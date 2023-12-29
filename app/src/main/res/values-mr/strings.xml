@@ -1,0 +1,334 @@
+<resources>
+    <string name="app_name">Street Saarthi</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_image_found">No image found</string>
+    <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
+    <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
+
+    <string name="click_here_to_agree_to_the"><![CDATA[Click Here to agree on the]]></string>
+    <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
+    <string name="title">Title</string>
+    <string name="submit">Submit</string>
+
+    <string name="PoweredbyVegaSegaSolutions">Powered by VegaSega Solutions</string>
+    <string name="NationalAssociation">National Association Of Street Vendors Of India</string>
+    <string name="AnInitiativeBy">An Initiative By</string>
+    <string name="ConnectingStreetVendorsAllOverIndia">Connecting Street Vendors All Over India</string>
+    <string name="StreetVendorSystem">Street Vendor System</string>
+
+
+    <string name="street_saarthi">Street Saarthi</string>
+
+
+    <string name="Pleaseselectagree">कृपया अटींवर सहमती निवडा &amp; अटी</string>
+
+
+
+    <string name = "quick_registation">त्वरित नोंदणी</string>
+    <string name="loginWithPassword">पासवर्डसह लॉगिन करा</string>
+    <string name="loginWithMobileOTP">मोबाइल OTP सह लॉगिन करा</string>
+    <string name="enterOtp">OTP एंटर करा</string>
+
+    <string name="completeProfileRegistration">पूर्ण प्रोफाइल नोंदणी</string>
+    <string name = "fast_process">जलद प्रक्रिया</string>
+    <string name="login_here">येथे लॉग इन करा</string>
+    <string name="enter_your_login_details_here">तुमचे लॉगिन तपशील येथे एंटर करा</string>
+    <string name="login_with_otp">OTP सह लॉगिन करा</string>
+    <string name = "quick_registration">त्वरित नोंदणी</string>
+    <string name="enter_your_details_for_quick_register">त्वरित नोंदणीसाठी तुमचे तपशील एंटर करा</string>
+    <string name="first_name">नाव</string>
+
+    <string name="last_name">आडनाव</string>
+
+    <string name="createPassword">पासवर्ड तयार करा</string>
+
+    <string name="EnterPassword">पासवर्ड प्रविष्ट करा</string>
+    <string name="reEnterPassword">पासवर्ड पुन्हा-एंटर करा</string>
+
+
+
+    <string name="enterMobileNumber">मोबाइल नंबर प्रविष्ट करा</string>
+
+
+    <string name="login">लॉगिन</string>
+
+
+    <string name="explore_app">अ‍ॅप एक्सप्लोर करा</string>
+
+    <string name = "register">नोंदणी करा</string>
+
+    <string name="LearnAboutSchemes">योजनांबद्दल जाणून घ्या</string>
+    <string name="ComplaintRedressal">तक्रार निवारण</string>
+    <string name="KnowYourRights">तुमचे हक्क जाणून घ्या</string>
+
+    <string name="desc1">तुम्हाला लागू असलेल्या नवीनतम योजनांबद्दल जाणून घ्या.</string>
+    <string name="desc2">तुमच्या सर्व तक्रारी जलद दाखल करणे, निरीक्षण करणे आणि वेळेवर निराकरण करणे.</string>
+    <string name="desc3">तुमचे कायदेशीर आणि नागरी हक्क काय आहेत, त्यांचा वापर कसा करावा याबद्दल येथे जाणून घ्या.</string>
+
+    <string name="SelectLanguage">भाषा निवडा</string>
+
+    <string name="english">English</string>
+    <string name="bengali">বাংলা</string>
+    <string name="gujarati">ગુજરાતી</string>
+    <string name="hindi">हिन्दी</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="marathi">मराठी</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="tamil">தமிழ்</string>
+
+    <string name="englishVal">en</string>
+    <string name="bengaliVal">bn</string>
+    <string name="gujaratiVal">gu</string>
+    <string name="hindiVal">hi</string>
+    <string name="kannadaVal">kn</string>
+    <string name="malayalamVal">ml</string>
+    <string name="marathiVal">mr</string>
+    <string name="punjabiVal">pa</string>
+    <string name="tamilVal">ta</string>
+
+    <string name="RegisterHere">येथे नोंदणी करा</string>
+    <string name="SelectYourchoiceofregistration">नोंदणीची तुमची निवड निवडा</string>
+    <string name="continues">सुरू ठेवा</string>
+
+
+    <string name="mobileNumber">मोबाइल नंबर</string>
+    <string name="YourPassword">तुमचा पासवर्ड</string>
+    <string name="register_for_new_account">नवीन खात्यासाठी नोंदणी करायची?</string>
+    <string name="Forgot">विसरलो</string>
+    <string name="ForgotPassword">पासवर्ड विसरलात</string>
+    <string name="EnterDetailstoSetpassword">पासवर्ड सेट करण्यासाठी तपशील एंटर करा</string>
+    <string name="send_otp">OTP पाठवा</string>
+    <string name = "verify_otp"> OTP सत्यापित करा</string>
+    <string name="set_password">पासवर्ड सेट करा</string>
+    <string name="back_to_login">लॉग इन करण्यासाठी परत</string>
+    <string name="back">मागे</string>
+    <string name="enter_details_to_register_with_us">आमच्याकडे नोंदणी करण्यासाठी तपशील प्रविष्ट करा</string>
+    <string name="profile_details">प्रोफाइल तपशील</string>
+    <string name = "registration_successful">नोंदणी यशस्वी</string>
+    <string name="congratulations_your_initial_registration_is_complete">अभिनंदन!\nतुमची प्रारंभिक नोंदणी पूर्ण झाली आहे</string>
+    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">तुमची नोंदणी सत्यापित करण्यासाठी आमच्या टीममधील कोणीतरी तुमच्याशी ४८ तासांच्या आत संपर्क करेल.</string>
+    <string name="RegisterNow">आता नोंदणी करा</string>
+
+    <string name = "resendOtp"> OTP पुन्हा पाठवा</string>
+    <string name="OTPnotverified">OTP सत्यापित नाही</string>
+    <string name="YourNewPassword">तुमचा नवीन पासवर्ड</string>
+    <string name="back_to_home">घरी परत</string>
+    <string name="back_to_home_u"><u>घरी परत</u></string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">पासवर्ड तयार करा आणि पासवर्ड पुन्हा एंटर करा सारखा नाही</string>
+
+    <string name="InvalidPassword">पासवर्ड 1 अपरकेस, 1 लोअरकेस, 1 नंबर आणि 1 स्पेशल कॅरेक्टरसह किमान 8 वर्णांचा असावा</string>
+    <string name = "father_s_first_name"> वडिलांचे नाव</string>
+    <string name="father_s_last_name">वडिलांचे आडनाव</string>
+    <string name="gender">लिंग</string>
+    <string name="date_of_birth">जन्मतारीख</string>
+    <string name="social_category">श्रेणी</string>
+    <string name = "education_qualifacation">शैक्षणिक पात्रता</string>
+    <string name="select_state">राज्य</string>
+    <string name = "select_district">जिल्हा</string>
+    <string name="municipality_panchayat">नगरपालिका/पंचायत</string>
+    <string name = "select_pincode"> पिनकोड</string>
+    <string name="marital_status">वैवाहिक स्थिती</string>
+    <string name = "spouse_s_name"> जोडीदाराचे नाव</string>
+    <string name="enter_address">पत्ता प्रविष्ट करा</string>
+    <string name="current_residential_address">वर्तमान निवासी पत्ता</string>
+    <string name="age_minimum">तुमचे वय किमान १४ वर्षे असावे</string>
+    <string name="type_of_market_place">बाजाराच्या ठिकाणाचा प्रकार</string>
+    <string name = "type_of_vending">विक्रीचा प्रकार</string>
+    <string name = "total_years_of_vending">विक्रीची एकूण वर्षे</string>
+    <string name="current_location_of_business">व्यवसायाचे वर्तमान स्थान</string>
+    <string name="upload_shop_image">शॉप इमेज अपलोड करा</string>
+    <string name="upload_cov">COV अपलोड करा</string>
+    <string name = "upload_lor"> LOR अपलोड करा</string>
+    <string name="camera">कॅमेरा</string>
+    <string name="open_camera_to_capture_image">प्रतिमा कॅप्चर करण्यासाठी कॅमेरा उघडा</string>
+    <string name="photos">फोटो</string>
+    <string name="browse_images_from_gallery">गॅलरीमधून प्रतिमा ब्राउझ करा</string>
+    <string name="cancel">रद्द करा</string>
+    <string name="choose_your_preference">तुमचे प्राधान्य निवडा</string>
+    <string name="complete_profile_registration">पूर्ण प्रोफाइल नोंदणी</string>
+    <string name="otp_verification">OTP पडताळणी</string>
+    <string name="current_vending_address">वर्तमान विक्री पत्ता</string>
+    <string name = "vending_time">विक्रीची वेळ</string>
+    <string name="to">ला</string>
+    <string name="open">उघडा</string>
+    <string name="close">बंद करा</string>
+    <string name = "open_time">उघडण्याची वेळ</string>
+    <string name = "close_time">बंद करण्याची वेळ</string>
+    <string name="document_details">दस्तऐवज तपशील</string>
+    <string name="do_you_have_vending_documents">तुमच्याकडे व्हेंडिंग दस्तऐवज आहेत का?</string>
+    <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/सर्वेक्षण पावती/चलान/महानगरपालिकेकडून मंजूरी पत्र)</string>
+    <string name = "government_scheme">शासकीय योजना</string>
+    <string name="yes">होय</string>
+    <string name="no">नाही</string>
+    <string name="upload_survey_receipt">सर्वेक्षण पावती अपलोड करा</string>
+    <string name="upload_challan">चलान अपलोड करा</string>
+    <string name="upload_approval_letter_from_municipality">नगरपालिकेकडून मंजूरी पत्र अपलोड करा</string>
+    <string name = "pm_swanidhi_scheme">PM स्वानिधी योजना</string>
+    <string name="others_please_name">इतर, कृपया नाव द्या</string>
+    <string name="scheme_name">योजनेचे नाव</string>
+    <string name="professional_details">व्यावसायिक तपशील</string>
+    <string name="personal_details">वैयक्तिक\nतपशील</string>
+    <string name="professional_details_2">व्यावसायिक\nतपशील</string>
+    <string name="SetPassword_details">सेट\nपासवर्ड</string>
+    <string name="passport_size_image">पासपोर्ट आकाराची प्रतिमा</string>
+    <string name="upload_media">मीडिया अपलोड करा</string>
+    <string name="aadhar_voter_id_pan_card_driving_license">(आधार / मतदार आयडी / पॅन कार्ड / ड्रायव्हिंग लायसन्स)</string>
+    <string name="address_mention_village">पत्ता (गावाचा उल्लेख करा)</string>
+    <string name="upload_shop">शॉप इमेज अपलोड करा</string>
+    <string name="identification_image">ओळखण्याची प्रतिमा</string>
+
+
+    <string-array name="gender_array">
+        <item>पुरुष</item>
+        <item>स्त्री</item>
+        <item>इतर</item>
+    </string-array>
+
+    <string-array name="years_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+    </string-array>
+
+
+    <string-array name="socialCategory_array">
+        <item>ST</item>
+        <item>SC</item>
+        <item>GEN</item>
+        <item>OBC</item>
+        <item>PWD</item>
+    </string-array>
+
+
+
+    <string-array name="socialEducation_array">
+        <item>शिक्षण नाही</item>
+        <item>प्राथमिक शिक्षण (1ली ते 5वी)</item>
+        <item>मध्यम शिक्षण (6वी ते 9वी)</item>
+        <item>उच्च शिक्षण (10वी ते 12वी)</item>
+        <item>पदवी</item>
+        <item>पदव्युत्तर शिक्षण</item>
+    </string-array>
+
+    <string name="married">विवाहित</string>
+    <string-array name="maritalStatus_array">
+        <item>सिंगल</item>
+        <item>विवाहित</item>
+        <item>विधवा</item>
+        <item>घटस्फोटित</item>
+        <item>विभक्त</item>
+    </string-array>
+
+    <string name="COVText">COV</string>
+    <string name="LORText">,LOR</string>
+    <string name="Survery_ReceiptText">,Survery_Receipt</string>
+    <string name="ChallanText">,Challan</string>
+    <string name="Approval_LetterText">,Approval_Letter</string>
+
+
+    <string name="terms1">Terms and Conditions</string>
+    <string name="terms2">Last updated: November 19, 2023</string>
+    <string name="terms3">Please read these terms and conditions carefully before using Our Service.</string>
+    <string name="terms4">Interpretation and Definitions</string>
+    <string name="terms5">Interpretation</string>
+    <string name="terms6">The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</string>
+    <string name="terms7">Definitions</string>
+    <string name="terms8">For the purposes of these Terms and Conditions:</string>
+    <string name="terms9">Application means the software program provided by the Company downloaded by You on any electronic device, named Street Saarthi</string>
+    <string name="terms10">Application Store means the digital distribution service operated and developed by Apple Inc. (Apple App Store) or Google Inc. (Google Play Store) in which the Application has been downloaded.</string>
+    <string name="terms11">Affiliate means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</string>
+    <string name="terms12">Country refers to: Bihar, India</string>
+    <string name="terms13">Company (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to National Association of Street Vendors of India , 304, Maurya Tower, Block-C, Maurya Lok Complex, Patna.</string>
+    <string name="terms14">Device means any device that can access the Service such as a computer, a cellphone or a digital tablet.</string>
+    <string name="terms15">Service refers to the Application or the Website or both.</string>
+    <string name="terms166">Terms and Conditions (also referred as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service. This Terms and Conditions agreement has been created with the help of the Free Terms and Conditions Generator.</string>
+    <string name="terms16">Third-party Social Media Service means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</string>
+    <string name="terms17">Website refers to Nasvi.in, accessible from https://nasvi.in/</string>
+    <string name="terms18">You means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</string>
+    <string name="terms19">Acknowledgment</string>
+    <string name="terms20">These are the Terms and Conditions governing the use of this Service and the agreement that operates between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.</string>
+
+    <string name="terms21">Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users and others who access or use the Service.</string>
+    <string name="terms22">By accessing or using the Service You agree to be bound by these Terms and Conditions. If You disagree with any part of these Terms and Conditions then You may not access the Service.</string>
+    <string name="terms23">You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.</string>
+    <string name="terms24">Your access to and use of the Service is also conditioned on Your acceptance of and compliance with the Privacy Policy of the Company. Our Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your personal information when You use the Application or the Website and tells You about Your privacy rights and how the law protects You. Please read Our Privacy Policy carefully before using Our Service.</string>
+    <string name="terms25">Links to Other Websites</string>
+    <string name="terms26">Our Service may contain links to third-party web sites or services that are not owned or controlled by the Company.</string>
+    <string name="terms27">The Company has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that the Company shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods or services available on or through any such web sites or services.</string>
+    <string name="terms28">We strongly advise You to read the terms and conditions and privacy policies of any third-party web sites or services that You visit.</string>
+    <string name="terms29">Termination</string>
+    <string name="terms30">We may terminate or suspend Your access immediately, without prior notice or liability, for any reason whatsoever, including without limitation if You breach these Terms and Conditions.</string>
+    <string name="terms31">Upon termination, Your right to use the Service will cease immediately.</string>
+    <string name="terms32">Limitation of Liability</string>
+    <string name="terms33">Notwithstanding any damages that You might incur, the entire liability of the Company and any of its suppliers under any provision of this Terms and Your exclusive remedy for all of the foregoing shall be limited to the amount actually paid by You through the Service or 100 USD if You haven\'t purchased anything through the Service.</string>
+    <string name="terms34">To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits, loss of data or other information, for business interruption, for personal injury, loss of privacy arising out of or in any way related to the use of or inability to use the Service, third-party software and/or third-party hardware used with the Service, or otherwise in connection with any provision of this Terms), even if the Company or any supplier has been advised of the possibility of such damages and even if the remedy fails of its essential purpose.</string>
+    <string name="terms35">Some states do not allow the exclusion of implied warranties or limitation of liability for incidental or consequential damages, which means that some of the above limitations may not apply. In these states, each party\'s liability will be limited to the greatest extent permitted by law.</string>
+    <string name="terms36">"AS IS" and "AS AVAILABLE" Disclaimer</string>
+    <string name="terms37">The Service is provided to You "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice. Without limitation to the foregoing, the Company provides no warranty or undertaking, and makes no representation of any kind that the Service will meet Your requirements, achieve any intended results, be compatible or work with any other software, applications, systems or services, operate without interruption, meet any performance or reliability standards or be error free or that any errors or defects can or will be corrected.</string>
+    <string name="terms38">Without limiting the foregoing, neither the Company nor any of the company\'s provider makes any representation or warranty of any kind, express or implied: (i) as to the operation or availability of the Service, or the information, content, and materials or products included thereon; (ii) that the Service will be uninterrupted or error-free; (iii) as to the accuracy, reliability, or currency of any information or content provided through the Service; or (iv) that the Service, its servers, the content, or e-mails sent from or on behalf of the Company are free of viruses, scripts, trojan horses, worms, malware, timebombs or other harmful components.</string>
+    <string name="terms39">Some jurisdictions do not allow the exclusion of certain types of warranties or limitations on applicable statutory rights of a consumer, so some or all of the above exclusions and limitations may not apply to You. But in such a case the exclusions and limitations set forth in this section shall be applied to the greatest extent enforceable under applicable law.</string>
+    <string name="terms40">Governing Law</string>
+    <string name="terms41">The laws of the Country, excluding its conflicts of law rules, shall govern this Terms and Your use of the Service. Your use of the Application may also be subject to other local, state, national, or international laws.</string>
+    <string name="terms42">Disputes Resolution</string>
+    <string name="terms43">If You have any concern or dispute about the Service, You agree to first try to resolve the dispute informally by contacting the Company.</string>
+    <string name="terms44">For European Union (EU) Users</string>
+    <string name="terms45">If You are a European Union consumer, you will benefit from any mandatory provisions of the law of the country in which you are resident in.</string>
+    <string name="terms46">United States Legal Compliance</string>
+    <string name="terms47">You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a "terrorist supporting" country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.</string>
+    <string name="terms48">Severability and Waiver Severability</string>
+    <string name="terms49">If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force and effect.</string>
+    <string name="terms50">Waiver</string>
+    <string name="terms51">Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not effect a party\'s ability to exercise such right or require such performance at any time thereafter nor shall the waiver of a breach constitute a waiver of any subsequent breach.</string>
+    <string name="terms52">Translation Interpretation</string>
+    <string name="terms53">These Terms and Conditions may have been translated if We have made them available to You on our Service. You agree that the original English text shall prevail in the case of a dispute.</string>
+    <string name="terms54">Changes to These Terms and Conditions</string>
+    <string name="terms55">We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material We will make reasonable efforts to provide at least 30 days\' notice prior to any new terms taking effect. What constitutes a material change will be determined at Our sole discretion.</string>
+    <string name="terms56">By continuing to access or use Our Service after those revisions become effective, You agree to be bound by the revised terms. If You do not agree to the new terms, in whole or in part, please stop using the website and the Service.</string>
+    <string name="terms57">Contact Us</string>
+    <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
+    <string name="terms59">By email: info@nasvinet.org</string>
+
+</resources>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:background="@color/_ffffffff"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  >
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textTitleMain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_25sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints"
+        app:fontFamily="@font/roboto_medium"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/profile_details"
+        android:visibility="visible"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextFN"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        style="@style/PrimaryEditText"
+        android:hint="@string/first_name"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@+id/textTitleMain"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextLN"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        style="@style/PrimaryEditText"
+        android:hint="@string/last_name"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@+id/editTextFN"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextMobileNumber"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        style="@style/PrimaryEditText"
+        android:hint="@string/mobileNumber"
+        android:text=""
+        android:inputType="number"
+        android:maxLength="10"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLN"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextSendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/white_round_corner"
+        style="@style/PrimaryEditText"
+        android:hint="@string/Forgot"
+        android:inputType="number"
+        android:text="@string/send_otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLN"
+        android:focusable="false"
+        android:backgroundTint="@color/_E79D46"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextOtp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        style="@style/PrimaryEditText"
+        android:hint="@string/enterOtp"
+        android:text=""
+        android:inputType="number"
+        android:maxLength="6"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextVeryfyOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/white_round_corner"
+        style="@style/PrimaryEditText"
+        android:hint="@string/Forgot"
+        android:inputType="number"
+        android:text="@string/verify_otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
+        android:focusable="false"
+        android:backgroundTint="@color/_999999"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

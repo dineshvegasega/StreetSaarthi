@@ -1,0 +1,275 @@
+<resources>
+    <string name="app_name">NASVI</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_image_found">No image found</string>
+    <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
+    <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
+
+    <string name="click_here_to_agree_to_the"><![CDATA[मैं सभी नियम एवं शर्तों से सहमत हूं।]]></string>
+    <string name="terms_amp_conditions"><u>नियम एवं शर्त</u></string>
+    <string name="title">Title</string>
+    <string name="submit">Submit</string>
+
+    <string name="PoweredbyVegaSegaSolutions">Powered by VegaSega Solutions</string>
+    <string name="NationalAssociation">National Association Of Street Vendors Of India</string>
+    <string name="AnInitiativeBy">An Initiative By</string>
+    <string name="ConnectingStreetVendorsAllOverIndia">Connecting Street Vendors All Over India</string>
+    <string name="StreetVendorSystem">Street Vendor System</string>
+
+
+    <string name="street_saarthi">Street Saarthi</string>
+
+
+    <string name="Pleaseselectagree">कृपया शर्तों एवं स्थितियाँ पर सहमति का चयन करें</string>
+
+
+    <string name="quick_registation">शीघ्र पंजीकरण</string>
+    <string name="loginWithPassword">पासवर्ड के साथ लॉगिन करें</string>
+    <string name="loginWithMobileOTP"> मोबाइल OTP के साथ लॉगिन करें</string>
+    <string name="enterOtp">OTP दर्ज करें</string>
+
+    <string name="completeProfileRegistration">प्रोफ़ाइल पंजीकरण पूरा करें</string>
+    <string name="fast_process">तेज़ प्रक्रिया</string>
+    <string name="login_here">यहां लॉगिन करें</string>
+    <string name="enter_your_login_details_here">यहां अपना लॉगिन विवरण दर्ज करें</string>
+    <string name="login_with_otp">ओटीपी से लॉगइन करें</string>
+    <string name="quick_registration">शीघ्र पंजीकरण </string>
+    <string name="enter_your_details_for_quick_register">त्वरित पंजीकरण के लिए अपना विवरण दर्ज करें</string>
+    <string name="first_name">पहला नाम</string>
+
+    <string name="last_name">उपनाम</string>
+
+    <string name="createPassword">पासवर्ड बनाएं</string>
+
+    <string name="EnterPassword">पासवर्ड दर्ज करें</string>
+    <string name="reEnterPassword">पासवर्ड की पुष्टि कीजिये</string>
+
+
+
+   <string name="enterMobileNumber">मोबाइल नंबर </string>
+
+
+    <string name="login">लॉग इन करें</string>
+
+
+    <string name="explore_app">ऐप एक्सप्लोर करें</string>
+
+    <string name="register">पंजीकरण करवाना</string>
+
+    <string name="LearnAboutSchemes">योजनाओं के बारे में जानें</string>
+    <string name="ComplaintRedressal">शिकायत निवारण</string>
+    <string name="KnowYourRights">अपने अधिकारों को जानें</string>
+
+    <string name="desc1">उन नवीनतम योजनाओं के बारे में जानें जो आपके लिए लागू हैं।</string>
+    <string name="desc2">आपकी सभी शिकायतों की त्वरित फाइलिंग, निगरानी और समय पर समाधान।</string>
+    <string name="desc3">यहां जानें कि आपके कानूनी और नागरिक अधिकार क्या हैं, उनका उपयोग कैसे करें।</string>
+
+    <string name="SelectLanguage">भाषा चुने</string>
+
+    <string name="english">English</string>
+    <string name="bengali">বাংলা</string>
+    <string name="gujarati">ગુજરાતી</string>
+    <string name="hindi">हिन्दी</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="marathi">मराठी</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="tamil">தமிழ்</string>
+
+    <string name="englishVal">en</string>
+    <string name="bengaliVal">bn</string>
+    <string name="gujaratiVal">gu</string>
+    <string name="hindiVal">hi</string>
+    <string name="kannadaVal">kn</string>
+    <string name="malayalamVal">ml</string>
+    <string name="marathiVal">mr</string>
+    <string name="punjabiVal">pa</string>
+    <string name="tamilVal">ta</string>
+
+    <string name="RegisterHere">यहां रजिस्टर करें</string>
+   <string name="SelectYourchoiceofregistration">पंजीकरण के लिए अपनी पसंद का चयन करें</string>
+    <string name="continues">आगे बढ़ें</string>
+
+
+    <string name="mobileNumber">मोबाइल नंबर</string>
+    <string name="YourPassword">आपका पासवर्ड</string>
+    <string name="register_for_new_account">नये खाते के लिए पंजीकरण करें?</string>
+    <string name="Forgot">भूल गया</string>
+    <string name="ForgotPassword">पासवर्ड भूल गए</string>
+    <string name="EnterDetailstoSetpassword">पासवर्ड सेट करने के लिए विवरण दर्ज करें</string>
+    <string name="send_otp">OTP भेजें</string>
+    <string name="verify_otp">OTP सत्यापित करें</string>
+    <string name="set_password">सांकेतिक शब्द लगना</string>
+    <string name="back_to_login">लॉगिन पर वापस जाएं</string>
+    <string name="back">पीछे जाये</string>
+    <string name="enter_details_to_register_with_us">हमारे साथ पंजीकरण करने के लिए विवरण दर्ज करें</string>
+    <string name="profile_details">प्रोफ़ाइल विवरण</string>
+    <string name="registration_successful">सफल पंजीकरण</string>
+    <string name="congratulations_your_initial_registration_is_complete">सफल पंजीकरण! आपका प्रारंभिक पंजीकरण पूरा हो गया है</string>
+    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">आपके पंजीकरण को सत्यापित करने के लिए हमारी टीम का कोई व्यक्ति 48 घंटे के भीतर आपसे संपर्क करेगा।</string>
+    <string name="RegisterNow">अभी पंजीकरण करें</string>
+
+    <string name="resendOtp">OTP पुनः भेजें</string>
+    <string name="OTPnotverified">ओटीपी सत्यापित नहीं है</string>
+    <string name="YourNewPassword">Your New Password</string>
+    <string name="back_to_home">मुख्य पृष्ठ पर जाये</string>
+    <string name="back_to_home_u"><u>मुख्य पृष्ठ पर जाये</u></string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">पासवर्ड बनाना और पासवर्ड पुनः दर्ज करना एक ही बात नहीं है</string>
+
+    <string name="InvalidPassword">पासवर्ड 1 अपरकेस, 1 लोअरकेस, 1 नंबर और 1 विशेष अक्षर के साथ कम से कम 8 अक्षर का होना चाहिए</string>
+    <string name="father_s_first_name">पिता का पहला नाम</string>
+    <string name="father_s_last_name">पिता का उपनाम</string>
+    <string name="gender">लिंग</string>
+    <string name="date_of_birth">जन्म की तारीख</string>
+    <string name="social_category">वर्ग</string>
+    <string name="education_qualifacation">शैक्षणिक योग्यता</string>
+    <string name="select_state">राज्य</string>
+    <string name="select_district">ज़िला</string>
+    <string name="municipality_panchayat">नगर पालिका/पंचायत</string>
+    <string name="select_pincode">पिन कोड</string>
+    <string name="marital_status">वैवाहिक स्थिति</string>
+    <string name="spouse_s_name">जीवनसाथी का नाम</string>
+    <string name="enter_address">पता दर्ज करें</string>
+    <string name="current_residential_address">वर्तमान आवासीय पता</string>
+    <string name="age_minimum">आपकी उम्र कम से कम 14 साल होनी चाहिए</string>
+    <string name="type_of_market_place">बाज़ार स्थल का प्रकार</string>
+    <string name="type_of_vending">वेंडिंग का प्रकार</string>
+    <string name="total_years_of_vending">वेंडिंग के कुल वर्ष</string>
+    <string name="current_location_of_business">वर्तमान वेंडिंग पता</string>
+    <string name="upload_shop_image">दुकान की फोटो अपलोड करें</string>
+    <string name="upload_cov">सीओवी अपलोड करें</string>
+    <string name="upload_lor">एलओआर अपलोड करें</string>
+    <string name="camera">कैमरा</string>
+    <string name="open_camera_to_capture_image">छवि खींचने के लिए कैमरा खोलें</string>
+    <string name="photos">तस्वीरें</string>
+    <string name="browse_images_from_gallery">गैलरी से छवियाँ ब्राउज़ करें</string>
+    <string name="cancel">रद्द करना</string>
+    <string name="choose_your_preference">अपनी प्राथमिकता चुनें</string>
+    <string name="complete_profile_registration">प्रोफ़ाइल पंजीकरण पूरा करें</string>
+    <string name="otp_verification">OTP सत्यापन</string>
+    <string name="current_vending_address">वर्तमान वेंडिंग पता</string>
+    <string name="vending_time">वेंडिंग का समय</string>
+    <string name="to">से</string>
+    <string name="open">खुला</string>
+    <string name="close">बंद करना</string>
+    <string name="open_time">खुलने का समय</string>
+    <string name="close_time">बंद होने का समय</string>
+    <string name="document_details">दस्तावेज़ विवरण</string>
+    <string name="do_you_have_vending_documents">क्या आपके पास वेंडिंग दस्तावेज़ हैं?</string>
+    <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(नगर निकाय से सीओवी/एलओआर/सर्वेक्षण रसीद/चालान/अनुमोदन पत्र)</string>
+    <string name="government_scheme">सरकारी योजना</string>
+    <string name="yes">हाँ</string>
+    <string name="no">नहीं</string>
+    <string name="upload_survey_receipt">सर्वेक्षण रसीद अपलोड करें</string>
+    <string name="upload_challan">चालान अपलोड करें</string>
+    <string name="upload_approval_letter_from_municipality">नगर पालिका से अनुमोदन पत्र अपलोड करें</string>
+    <string name="pm_swanidhi_scheme">पीएम स्वनिधि योजना</string>
+    <string name="others_please_name">अन्य, कृपया नाम बताएं</string>
+    <string name="scheme_name">योजना का नाम</string>
+    <string name="professional_details">व्यक्तिगत विवरण</string>
+    <string name="personal_details">व्यक्तिगत\nविवरण</string>
+    <string name="professional_details_2">व्यावसायिक\nविवरण</string>
+    <string name="SetPassword_details">पासवर्ड\nसेट करेे</string>
+    <string name="passport_size_image">पासपोर्ट आकार की छवि</string>
+    <string name="upload_media">मीडिया अपलोड करें</string>
+    <string name="aadhar_voter_id_pan_card_driving_license">(आधार / वोटर आईडी / पैन कार्ड / ड्राइविंग लाइसेंस)</string>
+    <string name="address_mention_village">पता (गाँव का उल्लेख करें)</string>
+    <string name="upload_shop">दुकान की फोटो अपलोड करें</string>
+    <string name="identification_image">पहचान छवि</string>
+
+
+    <string-array name="gender_array">
+        <item>पुरुष</item>
+        <item>महिला</item>
+        <item>अन्य</item>
+    </string-array>
+
+
+
+    <string-array name="years_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+    </string-array>
+
+
+    <string-array name="socialCategory_array">
+            <item>ST</item>
+            <item>SC</item>
+            <item>GEN</item>
+            <item>OBC</item>
+            <item>PWD</item>
+        </string-array>
+
+
+
+    <string-array name="socialEducation_array">
+            <item>कोई पढ़ाई नही</item>
+            <item>प्राथमिक शिक्षा (पहली से पांचवीं तक)</item>
+            <item>मिडिल शिक्षा (छठी से 9वीं)</item>
+            <item>उच्च शिक्षा (10वीं से 12वीं)</item>
+            <item>स्नातक</item>
+            <item>स्नातकोत्तर पाठ्यक्रम</item>
+        </string-array>
+    
+
+
+    <string name="married">विवाहित</string>
+        <string-array name="maritalStatus_array">
+            <item>अविवाहित</item>
+            <item>विवाहित</item>
+            <item>विधवा</item>
+            <item>तलाकशुदा</item>
+            <item>अलग-अलग</item>
+        </string-array>
+
+
+    <string name="COVText">COV</string>
+    <string name="LORText">,LOR</string>
+    <string name="Survery_ReceiptText">,Survery_Receipt</string>
+    <string name="ChallanText">,Challan</string>
+    <string name="Approval_LetterText">,Approval_Letter</string>
+
+</resources>
