@@ -1,5 +1,6 @@
 package com.demo.networking
 
+import com.google.gson.JsonElement
 import com.streetsaarthi.model.BaseResponseDC
 import com.streetsaarthi.models.ItemContributors
 import com.streetsaarthi.models.Items
@@ -19,10 +20,21 @@ import retrofit2.http.*
 interface ApiInterface {
 
 
+//    @POST(LOGIN)
+//    suspend fun login2(
+//        @Body requestBody: RequestBody
+//    ): Response<BaseResponseDC<JsonElement>>
+
+
     @POST(LOGIN)
     suspend fun login(
         @Body requestBody: RequestBody
-    ): Response<BaseResponseDC<Login>>
+    ): Response<BaseResponseDC<JsonElement>>
+
+    @POST(VERIFY_OTP)
+    suspend fun verifyOTPData(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
 
 
     @POST(SEND_OTP)
@@ -51,6 +63,12 @@ interface ApiInterface {
     suspend fun registerWithFiles(
     @Body hashMap: RequestBody
     ): Response<BaseResponseDC<Any>>
+
+    @POST(PASSWORD_UPDATE)
+    suspend fun passwordupdate(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<Any>>
+
 
 
     @GET(Vending)

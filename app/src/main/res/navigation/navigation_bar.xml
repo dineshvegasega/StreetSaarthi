@@ -190,6 +190,15 @@
             app:destination="@id/termsPrivacy"
             app:launchSingleTop="true"
             />
+
+        <action
+            android:id="@+id/action_loginOtp_to_home"
+            app:destination="@id/home"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_bar"
+            app:popUpToInclusive="true"
+            />
+
     </fragment>
 
 

@@ -270,4 +270,10 @@
     <string name="ChallanText">,Challan</string>
     <string name="Approval_LetterText">,Approval_Letter</string>
 
+
+    <string name="or">ਜਾਂ</string>
+    <string name = "enterOtpHere"> OTP ਇੱਥੇ ਦਾਖਲ ਕਰੋ</string>
+
+
+
 </resources>

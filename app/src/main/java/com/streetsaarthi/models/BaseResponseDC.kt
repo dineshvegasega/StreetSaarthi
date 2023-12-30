@@ -2,6 +2,7 @@ package com.streetsaarthi.model
 
 import com.google.gson.annotations.SerializedName
 
+
 data class BaseResponseDC<T>(
     @SerializedName("data")
     val `data`: T? = null,

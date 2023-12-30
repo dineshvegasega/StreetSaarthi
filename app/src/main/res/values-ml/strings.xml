@@ -269,6 +269,10 @@
     <string name="Approval_LetterText">,Approval_Letter</string>
 
 
+    <string name="or">അഥവാ</string>
+    <string name="enterOtpHere">OTP ഇവിടെ നൽകുക</string>
+
+
     <string name="terms1">Terms and Conditions</string>
     <string name="terms2">Last updated: November 19, 2023</string>
     <string name="terms3">Please read these terms and conditions carefully before using Our Service.</string>

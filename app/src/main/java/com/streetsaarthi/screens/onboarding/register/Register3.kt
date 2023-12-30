@@ -90,10 +90,11 @@ class Register3  : Fragment() , CallBackListener {
                 if (editTextMobileNumber.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
-                    val obj: JSONObject = JSONObject()
-                    obj.put("mobile_no", binding.editTextMobileNumber.text.toString())
-                    obj.put("slug", "signup")
-                    obj.put("user_type", USER_TYPE)
+                    val obj: JSONObject = JSONObject().apply {
+                        put("mobile_no", binding.editTextMobileNumber.text.toString())
+                        put("slug", "signup")
+                        put("user_type", USER_TYPE)
+                    }
                     viewModel.sendOTP(view = requireView(), obj)
                 }
             }
@@ -102,11 +103,12 @@ class Register3  : Fragment() , CallBackListener {
                 if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
-                    val obj: JSONObject = JSONObject()
-                    obj.put("mobile_no", binding.editTextMobileNumber.text.toString())
-                    obj.put("otp", binding.editTextOtp.text.toString())
-                    obj.put("slug", "signup")
-                    obj.put("user_type", USER_TYPE)
+                    val obj: JSONObject = JSONObject().apply {
+                        put("mobile_no", binding.editTextMobileNumber.text.toString())
+                        put("otp", binding.editTextOtp.text.toString())
+                        put("slug", "signup")
+                        put("user_type", USER_TYPE)
+                    }
                     viewModel.verifyOTP(view = requireView(), obj)
                 }
             }

@@ -273,4 +273,8 @@
     <string name="ChallanText">,Challan</string>
     <string name="Approval_LetterText">,Approval_Letter</string>
 
+    <string name="or">বা</string>
+    <string name="enterOtpHere">এখানে OTP লিখুন</string>
+
+
 </resources>

@@ -1,11 +1,9 @@
 package com.streetsaarthi
 
 import android.app.Application
-import com.mukesh.easydatastoremethods.calldatastore.CallDataStore
+import com.streetsaarthi.datastore.DataStoreUtil
 import dagger.hilt.android.HiltAndroidApp
-//import lv.chi.photopicker.ChiliPhotoPicker
-import com.streetsaarthi.R
-import com.streetsaarthi.controller.CoilImageLoader
+
 
 
 @HiltAndroidApp
@@ -15,9 +13,11 @@ class App : Application() {
 //        ChiliPhotoPicker.init(
 //            loader = CoilImageLoader(), authority = "com.streetsaarthi.provider"
 //        )
-        CallDataStore.initializeDataStore(
-            context = applicationContext,
-            dataBaseName = applicationContext.getString(R.string.app_name).replace(" ", "_")
-        )
+//        CallDataStore.initializeDataStore(
+//            context = applicationContext,
+//            dataBaseName = applicationContext.getString(R.string.app_name).replace(" ", "_")
+//        )
+
+        DataStoreUtil.initDataStore(applicationContext)
     }
 }

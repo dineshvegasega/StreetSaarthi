@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity() {
             navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
         }
 
+
+
+
+
 //        val json = JsonObject().apply {
 //            addProperty("age","28")
 //            addProperty("name","john")

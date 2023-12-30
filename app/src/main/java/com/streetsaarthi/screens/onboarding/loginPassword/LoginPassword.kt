@@ -36,7 +36,7 @@ class LoginPassword : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = LoginPasswordBinding.inflate(inflater)
         return binding.root
     }
@@ -44,13 +44,11 @@ class LoginPassword : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val obj: JSONObject = JSONObject()
-        obj.put("mobile_number", binding.editTextMobileNumber.text.toString())
-        obj.put("password", binding.editTextPassword.text.toString())
 
-        if (util == null) {
-            util = PhoneNumberUtil.createInstance(requireContext());
-        }
+//
+//        if (util == null) {
+//            util = PhoneNumberUtil.createInstance(requireContext());
+//        }
 //        try {
 //            val phoneNumber: PhoneNumber = util!!.parse("", "US")
 //            var isValid = util?.isValidNumber(phoneNumber) ?: false
@@ -81,12 +79,19 @@ class LoginPassword : Fragment() {
 //
 //            Log.e("TAG", "xxx "+xxx)
 
+
             binding.btSignIn.setOnClickListener {
                 if (binding.editTextMobileNumber.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 } else if (binding.editTextPassword.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.EnterPassword))
+                } else if(binding.editTextPassword.text.toString().length >= 0 && binding.editTextPassword.text.toString().length < 8){
+                    showSnackBar(getString(R.string.InvalidPassword))
                 } else {
+                    val obj: JSONObject = JSONObject().apply {
+                        put("mobile_number", binding.editTextMobileNumber.text.toString())
+                        put("password", binding.editTextPassword.text.toString())
+                    }
                     viewModel.login(view = requireView(), obj)
                 }
             }

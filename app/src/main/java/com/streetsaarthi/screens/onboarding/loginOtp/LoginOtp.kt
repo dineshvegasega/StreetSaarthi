@@ -49,8 +49,8 @@ class LoginOtp : Fragment() {
 //        }
 
         binding.apply {
-            editTextVeryfyOtp.setEnabled(false)
-//            btSignIn.setEnabled(false)
+//            editTextVeryfyOtp.isEnabled = false
+//            btSignIn.isEnabled = false
 
             textBack.setOnClickListener {
                 view.findNavController().navigateUp()
@@ -59,14 +59,14 @@ class LoginOtp : Fragment() {
             viewModel.isSend.observe(viewLifecycleOwner, Observer {
                 binding.editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
                 if (it == true){
-                    binding.editTextVeryfyOtp.setEnabled(true)
-                    binding.editTextVeryfyOtp.setBackgroundTintList(
+                    binding.btSignIn.setEnabled(true)
+                    binding.btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._E79D46, null)))
                 }else{
-                    binding.editTextVeryfyOtp.setEnabled(false)
-                    binding.editTextVeryfyOtp.setBackgroundTintList(
+                    binding.btSignIn.setEnabled(false)
+                    binding.btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._999999, null)))
@@ -74,26 +74,26 @@ class LoginOtp : Fragment() {
             })
 
 
-            viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
-                if (it == true){
-                    editTextSendOtp.setEnabled(false)
-                    editTextVeryfyOtp.setEnabled(false)
-                    binding.editTextSendOtp.setBackgroundTintList(
-                        ColorStateList.valueOf(
-                            ResourcesCompat.getColor(
-                                getResources(), R.color._999999, null)))
-                    binding.editTextVeryfyOtp.setBackgroundTintList(
-                        ColorStateList.valueOf(
-                            ResourcesCompat.getColor(
-                                getResources(), R.color._999999, null)))
-
-                    btSignIn.setEnabled(true)
-                    btSignIn.setBackgroundTintList(
-                        ColorStateList.valueOf(
-                            ResourcesCompat.getColor(
-                                getResources(), R.color._E79D46, null)))
-                }
-            })
+//            viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
+//                if (it == true){
+//                    editTextSendOtp.setEnabled(false)
+//                    editTextVeryfyOtp.setEnabled(false)
+//                    binding.editTextSendOtp.setBackgroundTintList(
+//                        ColorStateList.valueOf(
+//                            ResourcesCompat.getColor(
+//                                getResources(), R.color._999999, null)))
+//                    binding.editTextVeryfyOtp.setBackgroundTintList(
+//                        ColorStateList.valueOf(
+//                            ResourcesCompat.getColor(
+//                                getResources(), R.color._999999, null)))
+//
+//                    btSignIn.setEnabled(true)
+//                    btSignIn.setBackgroundTintList(
+//                        ColorStateList.valueOf(
+//                            ResourcesCompat.getColor(
+//                                getResources(), R.color._E79D46, null)))
+//                }
+//            })
 
 
 
@@ -101,10 +101,11 @@ class LoginOtp : Fragment() {
                 if (editTextMobileNumber.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
-                    val obj: JSONObject = JSONObject()
-                    obj.put("mobile_no", binding.editTextMobileNumber.text.toString())
-                    obj.put("slug", "signup")
-                    obj.put("user_type", USER_TYPE)
+                    val obj: JSONObject = JSONObject().apply {
+                        put("mobile_no", binding.editTextMobileNumber.text.toString())
+                        put("slug", "login")
+                        put("user_type", USER_TYPE)
+                    }
                     viewModel.sendOTP(view = requireView(), obj)
                 }
             }
@@ -114,18 +115,17 @@ class LoginOtp : Fragment() {
                 if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
-                    val obj: JSONObject = JSONObject()
-                    obj.put("mobile_no", binding.editTextMobileNumber.text.toString())
-                    obj.put("otp", binding.editTextOtp.text.toString())
-                    obj.put("slug", "signup")
-                    obj.put("user_type", USER_TYPE)
+                    val obj: JSONObject = JSONObject().apply {
+                        put("mobile_no", binding.editTextMobileNumber.text.toString())
+                        put("otp", binding.editTextOtp.text.toString())
+                        put("slug", "login")
+                        put("user_type", USER_TYPE)
+                    }
                     viewModel.verifyOTP(view = requireView(), obj)
                 }
             }
 
-            val obj: JSONObject = JSONObject()
-            obj.put("mobile_number", binding.editTextMobileNumber.text.toString())
-            obj.put("otp", binding.editTextOtp.text.toString())
+
 
             binding.btSignIn.setOnClickListener {
                 if (binding.editTextMobileNumber.text.toString().isEmpty()){
@@ -133,7 +133,13 @@ class LoginOtp : Fragment() {
                 } else if (binding.editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 } else{
-                    viewModel.login(view = requireView(), obj)
+                    val obj: JSONObject = JSONObject().apply {
+                        put("mobile_no", binding.editTextMobileNumber.text.toString())
+                        put("otp", binding.editTextOtp.text.toString())
+                        put("slug", "login")
+                        put("user_type", USER_TYPE)
+                    }
+                    viewModel.verifyOTPData(view = requireView(), obj)
                 }
             }
 

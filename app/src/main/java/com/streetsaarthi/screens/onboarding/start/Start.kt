@@ -3,7 +3,6 @@ package com.streetsaarthi.screens.onboarding.start
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,7 +25,6 @@ import com.streetsaarthi.databinding.ItemLanguageStartBinding
 import com.streetsaarthi.utils.LocaleHelper
 
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -35,6 +33,8 @@ class Start : Fragment() {
     private var _binding: StartBinding? = null
     private val binding get() = _binding!!
     private val viewModel: StartVM by viewModels()
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +55,8 @@ class Start : Fragment() {
 
 
         binding.apply {
+
+
             btSignIn.setOnClickListener {
                 requireView().findNavController().navigate(R.id.action_start_to_walkThrough)
             }
@@ -190,6 +192,11 @@ class Start : Fragment() {
 
 
 
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        MainActivity.activity.get()!!.finish()
+//    }
 
 
 }

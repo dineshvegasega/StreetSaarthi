@@ -10,11 +10,13 @@ import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.streetsaarthi.R
 import com.streetsaarthi.model.BaseResponseDC
 import com.streetsaarthi.models.login.Login
 import com.streetsaarthi.models.login.LoginResponse
 import com.streetsaarthi.networking.getJsonRequestBody
+import com.streetsaarthi.utils.navigateBack
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -107,48 +109,16 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
 
 
 
-    fun login(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun passwordupdate(view: View, jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
-            callHandler = object : CallHandler<Response<BaseResponseDC<Login>>> {
+            callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.login(requestBody = jsonObject.getJsonRequestBody())
+                    apiInterface.passwordupdate(requestBody = jsonObject.getJsonRequestBody())
 
-                override fun success(response: Response<BaseResponseDC<Login>>) {
+                override fun success(response: Response<BaseResponseDC<Any>>) {
                     if (response.isSuccessful){
-//                                showSnackBar(response.body()?.message.orEmpty())
-//                                view.navigateBack()
-
-                        response.body()?.data?.apply {
-                            token = response.body()?.token!!
-                        }
-
-                        val json = Gson().toJson(response.body())
-                        Log.e("TAG", "aaaaaaa "+json)
-
-//                        var ss = response.body()?.data.toString()
-                        //  Log.e("TAG", "aaaaaaa "+ss.data?.birth_address)
-//                        view.findNavController().navigate(R.id.action_loginPassword_to_webPage, Bundle().apply {
-//                            putString("data", ""+json)
-//                        })
-                        //val json = Gson().toJson(ss)
-//                        val gson = Gson()
-                        // val json = gson.toJson(ss)
-//                        val topic = Gson().fromJson(Gson().toJson(ss), Data::class.java)
-//                        Log.e("TAG", "aaaaaaa "+topic.toString())
-
-//                        var sss = <Data> response.body()?.data
-//                     sss.birth_address
-
-//                        val list: Data = response.body()?.data
-
-//                        var gson = Gson()
-//                        var mMineUserEntity = gson?.fromJson(response.body()?.data.toString(), Data::class.java)
-
-
-
-                        view.findNavController().navigate(R.id.action_loginPassword_to_home)
-
-
+                                showSnackBar(response.body()?.message.orEmpty())
+                                view.navigateBack()
                     }
                 }
 

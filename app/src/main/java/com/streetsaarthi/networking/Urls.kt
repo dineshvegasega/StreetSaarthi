@@ -9,6 +9,9 @@ const val SEND_OTP = "send-otp"
 const val VERIFY_OTP = "verify-otp"
 const val SIGN_UP = "vendor-signup"
 const val RESEND_OTP = "resend-otp"
+const val PASSWORD_UPDATE = "password-update"
+
+
 
 const val STATE = "state-list?page=1"
 const val DISTRICT = "district-list"

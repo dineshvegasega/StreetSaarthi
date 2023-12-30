@@ -127,6 +127,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
                     android:focusable="false"
                     android:backgroundTint="@color/_999999"
+                    android:visibility="gone"
                     />
 
 

@@ -164,13 +164,13 @@ class QuickRegistration : Fragment(), CallBackListener {
                 introViewPager.setCurrentItem(1, false)
                 btSignIn.setText(getString(R.string.RegisterNow))
             } else if (pos == 4){
-                val obj: JSONObject = JSONObject()
-                obj.put("vendor_first_name", viewModel.data.vendor_first_name)
-                obj.put("vendor_last_name", viewModel.data.vendor_last_name)
-                obj.put("mobile_no", viewModel.data.mobile_no)
-                obj.put("password", viewModel.data.password)
-                obj.put("user_type", USER_TYPE)
-
+                val obj: JSONObject = JSONObject().apply {
+                    put("vendor_first_name", viewModel.data.vendor_first_name)
+                    put("vendor_last_name", viewModel.data.vendor_last_name)
+                    put("mobile_no", viewModel.data.mobile_no)
+                    put("password", viewModel.data.password)
+                    put("user_type", USER_TYPE)
+                }
                 viewModel.register(view = requireView(), obj)
             }
         }
