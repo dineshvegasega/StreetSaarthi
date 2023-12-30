@@ -13,6 +13,7 @@ import com.streetsaarthi.models.Items
 import com.streetsaarthi.networking.getJsonRequestBody
 import com.google.gson.Gson
 import com.google.gson.JsonElement
+import com.streetsaarthi.MainActivity
 import com.streetsaarthi.datastore.DataStoreKeys.AUTH
 import com.streetsaarthi.datastore.DataStoreKeys.LOGIN_DATA
 import com.streetsaarthi.datastore.DataStoreUtil.saveData
@@ -31,10 +32,6 @@ import javax.inject.Inject
 class LoginPasswordVM @Inject constructor(private val repository: Repository
 ): ViewModel() {
 
-    private var result = MutableLiveData<Items>()
-//    val readResult : LiveData<Items> get() = result
-
-
     fun login(view: View, jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
@@ -46,6 +43,7 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                         saveData(AUTH, response.body()!!.token ?: "")
                         saveObject(LOGIN_DATA, Gson().fromJson(response.body()!!.data, Login::class.java))
                         showSnackBar(response.body()?.message.orEmpty())
+                        MainActivity.mainActivity.get()!!.callBack()
                         view.findNavController().navigate(R.id.action_loginPassword_to_home)
                     }
                 }

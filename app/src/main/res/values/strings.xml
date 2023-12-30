@@ -2,6 +2,7 @@
     <string name="app_name">Street Saarthi</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_image_found">No image found</string>
+    <string name="street_vendor_system">Street Vendor\nSystem</string>
     <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
     <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
 
@@ -273,7 +274,8 @@
 
     <string name="or">OR</string>
     <string name="enterOtpHere">Enter OTP Here</string>
-
+    <string name="logout">Logout</string>
+    <string name="are_your_sure_want_to_logout">Are you sure, You want to Logout?</string>
 
 
     <string name="terms1">Terms and Conditions</string>
