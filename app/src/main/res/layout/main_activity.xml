@@ -106,7 +106,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mainTopHeader"
                     app:layout_constraintBottom_toTopOf="@+id/layout_down"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    tools:listitem="@layout/item_menu"
+                    />
 
 
 
@@ -151,7 +152,7 @@
                         tools:ignore="MissingConstraints"
                         app:fontFamily="@font/roboto_regular"
                         android:text="App Version 1.0"
-                        app:layout_constraintStart_toEndOf="@+id/btSignIn"
+                        app:layout_constraintStart_toEndOf="@+id/btLogout"
                         />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

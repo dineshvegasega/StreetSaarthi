@@ -18,7 +18,7 @@ import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Screen
 import com.demo.networking.Start
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.streetsaarthi.MainActivity
+import com.streetsaarthi.screens.main.MainActivity
 import com.streetsaarthi.databinding.StartBinding
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.ItemLanguageStartBinding

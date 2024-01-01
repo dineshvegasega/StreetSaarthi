@@ -278,13 +278,28 @@ var tabPosition: Int = 0;
                     .addFormDataPart("vending_documents", docs.toString())
                     .addFormDataPart("vending_address", viewModel.data.birth_address!!)
 
+                if(viewModel.data.governmentScheme == true){
+                    var schemeName = StringBuffer()
                     if(viewModel.data.pmSwanidhiScheme == true){
-                        requestBody.addFormDataPart("availed_scheme", getString(R.string.pm_swanidhi_scheme))
+                        schemeName.append(getString(R.string.pm_swanidhi_scheme)+", ")
+                    } else {
+                        schemeName.removePrefix(getString(R.string.pm_swanidhi_scheme)+", ")
                     }
-                    requestBody.addFormDataPart("vending_others", getString(R.string.others_please_name))
-                    if(viewModel.data.othersName == true){
-                        requestBody.addFormDataPart("marketpalce_others", viewModel.data.schemeName!!)
+
+                    if(viewModel.data.otherScheme == true){
+                        schemeName.append(viewModel.data.schemeName)
+                    } else {
+                        schemeName.removePrefix(viewModel.data.schemeName!!)
                     }
+                    requestBody.addFormDataPart("availed_scheme", schemeName.toString())
+                } else {
+
+                }
+
+//                    requestBody.addFormDataPart("vending_others", getString(R.string.others_please_name))
+//                    if(viewModel.data.othersName == true){
+//                        requestBody.addFormDataPart("marketpalce_others", viewModel.data.schemeName!!)
+//                    }
 
                 requestBody.addFormDataPart("mobile_no", viewModel.data.mobile_no!!)
                 requestBody.addFormDataPart("password", viewModel.data.password!!)

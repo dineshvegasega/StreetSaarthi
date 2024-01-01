@@ -141,4 +141,20 @@
         <item name="android:background">@color/white</item>
     </style>
 
+
+    <style name="LogoutDialogTheme"  parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/_E79D46</item>
+        <item name="android:textColorPrimary">@color/_E79D46</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/ButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/ButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/ButtonStyle</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+
 </resources>

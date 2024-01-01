@@ -422,7 +422,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.webPage.WebPage"
+        android:name="com.streetsaarthi.screens.dashboard.webPage.WebPage"
         android:label="WebPage"
         android:id="@+id/webpage"
         tools:layout="@layout/webpage">
@@ -465,7 +465,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.home.Home"
+        android:name="com.streetsaarthi.screens.dashboard.home.Home"
         android:label="Home"
         android:id="@+id/home"
         tools:layout="@layout/home">
@@ -478,8 +478,39 @@
 
 
     <fragment
+        android:name="com.streetsaarthi.screens.dashboard.profiles.Profiles"
+        android:label="Profiles"
+        android:id="@+id/profiles"
+        tools:layout="@layout/profiles">
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.screens.dashboard.notifications.Notifications"
+        android:label="Notifications"
+        android:id="@+id/notifications"
+        tools:layout="@layout/notifications">
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.screens.dashboard.informationCenter.InformationCenter"
+        android:label="InformationCenter"
+        android:id="@+id/informationCenter"
+        tools:layout="@layout/information_center">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.screens.dashboard.settings.Settings"
+        android:label="Settings"
+        android:id="@+id/settings"
+        tools:layout="@layout/settings">
+    </fragment>
+
+
+    <fragment
         android:id="@+id/detail"
-        android:name="com.streetsaarthi.screens.main.details.Detail"
+        android:name="com.streetsaarthi.screens.dashboard.details.Detail"
         android:label="Detail"
         tools:layout="@layout/detail">
 

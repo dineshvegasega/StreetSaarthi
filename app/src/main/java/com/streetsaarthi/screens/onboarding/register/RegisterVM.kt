@@ -506,7 +506,10 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
 
 
         var type_of_marketplace : String ?= null,
+        var marketpalce_others : String ?= null,
         var type_of_vending : String ?= null,
+        var vending_others : String ?= null,
+
         var total_years_of_business : String ?= null,
 
         var open : String ?= null,
@@ -537,7 +540,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
 
         var governmentScheme : Boolean ?= false,
         var pmSwanidhiScheme : Boolean ?= false,
-        var othersName : Boolean ?= false,
+        var otherScheme : Boolean ?= false,
         var schemeName : String ?= null,
 
         var mobile_no : String ?= null,

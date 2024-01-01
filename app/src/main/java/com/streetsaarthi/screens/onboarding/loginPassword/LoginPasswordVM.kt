@@ -1,7 +1,6 @@
 package com.streetsaarthi.screens.onboarding.loginPassword
 
 import android.view.View
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
@@ -9,11 +8,10 @@ import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
 import com.streetsaarthi.R
-import com.streetsaarthi.models.Items
 import com.streetsaarthi.networking.getJsonRequestBody
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import com.streetsaarthi.MainActivity
+import com.streetsaarthi.screens.main.MainActivity
 import com.streetsaarthi.datastore.DataStoreKeys.AUTH
 import com.streetsaarthi.datastore.DataStoreKeys.LOGIN_DATA
 import com.streetsaarthi.datastore.DataStoreUtil.saveData

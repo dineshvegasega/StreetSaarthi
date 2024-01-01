@@ -456,6 +456,11 @@ class Register2  : Fragment() , CallBackListener {
             .setItems(list) {_,which->
                 binding.editTextTypeofMarketPlace.setText(list[which])
                 viewModel.marketplaceId =  viewModel.itemMarketplace[which].marketplace_id
+                if(viewModel.marketplaceId == 7){
+                    binding.editTextTypeofMarketPlaceEnter.visibility = View.VISIBLE
+                } else {
+                    binding.editTextTypeofMarketPlaceEnter.visibility = View.GONE
+                }
             }.show()
     }
 
@@ -471,6 +476,11 @@ class Register2  : Fragment() , CallBackListener {
             .setItems(list) {_,which->
                 binding.editTextTypeofVending.setText(list[which])
                 viewModel.vendingId =  viewModel.itemVending[which].vending_id
+                if(viewModel.vendingId == 11){
+                    binding.editTextTypeofVendingEnter.visibility = View.VISIBLE
+                } else {
+                    binding.editTextTypeofVendingEnter.visibility = View.GONE
+                }
             }.show()
     }
 
@@ -655,8 +665,12 @@ class Register2  : Fragment() , CallBackListener {
             if (pos == 3) {
                 if(editTextTypeofMarketPlace.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.type_of_market_place))
+                } else if(viewModel.marketplaceId == 7 && editTextTypeofMarketPlaceEnter.text.toString().isEmpty()){
+                    showSnackBar(getString(R.string.enter_market_place))
                 } else if (editTextTypeofVending.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.type_of_vending))
+                } else if(viewModel.vendingId == 11 && editTextTypeofVendingEnter.text.toString().isEmpty()){
+                    showSnackBar(getString(R.string.enter_vending))
                 } else if (editTextTotalYearsofVending.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.total_years_of_vending))
                 } else if (editTextVendingTimeOpen.text.toString().isEmpty()){
@@ -675,7 +689,10 @@ class Register2  : Fragment() , CallBackListener {
                     showSnackBar(getString(R.string.upload_shop_image))
                 } else {
                     viewModel.data.type_of_marketplace = viewModel.marketplaceId.toString()
+                    viewModel.data.marketpalce_others = editTextTypeofMarketPlaceEnter.text.toString()
                     viewModel.data.type_of_vending = viewModel.vendingId.toString()
+                    viewModel.data.vending_others = editTextTypeofVendingEnter.text.toString()
+
                     viewModel.data.total_years_of_business = editTextTotalYearsofVending.text.toString()
                     viewModel.data.birth_state = ""+viewModel.stateIdCurrent
                     viewModel.data.birth_district = ""+viewModel.districtIdCurrent
@@ -692,14 +709,28 @@ class Register2  : Fragment() , CallBackListener {
 
                     viewModel.data.governmentScheme = viewModel.governmentScheme
                     viewModel.data.pmSwanidhiScheme = binding.inclideGovernment.cbRememberPMSwanidhiScheme.isChecked
-                    viewModel.data.othersName = binding.inclideGovernment.cbRememberOthersPleaseName.isChecked
+                    viewModel.data.otherScheme = binding.inclideGovernment.cbRememberOthersPleaseName.isChecked
                     viewModel.data.schemeName = binding.inclideGovernment.editTextSchemeName.text.toString()
-                    Log.e("TAG", "viewModel.dataB "+viewModel.data.toString())
 
-                    Register.callBackListener!!.onCallBack(4)
+                    if (viewModel.data.governmentScheme == true){
+                        if (viewModel.data.otherScheme == true && binding.inclideGovernment.editTextSchemeName.text.toString().isEmpty()){
+                            showSnackBar(getString(R.string.scheme_name))
+                        } else {
+                            Register.callBackListener!!.onCallBack(4)
+                        }
+                    } else {
+                        Register.callBackListener!!.onCallBack(4)
+                    }
+
                 }
 
             }
+
+
+
+
+
+
         }
     }
 }

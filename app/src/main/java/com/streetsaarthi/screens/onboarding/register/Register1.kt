@@ -378,6 +378,7 @@ class Register1  : Fragment() , CallBackListener {
     override fun onCallBack(pos: Int) {
         Log.e("TAG", "onCallBackA " + pos)
         binding.apply {
+//            Register.callBackListener!!.onCallBack(2)
             if( pos == 1) {
                 if(editTextFN.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.first_name))

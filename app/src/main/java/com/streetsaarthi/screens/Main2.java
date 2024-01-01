@@ -1,16 +1,9 @@
 package com.streetsaarthi.screens;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.streetsaarthi.R;
-import com.streetsaarthi.utils.CustomTimePickerDialog;
-
-import java.util.Calendar;
 
 public class Main2 extends AppCompatActivity {
 

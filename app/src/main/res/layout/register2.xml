@@ -72,6 +72,18 @@
                 />
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTypeofMarketPlaceEnter"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                style="@style/PrimaryEditText"
+                android:hint="@string/enter_market_place"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofMarketPlace"
+                android:visibility="gone"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextTypeofVending"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -79,9 +91,21 @@
                 android:hint="@string/type_of_vending"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:text=""
-                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofMarketPlace"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofMarketPlaceEnter"
                 android:focusable="false"
                 android:drawableEnd="@drawable/ic_down_arrow"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTypeofVendingEnter"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                style="@style/PrimaryEditText"
+                android:hint="@string/enter_vending"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofVending"
+                android:visibility="gone"
                 />
 
 
@@ -92,10 +116,13 @@
                 style="@style/PrimaryEditText"
                 android:hint="@string/total_years_of_vending"
                 android:text=""
-                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofVending"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofVendingEnter"
                 android:focusable="false"
                 android:drawableEnd="@drawable/ic_down_arrow"
                 />
+
+
+
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextVendingTime"

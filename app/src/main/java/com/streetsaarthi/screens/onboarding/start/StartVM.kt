@@ -4,7 +4,7 @@ import android.os.Build
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.demo.networking.Repository
-import com.streetsaarthi.MainActivity
+import com.streetsaarthi.screens.main.MainActivity
 import com.streetsaarthi.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale
@@ -14,14 +14,15 @@ import javax.inject.Inject
 class StartVM @Inject constructor(private val repository: Repository): ViewModel() {
 
     var itemMain : ArrayList<Item> ?= ArrayList()
-    val locale: Locale
+    val locale: Locale = MainActivity.context.get()!!.resources.configuration.locales[0]
+
     init {
-        locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            MainActivity.context.get()!!.resources.configuration.locales[0]
-        } else {
-            MainActivity.context.get()!!.resources.configuration.locale
-        }
-        Log.e("TAG", "getLanguage "+ locale)
+//        locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            MainActivity.context.get()!!.resources.configuration.locales[0]
+//        } else {
+//            MainActivity.context.get()!!.resources.configuration.locale
+//        }
+//        Log.e("TAG", "getLanguage "+ locale)
         if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""+locale){
             itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.english), MainActivity.context.get()!!.getString(R.string.englishVal),true))
         }else{

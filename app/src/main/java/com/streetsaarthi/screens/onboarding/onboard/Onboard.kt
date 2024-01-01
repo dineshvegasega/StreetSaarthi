@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.OnboardBinding
 import com.streetsaarthi.models.Item
-import com.streetsaarthi.screens.main.home.HomeVM
+import com.streetsaarthi.screens.dashboard.home.HomeVM
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

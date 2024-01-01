@@ -3,15 +3,13 @@ package com.streetsaarthi.screens.onboarding.walkThrough
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
-import androidx.navigation.findNavController
 import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Repository
-import com.streetsaarthi.MainActivity
+import com.streetsaarthi.screens.main.MainActivity
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.OnboardItemBinding
 import com.streetsaarthi.databinding.WalkThroughItemBinding
 import com.streetsaarthi.screens.onboarding.onboard.Onboard
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

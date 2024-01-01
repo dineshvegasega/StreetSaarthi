@@ -1,25 +1,20 @@
 package com.streetsaarthi.screens.onboarding.onboard
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.CompleteRegister
-import com.demo.networking.LoginOtp
-import com.demo.networking.LoginPassword
-import com.demo.networking.QuickRegister
 import com.demo.networking.Repository
 import com.demo.networking.Screen
-import com.streetsaarthi.MainActivity
+import com.streetsaarthi.screens.main.MainActivity
 import com.streetsaarthi.R
-import com.streetsaarthi.databinding.ListItemBinding
-import com.streetsaarthi.databinding.OnboardBinding
 import com.streetsaarthi.databinding.OnboardItemBinding
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -87,6 +82,7 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
             viewType: Int
         ) = OnboardItemBinding.inflate(inflater, parent, false)
 
+        @SuppressLint("NotifyDataSetChanged")
         override fun onBindHolder(binding: OnboardItemBinding, dataClass: Onboard.Item, position: Int) {
             binding.txtTitle.text = dataClass.name
             Picasso.get().load(
@@ -121,15 +117,9 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
                     clickEvent.value = true
                 }
                 notifyDataSetChanged()
-
-//                when(position) {
-//                    0 -> it.findNavController().navigate(R.id.action_onboard_to_quickRegistration)
-//                    1 -> it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
-//                    2 -> it.findNavController().navigate(R.id.action_onboard_to_loginOtp)
-//                    3 -> it.findNavController().navigate(R.id.action_onboard_to_completeRegistration)
-//                    4 -> it.findNavController().navigate(R.id.action_onboard_to_completeRegistration)
-//                }
             }
         }
     }
+
+
 }
