@@ -357,18 +357,6 @@
 
 
 
-    <fragment
-        android:name="com.streetsaarthi.screens.onboarding.resetPassword.ResetPassword"
-        android:label="ResetPassword"
-        android:id="@+id/resetPassword"
-        tools:layout="@layout/reset_password">
-        <action
-            android:id="@+id/action_resetPassword_to_webPage"
-            app:destination="@id/webpage"
-            app:launchSingleTop="true"
-            />
-    </fragment>
-
 
     <fragment
         android:name="com.streetsaarthi.screens.onboarding.register.Register"
@@ -402,23 +390,6 @@
 
 
 
-    <fragment
-        android:name="com.streetsaarthi.screens.onboarding.completeRegistration.CompleteRegistration"
-        android:label="CompleteRegistration"
-        android:id="@+id/completeRegistration"
-        tools:layout="@layout/complete_registration">
-        <action
-            android:id="@+id/action_completeRegistration_to_webPage"
-            app:destination="@id/webpage"
-            app:launchSingleTop="true"
-            />
-
-        <action
-            android:id="@+id/action_completeRegistration_to_termsPrivacy"
-            app:destination="@id/termsPrivacy"
-            app:launchSingleTop="true"
-            />
-    </fragment>
 
 
     <fragment
