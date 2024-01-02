@@ -273,7 +273,12 @@
 
     <string name="or">ਜਾਂ</string>
     <string name = "enterOtpHere"> OTP ਇੱਥੇ ਦਾਖਲ ਕਰੋ</string>
-
+    <string name="img_description">ਇਹ ਇੱਕ ਚਿੱਤਰ ਹੈ</string>
+    <string name="logout">ਲੌਗਆਊਟ</string>
+    <string name="are_your_sure_want_to_logout">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਹੋ, ਤੁਸੀਂ ਲੌਗਆਊਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="enter_market_place">ਮਾਰਕੀਟ ਪਲੇਸ ਵਿੱਚ ਦਾਖਲ ਹੋਵੋ</string>
+    <string name="enter_vending">ਵੇਂਡਿੰਗ ਦਾਖਲ ਕਰੋ</string>
+    <string name="select_scheme">ਸਕੀਮ ਚੁਣੋ</string>
 
 
 </resources>

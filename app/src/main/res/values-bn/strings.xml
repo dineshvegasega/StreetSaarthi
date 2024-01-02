@@ -275,6 +275,11 @@
 
     <string name="or">বা</string>
     <string name="enterOtpHere">এখানে OTP লিখুন</string>
-
+    <string name="img_description">এটি একটি ছবি</string>
+    <string name="logout">লগআউট</string>
+    <string name="are_your_sure_want_to_logout">আপনি কি নিশ্চিত, আপনি লগআউট করতে চান?</string>
+    <string name = "enter_market_place"> মার্কেট প্লেসে প্রবেশ করুন</string>
+    <string name="enter_vending">ভেন্ডিং এন্টার করুন</string>
+    <string name = "select_scheme"> স্কিম নির্বাচন করুন</string>
 
 </resources>

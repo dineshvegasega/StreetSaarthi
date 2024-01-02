@@ -38,28 +38,29 @@ class Register2  : Fragment() , CallBackListener {
     private val viewModel: RegisterVM by activityViewModels()
 
     companion object {
-        var TAG="Register2"
-        private val REQUIRED_GALLERY_PERMISSIONS=
+        var TAG = "Register2"
+        private val REQUIRED_GALLERY_PERMISSIONS =
             arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
             )
-        private const val CAPTURE_IMAGE_REQUEST=1001
-        private const val GALLERY_IMAGE_REQUEST=1002
-        private const val GALLERY_PERMISSION_REQUEST=1004
-        private const val SELECT_ADDRESS_REQUEST_CODE=1003
-        private const val REQUEST_CODE_PERMISSIONS=1002
-        private val REQUIRED_PERMISSIONS=arrayOf(Manifest.permission.CAMERA)
+        private const val CAPTURE_IMAGE_REQUEST = 1001
+        private const val GALLERY_IMAGE_REQUEST = 1002
+        private const val GALLERY_PERMISSION_REQUEST = 1004
+        private const val SELECT_ADDRESS_REQUEST_CODE = 1003
+        private const val REQUEST_CODE_PERMISSIONS = 1002
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
         var callBackListener: CallBackListener? = null
     }
 
     var imagePosition = 0
-    private var pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) {
-            Log.e("PhotoPicker", "Selected URI: $uri")
-            //  binding.imageUploadpassportsizeImage.loadImage(url = {  requireContext().getMediaFilePathFor(uri) })
+    private var pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                Log.e("PhotoPicker", "Selected URI: $uri")
+                //  binding.imageUploadpassportsizeImage.loadImage(url = {  requireContext().getMediaFilePathFor(uri) })
                 when (imagePosition) {
                     11 -> {
                         Log.e("TakePicture", "Selected URI1: $imagePosition $uri")
@@ -67,56 +68,64 @@ class Register2  : Fragment() , CallBackListener {
                         viewModel.data.ShopImage = requireContext().getMediaFilePathFor(uri)
                         binding.textViewlayoutShopImage.setText(File(viewModel.data.ShopImage!!).name)
                     }
+
                     1 -> {
                         Log.e("TakePicture", "Selected URI1: $imagePosition $uri")
-                       // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
+                        // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
                         viewModel.data.ImageUploadCOV = requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewImageUploadCOV.setText(File(viewModel.data.ImageUploadCOV!!).name)
                     }
+
                     2 -> {
                         Log.e("TakePicture", "Selected URI2: $imagePosition $uri")
-                      //  binding.inclideDocuments.cbRememberImageUploadLOR.isChecked = true
+                        //  binding.inclideDocuments.cbRememberImageUploadLOR.isChecked = true
                         viewModel.data.ImageUploadLOR = requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewImageUploadLOR.setText(File(viewModel.data.ImageUploadLOR!!).name)
                     }
+
                     3 -> {
                         Log.e("TakePicture", "Selected URI3: $imagePosition $uri")
-                      //  binding.inclideDocuments.cbRememberUploadSurveyReceipt.isChecked = true
-                        viewModel.data.UploadSurveyReceipt = requireContext().getMediaFilePathFor(uri)
+                        //  binding.inclideDocuments.cbRememberUploadSurveyReceipt.isChecked = true
+                        viewModel.data.UploadSurveyReceipt =
+                            requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewUploadSurveyReceipt.setText(File(viewModel.data.UploadSurveyReceipt!!).name)
                     }
+
                     4 -> {
                         Log.e("TakePicture", "Selected URI4: $imagePosition $uri")
-                       // binding.inclideDocuments.cbRememberUploadChallan.isChecked = true
+                        // binding.inclideDocuments.cbRememberUploadChallan.isChecked = true
                         viewModel.data.UploadChallan = requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewUploadChallan.setText(File(viewModel.data.UploadChallan!!).name)
                     }
+
                     5 -> {
                         Log.e("TakePicture", "Selected URI5: $imagePosition $uri")
-                       // binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked = true
-                        viewModel.data.UploadApprovalLetter = requireContext().getMediaFilePathFor(uri)
+                        // binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked = true
+                        viewModel.data.UploadApprovalLetter =
+                            requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewUploadApprovalLetter.setText(File(viewModel.data.UploadApprovalLetter!!).name)
                     }
                 }
-        } else {
-            Log.e("PhotoPicker", "No media selected")
+            } else {
+                Log.e("PhotoPicker", "No media selected")
+            }
         }
-    }
 
 
-
-
-
-    var uriReal : Uri ?= null
+    var uriReal: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val directory = File(requireContext().filesDir, "camera_images")
-        if(!directory.exists()){
+        if (!directory.exists()) {
             directory.mkdirs()
         }
-        val file = File(directory,"${Calendar.getInstance().timeInMillis}.png")
-        uriReal = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", file)
+        val file = File(directory, "${Calendar.getInstance().timeInMillis}.png")
+        uriReal = FileProvider.getUriForFile(
+            requireContext(),
+            requireContext().getPackageName() + ".provider",
+            file
+        )
     }
 
 
@@ -131,34 +140,41 @@ class Register2  : Fragment() , CallBackListener {
                     viewModel.data.ShopImage = requireContext().getMediaFilePathFor(uriReal!!)
                     binding.textViewlayoutShopImage.setText(File(viewModel.data.ShopImage!!).name)
                 }
+
                 1 -> {
                     Log.e("TakePicture", "Selected URI1: $imagePosition $uri")
-                   // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
+                    // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
                     viewModel.data.ImageUploadCOV = requireContext().getMediaFilePathFor(uriReal!!)
                     binding.inclideDocuments.textViewImageUploadCOV.setText(File(viewModel.data.ImageUploadCOV!!).name)
                 }
+
                 2 -> {
                     Log.e("TakePicture", "Selected URI2: $imagePosition $uri")
-                   // binding.inclideDocuments.cbRememberImageUploadLOR.isChecked = true
+                    // binding.inclideDocuments.cbRememberImageUploadLOR.isChecked = true
                     viewModel.data.ImageUploadLOR = requireContext().getMediaFilePathFor(uriReal!!)
                     binding.inclideDocuments.textViewImageUploadLOR.setText(File(viewModel.data.ImageUploadLOR!!).name)
                 }
+
                 3 -> {
                     Log.e("TakePicture", "Selected URI3: $imagePosition $uri")
-                   // binding.inclideDocuments.cbRememberUploadSurveyReceipt.isChecked = true
-                    viewModel.data.UploadSurveyReceipt = requireContext().getMediaFilePathFor(uriReal!!)
+                    // binding.inclideDocuments.cbRememberUploadSurveyReceipt.isChecked = true
+                    viewModel.data.UploadSurveyReceipt =
+                        requireContext().getMediaFilePathFor(uriReal!!)
                     binding.inclideDocuments.textViewUploadSurveyReceipt.setText(File(viewModel.data.UploadSurveyReceipt!!).name)
                 }
+
                 4 -> {
                     Log.e("TakePicture", "Selected URI4: $imagePosition $uri")
-                   // binding.inclideDocuments.cbRememberUploadChallan.isChecked = true
+                    // binding.inclideDocuments.cbRememberUploadChallan.isChecked = true
                     viewModel.data.UploadChallan = requireContext().getMediaFilePathFor(uriReal!!)
                     binding.inclideDocuments.textViewUploadChallan.setText(File(viewModel.data.UploadChallan!!).name)
                 }
+
                 5 -> {
                     Log.e("TakePicture", "Selected URI5: $imagePosition $uri")
-                   // binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked = true
-                    viewModel.data.UploadApprovalLetter = requireContext().getMediaFilePathFor(uriReal!!)
+                    // binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked = true
+                    viewModel.data.UploadApprovalLetter =
+                        requireContext().getMediaFilePathFor(uriReal!!)
                     binding.inclideDocuments.textViewUploadApprovalLetter.setText(File(viewModel.data.UploadApprovalLetter!!).name)
                 }
             }
@@ -373,7 +389,6 @@ class Register2  : Fragment() , CallBackListener {
 //    }
 
 
-
 //    private fun checkPremissions() {
 //        when {
 //            PermissionUtils.isEnabled( requireContext()) -> {
@@ -395,14 +410,14 @@ class Register2  : Fragment() , CallBackListener {
 //    }
 
 
-    private fun showOptions() =try {
-        val dialogView=layoutInflater.inflate(R.layout.dialog_choose_image_option,null)
-        val btnCancel=dialogView.findViewById<AppCompatButton>(R.id.btnCancel)
-        val tvPhotos=dialogView.findViewById<AppCompatTextView>(R.id.tvPhotos)
-        val tvPhotosDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvPhotosDesc)
-        val tvCamera=dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
-        val tvCameraDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
-        val dialog=BottomSheetDialog(requireContext(),R.style.TransparentDialog)
+    private fun showOptions() = try {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_choose_image_option, null)
+        val btnCancel = dialogView.findViewById<AppCompatButton>(R.id.btnCancel)
+        val tvPhotos = dialogView.findViewById<AppCompatTextView>(R.id.tvPhotos)
+        val tvPhotosDesc = dialogView.findViewById<AppCompatTextView>(R.id.tvPhotosDesc)
+        val tvCamera = dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
+        val tvCameraDesc = dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
+        val dialog = BottomSheetDialog(requireContext(), R.style.TransparentDialog)
         btnCancel.setOnClickListener {
             dialog.dismiss()
         }
@@ -427,21 +442,20 @@ class Register2  : Fragment() , CallBackListener {
         dialog.show()
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG","errorD " + e.message)
+        Log.e("TAG", "errorD " + e.message)
     }
 
     private fun forCamera() {
-        requireActivity().runOnUiThread(){
+        requireActivity().runOnUiThread() {
             captureMedia.launch(uriReal)
         }
     }
 
     private fun forGallery() {
-        requireActivity().runOnUiThread(){
+        requireActivity().runOnUiThread() {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
-
 
 
     private fun showDropDownMarketPlaceDialog() {
@@ -453,10 +467,10 @@ class Register2  : Fragment() , CallBackListener {
         }
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
             .setTitle(resources.getString(R.string.type_of_market_place))
-            .setItems(list) {_,which->
+            .setItems(list) { _, which ->
                 binding.editTextTypeofMarketPlace.setText(list[which])
-                viewModel.marketplaceId =  viewModel.itemMarketplace[which].marketplace_id
-                if(viewModel.marketplaceId == 7){
+                viewModel.marketplaceId = viewModel.itemMarketplace[which].marketplace_id
+                if (viewModel.marketplaceId == 7) {
                     binding.editTextTypeofMarketPlaceEnter.visibility = View.VISIBLE
                 } else {
                     binding.editTextTypeofMarketPlaceEnter.visibility = View.GONE
@@ -473,10 +487,10 @@ class Register2  : Fragment() , CallBackListener {
         }
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
             .setTitle(resources.getString(R.string.type_of_vending))
-            .setItems(list) {_,which->
+            .setItems(list) { _, which ->
                 binding.editTextTypeofVending.setText(list[which])
-                viewModel.vendingId =  viewModel.itemVending[which].vending_id
-                if(viewModel.vendingId == 11){
+                viewModel.vendingId = viewModel.itemVending[which].vending_id
+                if (viewModel.vendingId == 11) {
                     binding.editTextTypeofVendingEnter.visibility = View.VISIBLE
                 } else {
                     binding.editTextTypeofVendingEnter.visibility = View.GONE
@@ -485,13 +499,11 @@ class Register2  : Fragment() , CallBackListener {
     }
 
 
-
-
     private fun showDropDownYearsDialog() {
-        val list=resources.getStringArray(R.array.years_array)
+        val list = resources.getStringArray(R.array.years_array)
         MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
             .setTitle(resources.getString(R.string.total_years_of_vending))
-            .setItems(list) {_,which->
+            .setItems(list) { _, which ->
                 binding.editTextTotalYearsofVending.setText(list[which])
 //                editProfileVM.gender.value = list[which]
             }.show()
@@ -503,28 +515,39 @@ class Register2  : Fragment() , CallBackListener {
         val mcurrentTime = Calendar.getInstance()
         val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
         val minute = mcurrentTime.get(Calendar.MINUTE)
-        mTimePicker = TimePickerDialog(requireContext(), R.style.TimeDialogTheme,object : TimePickerDialog.OnTimeSetListener {
-            override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                val datetime = Calendar.getInstance()
-                datetime[Calendar.HOUR_OF_DAY] = hourOfDay
-                datetime[Calendar.MINUTE] = minute
-                val strHrsToShow =
-                    if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
-                        datetime.get(Calendar.HOUR)
+        mTimePicker = TimePickerDialog(
+            requireContext(),
+            R.style.TimeDialogTheme,
+            object : TimePickerDialog.OnTimeSetListener {
+                override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                    val datetime = Calendar.getInstance()
+                    datetime[Calendar.HOUR_OF_DAY] = hourOfDay
+                    datetime[Calendar.MINUTE] = minute
+                    val strHrsToShow =
+                        if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
+                            datetime.get(Calendar.HOUR)
+                        )
+                    var am_pm = ""
+                    if (datetime.get(Calendar.AM_PM) == Calendar.AM)
+                        am_pm = "AM";
+                    else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
+                        am_pm = "PM";
+                    binding.editTextVendingTimeOpen.setText(
+                        strHrsToShow + ":" + datetime.get(
+                            Calendar.MINUTE
+                        ) + " " + am_pm
                     )
-                var am_pm = ""
-                if (datetime.get(Calendar.AM_PM) == Calendar.AM)
-                    am_pm = "AM";
-                else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
-                    am_pm = "PM";
-                binding.editTextVendingTimeOpen.setText(strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm)
-                //viewModel.data.open = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
-                viewModel.data.open = ""+hourOfDay+":"+minute+":00"
-                // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
-              //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
-                Log.e("TAG", "AAAA "+ viewModel.data.open)
-            }
-        }, hour, minute, false)
+                    //viewModel.data.open = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
+                    viewModel.data.open = "" + hourOfDay + ":" + minute + ":00"
+                    // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
+                    //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
+                    Log.e("TAG", "AAAA " + viewModel.data.open)
+                }
+            },
+            hour,
+            minute,
+            false
+        )
         mTimePicker.show()
 
 
@@ -564,31 +587,40 @@ class Register2  : Fragment() , CallBackListener {
         val mcurrentTime = Calendar.getInstance()
         val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
         val minute = mcurrentTime.get(Calendar.MINUTE)
-        mTimePicker = TimePickerDialog(requireContext(), R.style.TimeDialogTheme, object : TimePickerDialog.OnTimeSetListener {
-            override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                val datetime = Calendar.getInstance()
-                datetime[Calendar.HOUR_OF_DAY] = hourOfDay
-                datetime[Calendar.MINUTE] = minute
-                val strHrsToShow =
-                    if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
-                        datetime.get(Calendar.HOUR)
+        mTimePicker = TimePickerDialog(
+            requireContext(),
+            R.style.TimeDialogTheme,
+            object : TimePickerDialog.OnTimeSetListener {
+                override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                    val datetime = Calendar.getInstance()
+                    datetime[Calendar.HOUR_OF_DAY] = hourOfDay
+                    datetime[Calendar.MINUTE] = minute
+                    val strHrsToShow =
+                        if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
+                            datetime.get(Calendar.HOUR)
+                        )
+                    var am_pm = ""
+                    if (datetime.get(Calendar.AM_PM) == Calendar.AM)
+                        am_pm = "AM";
+                    else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
+                        am_pm = "PM";
+                    binding.editTextVendingTimeClose.setText(
+                        strHrsToShow + ":" + datetime.get(
+                            Calendar.MINUTE
+                        ) + " " + am_pm
                     )
-                var am_pm = ""
-                if (datetime.get(Calendar.AM_PM) == Calendar.AM)
-                    am_pm = "AM";
-                else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
-                    am_pm = "PM";
-                binding.editTextVendingTimeClose.setText(strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm)
-               // viewModel.data.close = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
-                viewModel.data.close = ""+hourOfDay+":"+minute+":00"
-                // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
-                //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
-            }
-        }, hour, minute, false)
+                    // viewModel.data.close = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
+                    viewModel.data.close = "" + hourOfDay + ":" + minute + ":00"
+                    // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
+                    //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
+                }
+            },
+            hour,
+            minute,
+            false
+        )
         mTimePicker.show()
     }
-
-
 
 
     private fun showDropDownStateDialog() {
@@ -600,9 +632,9 @@ class Register2  : Fragment() , CallBackListener {
         }
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
             .setTitle(resources.getString(R.string.select_state))
-            .setItems(list) {_,which->
+            .setItems(list) { _, which ->
                 binding.editTextSelectState.setText(list[which])
-                viewModel.stateIdCurrent =  viewModel.itemStateCurrent[which].id
+                viewModel.stateIdCurrent = viewModel.itemStateCurrent[which].id
                 view?.let { viewModel.districtCurrent(it, viewModel.stateIdCurrent) }
                 view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdCurrent) }
             }.show()
@@ -618,9 +650,9 @@ class Register2  : Fragment() , CallBackListener {
         }
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
             .setTitle(resources.getString(R.string.select_district))
-            .setItems(list) {_,which->
+            .setItems(list) { _, which ->
                 binding.editTextSelectDistrict.setText(list[which])
-                viewModel.districtIdCurrent =  viewModel.itemDistrictCurrent[which].id
+                viewModel.districtIdCurrent = viewModel.itemDistrictCurrent[which].id
                 view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdCurrent) }
             }.show()
     }
@@ -635,9 +667,9 @@ class Register2  : Fragment() , CallBackListener {
         }
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
             .setTitle(resources.getString(R.string.municipality_panchayat))
-            .setItems(list) {_,which->
+            .setItems(list) { _, which ->
                 binding.editTextMunicipalityPanchayat.setText(list[which])
-                viewModel.panchayatIdCurrent =  viewModel.itemPanchayatCurrent[which].id
+                viewModel.panchayatIdCurrent = viewModel.itemPanchayatCurrent[which].id
             }.show()
     }
 
@@ -651,86 +683,106 @@ class Register2  : Fragment() , CallBackListener {
         }
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
             .setTitle(resources.getString(R.string.select_pincode))
-            .setItems(list) {_,which->
+            .setItems(list) { _, which ->
                 binding.editTextSelectPincode.setText(list[which])
-                viewModel.pincodeIdCurrent =  viewModel.itemPincodeCurrent[which].id
+//                viewModel.pincodeIdCurrent = viewModel.itemPincodeCurrent[which].id
+                viewModel.pincodeIdCurrent = binding.editTextSelectPincode.text.toString().toInt()
             }.show()
     }
-
 
 
     override fun onCallBack(pos: Int) {
         Log.e("TAG", "onCallBackB " + pos)
         binding.apply {
             if (pos == 3) {
-                if(editTextTypeofMarketPlace.text.toString().isEmpty()){
+                if (editTextTypeofMarketPlace.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.type_of_market_place))
-                } else if(viewModel.marketplaceId == 7 && editTextTypeofMarketPlaceEnter.text.toString().isEmpty()){
+                } else if (viewModel.marketplaceId == 7 && editTextTypeofMarketPlaceEnter.text.toString()
+                        .isEmpty()
+                ) {
                     showSnackBar(getString(R.string.enter_market_place))
-                } else if (editTextTypeofVending.text.toString().isEmpty()){
+                } else if (editTextTypeofVending.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.type_of_vending))
-                } else if(viewModel.vendingId == 11 && editTextTypeofVendingEnter.text.toString().isEmpty()){
+                } else if (viewModel.vendingId == 11 && editTextTypeofVendingEnter.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.enter_vending))
-                } else if (editTextTotalYearsofVending.text.toString().isEmpty()){
+                } else if (editTextTotalYearsofVending.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.total_years_of_vending))
-                } else if (editTextVendingTimeOpen.text.toString().isEmpty()){
+                } else if (editTextVendingTimeOpen.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.open_time))
-                } else if (editTextVendingTimeClose.text.toString().isEmpty()){
+                } else if (editTextVendingTimeClose.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.close_time))
-                } else if (!(viewModel.stateIdCurrent > 0)){
+                } else if (!(viewModel.stateIdCurrent > 0)) {
                     showSnackBar(getString(R.string.select_state))
-                } else if (!(viewModel.districtIdCurrent > 0)){
+                } else if (!(viewModel.districtIdCurrent > 0)) {
                     showSnackBar(getString(R.string.select_district))
-                } else if (!(viewModel.panchayatIdCurrent > 0)){
+                } else if (!(viewModel.panchayatIdCurrent > 0)) {
                     showSnackBar(getString(R.string.municipality_panchayat))
-                } else if (editTextAddress.text.toString().isEmpty()){
+                } else if (editTextAddress.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.address_mention_village))
-                } else if (viewModel.data.ShopImage == null){
+                } else if (viewModel.data.ShopImage == null) {
                     showSnackBar(getString(R.string.upload_shop_image))
                 } else {
-                    viewModel.data.type_of_marketplace = viewModel.marketplaceId.toString()
-                    viewModel.data.marketpalce_others = editTextTypeofMarketPlaceEnter.text.toString()
-                    viewModel.data.type_of_vending = viewModel.vendingId.toString()
-                    viewModel.data.vending_others = editTextTypeofVendingEnter.text.toString()
-
-                    viewModel.data.total_years_of_business = editTextTotalYearsofVending.text.toString()
-                    viewModel.data.birth_state = ""+viewModel.stateIdCurrent
-                    viewModel.data.birth_district = ""+viewModel.districtIdCurrent
-                    viewModel.data.municipality_panchayat_birth = ""+viewModel.panchayatIdCurrent
-                    viewModel.data.birth_pincode = ""+viewModel.pincodeIdCurrent
-                    viewModel.data.birth_address = ""+editTextAddress.text.toString()
-
-                    viewModel.data.documentDetails = viewModel.documentDetails
-                    viewModel.data.ImageUploadCOVBoolean = binding.inclideDocuments.cbRememberImageUploadCOV.isChecked
-                    viewModel.data.ImageUploadLORBoolean = binding.inclideDocuments.cbRememberImageUploadLOR.isChecked
-                    viewModel.data.UploadSurveyReceiptBoolean = binding.inclideDocuments.cbRememberUploadSurveyReceipt.isChecked
-                    viewModel.data.UploadChallanBoolean = binding.inclideDocuments.cbRememberUploadChallan.isChecked
-                    viewModel.data.UploadApprovalLetterBoolean = binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked
-
-                    viewModel.data.governmentScheme = viewModel.governmentScheme
-                    viewModel.data.pmSwanidhiScheme = binding.inclideGovernment.cbRememberPMSwanidhiScheme.isChecked
-                    viewModel.data.otherScheme = binding.inclideGovernment.cbRememberOthersPleaseName.isChecked
-                    viewModel.data.schemeName = binding.inclideGovernment.editTextSchemeName.text.toString()
-
-                    if (viewModel.data.governmentScheme == true){
-                        if (viewModel.data.otherScheme == true && binding.inclideGovernment.editTextSchemeName.text.toString().isEmpty()){
-                            showSnackBar(getString(R.string.scheme_name))
+                    val schemeName = StringBuffer()
+                    if(binding.ivRdGovernmentYes.isChecked == true && binding.ivRdGovernmentNo.isChecked == false){
+                        //Log.e(TAG, "schemeNameAA ")
+                        viewModel.data.governmentScheme = binding.ivRdGovernmentYes.isChecked
+                        if(binding.inclideGovernment.cbRememberPMSwanidhiScheme.isChecked == true || binding.inclideGovernment.cbRememberOthersPleaseName.isChecked == true){
+                            if(binding.inclideGovernment.cbRememberOthersPleaseName.isChecked == true && binding.inclideGovernment.editTextSchemeName.text.toString().isEmpty()){
+                                showSnackBar(getString(R.string.scheme_name))
+                            }else{
+                                Log.e(TAG, "schemeNameAA22 ")
+                                if(binding.inclideGovernment.cbRememberPMSwanidhiScheme.isChecked == true){
+                                    schemeName.append(getString(R.string.pm_swanidhi_scheme)+", ")
+                                }
+                                if(binding.inclideGovernment.cbRememberOthersPleaseName.isChecked == true){
+                                    schemeName.append(binding.inclideGovernment.editTextSchemeName.text.toString())
+                                }
+                                viewModel.data.schemeName = schemeName.toString()
+                                setAddData()
+                            }
                         } else {
-                            Register.callBackListener!!.onCallBack(4)
+                            showSnackBar(getString(R.string.select_scheme))
                         }
-                    } else {
-                        Register.callBackListener!!.onCallBack(4)
+                    } else if(binding.ivRdGovernmentYes.isChecked == false && binding.ivRdGovernmentNo.isChecked == true){
+                        Log.e(TAG, "schemeNameBB ")
+                        viewModel.data.governmentScheme = binding.ivRdGovernmentYes.isChecked
+                        viewModel.data.schemeName = ""
+                        setAddData()
                     }
-
+                    Log.e(TAG, "schemeNameCC " + schemeName.toString())
                 }
-
             }
-
-
-
-
-
-
         }
     }
+
+    private fun setAddData() {
+        binding.apply {
+            viewModel.data.type_of_marketplace = viewModel.marketplaceId.toString()
+            viewModel.data.marketpalce_others = editTextTypeofMarketPlaceEnter.text.toString()
+            viewModel.data.type_of_vending = viewModel.vendingId.toString()
+            viewModel.data.vending_others = editTextTypeofVendingEnter.text.toString()
+
+            viewModel.data.total_years_of_business = editTextTotalYearsofVending.text.toString()
+            viewModel.data.birth_state = ""+viewModel.stateIdCurrent
+            viewModel.data.birth_district = ""+viewModel.districtIdCurrent
+            viewModel.data.municipality_panchayat_birth = ""+viewModel.panchayatIdCurrent
+            viewModel.data.birth_pincode = ""+viewModel.pincodeIdCurrent
+            viewModel.data.birth_address = ""+editTextAddress.text.toString()
+
+            viewModel.data.documentDetails = viewModel.documentDetails
+            viewModel.data.ImageUploadCOVBoolean = binding.inclideDocuments.cbRememberImageUploadCOV.isChecked
+            viewModel.data.ImageUploadLORBoolean = binding.inclideDocuments.cbRememberImageUploadLOR.isChecked
+            viewModel.data.UploadSurveyReceiptBoolean = binding.inclideDocuments.cbRememberUploadSurveyReceipt.isChecked
+            viewModel.data.UploadChallanBoolean = binding.inclideDocuments.cbRememberUploadChallan.isChecked
+            viewModel.data.UploadApprovalLetterBoolean = binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked
+
+            viewModel.data.governmentScheme = viewModel.governmentScheme
+            viewModel.data.pmSwanidhiScheme = binding.inclideGovernment.cbRememberPMSwanidhiScheme.isChecked
+            viewModel.data.otherScheme = binding.inclideGovernment.cbRememberOthersPleaseName.isChecked
+
+            Register.callBackListener!!.onCallBack(4)
+        }
+    }
+
+
 }

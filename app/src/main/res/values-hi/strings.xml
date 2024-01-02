@@ -274,6 +274,11 @@
 
     <string name="or">या</string>
     <string name="enterOtpHere">यहां OTP दर्ज करें</string>
-
+    <string name='img_description'>यह एक छवि है</string>
+    <string name='logout'>लॉगआउट</string>
+    <string name='are_your_sure_want_to_logout'>क्या आप निश्चित हैं, आप लॉगआउट करना चाहते हैं?</string>
+    <string name='enter_market_place'>मार्केट प्लेस दर्ज करें</string>
+    <string name='enter_vending'>वेंडिंग दर्ज करें</string>
+    <string name='select_scheme'>योजना चुनें</string>
 
 </resources>

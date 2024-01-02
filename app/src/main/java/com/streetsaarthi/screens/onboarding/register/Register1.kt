@@ -317,7 +317,8 @@ class Register1  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) {_,which->
                 binding.editTextSelectPincode.setText(list[which])
-                viewModel.pincodeId =  viewModel.itemPincode[which].id
+//                viewModel.pincodeId =  viewModel.itemPincode[which].id
+                viewModel.pincodeId = binding.editTextSelectPincode.text.toString().toInt()
             }.show()
     }
 
@@ -398,45 +399,8 @@ class Register1  : Fragment() , CallBackListener {
                     showSnackBar(getString(R.string.education_qualifacation))
                 } else if (editTextMaritalStatus.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.marital_status))
-                } else if (editTextMaritalStatus.text.toString() == getString(R.string.married)){
-                    if (editTextSpouseName.text.toString().isEmpty()){
+                } else if (editTextMaritalStatus.text.toString() == getString(R.string.married) && editTextSpouseName.text.toString().isEmpty()){
                         showSnackBar(getString(R.string.spouse_s_name))
-                    } else{
-                        if (!(viewModel.stateId > 0)){
-                            showSnackBar(getString(R.string.select_state))
-                        } else if (!(viewModel.districtId > 0)){
-                            showSnackBar(getString(R.string.select_district))
-                        } else if (!(viewModel.panchayatId > 0)){
-                            showSnackBar(getString(R.string.municipality_panchayat))
-                        } else if (editTextAddress.text.toString().isEmpty()){
-                            showSnackBar(getString(R.string.address_mention_village))
-                        } else if (viewModel.data.PassportSizeImage == null){
-                            showSnackBar(getString(R.string.passport_size_image))
-                        } else if (viewModel.data.IdentificationImage == null){
-                            showSnackBar(getString(R.string.identification_image))
-                        } else {
-                            viewModel.data.vendor_first_name = editTextFN.text.toString()
-                            viewModel.data.vendor_last_name = editTextLN.text.toString()
-                            viewModel.data.parent_first_name = editTextFaterFN.text.toString()
-                            viewModel.data.parent_last_name = editTextFatherLN.text.toString()
-                            viewModel.data.gender = editTextGender.text.toString()
-                            viewModel.data.date_of_birth = editTextDateofBirth.text.toString()
-                            viewModel.data.social_category = editTextSocialCategory.text.toString()
-                            viewModel.data.education_qualification = editTextEducationQualifacation.text.toString()
-                            viewModel.data.marital_status = editTextMaritalStatus.text.toString()
-                            viewModel.data.spouse_name = editTextSpouseName.text.toString()
-
-                            viewModel.data.current_state = ""+viewModel.stateId
-                            viewModel.data.current_district = ""+viewModel.districtId
-                            viewModel.data.municipality_panchayat_current = ""+viewModel.panchayatId
-                            viewModel.data.current_pincode = ""+viewModel.pincodeId
-                            viewModel.currentAddress = editTextAddress.text.toString()
-                            viewModel.data.current_address = ""+viewModel.currentAddress
-
-                            Log.e("TAG", "viewModel.dataA "+viewModel.data.toString())
-                            Register.callBackListener!!.onCallBack(2)
-                        }
-                    }
                 } else {
                     if (!(viewModel.stateId > 0)){
                         showSnackBar(getString(R.string.select_state))
