@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.dashboard.webPage
+package com.streetsaarthi.screens.main.webPage
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -23,12 +23,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.demo.networking.LoginOtp
-import com.demo.networking.LoginPassword
-import com.demo.networking.Screen
-import com.streetsaarthi.screens.main.MainActivity
+
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.WebpageBinding
+import com.streetsaarthi.screens.onboarding.networking.LoginOtp
+import com.streetsaarthi.screens.onboarding.networking.LoginPassword
+import com.streetsaarthi.screens.onboarding.networking.Screen
 import com.streetsaarthi.utils.navigateBack
 import dagger.hilt.android.AndroidEntryPoint
 

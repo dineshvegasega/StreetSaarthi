@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.dashboard.notifications
+package com.streetsaarthi.screens.main.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater

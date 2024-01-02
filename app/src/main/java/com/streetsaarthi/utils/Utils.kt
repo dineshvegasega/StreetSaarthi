@@ -14,7 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 
 import com.streetsaarthi.R
 import com.google.android.material.snackbar.Snackbar

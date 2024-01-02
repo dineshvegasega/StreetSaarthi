@@ -2,9 +2,9 @@ package com.streetsaarthi.di
 
 import android.content.Context
 import com.demo.networking.ApiInterface
-import com.demo.networking.URL
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.streetsaarthi.screens.onboarding.networking.URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

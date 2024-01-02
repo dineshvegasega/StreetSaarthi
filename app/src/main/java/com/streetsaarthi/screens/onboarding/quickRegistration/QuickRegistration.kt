@@ -14,7 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.demo.networking.USER_TYPE
+import com.streetsaarthi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.QuickRegistrationBinding
 import com.streetsaarthi.screens.interfaces.CallBackListener

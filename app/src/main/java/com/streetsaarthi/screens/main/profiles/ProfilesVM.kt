@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.dashboard.profiles
+package com.streetsaarthi.screens.main.profiles
 
 import androidx.lifecycle.ViewModel
 import com.demo.networking.Repository

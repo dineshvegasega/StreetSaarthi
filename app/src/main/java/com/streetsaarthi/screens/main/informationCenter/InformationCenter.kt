@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.dashboard.profiles
+package com.streetsaarthi.screens.main.informationCenter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.streetsaarthi.databinding.ProfilesBinding
+import com.streetsaarthi.databinding.InformationCenterBinding
 import com.streetsaarthi.models.Item
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Profiles : Fragment() {
-    private val viewModel: ProfilesVM by viewModels()
-    private var _binding: ProfilesBinding? = null
+class InformationCenter : Fragment() {
+    private val viewModel: InformationCenterVM by viewModels()
+    private var _binding: InformationCenterBinding? = null
     private val binding get() = _binding!!
 
     var itemMain : ArrayList<Item> ?= ArrayList()
@@ -22,7 +22,7 @@ class Profiles : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ProfilesBinding.inflate(inflater)
+        _binding = InformationCenterBinding.inflate(inflater)
         return binding.root
     }
 

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Repository
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.OnboardItemBinding
 import com.streetsaarthi.databinding.WalkThroughItemBinding

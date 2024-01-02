@@ -1,4 +1,4 @@
-package com.demo.networking
+package com.streetsaarthi.screens.onboarding.networking
 
 const val BASE_URL = "https://v2.nasvi.in/"
 const val URL = BASE_URL+"api/"

@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.dashboard.details
+package com.streetsaarthi.screens.main.details
 
 import android.content.Intent
 import android.net.Uri

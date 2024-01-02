@@ -6,7 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.databinding.LoaderBinding
 import com.streetsaarthi.utils.getErrorMessage
 import com.streetsaarthi.utils.hideSoftKeyBoard

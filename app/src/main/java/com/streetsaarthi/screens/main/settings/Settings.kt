@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.dashboard.settings
+package com.streetsaarthi.screens.main.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater

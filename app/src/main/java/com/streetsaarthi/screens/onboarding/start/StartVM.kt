@@ -1,10 +1,8 @@
 package com.streetsaarthi.screens.onboarding.start
 
-import android.os.Build
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.demo.networking.Repository
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale

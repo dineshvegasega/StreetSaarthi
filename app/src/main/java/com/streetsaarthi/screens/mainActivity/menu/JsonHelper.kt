@@ -1,12 +1,10 @@
-package com.streetsaarthi.screens.main.menu
+package com.streetsaarthi.screens.mainActivity.menu
 
 import android.content.Context
-import android.content.res.ColorStateList
-import androidx.core.content.res.ResourcesCompat
 import org.json.JSONObject
 import com.google.gson.Gson
 import com.streetsaarthi.R
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import java.util.Locale
 
 

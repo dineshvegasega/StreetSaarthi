@@ -11,7 +11,7 @@ import com.streetsaarthi.R
 import com.streetsaarthi.networking.getJsonRequestBody
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.datastore.DataStoreKeys.AUTH
 import com.streetsaarthi.datastore.DataStoreKeys.LOGIN_DATA
 import com.streetsaarthi.datastore.DataStoreUtil.saveData
@@ -42,7 +42,7 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                         saveObject(LOGIN_DATA, Gson().fromJson(response.body()!!.data, Login::class.java))
                         showSnackBar(response.body()?.message.orEmpty())
                         MainActivity.mainActivity.get()!!.callBack()
-                        view.findNavController().navigate(R.id.action_loginPassword_to_home)
+                        view.findNavController().navigate(R.id.action_loginPassword_to_dashboard)
                     }
                 }
 

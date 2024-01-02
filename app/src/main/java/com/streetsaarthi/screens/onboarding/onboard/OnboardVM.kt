@@ -10,13 +10,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.CompleteRegister
 import com.demo.networking.Repository
-import com.demo.networking.Screen
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.OnboardItemBinding
 import com.squareup.picasso.Picasso
+import com.streetsaarthi.screens.onboarding.networking.CompleteRegister
+import com.streetsaarthi.screens.onboarding.networking.LoginOtp
+import com.streetsaarthi.screens.onboarding.networking.LoginPassword
+import com.streetsaarthi.screens.onboarding.networking.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -60,15 +62,15 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
         when(whichScreen) {
                     0 -> it.findNavController().navigate(R.id.action_onboard_to_quickRegistration)
                     1 ->
-//                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
-//                        putString(Screen, LoginPassword)
-//                    })
-            it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
+                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
+                        putString(Screen, LoginPassword)
+                    })
+           // it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
                     2 ->
-//                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
-//                        putString(Screen, LoginOtp)
-//                    })
-            it.findNavController().navigate(R.id.action_onboard_to_loginOtp)
+                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
+                        putString(Screen, LoginOtp)
+                    })
+//            it.findNavController().navigate(R.id.action_onboard_to_loginOtp)
                     3 -> it.findNavController().navigate(R.id.action_onboard_to_register, Bundle().apply {
                         putString(Screen, CompleteRegister)
                     })

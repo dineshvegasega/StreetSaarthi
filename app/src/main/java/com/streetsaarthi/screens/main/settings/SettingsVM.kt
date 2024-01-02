@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.dashboard.settings
+package com.streetsaarthi.screens.main.settings
 
 import androidx.lifecycle.ViewModel
 import com.demo.networking.Repository

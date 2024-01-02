@@ -36,8 +36,8 @@
             />
 
         <action
-            android:id="@+id/action_splash_to_home"
-            app:destination="@id/home"
+            android:id="@+id/action_splash_to_dashboard"
+            app:destination="@id/dashboard"
             app:launchSingleTop="true"
             app:popUpTo="@id/splash"
             app:popUpToInclusive="true"
@@ -82,13 +82,7 @@
             app:popUpToInclusive="true"
             />
 
-        <action
-            android:id="@+id/action_walkThrough_to_completeRegistration"
-            app:destination="@id/completeRegistration"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/walkThrough"
-            app:popUpToInclusive="true"
-            />
+
 
         <action
             android:id="@+id/action_walkThrough_to_onBoard"
@@ -125,11 +119,7 @@
             app:launchSingleTop="true"
             />
 
-        <action
-            android:id="@+id/action_onboard_to_completeRegistration"
-            app:destination="@id/completeRegistration"
-            app:launchSingleTop="true"
-            />
+
 
         <action
             android:id="@+id/action_onboard_to_termsPrivacy"
@@ -173,11 +163,7 @@
             app:launchSingleTop="true"
             />
 
-        <action
-            android:id="@+id/action_loginOtp_to_completeRegistration"
-            app:destination="@id/completeRegistration"
-            app:launchSingleTop="true"
-            />
+
 
         <action
             android:id="@+id/action_loginOtp_to_registar"
@@ -192,8 +178,8 @@
             />
 
         <action
-            android:id="@+id/action_loginOtp_to_home"
-            app:destination="@id/home"
+            android:id="@+id/action_loginOtp_to_dashboard"
+            app:destination="@id/dashboard"
             app:launchSingleTop="true"
             app:popUpTo="@id/navigation_bar"
             app:popUpToInclusive="true"
@@ -220,11 +206,7 @@
             app:launchSingleTop="true"
             />
 
-        <action
-            android:id="@+id/action_quickRegistration_to_completeRegistration"
-            app:destination="@id/completeRegistration"
-            app:launchSingleTop="true"
-            />
+
 
         <action
             android:id="@+id/action_quickRegistration_to_onboard"
@@ -282,11 +264,6 @@
             app:launchSingleTop="true"
             />
 
-        <action
-            android:id="@+id/action_loginPassword_to_completeRegistration"
-            app:destination="@id/completeRegistration"
-            app:launchSingleTop="true"
-            />
 
         <action
             android:id="@+id/action_loginPassword_to_termsPrivacy"
@@ -301,8 +278,8 @@
             />
 
         <action
-            android:id="@+id/action_loginPassword_to_home"
-            app:destination="@id/home"
+            android:id="@+id/action_loginPassword_to_dashboard"
+            app:destination="@id/dashboard"
             app:launchSingleTop="true"
             app:popUpTo="@id/navigation_bar"
             app:popUpToInclusive="true"
@@ -316,11 +293,6 @@
         android:label="ForgetPassword"
         android:id="@+id/forgetPassword"
         tools:layout="@layout/forget_password">
-        <action
-            android:id="@+id/action_forgetPassword_to_ResetPassword"
-            app:destination="@id/resetPassword"
-            app:launchSingleTop="true"
-            />
 
         <action
             android:id="@+id/action_forgetPassword_to_loginPassword"
@@ -342,11 +314,7 @@
             app:launchSingleTop="true"
             />
 
-        <action
-            android:id="@+id/action_forgetPassword_to_completeRegistration"
-            app:destination="@id/completeRegistration"
-            app:launchSingleTop="true"
-            />
+
 
         <action
             android:id="@+id/action_forgetPassword_to_termsPrivacy"
@@ -393,7 +361,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.dashboard.webPage.WebPage"
+        android:name="com.streetsaarthi.screens.main.webPage.WebPage"
         android:label="WebPage"
         android:id="@+id/webpage"
         tools:layout="@layout/webpage">
@@ -436,12 +404,12 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.dashboard.home.Home"
-        android:label="Home"
-        android:id="@+id/home"
-        tools:layout="@layout/home">
+        android:name="com.streetsaarthi.screens.main.dashboard.Dashboard"
+        android:label="Dashboard"
+        android:id="@+id/dashboard"
+        tools:layout="@layout/dashboard">
         <action
-            android:id="@+id/action_home_to_detail"
+            android:id="@+id/action_dashboard_to_detail"
             app:destination="@id/detail"
             app:launchSingleTop="true"
             />
@@ -449,7 +417,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.dashboard.profiles.Profiles"
+        android:name="com.streetsaarthi.screens.main.profiles.Profiles"
         android:label="Profiles"
         android:id="@+id/profiles"
         tools:layout="@layout/profiles">
@@ -457,7 +425,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.dashboard.notifications.Notifications"
+        android:name="com.streetsaarthi.screens.main.notifications.Notifications"
         android:label="Notifications"
         android:id="@+id/notifications"
         tools:layout="@layout/notifications">
@@ -465,14 +433,14 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.dashboard.informationCenter.InformationCenter"
+        android:name="com.streetsaarthi.screens.main.informationCenter.InformationCenter"
         android:label="InformationCenter"
         android:id="@+id/informationCenter"
         tools:layout="@layout/information_center">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.dashboard.settings.Settings"
+        android:name="com.streetsaarthi.screens.main.settings.Settings"
         android:label="Settings"
         android:id="@+id/settings"
         tools:layout="@layout/settings">
@@ -481,7 +449,7 @@
 
     <fragment
         android:id="@+id/detail"
-        android:name="com.streetsaarthi.screens.dashboard.details.Detail"
+        android:name="com.streetsaarthi.screens.main.details.Detail"
         android:label="Detail"
         tools:layout="@layout/detail">
 

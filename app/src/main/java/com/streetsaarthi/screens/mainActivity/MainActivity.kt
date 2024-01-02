@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.main
+package com.streetsaarthi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,18 +9,15 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.demo.networking.Screen
+import com.streetsaarthi.screens.onboarding.networking.Screen
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.MainActivityBinding

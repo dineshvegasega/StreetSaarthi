@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.main
+package com.streetsaarthi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,17 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.ViewModel
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Repository
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.ItemMenuBinding
-import com.streetsaarthi.screens.main.MainActivity.Companion.navHostFragment
-import com.streetsaarthi.screens.main.menu.ItemChildMenuModel
-import com.streetsaarthi.screens.main.menu.ItemMenuModel
-import com.streetsaarthi.screens.main.menu.JsonHelper
+import com.streetsaarthi.screens.mainActivity.MainActivity.Companion.navHostFragment
+import com.streetsaarthi.screens.mainActivity.menu.ItemChildMenuModel
+import com.streetsaarthi.screens.mainActivity.menu.ItemMenuModel
+import com.streetsaarthi.screens.mainActivity.menu.JsonHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale
 import javax.inject.Inject
@@ -66,7 +65,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
                 root.setOnClickListener {
                     when(position) {
-                        0 -> navHostFragment?.navController?.navigate(R.id.home)
+                        0 -> navHostFragment?.navController?.navigate(R.id.dashboard)
                         1 -> navHostFragment?.navController?.navigate(R.id.profiles)
                         2 -> navHostFragment?.navController?.navigate(R.id.notifications)
                         7 -> navHostFragment?.navController?.navigate(R.id.informationCenter)

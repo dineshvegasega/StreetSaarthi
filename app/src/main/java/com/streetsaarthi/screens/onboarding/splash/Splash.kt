@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.datastore.DataStoreKeys.LOGIN_DATA
 import com.streetsaarthi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.R
@@ -81,7 +81,7 @@ class Splash : Fragment() {
                 if(loginUser == null){
                     requireView().findNavController().navigate(R.id.action_splash_to_start)
                 }else{
-                    requireView().findNavController().navigate(R.id.action_splash_to_home)
+                    requireView().findNavController().navigate(R.id.action_splash_to_dashboard)
                 }
             }
             MainActivity.mainActivity.get()!!.callBack()

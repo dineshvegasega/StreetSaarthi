@@ -123,7 +123,7 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                             Gson().fromJson(response.body()!!.data, Login::class.java)
                         )
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_loginOtp_to_home)
+                        view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
                     }
                 }
 

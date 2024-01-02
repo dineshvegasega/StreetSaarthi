@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.main.menu
+package com.streetsaarthi.screens.mainActivity.menu
 
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName

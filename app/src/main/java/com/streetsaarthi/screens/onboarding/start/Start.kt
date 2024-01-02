@@ -15,10 +15,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.Screen
-import com.demo.networking.Start
+import com.streetsaarthi.screens.onboarding.networking.Screen
+import com.streetsaarthi.screens.onboarding.networking.Start
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.streetsaarthi.screens.main.MainActivity
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.databinding.StartBinding
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.ItemLanguageStartBinding

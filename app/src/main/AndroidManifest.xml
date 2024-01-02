@@ -53,7 +53,7 @@
         android:requestLegacyExternalStorage="true"
         >
         <activity
-            android:name=".screens.main.MainActivity"
+            android:name=".screens.mainActivity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Test1"

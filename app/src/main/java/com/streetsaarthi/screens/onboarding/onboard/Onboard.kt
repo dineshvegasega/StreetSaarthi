@@ -9,11 +9,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.OnboardBinding
-import com.streetsaarthi.models.Item
-import com.streetsaarthi.screens.dashboard.home.HomeVM
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

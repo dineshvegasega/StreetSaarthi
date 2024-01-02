@@ -1,29 +1,19 @@
-package com.streetsaarthi.screens.dashboard.home
+package com.streetsaarthi.screens.main.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
-import com.streetsaarthi.R
-import com.streetsaarthi.databinding.HomeBinding
+import com.streetsaarthi.databinding.DashboardBinding
 import com.streetsaarthi.models.Item
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Home : Fragment() {
-    private val viewModel: HomeVM by viewModels()
-    private var _binding: HomeBinding? = null
+class Dashboard : Fragment() {
+    private val viewModel: DashboardVM by viewModels()
+    private var _binding: DashboardBinding? = null
     private val binding get() = _binding!!
 
     var itemMain : ArrayList<Item> ?= ArrayList()
@@ -32,7 +22,7 @@ class Home : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = HomeBinding.inflate(inflater)
+        _binding = DashboardBinding.inflate(inflater)
         return binding.root
 //        val view = inflater.inflate(R.layout.home, container, false)
 //        return view

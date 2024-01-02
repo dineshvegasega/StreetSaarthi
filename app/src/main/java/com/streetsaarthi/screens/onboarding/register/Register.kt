@@ -10,14 +10,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.demo.networking.USER_TYPE
+import com.streetsaarthi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.RegisterBinding
 import com.streetsaarthi.screens.interfaces.CallBackListener
@@ -40,16 +39,16 @@ class Register : Fragment() , CallBackListener {
     companion object{
         var callBackListener: CallBackListener? = null
 
-        const val ALL_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS =
-            mutableListOf (
-                Manifest.permission.CAMERA
-            ).apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    add(Manifest.permission.READ_MEDIA_IMAGES)
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            }.toTypedArray()
+//        const val ALL_PERMISSIONS = 10
+//        private val REQUIRED_PERMISSIONS =
+//            mutableListOf (
+//                Manifest.permission.CAMERA
+//            ).apply {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//                    add(Manifest.permission.READ_MEDIA_IMAGES)
+//                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+//                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//            }.toTypedArray()
     }
 
     override fun onCreateView(
@@ -64,20 +63,20 @@ class Register : Fragment() , CallBackListener {
 var tabPosition: Int = 0;
 
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            ALL_PERMISSIONS -> {
-                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) else {
-
-                }
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        when (requestCode) {
+//            ALL_PERMISSIONS -> {
+//                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) else {
+//
+//                }
+//            }
+//        }
+//    }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -249,8 +248,6 @@ var tabPosition: Int = 0;
                 if(viewModel.data.UploadApprovalLetterBoolean == true){
                     docs.append(getString(R.string.Approval_LetterText))
                 }
-
-
 
                 val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)

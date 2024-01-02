@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.demo.networking.CompleteRegister
-import com.demo.networking.Screen
-import com.demo.networking.USER_TYPE
+import com.streetsaarthi.screens.onboarding.networking.CompleteRegister
+import com.streetsaarthi.screens.onboarding.networking.Screen
+import com.streetsaarthi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.LoginOtpBinding
 import com.streetsaarthi.databinding.LoginPasswordBinding

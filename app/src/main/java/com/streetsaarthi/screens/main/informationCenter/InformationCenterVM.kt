@@ -1,4 +1,4 @@
-package com.streetsaarthi.screens.dashboard.informationCenter
+package com.streetsaarthi.screens.main.informationCenter
 
 import androidx.lifecycle.ViewModel
 import com.demo.networking.Repository

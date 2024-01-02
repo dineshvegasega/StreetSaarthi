@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.demo.networking.USER_TYPE
+import com.streetsaarthi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.QuickRegistration1Binding
 import com.streetsaarthi.screens.interfaces.CallBackListener
