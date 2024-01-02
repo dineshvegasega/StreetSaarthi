@@ -13,6 +13,7 @@ import com.streetsaarthi.R
 import com.streetsaarthi.model.BaseResponseDC
 import com.streetsaarthi.models.mix.ItemDistrict
 import com.streetsaarthi.models.mix.ItemMarketplace
+import com.streetsaarthi.models.mix.ItemOrganization
 import com.streetsaarthi.models.mix.ItemPanchayat
 import com.streetsaarthi.models.mix.ItemPincode
 import com.streetsaarthi.models.mix.ItemState
@@ -214,6 +215,9 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
     var itemPincodeCurrent : ArrayList<ItemPincode> = ArrayList()
     var pincodeIdCurrent : Int = 0
 
+    var itemLocalOrganizationCurrent : ArrayList<ItemOrganization> = ArrayList()
+    var localOrganizationIdCurrent : Int = 0
+
     var currentAddressCurrent : String = ""
 
     fun stateCurrent(view: View) = viewModelScope.launch {
@@ -300,6 +304,32 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<List<ItemPincode>>>) {
                     if (response.isSuccessful){
                         itemPincodeCurrent = response.body()?.data as ArrayList<ItemPincode>
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+    fun localOrganisation(view: View, stateId: Int, districtId: Int) = viewModelScope.launch {
+        val obj: JSONObject = JSONObject()
+        obj.put("state_id", districtId)
+        obj.put("district_id", districtId)
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemOrganization>>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.localOrganisation(requestBody = obj.getJsonRequestBody())
+
+                override fun success(response: Response<BaseResponseDC<List<ItemOrganization>>>) {
+                    if (response.isSuccessful){
+                        itemLocalOrganizationCurrent = response.body()?.data as ArrayList<ItemOrganization>
                     }
                 }
 

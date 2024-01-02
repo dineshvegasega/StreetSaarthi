@@ -19,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.streetsaarthi.screens.onboarding.networking.Screen
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.squareup.picasso.Picasso
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.MainActivityBinding
 import com.streetsaarthi.datastore.DataStoreKeys
@@ -80,6 +81,10 @@ class MainActivity : AppCompatActivity() {
             navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
         }
 
+
+        Picasso.get().load(
+                "http://167.71.225.20:8081/uploads/1702704229image-352x80%20(2).jpg"
+            ).into(binding.topLayout.ivImage)
 
         binding.btLogout.setOnClickListener {
             // MainActivity.mainActivity.get()!!.callBack()

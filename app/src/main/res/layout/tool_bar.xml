@@ -59,6 +59,20 @@
             android:text="@string/street_vendor_system"
             />
 
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivImage"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="@dimen/_12sdp"
+            app:srcCompat="@drawable/user_icon"
+            android:theme="@style/RoundCorner50"
+            android:scaleType="centerCrop"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

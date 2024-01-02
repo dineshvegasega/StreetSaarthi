@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/_4sdp"
+    app:cardUseCompatPadding="true"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_3sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,1:1.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_place_holder"
+            android:background="@color/_000000"
+            android:scaleType="centerCrop"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/title"
+            android:textAllCaps="false"
+            android:textColor="@color/_e8ebee"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:textStyle="normal"
+            app:fontFamily="sans-serif"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivIcon"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textAllCaps="false"
+            android:textColor="@color/_e8ebee"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:textStyle="normal"
+            app:fontFamily="sans-serif"
+            android:layout_marginTop="@dimen/_4sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+            app:layout_constraintStart_toEndOf="@+id/ivIcon"
+            android:lines="1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+
+
+
+

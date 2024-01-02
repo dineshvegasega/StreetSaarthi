@@ -17,6 +17,7 @@ const val STATE = "state-list?page=1"
 const val DISTRICT = "district-list"
 const val PANCHAYAT = "panchayat-list"
 const val PINCODE = "pincode-list"
+const val LOCAL_ORGANISATION = "local-organisation"
 const val Vending = "vending-list?page=1"
 const val Marketplace = "marketplace-list?page=1"
 

@@ -249,6 +249,12 @@ class Register2  : Fragment() , CallBackListener {
                 showDropDownPincodeDialog()
             }
 
+            editTextLocalOrganisation.setOnClickListener {
+                requireActivity().hideKeyboard()
+                showDropDownLocalOrganisationDialog()
+            }
+
+
             layoutShopImage.setOnClickListener {
                 imagePosition = 11
                 showOptions()
@@ -637,6 +643,7 @@ class Register2  : Fragment() , CallBackListener {
                 viewModel.stateIdCurrent = viewModel.itemStateCurrent[which].id
                 view?.let { viewModel.districtCurrent(it, viewModel.stateIdCurrent) }
                 view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdCurrent) }
+               // view?.let { viewModel.localOrganisation(it, viewModel.stateIdCurrent, viewModel.districtIdCurrent) }
             }.show()
     }
 
@@ -654,6 +661,7 @@ class Register2  : Fragment() , CallBackListener {
                 binding.editTextSelectDistrict.setText(list[which])
                 viewModel.districtIdCurrent = viewModel.itemDistrictCurrent[which].id
                 view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdCurrent) }
+               // view?.let { viewModel.localOrganisation(it, viewModel.stateIdCurrent, viewModel.districtIdCurrent) }
             }.show()
     }
 
@@ -689,6 +697,24 @@ class Register2  : Fragment() , CallBackListener {
                 viewModel.pincodeIdCurrent = binding.editTextSelectPincode.text.toString().toInt()
             }.show()
     }
+
+
+    private fun showDropDownLocalOrganisationDialog() {
+        var index = 0
+        val list = arrayOfNulls<String>(viewModel.itemLocalOrganizationCurrent.size)
+        for (value in viewModel.itemLocalOrganizationCurrent) {
+            list[index] = value.local_organization_name
+            index++
+        }
+        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+            .setTitle(resources.getString(R.string.localOrganisation))
+            .setItems(list) { _, which ->
+                binding.editTextLocalOrganisation.setText(list[which])
+                viewModel.localOrganizationIdCurrent = viewModel.itemLocalOrganizationCurrent[which].id
+            }.show()
+    }
+
+
 
 
     override fun onCallBack(pos: Int) {

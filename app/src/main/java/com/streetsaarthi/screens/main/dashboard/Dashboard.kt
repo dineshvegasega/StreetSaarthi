@@ -1,5 +1,6 @@
 package com.streetsaarthi.screens.main.dashboard
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,6 @@ class Dashboard : Fragment() {
     private var _binding: DashboardBinding? = null
     private val binding get() = _binding!!
 
-    var itemMain : ArrayList<Item> ?= ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,17 +24,26 @@ class Dashboard : Fragment() {
     ): View? {
         _binding = DashboardBinding.inflate(inflater)
         return binding.root
-//        val view = inflater.inflate(R.layout.home, container, false)
-//        return view
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
        // val menuHost: MenuHost = requireActivity()
         //createMenu(menuHost)
-//        binding.recyclerView.setHasFixedSize(true)
-//        binding.recyclerView.adapter = viewModel.photosAdapter
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.adapter = viewModel.photosAdapter
+        viewModel.photosAdapter.notifyDataSetChanged()
+        viewModel.photosAdapter.submitList(viewModel.itemMain)
+
+
+        binding.recyclerViewRecent.setHasFixedSize(true)
+        binding.recyclerViewRecent.adapter = viewModel.recentAdapter
+        viewModel.recentAdapter.notifyDataSetChanged()
+        viewModel.recentAdapter.submitList(viewModel.itemMain)
+
+
 //        viewModel.readResult.observe(viewLifecycleOwner, Observer {
 //            if (it != null) {
 //                itemMain = it?.items!!

@@ -4,11 +4,13 @@ import com.google.gson.JsonElement
 import com.streetsaarthi.model.BaseResponseDC
 import com.streetsaarthi.models.mix.ItemDistrict
 import com.streetsaarthi.models.mix.ItemMarketplace
+import com.streetsaarthi.models.mix.ItemOrganization
 import com.streetsaarthi.models.mix.ItemPanchayat
 import com.streetsaarthi.models.mix.ItemPincode
 import com.streetsaarthi.models.mix.ItemState
 import com.streetsaarthi.models.mix.ItemVending
 import com.streetsaarthi.screens.onboarding.networking.DISTRICT
+import com.streetsaarthi.screens.onboarding.networking.LOCAL_ORGANISATION
 import com.streetsaarthi.screens.onboarding.networking.LOGIN
 import com.streetsaarthi.screens.onboarding.networking.Marketplace
 import com.streetsaarthi.screens.onboarding.networking.PANCHAYAT
@@ -101,6 +103,12 @@ interface ApiInterface {
     suspend fun pincode(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemPincode>>>
+
+    @POST(LOCAL_ORGANISATION)
+    suspend fun localOrganisation(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<List<ItemOrganization>>>
+
 
 
 }

@@ -156,5 +156,7 @@
     </style>
 
 
-
+    <style name="RoundCorner50">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

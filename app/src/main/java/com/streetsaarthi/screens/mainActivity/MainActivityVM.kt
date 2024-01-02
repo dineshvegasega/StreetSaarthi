@@ -2,6 +2,7 @@ package com.streetsaarthi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,19 @@ import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Repository
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.ItemMenuBinding
+import com.streetsaarthi.screens.main.complaintsFeedback.createNew.CreateNew
+import com.streetsaarthi.screens.main.complaintsFeedback.history.History
+import com.streetsaarthi.screens.main.dashboard.Dashboard
+import com.streetsaarthi.screens.main.informationCenter.InformationCenter
+import com.streetsaarthi.screens.main.notices.allNotices.AllNotices
+import com.streetsaarthi.screens.main.notices.liveNotices.LiveNotices
+import com.streetsaarthi.screens.main.notifications.Notifications
+import com.streetsaarthi.screens.main.profiles.Profiles
+import com.streetsaarthi.screens.main.schemes.allSchemes.AllSchemes
+import com.streetsaarthi.screens.main.schemes.liveSchemes.LiveSchemes
+import com.streetsaarthi.screens.main.settings.Settings
+import com.streetsaarthi.screens.main.training.allTraining.AllTraining
+import com.streetsaarthi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.screens.mainActivity.MainActivity.Companion.navHostFragment
 import com.streetsaarthi.screens.mainActivity.menu.ItemChildMenuModel
 import com.streetsaarthi.screens.mainActivity.menu.ItemMenuModel
@@ -53,7 +67,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 recyclerViewChild.visibility = if (dataClass.isExpanded == true) View.VISIBLE else View.GONE
 
                 recyclerViewChild.setHasFixedSize(true)
-                val headlineAdapter = ChildMenuAdapter(binding.root.context, dataClass.titleChildArray)
+                val headlineAdapter = ChildMenuAdapter(binding.root.context, dataClass.titleChildArray, position)
                 recyclerViewChild.adapter = headlineAdapter
                 recyclerViewChild.layoutManager = LinearLayoutManager(binding.root.context)
 
@@ -64,12 +78,33 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 }
 
                 root.setOnClickListener {
+                    var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                     when(position) {
-                        0 -> navHostFragment?.navController?.navigate(R.id.dashboard)
-                        1 -> navHostFragment?.navController?.navigate(R.id.profiles)
-                        2 -> navHostFragment?.navController?.navigate(R.id.notifications)
-                        7 -> navHostFragment?.navController?.navigate(R.id.informationCenter)
-                        8 -> navHostFragment?.navController?.navigate(R.id.settings)
+                        0 -> {
+                            if (fragmentInFrame !is Dashboard){
+                                navHostFragment?.navController?.navigate(R.id.dashboard)
+                            }
+                        }
+                        1 -> {
+                            if (fragmentInFrame !is Profiles){
+                                navHostFragment?.navController?.navigate(R.id.profiles)
+                            }
+                        }
+                        2 -> {
+                            if (fragmentInFrame !is Notifications){
+                                navHostFragment?.navController?.navigate(R.id.notifications)
+                            }
+                        }
+                        7 -> {
+                        if (fragmentInFrame !is InformationCenter){
+                            navHostFragment?.navController?.navigate(R.id.informationCenter)
+                            }
+                        }
+                        8 -> {
+                        if (fragmentInFrame !is Settings){
+                            navHostFragment?.navController?.navigate(R.id.settings)
+                        }
+                    }
                     }
                     MainActivity.binding.drawerLayout.close()
                 }
@@ -78,10 +113,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
     }
 
 
-    class ChildMenuAdapter(context: Context, data: List<ItemChildMenuModel>?) :
+    class ChildMenuAdapter(context: Context, data: List<ItemChildMenuModel>?, mainPosition: Int) :
         RecyclerView.Adapter<ChildMenuAdapter.ChildViewHolder>() {
         private var items: List<ItemChildMenuModel>? = data
         private var inflater: LayoutInflater = LayoutInflater.from(context)
+        private var parentPosition: Int = mainPosition
 
         override
         fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChildViewHolder {
@@ -93,6 +129,61 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
         fun onBindViewHolder(holder: ChildViewHolder, position: Int) {
             val item = items?.get(position)
             holder.tvTitle.text = item?.title
+            holder.itemView.setOnClickListener {
+                var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
+                when(parentPosition) {
+                    3 -> when(position) {
+                        0 -> {
+                            if (fragmentInFrame !is LiveSchemes){
+                                navHostFragment?.navController?.navigate(R.id.liveSchemes)
+                            }
+                        }
+                        1 -> {
+                            if (fragmentInFrame !is AllSchemes){
+                                navHostFragment?.navController?.navigate(R.id.allSchemes)
+                            }
+                        }
+                    }
+                    4 -> when(position) {
+                        0 -> {
+                            if (fragmentInFrame !is LiveNotices){
+                                navHostFragment?.navController?.navigate(R.id.liveNotices)
+                            }
+                        }
+                        1 -> {
+                            if (fragmentInFrame !is AllNotices){
+                                navHostFragment?.navController?.navigate(R.id.allNotices)
+                            }
+                        }
+                    }
+                    5 -> when(position) {
+                        0 -> {
+                            if (fragmentInFrame !is LiveTraining){
+                                navHostFragment?.navController?.navigate(R.id.liveTraining)
+                            }
+                        }
+                        1 -> {
+                            if (fragmentInFrame !is AllTraining){
+                                navHostFragment?.navController?.navigate(R.id.allTraining)
+                            }
+                        }
+                    }
+                    6 -> when(position) {
+                        0 -> {
+                            if (fragmentInFrame !is CreateNew){
+                                navHostFragment?.navController?.navigate(R.id.createNew)
+                            }
+                        }
+                        1 -> {
+                            if (fragmentInFrame !is History){
+                                navHostFragment?.navController?.navigate(R.id.history)
+                            }
+                        }
+                    }
+                }
+                MainActivity.binding.drawerLayout.close()
+                Log.e("TAG", ""+parentPosition +" SSS "+position)
+            }
         }
 
         override

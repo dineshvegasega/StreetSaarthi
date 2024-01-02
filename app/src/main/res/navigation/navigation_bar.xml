@@ -409,8 +409,28 @@
         android:id="@+id/dashboard"
         tools:layout="@layout/dashboard">
         <action
-            android:id="@+id/action_dashboard_to_detail"
-            app:destination="@id/detail"
+            android:id="@+id/action_dashboard_to_profile"
+            app:destination="@id/profiles"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_liveSchemes"
+            app:destination="@id/liveSchemes"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_liveNotices"
+            app:destination="@id/liveNotices"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_liveTraining"
+            app:destination="@id/liveTraining"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_createNew"
+            app:destination="@id/createNew"
             app:launchSingleTop="true"
             />
     </fragment>
@@ -445,6 +465,68 @@
         android:id="@+id/settings"
         tools:layout="@layout/settings">
     </fragment>
+
+
+
+    <fragment
+        android:name="com.streetsaarthi.screens.main.schemes.liveSchemes.LiveSchemes"
+        android:label="LiveSchemes"
+        android:id="@+id/liveSchemes"
+        tools:layout="@layout/live_schemes">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.screens.main.schemes.allSchemes.AllSchemes"
+        android:label="AllSchemes"
+        android:id="@+id/allSchemes"
+        tools:layout="@layout/all_schemes">
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.screens.main.notices.liveNotices.LiveNotices"
+        android:label="LiveNotices"
+        android:id="@+id/liveNotices"
+        tools:layout="@layout/live_notices">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.screens.main.notices.allNotices.AllNotices"
+        android:label="AllNotices"
+        android:id="@+id/allNotices"
+        tools:layout="@layout/all_notices">
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.screens.main.training.liveTraining.LiveTraining"
+        android:label="LiveTraining"
+        android:id="@+id/liveTraining"
+        tools:layout="@layout/live_training">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.screens.main.training.allTraining.AllTraining"
+        android:label="AllTraining"
+        android:id="@+id/allTraining"
+        tools:layout="@layout/all_training">
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.screens.main.complaintsFeedback.createNew.CreateNew"
+        android:label="CreateNew"
+        android:id="@+id/createNew"
+        tools:layout="@layout/create_new">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.screens.main.complaintsFeedback.history.History"
+        android:label="History"
+        android:id="@+id/history"
+        tools:layout="@layout/history">
+    </fragment>
+
 
 
     <fragment
