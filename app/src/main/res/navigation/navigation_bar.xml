@@ -429,8 +429,8 @@
             app:launchSingleTop="true"
             />
         <action
-            android:id="@+id/action_dashboard_to_createNew"
-            app:destination="@id/createNew"
+            android:id="@+id/action_dashboard_to_history"
+            app:destination="@id/history"
             app:launchSingleTop="true"
             />
     </fragment>

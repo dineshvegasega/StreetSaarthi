@@ -22,7 +22,6 @@ import com.streetsaarthi.networking.getJsonRequestBody
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Response
@@ -318,14 +317,12 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         )
     }
 
-    fun localOrganisation(view: View, stateId: Int, districtId: Int) = viewModelScope.launch {
-        val obj: JSONObject = JSONObject()
-        obj.put("state_id", districtId)
-        obj.put("district_id", districtId)
+    fun localOrganisation(view: View, jsonObj: JSONObject) = viewModelScope.launch {
+
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemOrganization>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.localOrganisation(requestBody = obj.getJsonRequestBody())
+                    apiInterface.localOrganisation(requestBody = jsonObj.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<List<ItemOrganization>>>) {
                     if (response.isSuccessful){
@@ -550,7 +547,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         var municipality_panchayat_birth : String ?= null,
         var birth_pincode : String ?= null,
         var birth_address : String ?= null,
-
+        var localOrganisation : String ?= null,
 
 
         var ShopImage : String ?= null,
@@ -576,6 +573,8 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         var mobile_no : String ?= null,
         var otp : String ?= null,
         var password : String ?= null
+
+
     )
 
 

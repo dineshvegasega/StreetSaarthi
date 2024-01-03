@@ -96,7 +96,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     1 -> it.findNavController().navigate(R.id.action_dashboard_to_liveSchemes)
                     2 -> it.findNavController().navigate(R.id.action_dashboard_to_liveNotices)
                     3 -> it.findNavController().navigate(R.id.action_dashboard_to_liveTraining)
-                    4 -> it.findNavController().navigate(R.id.action_dashboard_to_createNew)
+                    4 -> it.findNavController().navigate(R.id.action_dashboard_to_history)
                 }
 
             }

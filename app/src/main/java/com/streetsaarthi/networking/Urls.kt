@@ -1,6 +1,7 @@
 package com.streetsaarthi.screens.onboarding.networking
 
-const val BASE_URL = "https://v2.nasvi.in/"
+//const val BASE_URL = "https://v2.nasvi.in/"
+const val BASE_URL = "http://167.71.225.20:8081/"
 const val URL = BASE_URL+"api/"
 
 

@@ -88,16 +88,25 @@
 
     <style name="TransparentDialog" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:state_expanded">true</item>
-        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:backgroundDimAmount">0.5</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
     </style>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+
+        <item name="android:layout_marginBottom">0dp</item>
+
+    </style>
+
 
 
     <style name="CalendarDatePickerDialog"  parent="Theme.AppCompat.Light.Dialog">
@@ -159,4 +168,15 @@
     <style name="RoundCorner50">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="RoundCorner5">
+        <item name="cornerSize">5%</item>
+    </style>
+
+    <style name="RoundCorner10">
+        <item name="cornerSize">10%</item>
+    </style>
+
+
+
 </resources>

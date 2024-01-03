@@ -114,22 +114,15 @@ var tabPosition: Int = 0;
             loadProgress(tabPosition)
 
             btSignIn.setOnClickListener {
-//                if (tabPosition == QuickRegister){
-//                    requireView().findNavController().navigate(R.id.action_register_to_registerSuccessful)
-//                } else if (screen == CompleteRegister){
                     if (tabPosition == 0){
-                       // introViewPager.setCurrentItem(1, false)
                         Register1.callBackListener!!.onCallBack(1)
                         btSignIn.setText(getString(R.string.continues))
                     } else if (tabPosition == 1){
-                        // introViewPager.setCurrentItem(2, false)
                         Register2.callBackListener!!.onCallBack(3)
                         btSignIn.setText(getString(R.string.RegisterNow))
                     }else if (tabPosition == 2){
                         Register3.callBackListener!!.onCallBack(5)
-//                        requireView().findNavController().navigate(R.id.action_register_to_registerSuccessful)
                     }
-//                }
                 loadProgress(tabPosition)
             }
 
@@ -279,9 +272,8 @@ var tabPosition: Int = 0;
                     .addFormDataPart("vending_municipality_panchayat", viewModel.data.municipality_panchayat_birth!!)
                     .addFormDataPart("vending_pincode", viewModel.data.birth_pincode!!)
                     .addFormDataPart("vending_address", viewModel.data.birth_address!!)
-
+                    .addFormDataPart("local_organisation", viewModel.data.localOrganisation!!)
                     .addFormDataPart("vending_documents", docs.toString())
-                    .addFormDataPart("vending_address", viewModel.data.birth_address!!)
 
                 if(!viewModel.data.schemeName!!.isEmpty()){
                     requestBody.addFormDataPart("availed_scheme", viewModel.data.schemeName!!)

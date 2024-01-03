@@ -295,8 +295,8 @@
 
     <string name="complaintsSlashfeedback">Complaints/Feedback</string>
     <string name="AllComplaintsFeedback">All Complaints/Feedback</string>
-
-
+    <string name="do_you_have_localOrgnaization">Do you have Local Orgnaization?</string>
+    <string name="apply">Apply</string>
 
 
     <string name="terms1">Terms and Conditions</string>
@@ -360,5 +360,6 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
+
 
 </resources>

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Repository
 import com.streetsaarthi.databinding.ItemAllSchemesBinding
+import com.streetsaarthi.databinding.ItemHistoryBinding
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,14 +23,14 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
     }
 
 
-    val photosAdapter = object : GenericAdapter<ItemAllSchemesBinding, String>() {
+    val photosAdapter = object : GenericAdapter<ItemHistoryBinding, String>() {
         override fun onCreateView(
             inflater: LayoutInflater,
             parent: ViewGroup,
             viewType: Int
-        ) = ItemAllSchemesBinding.inflate(inflater, parent, false)
+        ) = ItemHistoryBinding.inflate(inflater, parent, false)
 
-        override fun onBindHolder(binding: ItemAllSchemesBinding, dataClass: String, position: Int) {
+        override fun onBindHolder(binding: ItemHistoryBinding, dataClass: String, position: Int) {
 
         }
     }

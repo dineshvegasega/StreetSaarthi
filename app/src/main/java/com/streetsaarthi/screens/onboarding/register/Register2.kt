@@ -1,10 +1,13 @@
 package com.streetsaarthi.screens.onboarding.register
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.app.TimePickerDialog
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +19,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -27,8 +31,10 @@ import com.streetsaarthi.screens.interfaces.CallBackListener
 import com.streetsaarthi.utils.getMediaFilePathFor
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 import java.io.File
 import java.util.Calendar
+
 
 @AndroidEntryPoint
 class Register2  : Fragment() , CallBackListener {
@@ -36,6 +42,9 @@ class Register2  : Fragment() , CallBackListener {
     private var _binding: Register2Binding? = null
     private val binding get() = _binding!!
     private val viewModel: RegisterVM by activityViewModels()
+
+    var scrollPoistion = 0
+
 
     companion object {
         var TAG = "Register2"
@@ -249,6 +258,18 @@ class Register2  : Fragment() , CallBackListener {
                 showDropDownPincodeDialog()
             }
 
+
+            ivRdLocalOrgnaizationYes.setOnClickListener {
+                editTextLocalOrganisation.visibility = View.VISIBLE
+                setScrollPosition(1, true)
+            }
+
+            ivRdLocalOrgnaizationNo.setOnClickListener {
+                editTextLocalOrganisation.visibility = View.GONE
+                setScrollPosition(1, false)
+            }
+
+
             editTextLocalOrganisation.setOnClickListener {
                 requireActivity().hideKeyboard()
                 showDropDownLocalOrganisationDialog()
@@ -264,18 +285,12 @@ class Register2  : Fragment() , CallBackListener {
             ivRdDocumentYes.setOnClickListener {
                 viewModel.documentDetails = true
                 inclideDocuments.layoutDocuments.visibility = View.VISIBLE
-//                val heightOfNewView: Int = visibilityChangedView.getMeasuredHeight()
-//                val currentScrollY: Int = binding.scroll.getScrollY()
-                //binding.scroll.scrollTo(0, currentScrollY + heightOfNewView)
-
-//                scroll.smoothScrollTo(0, inclideDocuments.layoutDocuments.getY().toInt());
-//                //binding.scroll.smoothScrollTo (View.FOCUS_DOWN);
-//                scroll.setSmoothScrollingEnabled(true);
-
+                setScrollPosition(1, true)
             }
             ivRdDocumentNo.setOnClickListener {
                 viewModel.documentDetails = false
                 inclideDocuments.layoutDocuments.visibility = View.GONE
+                setScrollPosition(1, false)
             }
 
             inclideDocuments.layoutImageUploadCOV.setOnClickListener {
@@ -301,119 +316,53 @@ class Register2  : Fragment() , CallBackListener {
 
 
 
+            binding.scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                    scrollPoistion = scrollY
+            })
+
+
             ivRdGovernmentYes.setOnClickListener {
                 viewModel.governmentScheme = true
                 inclideGovernment.layoutGovernmentScheme.visibility = View.VISIBLE
+                setScrollPosition(2, true)
             }
 
             ivRdGovernmentNo.setOnClickListener {
                 viewModel.governmentScheme = false
                 inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
+                setScrollPosition(2, false)
             }
 
-
-//            btUploadpassportsizeImage.setOnClickListener {
-//                requireActivity().hideKeyboard()
-//
-////                mGetContent.launch(uriReal)
-//
-//                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-//
-////                showOptions()
-//
-//
-////                PhotoPickerFragment.newInstance(
-////                    multiple = false,
-////                    allowCamera = true,
-////                    maxSelection = 1,
-//////                    theme = STYLE_ALIAS.ChiliPhotoPicker
-////                ).show(childFragmentManager, javaClass.name)
-//
-////                if (
-////                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-////                    (
-////                            ContextCompat.checkSelfPermission(requireContext(), READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED ||
-////                                    ContextCompat.checkSelfPermission(requireContext(), READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
-////                            )
-////                ) {
-////                    // Full access on Android 13 (API level 33) or higher
-////                    Log.e(TAG, "aaaaaaaaa0")
-////                } else if (
-////                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE &&
-////                    ContextCompat.checkSelfPermission(requireContext(), READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED
-////                ) {
-////                    // Partial access on Android 14 (API level 34) or higher
-////                    Log.e(TAG, "aaaaaaaaa1")
-////                }  else if (ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-////                    // Full access up to Android 12 (API level 32)
-////                    Log.e(TAG, "aaaaaaaaa2")
-////                } else if (ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-////                    // Full access up to Android 12 (API level 32)
-////                    Log.e(TAG, "aaaaaaaaa2")
-////                } else {
-////                    // Access denied
-////                    Log.e(TAG, "aaaaaaaaa3")
-////                }
-//
-//
-//
-//
-//// Permission request logic
-////                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-////                    requestPermissions.launch(arrayOf(READ_MEDIA_IMAGES, READ_MEDIA_VIDEO, READ_MEDIA_VISUAL_USER_SELECTED))
-////                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-////                    requestPermissions.launch(arrayOf(READ_MEDIA_IMAGES, READ_MEDIA_VIDEO))
-////                } else {
-////                    requestPermissions.launch(arrayOf(READ_EXTERNAL_STORAGE))
-////                }
-//
-//            }
         }
     }
 
-//    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-//    override fun onStart() {
-//        super.onStart()
-//        when {
-//            PermissionUtils.isAccessREAD_MEDIA_IMAGESGranted( requireContext()) -> {
-//                checkPremissions()
-//            }
-//            PermissionUtils.isAccessCAMERAGranted(requireContext()) -> {
-//                checkPremissions()
-//            }
-//            else -> {
-//                val permission = ContextCompat.checkSelfPermission(
-//                    requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-//
-//                if (permission != PackageManager.PERMISSION_GRANTED) {
-//                    permissionsResultCallback.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-//                } else {
-//                    println("Permission isGranted")
-//                }
-//            }
-//        }
-//    }
 
+    private fun setScrollPosition(type : Int, ifTrue: Boolean) {
+        when(type){
+            1 -> {
+                ObjectAnimator.ofInt(binding.scroll, "scrollY",  scrollPoistion).setDuration(100).start()
 
-//    private fun checkPremissions() {
-//        when {
-//            PermissionUtils.isEnabled( requireContext()) -> {
-//                //setUpLocationListener()
-//            }
-//            else -> {
-//                AlertDialog.Builder(requireContext())
-//                    .setTitle(requireContext().getString(R.string.enable_gps))
-//                    .setMessage(requireContext().getString(R.string.required_for_this_app))
-//                    .setCancelable(false)
-//                    .setPositiveButton(requireContext().getString(R.string.enable_now)) { _, _ ->
-//                        val viewIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-//                        someActivityResultLauncher.launch(viewIntent)
-//
-//                    }
-//                    .show()
-//            }
-//        }
-//    }
+//                Handler(Looper.getMainLooper()).postDelayed(Runnable {
+////                    if(ifTrue == true){
+////                        val itemHeight = binding.inclideDocuments.layoutDocuments.height
+////                        binding.scroll.smoothScrollTo(0,scrollPoistion + (itemHeight - 200))
+////                    } else {
+////                        val itemHeight = binding.inclideDocuments.layoutDocuments.height
+////                        binding.scroll.smoothScrollTo(0,scrollPoistion + (itemHeight + 100))
+////                    }
+//                    ObjectAnimator.ofInt(binding.scroll, "scrollY",  scrollPoistion).setDuration(100).start()
+//                }, 50)
+            }
+
+            2 -> {
+                Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                    val itemHeight =
+                        binding.inclideGovernment.layoutGovernmentScheme.height
+                    binding.scroll.smoothScrollTo(0,scrollPoistion * itemHeight)
+                }, 50)
+            }
+        }
+    }
 
 
     private fun showOptions() = try {
@@ -639,11 +588,22 @@ class Register2  : Fragment() , CallBackListener {
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
             .setTitle(resources.getString(R.string.select_state))
             .setItems(list) { _, which ->
+//                viewModel.districtIdCurrent = 0
+//                binding.editTextSelectDistrict.setText("")
+//                viewModel.panchayatIdCurrent = 0
+//                binding.editTextMunicipalityPanchayat.setText("")
+////                viewModel.pincodeIdCurrent = 0
+////                binding.editTextSelectPincode.setText("")
+//                viewModel.localOrganizationIdCurrent = 0
+//                binding.editTextLocalOrganisation.setText("")
+
                 binding.editTextSelectState.setText(list[which])
                 viewModel.stateIdCurrent = viewModel.itemStateCurrent[which].id
                 view?.let { viewModel.districtCurrent(it, viewModel.stateIdCurrent) }
                 view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdCurrent) }
-               // view?.let { viewModel.localOrganisation(it, viewModel.stateIdCurrent, viewModel.districtIdCurrent) }
+                view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                    put("state_id", viewModel.stateIdCurrent)
+                })}
             }.show()
     }
 
@@ -661,7 +621,10 @@ class Register2  : Fragment() , CallBackListener {
                 binding.editTextSelectDistrict.setText(list[which])
                 viewModel.districtIdCurrent = viewModel.itemDistrictCurrent[which].id
                 view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdCurrent) }
-               // view?.let { viewModel.localOrganisation(it, viewModel.stateIdCurrent, viewModel.districtIdCurrent) }
+                view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                    put("state_id", viewModel.stateIdCurrent)
+                    put("district_id", viewModel.districtIdCurrent)
+                })}
             }.show()
     }
 
@@ -745,6 +708,8 @@ class Register2  : Fragment() , CallBackListener {
                     showSnackBar(getString(R.string.municipality_panchayat))
                 } else if (editTextAddress.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.address_mention_village))
+                } else if (binding.ivRdLocalOrgnaizationYes.isChecked == true && editTextLocalOrganisation.text.toString().isEmpty()) {
+                    showSnackBar(getString(R.string.localOrganisation))
                 } else if (viewModel.data.ShopImage == null) {
                     showSnackBar(getString(R.string.upload_shop_image))
                 } else {
@@ -794,6 +759,7 @@ class Register2  : Fragment() , CallBackListener {
             viewModel.data.municipality_panchayat_birth = ""+viewModel.panchayatIdCurrent
             viewModel.data.birth_pincode = ""+viewModel.pincodeIdCurrent
             viewModel.data.birth_address = ""+editTextAddress.text.toString()
+            viewModel.data.localOrganisation = ""+viewModel.localOrganizationIdCurrent
 
             viewModel.data.documentDetails = viewModel.documentDetails
             viewModel.data.ImageUploadCOVBoolean = binding.inclideDocuments.cbRememberImageUploadCOV.isChecked

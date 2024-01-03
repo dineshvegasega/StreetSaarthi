@@ -25,14 +25,23 @@ import com.streetsaarthi.databinding.MainActivityBinding
 import com.streetsaarthi.datastore.DataStoreKeys
 import com.streetsaarthi.datastore.DataStoreUtil
 import com.streetsaarthi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.screens.main.dashboard.Dashboard
+import com.streetsaarthi.screens.onboarding.splash.Splash
+import com.streetsaarthi.screens.onboarding.start.Start
 import com.streetsaarthi.utils.LocaleHelper
+import com.streetsaarthi.utils.mainThread
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import java.lang.ref.WeakReference
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     companion object {
+
+        @JvmStatic
+        var hideValue: Boolean = false
+
         @JvmStatic
         lateinit var context: WeakReference<Context>
 
@@ -218,6 +227,17 @@ class MainActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase,""))
     }
+
+
+//    override fun onResume() {
+//        super.onResume()
+//
+//        Log.e("TAG", "onResume1 "+hideValue)
+//
+//        callBack()
+//    }
+
+
 
     fun callBack() {
         binding.apply {

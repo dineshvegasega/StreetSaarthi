@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Repository
 import com.streetsaarthi.databinding.ItemAllSchemesBinding
+import com.streetsaarthi.databinding.ItemAllTrainingBinding
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,14 +23,14 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
     }
 
 
-    val photosAdapter = object : GenericAdapter<ItemAllSchemesBinding, String>() {
+    val photosAdapter = object : GenericAdapter<ItemAllTrainingBinding, String>() {
         override fun onCreateView(
             inflater: LayoutInflater,
             parent: ViewGroup,
             viewType: Int
-        ) = ItemAllSchemesBinding.inflate(inflater, parent, false)
+        ) = ItemAllTrainingBinding.inflate(inflater, parent, false)
 
-        override fun onBindHolder(binding: ItemAllSchemesBinding, dataClass: String, position: Int) {
+        override fun onBindHolder(binding: ItemAllTrainingBinding, dataClass: String, position: Int) {
 
         }
     }

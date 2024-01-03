@@ -8,12 +8,11 @@ class RegisterAdapter (fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
     override fun createFragment(position: Int): Fragment {
-        return if (position === 0) {
-            Register1()
-        } else if (position === 1) {
-            Register2()
-        }  else {
-            Register3()
+        return when(position) {
+            0 -> Register1()
+            1 -> Register2()
+            2 -> Register3()
+            else -> Register1()
         }
     }
 

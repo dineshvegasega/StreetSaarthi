@@ -49,6 +49,7 @@
         android:drawableEnd="@drawable/ic_search"
         app:layout_constraintTop_toBottomOf="@+id/textHeaderTxt"
         android:layout_marginHorizontal="0dp"
+        android:imeOptions="actionSearch"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

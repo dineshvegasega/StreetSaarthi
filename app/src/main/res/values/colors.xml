@@ -29,7 +29,7 @@
 
 
     <color name="_ffffffff">#FFFFFFFF</color>
-    <color name="_00000000">#00000000</color>
+    <color name="_00000000">#00ffffff</color>
 
 
     <color name="_363438">#363438</color>
@@ -44,5 +44,10 @@
     <color name="_BBBBBB">#BBBBBB</color>
     <color name="_79747E">#79747E</color>
     <color name="_DDDDDD">#DDDDDD</color>
+    <color name="_138808">#138808</color>
+    <color name="_A5A5A5">#A5A5A5</color>
+    <color name="_484848">#484848</color>
+
+
 
 </resources>
