@@ -1,17 +1,19 @@
 package com.streetsaarthi.screens.main.training.liveTraining
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.lifecycle.ViewModel
 import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Repository
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.streetsaarthi.R
-import com.streetsaarthi.databinding.ItemAllSchemesBinding
+import com.streetsaarthi.databinding.DialogBottomLiveTrainingBinding
 import com.streetsaarthi.databinding.ItemLiveTrainingBinding
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+
 
 @HiltViewModel
 class LiveTrainingVM @Inject constructor(private val repository: Repository): ViewModel() {
@@ -34,22 +36,25 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
         ) = ItemLiveTrainingBinding.inflate(inflater, parent, false)
 
         override fun onBindHolder(binding: ItemLiveTrainingBinding, dataClass: String, position: Int) {
-            binding.root.setOnClickListener {
-              //  val dialogView = binding.view.inflate(R.layout.logout_dialog, null)
-               // val dialog = BottomSheetDialog(this, R.style.TransparentDialog)
+            binding.apply {
+                root.setOnClickListener {
+                    val dialogBinding = DialogBottomLiveTrainingBinding.inflate(root.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
+                    dialogBinding.apply {
+                        val dialog = BottomSheetDialog(root.context)
+                        dialog.setContentView(root)
+                        dialog.setOnShowListener { dia ->
+                            val bottomSheetDialog = dia as BottomSheetDialog
+                            val bottomSheetInternal: FrameLayout =
+                                bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+                            bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+                        }
+                        dialog.show()
 
-                val dialogView: View = LayoutInflater.from(binding.root.context)
-                    .inflate(R.layout.dialog_bottom_live_training, null)
-
-                val dialog = BottomSheetDialog(binding.root.context,R.style.TransparentDialog)
-                dialog.setContentView(dialogView)
-                dialog.show()
-                val window=dialog.window
-                window!!.setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                window.setBackgroundDrawableResource(R.color._00000000)
+                        btClose.setOnClickListener {
+                            dialog.dismiss()
+                        }
+                    }
+                }
             }
         }
     }

@@ -282,4 +282,22 @@
     <string name="enter_vending">ভেন্ডিং এন্টার করুন</string>
     <string name = "select_scheme"> স্কিম নির্বাচন করুন</string>
 
+    <string name="profiles">প্রোফাইল</string>
+    <string name="live_schemes">লাইভ স্কিম</string>
+    <string name="all_schemes">সমস্ত স্কিম</string>
+    <string name="live_notices">লাইভ বিজ্ঞপ্তি</string>
+    <string name="all_notices">সমস্ত বিজ্ঞপ্তি</string>
+    <string name = "live_training">লাইভ প্রশিক্ষণ</string>
+    <string name="all_training">সমস্ত প্রশিক্ষণ</string>
+    <string name="complaints_feedback">অভিযোগ এবং\nপ্রতিক্রিয়া</string>
+    <string name="recent_activites">সাম্প্রতিক ক্রিয়াকলাপ</string>
+    <string name="viewMore">আরো দেখুন</string>
+    <string name="localOrganisation">সংগঠন নির্বাচন করুন</string>
+    <string name="search">অনুসন্ধান করুন</string>
+
+    <string name="complaintsSlashfeedback">অভিযোগ/প্রতিক্রিয়া</string>
+    <string name="AllComplaintsFeedback">সমস্ত অভিযোগ/প্রতিক্রিয়া</string>
+    <string name="do_you_have_localOrgnaization">আপনি কি কোন সংস্থার সাথে যুক্ত?</string>
+    <string name="apply">প্রয়োগ করুন</string>
+
 </resources>

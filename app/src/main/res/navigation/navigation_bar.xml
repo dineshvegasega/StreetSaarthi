@@ -7,6 +7,13 @@
     >
 
     <fragment
+        android:name="com.streetsaarthi.screens.onboarding.register.Register2"
+        android:label="Register2"
+        android:id="@+id/register2"
+        tools:layout="@layout/register2">
+    </fragment>
+
+    <fragment
         android:name="com.streetsaarthi.screens.onboarding.splash.Splash"
         android:label="Splash"
         android:id="@+id/splash"

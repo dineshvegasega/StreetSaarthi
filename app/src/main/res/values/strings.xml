@@ -280,6 +280,7 @@
     <string name="enter_vending">Enter Vending</string>
     <string name="select_scheme">Select Scheme</string>
     <string name="NASVI_Street_Vendor_Dashboard" translatable="false">NASVI Street Vendor Dashboard</string>
+
     <string name="profiles">Profiles</string>
     <string name="live_schemes">Live Schemes</string>
     <string name="all_schemes">All Schemes</string>
@@ -290,12 +291,12 @@
     <string name="complaints_feedback">Complaints &amp;\nFeedback</string>
     <string name="recent_activites">Recent Activites</string>
     <string name="viewMore">View More</string>
-    <string name="localOrganisation">Local Organisation</string>
+    <string name="localOrganisation">Select Organisation</string>
     <string name="search">Search</string>
 
     <string name="complaintsSlashfeedback">Complaints/Feedback</string>
     <string name="AllComplaintsFeedback">All Complaints/Feedback</string>
-    <string name="do_you_have_localOrgnaization">Do you have Local Orgnaization?</string>
+    <string name="do_you_have_localOrgnaization">Are you Associated with any Organization?</string>
     <string name="apply">Apply</string>
 
 

@@ -280,5 +280,23 @@
     <string name="enter_vending">ਵੇਂਡਿੰਗ ਦਾਖਲ ਕਰੋ</string>
     <string name="select_scheme">ਸਕੀਮ ਚੁਣੋ</string>
 
+    <string name="profiles">ਪ੍ਰੋਫਾਈਲਾਂ</string>
+    <string name="live_schemes">ਲਾਈਵ ਸਕੀਮਾਂ</string>
+    <string name="all_schemes">ਸਾਰੀਆਂ ਸਕੀਮਾਂ</string>
+    <string name="live_notices">ਲਾਈਵ ਨੋਟਿਸ</string>
+    <string name="all_notices">ਸਾਰੇ ਨੋਟਿਸ</string>
+    <string name="live_training">ਲਾਈਵ ਟਰੇਨਿੰਗ</string>
+    <string name="all_training">ਸਾਰੀ ਸਿਖਲਾਈ</string>
+    <string name="complaints_feedback">ਸ਼ਿਕਾਇਤਾਂ &amp;\nਫੀਡਬੈਕ</string>
+    <string name = "recent_activites">ਹਾਲੀਆ ਸਰਗਰਮੀਆਂ</string>
+    <string name="viewMore">ਹੋਰ ਦੇਖੋ</string>
+    <string name="localOrganisation">ਸੰਗਠਨ ਚੁਣੋ</string>
+    <string name="search">ਖੋਜ</string>
+
+    <string name="complaintsSlashfeedback">ਸ਼ਿਕਾਇਤਾਂ/ਫੀਡਬੈਕ</string>
+    <string name="AllComplaintsFeedback">ਸਾਰੀਆਂ ਸ਼ਿਕਾਇਤਾਂ/ਫੀਡਬੈਕ</string>
+    <string name="do_you_have_localOrgnaization">ਕੀ ਤੁਸੀਂ ਕਿਸੇ ਸੰਗਠਨ ਨਾਲ ਜੁੜੇ ਹੋ?</string>
+    <string name="apply">ਲਾਗੂ ਕਰੋ</string>
+
 
 </resources>

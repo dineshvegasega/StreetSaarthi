@@ -281,4 +281,23 @@
     <string name='enter_vending'>वेंडिंग दर्ज करें</string>
     <string name='select_scheme'>योजना चुनें</string>
 
+    <string name='profiles'>प्रोफ़ाइल</string>
+    <string name='live_schemes'>लाइव योजनाएं</string>
+    <string name='all_schemes'>सभी योजनाएं</string>
+    <string name='live_notices'>लाइव नोटिस</string>
+    <string name='all_notices'>सभी सूचनाएं</string>
+    <string name='live_training'>लाइव प्रशिक्षण</string>
+    <string name='all_training'>सभी प्रशिक्षण</string>
+    <string name='complaints_feedback'>शिकायतें &amp;\nप्रतिक्रिया</string>
+    <string name='recent_activites'>हाल की गतिविधियां</string>
+    <string name='viewMore'>और देखें</string>
+    <string name='localOrganisation'>संगठन का चयन करें</string>
+    <string name='search'>खोजें</string>
+
+    <string name='complaintsSlashfeedback'>शिकायत/प्रतिक्रिया</string>
+    <string name = "AllComplaintsFeedback">सभी शिकायतें/प्रतिक्रिया</string>
+    <string name='do_you_have_localOrgnaization'>क्या आप किसी संगठन से जुड़े हैं?</string>
+    <string name='apply'>लागू करें</string>
+
+
 </resources>

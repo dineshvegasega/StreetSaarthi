@@ -278,6 +278,22 @@
     <string name="enter_vending">वेंडिंग एंटर करा</string>
     <string name="select_scheme">योजना निवडा</string>
 
+    <string name="profiles">प्रोफाइल</string>
+    <string name="live_schemes">लाइव्ह योजना</string>
+    <string name="all_schemes">सर्व योजना</string>
+    <string name="live_notices">लाइव्ह सूचना</string>
+    <string name="all_notices">सर्व सूचना</string>
+    <string name = "live_training"> थेट प्रशिक्षण</string>
+    <string name="all_training">सर्व प्रशिक्षण</string>
+    <string name="complaints_feedback">तक्रारी &amp;\nअभिप्राय</string>
+    <string name = "recent_activites"> अलीकडील क्रियाकलाप</string>
+    <string name="viewMore">अधिक पहा</string>
+    <string name="localOrganisation">संस्था निवडा</string>
+    <string name="search">शोधा</string>
 
+    <string name="complaintsSlashfeedback">तक्रारी/अभिप्राय</string>
+    <string name="AllComplaintsFeedback">सर्व तक्रारी/अभिप्राय</string>
+    <string name="do_you_have_localOrgnaization">तुम्ही कोणत्याही संस्थेशी संबंधित आहात का?</string>
+    <string name="apply">लागू करा</string>
 
 </resources>

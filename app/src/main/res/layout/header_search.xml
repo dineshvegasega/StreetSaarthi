@@ -50,6 +50,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textHeaderTxt"
         android:layout_marginHorizontal="0dp"
         android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:lines="1"
+        android:singleLine="true"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

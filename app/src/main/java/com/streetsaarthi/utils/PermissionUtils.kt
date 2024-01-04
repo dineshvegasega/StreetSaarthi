@@ -39,10 +39,13 @@ object PermissionUtils {
      * Function to check if location of the device is enabled or not
      */
     fun isEnabled(context: Context): Boolean {
-        val locationManager: LocationManager =
-            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(READ_MEDIA_IMAGES)
-                || locationManager.isProviderEnabled(CAMERA)
+//        val locationManager: LocationManager =
+//            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        return locationManager.isProviderEnabled(READ_MEDIA_IMAGES)
+//                || locationManager.isProviderEnabled(CAMERA)
+        return (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED)
+
     }
 
 }

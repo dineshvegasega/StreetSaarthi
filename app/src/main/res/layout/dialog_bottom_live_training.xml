@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:paddingVertical="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivMap">
@@ -149,37 +149,37 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btClose"
                 style="@style/PrimaryButtonYellow"
-                android:background="@drawable/yellow_round_corner"
-                app:backgroundTint="@null"
+                app:backgroundTint="@color/white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingHorizontal="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_7sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:text="@string/close"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_11ssp"
                 app:cornerRadius="@dimen/_4sdp"
                 app:layout_constraintEnd_toStartOf="@+id/btApply"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/timeDate"
-                app:layout_constraintHorizontal_chainStyle="spread"/>
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:strokeColor="@color/_E79D46"
+     />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btApply"
                 style="@style/PrimaryButtonYellow"
-                android:background="@drawable/yellow_round_corner"
                 app:backgroundTint="@color/_E79D46"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingHorizontal="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_7sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/apply"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_11ssp"
                 app:cornerRadius="@dimen/_4sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btClose"
@@ -188,8 +188,6 @@
                 android:layout_marginStart="@dimen/_15sdp"
 
                 />
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

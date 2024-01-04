@@ -278,6 +278,23 @@
     <string name="enter_vending">വെൻഡിംഗ് നൽകുക</string>
     <string name="select_scheme">സ്‌കീം തിരഞ്ഞെടുക്കുക</string>
 
+    <string name="profiles">പ്രൊഫൈലുകൾ</string>
+    <string name="live_schemes">തത്സമയ സ്കീമുകൾ</string>
+    <string name="all_schemes">എല്ലാ സ്കീമുകളും</string>
+    <string name="live_notices">തത്സമയ അറിയിപ്പുകൾ</string>
+    <string name="all_notices">എല്ലാ അറിയിപ്പുകളും</string>
+    <string name="live_training">തത്സമയ പരിശീലനം</string>
+    <string name="all_training">എല്ലാ പരിശീലനവും</string>
+    <string name="complaints_feedback">പരാതികൾ &amp;\nഫീഡ്‌ബാക്ക്</string>
+    <string name="recent_activites">സമീപകാല പ്രവർത്തനങ്ങൾ</string>
+    <string name="viewMore">കൂടുതൽ കാണുക</string>
+    <string name="localOrganisation">ഓർഗനൈസേഷൻ തിരഞ്ഞെടുക്കുക</string>
+    <string name="search">തിരയൽ</string>
+
+    <string name="complaintsSlashfeedback">പരാതികൾ/ഫീഡ്‌ബാക്ക്</string>
+    <string name="AllComplaintsFeedback">എല്ലാ പരാതികളും/ഫീഡ്‌ബാക്കും</string>
+    <string name="do_you_have_localOrgnaization">നിങ്ങൾ ഏതെങ്കിലും ഓർഗനൈസേഷനുമായി ബന്ധപ്പെട്ടിട്ടുണ്ടോ?</string>
+    <string name="apply">പ്രയോഗിക്കുക</string>
 
 
 </resources>

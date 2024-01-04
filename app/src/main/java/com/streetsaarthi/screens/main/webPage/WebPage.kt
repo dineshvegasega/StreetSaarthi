@@ -1,16 +1,21 @@
 package com.streetsaarthi.screens.main.webPage
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
 import android.content.Context
+import android.content.Context.DOWNLOAD_SERVICE
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.DownloadListener
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -20,18 +25,20 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-
-import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.WebpageBinding
+import com.streetsaarthi.screens.mainActivity.MainActivity
 import com.streetsaarthi.screens.onboarding.networking.LoginOtp
 import com.streetsaarthi.screens.onboarding.networking.LoginPassword
 import com.streetsaarthi.screens.onboarding.networking.Screen
+import com.streetsaarthi.screens.onboarding.networking.WEB_URL
 import com.streetsaarthi.utils.navigateBack
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Calendar
 
 
 @AndroidEntryPoint
@@ -97,6 +104,14 @@ class WebPage : Fragment() {
 //        binding.webView.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(
 //            getResources(), R.color._F02A2A, null)));
 
+
+//        binding.webView.setDownloadListener(DownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
+//            val i = Intent(Intent.ACTION_VIEW)
+//            i.setData(Uri.parse(url))
+//            startActivity(i)
+//        })
+
+
         binding.webView.webViewClient = object : WebViewClient() {
             override fun shouldInterceptRequest(
                 view: WebView?,
@@ -129,9 +144,11 @@ class WebPage : Fragment() {
 //https://streetsaarthi.in/#/mobile-login
         var screen = arguments?.getString(Screen)
             if (screen == LoginPassword){
-                binding.webView.loadUrl("https://nasvi.in/#/mobile-login")
+//                binding.webView.loadUrl(WEB_URL+"#/mobile-login")
+                binding.webView.loadUrl("https://amritmahotsav.nic.in/downloads.htm")
+
             } else if (screen == LoginOtp){
-                binding.webView.loadUrl("https://nasvi.in/#/mobile-otp-login")
+                binding.webView.loadUrl(WEB_URL+"#/mobile-otp-login")
             }
 
 
@@ -142,10 +159,33 @@ class WebPage : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             binding.webView.addJavascriptInterface(WebAppInterface(requireContext(), binding), "Android")
         }, 200)
+
+
+
+        binding.webView.setDownloadListener(DownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
+            val request = DownloadManager.Request(
+                Uri.parse(url)
+            )
+//            request.allowScanningByMediaScanner()
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) //Notify client once download is completed!
+            request.setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                "StreetSaarthi_${Calendar.getInstance().timeInMillis}.jpg"
+            )
+            val dm = requireContext().getSystemService(DOWNLOAD_SERVICE) as DownloadManager?
+            dm!!.enqueue(request)
+            Toast.makeText(
+                requireContext(),
+                "File Downloading...",
+                Toast.LENGTH_LONG
+            ).show()
+        })
+
+
     }
 
 
-//    Request OTP Again in
+
 
     class WebAppInterface(private val mContext: Context, var bind: WebpageBinding) {
         /** Show a toast from the web page.  */

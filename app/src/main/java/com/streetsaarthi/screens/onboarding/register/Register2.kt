@@ -213,6 +213,10 @@ class Register2  : Fragment() , CallBackListener {
             viewModel.vending(view)
             viewModel.marketplace(view)
 
+//            btSignIn.setOnClickListener {
+//                Log.e("TAG", "viewModel.dataB "+viewModel.data.toString())
+//            }
+
             editTextTypeofMarketPlace.setOnClickListener {
                 requireActivity().hideKeyboard()
                 showDropDownMarketPlaceDialog()
@@ -278,7 +282,8 @@ class Register2  : Fragment() , CallBackListener {
 
             layoutShopImage.setOnClickListener {
                 imagePosition = 11
-                showOptions()
+                isFree = true
+                callMediaPermissions()
             }
 
 
@@ -295,23 +300,28 @@ class Register2  : Fragment() , CallBackListener {
 
             inclideDocuments.layoutImageUploadCOV.setOnClickListener {
                 imagePosition = 1
-                showOptions()
+                isFree = true
+                callMediaPermissions()
             }
             inclideDocuments.layoutImageUploadLOR.setOnClickListener {
                 imagePosition = 2
-                showOptions()
+                isFree = true
+                callMediaPermissions()
             }
             inclideDocuments.layoutUploadSurveyReceipt.setOnClickListener {
                 imagePosition = 3
-                showOptions()
+                isFree = true
+                callMediaPermissions()
             }
             inclideDocuments.layoutUploadChallan.setOnClickListener {
                 imagePosition = 4
-                showOptions()
+                isFree = true
+                callMediaPermissions()
             }
             inclideDocuments.layoutUploadApprovalLetter.setOnClickListener {
                 imagePosition = 5
-                showOptions()
+                isFree = true
+                callMediaPermissions()
             }
 
 
@@ -341,17 +351,6 @@ class Register2  : Fragment() , CallBackListener {
         when(type){
             1 -> {
                 ObjectAnimator.ofInt(binding.scroll, "scrollY",  scrollPoistion).setDuration(100).start()
-
-//                Handler(Looper.getMainLooper()).postDelayed(Runnable {
-////                    if(ifTrue == true){
-////                        val itemHeight = binding.inclideDocuments.layoutDocuments.height
-////                        binding.scroll.smoothScrollTo(0,scrollPoistion + (itemHeight - 200))
-////                    } else {
-////                        val itemHeight = binding.inclideDocuments.layoutDocuments.height
-////                        binding.scroll.smoothScrollTo(0,scrollPoistion + (itemHeight + 100))
-////                    }
-//                    ObjectAnimator.ofInt(binding.scroll, "scrollY",  scrollPoistion).setDuration(100).start()
-//                }, 50)
             }
 
             2 -> {
@@ -363,6 +362,43 @@ class Register2  : Fragment() , CallBackListener {
             }
         }
     }
+
+
+
+
+    private fun callMediaPermissions() {
+        activityResultLauncher.launch(
+            arrayOf(Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+        )
+    }
+
+
+
+    var isFree = false
+    private val activityResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions())
+        { permissions ->
+            // Handle Permission granted/rejected
+            permissions.entries.forEach {
+                val permissionName = it.key
+                val isGranted = it.value
+                Log.e("TAG", "00000 "+permissionName)
+                if (isGranted) {
+                    Log.e("TAG", "11111"+permissionName)
+                    if(isFree){
+                        showOptions()
+                    }
+                    isFree = false
+                } else {
+                    // Permission is denied
+                    Log.e("TAG", "222222"+permissionName)
+                }
+            }
+        }
+
+
 
 
     private fun showOptions() = try {
@@ -488,12 +524,17 @@ class Register2  : Fragment() , CallBackListener {
                     else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
                         am_pm = "PM";
                     binding.editTextVendingTimeOpen.setText(
-                        strHrsToShow + ":" + datetime.get(
-                            Calendar.MINUTE
-                        ) + " " + am_pm
+                        strHrsToShow + ":" + (if (minute.toString().length == 1) "0"+datetime.get(Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
                     )
                     //viewModel.data.open = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
-                    viewModel.data.open = "" + hourOfDay + ":" + minute + ":00"
+//                    var ss : String =
+
+                    if (minute.toString().length == 1){
+
+                    } else {
+
+                    }
+                    viewModel.data.open = "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
                     // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
                     //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
                     Log.e("TAG", "AAAA " + viewModel.data.open)
@@ -554,18 +595,19 @@ class Register2  : Fragment() , CallBackListener {
                         if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
                             datetime.get(Calendar.HOUR)
                         )
+
                     var am_pm = ""
                     if (datetime.get(Calendar.AM_PM) == Calendar.AM)
                         am_pm = "AM";
                     else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
                         am_pm = "PM";
                     binding.editTextVendingTimeClose.setText(
-                        strHrsToShow + ":" + datetime.get(
-                            Calendar.MINUTE
-                        ) + " " + am_pm
+                        strHrsToShow + ":" + (if (minute.toString().length == 1) "0"+datetime.get(Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
                     )
+
                     // viewModel.data.close = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
-                    viewModel.data.close = "" + hourOfDay + ":" + minute + ":00"
+                    viewModel.data.close = "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
+
                     // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
                     //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
                 }
@@ -666,7 +708,7 @@ class Register2  : Fragment() , CallBackListener {
         var index = 0
         val list = arrayOfNulls<String>(viewModel.itemLocalOrganizationCurrent.size)
         for (value in viewModel.itemLocalOrganizationCurrent) {
-            list[index] = value.local_organization_name
+            list[index] = value.local_organisation_name
             index++
         }
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)

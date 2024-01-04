@@ -1,10 +1,14 @@
 package com.streetsaarthi.screens.onboarding.register
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,6 +29,7 @@ import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.Register1Binding
 import com.streetsaarthi.screens.interfaces.CallBackListener
+import com.streetsaarthi.utils.Permissions
 import com.streetsaarthi.utils.getMediaFilePathFor
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,12 +78,7 @@ class Register1  : Fragment() , CallBackListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val directory = File(requireContext().filesDir, "camera_images")
-        if(!directory.exists()){
-            directory.mkdirs()
-        }
-        val file = File(directory,"${Calendar.getInstance().timeInMillis}.png")
-        uriReal = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", file)
+
     }
 
 
@@ -90,6 +92,8 @@ class Register1  : Fragment() , CallBackListener {
                     // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
                     viewModel.data.PassportSizeImage = requireContext().getMediaFilePathFor(uriReal!!)
                     binding.textViewPassportSizeImage.setText(File(viewModel.data.PassportSizeImage!!).name)
+                  //  binding.ivIcon22.loadImage(url = {  requireContext().getMediaFilePathFor(uriReal!!) })
+
                 }
                 2 -> {
                     Log.e("TakePicture", "Selected URI2: $imagePosition $uri")
@@ -172,17 +176,53 @@ class Register1  : Fragment() , CallBackListener {
 
             layoutPassportSizeImage.setOnClickListener {
                 imagePosition = 1
-                showOptions()
+                isFree = true
+                callMediaPermissions()
             }
 
             layoutIdentificationImage.setOnClickListener {
                 imagePosition = 2
-                showOptions()
+                isFree = true
+                callMediaPermissions()
             }
 
         }
 
     }
+
+    private fun callMediaPermissions() {
+        activityResultLauncher.launch(
+            arrayOf(Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+        )
+    }
+
+
+    var isFree = false
+    private val activityResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions())
+        { permissions ->
+            // Handle Permission granted/rejected
+            permissions.entries.forEach {
+                val permissionName = it.key
+                val isGranted = it.value
+                Log.e("TAG", "00000 "+permissionName)
+                if (isGranted) {
+                    Log.e("TAG", "11111"+permissionName)
+                    if(isFree){
+                        showOptions()
+                    }
+                    isFree = false
+                } else {
+                    // Permission is denied
+                    Log.e("TAG", "222222"+permissionName)
+                }
+            }
+        }
+
+
+
 
 
     private fun showDropDownGenderDialog() {
@@ -334,6 +374,9 @@ class Register1  : Fragment() , CallBackListener {
         val tvCamera=dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
         val tvCameraDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
         val dialog= BottomSheetDialog(requireContext(),R.style.TransparentDialog)
+        dialog.setContentView(dialogView)
+        dialog.show()
+
         btnCancel.setOnClickListener {
             dialog.dismiss()
         }
@@ -354,15 +397,23 @@ class Register1  : Fragment() , CallBackListener {
             dialog.dismiss()
             forGallery()
         }
-        dialog.setContentView(dialogView)
-        dialog.show()
+
     } catch (e: Exception) {
         e.printStackTrace()
         Log.e("TAG","errorD " + e.message)
     }
 
+
+
+
     private fun forCamera() {
         requireActivity().runOnUiThread(){
+            val directory = File(requireContext().filesDir, "camera_images")
+            if(!directory.exists()){
+                directory.mkdirs()
+            }
+            val file = File(directory,"${Calendar.getInstance().timeInMillis}.png")
+            uriReal = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", file)
             captureMedia.launch(uriReal)
         }
     }
