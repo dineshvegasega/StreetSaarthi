@@ -25,7 +25,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -144,8 +143,8 @@ class WebPage : Fragment() {
 //https://streetsaarthi.in/#/mobile-login
         var screen = arguments?.getString(Screen)
             if (screen == LoginPassword){
-//                binding.webView.loadUrl(WEB_URL+"#/mobile-login")
-                binding.webView.loadUrl("https://amritmahotsav.nic.in/downloads.htm")
+                binding.webView.loadUrl(WEB_URL+"#/mobile-login")
+//                binding.webView.loadUrl("https://amritmahotsav.nic.in/downloads.htm")
 
             } else if (screen == LoginOtp){
                 binding.webView.loadUrl(WEB_URL+"#/mobile-otp-login")
@@ -167,11 +166,12 @@ class WebPage : Fragment() {
                 Uri.parse(url)
             )
 //            request.allowScanningByMediaScanner()
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) //Notify client once download is completed!
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             request.setDestinationInExternalPublicDir(
                 Environment.DIRECTORY_DOWNLOADS,
-                "StreetSaarthi_${Calendar.getInstance().timeInMillis}.jpg"
+                "StreetSaarthi_${Calendar.getInstance().timeInMillis}_${url.substring(url.lastIndexOf("/") + 1)}"
             )
+
             val dm = requireContext().getSystemService(DOWNLOAD_SERVICE) as DownloadManager?
             dm!!.enqueue(request)
             Toast.makeText(
