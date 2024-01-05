@@ -22,6 +22,7 @@ import androidx.core.content.FileProvider
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kochia.customer.utils.hideKeyboard
@@ -31,6 +32,8 @@ import com.streetsaarthi.screens.interfaces.CallBackListener
 import com.streetsaarthi.utils.getMediaFilePathFor
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.File
 import java.util.Calendar
@@ -68,128 +71,93 @@ class Register2  : Fragment() , CallBackListener {
     private var pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                Log.e("PhotoPicker", "Selected URI: $uri")
-                //  binding.imageUploadpassportsizeImage.loadImage(url = {  requireContext().getMediaFilePathFor(uri) })
                 when (imagePosition) {
                     11 -> {
-                        Log.e("TakePicture", "Selected URI1: $imagePosition $uri")
                         // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
                         viewModel.data.ShopImage = requireContext().getMediaFilePathFor(uri)
                         binding.textViewlayoutShopImage.setText(File(viewModel.data.ShopImage!!).name)
                     }
 
                     1 -> {
-                        Log.e("TakePicture", "Selected URI1: $imagePosition $uri")
-                        // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
                         viewModel.data.ImageUploadCOV = requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewImageUploadCOV.setText(File(viewModel.data.ImageUploadCOV!!).name)
                     }
 
                     2 -> {
-                        Log.e("TakePicture", "Selected URI2: $imagePosition $uri")
-                        //  binding.inclideDocuments.cbRememberImageUploadLOR.isChecked = true
                         viewModel.data.ImageUploadLOR = requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewImageUploadLOR.setText(File(viewModel.data.ImageUploadLOR!!).name)
                     }
 
                     3 -> {
-                        Log.e("TakePicture", "Selected URI3: $imagePosition $uri")
-                        //  binding.inclideDocuments.cbRememberUploadSurveyReceipt.isChecked = true
                         viewModel.data.UploadSurveyReceipt =
                             requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewUploadSurveyReceipt.setText(File(viewModel.data.UploadSurveyReceipt!!).name)
                     }
 
                     4 -> {
-                        Log.e("TakePicture", "Selected URI4: $imagePosition $uri")
-                        // binding.inclideDocuments.cbRememberUploadChallan.isChecked = true
                         viewModel.data.UploadChallan = requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewUploadChallan.setText(File(viewModel.data.UploadChallan!!).name)
                     }
 
                     5 -> {
-                        Log.e("TakePicture", "Selected URI5: $imagePosition $uri")
-                        // binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked = true
                         viewModel.data.UploadApprovalLetter =
                             requireContext().getMediaFilePathFor(uri)
                         binding.inclideDocuments.textViewUploadApprovalLetter.setText(File(viewModel.data.UploadApprovalLetter!!).name)
                     }
                 }
             } else {
-                Log.e("PhotoPicker", "No media selected")
             }
         }
+
+
+
 
 
     var uriReal: Uri? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val directory = File(requireContext().filesDir, "camera_images")
-        if (!directory.exists()) {
-            directory.mkdirs()
-        }
-        val file = File(directory, "${Calendar.getInstance().timeInMillis}.png")
-        uriReal = FileProvider.getUriForFile(
-            requireContext(),
-            requireContext().getPackageName() + ".provider",
-            file
-        )
-    }
-
-
     val captureMedia = registerForActivityResult(ActivityResultContracts.TakePicture()) { uri ->
-        if (uri == true) {
-            Log.e("PhotoPicker", "Selected URI: $uriReal")
-            //  binding.imageUploadpassportsizeImage.loadImage(url = {  requireContext().getMediaFilePathFor(uriReal) })
-            when (imagePosition) {
-                11 -> {
-                    Log.e("TakePicture", "Selected URI5: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked = true
-                    viewModel.data.ShopImage = requireContext().getMediaFilePathFor(uriReal!!)
-                    binding.textViewlayoutShopImage.setText(File(viewModel.data.ShopImage!!).name)
-                }
+        lifecycleScope.launch {
+            if (uri == true) {
+                when (imagePosition) {
+                    11 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
+                        viewModel.data.ShopImage = compressedImageFile.path
+                        binding.textViewlayoutShopImage.setText(compressedImageFile.name)
+                    }
 
-                1 -> {
-                    Log.e("TakePicture", "Selected URI1: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
-                    viewModel.data.ImageUploadCOV = requireContext().getMediaFilePathFor(uriReal!!)
-                    binding.inclideDocuments.textViewImageUploadCOV.setText(File(viewModel.data.ImageUploadCOV!!).name)
-                }
+                    1 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
+                        viewModel.data.ImageUploadCOV = compressedImageFile.path
+                        binding.inclideDocuments.textViewImageUploadCOV.setText(compressedImageFile.name)
+                    }
 
-                2 -> {
-                    Log.e("TakePicture", "Selected URI2: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberImageUploadLOR.isChecked = true
-                    viewModel.data.ImageUploadLOR = requireContext().getMediaFilePathFor(uriReal!!)
-                    binding.inclideDocuments.textViewImageUploadLOR.setText(File(viewModel.data.ImageUploadLOR!!).name)
-                }
+                    2 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
+                        viewModel.data.ImageUploadLOR = compressedImageFile.path
+                        binding.inclideDocuments.textViewImageUploadLOR.setText(compressedImageFile.name)
+                    }
 
-                3 -> {
-                    Log.e("TakePicture", "Selected URI3: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberUploadSurveyReceipt.isChecked = true
-                    viewModel.data.UploadSurveyReceipt =
-                        requireContext().getMediaFilePathFor(uriReal!!)
-                    binding.inclideDocuments.textViewUploadSurveyReceipt.setText(File(viewModel.data.UploadSurveyReceipt!!).name)
-                }
+                    3 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
+                        viewModel.data.UploadSurveyReceipt = compressedImageFile.path
+                        binding.inclideDocuments.textViewUploadSurveyReceipt.setText(compressedImageFile.name)
+                    }
 
-                4 -> {
-                    Log.e("TakePicture", "Selected URI4: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberUploadChallan.isChecked = true
-                    viewModel.data.UploadChallan = requireContext().getMediaFilePathFor(uriReal!!)
-                    binding.inclideDocuments.textViewUploadChallan.setText(File(viewModel.data.UploadChallan!!).name)
-                }
+                    4 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
+                        viewModel.data.UploadChallan = compressedImageFile.path
+                        binding.inclideDocuments.textViewUploadChallan.setText(compressedImageFile.name)
+                    }
 
-                5 -> {
-                    Log.e("TakePicture", "Selected URI5: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberUploadApprovalLetter.isChecked = true
-                    viewModel.data.UploadApprovalLetter =
-                        requireContext().getMediaFilePathFor(uriReal!!)
-                    binding.inclideDocuments.textViewUploadApprovalLetter.setText(File(viewModel.data.UploadApprovalLetter!!).name)
+                    5 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
+                        viewModel.data.UploadApprovalLetter = compressedImageFile.path
+                        binding.inclideDocuments.textViewUploadApprovalLetter.setText(compressedImageFile.name)
+                    }
                 }
+            } else {
             }
-        } else {
-            Log.e("PhotoPicker", "No media selected")
         }
+
     }
 
 
@@ -446,6 +414,12 @@ class Register2  : Fragment() , CallBackListener {
 
     private fun forCamera() {
         requireActivity().runOnUiThread() {
+            val directory = File(requireContext().filesDir, "camera_images")
+            if(!directory.exists()){
+                directory.mkdirs()
+            }
+            val file = File(directory,"${Calendar.getInstance().timeInMillis}.png")
+            uriReal = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", file)
             captureMedia.launch(uriReal)
         }
     }

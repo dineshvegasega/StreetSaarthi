@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.database.Cursor
 import android.net.Uri
+import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
@@ -121,6 +123,23 @@ fun String?.getResponseError(): String {
         } else this
     } catch (e: Exception) {
         this
+    }
+}
+
+
+
+fun Context.getRealPathFromUri(contentUri: Uri?): String? {
+    var cursor: Cursor?=null
+    return try {
+        var proj=arrayOf<kotlin.String>(MediaStore.Images.Media.DATA)
+        //val proj: Array<String>= arrayOf<kotlin.String>(MediaStore.Images.Media.DATA)
+        cursor=contentResolver.query(contentUri!!,proj,null,null,null)
+        assert(cursor != null)
+        val column_index=cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        cursor.getString(column_index)
+    } finally {
+        cursor?.close()
     }
 }
 

@@ -48,31 +48,6 @@ class Register : Fragment() , CallBackListener {
 
     companion object{
         var callBackListener: CallBackListener? = null
-
-//        const val ALL_PERMISSIONS = 10
-//        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-//        private val REQUIRED_PERMISSIONS =
-//            mutableListOf (
-////                Manifest.permission.READ_MEDIA_IMAGES,
-////                Manifest.permission.WRITE_EXTERNAL_STORAGE
-//                Manifest.permission.CAMERA
-//            )
-//                .apply {
-////                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-////                    add(Manifest.permission.READ_MEDIA_IMAGES)
-////                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-////                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                    add(Manifest.permission.CAMERA)
-//            }.toTypedArray()
-
-//        private val REQUIRED_GALLERY_PERMISSIONS =
-//            arrayOf(
-//                Manifest.permission.READ_EXTERNAL_STORAGE,
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                Manifest.permission.CAMERA
-//            )
-//        const val CAPTURE_IMAGE_REQUEST = 1001
-//        const val GALLERY_IMAGE_REQUEST = 1002
     }
 
     override fun onCreateView(
@@ -86,90 +61,12 @@ class Register : Fragment() , CallBackListener {
 
 var tabPosition: Int = 0;
 
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        when (requestCode) {
-//            ALL_PERMISSIONS -> {
-//                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) else {
-//
-//                }
-//            }
-//        }
-//    }
-
-//
-//    private fun checkPremissions() {
-//        when {
-//            PermissionUtils.isEnabled( requireContext()) -> {
-////                setUpLocationListener()
-//                Log.e("TAG", "CCCCCCCCCC")
-//            }
-//            else -> {
-//                AlertDialog.Builder(requireContext())
-//                    .setTitle(requireContext().getString(R.string.enterOtp))
-//                    .setMessage(requireContext().getString(R.string.live_notices))
-//                    .setCancelable(false)
-//                    .setPositiveButton(requireContext().getString(R.string.all_notices)) { _, _ ->
-//                        val viewIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-//                        someActivityResultLauncher.launch(viewIntent)
-//
-//                    }
-//                    .show()
-//            }
-//        }
-//    }
-//
-//
-//
-//    var someActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
-//        ActivityResultContracts.StartActivityForResult()
-//    ) { result ->
-////        setUpLocationListener()
-//        Log.e("TAG", "BBBBBBB")
-//    }
-//
-//    private val permissionsResultCallback = registerForActivityResult(
-//        ActivityResultContracts.RequestPermission()){
-//        when (it) {
-//            true -> {
-//                checkPremissions()
-//            }
-//            false -> {
-//                Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         callBackListener = this
 
-
-//        when {
-//            PermissionUtils.isAccessCAMERAGranted( requireContext()) -> {
-//                checkPremissions()
-//            }
-//            else -> {
-//                val permission = ContextCompat.checkSelfPermission(
-//                    requireContext(), Manifest.permission.CAMERA)
-//
-//                if (permission != PackageManager.PERMISSION_GRANTED) {
-//                    permissionsResultCallback.launch(Manifest.permission.CAMERA)
-//                } else {
-//                    println("Permission isGranted")
-//                    Log.e("TAG", "ZZZZZZZ")
-//                }
-//            }
-//        }
-
-       // ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, ALL_PERMISSIONS)
 
         binding.apply {
             var adapter= RegisterAdapter(requireActivity())
@@ -188,14 +85,6 @@ var tabPosition: Int = 0;
                 }
             })
 
-//            var screen = arguments?.getString(Screen)
-//            if (screen == QuickRegister){
-//                loading.visibility = View.GONE
-//            } else if (screen == CompleteRegister){
-//                loading.visibility = View.VISIBLE
-//            } else if (screen == LoginPassword){
-//               // loading.visibility = View.GONE
-//            }
 
             loadProgress(tabPosition)
 
@@ -305,6 +194,7 @@ var tabPosition: Int = 0;
     @SuppressLint("SuspiciousIndentation")
     override fun onCallBack(pos: Int) {
         Log.e("TAG", "onCallBack " + pos)
+
         binding.apply {
             if (pos == 2){
                 introViewPager.setCurrentItem(1, false)
@@ -442,8 +332,8 @@ var tabPosition: Int = 0;
                     requestBody.addFormDataPart("password", viewModel.data.password!!)
                 }
 
-
-
+//                requestBody.addFormDataPart("mobile_no", "1234567826")
+//                requestBody.addFormDataPart("password", "Test@123")
 
 //                requestBody.addFormDataPart("status", "unverified")
 
@@ -512,7 +402,7 @@ var tabPosition: Int = 0;
                 }
 
                 Log.e("TAG", "viewModel.dataAll "+viewModel.data.toString())
-               // viewModel.registerWithFiles(view = requireView(), requestBody.build())
+                viewModel.registerWithFiles(view = requireView(), requestBody.build())
             }
         }
     }

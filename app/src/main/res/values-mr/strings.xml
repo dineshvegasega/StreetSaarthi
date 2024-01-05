@@ -293,7 +293,7 @@
 
     <string name="complaintsSlashfeedback">तक्रारी/अभिप्राय</string>
     <string name="AllComplaintsFeedback">सर्व तक्रारी/अभिप्राय</string>
-    <string name="do_you_have_localOrgnaization">तुम्ही कोणत्याही संस्थेशी संबंधित आहात का?</string>
+    <string name="do_you_have_localOrgnaization">तुम्ही कोणत्याही संस्थेशी संलग्न आहात का?</string>
     <string name="apply">लागू करा</string>
 
 </resources>

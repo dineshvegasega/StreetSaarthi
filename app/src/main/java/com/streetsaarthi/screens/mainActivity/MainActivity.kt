@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -13,11 +14,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.streetsaarthi.screens.onboarding.networking.Screen
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.squareup.picasso.Picasso
 import com.streetsaarthi.R
@@ -25,13 +26,10 @@ import com.streetsaarthi.databinding.MainActivityBinding
 import com.streetsaarthi.datastore.DataStoreKeys
 import com.streetsaarthi.datastore.DataStoreUtil
 import com.streetsaarthi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.screens.main.dashboard.Dashboard
-import com.streetsaarthi.screens.onboarding.splash.Splash
-import com.streetsaarthi.screens.onboarding.start.Start
+import com.streetsaarthi.screens.onboarding.networking.Screen
 import com.streetsaarthi.utils.LocaleHelper
-import com.streetsaarthi.utils.mainThread
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
+import java.io.File
 import java.lang.ref.WeakReference
 
 
@@ -64,6 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityVM by viewModels()
 
+    @SuppressLint("SdCardPath")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = MainActivityBinding.inflate(layoutInflater)
@@ -89,7 +88,6 @@ class MainActivity : AppCompatActivity() {
             Log.e("TAG", "screen "+screen)
             navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
         }
-
 
         Picasso.get().load(
                 "http://167.71.225.20:8081/uploads/1702704229image-352x80%20(2).jpg"

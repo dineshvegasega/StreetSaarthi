@@ -297,7 +297,7 @@
 
     <string name="complaintsSlashfeedback">অভিযোগ/প্রতিক্রিয়া</string>
     <string name="AllComplaintsFeedback">সমস্ত অভিযোগ/প্রতিক্রিয়া</string>
-    <string name="do_you_have_localOrgnaization">আপনি কি কোন সংস্থার সাথে যুক্ত?</string>
+    <string name="do_you_have_localOrgnaization">আপনি কি কোন প্রতিষ্ঠানের সাথে যুক্ত?</string>
     <string name="apply">প্রয়োগ করুন</string>
 
 </resources>

@@ -23,16 +23,24 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.Register1Binding
 import com.streetsaarthi.screens.interfaces.CallBackListener
+import com.streetsaarthi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.utils.Permissions
 import com.streetsaarthi.utils.getMediaFilePathFor
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.time.LocalDate
 import java.time.Period
@@ -52,59 +60,45 @@ class Register1  : Fragment() , CallBackListener {
     var imagePosition = 0
     private var pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
-            Log.e("PhotoPicker", "Selected URI: $uri")
             when (imagePosition) {
                 1 -> {
-                    Log.e("TakePicture", "Selected URI1: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
                     viewModel.data.PassportSizeImage = requireContext().getMediaFilePathFor(uri)
                     binding.textViewPassportSizeImage.setText(File(viewModel.data.PassportSizeImage!!).name)
                 }
                 2 -> {
-                    Log.e("TakePicture", "Selected URI2: $imagePosition $uri")
-                    //  binding.inclideDocuments.cbRememberImageUploadLOR.isChecked = true
                     viewModel.data.IdentificationImage = requireContext().getMediaFilePathFor(uri)
                     binding.textViewIdentificationImage.setText(File(viewModel.data.IdentificationImage!!).name)
                 }
             }
         } else {
-            Log.e("PhotoPicker", "No media selected")
         }
     }
+
+
+
 
 
 
     var uriReal : Uri?= null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-
     val captureMedia = registerForActivityResult(ActivityResultContracts.TakePicture()) { uri ->
-        if (uri == true) {
-            Log.e("PhotoPicker", "Selected URI: $uriReal")
-            //  binding.imageUploadpassportsizeImage.loadImage(url = {  requireContext().getMediaFilePathFor(uriReal) })
-            when (imagePosition) {
-                1 -> {
-                    Log.e("TakePicture", "Selected URI1: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
-                    viewModel.data.PassportSizeImage = requireContext().getMediaFilePathFor(uriReal!!)
-                    binding.textViewPassportSizeImage.setText(File(viewModel.data.PassportSizeImage!!).name)
-                  //  binding.ivIcon22.loadImage(url = {  requireContext().getMediaFilePathFor(uriReal!!) })
-
+        lifecycleScope.launch {
+            if (uri == true) {
+                when (imagePosition) {
+                    1 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
+                        viewModel.data.PassportSizeImage = compressedImageFile.path
+                        binding.textViewPassportSizeImage.setText(compressedImageFile.name)
+                    }
+                    2 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
+                        viewModel.data.IdentificationImage = compressedImageFile.path
+                        binding.textViewIdentificationImage.setText(compressedImageFile.name)
+                    }
                 }
-                2 -> {
-                    Log.e("TakePicture", "Selected URI2: $imagePosition $uri")
-                    // binding.inclideDocuments.cbRememberImageUploadLOR.isChecked = true
-                    viewModel.data.IdentificationImage = requireContext().getMediaFilePathFor(uriReal!!)
-                    binding.textViewIdentificationImage.setText(File(viewModel.data.IdentificationImage!!).name)
-                }
+            } else {
             }
-        } else {
-            Log.e("PhotoPicker", "No media selected")
         }
+
     }
 
 
@@ -124,6 +118,28 @@ class Register1  : Fragment() , CallBackListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         callBackListener = this
+
+
+
+
+//        binding.btSignIn.setOnClickListener {
+//            val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("user_role", USER_TYPE)
+//            requestBody.addFormDataPart("mobile_no", "1234567825")
+//            requestBody.addFormDataPart("password", "Test@123")
+//
+//            requestBody.addFormDataPart(
+//                "profile_image_name",
+//                File(viewModel.data.PassportSizeImage).name,
+//                File(viewModel.data.PassportSizeImage).asRequestBody("image/png".toMediaTypeOrNull())
+//            )
+//
+//
+//            viewModel.registerWithFiles(view = requireView(), requestBody.build())
+//
+//
+//        }
 
 
         binding.apply {
@@ -253,7 +269,7 @@ class Register1  : Fragment() , CallBackListener {
         val dpd = DatePickerDialog(requireContext(), R.style.CalendarDatePickerDialog,DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             val today= LocalDate.now()
             val birthday: LocalDate=LocalDate.of(year,(monthOfYear+1),dayOfMonth)
-                val p: Period =Period.between(birthday,today)
+            val p: Period =Period.between(birthday,today)
             if(p.getYears() > 13){
                 binding.editTextDateofBirth.setText("" + year + "-" + (monthOfYear+1)  + "-" + dayOfMonth)
             }else{
@@ -459,7 +475,7 @@ class Register1  : Fragment() , CallBackListener {
                 } else if (editTextMaritalStatus.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.marital_status))
                 } else if (editTextMaritalStatus.text.toString() == getString(R.string.married) && editTextSpouseName.text.toString().isEmpty()){
-                        showSnackBar(getString(R.string.spouse_s_name))
+                    showSnackBar(getString(R.string.spouse_s_name))
                 } else {
                     if (!(viewModel.stateId > 0)){
                         showSnackBar(getString(R.string.select_state))

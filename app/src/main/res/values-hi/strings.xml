@@ -296,7 +296,7 @@
 
     <string name='complaintsSlashfeedback'>शिकायत/प्रतिक्रिया</string>
     <string name = "AllComplaintsFeedback">सभी शिकायतें/प्रतिक्रिया</string>
-    <string name='do_you_have_localOrgnaization'>क्या आप किसी संगठन से जुड़े हैं?</string>
+    <string name='do_you_have_localOrgnaization'>क्या आप किसी संगठन से संबद्ध हैं?</string>
     <string name='apply'>लागू करें</string>
 
 

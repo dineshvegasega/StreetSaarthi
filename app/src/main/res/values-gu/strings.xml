@@ -294,7 +294,7 @@
 
     <string name="complaintsSlashfeedback">ફરિયાદો/પ્રતિસાદ</string>
     <string name="AllComplaintsFeedback">બધી ફરિયાદો/પ્રતિસાદ</string>
-    <string name="do_you_have_localOrgnaization">શું તમે કોઈપણ સંસ્થા સાથે સંકળાયેલા છો?</string>
+    <string name="do_you_have_localOrgnaization">શું તમે કોઈપણ સંસ્થા સાથે જોડાયેલા છો?</string>
     <string name="apply">લાગુ કરો</string>
 
 </resources>
