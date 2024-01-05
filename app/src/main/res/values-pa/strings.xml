@@ -72,6 +72,7 @@
     <string name="marathi">मराठी</string>
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
+    <string name="telugu">తెలుగు</string>
 
     <string name="englishVal">en</string>
     <string name="bengaliVal">bn</string>
@@ -82,6 +83,9 @@
     <string name="marathiVal">mr</string>
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
+    <string name="teluguVal">te</string>
+
+
 
     <string name="RegisterHere">ਇੱਥੇ ਰਜਿਸਟਰ ਕਰੋ</string>
    <string name="SelectYourchoiceofregistration">ਆਪਣੀ ਪਸੰਦ ਦੀ ਚੋਣ ਕਰਨ ਲਈ ਰਜਿਸਟਰ ਕਰੋ</string>

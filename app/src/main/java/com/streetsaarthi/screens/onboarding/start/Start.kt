@@ -127,6 +127,13 @@ class Start : Fragment() {
                     ColorStateList.valueOf(
                         ResourcesCompat.getColor(
                             getResources(), R.color._E79D46, null)))
+            } else if (MainActivity.context.get()!!.getString(R.string.teluguVal) == ""+viewModel.locale){
+                btLanguage.setText(R.string.telugu)
+                btSignIn.setEnabled(true)
+                btSignIn.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        ResourcesCompat.getColor(
+                            getResources(), R.color._E79D46, null)))
             }
 
 

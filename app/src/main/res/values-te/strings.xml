@@ -1,0 +1,307 @@
+<resources>
+    <string name="app_name">Street Saarthi</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_image_found">No image found</string>
+    <string name="street_vendor_system" translatable="false">Street Vendor\nSystem</string>
+    <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
+    <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
+
+    <string name="click_here_to_agree_to_the"><![CDATA[Click Here to agree on the]]></string>
+    <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
+    <string name="title">Title</string>
+    <string name="submit">Submit</string>
+
+    <string name="PoweredbyVegaSegaSolutions">Powered by VegaSega Solutions</string>
+    <string name="NationalAssociation">National Association Of Street Vendors Of India</string>
+    <string name="AnInitiativeBy">An Initiative By</string>
+    <string name="ConnectingStreetVendorsAllOverIndia">Connecting Street Vendors All Over India</string>
+    <string name="StreetVendorSystem">Street Vendor System</string>
+
+
+    <string name="street_saarthi">Street Saarthi</string>
+------------------------------------------------------------------
+
+    <string name="Pleaseselectagree">దయచేసి నిబంధనలపై అంగీకరించండి &amp; షరతులు</string>
+
+
+    <string name="quick_registation">శీఘ్ర రిజిస్టర్</string>
+    <string name="loginWithPassword">పాస్‌వర్డ్‌తో లాగిన్ అవ్వండి</string>
+    <string name="loginWithMobileOTP">మొబైల్ OTP తో లాగిన్ అవ్వండి</string>
+    <string name="enterOtp">OTP ని నమోదు చేయండి</string>
+
+    <string name="completeProfileRegistration">పూర్తి ప్రొఫైల్ రిజిస్ట్రేషన్</string>
+    <string name="fast_process">వేగవంతమైన ప్రక్రియ</string>
+    <string name="login_here">ఇక్కడ లాగిన్ అవ్వండి</string>
+    <string name="enter_your_login_details_here">మీ లాగిన్ వివరాలను ఇక్కడ నమోదు చేయండి</string>
+    <string name="login_with_otp">OTP తో లాగిన్ అవ్వండి</string>
+    <string name="quick_registration">శీఘ్ర నమోదు</string>
+    <string name="enter_your_details_for_quick_register">శీఘ్ర రిజిస్టర్ కోసం మీ వివరాలను నమోదు చేయండి</string>
+    <string name="first_name">మొదటి పేరు</string>
+
+    <string name="last_name">చివరి పేరు</string>
+
+    <string name="createPassword">పాస్వర్డ్ సృష్టించండి</string>
+
+    <string name="EnterPassword">రహస్య సంకేతం తెలపండి</string>
+    <string name="reEnterPassword">పాస్వర్డ్ను తిరిగి నమోదు చేయండి</string>
+
+
+
+    <string name="enterMobileNumber">మొబైల్ నంబర్‌ను నమోదు చేయండి</string>
+
+
+    <string name="login">ప్రవేశించండి</string>
+
+
+    <string name="explore_app">అనువర్తనాన్ని అన్వేషించండి</string>
+
+    <string name="register">నమోదు చేసుకోండి</string>
+
+    <string name="LearnAboutSchemes">పథకాల గురించి తెలుసుకోండి</string>
+    <string name="ComplaintRedressal">ఫిర్యాదు పరిష్కారం</string>
+    <string name="KnowYourRights">మీ హక్కులను తెలుసుకోండి</string>
+
+    <string name="desc1">మీకు వర్తించే తాజా పథకాల గురించి తెలుసుకోండి.</string>
+    <string name="desc2">మీ అన్ని ఫిర్యాదుల యొక్క శీఘ్ర దాఖలు, పర్యవేక్షణ మరియు సకాలంలో పరిష్కారం.</string>
+    <string name="desc3">మీ చట్టపరమైన మరియు పౌర హక్కులు ఏమిటో, వాటిని ఎలా వ్యాయామం చేయాలో ఇక్కడ తెలుసుకోండి.</string>
+
+    <string name="SelectLanguage">భాషను ఎంచుకోండి</string>
+
+    <string name="english">English</string>
+    <string name="bengali">বাংলা</string>
+    <string name="gujarati">ગુજરાતી</string>
+    <string name="hindi">हिन्दी</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="marathi">मराठी</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="tamil">தமிழ்</string>
+    <string name="telugu">తెలుగు</string>
+
+    <string name="englishVal">en</string>
+    <string name="bengaliVal">bn</string>
+    <string name="gujaratiVal">gu</string>
+    <string name="hindiVal">hi</string>
+    <string name="kannadaVal">kn</string>
+    <string name="malayalamVal">ml</string>
+    <string name="marathiVal">mr</string>
+    <string name="punjabiVal">pa</string>
+    <string name="tamilVal">ta</string>
+    <string name="teluguVal">te</string>
+
+
+    <string name="RegisterHere">ఇక్కడ నమోదు చేయండి</string>
+    <string name="SelectYourchoiceofregistration">మీ రిజిస్ట్రేషన్ ఎంపికను ఎంచుకోండి</string>
+    <string name="continues">కొనసాగించండి</string>
+
+
+    <string name="mobileNumber">మొబైల్ సంఖ్య</string>
+    <string name="YourPassword">మీ పాస్‌వర్డ్</string>
+    <string name="register_for_new_account">కొత్త ఖాతా కోసం నమోదు చేయాలా?</string>
+    <string name="Forgot">మర్చిపోయాను</string>
+    <string name="ForgotPassword">పాస్‌వర్డ్ మర్చిపోయారా</string>
+    <string name="EnterDetailstoSetpassword">పాస్‌వర్డ్‌ని సెట్ చేయడానికి వివరాలను నమోదు చేయండి</string>
+    <string name="send_otp">OTP పంపండి</string>
+    <string name="verify_otp">OTPని ధృవీకరించండి</string>
+    <string name="set_password">పాస్వర్డ్ సెట్ చేయండి</string>
+    <string name="back_to_login">లాగిన్‌కి తిరిగి వెళ్ళు</string>
+    <string name="back">తిరిగి</string>
+    <string name="enter_details_to_register_with_us">మాతో నమోదు చేసుకోవడానికి వివరాలను నమోదు చేయండి</string>
+    <string name="profile_details">ప్రొఫైల్ వివరాలు</string>
+    <string name="registration_successful">నమోదు విజయవంతమైంది</string>
+    <string name="congratulations_your_initial_registration_is_complete">అభినందనలు!\nమీ ప్రారంభ రిజిస్ట్రేషన్ పూర్తయింది</string>
+    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">మీ రిజిస్ట్రేషన్‌ను ధృవీకరించడానికి మా బృందం నుండి ఎవరైనా మిమ్మల్ని 48 గంటలలోపు సంప్రదిస్తారు.</string>
+    <string name="RegisterNow">ఇప్పుడు నమోదు చేసుకోండి</string>
+
+    <string name="resendOtp">OTP ను మళ్ళీ పంపు</string>
+    <string name="OTPnotverified">OTP ధృవీకరించబడలేదు</string>
+    <string name="YourNewPassword">మీ కొత్త పాస్‌వర్డ్</string>
+    <string name="back_to_home">తిరిగి ఇంటికి</string>
+    <string name="back_to_home_u"><u>తిరిగి ఇంటికి</u></string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">పాస్‌వర్డ్‌ని సృష్టించండి మరియు పాస్‌వర్డ్‌ని మళ్లీ నమోదు చేయండి ఒకేలా ఉండదు</string>
+
+    <string name="InvalidPassword">పాస్‌వర్డ్‌లో 1 పెద్ద అక్షరం, 1 చిన్న అక్షరం, 1 సంఖ్య మరియు 1 ప్రత్యేక అక్షరంతో పాటు కనీసం 8 అక్షరాలు ఉండాలి</string>
+    <string name="father_s_first_name">తండ్రి\'s మొదటి పేరు</string>
+    <string name="father_s_last_name">తండ్రి\'s చివరి పేరు</string>
+    <string name="gender">లింగం</string>
+    <string name="date_of_birth">పుట్టిన తేది</string>
+    <string name="social_category">వర్గం</string>
+    <string name="education_qualifacation">విద్య అర్హత</string>
+    <string name="select_state">రాష్ట్రం</string>
+    <string name="select_district">జిల్లా</string>
+    <string name="municipality_panchayat">మునిసిపాలిటీ/పంచాయతీ</string>
+    <string name="select_pincode">పిన్ కోడ్</string>
+    <string name="marital_status">వైవాహిక స్థితి</string>
+    <string name="spouse_s_name">జీవిత భాగస్వామి పేరు</string>
+    <string name="enter_address">చిరునామాను నమోదు చేయండి</string>
+    <string name="current_residential_address">ప్రస్తుత నివాస చిరునామా</string>
+    <string name="age_minimum">మీ వయస్సు కనీసం 14 సంవత్సరాలు ఉండాలి</string>
+    <string name="type_of_market_place">మార్కెట్ స్థలం రకం</string>
+    <string name="type_of_vending">వెండింగ్ రకం</string>
+    <string name="total_years_of_vending">వెండింగ్ యొక్క మొత్తం సంవత్సరాలు</string>
+    <string name="current_location_of_business">వ్యాపారం యొక్క ప్రస్తుత స్థానం</string>
+    <string name="upload_shop_image">షాప్ చిత్రాన్ని అప్‌లోడ్ చేయండి</string>
+    <string name="upload_cov">COV ని అప్‌లోడ్ చేయండి</string>
+    <string name="upload_lor">లోర్ అప్‌లోడ్ చేయండి</string>
+    <string name="camera">కెమెరా</string>
+    <string name="open_camera_to_capture_image">చిత్రాన్ని క్యాప్చర్ చేయడానికి కెమెరాను తెరవండి</string>
+    <string name="photos">ఫోటోలు</string>
+    <string name="browse_images_from_gallery">గ్యాలరీ నుండి చిత్రాలను బ్రౌజ్ చేయండి</string>
+    <string name="cancel">రద్దు చేయి</string>
+    <string name="choose_your_preference">మీ ప్రాధాన్యతను ఎంచుకోండి</string>
+    <string name="complete_profile_registration">పూర్తి ప్రొఫైల్ రిజిస్ట్రేషన్</string>
+    <string name="otp_verification">OTP ధృవీకరణ</string>
+    <string name="current_vending_address">ప్రస్తుత వెండింగ్ చిరునామా</string>
+    <string name="vending_time">వెండింగ్ సమయం</string>
+    <string name="to">to</string>
+    <string name="open">ఓపెన్</string>
+    <string name="close">దగ్గరగా</string>
+    <string name="open_time">ఓపెన్ టైమ్</string>
+    <string name="close_time">మూసివేత సమయం</string>
+    <string name="document_details">పత్ర వివరాలు</string>
+    <string name="do_you_have_vending_documents">మీకు వెండింగ్ పత్రాలు ఉన్నాయా?</string>
+    <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/సర్వే రసీదు/చలాన్/మునిసిపల్ బాడీ నుండి ఆమోదం లేఖ)</string>
+    <string name="government_scheme">ప్రభుత్వ పథకం</string>
+    <string name="yes">అవును</string>
+    <string name="no">లేదు</string>
+    <string name="upload_survey_receipt">సర్వే రశీదును అప్‌లోడ్ చేయండి</string>
+    <string name="upload_challan">చలాన్ అప్‌లోడ్ చేయండి</string>
+    <string name="upload_approval_letter_from_municipality">మునిసిపాలిటీ నుండి ఆమోదం లేఖను అప్‌లోడ్ చేయండి</string>
+    <string name="pm_swanidhi_scheme">పిఎం స్వానిధి పథకం</string>
+    <string name="others_please_name">ఇతరులు, దయచేసి పేరు</string>
+    <string name="scheme_name">పథకం పేరు</string>
+    <string name="professional_details">వృత్తిపరమైన వివరాలు</string>
+    <string name="personal_details">వ్యక్తిగత\nవివరాలు</string>
+    <string name="professional_details_2">వృత్తిపరమైన\nవివరాలు</string>
+    <string name="SetPassword_details">పాస్వర్డ్ సెట్ చేయండి</string>
+    <string name="passport_size_image">పాస్‌పోర్ట్ సైజు చిత్రం</string>
+    <string name="upload_media">మీడియాను అప్‌లోడ్ చేయి</string>
+    <string name="aadhar_voter_id_pan_card_driving_license">(ఆధార్ / ఓటర్ ID / PAN కార్డ్ / డ్రైవింగ్ లైసెన్స్)</string>
+    <string name="address_mention_village">చిరునామా (గ్రామం గురించి ప్రస్తావించండి)</string>
+    <string name="upload_shop">షాప్ చిత్రాన్ని అప్‌లోడ్ చేయండి</string>
+    <string name="identification_image">గుర్తింపు చిత్రం</string>
+
+
+    <string-array name="gender_array">
+        <item>పురుషుడు</item>
+        <item>స్త్రీ</item>
+        <item>ఇతర</item>
+    </string-array>
+
+
+
+    <string-array name="years_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+    </string-array>
+
+
+    <string-array name="socialCategory_array">
+        <item>ST</item>
+        <item>SC</item>
+        <item>GEN</item>
+        <item>OBC</item>
+        <item>PWD</item>
+    </string-array>
+
+
+
+    <string-array name="socialEducation_array">
+        <item>విద్య లేదు</item>
+        <item>ప్రాథమిక విద్య(1 నుండి 5 వరకు)</item>
+        <item>మధ్య విద్య(6 నుండి 9 వరకు)</item>
+        <item>ఉన్నత విద్య(10 నుండి 12 వరకు)</item>
+        <item>గ్రాడ్యుయేషన్</item>
+        <item>పోస్ట్ గ్రాడ్యుయేషన్</item>
+    </string-array>
+
+    <string name="married">వివాహం</string>
+    <string-array name="maritalStatus_array">
+        <item>సింగిల్</item>
+        <item>వివాహం</item>
+        <item>వితంతువు</item>
+        <item>విడాకులు తీసుకున్నారు</item>
+        <item>వేరు చేయబడింది</item>
+    </string-array>
+
+
+    <string name="COVText">COV</string>
+    <string name="LORText">,LOR</string>
+    <string name="Survery_ReceiptText">,Survery_Receipt</string>
+    <string name="ChallanText">,Challan</string>
+    <string name="Approval_LetterText">,Approval_Letter</string>
+
+    <string name="or">లేదా</string>
+    <string name="enterOtpHere">OTP ని ఇక్కడ నమోదు చేయండి</string>
+    <string name="img_description">ఇది ఒక చిత్రం</string>
+    <string name="logout">Logout</string>
+    <string name="are_your_sure_want_to_logout">మీరు ఖచ్చితంగా లాగ్ అవుట్ చేయాలనుకుంటున్నారా?</string>
+    <string name="enter_market_place">మార్కెట్ ప్లేస్‌ను నమోదు చేయండి</string>
+    <string name="enter_vending">విక్రయాలను నమోదు చేయండి</string>
+    <string name="select_scheme">స్కీమ్‌ని ఎంచుకోండి</string>
+    <string name="NASVI_Street_Vendor_Dashboard" translatable="false">NASVI Street Vendor Dashboard</string>
+
+    <string name="profiles">ప్రొఫైల్స్</string>
+    <string name="live_schemes">లైవ్ స్కీమ్‌లు</string>
+    <string name="all_schemes">అన్ని పథకాలు</string>
+    <string name="live_notices">లైవ్ నోటీసులు</string>
+    <string name="all_notices">అన్ని నోటీసులు</string>
+    <string name="live_training">ప్రత్యక్ష శిక్షణ</string>
+    <string name="all_training">అన్ని శిక్షణ</string>
+    <string name="complaints_feedback">ఫిర్యాదులు &amp;\nఫీడ్‌బ్యాక్</string>
+    <string name="recent_activites">ఇటీవలి యాక్టివిట్‌లు</string>
+    <string name="viewMore">మరింత వీక్షించండి</string>
+    <string name="search">శోధన</string>
+
+    <string name="complaintsSlashfeedback">ఫిర్యాదులు/ఫీడ్‌బ్యాక్</string>
+    <string name="AllComplaintsFeedback">అన్ని ఫిర్యాదులు/ఫీడ్‌బ్యాక్</string>
+
+    <string name="localOrganisation">సంస్థను ఎంచుకోండి</string>
+    <string name="do_you_have_localOrgnaization">మీరు ఏదైనా సంస్థతో అనుబంధంగా ఉన్నారా?</string>
+
+    <string name="apply">వర్తించు</string>
+
+</resources>
