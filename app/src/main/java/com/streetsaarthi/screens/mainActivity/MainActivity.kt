@@ -2,18 +2,26 @@ package com.streetsaarthi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavOptions
@@ -62,11 +70,29 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityVM by viewModels()
 
-    @SuppressLint("SdCardPath")
+    private val pushNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if(granted){
+            Log.e("TAG", "AAAAgranted "+granted)
+
+        }else{
+            Log.e("TAG", "BBBBgranted "+granted)
+        }
+    }
+
+    @SuppressLint("SdCardPath", "MutableImplicitPendingIntent")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//
+//        if (Build.VERSION.SDK_INT >= 33) {
+//            pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+//        } else {
+//
+//        }
+
 
         context = WeakReference(this)
         activity = WeakReference(this)
@@ -82,6 +108,72 @@ class MainActivity : AppCompatActivity() {
 //                Log.e("TAG", "onDestinationChanged: " + destination.label)
 //            }
 //        })
+
+//        imagePathCC /storage/emulated/0/Download/1704524739950.png
+//       content://com.streetsaarthi.provider/external/Download/1704524739950.png
+//        var aaa = "/storage/emulated/0/Download/1704434016909.png"
+//        var bbb = File(aaa)
+//        var ccc = File(bbb.absolutePath)
+
+        //val imagePath: File = File(File("/storage/emulated/0/Download/1704434016909.png").absolutePath)
+       // var file = File("/storage/emulated/0/Download/1704434016909.png")
+
+
+//        val intent = Intent(Intent.ACTION_VIEW)
+//        val data =
+//            FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", ccc)
+//        intent.setDataAndType(data, "image/*")
+//        Log.e("TAG", "dataCC "+data)
+//         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//        startActivity(intent)
+
+//        val intent = Intent(Intent.ACTION_VIEW)
+////        val data =
+////            FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", imagePath)
+//      //  intent.setDataAndType(data, "image/*")
+//        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//
+////            val pendingIntent=if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+////                PendingIntent.getActivity(requireContext(),0,intent,PendingIntent.FLAG_MUTABLE)
+////            } else {
+////                PendingIntent.getActivity(requireContext(),0,intent,
+////                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+////            }
+//
+//        val pendingIntent = if (Build.VERSION.SDK_INT >= 33) {
+//            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT)
+//        } else {
+//            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
+//        }
+//
+//        val CHANNEL_ID="my_channel_01" // The id of the channel.
+//        val name: CharSequence="Download" // The user-visible name of the channel.
+//        val importance= NotificationManager.IMPORTANCE_HIGH
+//        var mChannel: NotificationChannel?=null
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            mChannel= NotificationChannel(CHANNEL_ID,name,importance)
+//            mChannel.enableLights(true)
+//            mChannel.lightColor= Color.WHITE
+//            mChannel.setShowBadge(true)
+//            mChannel.lockscreenVisibility= Notification.VISIBILITY_PUBLIC
+//        }
+//
+//        val notification= NotificationCompat.Builder(this,CHANNEL_ID)
+//            .setSmallIcon(R.mipmap.ic_launcher) //.setLargeIcon(icon)
+//            .setPriority(Notification.PRIORITY_HIGH)
+//            .setContentTitle(getString(R.string.app_name))
+//            .setAutoCancel(true)
+//            .setChannelId("my_channel_01")
+//            .setContentIntent(pendingIntent)
+//            .setContentText("file.name").build()
+//        val notificationManager=
+//            getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) notificationManager.createNotificationChannel(
+//            mChannel!!
+//        )
+//        notificationManager.notify(0,notification)
+
+
 
         if (intent!!.hasExtra(Screen)){
             var screen = intent.getStringExtra(Screen)

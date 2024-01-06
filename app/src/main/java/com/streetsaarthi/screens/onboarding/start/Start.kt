@@ -134,6 +134,13 @@ class Start : Fragment() {
                     ColorStateList.valueOf(
                         ResourcesCompat.getColor(
                             getResources(), R.color._E79D46, null)))
+            } else if (MainActivity.context.get()!!.getString(R.string.urduVal) == ""+viewModel.locale){
+                btLanguage.setText(R.string.urdu)
+                btSignIn.setEnabled(true)
+                btSignIn.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        ResourcesCompat.getColor(
+                            getResources(), R.color._E79D46, null)))
             }
 
 
@@ -182,6 +189,26 @@ class Start : Fragment() {
                             MainActivity.activity.get()!!.finish()
                             MainActivity.activity.get()!!.finishAffinity()
                         }
+
+
+                        binding.btImage.setOnClickListener {
+                            Log.e("TAG" , "asdsfs "+dataClass.name)
+
+                            val list = currentList
+                            list.forEach {
+                                it.isSelected = dataClass == it
+                            }
+                            notifyDataSetChanged()
+
+                            LocaleHelper.setLocale(requireContext(),dataClass.locale)
+                            val refresh = Intent(Intent(requireActivity(), MainActivity::class.java))
+                            refresh.putExtra(Screen, Start)
+                            refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(refresh)
+                            MainActivity.activity.get()!!.finish()
+                            MainActivity.activity.get()!!.finishAffinity()
+                        }
+
                     }
                 }
                 val recyclerView = dialogView.findViewById<RecyclerView>(R.id.rvList)

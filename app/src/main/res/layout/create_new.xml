@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/_DDDDDD">
+    android:background="@color/_FFFCF8">
 
     <include layout="@layout/header_search"
         android:id="@+id/inclide_header_search"
@@ -15,18 +15,290 @@
         android:visibility="visible"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/item_recent_activities"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/inclide_header_search"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="@dimen/_10sdp"
-        tools:itemCount="10"
-        android:paddingHorizontal="@dimen/_10sdp"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inclide_header_search"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_15sdp">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textSelectYourChoiceTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Select Your Choice"
+                android:textColor="@color/_322F35"
+                android:textSize="@dimen/_10ssp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextSelectYourChoice"
+                style="@style/PrimaryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:hint="Register Complaint"
+                android:text=""
+                android:textColor="@color/_322F35"
+                android:focusable="false"
+                android:drawableEnd="@drawable/ic_down_arrow"
+                app:layout_constraintTop_toBottomOf="@+id/textSelectYourChoiceTxt" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textSubjectOfComplaintTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="Subject Of Complaint"
+                android:textColor="@color/_322F35"
+                android:textSize="@dimen/_10ssp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSelectYourChoice"
+                tools:ignore="MissingConstraints"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextSubjectOfComplaint"
+                style="@style/PrimaryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:hint="Type Here"
+                android:textColor="@color/_322F35"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/textSubjectOfComplaintTxt" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textYourNameTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="Your Name"
+                android:textColor="@color/_322F35"
+                android:textSize="@dimen/_10ssp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSubjectOfComplaint"
+                tools:ignore="MissingConstraints"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextYourName"
+                style="@style/PrimaryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:hint="Your Full Name"
+                android:textColor="@color/_322F35"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/textYourNameTxt" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textYourMobileNumberTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="Your Mobile Number"
+                android:textColor="@color/_322F35"
+                android:textSize="@dimen/_10ssp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextYourName"
+                tools:ignore="MissingConstraints"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextYourMobileNumber"
+                style="@style/PrimaryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:hint="Your Mobile Number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textColor="@color/_322F35"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/textYourMobileNumberTxt" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textYourDescriptionTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="Description"
+                android:textColor="@color/_322F35"
+                android:textSize="@dimen/_10ssp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextYourMobileNumber"
+                tools:ignore="MissingConstraints"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTypeHere"
+                style="@style/PrimaryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:gravity="top"
+                android:hint="Type Here"
+                android:maxLines="4"
+                android:minHeight="@dimen/_100sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:singleLine="false"
+                android:text=""
+                android:textColor="@color/_322F35"
+                app:layout_constraintTop_toBottomOf="@+id/textYourDescriptionTxt"
+                tools:layout_editor_absoluteX="16dp" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textUploadMedia"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="Upload Media"
+                android:textColor="@color/_322F35"
+                android:textSize="@dimen/_10ssp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeHere"
+                tools:ignore="MissingConstraints" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutUploadMedia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/white_round_corner"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textUploadMedia">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewUploadMedia"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:button="@drawable/check_box_button"
+                    android:buttonTint="@color/_424041"
+                    android:fontFamily="@font/roboto_medium"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/_322F35"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btUploadMedia"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btUploadMedia"
+                    style="@style/PrimaryButtonYellow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:text="Upload Media"
+                    android:textColor="@color/_2C2C2C"
+                    android:textSize="@dimen/_9ssp"
+                    app:backgroundTint="@color/white"
+                    app:cornerRadius="@dimen/_4sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="@color/_646464" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btCancel"
+                style="@style/PrimaryButtonYellow"
+                app:backgroundTint="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/_20sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textColor="@color/black"
+                android:text="Cancel"
+                android:textSize="@dimen/_11ssp"
+                app:cornerRadius="@dimen/_4sdp"
+                app:layout_constraintEnd_toStartOf="@+id/btSubmit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutUploadMedia"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:strokeColor="@color/_49454F"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btSubmit"
+                style="@style/PrimaryButtonYellow"
+                app:backgroundTint="@color/_E79D46"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/_20sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                app:cornerRadius="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btCancel"
+                app:layout_constraintTop_toBottomOf="@+id/layoutUploadMedia"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:layout_marginStart="@dimen/_15sdp"
+
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

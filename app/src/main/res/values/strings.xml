@@ -77,6 +77,7 @@
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
     <string name="telugu">తెలుగు</string>
+    <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
     <string name="bengaliVal">bn</string>
@@ -88,7 +89,7 @@
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
     <string name="teluguVal">te</string>
-
+    <string name="urduVal">ur</string>
 
 
     <string name="RegisterHere">Register Here</string>
@@ -149,7 +150,7 @@
     <string name="photos">Photos</string>
     <string name="browse_images_from_gallery">Browse Images From Gallery</string>
     <string name="cancel">Cancel</string>
-    <string name="choose_your_preference">Choose your preference</string>
+    <string name="choose_your_preference">Choose Your Preference</string>
     <string name="complete_profile_registration">Complete Profile Registration</string>
     <string name="otp_verification">OTP Verification</string>
     <string name="current_vending_address">Current Vending Address</string>
@@ -304,6 +305,47 @@
     <string name="do_you_have_localOrgnaization">Are you Affiliated with any Organization?</string>
 
     <string name="apply">Apply</string>
+
+
+    <string name="first_nameStar">First Name*</string>
+    <string name="last_nameStar">Last Name*</string>
+    <string name="mobileNumberStar">Mobile Number*</string>
+    <string name="YourPasswordStar">Your Password*</string>
+    <string name="enterOtpStar">Enter OTP*</string>
+
+    <string name="createPasswordStar">Create Password*</string>
+    <string name="reEnterPasswordStar">Re-Enter Password*</string>
+
+    <string name="father_s_first_nameStar">Father\'s First Name*</string>
+    <string name="father_s_last_nameStar">Father\'s Last Name*</string>
+    <string name="genderStar">Gender*</string>
+    <string name="date_of_birthStar">Date of Birth*</string>
+    <string name="social_categoryStar">Category*</string>
+    <string name="education_qualifacationStar">Education Qualification*</string>
+    <string name="select_stateStar">State*</string>
+    <string name="select_districtStar">District*</string>
+    <string name="municipality_panchayatStar">Municipality/Panchayat*</string>
+    <string name="select_pincodeStar">Pincode*</string>
+    <string name="marital_statusStar">Marital Status*</string>
+    <string name="spouse_s_nameStar">Spouse\'s Name*</string>
+    <string name="address_mention_villageStar">Address (Mention Village)*</string>
+    <string name="upload_mediaStar">Upload Media*</string>
+
+    <string name="type_of_market_placeStar">Type of Market Place*</string>
+    <string name="type_of_vendingStar">Type of Vending*</string>
+    <string name="total_years_of_vendingStar">Total Years of Vending*</string>
+    <string name="enter_market_placeStar">Enter Market Place*</string>
+    <string name="enter_vendingStar">Enter Vending*</string>
+
+    <string name="openStar">Open*</string>
+    <string name="closeStar">Close*</string>
+
+    <string name="localOrganisationStar">Select Organisation*</string>
+
+
+
+
+
 
 
     <string name="terms1">Terms and Conditions</string>

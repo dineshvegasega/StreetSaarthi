@@ -5,8 +5,9 @@
     <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
     <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
 
-    <string name="click_here_to_agree_to_the"><![CDATA[Click Here to agree on the]]></string>
-    <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
+    <string name="click_here_to_agree_to_the"><![CDATA[இங்கே கிளிக் செய்யவும்]]></string>
+    <string name="terms_amp_conditions"><u>விதிமுறைகள் &amp; நிபந்தனைகள்</u></string>
+
     <string name="title">Title</string>
     <string name="submit">Submit</string>
 
@@ -76,6 +77,7 @@
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
     <string name="telugu">తెలుగు</string>
+    <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
     <string name="bengaliVal">bn</string>
@@ -87,6 +89,7 @@
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
     <string name="teluguVal">te</string>
+    <string name="urduVal">ur</string>
 
 
     <string name="RegisterHere">ഇവിടെ രജിസ്റ്റർ ചെയ്യുക</string>
@@ -298,6 +301,47 @@
     <string name="do_you_have_localOrgnaization">நீங்கள் ஏதேனும் ஒரு நிறுவனத்துடன் இணைந்திருக்கிறீர்களா?</string>
     <string name="apply">விண்ணப்பிக்கவும்</string>
 
+
+
+
+
+
+
+    <string name="first_nameStar">ആദ്യ നാമം*</string>
+    <string name="last_nameStar">അവസാന നാമം*</string>
+    <string name="mobileNumberStar">മൊബൈൽ നമ്പർ*</string>
+    <string name="YourPasswordStar">നിങ്ങളുടെ പാസ്‌വേഡ്*</string>
+    <string name="enterOtpStar">OTP നൽകുക*</string>
+
+    <string name="createPasswordStar">പാസ്‌വേഡ് സൃഷ്‌ടിക്കുക*</string>
+    <string name="reEnterPasswordStar">പാസ്‌വേഡ് വീണ്ടും നൽകുക*</string>
+
+    <string name="father_s_first_nameStar">അച്ഛന്റെ ആദ്യ നാമം*</string>
+    <string name="father_s_last_nameStar">അച്ഛന്റെ അവസാന നാമം*</string>
+    <string name="genderStar">ലിംഗഭേദം*</string>
+    <string name="date_of_birthStar">ജനന തീയതി*</string>
+    <string name="social_categoryStar">വിഭാഗം*</string>
+    <string name="education_qualifacationStar">വിദ്യാഭ്യാസ യോഗ്യത*</string>
+    <string name="select_stateStar">സംസ്ഥാനം*</string>
+    <string name="select_districtStar">ജില്ല*</string>
+    <string name="municipality_panchayatStar">മുനിസിപ്പാലിറ്റി/പഞ്ചായത്ത്*</string>
+    <string name="select_pincodeStar">പിൻകോഡ്*</string>
+    <string name="marital_statusStar">വൈവാഹിക നില*</string>
+    <string name="spouse_s_nameStar">ഭാര്യയുടെ പേര്*</string>
+
+    <string name="address_mention_villageStar">വിലാസം (ഗ്രാമം പരാമർശിക്കുക)*</string>
+    <string name="upload_mediaStar">മീഡിയ അപ്‌ലോഡ് ചെയ്യുക*</string>
+
+    <string name="type_of_market_placeStar">വിപണി സ്ഥലത്തിന്റെ തരം*</string>
+    <string name="type_of_vendingStar">വെൻഡിംഗ് തരം*</string>
+    <string name="total_years_of_vendingStar">ആകെ വെൻഡിംഗ് വർഷങ്ങൾ*</string>
+    <string name="enter_market_placeStar">சந்தை இடத்தை உள்ளிடவும்*</string>
+    <string name="enter_vendingStar">விற்பனையை உள்ளிடவும்*</string>
+
+    <string name="openStar">തുറക്കുക*</string>
+    <string name="closeStar">അടയ്ക്കുക*</string>
+
+    <string name="localOrganisationStar">அமைப்பைத் தேர்ந்தெடுக்கவும்*</string>
 
 
 </resources>

@@ -32,7 +32,7 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
     init {
         itemMain?.add(
             Onboard.Item(
-                MainActivity.context.get()!!.getString(R.string.quick_registation),
+                MainActivity.context.get()!!.getString(R.string.quick_registration),
                 R.drawable.onboard1
             )
         )

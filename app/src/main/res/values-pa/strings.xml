@@ -5,8 +5,9 @@
     <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
     <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
 
-    <string name="click_here_to_agree_to_the"><![CDATA[Click Here to agree on the]]></string>
-    <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
+    <string name="click_here_to_agree_to_the"><![CDATA[ਸਹਿਮਤ ਹੋਣ ਲਈ ਇੱਥੇ ਕਲਿੱਕ ਕਰੋ]]></string>
+    <string name="terms_amp_conditions"><u>ਸ਼ਰਤਾਂ &amp; ਸ਼ਰਤਾਂ</u></string>
+
     <string name="title">Title</string>
     <string name="submit">Submit</string>
 
@@ -73,6 +74,7 @@
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
     <string name="telugu">తెలుగు</string>
+    <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
     <string name="bengaliVal">bn</string>
@@ -84,6 +86,7 @@
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
     <string name="teluguVal">te</string>
+    <string name="urduVal">ur</string>
 
 
 
@@ -152,8 +155,8 @@
     <string name="current_vending_address">ਮੌਜੂਦਾ ਵੈਂਡਿੰਗ ਪਤਾ</string>
     <string name="vending_time">ਵੈਂਡਿੰਗ ਟਾਈਮ</string>
     <string name="to">सਨੂੰ</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+    <string name="open">ਖੋਲ੍ਹੋ</string>
+    <string name="close">ਬੰਦ ਕਰੋ</string>
     <string name="open_time">ਖੁੱਲਾ</string>
     <string name="close_time">ਨੇੜੇ</string>
     <string name="document_details">ਦਸਤਾਵੇਜ਼ ਵੇਰਵੇ</string>
@@ -302,5 +305,46 @@
     <string name="do_you_have_localOrgnaization">ਕੀ ਤੁਸੀਂ ਕਿਸੇ ਸੰਗਠਨ ਨਾਲ ਜੁੜੇ ਹੋ?</string>
     <string name="apply">ਲਾਗੂ ਕਰੋ</string>
 
+
+
+
+
+
+
+    <string name="first_nameStar">ਪਹਿਲਾ ਨਾਂ*</string>
+    <string name="last_nameStar">ਆਖਰੀ ਨਾਂਮ*</string>
+    <string name="mobileNumberStar">ਮੋਬਾਇਲ ਨੰਬਰ*</string>
+    <string name="YourPasswordStar">ਤੁਹਾਡਾ ਪਾਸਵਰड*</string>
+    <string name="enterOtpStar">ਇੱਥੇ ਓਟੀਪੀ ਦਰਜ ਕਰੋ*</string>
+
+    <string name="createPasswordStar">ਪਾਸਵਰਡ ਬਣਾਓ*</string>
+    <string name="reEnterPasswordStar">ਪਾਸਵਰਡ ਪੱਕਾ ਕਰੋ*</string>
+
+    <string name="father_s_first_nameStar">ਪਿਤਾ ਦਾ ਪਹਿਲਾ ਨਾਮ*</string>
+    <string name="father_s_last_nameStar">ਪਿਤਾ ਦਾ ਆਖਰੀ ਨਾਮ*</string>
+    <string name="genderStar">ਲਿੰਗ*</string>
+    <string name="date_of_birthStar">ਜਨਮ ਤਾਰੀਖ*</string>
+    <string name="social_categoryStar">वर्ग*</string>
+    <string name="education_qualifacationStar">ਸਿੱਖਿਆ ਯੋਗਤਾ*</string>
+    <string name="select_stateStar">ਰਾਜ*</string>
+    <string name="select_districtStar">ਜ਼ਿਲ੍ਹਾ*</string>
+    <string name="municipality_panchayatStar">ਮਿਉਂਸਪੈਲਟੀ / ਨਗਰਪਾਲਿਕਾ*</string>
+    <string name="select_pincodeStar">ਪਿੰਨ ਕੋਡ*</string>
+    <string name="marital_statusStar">ਵਿਵਾਹਿਕ ਦਰਜਾ*</string>
+    <string name="spouse_s_nameStar">ਪਤੀ / ਪਤਨੀ ਦਾ ਨਾਮ*</string>
+
+    <string name="address_mention_villageStar">ਪਤਾ (ਪਿੰਡ ਦਾ ਜ਼ਿਕਰ ਕਰੋ)*</string>
+    <string name="upload_mediaStar">ਮੀਡੀਆ ਅੱਪਲੋਡ ਕਰੋ*</string>
+
+    <string name="type_of_market_placeStar">ਮਾਰਕੀਟ ਸਥਾਨ ਦੀ ਕਿਸਮ*</string>
+    <string name="type_of_vendingStar">ਵਿਕਰੇਤਾ ਦੀ ਕਿਸਮ*</string>
+    <string name="total_years_of_vendingStar">ਵਿਕਰੇਤਾ ਦੇ ਕੁੱਲ ਸਾਲ*</string>
+    <string name="enter_market_placeStar">ਮਾਰਕੀਟ ਪਲੇਸ ਵਿੱਚ ਦਾਖਲ ਹੋਵੋ*</string>
+    <string name="enter_vendingStar">ਵੇਂਡਿੰਗ ਦਾਖਲ ਕਰੋ*</string>
+
+    <string name="openStar">ਖੋਲ੍ਹੋ*</string>
+    <string name="closeStar">ਬੰਦ ਕਰੋ*</string>
+
+    <string name="localOrganisationStar">ਸੰਗਠਨ ਚੁਣੋ*</string>
 
 </resources>

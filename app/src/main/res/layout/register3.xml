@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/createPassword"
+                android:hint="@string/createPasswordStar"
                 android:inputType="textPassword"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/textTitleMain"
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/reEnterPassword"
+                android:hint="@string/reEnterPasswordStar"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:inputType="textPassword"
                 android:text=""
@@ -118,13 +118,15 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextMobileNumber"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/mobileNumber"
+                android:hint="@string/mobileNumberStar"
                 android:text=""
                 android:inputType="number"
                 android:maxLength="10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editTextSendOtp"
                 app:layout_constraintTop_toBottomOf="@+id/textTitlePermanentAddress"
                 />
 
@@ -147,13 +149,15 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextOtp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/enterOtp"
+                android:hint="@string/enterOtpStar"
                 android:text=""
                 android:inputType="number"
                 android:maxLength="6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editTextVeryfyOtp"
                 app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
                 />
 

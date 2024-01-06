@@ -80,6 +80,12 @@ class StartVM @Inject constructor(private val repository: Repository): ViewModel
         }else{
             itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.telugu), MainActivity.context.get()!!.getString(R.string.teluguVal),false))
         }
+
+        if (MainActivity.context.get()!!.getString(R.string.urdu) == ""+locale){
+            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.urdu), MainActivity.context.get()!!.getString(R.string.urduVal),true))
+        }else{
+            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.urdu), MainActivity.context.get()!!.getString(R.string.urduVal),false))
+        }
     }
 
     data class Item (

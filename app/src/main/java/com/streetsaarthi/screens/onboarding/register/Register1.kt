@@ -3,6 +3,7 @@ package com.streetsaarthi.screens.onboarding.register
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -207,7 +208,14 @@ class Register1  : Fragment() , CallBackListener {
     }
 
     private fun callMediaPermissions() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE){
+            activityResultLauncher.launch(
+                arrayOf(Manifest.permission.CAMERA,
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
+            )
+        }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             activityResultLauncher.launch(
                 arrayOf(Manifest.permission.CAMERA,
                     Manifest.permission.READ_MEDIA_IMAGES)
@@ -270,13 +278,26 @@ class Register1  : Fragment() , CallBackListener {
             val today= LocalDate.now()
             val birthday: LocalDate=LocalDate.of(year,(monthOfYear+1),dayOfMonth)
             val p: Period =Period.between(birthday,today)
+
+
+            var mm : String = (monthOfYear+1).toString()
+            if (mm.length == 1){
+                mm = "0"+mm
+            }
+
+            var dd : String = ""+dayOfMonth
+            if (dd.length == 1){
+                dd = "0"+dd
+            }
+
             if(p.getYears() > 13){
-                binding.editTextDateofBirth.setText("" + year + "-" + (monthOfYear+1)  + "-" + dayOfMonth)
+                binding.editTextDateofBirth.setText("" + year + "-" + mm  + "-" + dd)
             }else{
                 showSnackBar(getString(R.string.age_minimum))
                 binding.editTextDateofBirth.setText("")
             }
         }, year, month, day)
+//        dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
         dpd.show()
     }
 

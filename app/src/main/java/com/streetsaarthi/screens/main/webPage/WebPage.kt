@@ -72,10 +72,8 @@ class WebPage : Fragment() {
             override fun handleOnBackPressed() {
                 if (binding.webView.canGoBack()){
                     binding.webView.goBack()
-                    Log.e("TAG", "onBackPressedDispatcher1")
                 }
                 else {
-                    Log.e("TAG", "onBackPressedDispatcher2")
                     view?.navigateBack()
                 }
             }
@@ -92,42 +90,15 @@ class WebPage : Fragment() {
     }
 
 
-    private val pushNotificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        Log.e("TAG", "grantedAAA")
-    }
+
+
+    var urlLoad = ""
+
     @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = view.findNavController()
 
-
-        pushNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-
-//        myView = view
-      //  val data = arguments?.getString("data")
-        //val token = arguments?.getString("token")
-//        val json = Gson().toJson(str)
-//
-//        val data = "Hello"
-//        Log.e("TAG", "cccccccc "+data)
-
-//        val json = getJson()
-//        val topic = gson.fromJson(json, Topic::class.java)
-
-
-//        binding.buttonPanel.setOnClickListener {
-//            view.findNavController().navigate(R.id.action_webPage_to_QuickRegister)
-//        }
-
-//        binding.webView.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(
-//            getResources(), R.color._F02A2A, null)));
-
-
-//        binding.webView.setDownloadListener(DownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
-//            val i = Intent(Intent.ACTION_VIEW)
-//            i.setData(Uri.parse(url))
-//            startActivity(i)
-//        })
 
 
         binding.webView.webViewClient = object : WebViewClient() {
@@ -140,7 +111,7 @@ class WebPage : Fragment() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 binding.progressBar.visibility = View.GONE
-              //  view?.loadUrl(getString(R.string.url))
+                //  view?.loadUrl(getString(R.string.url))
 //                view?.loadUrl("javascript:docWrite('" + data + "')")
 //                 view?.loadUrl("javascript:docWrite2('fsdfasfg')");
             }
@@ -160,10 +131,8 @@ class WebPage : Fragment() {
             }
         }
 
-
-
-//https://streetsaarthi.in/#/mobile-login
         var screen = arguments?.getString(Screen)
+        Handler(Looper.getMainLooper()).postDelayed({
             if (screen == LoginPassword){
                 binding.webView.loadUrl(WEB_URL+"#/mobile-login")
 //                binding.webView.loadUrl("https://amritmahotsav.nic.in/downloads.htm")
@@ -171,11 +140,9 @@ class WebPage : Fragment() {
             } else if (screen == LoginOtp){
                 binding.webView.loadUrl(WEB_URL+"#/mobile-otp-login")
             }
+        }, 200)
 
 
-//        binding.webView.loadUrl("http://167.71.225.20:8080/#/login")
-//        binding.webView.loadUrl(getString(R.string.url));
-//        binding.webView.loadUrl("http://167.71.225.20:8080/")
 
         Handler(Looper.getMainLooper()).postDelayed({
             binding.webView.addJavascriptInterface(WebAppInterface(requireContext(), binding), "Android")
@@ -184,56 +151,34 @@ class WebPage : Fragment() {
 
 
         binding.webView.setDownloadListener(DownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
-
-            if (url.startsWith("data:")) {  //when url is base64 encoded data
-                val path: String = createAndSaveFileFromBase64Url(url)
+            if (Build.VERSION.SDK_INT >= 33) {
+                urlLoad = url
+                pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            } else {
+                if (url.startsWith("data:")) {
+                    val path: String = createAndSaveFileFromBase64Url(url)
+                }
             }
-
-//            var data = android.util.Base64.decode(url, android.util.Base64.DEFAULT);
-
-//            val request = DownloadManager.Request(Uri.parse(url))
-//            request.setMimeType(mimeType.toString())
-//         //   val cookies: String = CookieManager.getInstance().getCookie(url)
-////            request.addRequestHeader("cookie", cookies)
-////            request.addRequestHeader("User-Agent", userAgent)
-//            request.setDescription(resources.getString(R.string.enterOtp))
-//            val filename = URLUtil.guessFileName(url, contentDisposition, mimeType.toString())
-//            request.setTitle(filename)
-////            request.allowScanningByMediaScanner()
-//            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-//            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
-//            val dm =  requireContext().getSystemService(DOWNLOAD_SERVICE) as DownloadManager?
-//            dm!!.enqueue(request)
-//            Toast.makeText( requireContext().getApplicationContext(), R.string.COVText, Toast.LENGTH_LONG)
-//                .show()
-////            val request = DownloadManager.Request(
-////                Uri.parse(url)
-////            )
-////            request.allowScanningByMediaScanner()
-
-            Log.e("TAG", "urlAA "+url)
-
-
-//            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-//            request.setDestinationInExternalPublicDir(
-//                Environment.DIRECTORY_DOWNLOADS,
-//                "StreetSaarthi_${Calendar.getInstance().timeInMillis}_${url.substring(url.lastIndexOf("/") + 1)}"
-//            )
-//
-//            val dm = requireContext().getSystemService(DOWNLOAD_SERVICE) as DownloadManager?
-//            dm!!.enqueue(request)
-//            Toast.makeText(
-//                requireContext(),
-//                "File Downloading...",
-//                Toast.LENGTH_LONG
-//            ).show()
         })
-
 
     }
 
 
-    @SuppressLint("MutableImplicitPendingIntent")
+    private val pushNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            Log.e("TAG", "AAAAgranted " + granted)
+            if (urlLoad.startsWith("data:")) {
+                val path: String = createAndSaveFileFromBase64Url(urlLoad)
+            }
+        } else {
+            Log.e("TAG", "BBBBgranted " + granted)
+        }
+
+    }
+
+        @SuppressLint("MutableImplicitPendingIntent")
     @OptIn(ExperimentalEncodingApi::class)
     fun createAndSaveFileFromBase64Url(url: String): String {
         val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
@@ -250,15 +195,22 @@ class WebPage : Fragment() {
             val os: OutputStream = FileOutputStream(file)
             os.write(decodedBytes)
             os.close()
-            val imagePath: File = File(file.absolutePath)
             val intent = Intent(Intent.ACTION_VIEW)
-            val data =
+
+            val data= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", file)
+            }else{
+                val imagePath: File = File(file.absolutePath)
                 FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", imagePath)
+            }
+
             intent.setDataAndType(data, "image/*")
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-           // startActivity(intent)
+            // startActivity(intent)
 
-            val pendingIntent=if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val pendingIntent= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                PendingIntent.getBroadcast(requireContext(), 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT)
+            }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 PendingIntent.getActivity(requireContext(),0,intent,PendingIntent.FLAG_MUTABLE)
             } else {
                 PendingIntent.getActivity(requireContext(),0,intent,
@@ -267,7 +219,7 @@ class WebPage : Fragment() {
 
 
             val CHANNEL_ID="my_channel_01" // The id of the channel.
-            val name: CharSequence="test" // The user-visible name of the channel.
+            val name: CharSequence="Download" // The user-visible name of the channel.
             val importance=NotificationManager.IMPORTANCE_HIGH
             var mChannel: NotificationChannel?=null
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -281,7 +233,7 @@ class WebPage : Fragment() {
             val notification=NotificationCompat.Builder(requireContext(),CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher) //.setLargeIcon(icon)
 //                .setStyle("bigText")
-                .setPriority(Notification.PRIORITY_HIGH)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentTitle(getString(R.string.app_name))
                 .setAutoCancel(true)
                 .setChannelId("my_channel_01")
@@ -318,7 +270,7 @@ class WebPage : Fragment() {
 
         @JavascriptInterface
         fun redirectToMainPage(toast: String) {
-           // Toast.makeText(mContext, "1"+toast, Toast.LENGTH_SHORT).show()
+            // Toast.makeText(mContext, "1"+toast, Toast.LENGTH_SHORT).show()
             Handler(Looper.getMainLooper()).post(Thread {
                 MainActivity.activity.get()?.runOnUiThread {
                     //navController.navigate(R.id.action_webPage_to_onboard)

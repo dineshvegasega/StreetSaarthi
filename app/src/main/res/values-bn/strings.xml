@@ -5,8 +5,8 @@
     <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
     <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
 
-    <string name="click_here_to_agree_to_the"><![CDATA[Click Here to agree on the]]></string>
-    <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
+    <string name="click_here_to_agree_to_the"><![CDATA[এতে সম্মত হতে এখানে ক্লিক করুন]]></string>
+    <string name="terms_amp_conditions"><u>শর্তাবলী &amp; শর্তাবলী</u></string>
     <string name="title">Title</string>
     <string name="submit">Submit</string>
 
@@ -80,6 +80,7 @@
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
     <string name="telugu">తెలుగు</string>
+    <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
     <string name="bengaliVal">bn</string>
@@ -91,6 +92,7 @@
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
     <string name="teluguVal">te</string>
+    <string name="urduVal">ur</string>
 
 
 
@@ -303,5 +305,43 @@
     <string name="AllComplaintsFeedback">সমস্ত অভিযোগ/প্রতিক্রিয়া</string>
     <string name="do_you_have_localOrgnaization">আপনি কি কোন প্রতিষ্ঠানের সাথে যুক্ত?</string>
     <string name="apply">প্রয়োগ করুন</string>
+
+
+
+
+    <string name="first_nameStar">প্রথম নাম*</string>
+    <string name="last_nameStar">শেষ নাম*</string>
+    <string name="mobileNumberStar">মোবাইল নম্বর*</string>
+    <string name="YourPasswordStar">আপনার পাসওয়ার্ড*</string>
+    <string name="enterOtpStar">OTP লিখুন*</string>
+
+    <string name="createPasswordStar">পাসওয়ার্ড তৈরি করুন*</string>
+    <string name="reEnterPasswordStar">পাসওয়ার্ড পুনরায় লিখুন*</string>
+
+    <string name="father_s_first_nameStar">পিতার প্রথম নাম*</string>
+    <string name="father_s_last_nameStar">পিতার শেষ নাম*</string>
+    <string name = "genderStar"> লিঙ্গ*</string>
+    <string name="date_of_birthStar">জন্ম তারিখ*</string>
+    <string name = "social_categoryStar">বিভাগ*</string>
+    <string name = "education_qualifacationStar">শিক্ষার যোগ্যতা*</string>
+    <string name = "select_stateStar"> রাজ্য*</string>
+    <string name = "select_districtStar">জেলা*</string>
+    <string name="municipality_panchayatStar">পৌরসভা/পঞ্চায়েত*</string>
+    <string name="select_pincodeStar">পিনকোড*</string>
+    <string name="marital_statusStar">বৈবাহিক অবস্থা*</string>
+    <string name = "spouse_s_nameStar"> স্বামী/স্ত্রীর নাম*</string>
+    <string name="address_mention_villageStar">ঠিকানা (গ্রাম উল্লেখ করুন)*</string>
+    <string name="upload_mediaStar">আপলোড মিডিয়া*</string>৷
+
+    <string name = "type_of_market_placeStar">মার্কেট প্লেসের প্রকার*</string>
+    <string name = "type_of_vendingStar">ভেন্ডিংয়ের ধরন*</string>
+    <string name="total_years_of_vendingStar">বিক্রয়ের মোট বছর*</string>
+
+    <string name = "enter_market_placeStar">মার্কেট প্লেসে প্রবেশ করুন*</string>
+    <string name="enter_vendingStar">ভেন্ডিং এন্টার করুন*</string>
+    <string name="openStar">খুলুন*</string>৷
+    <string name="closeStar">বন্ধ করুন*</string>
+    <string name="localOrganisationStar">সংগঠন নির্বাচন করুন*</string>
+
 
 </resources>

@@ -76,6 +76,7 @@
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
     <string name="telugu">తెలుగు</string>
+    <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
     <string name="bengaliVal">bn</string>
@@ -87,6 +88,7 @@
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
     <string name="teluguVal">te</string>
+    <string name="urduVal">ur</string>
 
 
 
@@ -302,6 +304,45 @@
     <string name = "AllComplaintsFeedback">सभी शिकायतें/प्रतिक्रिया</string>
     <string name='do_you_have_localOrgnaization'>क्या आप किसी संगठन से संबद्ध हैं?</string>
     <string name='apply'>लागू करें</string>
+
+
+
+
+    <string name="first_nameStar">पहला नाम*</string>
+    <string name="last_nameStar">उपनाम*</string>
+
+    <string name="mobileNumberStar">मोबाइल नंबर*</string>
+    <string name="YourPasswordStar">आपका पासवर्ड*</string>
+    <string name="enterOtpStar">OTP दर्ज करें*</string>
+
+    <string name="createPasswordStar">पासवर्ड बनाएं*</string>
+    <string name="reEnterPasswordStar">पासवर्ड की पुष्टि कीजिये*</string>
+
+    <string name="father_s_first_nameStar">पिता का पहला नाम*</string>
+    <string name="father_s_last_nameStar">पिता का उपनाम*</string>
+    <string name="genderStar">लिंग*</string>
+    <string name="date_of_birthStar">जन्म की तारीख*</string>
+    <string name="social_categoryStar">वर्ग*</string>
+    <string name="education_qualifacationStar">शैक्षणिक योग्यता*</string>
+    <string name="select_stateStar">राज्य*</string>
+    <string name="select_districtStar">ज़िला*</string>
+    <string name="municipality_panchayatStar">नगर पालिका/पंचायत*</string>
+    <string name="select_pincodeStar">पिन कोड*</string>
+    <string name="marital_statusStar">वैवाहिक स्थिति*</string>
+    <string name="spouse_s_nameStar">जीवनसाथी का नाम*</string>
+
+    <string name="address_mention_villageStar">पता (गाँव का उल्लेख करें)*</string>
+    <string name="upload_mediaStar">मीडिया अपलोड करें*</string>
+
+    <string name="type_of_market_placeStar">बाज़ार स्थल का प्रकार*</string>
+    <string name="type_of_vendingStar">वेंडिंग का प्रकार*</string>
+    <string name="total_years_of_vendingStar">वेंडिंग के कुल वर्ष*</string>
+    <string name='enter_market_placeStar'>मार्केट प्लेस दर्ज करें*</string>
+    <string name='enter_vendingStar'>वेंडिंग दर्ज करें*</string>
+
+    <string name="openStar">खुला*</string>
+    <string name="closeStar">बंद करना*</string>
+    <string name='localOrganisationStar'>संगठन का चयन करे*</string>
 
 
 </resources>

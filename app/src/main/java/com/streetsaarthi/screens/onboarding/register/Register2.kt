@@ -335,7 +335,14 @@ class Register2  : Fragment() , CallBackListener {
 
 
     private fun callMediaPermissions() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE){
+            activityResultLauncher.launch(
+                arrayOf(Manifest.permission.CAMERA,
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
+            )
+        }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             activityResultLauncher.launch(
                 arrayOf(Manifest.permission.CAMERA,
                     Manifest.permission.READ_MEDIA_IMAGES)
