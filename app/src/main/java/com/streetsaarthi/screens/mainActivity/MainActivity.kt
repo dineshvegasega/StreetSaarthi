@@ -116,12 +116,13 @@ class MainActivity : AppCompatActivity() {
 //        var ccc = File(bbb.absolutePath)
 
         //val imagePath: File = File(File("/storage/emulated/0/Download/1704434016909.png").absolutePath)
-       // var file = File("/storage/emulated/0/Download/1704434016909.png")
+       // var file = File("/storage/emulated/0/Download/1704559718392.png")
+//       fileZZ /storage/emulated/0/Download/1704559718392.png
 
 
 //        val intent = Intent(Intent.ACTION_VIEW)
 //        val data =
-//            FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", ccc)
+//            FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file)
 //        intent.setDataAndType(data, "image/*")
 //        Log.e("TAG", "dataCC "+data)
 //         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -140,10 +141,13 @@ class MainActivity : AppCompatActivity() {
 ////                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
 ////            }
 //
-//        val pendingIntent = if (Build.VERSION.SDK_INT >= 33) {
+//        val pendingIntent= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
 //            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT)
+//        }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//            PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_MUTABLE)
 //        } else {
-//            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
+//            PendingIntent.getActivity(this,0,intent,
+//                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
 //        }
 //
 //        val CHANNEL_ID="my_channel_01" // The id of the channel.
@@ -163,7 +167,7 @@ class MainActivity : AppCompatActivity() {
 //            .setPriority(Notification.PRIORITY_HIGH)
 //            .setContentTitle(getString(R.string.app_name))
 //            .setAutoCancel(true)
-//            .setChannelId("my_channel_01")
+//            .setChannelId(CHANNEL_ID)
 //            .setContentIntent(pendingIntent)
 //            .setContentText("file.name").build()
 //        val notificationManager=

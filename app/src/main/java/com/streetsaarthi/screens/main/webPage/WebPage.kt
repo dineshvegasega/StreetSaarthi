@@ -197,6 +197,11 @@ class WebPage : Fragment() {
             os.close()
             val intent = Intent(Intent.ACTION_VIEW)
 
+            Log.e("TAG", "fileZZ "+file.toString())
+
+//            val data =
+//                FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", file)
+
             val data= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", file)
             }else{
@@ -209,7 +214,7 @@ class WebPage : Fragment() {
             // startActivity(intent)
 
             val pendingIntent= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                PendingIntent.getBroadcast(requireContext(), 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT)
+                PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT)
             }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 PendingIntent.getActivity(requireContext(),0,intent,PendingIntent.FLAG_MUTABLE)
             } else {
@@ -236,7 +241,7 @@ class WebPage : Fragment() {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentTitle(getString(R.string.app_name))
                 .setAutoCancel(true)
-                .setChannelId("my_channel_01")
+                .setChannelId(CHANNEL_ID)
                 .setContentIntent(pendingIntent)
                 .setContentText(file.name).build()
             val notificationManager=

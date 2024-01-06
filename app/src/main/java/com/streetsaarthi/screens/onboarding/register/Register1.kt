@@ -263,7 +263,11 @@ class Register1  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.gender))
             .setItems(list) {_,which->
                 binding.editTextGender.setText(list[which])
-//                editProfileVM.gender.value = list[which]
+                when(which){
+                    0-> viewModel.data.gender = "Male"
+                    1-> viewModel.data.gender = "Female"
+                    2-> viewModel.data.gender = "Other"
+                }
             }.show()
     }
 
@@ -318,7 +322,14 @@ class Register1  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.education_qualifacation))
             .setItems(list) {_,which->
                 binding.editTextEducationQualifacation.setText(list[which])
-//                editProfileVM.gender.value = list[which]
+                when(which){
+                    0-> viewModel.data.education_qualification = "No Education"
+                    1-> viewModel.data.education_qualification = "Primary Education(1st To 5th)"
+                    2-> viewModel.data.education_qualification = "Middle Education(6th To 9th)"
+                    3-> viewModel.data.education_qualification = "Higher Education(10th To 12th)"
+                    4-> viewModel.data.education_qualification = "Graduation"
+                    5-> viewModel.data.education_qualification = "Post Graduation"
+                }
             }.show()
     }
 
@@ -329,11 +340,18 @@ class Register1  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.marital_status))
             .setItems(list) {_,which->
                 binding.editTextMaritalStatus.setText(list[which])
-//                editProfileVM.gender.value = list[which]
                 if (list[which] == getString(R.string.married)){
                     binding.editTextSpouseName.visibility = View.VISIBLE
                 }else{
                     binding.editTextSpouseName.visibility = View.GONE
+                }
+                when(which){
+                    0-> viewModel.data.marital_status = "Single"
+                    1-> viewModel.data.marital_status = "Married"
+                    2-> viewModel.data.marital_status = "Widowed"
+                    3-> viewModel.data.marital_status = "Divorced"
+                    4-> viewModel.data.marital_status = "Graduation"
+                    5-> viewModel.data.marital_status = "Separated"
                 }
             }.show()
     }
@@ -515,11 +533,11 @@ class Register1  : Fragment() , CallBackListener {
                         viewModel.data.vendor_last_name = editTextLN.text.toString()
                         viewModel.data.parent_first_name = editTextFaterFN.text.toString()
                         viewModel.data.parent_last_name = editTextFatherLN.text.toString()
-                        viewModel.data.gender = editTextGender.text.toString()
+//                        viewModel.data.gender = editTextGender.text.toString()
                         viewModel.data.date_of_birth = editTextDateofBirth.text.toString()
                         viewModel.data.social_category = editTextSocialCategory.text.toString()
-                        viewModel.data.education_qualification = editTextEducationQualifacation.text.toString()
-                        viewModel.data.marital_status = editTextMaritalStatus.text.toString()
+//                        viewModel.data.education_qualification = editTextEducationQualifacation.text.toString()
+//                        viewModel.data.marital_status = editTextMaritalStatus.text.toString()
                         viewModel.data.spouse_name = editTextSpouseName.text.toString()
 
                         viewModel.data.current_state = ""+viewModel.stateId
