@@ -347,4 +347,12 @@
 
     <string name="localOrganisationStar">ਸੰਗਠਨ ਚੁਣੋ*</string>
 
+    <string name="the_verify_code_will_expire_in_00_59">ਤਸਦੀਕ ਕੋਡ ਦੀ ਮਿਆਦ %s ਵਿੱਚ ਸਮਾਪਤ ਹੋ ਜਾਵੇਗੀ</string>
+    <string name="your_Profile">ਤੁਹਾਡਾ ਪ੍ਰੋਫਾਈਲ</string>
+    <string name="personal_detailsFull">ਨਿੱਜੀ ਵੇਰਵੇ</string>
+    <string name="contact_details">ਸੰਪਰਕ ਵੇਰਵੇ</string>
+    <string name = "other_details">ਹੋਰ ਵੇਰਵੇ</string>
+
+
+
 </resources>

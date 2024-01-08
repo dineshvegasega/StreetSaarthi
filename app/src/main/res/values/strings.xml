@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Street Saarthi</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_image_found">No image found</string>
@@ -19,6 +19,7 @@
 
 
     <string name="street_saarthi">Street Saarthi</string>
+    <string name="google_place_key" tools:ignore="MissingTranslation">AIzaSyAuptk-VCeLs864df80F1PIzsxL5RM9F1c</string>
 
 
     <string name="Pleaseselectagree">Please select agree on the Terms &amp; Conditions</string>
@@ -342,10 +343,11 @@
 
     <string name="localOrganisationStar">Select Organisation*</string>
 
-
-
-
-
+    <string name="the_verify_code_will_expire_in_00_59">The verify code will expire in %s</string>
+    <string name="your_Profile">Your Profile</string>
+    <string name="personal_detailsFull">Personal Details</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="other_details">Other Details</string>
 
 
     <string name="terms1">Terms and Conditions</string>
@@ -409,6 +411,7 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
+    <string name="edit">Edit</string>
 
 
 </resources>

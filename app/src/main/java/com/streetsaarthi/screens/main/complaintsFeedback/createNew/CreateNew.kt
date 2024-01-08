@@ -36,4 +36,9 @@ class CreateNew : Fragment() {
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
         }
     }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

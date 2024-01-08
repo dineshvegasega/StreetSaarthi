@@ -58,6 +58,10 @@ class Onboard : Fragment() {
     }
 
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 
     data class Item (
         var name: String = "",

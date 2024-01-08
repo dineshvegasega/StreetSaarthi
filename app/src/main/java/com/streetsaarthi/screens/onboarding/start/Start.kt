@@ -225,12 +225,9 @@ class Start : Fragment() {
 
 
 
-
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        MainActivity.activity.get()!!.finish()
-//    }
-
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 
 }

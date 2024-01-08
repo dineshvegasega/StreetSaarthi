@@ -143,4 +143,9 @@ class TermsPrivacy : Fragment() {
         binding.webView.setInitialScale(30);
     }
 
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

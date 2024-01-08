@@ -344,5 +344,10 @@
     <string name="closeStar">बंद करना*</string>
     <string name='localOrganisationStar'>संगठन का चयन करे*</string>
 
+    <string name='the_verify_code_will_expire_in_00_59'>सत्यापित कोड %s में समाप्त हो जाएगा</string>
+    <string name='your_Profile'>आपकी प्रोफ़ाइल</string>
+    <string name='personal_detailsFull'>व्यक्तिगत विवरण</string>
+    <string name='contact_details'>संपर्क विवरण</string>
+    <string name='other_details'>अन्य विवरण</string>
 
 </resources>

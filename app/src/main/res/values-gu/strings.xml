@@ -341,5 +341,10 @@
 
     <string name="localOrganisationStar">સંસ્થા પસંદ કરો*</string>
 
+    <string name="the_verify_code_will_expire_in_00_59">ચકાસણી કોડ %s માં સમાપ્ત થશે</string>
+    <string name = "your_Profile">તમારી પ્રોફાઇલ</string>
+    <string name="personal_detailsFull">વ્યક્તિગત વિગતો</string>
+    <string name="contact_details">સંપર્ક વિગતો</string>
+    <string name = "other_details">અન્ય વિગતો</string>
 
 </resources>

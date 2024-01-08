@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.textclassifier.TextClassifierEvent.LanguageDetectionEvent
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -27,6 +28,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
 import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.Register1Binding
@@ -372,6 +376,12 @@ class Register1  : Fragment() , CallBackListener {
                 viewModel.stateId =  viewModel.itemState[which].id
                 view?.let { viewModel.district(it, viewModel.stateId) }
                 view?.let { viewModel.panchayat(it, viewModel.stateId) }
+
+//                val options = LanguageDetectionEvent.Builder()
+//                    .setSourceLanguage(FirebaseTranslateLanguage.EN)
+//                    .setTargetLanguage(FirebaseTranslateLanguage.DE)
+//                    .build()
+//                val englishGermanTranslator = FirebaseNaturalLanguage.getInstance().getTranslator(options)
             }.show()
     }
 
@@ -553,5 +563,11 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
         }
+    }
+
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

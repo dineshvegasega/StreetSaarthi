@@ -2,16 +2,10 @@ package com.streetsaarthi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
+import android.content.res.Resources
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -21,13 +15,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.content.FileProvider
+import androidx.core.os.ConfigurationCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
+//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
 import com.squareup.picasso.Picasso
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.MainActivityBinding
@@ -37,8 +36,8 @@ import com.streetsaarthi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.screens.onboarding.networking.Screen
 import com.streetsaarthi.utils.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
 import java.lang.ref.WeakReference
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -179,6 +178,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
         if (intent!!.hasExtra(Screen)){
             var screen = intent.getStringExtra(Screen)
             Log.e("TAG", "screen "+screen)
@@ -304,8 +305,97 @@ class MainActivity : AppCompatActivity() {
 //                else -> print("I don't know anything about it")
 //            }
 //        }
+
+        //detectLanguage("i am Dinesh")
+
+//        val llc = ConfigurationCompat.getLocales(Resources.getSystem().configuration)
+//        for (i in 0 until llc.size()) {
+//            println(llc[i]!!.displayLanguage)
+//            Log.e("MainActivity", "displayLanguage "+llc[i]!!.displayLanguage)
+//        }
+//
+//        val isLang = Locale.getDefault().language == "hi"
+//        Log.e("MainActivity", "isLang "+isLang)
+//
+//        var local = Locale.getDefault().getLanguage()
+//        Log.e("MainActivity", "locallocal "+local)
+
+
+//        initLanguage(
+//            FirebaseTranslateLanguage.EN,
+//            FirebaseTranslateLanguage.HI,
+//            "Hi i am dinesh"
+//        )
     }
 
+//    private fun initLanguage(idSL: Any?, idTL: Any?, text: String?) {
+//        val option = FirebaseTranslatorOptions.Builder()
+//            .setSourceLanguage(idSL as Int)
+//            .setTargetLanguage(idTL as Int)
+//            .build()
+//        val textTranslator = FirebaseNaturalLanguage.getInstance().getTranslator(option)
+//
+//        // Download model for the first time
+//
+//        textTranslator.downloadModelIfNeeded()
+//            .addOnSuccessListener {
+//                Log.e("MainActivity", "Download Success")
+//            }
+//            .addOnFailureListener {
+//                Log.e("MainActivity", "Download Failed: $it")
+//            }
+//
+//
+//        // Translate text from source language to target language related with model
+//        textTranslator.translate(text.toString())
+//            .addOnSuccessListener {
+//                //tvResult.text = it
+//                Log.e("MainActivity", "TranslateAA Success $it")
+//            }.addOnFailureListener {
+//                Log.e("MainActivity", "TranslateAA Failed: $it")
+//            }
+//    }
+    private fun detectLanguage(string: String) {
+//        val languageIdentifier = LanguageIdentification.getClient()
+//        languageIdentifier.identifyLanguage("Hello World")
+//            .addOnSuccessListener { languageCode ->
+//                if (languageCode == "hi") {
+//                    Log.e("TAG", "Can't identify language.")
+//                } else {
+//                    //Log.e("TAG", "Language: $languageCode "+)
+////                    when (languageCode) {
+////                        "en" -> detectedLanguage.text = "The Idenify Langauge is English"
+////                        "hi" -> detectedLanguage.text = "The Idenify Langauge is Hindi"
+////                        "ar" -> detectedLanguage.text = "The Idenify Langauge is Arabic"
+////                    }
+//                }
+//            }
+//            .addOnFailureListener {
+//                Log.i("TAG", "Can't identify language.")
+//            }
+
+//        val options = FirebaseTranslatorOptions.Builder()
+//            .setSourceLanguage(FirebaseTranslateLanguage.EN)
+//            .setTargetLanguage(FirebaseTranslateLanguage.HI)
+//            .build()
+//        val englishGermanTranslator = FirebaseNaturalLanguage.getInstance().getTranslator(options)
+
+//        englishGermanTranslator.downloadModelIfNeeded()
+//            .addOnSuccessListener {
+//                Log.e("TAG", " AAAAA "+it)
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.e("TAG", "Can't identify language.")
+//            }
+
+//        englishGermanTranslator.translate(string)
+//            .addOnSuccessListener { translatedText ->
+//                Log.e("TAG", " AAAAAtranslatedText "+translatedText)
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.e("TAG", "Can't identify language.")
+//            }
+    }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)

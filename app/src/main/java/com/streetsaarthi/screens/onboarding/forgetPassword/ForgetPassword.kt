@@ -2,6 +2,7 @@ package com.streetsaarthi.screens.onboarding.forgetPassword
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.streetsaarthi.databinding.ForgetPasswordBinding
 import com.streetsaarthi.databinding.LoginPasswordBinding
 import com.streetsaarthi.models.Item
 import com.streetsaarthi.screens.onboarding.quickRegistration.QuickRegistrationVM
+import com.streetsaarthi.utils.OtpTimer
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
@@ -53,6 +55,26 @@ class ForgetPassword : Fragment() {
                 view.findNavController().navigateUp()
             }
 
+            var counter = 0
+            var start: Int
+            var end: Int
+            imgCreatePassword.setOnClickListener {
+                if(counter == 0){
+                    counter = 1
+                    imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
+                    start=editTextPassword.getSelectionStart()
+                    end=editTextPassword.getSelectionEnd()
+                    editTextPassword.setTransformationMethod(null)
+                    editTextPassword.setSelection(start,end)
+                }else{
+                    counter = 0
+                    imgCreatePassword.setImageResource(R.drawable.ic_eye_closed)
+                    start=editTextPassword.getSelectionStart()
+                    end=editTextPassword.getSelectionEnd()
+                    editTextPassword.setTransformationMethod(PasswordTransformationMethod())
+                    editTextPassword.setSelection(start,end)
+                }
+            }
 
 
 
@@ -145,17 +167,13 @@ class ForgetPassword : Fragment() {
                 }
             }
 
-
-
-
-
-
         }
+    }
 
 
-
-
-
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
 }

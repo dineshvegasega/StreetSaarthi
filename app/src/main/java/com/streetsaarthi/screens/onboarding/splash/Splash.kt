@@ -65,5 +65,8 @@ class Splash : Fragment() {
     }
 
 
-
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

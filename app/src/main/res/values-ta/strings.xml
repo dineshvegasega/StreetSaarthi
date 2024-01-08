@@ -343,5 +343,11 @@
 
     <string name="localOrganisationStar">அமைப்பைத் தேர்ந்தெடுக்கவும்*</string>
 
+    <string name="the_verify_code_will_expire_in_00_59">சரிபார்ப்புக் குறியீடு %s இல் காலாவதியாகும்</string>
+    <string name="your_Profile">உங்கள் சுயவிவரம்</string>
+    <string name="personal_detailsFull">தனிப்பட்ட விவரங்கள்</string>
+    <string name="contact_details">தொடர்பு விவரங்கள்</string>
+    <string name="other_details">பிற விவரங்கள்</string>
+
 
 </resources>

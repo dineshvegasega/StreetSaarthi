@@ -110,19 +110,19 @@ public class Main extends AppCompatActivity {
 
         setContentView(R.layout.main);
 
-        button = findViewById(R.id.button);
-
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                permissionsList = new ArrayList<>();
-                permissionsList.addAll(Arrays.asList(permissionsStr));
-                askForPermissions(permissionsList);
-
-            }
-        });
+//        button = findViewById(R.id.button);
+//
+//
+//
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                permissionsList = new ArrayList<>();
+//                permissionsList.addAll(Arrays.asList(permissionsStr));
+//                askForPermissions(permissionsList);
+//
+//            }
+//        });
 
     }
 

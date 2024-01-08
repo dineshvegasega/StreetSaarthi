@@ -311,6 +311,22 @@ class WebPage : Fragment() {
             Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show()
         }
 
+
+        @JavascriptInterface
+        fun sendWebLinkToAndroid(toast: String) {
+            Toast.makeText(mContext, "AA1"+toast, Toast.LENGTH_SHORT).show()
+        }
+
+
+        @JavascriptInterface
+        fun sendVideoLinkToAndroid(toast: String) {
+            Toast.makeText(mContext, "AA2"+toast, Toast.LENGTH_SHORT).show()
+        }
+
+
+
+
+
     }
 
     override fun onResume() {
@@ -374,4 +390,10 @@ class WebPage : Fragment() {
         binding.webView.setInitialScale(30);
     }
 
+
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

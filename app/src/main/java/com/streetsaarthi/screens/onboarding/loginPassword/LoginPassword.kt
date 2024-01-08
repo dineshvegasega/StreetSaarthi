@@ -1,6 +1,7 @@
 package com.streetsaarthi.screens.onboarding.loginPassword
 
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -70,6 +71,27 @@ class LoginPassword : Fragment() {
                 view.findNavController().navigateUp()
             }
 
+            var counter = 0
+            var start: Int
+            var end: Int
+            imgCreatePassword.setOnClickListener {
+                if(counter == 0){
+                    counter = 1
+                    imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
+                    start=editTextPassword.getSelectionStart()
+                    end=editTextPassword.getSelectionEnd()
+                    editTextPassword.setTransformationMethod(null)
+                    editTextPassword.setSelection(start,end)
+                }else{
+                    counter = 0
+                    imgCreatePassword.setImageResource(R.drawable.ic_eye_closed)
+                    start=editTextPassword.getSelectionStart()
+                    end=editTextPassword.getSelectionEnd()
+                    editTextPassword.setTransformationMethod(PasswordTransformationMethod())
+                    editTextPassword.setSelection(start,end)
+                }
+            }
+
             editTextLoginWith.setOnClickListener {
                 view.findNavController().navigate(R.id.action_loginPassword_to_loginOtp)
             }
@@ -105,5 +127,8 @@ class LoginPassword : Fragment() {
 
     }
 
-
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

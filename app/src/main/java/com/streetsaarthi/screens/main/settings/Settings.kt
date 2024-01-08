@@ -30,4 +30,10 @@ class Settings : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

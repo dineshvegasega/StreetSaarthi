@@ -42,7 +42,12 @@ class AllSchemes : Fragment() {
             binding.recyclerView.adapter = viewModel.photosAdapter
             viewModel.photosAdapter.notifyDataSetChanged()
             viewModel.photosAdapter.submitList(viewModel.itemMain)
-
         }
+    }
+
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

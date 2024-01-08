@@ -2,6 +2,7 @@ package com.streetsaarthi.screens.onboarding.quickRegistration
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,51 @@ class QuickRegistration2 : Fragment() , CallBackListener {
         super.onViewCreated(view, savedInstanceState)
         callBackListener = this
         binding.apply {
+
+            var counter = 0
+            var start: Int
+            var end: Int
+            imgCreatePassword.setOnClickListener {
+                if(counter == 0){
+                    counter = 1
+                    imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
+                    start=editTextCreatePassword.getSelectionStart()
+                    end=editTextCreatePassword.getSelectionEnd()
+                    editTextCreatePassword.setTransformationMethod(null)
+                    editTextCreatePassword.setSelection(start,end)
+                }else{
+                    counter = 0
+                    imgCreatePassword.setImageResource(R.drawable.ic_eye_closed)
+                    start=editTextCreatePassword.getSelectionStart()
+                    end=editTextCreatePassword.getSelectionEnd()
+                    editTextCreatePassword.setTransformationMethod(PasswordTransformationMethod())
+                    editTextCreatePassword.setSelection(start,end)
+                }
+            }
+
+
+            var counter2 = 0
+            var start2: Int
+            var end2: Int
+            imgReEnterPassword.setOnClickListener {
+                if(counter2 == 0){
+                    counter2 = 1
+                    imgReEnterPassword.setImageResource(R.drawable.ic_eye_open)
+                    start2=editTextReEnterPassword.getSelectionStart()
+                    end2=editTextReEnterPassword.getSelectionEnd()
+                    editTextReEnterPassword.setTransformationMethod(null)
+                    editTextReEnterPassword.setSelection(start2,end2)
+                }else{
+                    counter2 = 0
+                    imgReEnterPassword.setImageResource(R.drawable.ic_eye_closed)
+                    start2=editTextReEnterPassword.getSelectionStart()
+                    end2=editTextReEnterPassword.getSelectionEnd()
+                    editTextReEnterPassword.setTransformationMethod(PasswordTransformationMethod())
+                    editTextReEnterPassword.setSelection(start2,end2)
+                }
+            }
+
+
             textTerms.setOnClickListener {
                 openTermConditionsDialog()
                 Log.e("sadf", "ffff")
@@ -53,9 +99,6 @@ class QuickRegistration2 : Fragment() , CallBackListener {
         Log.e("TAG", "onCallBackB "+pos)
 
         binding.apply {
-
-
-
             if (pos == 3) {
                 if(editTextCreatePassword.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.createPassword))
@@ -96,4 +139,9 @@ class QuickRegistration2 : Fragment() , CallBackListener {
         }
     }
 
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

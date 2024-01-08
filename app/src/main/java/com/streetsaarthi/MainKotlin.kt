@@ -109,17 +109,17 @@ class MainKotlin : AppCompatActivity() {
 
         setContentView(R.layout.main)
 
-        var button = findViewById<Button>(R.id.button)
+//        var button = findViewById<Button>(R.id.button)
 
-        button.setOnClickListener {
-//            permissionsList = ArrayList<String>()
-//            permissionsList!!.addAll(Arrays.asList<String>(*permissionsStr))
+//        button.setOnClickListener {
+////            permissionsList = ArrayList<String>()
+////            permissionsList!!.addAll(Arrays.asList<String>(*permissionsStr))
+////            askForPermissions(permissionsList!!)
+//
+//            permissionsList = java.util.ArrayList()
+//            permissionsList!!.addAll(Arrays.asList(*permissionsStr))
 //            askForPermissions(permissionsList!!)
-
-            permissionsList = java.util.ArrayList()
-            permissionsList!!.addAll(Arrays.asList(*permissionsStr))
-            askForPermissions(permissionsList!!)
-        }
+//        }
     }
 }
 

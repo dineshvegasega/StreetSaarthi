@@ -87,10 +87,13 @@ class WalkThrough : Fragment() {
         }
 
 
-//        binding.btSignUp.setOnClickListener {
-//            requireView().findNavController().navigate(R.id.action_walkThrough_to_Registar)
-//        }
+    }
 
+
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
 

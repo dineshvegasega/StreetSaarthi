@@ -406,4 +406,10 @@ var tabPosition: Int = 0;
             }
         }
     }
+
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

@@ -347,7 +347,11 @@
 
     <string name="localOrganisationStar">تنظیم منتخب کریں*</string>
 
-
+    <string name="the_verify_code_will_expire_in_00_59">تصدیق کوڈ کی میعاد %s میں ختم ہو جائے گی</string>
+    <string name="your_Profile">آپ کا پروفائل</string>
+    <string name = "personal_detailsFull">ذاتی تفصیلات</string>
+    <string name="contact_details">رابطے کی تفصیلات</string>
+    <string name="other_details">دیگر تفصیلات</string>
 
 
 

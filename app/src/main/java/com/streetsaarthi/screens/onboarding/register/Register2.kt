@@ -808,4 +808,8 @@ class Register2  : Fragment() , CallBackListener {
     }
 
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

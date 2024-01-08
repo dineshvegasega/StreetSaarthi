@@ -33,12 +33,15 @@ class History : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.AllComplaintsFeedback)
-
             recyclerView.setHasFixedSize(true)
             binding.recyclerView.adapter = viewModel.photosAdapter
             viewModel.photosAdapter.notifyDataSetChanged()
             viewModel.photosAdapter.submitList(viewModel.itemMain)
-
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

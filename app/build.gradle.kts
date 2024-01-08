@@ -4,7 +4,9 @@ plugins {
     kotlin("kapt")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-    id ("kotlin-parcelize")
+    id("kotlin-parcelize")
+//    id("com.google.firebase.crashlytics")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -44,7 +46,6 @@ android {
         compose = true
         dataBinding = true
         viewBinding = true
-
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -52,8 +53,23 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+//            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+//            excludes.add("META-INF/LICENSE.md")
+//            excludes.add("META-INF/LICENSE-notice.md")
+//
+//            excludes.add("META-INF/DEPENDENCIES")
+//            excludes.add("META-INF/LICENSE")
+//            excludes.add("META-INF/LICENSE.txt")
+//            excludes.add("META-INF/license.txt")
+//            excludes.add("META-INF/NOTICE")
+//            excludes.add("META-INF/NOTICE.txt")
+//            excludes.add("META-INF/notice.txt")
+//            excludes.add("META-INF/*.kotlin_module")
+//            excludes.add("META-INF/LICENSE-notice.md")
         }
     }
+
+
 
     kapt {
         correctErrorTypes = true
@@ -63,7 +79,6 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")
@@ -116,4 +131,48 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences-core:1.0.0")
 
     implementation ("id.zelory:compressor:3.0.1")
+
+//    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+//    implementation ("com.google.firebase:firebase-auth-ktx")
+//    implementation ("com.google.firebase:firebase-database-ktx")
+////    implementation ("com.google.firebase:firebase-messaging-ktx")
+//    implementation ("com.google.firebase:firebase-analytics-ktx")
+//    implementation ("com.google.firebase:firebase-crashlytics-ktx")
+//    implementation ("com.google.firebase:firebase-config-ktx")
+
+
+//    implementation ("com.google.firebase:firebase-ml-natural-language:22.0.1")
+//    implementation ("com.google.firebase:firebase-ml-natural-language-language-id-model:20.0.8")
+//    implementation ("com.google.firebase:firebase-ml-natural-language-translate-model:20.0.9")
+
+
+//    implementation ("com.google.firebase:firebase-ml-natural-language:22.0.1")
+//    implementation ("com.google.firebase:firebase-ml-natural-language-translate-model:20.0.9")
+//
+
+////    implementation ("com.google.guava:guava:27.0.1-jre")
+//    implementation("com.google.cloud:google-cloud-translate:1.12.0"){
+//        configurations.all {
+////            exclude("org.apache.http components")
+////            exclude("org.json', module: 'json")
+////            exclude("com.google.api-client")
+//        }
+//    }
+//
+//
+//    annotationProcessor ("com.google.cloud:google-cloud-translate:1.12.0")
+
+//    implementation ("com.google.api-client:google-api-client:1.33.0")
+
+
+//    implementation ("com.google.api-client:google-api-client:1.33.0"){
+//        configurations.all {
+//            exclude("org.apache.http components")
+////            exclude("org.json', module: 'json")
+//            exclude("com.google.api-client")
+//
+//        }
+//    }
+
+
 }

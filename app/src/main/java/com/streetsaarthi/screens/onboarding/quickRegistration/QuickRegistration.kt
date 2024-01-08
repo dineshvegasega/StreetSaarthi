@@ -178,4 +178,9 @@ class QuickRegistration : Fragment(), CallBackListener {
     }
 
 
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

@@ -73,4 +73,11 @@ class Detail : Fragment() {
 
 //        viewModel.getContributors(data?.owner?.login, data?.name)
     }
+
+
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

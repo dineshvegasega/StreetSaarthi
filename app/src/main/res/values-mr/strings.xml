@@ -343,5 +343,11 @@
 
     <string name="localOrganisationStar">संस्था निवडा*</string>
 
+    <string name="the_verify_code_will_expire_in_00_59">सत्यापन कोड %s मध्ये कालबाह्य होईल</string>
+    <string name="your_Profile">तुमची प्रोफाइल</string>
+    <string name = "personal_detailsFull">वैयक्तिक तपशील</string>
+    <string name="contact_details">संपर्क तपशील</string>
+    <string name = "other_details">इतर तपशील</string>
+
 
 </resources>

@@ -3,6 +3,7 @@ package com.streetsaarthi.screens.onboarding.register
 import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,12 +19,13 @@ import com.google.android.material.button.MaterialButton
 import com.streetsaarthi.R
 import com.streetsaarthi.databinding.Register3Binding
 import com.streetsaarthi.screens.interfaces.CallBackListener
+import com.streetsaarthi.utils.OtpTimer
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class Register3  : Fragment() , CallBackListener {
+class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
     private var _binding: Register3Binding? = null
     private val binding get() = _binding!!
     private val viewModel: RegisterVM by activityViewModels()
@@ -44,13 +46,57 @@ class Register3  : Fragment() , CallBackListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         callBackListener = this
-
+        OtpTimer.sendOtpTimerData = this
         binding.editTextVeryfyOtp.setEnabled(false)
+
         binding.apply {
+            var counter = 0
+            var start: Int
+            var end: Int
+            imgCreatePassword.setOnClickListener {
+                if(counter == 0){
+                    counter = 1
+                    imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
+                    start=editTextCreatePassword.getSelectionStart()
+                    end=editTextCreatePassword.getSelectionEnd()
+                    editTextCreatePassword.setTransformationMethod(null)
+                    editTextCreatePassword.setSelection(start,end)
+                }else{
+                    counter = 0
+                    imgCreatePassword.setImageResource(R.drawable.ic_eye_closed)
+                    start=editTextCreatePassword.getSelectionStart()
+                    end=editTextCreatePassword.getSelectionEnd()
+                    editTextCreatePassword.setTransformationMethod(PasswordTransformationMethod())
+                    editTextCreatePassword.setSelection(start,end)
+                }
+            }
+
+
+            var counter2 = 0
+            var start2: Int
+            var end2: Int
+            imgReEnterPassword.setOnClickListener {
+                if(counter2 == 0){
+                    counter2 = 1
+                    imgReEnterPassword.setImageResource(R.drawable.ic_eye_open)
+                    start2=editTextReEnterPassword.getSelectionStart()
+                    end2=editTextReEnterPassword.getSelectionEnd()
+                    editTextReEnterPassword.setTransformationMethod(null)
+                    editTextReEnterPassword.setSelection(start2,end2)
+                }else{
+                    counter2 = 0
+                    imgReEnterPassword.setImageResource(R.drawable.ic_eye_closed)
+                    start2=editTextReEnterPassword.getSelectionStart()
+                    end2=editTextReEnterPassword.getSelectionEnd()
+                    editTextReEnterPassword.setTransformationMethod(PasswordTransformationMethod())
+                    editTextReEnterPassword.setSelection(start2,end2)
+                }
+            }
+
+
             viewModel.isSend.observe(viewLifecycleOwner, Observer {
-                binding.editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(
-                    R.string.send_otp)})
                 if (it == true){
+                    OtpTimer.startTimer()
                     binding.editTextVeryfyOtp.setEnabled(true)
                     binding.editTextVeryfyOtp.setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -97,6 +143,7 @@ class Register3  : Fragment() , CallBackListener {
                     }
                     viewModel.sendOTP(view = requireView(), obj)
                 }
+                OtpTimer.startTimer()
             }
 
             binding.editTextVeryfyOtp.setOnClickListener {
@@ -165,4 +212,33 @@ class Register3  : Fragment() , CallBackListener {
             }
         }
     }
+
+
+    override fun otpData(string: String) {
+        binding.tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
+        if(string.isEmpty()){
+            binding.editTextSendOtp.setText(getString(R.string.resendOtp))
+            binding.editTextSendOtp.setEnabled(true)
+            binding.editTextSendOtp.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        getResources(), R.color._E79D46, null)))
+        } else {
+            binding.editTextSendOtp.setEnabled(false)
+            binding.editTextSendOtp.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        getResources(), R.color._999999, null)))
+        }
+    }
+
+    override fun onDestroyView() {
+        OtpTimer.sendOtpTimerData = null
+        OtpTimer.stopTimer()
+        _binding = null
+        super.onDestroyView()
+    }
 }
+
+//implementation("com.google.firebase:firebase-analytics")

@@ -344,6 +344,10 @@
     <string name="closeStar">ಮುಚ್ಚು*</string>
     <string name="localOrganisationStar">ಸಂಸ್ಥೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ*</string>
 
-
+    <string name="the_verify_code_will_expire_in_00_59">ಪರಿಶೀಲನೆ ಕೋಡ್ %s ನಲ್ಲಿ ಮುಕ್ತಾಯಗೊಳ್ಳುತ್ತದೆ</string>
+    <string name="your_Profile">ನಿಮ್ಮ ಪ್ರೊಫೈಲ್</string>
+    <string name="personal_detailsFull">ವೈಯಕ್ತಿಕ ವಿವರಗಳು</string>
+    <string name="contact_details">ಸಂಪರ್ಕ ವಿವರಗಳು</string>
+    <string name="other_details">ಇತರ ವಿವರಗಳು</string>
 
 </resources>

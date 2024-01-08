@@ -347,5 +347,10 @@
 
     <string name="localOrganisationStar">సంస్థను ఎంచుకోండి*</string>
 
+    <string name="the_verify_code_will_expire_in_00_59">ధృవీకరణ కోడ్ %sలో ముగుస్తుంది</string>
+    <string name="your_Profile">మీ ప్రొఫైల్</string>
+    <string name="personal_detailsFull">వ్యక్తిగత వివరాలు</string>
+    <string name="contact_details">సంప్రదింపు వివరాలు</string>
+    <string name="other_details">ఇతర వివరాలు</string>
 
 </resources>

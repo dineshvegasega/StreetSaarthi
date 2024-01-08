@@ -343,5 +343,10 @@
     <string name="closeStar">বন্ধ করুন*</string>
     <string name="localOrganisationStar">সংগঠন নির্বাচন করুন*</string>
 
+    <string name="the_verify_code_will_expire_in_00_59">যাচাই কোডের মেয়াদ %s এ শেষ হয়ে যাবে</string>
+    <string name="your_Profile">আপনার প্রোফাইল</string>
+    <string name="personal_detailsFull">ব্যক্তিগত বিবরণ</string>
+    <string name="contact_details">যোগাযোগের বিবরণ</string>
+    <string name = "other_details">অন্যান্য বিশদ বিবরণ</string>
 
 </resources>
