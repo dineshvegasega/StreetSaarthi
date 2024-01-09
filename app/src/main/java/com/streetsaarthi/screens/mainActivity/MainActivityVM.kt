@@ -18,6 +18,7 @@ import com.streetsaarthi.screens.main.complaintsFeedback.createNew.CreateNew
 import com.streetsaarthi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.screens.main.dashboard.Dashboard
 import com.streetsaarthi.screens.main.informationCenter.InformationCenter
+import com.streetsaarthi.screens.main.membershipDetails.MembershipDetails
 import com.streetsaarthi.screens.main.notices.allNotices.AllNotices
 import com.streetsaarthi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.screens.main.notifications.Notifications
@@ -95,12 +96,17 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                 navHostFragment?.navController?.navigate(R.id.notifications)
                             }
                         }
-                        7 -> {
+                        3 -> {
+                            if (fragmentInFrame !is MembershipDetails){
+                                navHostFragment?.navController?.navigate(R.id.membershipDetails)
+                            }
+                        }
+                        8 -> {
                         if (fragmentInFrame !is InformationCenter){
                             navHostFragment?.navController?.navigate(R.id.informationCenter)
                             }
                         }
-                        8 -> {
+                        9 -> {
                         if (fragmentInFrame !is Settings){
                             navHostFragment?.navController?.navigate(R.id.settings)
                         }
@@ -132,7 +138,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
             holder.itemView.setOnClickListener {
                 var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                 when(parentPosition) {
-                    3 -> when(position) {
+                    4 -> when(position) {
                         0 -> {
                             if (fragmentInFrame !is LiveSchemes){
                                 navHostFragment?.navController?.navigate(R.id.liveSchemes)
@@ -144,7 +150,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                             }
                         }
                     }
-                    4 -> when(position) {
+                    5 -> when(position) {
                         0 -> {
                             if (fragmentInFrame !is LiveNotices){
                                 navHostFragment?.navController?.navigate(R.id.liveNotices)
@@ -156,7 +162,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                             }
                         }
                     }
-                    5 -> when(position) {
+                    6 -> when(position) {
                         0 -> {
                             if (fragmentInFrame !is LiveTraining){
                                 navHostFragment?.navController?.navigate(R.id.liveTraining)
@@ -168,7 +174,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                             }
                         }
                     }
-                    6 -> when(position) {
+                    7 -> when(position) {
                         0 -> {
                             if (fragmentInFrame !is CreateNew){
                                 navHostFragment?.navController?.navigate(R.id.createNew)

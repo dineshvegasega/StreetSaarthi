@@ -1,5 +1,6 @@
 package com.streetsaarthi.screens.onboarding.loginPassword
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,11 +39,14 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        saveData(AUTH, response.body()!!.token ?: "")
-                        saveObject(LOGIN_DATA, Gson().fromJson(response.body()!!.data, Login::class.java))
                         showSnackBar(response.body()?.message.orEmpty())
-                        MainActivity.mainActivity.get()!!.callBack()
-                        view.findNavController().navigate(R.id.action_loginPassword_to_dashboard)
+                        if(response.body()!!.data != null){
+                            Log.e("TAG", "aaaaa")
+                            saveData(AUTH, response.body()!!.token ?: "")
+                            saveObject(LOGIN_DATA, Gson().fromJson(response.body()!!.data, Login::class.java))
+                            MainActivity.mainActivity.get()!!.callBack()
+                            view.findNavController().navigate(R.id.action_loginPassword_to_dashboard)
+                        }
                     }
                 }
 

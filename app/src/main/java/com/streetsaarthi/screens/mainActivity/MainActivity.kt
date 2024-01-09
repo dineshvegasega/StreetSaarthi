@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,6 +23,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 //import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
 //import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
 //import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
@@ -34,6 +36,7 @@ import com.streetsaarthi.databinding.MainActivityBinding
 import com.streetsaarthi.datastore.DataStoreKeys
 import com.streetsaarthi.datastore.DataStoreUtil
 import com.streetsaarthi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.models.login.Login
 import com.streetsaarthi.screens.onboarding.networking.Screen
 import com.streetsaarthi.utils.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -189,9 +192,19 @@ class MainActivity : AppCompatActivity() {
             navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
         }
 
-        Picasso.get().load(
-                "http://167.71.225.20:8081/uploads/1702704229image-352x80%20(2).jpg"
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            var aa = Gson().fromJson(loginUser, Login::class.java)
+           // Log.e("TAG", "aaQQ "+aa)
+            Picasso.get().load(
+                Gson().fromJson(loginUser, Login::class.java).profile_image_name.url
             ).into(binding.topLayout.ivImage)
+        }
+
+
+        val manager =  packageManager
+        val info = manager?.getPackageInfo( packageName, 0)
+        val versionName = info?.versionName
+        binding.textVersion.text = getString(R.string.app_version_1_0, versionName)
 
         binding.btLogout.setOnClickListener {
             // MainActivity.mainActivity.get()!!.callBack()

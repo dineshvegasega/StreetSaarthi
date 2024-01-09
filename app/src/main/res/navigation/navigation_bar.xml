@@ -366,8 +366,23 @@
         android:id="@+id/dashboard"
         tools:layout="@layout/dashboard">
         <action
+            android:id="@+id/action_dashboard_to_dashboard"
+            app:destination="@id/dashboard"
+            app:launchSingleTop="true"
+            />
+        <action
             android:id="@+id/action_dashboard_to_profile"
             app:destination="@id/profiles"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_notifications"
+            app:destination="@id/notifications"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_membershipDetails"
+            app:destination="@id/membershipDetails"
             app:launchSingleTop="true"
             />
         <action
@@ -376,8 +391,18 @@
             app:launchSingleTop="true"
             />
         <action
+            android:id="@+id/action_dashboard_to_allSchemes"
+            app:destination="@id/allSchemes"
+            app:launchSingleTop="true"
+            />
+        <action
             android:id="@+id/action_dashboard_to_liveNotices"
             app:destination="@id/liveNotices"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_allNotices"
+            app:destination="@id/allNotices"
             app:launchSingleTop="true"
             />
         <action
@@ -386,8 +411,28 @@
             app:launchSingleTop="true"
             />
         <action
+            android:id="@+id/action_dashboard_to_allTraining"
+            app:destination="@id/allTraining"
+            app:launchSingleTop="true"
+            />
+        <action
             android:id="@+id/action_dashboard_to_history"
             app:destination="@id/history"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_createNew"
+            app:destination="@id/createNew"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_informationCenter"
+            app:destination="@id/informationCenter"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_dashboard_to_settings"
+            app:destination="@id/settings"
             app:launchSingleTop="true"
             />
     </fragment>
