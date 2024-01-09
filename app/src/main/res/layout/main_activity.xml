@@ -89,7 +89,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         tools:ignore="MissingConstraints"
                         app:fontFamily="@font/roboto_medium"
-                        android:text="CLOSE X"
+                        android:text="@string/close_x"
                         android:padding="@dimen/_10sdp"
                         />
 
@@ -151,7 +151,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         tools:ignore="MissingConstraints"
                         app:fontFamily="@font/roboto_regular"
-                        android:text="App Version 1.0"
+                        android:text="@string/app_version_1_0"
                         app:layout_constraintStart_toEndOf="@+id/btLogout"
                         />
 

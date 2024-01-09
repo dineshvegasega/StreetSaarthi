@@ -18,12 +18,13 @@ import com.streetsaarthi.databinding.LoginOtpBinding
 import com.streetsaarthi.databinding.LoginPasswordBinding
 import com.streetsaarthi.models.Item
 import com.streetsaarthi.screens.onboarding.quickRegistration.QuickRegistrationVM
+import com.streetsaarthi.utils.OtpTimer
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class LoginOtp : Fragment() {
+class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
     private var _binding: LoginOtpBinding? = null
     private val binding get() = _binding!!
 
@@ -42,11 +43,7 @@ class LoginOtp : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.textTerms.setOnClickListener {
-//            view.findNavController().navigate(R.id.action_loginOtp_to_registar, Bundle().apply {
-//                putString(Screen, CompleteRegister)
-//            })
-//        }
+        OtpTimer.sendOtpTimerData = this
 
         binding.apply {
 //            editTextVeryfyOtp.isEnabled = false
@@ -57,8 +54,8 @@ class LoginOtp : Fragment() {
             }
 
             viewModel.isSend.observe(viewLifecycleOwner, Observer {
-                binding.editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
                 if (it == true){
+                    OtpTimer.startTimer()
                     binding.btSignIn.setEnabled(true)
                     binding.btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -151,7 +148,29 @@ class LoginOtp : Fragment() {
         }
     }
 
+
+    override fun otpData(string: String) {
+        binding.tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
+        if(string.isEmpty()){
+            binding.editTextSendOtp.setText(getString(R.string.resendOtp))
+            binding.editTextSendOtp.setEnabled(true)
+            binding.editTextSendOtp.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        getResources(), R.color._E79D46, null)))
+        } else {
+            binding.editTextSendOtp.setEnabled(false)
+            binding.editTextSendOtp.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        getResources(), R.color._999999, null)))
+        }
+    }
+
     override fun onDestroyView() {
+        OtpTimer.sendOtpTimerData = null
+        OtpTimer.stopTimer()
         _binding = null
         super.onDestroyView()
     }

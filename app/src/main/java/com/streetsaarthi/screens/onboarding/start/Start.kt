@@ -1,8 +1,10 @@
 package com.streetsaarthi.screens.onboarding.start
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -34,33 +36,40 @@ class Start : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: StartVM by viewModels()
 
+    @get:JvmName("getAdapterContext")
+    var context : Context ?= null
+
+    @get:JvmName("getAdapterContext")
+    lateinit var resources : Resources
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        context = requireContext()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = StartBinding.inflate(inflater)
+        Log.e("TAG", "onCreateView")
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.e("TAG", "onViewCreated")
         //val current = resources.configuration.locale
 
 
 
-
         binding.apply {
-
-
             btSignIn.setOnClickListener {
                 requireView().findNavController().navigate(R.id.action_start_to_walkThrough)
             }
-
+            btSignIn.setText(R.string.explore_app)
             btSignIn.setEnabled(false)
             if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""){
                 btSignIn.setEnabled(false)
@@ -190,7 +199,6 @@ class Start : Fragment() {
                             MainActivity.activity.get()!!.finishAffinity()
                         }
 
-
                         binding.btImage.setOnClickListener {
                             Log.e("TAG" , "asdsfs "+dataClass.name)
 
@@ -208,7 +216,6 @@ class Start : Fragment() {
                             MainActivity.activity.get()!!.finish()
                             MainActivity.activity.get()!!.finishAffinity()
                         }
-
                     }
                 }
                 val recyclerView = dialogView.findViewById<RecyclerView>(R.id.rvList)
@@ -228,6 +235,7 @@ class Start : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+        Log.e("TAG", "onDestroyView")
     }
 
 }

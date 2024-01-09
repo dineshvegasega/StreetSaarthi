@@ -81,7 +81,7 @@
                 />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/editTextFaterFN"
+                android:id="@+id/editTextFatherFN"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
@@ -97,7 +97,7 @@
                 style="@style/PrimaryEditText"
                 android:hint="@string/father_s_last_nameStar"
                 android:text=""
-                app:layout_constraintTop_toBottomOf="@+id/editTextFaterFN"
+                app:layout_constraintTop_toBottomOf="@+id/editTextFatherFN"
                 />
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -297,7 +297,6 @@
                     android:hint="@string/select_pincode"
                     android:text=""
                     android:focusable="false"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextMunicipalityPanchayat"
                     android:drawableEnd="@drawable/ic_down_arrow"
                     android:layout_weight="1.3"
                     />

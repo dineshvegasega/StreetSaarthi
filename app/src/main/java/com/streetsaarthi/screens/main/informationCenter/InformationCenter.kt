@@ -1,11 +1,13 @@
 package com.streetsaarthi.screens.main.informationCenter
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.streetsaarthi.R
 import com.streetsaarthi.databinding.InformationCenterBinding
 import com.streetsaarthi.models.Item
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,8 +29,16 @@ class InformationCenter : Fragment() {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.apply {
+            inclideHeaderSearch.textHeaderTxt.text = getString(R.string.information_center)
+            recyclerView.setHasFixedSize(true)
+            binding.recyclerView.adapter = viewModel.photosAdapter
+            viewModel.photosAdapter.notifyDataSetChanged()
+            viewModel.photosAdapter.submitList(viewModel.itemMain)
+        }
     }
 
 

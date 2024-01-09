@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:padding="@dimen/_10sdp">
 
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -16,7 +16,7 @@
     android:padding="@dimen/_10sdp"
         android:layout_margin="@dimen/_10sdp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iverer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,21 +31,21 @@
             android:id="@+id/textPopular42354435"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Are you sure you want to logout your account ?"
+            android:text="@string/are_you_sure_you_want_to_logout_your_account"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/_10sdp"
             tools:ignore="MissingConstraints"
             android:layout_marginTop="@dimen/_10sdp"/>
 
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="@dimen/_15sdp"
             >
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/videoL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Yes"
+                    android:text="yes"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11sdp"
@@ -69,7 +69,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginRight="@dimen/_5sdp"/>
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
             <LinearLayout
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="No"
+                    android:text="@string/no"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11sdp"
@@ -98,11 +98,11 @@
                     android:layout_marginLeft="@dimen/_5sdp"/>
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -18,6 +18,9 @@ import com.streetsaarthi.models.mix.ItemPanchayat
 import com.streetsaarthi.models.mix.ItemPincode
 import com.streetsaarthi.models.mix.ItemState
 import com.streetsaarthi.models.mix.ItemVending
+import com.streetsaarthi.models.translate.ItemTranslate
+import com.streetsaarthi.networking.ApiTranslateInterface
+import com.streetsaarthi.networking.CallHandlerTranslate
 import com.streetsaarthi.networking.getJsonRequestBody
 import com.streetsaarthi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -490,7 +493,30 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         )
     }
 
+    fun translate(view: View) = viewModelScope.launch {
+        repository.callApiTranslate(
+            callHandler = object : CallHandlerTranslate<Response<ItemTranslate>> {
+                override suspend fun sendRequest(apiInterface: ApiTranslateInterface) =
+                    apiInterface.translate()
 
+                override fun success(response: Response<ItemTranslate>) {
+//                    if (response.isSuccessful){
+//                        itemState = response.body()?.data as ArrayList<ItemState>
+//                    }
+
+                    Log.e("TAG", "XXXX "+response.getJsonRequestBody())
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
 
 
 //    fun uploadImage(imagePath: String, callback: String.() -> Unit) = getAuthToken {

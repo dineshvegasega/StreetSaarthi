@@ -2,10 +2,14 @@ package com.streetsaarthi
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.webkit.WebView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.JsonParser
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.util.Calendar
+
 //import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
 //import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
 
@@ -13,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 //import com.google.api.client.json.jackson2.JacksonFactory;
 //import com.google.api.services.translate.Translate;
 //import com.google.api.services.translate.model.TranslationsListResponse;
-import java.util.Arrays
 
 
 //import org.json.JSONObject
@@ -29,9 +32,27 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.webpage)
         webView = findViewById(R.id.webView)
-        button = findViewById(R.id.button)
+//        button = findViewById(R.id.button)
 
         button.setOnClickListener {
+
+//            val client = OkHttpClient()
+//            val request: Request = Calendar.Builder()
+//                .url("https://translation.googleapis.com/language/translate/v2?key=$apiKey&q=$textToTranslate&source=$sourceLanguage&target=$targetLanguage")
+//                .get()
+//                .build()
+//
+//            return try {
+//                val response = client.newCall(request).execute()
+//                val jsonResponse = response.body!!.string()
+//                val jsonObject =
+//                    JsonParser.parseString(jsonResponse).asJsonObject
+//                jsonObject.getAsJsonObject("data")
+//                    .getAsJsonArray("translations")[0].asJsonObject["translatedText"].asString
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                null
+//            }
 
 //            initLanguage(
 //                "EN",

@@ -4,6 +4,8 @@ import android.content.Context
 import com.demo.networking.ApiInterface
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.streetsaarthi.networking.ApiTranslateInterface
+import com.streetsaarthi.screens.onboarding.networking.TRANSLATE_URL
 import com.streetsaarthi.screens.onboarding.networking.URL
 import dagger.Module
 import dagger.Provides
@@ -16,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -49,6 +52,7 @@ class AppModule {
 
     @Provides
     @Singleton
+    @Qualifiers.Normal
     fun providesRetrofit(
         gson: Gson,
         okHttpClient: OkHttpClient
@@ -61,8 +65,25 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiInterface =
+    @Qualifiers.Translate
+    fun providesRetrofitTranslate(
+        gson: Gson,
+        okHttpClient: OkHttpClient
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(TRANSLATE_URL)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .client(okHttpClient)
+        .build()
+
+    @Provides
+    @Singleton
+    fun provideApiService(@Qualifiers.Normal retrofit: Retrofit): ApiInterface =
         retrofit.create(ApiInterface::class.java)
 
 
+
+    @Provides
+    @Singleton
+    fun provideTranslateApiService(@Qualifiers.Translate retrofit: Retrofit): ApiTranslateInterface =
+        retrofit.create(ApiTranslateInterface::class.java)
 }

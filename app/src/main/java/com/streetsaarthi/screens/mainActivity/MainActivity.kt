@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.ConfigurationCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -85,6 +86,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        setIntent(intent)
 //
 //        if (Build.VERSION.SDK_INT >= 33) {
 //            pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
@@ -397,14 +400,22 @@ class MainActivity : AppCompatActivity() {
 //            }
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    public override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         Log.e("TAG", "onNewIntent "+intent)
         //navHostFragment!!.navController.navigate(R.id.start)
+
+//        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+
         if (intent!!.hasExtra(Screen)){
             var screen = intent.getStringExtra(Screen)
             Log.e("TAG", "screen "+screen)
+//            navHostFragment?.navController?.navigate(R.id.start)
+//            navHostFragment?.navController?.popBackStack(R.id.start, true)
+//            setIntent(intent)
             navHostFragment?.navController?.navigate(R.id.start)
+
         }
     }
 
@@ -435,5 +446,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+
+    fun callFragment() {
+        navHostFragment?.navController?.navigateUp()
+//         getSupportFragmentManager().popBackStack();
+
+        val navOptions: NavOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.navigation_bar, true)
+            .build()
+        navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
     }
 }

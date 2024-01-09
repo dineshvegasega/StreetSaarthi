@@ -1,11 +1,12 @@
 package com.streetsaarthi.screens.main.webPage
 
-import android.Manifest
+import android.R.id
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
@@ -314,13 +315,41 @@ class WebPage : Fragment() {
 
         @JavascriptInterface
         fun sendWebLinkToAndroid(toast: String) {
-            Toast.makeText(mContext, "AA1"+toast, Toast.LENGTH_SHORT).show()
+            Log.e("TAG", "sendWebLinkToAndroid "+toast)
+            Handler(Looper.getMainLooper()).post(Thread {
+                MainActivity.activity.get()?.runOnUiThread {
+                    //Toast.makeText(mContext, "AA1"+toast, Toast.LENGTH_SHORT).show()
+                    val webIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(toast)
+                    )
+                    try {
+                        binding.root.context.startActivity(webIntent)
+                    } catch (ex: ActivityNotFoundException) {
+                        //binding.root.context.startActivity(webIntent)
+                    }
+                }
+            })
         }
 
 
         @JavascriptInterface
         fun sendVideoLinkToAndroid(toast: String) {
-            Toast.makeText(mContext, "AA2"+toast, Toast.LENGTH_SHORT).show()
+            Log.e("TAG", "sendVideoLinkToAndroid "+toast)
+            Handler(Looper.getMainLooper()).post(Thread {
+                MainActivity.activity.get()?.runOnUiThread {
+//                    Toast.makeText(mContext, "AA2"+toast, Toast.LENGTH_SHORT).show()
+                    val webIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(toast)
+                    )
+                    try {
+                        binding.root.context.startActivity(webIntent)
+                    } catch (ex: ActivityNotFoundException) {
+                        //binding.root.context.startActivity(webIntent)
+                    }
+                }
+            })
         }
 
 

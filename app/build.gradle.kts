@@ -122,6 +122,9 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
 
+    implementation ("com.google.code.gson:gson:2.10.1")
+
+
     implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("io.michaelrocks:libphonenumber-android:8.12.52")
 //    implementation ("com.github.ChiliLabs:ChiliPhotoPicker:0.3.1")

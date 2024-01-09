@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class ForgetPassword : Fragment() {
+class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
     private var _binding: ForgetPasswordBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ForgetPasswordVM by viewModels()
@@ -41,11 +41,7 @@ class ForgetPassword : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        viewModel.isSend.observe(viewLifecycleOwner, Observer {
-            binding.editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
-        })
+        OtpTimer.sendOtpTimerData = this
 
 
         binding.apply {
@@ -54,6 +50,24 @@ class ForgetPassword : Fragment() {
             textBack.setOnClickListener {
                 view.findNavController().navigateUp()
             }
+
+
+            viewModel.isSend.observe(viewLifecycleOwner, Observer {
+                if (it == true){
+                    OtpTimer.startTimer()
+                    binding.editTextVeryfyOtp.setEnabled(true)
+                    binding.editTextVeryfyOtp.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._E79D46, null)))
+                }else{
+                    binding.editTextVeryfyOtp.setEnabled(false)
+                    binding.editTextVeryfyOtp.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._999999, null)))
+                }
+            })
 
             var counter = 0
             var start: Int
@@ -171,7 +185,28 @@ class ForgetPassword : Fragment() {
     }
 
 
+    override fun otpData(string: String) {
+        binding.tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
+        if(string.isEmpty()){
+            binding.editTextSendOtp.setText(getString(R.string.resendOtp))
+            binding.editTextSendOtp.setEnabled(true)
+            binding.editTextSendOtp.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        getResources(), R.color._E79D46, null)))
+        } else {
+            binding.editTextSendOtp.setEnabled(false)
+            binding.editTextSendOtp.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        getResources(), R.color._999999, null)))
+        }
+    }
+
     override fun onDestroyView() {
+        OtpTimer.sendOtpTimerData = null
+        OtpTimer.stopTimer()
         _binding = null
         super.onDestroyView()
     }

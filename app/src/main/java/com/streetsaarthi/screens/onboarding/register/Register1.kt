@@ -175,6 +175,7 @@ class Register1  : Fragment() , CallBackListener {
 
 
             viewModel.state(view)
+//            viewModel.translate(view)
             editTextSelectState.setOnClickListener {
                 requireActivity().hideKeyboard()
                 showDropDownStateDialog()
@@ -509,7 +510,7 @@ class Register1  : Fragment() , CallBackListener {
                     showSnackBar(getString(R.string.first_name))
                 } else if (editTextLN.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.last_name))
-                } else if (editTextFaterFN.text.toString().isEmpty()){
+                } else if (editTextFatherFN.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.father_s_first_name))
                 } else if (editTextFatherLN.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.father_s_last_name))
@@ -541,7 +542,7 @@ class Register1  : Fragment() , CallBackListener {
                     } else {
                         viewModel.data.vendor_first_name = editTextFN.text.toString()
                         viewModel.data.vendor_last_name = editTextLN.text.toString()
-                        viewModel.data.parent_first_name = editTextFaterFN.text.toString()
+                        viewModel.data.parent_first_name = editTextFatherFN.text.toString()
                         viewModel.data.parent_last_name = editTextFatherLN.text.toString()
 //                        viewModel.data.gender = editTextGender.text.toString()
                         viewModel.data.date_of_birth = editTextDateofBirth.text.toString()

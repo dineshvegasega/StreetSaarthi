@@ -345,7 +345,6 @@
                 />
 
 
-
             <RadioGroup
                 android:id="@+id/radioGroupLocalOrgnaization"
                 android:layout_width="match_parent"

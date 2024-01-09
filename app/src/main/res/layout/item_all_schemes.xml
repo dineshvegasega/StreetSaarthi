@@ -57,7 +57,7 @@
             tools:ignore="MissingConstraints"
             app:fontFamily="@font/roboto_regular"
             android:backgroundTint="@color/_138808"
-            android:text="Active"
+            android:text="@string/active"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,33 +6,14 @@
     app:startDestination="@id/splash"
     >
 
-    <fragment
-        android:name="com.streetsaarthi.screens.onboarding.register.Register2"
-        android:label="Register2"
-        android:id="@+id/register2"
-        tools:layout="@layout/register2">
-    </fragment>
+
 
     <fragment
         android:name="com.streetsaarthi.screens.onboarding.splash.Splash"
         android:label="Splash"
         android:id="@+id/splash"
         tools:layout="@layout/splash">
-        <action
-            android:id="@+id/action_splash_to_login"
-            app:destination="@id/loginPassword"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/splash"
-            app:popUpToInclusive="true"
-            />
 
-        <action
-            android:id="@+id/action_splash_to_onboard"
-            app:destination="@id/onboard"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/onboard"
-            app:popUpToInclusive="true"
-            />
 
         <action
             android:id="@+id/action_splash_to_start"
@@ -129,12 +110,6 @@
 
 
         <action
-            android:id="@+id/action_onboard_to_termsPrivacy"
-            app:destination="@id/termsPrivacy"
-            app:launchSingleTop="true"
-            />
-
-        <action
             android:id="@+id/action_onboard_to_register"
             app:destination="@id/register"
             app:launchSingleTop="true"
@@ -144,8 +119,8 @@
             android:id="@+id/action_onboard_to_webPage"
             app:destination="@id/webpage"
             app:launchSingleTop="true"
-
             />
+
     </fragment>
 
 
@@ -178,11 +153,6 @@
             app:launchSingleTop="true"
             />
 
-        <action
-            android:id="@+id/action_loginOtp_to_termsPrivacy"
-            app:destination="@id/termsPrivacy"
-            app:launchSingleTop="true"
-            />
 
         <action
             android:id="@+id/action_loginOtp_to_dashboard"
@@ -202,34 +172,6 @@
         tools:layout="@layout/quick_registration">
 
         <action
-            android:id="@+id/action_quickRegistration_to_loginPassword"
-            app:destination="@id/loginPassword"
-            app:launchSingleTop="true"
-            />
-
-        <action
-            android:id="@+id/action_quickRegistration_to_loginOtp"
-            app:destination="@id/loginOtp"
-            app:launchSingleTop="true"
-            />
-
-
-
-        <action
-            android:id="@+id/action_quickRegistration_to_onboard"
-            app:destination="@id/onboard"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/navigation_bar"
-            app:popUpToInclusive="true"
-            />
-
-        <action
-            android:id="@+id/action_quickRegistration_to_termsPrivacy"
-            app:destination="@id/termsPrivacy"
-            app:launchSingleTop="true"
-            />
-
-        <action
             android:id="@+id/action_quickRegistration_to_registerSuccessful"
             app:destination="@id/registerSuccessful"
             app:launchSingleTop="true"
@@ -237,6 +179,33 @@
             app:popUpToInclusive="true"
             />
 
+        <action
+            android:id="@+id/action_quickRegistration_to_quickRegistration1"
+            app:destination="@id/quickRegistration1"
+            app:launchSingleTop="true"
+            />
+
+        <action
+            android:id="@+id/action_quickRegistration_to_quickRegistration2"
+            app:destination="@id/quickRegistration2"
+            app:launchSingleTop="true"
+            />
+
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.screens.onboarding.quickRegistration.QuickRegistration1"
+        android:label="QuickRegistration1"
+        android:id="@+id/quickRegistration1"
+        tools:layout="@layout/quick_registration1">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.screens.onboarding.quickRegistration.QuickRegistration2"
+        android:label="QuickRegistration2"
+        android:id="@+id/quickRegistration2"
+        tools:layout="@layout/quick_registration2">
     </fragment>
 
 
@@ -245,11 +214,7 @@
         android:label="LoginPassword"
         android:id="@+id/loginPassword"
         tools:layout="@layout/login_password">
-        <action
-            android:id="@+id/action_loginPassword_to_webPage"
-            app:destination="@id/webpage"
-            app:launchSingleTop="true"
-            />
+
 
         <action
             android:id="@+id/action_loginPassword_to_forgetPassword"
@@ -263,25 +228,6 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/loginPassword"
             app:popUpToInclusive="true"
-            />
-
-        <action
-            android:id="@+id/action_loginPassword_to_quickRegistration"
-            app:destination="@id/quickRegistration"
-            app:launchSingleTop="true"
-            />
-
-
-        <action
-            android:id="@+id/action_loginPassword_to_termsPrivacy"
-            app:destination="@id/termsPrivacy"
-            app:launchSingleTop="true"
-            />
-
-        <action
-            android:id="@+id/action_loginPassword_to_Registar"
-            app:destination="@id/register"
-            app:launchSingleTop="true"
             />
 
         <action
@@ -301,33 +247,6 @@
         android:id="@+id/forgetPassword"
         tools:layout="@layout/forget_password">
 
-        <action
-            android:id="@+id/action_forgetPassword_to_loginPassword"
-            app:destination="@id/loginPassword"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/forgetPassword"
-            app:popUpToInclusive="true"
-            />
-
-        <action
-            android:id="@+id/action_forgetPassword_to_loginOtp"
-            app:destination="@id/loginOtp"
-            app:launchSingleTop="true"
-            />
-
-        <action
-            android:id="@+id/action_forgetPassword_to_quickRegistration"
-            app:destination="@id/quickRegistration"
-            app:launchSingleTop="true"
-            />
-
-
-
-        <action
-            android:id="@+id/action_forgetPassword_to_termsPrivacy"
-            app:destination="@id/termsPrivacy"
-            app:launchSingleTop="true"
-            />
     </fragment>
 
 
@@ -339,13 +258,50 @@
         android:id="@+id/register"
         tools:layout="@layout/register">
         <action
+            android:id="@+id/action_register_to_register1"
+            app:destination="@id/register1"
+            app:launchSingleTop="true"
+            />
+
+        <action
+            android:id="@+id/action_register_to_register2"
+            app:destination="@id/register2"
+            app:launchSingleTop="true"
+            />
+
+        <action
+            android:id="@+id/action_register_to_register3"
+            app:destination="@id/register3"
+            app:launchSingleTop="true"
+            />
+        <action
             android:id="@+id/action_register_to_registerSuccessful"
             app:destination="@id/registerSuccessful"
             app:launchSingleTop="true"
             app:popUpTo="@id/register"
             app:popUpToInclusive="true"
             />
+    </fragment>
 
+    <fragment
+        android:name="com.streetsaarthi.screens.onboarding.register.Register1"
+        android:label="Register1"
+        android:id="@+id/register1"
+        tools:layout="@layout/register1">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.screens.onboarding.register.Register2"
+        android:label="Register2"
+        android:id="@+id/register2"
+        tools:layout="@layout/register2">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.screens.onboarding.register.Register3"
+        android:label="Register3"
+        android:id="@+id/register3"
+        tools:layout="@layout/register3">
     </fragment>
 
     <fragment
@@ -401,13 +357,7 @@
 
 
 
-    <fragment
-        android:name="com.streetsaarthi.screens.onboarding.termsPrivacy.TermsPrivacy"
-        android:label="TermsPrivacy"
-        android:id="@+id/termsPrivacy"
-        tools:layout="@layout/terms">
 
-    </fragment>
 
 
     <fragment
@@ -532,16 +482,25 @@
         android:label="History"
         android:id="@+id/history"
         tools:layout="@layout/history">
+        <action
+            android:id="@+id/action_history_to_historyDetail"
+            app:destination="@id/historyDetail"
+            app:launchSingleTop="true"
+            />
     </fragment>
 
-
+    <fragment
+        android:name="com.streetsaarthi.screens.main.complaintsFeedback.historyDetail.HistoryDetail"
+        android:label="HistoryDetail"
+        android:id="@+id/historyDetail"
+        tools:layout="@layout/history_detail">
+    </fragment>
 
     <fragment
-        android:id="@+id/detail"
-        android:name="com.streetsaarthi.screens.main.details.Detail"
-        android:label="Detail"
-        tools:layout="@layout/detail">
-
+        android:name="com.streetsaarthi.screens.main.membershipDetails.MembershipDetails"
+        android:label="MembershipDetails"
+        android:id="@+id/membershipDetails"
+        tools:layout="@layout/membership_details">
 
     </fragment>
 
