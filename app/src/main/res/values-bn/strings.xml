@@ -355,5 +355,7 @@
     <string name="app_version_1_0">অ্যাপ সংস্করণ %s</string>
     <string name="notices">নোটিস</string>
     <string name = "training"> প্রশিক্ষণ</string>
+    <string name = "information_center">তথ্য কেন্দ্র</string>
+    <string name="membership_details">সদস্যতার বিবরণ</string>
 
 </resources>

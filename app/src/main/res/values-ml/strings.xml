@@ -356,5 +356,8 @@
     <string name="app_version_1_0">ആപ്പ് പതിപ്പ് %s</string>
     <string name="notices">അറിയിപ്പുകൾ</string>
     <string name="training">പരിശീലനം</string>
+    <string name="information_center">വിവര കേന്ദ്രം</string>
+    <string name="membership_details">അംഗത്വ വിശദാംശങ്ങൾ</string>
+
 
 </resources>

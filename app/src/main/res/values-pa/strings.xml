@@ -359,5 +359,8 @@
     <string name="app_version_1_0">ਐਪ ਸੰਸਕਰਣ %s</string>
     <string name="notices">ਨੋਟਿਸ</string>
     <string name = "training">ਸਿਖਲਾਈ</string>
+    <string name = "information_center">ਜਾਣਕਾਰੀ ਕੇਂਦਰ</string>
+    <string name="membership_details">ਮੈਂਬਰਸ਼ਿਪ ਵੇਰਵੇ</string>
+
 
 </resources>

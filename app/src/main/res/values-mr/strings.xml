@@ -355,5 +355,8 @@
     <string name="app_version_1_0">अॅप आवृत्ती %s</string>
     <string name="notices">सूचना</string>
     <string name = "training">प्रशिक्षण</string>
+    <string name="information_center">माहिती केंद्र</string>
+    <string name="membership_details">सदस्यत्व तपशील</string>
+
 
 </resources>

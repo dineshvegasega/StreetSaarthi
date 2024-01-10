@@ -357,5 +357,8 @@
     <string name="app_version_1_0">యాప్ వెర్షన్ %s</string>
     <string name="notices">నోటీసులు</string>
     <string name="training">శిక్షణ</string>
+    <string name="information_center">సమాచార కేంద్రం</string>
+    <string name="membership_details">సభ్యత్వ వివరాలు</string>
+
 
 </resources>

@@ -354,7 +354,7 @@
     <string name="close_x">बंद करना X</string>
     <string name="x_close">X बंद करना</string>
     <string name="app_version_1_0">एप्लिकेशन वेरीज़न %s</string>
-    <string name='नोटिस'>नोटिस</string>
-    <string name='प्रशिक्षण'>प्रशिक्षण</string>
+    <string name='information_center'>सूचना केंद्र</string>
+    <string name='membership_details'>सदस्यता विवरण</string>
 
 </resources>

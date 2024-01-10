@@ -357,5 +357,8 @@
     <string name="app_version_1_0">اپ ورژن %s</string>
     <string name = "notices"> نوٹسز</string>
     <string name="training">ٹریننگ</string>
+    <string name = "information_center"> معلوماتی مرکز</string>
+    <string name="membership_details">رکنیت کی تفصیلات</string>
+
 
 </resources>

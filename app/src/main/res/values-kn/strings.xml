@@ -356,5 +356,8 @@
     <string name="app_version_1_0">ಅಪ್ಲಿಕೇಶನ್ ಆವೃತ್ತಿ %s</string>
     <string name="notices">ಸೂಚನೆಗಳು</string>
     <string name="training">ತರಬೇತಿ</string>
+    <string name="information_center">ಮಾಹಿತಿ ಕೇಂದ್ರ</string>
+    <string name="membership_details">ಸದಸ್ಯತ್ವದ ವಿವರಗಳು</string>
+
 
 </resources>

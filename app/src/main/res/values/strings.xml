@@ -355,6 +355,8 @@
     <string name="app_version_1_0">App Version %s</string>
     <string name="notices">Notices</string>
     <string name="training">Training</string>
+    <string name="information_center">Information Center</string>
+    <string name="membership_details">Membership Details</string>
 
 
 
@@ -372,8 +374,6 @@
     <string name="delete_your_account">Delete Your Account</string>
     <string name="delete_account">Delete Account</string>
     <string name="delete">Delete</string>
-    <string name="information_center">Information Center</string>
-    <string name="membership_details">Membership Details</string>
     <string name="edit">Edit</string>
     <string name="select_your_choice">Select Your Choice</string>
     <string name="register_complaint">Register Complaint</string>
