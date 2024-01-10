@@ -2,7 +2,6 @@
     <string name="app_name">Street Saarthi</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_image_found">No image found</string>
-    <string name="street_vendor_system" translatable="false">Street Vendor\nSystem</string>
     <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
     <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
 
@@ -285,9 +284,8 @@
     <string name="enter_market_place">మార్కెట్ ప్లేస్‌ను నమోదు చేయండి</string>
     <string name="enter_vending">విక్రయాలను నమోదు చేయండి</string>
     <string name="select_scheme">స్కీమ్‌ని ఎంచుకోండి</string>
-    <string name="NASVI_Street_Vendor_Dashboard" translatable="false">NASVI Street Vendor Dashboard</string>
 
-    <string name="profiles">ప్రొఫైల్స్</string>
+    <string name="profiles">ప్రొఫైల్</string>
     <string name="live_schemes">లైవ్ స్కీమ్‌లు</string>
     <string name="all_schemes">అన్ని పథకాలు</string>
     <string name="live_notices">లైవ్ నోటీసులు</string>
@@ -352,5 +350,12 @@
     <string name="personal_detailsFull">వ్యక్తిగత వివరాలు</string>
     <string name="contact_details">సంప్రదింపు వివరాలు</string>
     <string name="other_details">ఇతర వివరాలు</string>
+
+
+    <string name="close_x">దగ్గరగా X</string>
+    <string name="x_close">X దగ్గరగా</string>
+    <string name="app_version_1_0">యాప్ వెర్షన్ %s</string>
+    <string name="notices">నోటీసులు</string>
+    <string name="training">శిక్షణ</string>
 
 </resources>

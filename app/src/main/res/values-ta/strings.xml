@@ -283,7 +283,7 @@
     <string name="enter_vending">விற்பனையை உள்ளிடவும்</string>
     <string name="select_scheme">திட்டத்தைத் தேர்ந்தெடு</string>
 
-    <string name="profiles">சுயவிவரங்கள்</string>
+    <string name="profiles">சுயவிவரம்</string>
     <string name="live_schemes">நேரடி திட்டங்கள்</string>
     <string name="all_schemes">அனைத்து திட்டங்களும்</string>
     <string name="live_notices">நேரடி அறிவிப்புகள்</string>
@@ -349,5 +349,11 @@
     <string name="contact_details">தொடர்பு விவரங்கள்</string>
     <string name="other_details">பிற விவரங்கள்</string>
 
+
+    <string name="close_x">நெருக்கமான X</string>
+    <string name="x_close">X நெருக்கமான</string>
+    <string name="app_version_1_0">பயன்பாட்டின் பதிப்பு %s</string>
+    <string name="notices">அறிவிப்புகள்</string>
+    <string name="training">பயிற்சி</string>
 
 </resources>

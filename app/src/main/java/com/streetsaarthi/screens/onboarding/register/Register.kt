@@ -292,20 +292,20 @@ var tabPosition: Int = 0;
                         requestBody.addFormDataPart("vending_time_to", viewModel.data.close!!)
                     }
 
-                    if(viewModel.data.birth_state  != null){
-                        requestBody.addFormDataPart("vending_state", viewModel.data.birth_state!!)
+                    if(viewModel.data.vending_state  != null){
+                        requestBody.addFormDataPart("vending_state", viewModel.data.vending_state!!)
                     }
-                    if(viewModel.data.birth_district  != null){
-                        requestBody.addFormDataPart("vending_district", viewModel.data.birth_district!!)
+                    if(viewModel.data.vending_district  != null){
+                        requestBody.addFormDataPart("vending_district", viewModel.data.vending_district!!)
                     }
-                    if(viewModel.data.municipality_panchayat_birth  != null){
-                        requestBody.addFormDataPart("vending_municipality_panchayat", viewModel.data.municipality_panchayat_birth!!)
+                    if(viewModel.data.vending_municipality_panchayat  != null){
+                        requestBody.addFormDataPart("vending_municipality_panchayat", viewModel.data.vending_municipality_panchayat!!)
                     }
-                if(viewModel.data.birth_pincode  != null){
-                    requestBody.addFormDataPart("vending_pincode", viewModel.data.birth_pincode!!)
+                if(viewModel.data.vending_pincode  != null){
+                    requestBody.addFormDataPart("vending_pincode", viewModel.data.vending_pincode!!)
                 }
-                if(viewModel.data.birth_address  != null){
-                    requestBody.addFormDataPart("vending_address", viewModel.data.birth_address!!)
+                if(viewModel.data.vending_address  != null){
+                    requestBody.addFormDataPart("vending_address", viewModel.data.vending_address!!)
                 }
                 if(viewModel.data.localOrganisation  != null){
                     requestBody.addFormDataPart("local_organisation", viewModel.data.localOrganisation!!)
@@ -337,27 +337,27 @@ var tabPosition: Int = 0;
 
 //                requestBody.addFormDataPart("status", "unverified")
 
-                if(viewModel.data.PassportSizeImage != null){
+                if(viewModel.data.passportSizeImage != null){
                         requestBody.addFormDataPart(
                             "profile_image_name",
-                            File(viewModel.data.PassportSizeImage!!).name,
-                            File(viewModel.data.PassportSizeImage!!).asRequestBody("image/*".toMediaTypeOrNull())
+                            File(viewModel.data.passportSizeImage!!).name,
+                            File(viewModel.data.passportSizeImage!!).asRequestBody("image/*".toMediaTypeOrNull())
                         )
                 }
 
-                if(viewModel.data.IdentificationImage != null){
+                if(viewModel.data.identificationImage != null){
                     requestBody.addFormDataPart(
                         "identity_image_name",
-                        File(viewModel.data.IdentificationImage!!).name,
-                        File(viewModel.data.IdentificationImage!!).asRequestBody("image/*".toMediaTypeOrNull())
+                        File(viewModel.data.identificationImage!!).name,
+                        File(viewModel.data.identificationImage!!).asRequestBody("image/*".toMediaTypeOrNull())
                     )
                 }
 
-                if(viewModel.data.ShopImage != null){
+                if(viewModel.data.shopImage != null){
                     requestBody.addFormDataPart(
                         "shop_image",
-                        File(viewModel.data.ShopImage!!).name,
-                        File(viewModel.data.ShopImage!!).asRequestBody("image/*".toMediaTypeOrNull())
+                        File(viewModel.data.shopImage!!).name,
+                        File(viewModel.data.shopImage!!).asRequestBody("image/*".toMediaTypeOrNull())
                     )
                 }
 

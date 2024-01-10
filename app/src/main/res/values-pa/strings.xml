@@ -287,7 +287,7 @@
     <string name="enter_vending">ਵੇਂਡਿੰਗ ਦਾਖਲ ਕਰੋ</string>
     <string name="select_scheme">ਸਕੀਮ ਚੁਣੋ</string>
 
-    <string name="profiles">ਪ੍ਰੋਫਾਈਲਾਂ</string>
+    <string name="profiles">ਪ੍ਰੋਫਾਈਲ</string>
     <string name="live_schemes">ਲਾਈਵ ਸਕੀਮਾਂ</string>
     <string name="all_schemes">ਸਾਰੀਆਂ ਸਕੀਮਾਂ</string>
     <string name="live_notices">ਲਾਈਵ ਨੋਟਿਸ</string>
@@ -354,5 +354,10 @@
     <string name = "other_details">ਹੋਰ ਵੇਰਵੇ</string>
 
 
+    <string name="close_x">ਬੰਦ ਕਰੋ X</string>
+    <string name="x_close">X ਬੰਦ ਕਰੋ</string>
+    <string name="app_version_1_0">ਐਪ ਸੰਸਕਰਣ %s</string>
+    <string name="notices">ਨੋਟਿਸ</string>
+    <string name = "training">ਸਿਖਲਾਈ</string>
 
 </resources>

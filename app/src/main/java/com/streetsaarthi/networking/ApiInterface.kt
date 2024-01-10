@@ -12,7 +12,10 @@ import com.streetsaarthi.models.mix.ItemVending
 import com.streetsaarthi.screens.onboarding.networking.DISTRICT
 import com.streetsaarthi.screens.onboarding.networking.LOCAL_ORGANISATION
 import com.streetsaarthi.screens.onboarding.networking.LOGIN
+import com.streetsaarthi.screens.onboarding.networking.LiveScheme
+import com.streetsaarthi.screens.onboarding.networking.LiveTraining
 import com.streetsaarthi.screens.onboarding.networking.Marketplace
+import com.streetsaarthi.screens.onboarding.networking.NoticeLiveList
 import com.streetsaarthi.screens.onboarding.networking.PANCHAYAT
 import com.streetsaarthi.screens.onboarding.networking.PASSWORD_UPDATE
 import com.streetsaarthi.screens.onboarding.networking.PINCODE
@@ -20,6 +23,8 @@ import com.streetsaarthi.screens.onboarding.networking.RESEND_OTP
 import com.streetsaarthi.screens.onboarding.networking.SEND_OTP
 import com.streetsaarthi.screens.onboarding.networking.SIGN_UP
 import com.streetsaarthi.screens.onboarding.networking.STATE
+import com.streetsaarthi.screens.onboarding.networking.SchemeHistoryList
+import com.streetsaarthi.screens.onboarding.networking.VENDER_PROFILE
 import com.streetsaarthi.screens.onboarding.networking.VERIFY_OTP
 import com.streetsaarthi.screens.onboarding.networking.Vending
 import okhttp3.RequestBody
@@ -28,17 +33,17 @@ import retrofit2.http.*
 
 interface ApiInterface {
 
-
-//    @POST(LOGIN)
-//    suspend fun login2(
-//        @Body requestBody: RequestBody
-//    ): Response<BaseResponseDC<JsonElement>>
-
-
     @POST(LOGIN)
     suspend fun login(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
+
+
+    @GET(VENDER_PROFILE+ "/{id}")
+    suspend fun profile(
+        @Path("id") id: String,
+    ): Response<BaseResponseDC<JsonElement>>
+
 
     @POST(VERIFY_OTP)
     suspend fun verifyOTPData(
@@ -67,8 +72,8 @@ interface ApiInterface {
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
 
-@Headers("Accept: application/json")
-@POST(SIGN_UP)
+    @Headers("Accept: application/json")
+    @POST(SIGN_UP)
     suspend fun registerWithFiles(
     @Body hashMap: RequestBody
     ): Response<BaseResponseDC<Any>>
@@ -111,4 +116,27 @@ interface ApiInterface {
 
 
 
+    @POST(SchemeHistoryList)
+    suspend fun schemeHistoryList(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+
+    @POST(LiveScheme)
+    suspend fun liveScheme(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(NoticeLiveList)
+    suspend fun liveNotice(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(LiveTraining)
+    suspend fun liveTraining(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
 }

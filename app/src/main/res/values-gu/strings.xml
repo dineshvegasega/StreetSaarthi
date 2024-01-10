@@ -286,7 +286,7 @@
     <string name="enter_vending">વેન્ડિંગ દાખલ કરો</string>
     <string name = "select_scheme"> યોજના પસંદ કરો</string>
 
-    <string name="profiles">પ્રોફાઇલ્સ</string>
+    <string name="profiles">પ્રોફાઇલ</string>
     <string name="live_schemes">લાઇવ યોજનાઓ</string>
     <string name="all_schemes">બધી યોજનાઓ</string>
     <string name="live_notices">લાઇવ સૂચનાઓ</string>
@@ -346,5 +346,12 @@
     <string name="personal_detailsFull">વ્યક્તિગત વિગતો</string>
     <string name="contact_details">સંપર્ક વિગતો</string>
     <string name = "other_details">અન્ય વિગતો</string>
+
+
+    <string name="close_x">બંધ X</string>
+    <string name="x_close">X બંધ</string>
+    <string name="app_version_1_0">એપ્લિકેશન સંસ્કરણ %s</string>
+    <string name="notices">નોટિસ</string>
+    <string name = "training">તાલીમ</string>
 
 </resources>

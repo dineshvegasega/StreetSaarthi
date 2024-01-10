@@ -84,6 +84,8 @@ public class Main extends AppCompatActivity {
                 alertDialog.show();
             }
         }
+
+
     }
 
     private void askForPermissions(ArrayList<String> permissionsList) {

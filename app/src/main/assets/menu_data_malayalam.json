@@ -1,75 +1,81 @@
 {
   "menu": [
     {
-      "name": "Dashboard",
+      "name": "ഡാഷ്ബോർഡ്",
       "headlines": [
 
       ]
     },
     {
-      "name": "Profiles",
+      "name": "പ്രൊഫൈൽ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Notifications",
+      "name": "അറിയിപ്പുകൾ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Schemes",
-      "headlines": [
-        {
-          "title": "Live Schemes"
-        },
-        {
-          "title": "All Schemes"
-        }
-      ]
-    },
-    {
-      "name": "Notices",
-      "headlines": [
-        {
-          "title": "Live Notices"
-        },
-        {
-          "title": "All Notices"
-        }
-      ]
-    },
-    {
-      "name": "Training",
-      "headlines": [
-        {
-          "title": "Live Training"
-        },
-        {
-          "title": "All Training"
-        }
-      ]
-    },
-    {
-      "name": "Complaints/Feedback",
-      "headlines": [
-        {
-          "title": "Create New"
-        },
-        {
-          "title": "History"
-        }
-      ]
-    },
-    {
-      "name": "Information Center",
+      "name": "അംഗത്വ വിശദാംശങ്ങൾ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Settings",
+      "name": "സ്കീമുകൾ",
+      "headlines": [
+        {
+          "title": "ലൈവ് സ്കീമുകൾ"
+        },
+        {
+          "title": "എല്ലാ സ്കീമുകളും"
+        }
+      ]
+    },
+    {
+      "name": "അറിയിപ്പുകൾ",
+      "headlines": [
+        {
+          "title": "തത്സമയ അറിയിപ്പുകൾ"
+        },
+        {
+          "title": "എല്ലാ അറിയിപ്പുകളും"
+        }
+      ]
+    },
+    {
+      "name": "പരിശീലനം",
+      "headlines": [
+        {
+          "title": "തത്സമയ പരിശീലനം"
+        },
+        {
+          "title": "എല്ലാ പരിശീലനവും"
+        }
+      ]
+    },
+    {
+      "name": "പരാതികൾ/ഫീഡ്ബാക്ക്",
+      "headlines": [
+        {
+          "title": "പുതിയത് സൃഷ്‌ടിക്കുക"
+        },
+        {
+          "title": "ചരിത്രം"
+        }
+      ]
+    },
+    {
+      "name": "വിവര കേന്ദ്രം",
+      "headlines": [
+
+      ]
+    },
+    {
+      "name": "ക്രമീകരണങ്ങൾ",
       "headlines": [
 
       ]

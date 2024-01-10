@@ -350,4 +350,11 @@
     <string name='contact_details'>संपर्क विवरण</string>
     <string name='other_details'>अन्य विवरण</string>
 
+
+    <string name="close_x">बंद करना X</string>
+    <string name="x_close">X बंद करना</string>
+    <string name="app_version_1_0">एप्लिकेशन वेरीज़न %s</string>
+    <string name='नोटिस'>नोटिस</string>
+    <string name='प्रशिक्षण'>प्रशिक्षण</string>
+
 </resources>

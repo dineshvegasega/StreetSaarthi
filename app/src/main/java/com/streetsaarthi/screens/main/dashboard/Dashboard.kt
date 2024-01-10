@@ -1,15 +1,29 @@
 package com.streetsaarthi.screens.main.dashboard
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.google.gson.Gson
+import com.squareup.picasso.Picasso
+import com.streetsaarthi.R
 import com.streetsaarthi.databinding.DashboardBinding
+import com.streetsaarthi.datastore.DataStoreKeys
+import com.streetsaarthi.datastore.DataStoreUtil
 import com.streetsaarthi.models.Item
+import com.streetsaarthi.models.login.Login
+import com.streetsaarthi.screens.mainActivity.MainActivity
+import com.streetsaarthi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.utils.OtpTimer
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class Dashboard : Fragment() {
@@ -32,16 +46,55 @@ class Dashboard : Fragment() {
         super.onViewCreated(view, savedInstanceState)
        // val menuHost: MenuHost = requireActivity()
         //createMenu(menuHost)
+
+
         binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.adapter = viewModel.photosAdapter
-        viewModel.photosAdapter.notifyDataSetChanged()
-        viewModel.photosAdapter.submitList(viewModel.itemMain)
+        binding.recyclerView.adapter = viewModel.dashboardAdapter
+        viewModel.isScheme.observe(viewLifecycleOwner, Observer {
+            if (it){
+                viewModel.itemMain?.get(1)?.apply {
+                    isNew = true
+                }
+            }
+        })
+        viewModel.isNotice.observe(viewLifecycleOwner, Observer {
+            if (it){
+                viewModel.itemMain?.get(2)?.apply {
+                    isNew = true
+                }
+            }
+        })
+        viewModel.isTraining.observe(viewLifecycleOwner, Observer {
+            if (it){
+                viewModel.itemMain?.get(3)?.apply {
+                    isNew = true
+                }
+            }
+        })
+        viewModel.dashboardAdapter.notifyDataSetChanged()
+        viewModel.dashboardAdapter.submitList(viewModel.itemMain)
+
+        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val obj: JSONObject = JSONObject().apply {
+                    put("page", "1")
+                    put("status", "Active")
+//                    put("search_input", USER_TYPE)
+                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
+                }
+                viewModel.liveScheme(view = requireView(), obj)
+                viewModel.liveTraining(view = requireView(), obj)
+                viewModel.liveNotice(view = requireView(), obj)
+            }
+        }
 
 
-        binding.recyclerViewRecent.setHasFixedSize(true)
-        binding.recyclerViewRecent.adapter = viewModel.recentAdapter
-        viewModel.recentAdapter.notifyDataSetChanged()
-        viewModel.recentAdapter.submitList(viewModel.itemMain)
+
+//
+//        binding.recyclerViewRecent.setHasFixedSize(true)
+//        binding.recyclerViewRecent.adapter = viewModel.recentAdapter
+//        viewModel.recentAdapter.notifyDataSetChanged()
+//        viewModel.recentAdapter.submitList(viewModel.itemMain)
 
 
 //        viewModel.readResult.observe(viewLifecycleOwner, Observer {

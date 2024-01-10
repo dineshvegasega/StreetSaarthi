@@ -151,7 +151,7 @@
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_medium"
                 android:text="@string/current_location_of_businessStar"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_10sdp"
                 />
 
@@ -165,7 +165,7 @@
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/textCurrent_location_of_businessTxt"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_5sdp"
                 />
 
@@ -208,7 +208,7 @@
                         android:id="@+id/ivImagePassportsizeImage"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        app:srcCompat="@drawable/background"
+                        app:srcCompat="@drawable/no_image_modified"
                         android:theme="@style/RoundCorner5"
                         android:scaleType="centerCrop"
                         />
@@ -245,7 +245,7 @@
                         android:id="@+id/ivImageShopimage"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        app:srcCompat="@drawable/background"
+                        app:srcCompat="@drawable/no_image_modified"
                         android:theme="@style/RoundCorner5"
                         android:scaleType="centerCrop"
                         />
@@ -292,7 +292,7 @@
                         android:id="@+id/ivImageIdentityImage"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        app:srcCompat="@drawable/background"
+                        app:srcCompat="@drawable/no_image_modified"
                         android:theme="@style/RoundCorner5"
                         android:scaleType="centerCrop"
                         />
@@ -329,7 +329,7 @@
                         android:id="@+id/ivImageCOV"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        app:srcCompat="@drawable/background"
+                        app:srcCompat="@drawable/no_image_modified"
                         android:theme="@style/RoundCorner5"
                         android:scaleType="centerCrop"
                         />
@@ -376,7 +376,7 @@
                         android:id="@+id/ivImageMembershipId"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        app:srcCompat="@drawable/background"
+                        app:srcCompat="@drawable/no_image_modified"
                         android:theme="@style/RoundCorner5"
                         android:scaleType="centerCrop"
                         />
@@ -413,7 +413,7 @@
                         android:id="@+id/ivImageLOR"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        app:srcCompat="@drawable/background"
+                        app:srcCompat="@drawable/no_image_modified"
                         android:theme="@style/RoundCorner5"
                         android:scaleType="centerCrop"
                         />

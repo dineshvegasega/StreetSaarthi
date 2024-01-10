@@ -5,16 +5,10 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
 import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
-import com.google.gson.Gson
-import com.google.gson.JsonElement
-import com.streetsaarthi.R
 import com.streetsaarthi.model.BaseResponseDC
-import com.streetsaarthi.models.login.Login
-import com.streetsaarthi.models.login.LoginResponse
 import com.streetsaarthi.networking.getJsonRequestBody
 import com.streetsaarthi.utils.navigateBack
 import com.streetsaarthi.utils.showSnackBar

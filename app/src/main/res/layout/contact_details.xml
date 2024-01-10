@@ -124,7 +124,7 @@
                 app:fontFamily="@font/roboto_medium"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/is_your_permanent_residence_same_as_current_residenceStar"
-                android:visibility="visible"
+                android:visibility="gone"
                 />
 
 
@@ -137,6 +137,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_3sdp"
+                android:visibility="gone"
                 >
 
                 <androidx.appcompat.widget.AppCompatRadioButton
@@ -181,12 +182,12 @@
                 android:textColor="@color/_2C2C2C"
                 android:textSize="@dimen/_12ssp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroupIs_your_permanent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_medium"
-                android:text="@string/current_addressStar"
+                android:text="@string/current_vending_addressStar"
                 android:visibility="visible"
                 />
 

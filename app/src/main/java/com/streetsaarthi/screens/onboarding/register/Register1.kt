@@ -67,12 +67,12 @@ class Register1  : Fragment() , CallBackListener {
         if (uri != null) {
             when (imagePosition) {
                 1 -> {
-                    viewModel.data.PassportSizeImage = requireContext().getMediaFilePathFor(uri)
-                    binding.textViewPassportSizeImage.setText(File(viewModel.data.PassportSizeImage!!).name)
+                    viewModel.data.passportSizeImage = requireContext().getMediaFilePathFor(uri)
+                    binding.textViewPassportSizeImage.setText(File(viewModel.data.passportSizeImage!!).name)
                 }
                 2 -> {
-                    viewModel.data.IdentificationImage = requireContext().getMediaFilePathFor(uri)
-                    binding.textViewIdentificationImage.setText(File(viewModel.data.IdentificationImage!!).name)
+                    viewModel.data.identificationImage = requireContext().getMediaFilePathFor(uri)
+                    binding.textViewIdentificationImage.setText(File(viewModel.data.identificationImage!!).name)
                 }
             }
         } else {
@@ -91,12 +91,12 @@ class Register1  : Fragment() , CallBackListener {
                 when (imagePosition) {
                     1 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
-                        viewModel.data.PassportSizeImage = compressedImageFile.path
+                        viewModel.data.passportSizeImage = compressedImageFile.path
                         binding.textViewPassportSizeImage.setText(compressedImageFile.name)
                     }
                     2 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
-                        viewModel.data.IdentificationImage = compressedImageFile.path
+                        viewModel.data.identificationImage = compressedImageFile.path
                         binding.textViewIdentificationImage.setText(compressedImageFile.name)
                     }
                 }
@@ -535,9 +535,9 @@ class Register1  : Fragment() , CallBackListener {
                         showSnackBar(getString(R.string.municipality_panchayat))
                     } else if (editTextAddress.text.toString().isEmpty()){
                         showSnackBar(getString(R.string.address_mention_village))
-                    } else if (viewModel.data.PassportSizeImage == null){
+                    } else if (viewModel.data.passportSizeImage == null){
                         showSnackBar(getString(R.string.passport_size_image))
-                    } else if (viewModel.data.IdentificationImage == null){
+                    } else if (viewModel.data.identificationImage == null){
                         showSnackBar(getString(R.string.identification_image))
                     } else {
                         viewModel.data.vendor_first_name = editTextFN.text.toString()

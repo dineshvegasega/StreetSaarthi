@@ -57,6 +57,7 @@
             app:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_6sdp"
             android:text="@string/street_vendor_system"
+            app:textAllCaps="true"
             />
 
 

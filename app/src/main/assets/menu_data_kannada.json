@@ -1,75 +1,81 @@
 {
   "menu": [
     {
-      "name": "Dashboard",
+      "name": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
       "headlines": [
 
       ]
     },
     {
-      "name": "Profiles",
+      "name": "ಪ್ರೊಫೈಲ್",
       "headlines": [
 
       ]
     },
     {
-      "name": "Notifications",
+      "name": "ಅಧಿಸೂಚನೆಗಳು",
       "headlines": [
 
       ]
     },
     {
-      "name": "Schemes",
-      "headlines": [
-        {
-          "title": "Live Schemes"
-        },
-        {
-          "title": "All Schemes"
-        }
-      ]
-    },
-    {
-      "name": "Notices",
-      "headlines": [
-        {
-          "title": "Live Notices"
-        },
-        {
-          "title": "All Notices"
-        }
-      ]
-    },
-    {
-      "name": "Training",
-      "headlines": [
-        {
-          "title": "Live Training"
-        },
-        {
-          "title": "All Training"
-        }
-      ]
-    },
-    {
-      "name": "Complaints/Feedback",
-      "headlines": [
-        {
-          "title": "Create New"
-        },
-        {
-          "title": "History"
-        }
-      ]
-    },
-    {
-      "name": "Information Center",
+      "name": "ಸದಸ್ಯತ್ವದ ವಿವರಗಳು",
       "headlines": [
 
       ]
     },
     {
-      "name": "Settings",
+      "name": "ಯೋಜನೆಗಳು",
+      "headlines": [
+        {
+          "title": "ಲೈವ್ ಯೋಜನೆಗಳು"
+        },
+        {
+          "title": "ಎಲ್ಲಾ ಯೋಜನೆಗಳು"
+        }
+      ]
+    },
+    {
+      "name": "ಸೂಚನೆಗಳು",
+      "headlines": [
+        {
+          "title": "ಲೈವ್ ಸೂಚನೆಗಳು"
+        },
+        {
+          "title": "ಎಲ್ಲಾ ಸೂಚನೆಗಳು"
+        }
+      ]
+    },
+    {
+      "name": "ತರಬೇತಿ",
+      "headlines": [
+        {
+          "title": "ಲೈವ್ ತರಬೇತಿ"
+        },
+        {
+          "title": "ಎಲ್ಲಾ ತರಬೇತಿ"
+        }
+      ]
+    },
+    {
+      "name": "ದೂರುಗಳು/ಪ್ರತಿಕ್ರಿಯೆ",
+      "headlines": [
+        {
+          "title": "ಹೊಸದನ್ನು ರಚಿಸಿ"
+        },
+        {
+          "title": "ಇತಿಹಾಸ"
+        }
+      ]
+    },
+    {
+      "name": "ಮಾಹಿತಿ ಕೇಂದ್ರ",
+      "headlines": [
+
+      ]
+    },
+    {
+      "name": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
       "headlines": [
 
       ]

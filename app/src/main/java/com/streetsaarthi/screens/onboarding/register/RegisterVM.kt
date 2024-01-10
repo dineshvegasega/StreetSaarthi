@@ -321,7 +321,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
     }
 
     fun localOrganisation(view: View, jsonObj: JSONObject) = viewModelScope.launch {
-
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemOrganization>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -553,8 +552,8 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         var current_pincode : String ?= null,
         var current_address : String ?= null,
 
-        var PassportSizeImage : String ?= null,
-        var IdentificationImage : String ?= null,
+        var passportSizeImage : String ?= null,
+        var identificationImage : String ?= null,
 
 
 
@@ -568,15 +567,15 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         var open : String ?= null,
         var close : String ?= null,
 
-        var birth_state : String ?= null,
-        var birth_district : String ?= null,
-        var municipality_panchayat_birth : String ?= null,
-        var birth_pincode : String ?= null,
-        var birth_address : String ?= null,
+        var vending_state : String ?= null,
+        var vending_district : String ?= null,
+        var vending_municipality_panchayat : String ?= null,
+        var vending_pincode : String ?= null,
+        var vending_address : String ?= null,
         var localOrganisation : String ?= null,
 
 
-        var ShopImage : String ?= null,
+        var shopImage : String ?= null,
 
         var documentDetails : Boolean ?= false,
         var ImageUploadCOV : String ?= null,

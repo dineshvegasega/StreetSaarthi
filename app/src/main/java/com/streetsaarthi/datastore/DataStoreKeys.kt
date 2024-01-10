@@ -17,6 +17,9 @@ object DataStoreKeys {
     val LOGIN_PASSWORD by lazy { stringPreferencesKey("LOGIN_PASSWORD") }
     val LANGUAGE by lazy { stringPreferencesKey("LANGUAGE") }
     val DEFAULT_ADDRESS by lazy { stringPreferencesKey("DEFAULT_ADDRESS") }
+    val LIVE_SCHEME_DATA by lazy { stringPreferencesKey("LIVE_SCHEME_DATA") }
+    val LIVE_NOTICE_DATA by lazy { stringPreferencesKey("LIVE_NOTICE_DATA") }
+    val LIVE_TRAINING_DATA by lazy { stringPreferencesKey("LIVE_TRAINING_DATA") }
 
     val Context.dataStore by preferencesDataStore(DATA_STORE_NAME)
 }

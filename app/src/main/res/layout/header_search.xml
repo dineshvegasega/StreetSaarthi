@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:paddingHorizontal="@dimen/_10sdp"
-    android:paddingVertical="@dimen/_15sdp">
+    android:paddingVertical="@dimen/_10sdp">
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -71,7 +71,7 @@
         android:maxLines="1"
         android:lines="1"
         android:singleLine="true"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

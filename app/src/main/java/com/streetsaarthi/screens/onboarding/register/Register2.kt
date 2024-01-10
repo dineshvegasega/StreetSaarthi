@@ -74,8 +74,8 @@ class Register2  : Fragment() , CallBackListener {
                 when (imagePosition) {
                     11 -> {
                         // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
-                        viewModel.data.ShopImage = requireContext().getMediaFilePathFor(uri)
-                        binding.textViewlayoutShopImage.setText(File(viewModel.data.ShopImage!!).name)
+                        viewModel.data.shopImage = requireContext().getMediaFilePathFor(uri)
+                        binding.textViewlayoutShopImage.setText(File(viewModel.data.shopImage!!).name)
                     }
 
                     1 -> {
@@ -120,7 +120,7 @@ class Register2  : Fragment() , CallBackListener {
                 when (imagePosition) {
                     11 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
-                        viewModel.data.ShopImage = compressedImageFile.path
+                        viewModel.data.shopImage = compressedImageFile.path
                         binding.textViewlayoutShopImage.setText(compressedImageFile.name)
                     }
 
@@ -741,7 +741,7 @@ class Register2  : Fragment() , CallBackListener {
                     showSnackBar(getString(R.string.address_mention_village))
                 } else if (binding.ivRdLocalOrgnaizationYes.isChecked == true && editTextLocalOrganisation.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.localOrganisation))
-                } else if (viewModel.data.ShopImage == null) {
+                } else if (viewModel.data.shopImage == null) {
                     showSnackBar(getString(R.string.upload_shop_image))
                 } else {
                     val schemeName = StringBuffer()
@@ -785,11 +785,11 @@ class Register2  : Fragment() , CallBackListener {
             viewModel.data.vending_others = editTextTypeofVendingEnter.text.toString()
 
             viewModel.data.total_years_of_business = editTextTotalYearsofVending.text.toString()
-            viewModel.data.birth_state = ""+viewModel.stateIdCurrent
-            viewModel.data.birth_district = ""+viewModel.districtIdCurrent
-            viewModel.data.municipality_panchayat_birth = ""+viewModel.panchayatIdCurrent
-            viewModel.data.birth_pincode = ""+viewModel.pincodeIdCurrent
-            viewModel.data.birth_address = ""+editTextAddress.text.toString()
+            viewModel.data.vending_state = ""+viewModel.stateIdCurrent
+            viewModel.data.vending_district = ""+viewModel.districtIdCurrent
+            viewModel.data.vending_municipality_panchayat = ""+viewModel.panchayatIdCurrent
+            viewModel.data.vending_pincode = ""+viewModel.pincodeIdCurrent
+            viewModel.data.vending_address = ""+editTextAddress.text.toString()
             viewModel.data.localOrganisation = ""+viewModel.localOrganizationIdCurrent
 
             viewModel.data.documentDetails = viewModel.documentDetails

@@ -285,7 +285,7 @@
     <string name="enter_vending">ವಿತರಣೆಯನ್ನು ನಮೂದಿಸಿ</string>
     <string name="select_scheme">ಸ್ಕೀಮ್ ಆಯ್ಕೆಮಾಡಿ</string>
 
-    <string name="profiles">ಪ್ರೊಫೈಲ್‌ಗಳು</string>
+    <string name="profiles">ಪ್ರೊಫೈಲ್</string>
     <string name="live_schemes">ಲೈವ್ ಸ್ಕೀಮ್‌ಗಳು</string>
     <string name="all_schemes">ಎಲ್ಲಾ ಯೋಜನೆಗಳು</string>
     <string name="live_notices">ಲೈವ್ ಸೂಚನೆಗಳು</string>
@@ -349,5 +349,12 @@
     <string name="personal_detailsFull">ವೈಯಕ್ತಿಕ ವಿವರಗಳು</string>
     <string name="contact_details">ಸಂಪರ್ಕ ವಿವರಗಳು</string>
     <string name="other_details">ಇತರ ವಿವರಗಳು</string>
+
+
+    <string name="close_x">ಮುಚ್ಚಿ X</string>
+    <string name="x_close">X ಮುಚ್ಚಿ</string>
+    <string name="app_version_1_0">ಅಪ್ಲಿಕೇಶನ್ ಆವೃತ್ತಿ %s</string>
+    <string name="notices">ಸೂಚನೆಗಳು</string>
+    <string name="training">ತರಬೇತಿ</string>
 
 </resources>

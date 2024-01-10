@@ -350,4 +350,10 @@
     <string name = "other_details">इतर तपशील</string>
 
 
+    <string name="close_x">बंद X</string>
+    <string name="x_close">X बंद</string>
+    <string name="app_version_1_0">अॅप आवृत्ती %s</string>
+    <string name="notices">सूचना</string>
+    <string name = "training">प्रशिक्षण</string>
+
 </resources>

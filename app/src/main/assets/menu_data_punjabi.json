@@ -1,75 +1,81 @@
 {
   "menu": [
     {
-      "name": "Dashboard",
+      "name": "ਡੈਸ਼ਬੋਰਡ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Profiles",
+      "name": "ਪਰੋਫਾਇਲ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Notifications",
+      "name": "ਸੂਚਨਾਵਾਂ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Schemes",
-      "headlines": [
-        {
-          "title": "Live Schemes"
-        },
-        {
-          "title": "All Schemes"
-        }
-      ]
-    },
-    {
-      "name": "Notices",
-      "headlines": [
-        {
-          "title": "Live Notices"
-        },
-        {
-          "title": "All Notices"
-        }
-      ]
-    },
-    {
-      "name": "Training",
-      "headlines": [
-        {
-          "title": "Live Training"
-        },
-        {
-          "title": "All Training"
-        }
-      ]
-    },
-    {
-      "name": "Complaints/Feedback",
-      "headlines": [
-        {
-          "title": "Create New"
-        },
-        {
-          "title": "History"
-        }
-      ]
-    },
-    {
-      "name": "Information Center",
+      "name": "ਮੈਂਬਰਸ਼ਿਪ ਵੇਰਵੇ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Settings",
+      "name": "ਸਕੀਮਾਂ",
+      "headlines": [
+        {
+          "title": "ਲਾਈਵ ਸਕੀਮਾਂ"
+        },
+        {
+          "title": "ਸਾਰੀਆਂ ਸਕੀਮਾਂ"
+        }
+      ]
+    },
+    {
+      "name": "ਨੋਟਿਸ",
+      "headlines": [
+        {
+          "title": "ਲਾਈਵ ਨੋਟਿਸ"
+        },
+        {
+          "title": "ਸਾਰੇ ਨੋਟਿਸ"
+        }
+      ]
+    },
+    {
+      "name": "ਸਿਖਲਾਈ",
+      "headlines": [
+        {
+          "title": "ਲਾਈਵ ਟਰੇਨਿੰਗ"
+        },
+        {
+          "title": "ਸਾਰੀ ਸਿਖਲਾਈ"
+        }
+      ]
+    },
+    {
+      "name": "ਸ਼ਿਕਾਇਤਾਂ/ਫੀਡਬੈਕ",
+      "headlines": [
+        {
+          "title": "ਨਵਾਂ ਬਣਾਓ"
+        },
+        {
+          "title": "ਇਤਿਹਾਸ"
+        }
+      ]
+    },
+    {
+      "name": "ਜਾਣਕਾਰੀ ਕੇਂਦਰ",
+      "headlines": [
+
+      ]
+    },
+    {
+      "name": "ਸੈਟਿੰਗ",
       "headlines": [
 
       ]

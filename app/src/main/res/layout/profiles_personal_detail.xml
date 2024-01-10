@@ -15,7 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/yellow_round_corner"
         android:layout_marginHorizontal="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
         android:visibility="visible"
         android:backgroundTint="@color/_E79D46"
         >

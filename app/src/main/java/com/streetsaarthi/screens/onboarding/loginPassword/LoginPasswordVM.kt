@@ -41,6 +41,33 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
                         if(response.body()!!.data != null){
+                            profiles(view, ""+Gson().fromJson(response.body()!!.data, Login::class.java).id)
+                        }
+                    }
+                }
+                override fun error(message: String) {
+                    super.error(message)
+                }
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+
+
+    fun profiles(view: View, _id: String) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.profile(_id)
+
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        showSnackBar(response.body()?.message.orEmpty())
+                        if(response.body()!!.data != null){
                             Log.e("TAG", "aaaaa")
                             saveData(AUTH, response.body()!!.token ?: "")
                             saveObject(LOGIN_DATA, Gson().fromJson(response.body()!!.data, Login::class.java))
@@ -49,11 +76,9 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                         }
                     }
                 }
-
                 override fun error(message: String) {
                     super.error(message)
                 }
-
                 override fun loading() {
                     super.loading()
                 }

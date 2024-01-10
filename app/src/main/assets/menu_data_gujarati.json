@@ -1,75 +1,81 @@
 {
   "menu": [
     {
-      "name": "Dashboard",
+      "name": "ડેશબોર્ડ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Profiles",
+      "name": "પ્રોફાઇલ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Notifications",
+      "name": "સૂચનાઓ",
       "headlines": [
 
       ]
     },
     {
-      "name": "Schemes",
-      "headlines": [
-        {
-          "title": "Live Schemes"
-        },
-        {
-          "title": "All Schemes"
-        }
-      ]
-    },
-    {
-      "name": "Notices",
-      "headlines": [
-        {
-          "title": "Live Notices"
-        },
-        {
-          "title": "All Notices"
-        }
-      ]
-    },
-    {
-      "name": "Training",
-      "headlines": [
-        {
-          "title": "Live Training"
-        },
-        {
-          "title": "All Training"
-        }
-      ]
-    },
-    {
-      "name": "Complaints/Feedback",
-      "headlines": [
-        {
-          "title": "Create New"
-        },
-        {
-          "title": "History"
-        }
-      ]
-    },
-    {
-      "name": "Information Center",
+      "name": "સભ્યપદ વિગતો",
       "headlines": [
 
       ]
     },
     {
-      "name": "Settings",
+      "name": "યોજનાઓ",
+      "headlines": [
+        {
+          "title": "જીવંત યોજનાઓ"
+        },
+        {
+          "title": "બધી યોજનાઓ"
+        }
+      ]
+    },
+    {
+      "name": "નોટિસ",
+      "headlines": [
+        {
+          "title": "લાઈવ નોટિસ"
+        },
+        {
+          "title": "બધી સૂચનાઓ"
+        }
+      ]
+    },
+    {
+      "name": "તાલીમ",
+      "headlines": [
+        {
+          "title": "જીવંત તાલીમ"
+        },
+        {
+          "title": "તમામ તાલીમ"
+        }
+      ]
+    },
+    {
+      "name": "ફરિયાદો/પ્રતિસાદ",
+      "headlines": [
+        {
+          "title": "નવું બનાવો"
+        },
+        {
+          "title": "ઇતિહાસ"
+        }
+      ]
+    },
+    {
+      "name": "માહિતી કેન્દ્ર",
+      "headlines": [
+
+      ]
+    },
+    {
+      "name": "સેટિંગ્સ",
       "headlines": [
 
       ]

@@ -37,7 +37,9 @@ import com.streetsaarthi.datastore.DataStoreKeys
 import com.streetsaarthi.datastore.DataStoreUtil
 import com.streetsaarthi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.models.login.Login
+import com.streetsaarthi.screens.onboarding.networking.Main
 import com.streetsaarthi.screens.onboarding.networking.Screen
+import com.streetsaarthi.screens.onboarding.networking.Start
 import com.streetsaarthi.utils.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
@@ -188,17 +190,15 @@ class MainActivity : AppCompatActivity() {
 
         if (intent!!.hasExtra(Screen)){
             var screen = intent.getStringExtra(Screen)
-            Log.e("TAG", "screen "+screen)
-            navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
+            Log.e("TAG", "screenAA "+screen)
+//            if(screen == Start){
+//                navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
+//            } else if (screen == Main){
+//                navHostFragment?.navController?.navigate(R.id.action_splash_to_dashboard)
+//            }
         }
 
-        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-            var aa = Gson().fromJson(loginUser, Login::class.java)
-           // Log.e("TAG", "aaQQ "+aa)
-            Picasso.get().load(
-                Gson().fromJson(loginUser, Login::class.java).profile_image_name.url
-            ).into(binding.topLayout.ivImage)
-        }
+
 
 
         val manager =  packageManager
@@ -218,6 +218,10 @@ class MainActivity : AppCompatActivity() {
                     dialog.dismiss()
                     DataStoreUtil.removeKey(DataStoreKeys.LOGIN_DATA) {}
                     DataStoreUtil.removeKey(DataStoreKeys.AUTH) {}
+                    DataStoreUtil.removeKey(DataStoreKeys.LIVE_SCHEME_DATA) {}
+                    DataStoreUtil.removeKey(DataStoreKeys.LIVE_NOTICE_DATA) {}
+                    DataStoreUtil.removeKey(DataStoreKeys.LIVE_TRAINING_DATA) {}
+                    DataStoreUtil.clearDataStore {  }
                     Handler(Looper.getMainLooper()).postDelayed({
                         binding.drawerLayout.close()
                     }, 500)
@@ -456,6 +460,13 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     binding.topLayout.topToolbar.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        if(loginUser != null){
+                            Picasso.get().load(
+                                Gson().fromJson(loginUser, Login::class.java).profile_image_name.url
+                            ).into(binding.topLayout.ivImage)
+                        }
+                    }
                 }
             }
         }
@@ -470,5 +481,12 @@ class MainActivity : AppCompatActivity() {
             .setPopUpTo(R.id.navigation_bar, true)
             .build()
         navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
+    }
+
+
+
+
+    fun callUpdateData() {
+
     }
 }

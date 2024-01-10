@@ -349,4 +349,11 @@
     <string name="contact_details">যোগাযোগের বিবরণ</string>
     <string name = "other_details">অন্যান্য বিশদ বিবরণ</string>
 
+
+    <string name="close_x">বন্ধ X</string>
+    <string name="x_close">X বন্ধ</string>
+    <string name="app_version_1_0">অ্যাপ সংস্করণ %s</string>
+    <string name="notices">নোটিস</string>
+    <string name = "training"> প্রশিক্ষণ</string>
+
 </resources>

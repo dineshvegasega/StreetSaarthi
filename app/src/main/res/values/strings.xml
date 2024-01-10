@@ -2,7 +2,7 @@
     <string name="app_name">Street Saarthi</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_image_found">No image found</string>
-    <string name="street_vendor_system" translatable="false">Street Vendor\nSystem</string>
+    <string name="street_vendor_system" translatable="false">Street\nSaarthi</string>
     <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
     <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
 
@@ -285,9 +285,9 @@
     <string name="enter_market_place">Enter Market Place</string>
     <string name="enter_vending">Enter Vending</string>
     <string name="select_scheme">Select Scheme</string>
-    <string name="NASVI_Street_Vendor_Dashboard" translatable="false">NASVI Street Vendor Dashboard</string>
+    <string name="NASVI_Street_Vendor_Dashboard" translatable="false">Welcome to Street Saarthi Dashboard</string>
 
-    <string name="profiles">Profiles</string>
+    <string name="profiles">Profile</string>
     <string name="live_schemes">Live Schemes</string>
     <string name="all_schemes">All Schemes</string>
     <string name="live_notices">Live Notices</string>
@@ -348,6 +348,16 @@
     <string name="personal_detailsFull">Personal Details</string>
     <string name="contact_details">Contact Details</string>
     <string name="other_details">Other Details</string>
+
+
+    <string name="x_close">X Close</string>
+    <string name="close_x">CLOSE X</string>
+    <string name="app_version_1_0">App Version %s</string>
+    <string name="notices">Notices</string>
+    <string name="training">Training</string>
+
+
+
     <string name="current_addressStar">Current Address*</string>
     <string name="is_your_permanent_residence_same_as_current_residenceStar">Is your permanent residence same as current residence?*</string>
     <string name="current_location_of_businessStar">Current Location of Business*</string>
@@ -365,7 +375,6 @@
     <string name="information_center">Information Center</string>
     <string name="membership_details">Membership Details</string>
     <string name="edit">Edit</string>
-    <string name="x_close">X Close</string>
     <string name="select_your_choice">Select Your Choice</string>
     <string name="register_complaint">Register Complaint</string>
     <string name="subject_of_complaint">Subject Of Complaint</string>
@@ -378,10 +387,14 @@
     <string name="write_something">Write Something</string>
     <string name="active">Active</string>
     <string name="live">LIVE</string>
-    <string name="close_x">CLOSE X</string>
-    <string name="app_version_1_0">App Version %s</string>
     <string name="download_membership_card">Download Membership Card</string>
     <string name="venderDetails"><b>Vender Details:</b> %s</string>
+    <string name="powered_by_national_association_of_street_vendors_of_india">Powered by <b>National Association Of Street Vendors Of India</b></string>
+    <string name="current_vending_addressStar">Current Vending Address*</string>
+
+
+
+
 
 
 
@@ -448,9 +461,6 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
-
-
-
 
 
 </resources>
