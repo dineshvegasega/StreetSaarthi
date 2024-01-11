@@ -696,7 +696,7 @@
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_regular"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:text="@string/cov_lor_survey_receipt_challan_approval_letter_from_municipal_body"
+                android:text="@string/schemes_like_pm_swanidhi_yojna_etc"
                 android:visibility="visible"
                 />
 

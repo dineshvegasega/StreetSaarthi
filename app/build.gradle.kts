@@ -10,15 +10,15 @@ plugins {
 }
 
 android {
-    namespace = "com.streetsaarthi"
+    namespace = "com.streetsaarthi.nasvi"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.streetsaarthi"
+        applicationId = "com.streetsaarthi.nasvi"
         minSdk = 24
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 1
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -70,13 +70,11 @@ android {
     }
 
 
-
     kapt {
         correctErrorTypes = true
     }
-
-
 }
+
 
 dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
@@ -124,6 +122,11 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.10.1")
 
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    kapt ("com.github.bumptech.glide:compiler:4.11.0")
+    implementation("com.github.bumptech.glide:okhttp3-integration:4.11.0") {
+        exclude("glide-parent")
+    }
 
     implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("io.michaelrocks:libphonenumber-android:8.12.52")

@@ -103,32 +103,32 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTime"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
                     android:includeFontPadding="false"
                     android:text="00:27"
                     android:textColor="@color/_B3261E"
                     android:textSize="@dimen/_11ssp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_25sdp"
+                    android:gravity="end"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:visibility="gone"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editTextOtp"
+                    style="@style/PrimaryEditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    style="@style/PrimaryEditText"
+                    android:layout_marginTop="12dp"
                     android:hint="@string/enterOtpHere"
                     android:inputType="number"
-                    android:text=""
                     android:maxLength="6"
+                    android:text=""
                     app:layout_constraintTop_toBottomOf="@+id/tvTime"
-                    />
+              />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editTextVeryfyOtp"

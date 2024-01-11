@@ -200,7 +200,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="MissingConstraints"
                         app:fontFamily="@font/roboto_medium"
-                        android:text="Passport size Image*"
+                        android:text="@string/passport_size_imageStar"
                         android:visibility="visible"
                         />
 
@@ -237,7 +237,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="MissingConstraints"
                         app:fontFamily="@font/roboto_medium"
-                        android:text="Shop image*"
+                        android:text="@string/shop_imageStar"
                         android:visibility="visible"
                         />
 
@@ -284,7 +284,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="MissingConstraints"
                         app:fontFamily="@font/roboto_medium"
-                        android:text="Identity Image*"
+                        android:text="@string/identity_imageStar"
                         android:visibility="visible"
                         />
 
@@ -368,7 +368,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="MissingConstraints"
                         app:fontFamily="@font/roboto_medium"
-                        android:text="Membership Id"
+                        android:text="@string/membership_id"
                         android:visibility="visible"
                         />
 

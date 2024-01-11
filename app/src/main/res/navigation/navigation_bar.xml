@@ -9,7 +9,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.splash.Splash"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.splash.Splash"
         android:label="Splash"
         android:id="@+id/splash"
         tools:layout="@layout/splash">
@@ -35,7 +35,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.start.Start"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.start.Start"
         android:label="Start"
         android:id="@+id/start"
         tools:layout="@layout/start">
@@ -50,7 +50,7 @@
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.walkThrough.WalkThrough"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.walkThrough.WalkThrough"
         android:label="WalkThrough"
         android:id="@+id/walkThrough"
         tools:layout="@layout/walk_through">
@@ -85,7 +85,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.onboard.Onboard"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.onboard.Onboard"
         android:label="Onboard"
         android:id="@+id/onboard"
         tools:layout="@layout/onboard">
@@ -126,7 +126,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.loginOtp.LoginOtp"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.loginOtp.LoginOtp"
         android:label="LoginOtp"
         android:id="@+id/loginOtp"
         tools:layout="@layout/login_otp">
@@ -166,7 +166,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.quickRegistration.QuickRegistration"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration"
         android:label="QuickRegistration"
         android:id="@+id/quickRegistration"
         tools:layout="@layout/quick_registration">
@@ -195,14 +195,14 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.quickRegistration.QuickRegistration1"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1"
         android:label="QuickRegistration1"
         android:id="@+id/quickRegistration1"
         tools:layout="@layout/quick_registration1">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.quickRegistration.QuickRegistration2"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration2"
         android:label="QuickRegistration2"
         android:id="@+id/quickRegistration2"
         tools:layout="@layout/quick_registration2">
@@ -210,7 +210,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.loginPassword.LoginPassword"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.loginPassword.LoginPassword"
         android:label="LoginPassword"
         android:id="@+id/loginPassword"
         tools:layout="@layout/login_password">
@@ -242,7 +242,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.forgetPassword.ForgetPassword"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.forgetPassword.ForgetPassword"
         android:label="ForgetPassword"
         android:id="@+id/forgetPassword"
         tools:layout="@layout/forget_password">
@@ -253,7 +253,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.register.Register"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.register.Register"
         android:label="Register"
         android:id="@+id/register"
         tools:layout="@layout/register">
@@ -284,28 +284,28 @@
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.register.Register1"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.register.Register1"
         android:label="Register1"
         android:id="@+id/register1"
         tools:layout="@layout/register1">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.register.Register2"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.register.Register2"
         android:label="Register2"
         android:id="@+id/register2"
         tools:layout="@layout/register2">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.register.Register3"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.register.Register3"
         android:label="Register3"
         android:id="@+id/register3"
         tools:layout="@layout/register3">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.onboarding.registerSuccessful.RegisterSuccessful"
+        android:name="com.streetsaarthi.nasvi.screens.onboarding.registerSuccessful.RegisterSuccessful"
         android:label="RegisterSuccessful"
         android:id="@+id/registerSuccessful"
         tools:layout="@layout/register_successful">
@@ -324,7 +324,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.webPage.WebPage"
+        android:name="com.streetsaarthi.nasvi.screens.main.webPage.WebPage"
         android:label="WebPage"
         android:id="@+id/webpage"
         tools:layout="@layout/webpage">
@@ -361,7 +361,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.dashboard.Dashboard"
+        android:name="com.streetsaarthi.nasvi.screens.main.dashboard.Dashboard"
         android:label="Dashboard"
         android:id="@+id/dashboard"
         tools:layout="@layout/dashboard">
@@ -439,7 +439,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.profiles.Profiles"
+        android:name="com.streetsaarthi.nasvi.screens.main.profiles.Profiles"
         android:label="Profiles"
         android:id="@+id/profiles"
         tools:layout="@layout/profiles">
@@ -447,7 +447,7 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.notifications.Notifications"
+        android:name="com.streetsaarthi.nasvi.screens.main.notifications.Notifications"
         android:label="Notifications"
         android:id="@+id/notifications"
         tools:layout="@layout/notifications">
@@ -455,14 +455,14 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.informationCenter.InformationCenter"
+        android:name="com.streetsaarthi.nasvi.screens.main.informationCenter.InformationCenter"
         android:label="InformationCenter"
         android:id="@+id/informationCenter"
         tools:layout="@layout/information_center">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.settings.Settings"
+        android:name="com.streetsaarthi.nasvi.screens.main.settings.Settings"
         android:label="Settings"
         android:id="@+id/settings"
         tools:layout="@layout/settings">
@@ -471,14 +471,14 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.schemes.liveSchemes.LiveSchemes"
+        android:name="com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes"
         android:label="LiveSchemes"
         android:id="@+id/liveSchemes"
         tools:layout="@layout/live_schemes">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.schemes.allSchemes.AllSchemes"
+        android:name="com.streetsaarthi.nasvi.screens.main.schemes.allSchemes.AllSchemes"
         android:label="AllSchemes"
         android:id="@+id/allSchemes"
         tools:layout="@layout/all_schemes">
@@ -486,14 +486,14 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.notices.liveNotices.LiveNotices"
+        android:name="com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices"
         android:label="LiveNotices"
         android:id="@+id/liveNotices"
         tools:layout="@layout/live_notices">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.notices.allNotices.AllNotices"
+        android:name="com.streetsaarthi.nasvi.screens.main.notices.allNotices.AllNotices"
         android:label="AllNotices"
         android:id="@+id/allNotices"
         tools:layout="@layout/all_notices">
@@ -501,14 +501,14 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.training.liveTraining.LiveTraining"
+        android:name="com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining"
         android:label="LiveTraining"
         android:id="@+id/liveTraining"
         tools:layout="@layout/live_training">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.training.allTraining.AllTraining"
+        android:name="com.streetsaarthi.nasvi.screens.main.training.allTraining.AllTraining"
         android:label="AllTraining"
         android:id="@+id/allTraining"
         tools:layout="@layout/all_training">
@@ -516,14 +516,14 @@
 
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.complaintsFeedback.createNew.CreateNew"
+        android:name="com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew.CreateNew"
         android:label="CreateNew"
         android:id="@+id/createNew"
         tools:layout="@layout/create_new">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.complaintsFeedback.history.History"
+        android:name="com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History"
         android:label="History"
         android:id="@+id/history"
         tools:layout="@layout/history">
@@ -535,14 +535,14 @@
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.complaintsFeedback.historyDetail.HistoryDetail"
+        android:name="com.streetsaarthi.nasvi.screens.main.complaintsFeedback.historyDetail.HistoryDetail"
         android:label="HistoryDetail"
         android:id="@+id/historyDetail"
         tools:layout="@layout/history_detail">
     </fragment>
 
     <fragment
-        android:name="com.streetsaarthi.screens.main.membershipDetails.MembershipDetails"
+        android:name="com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetails"
         android:label="MembershipDetails"
         android:id="@+id/membershipDetails"
         tools:layout="@layout/membership_details">

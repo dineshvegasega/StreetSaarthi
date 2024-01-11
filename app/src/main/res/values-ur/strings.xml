@@ -48,7 +48,7 @@
 
 
 
-    <string name="enterMobileNumber">موبائل نمبر درج کریں</string>
+    <string name="enterMobileNumber">درست موبائل نمبر درج کریں۔</string>
 
 
     <string name="login">لاگ ان کریں</string>
@@ -78,6 +78,7 @@
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
     <string name="telugu">తెలుగు</string>
+    <string name="assamese">অসমীয়া</string>
     <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
@@ -90,6 +91,7 @@
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
     <string name="teluguVal">te</string>
+    <string name="assameseVal">as</string>
     <string name="urduVal">ur</string>
 
 
@@ -114,7 +116,7 @@
     <string name="profile_details">پروفائل کی تفصیلات</string>
     <string name="registration_successful">رجسٹریشن کامیاب</string>
     <string name="congratulations_your_initial_registration_is_complete">مبارک ہو!\nآپ کی ابتدائی رجسٹریشن مکمل ہے</string>
-    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ہماری ٹیم کا کوئی شخص آپ کی رجسٹریشن کی تصدیق کے ل 48 48 گھنٹوں کے اندر آپ سے رابطہ کرے گا۔</string>
+    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ہماری ٹیم کا کوئی شخص آپ کی رجسٹریشن کی تصدیق کے ل 48 گھنٹوں کے اندر آپ سے رابطہ کرے گا۔</string>
     <string name="RegisterNow">ابھی رجسٹر کریں</string>
 
     <string name="resendOtp">او ٹی پی کو دوبارہ جاری کریں</string>
@@ -345,7 +347,7 @@
 
     <string name="localOrganisationStar">تنظیم منتخب کریں*</string>
 
-    <string name="the_verify_code_will_expire_in_00_59">تصدیق کوڈ کی میعاد %s میں ختم ہو جائے گی</string>
+    <string name="the_verify_code_will_expire_in_00_59">%s</string>
     <string name="your_Profile">آپ کا پروفائل</string>
     <string name = "personal_detailsFull">ذاتی تفصیلات</string>
     <string name="contact_details">رابطے کی تفصیلات</string>
@@ -359,6 +361,43 @@
     <string name="training">ٹریننگ</string>
     <string name = "information_center"> معلوماتی مرکز</string>
     <string name="membership_details">رکنیت کی تفصیلات</string>
+    <string name="current_addressStar">موجودہ پتہ*</string>
+    <string name="is_your_permanent_residence_same_as_current_residenceStar">کیا آپ کی مستقل رہائش موجودہ رہائش گاہ جیسی ہے؟*</string>
+    <string name = "current_location_of_businessStar">کاروبار کا موجودہ مقام*</string>
+    <string name = "trackingId"> ٹریکنگ آئی ڈی: %s</string>
+    <string name="settings">ترتیبات</string>
+    <string name="app_settings">ایپ کی ترتیبات</string>
+    <string name="select_language">زبان منتخب کریں</string>
+    <string name="notifications">اطلاعات</string>
+    <string name="profile_settings">پروفائل کی ترتیبات</string>
+    <string name = "change_password"> پاس ورڈ تبدیل کریں</string>
+    <string name="logout_account">لاگ آؤٹ اکاؤنٹ</string>
+    <string name="delete_your_account">اپنا اکاؤنٹ حذف کریں</string>
+    <string name="delete_account">اکاؤنٹ حذف کریں</string>
+    <string name="delete">حذف کریں</string>
+    <string name="edit">ترمیم کریں</string>
+    <string name="select_your_choice">اپنی پسند منتخب کریں</string>
+    <string name="register_complaint">شکایت رجسٹر کریں</string>
+    <string name="subject_of_complaint">شکایت کا موضوع</string>
 
+    <string name="type_here">یہاں ٹائپ کریں</string>
+    <string name="your_name">آپ کا نام</string>
+    <string name="your_full_name">آپ کا پورا نام</string>
+    <string name="your_mobile_number">آپ کا موبائل نمبر</string>
+    <string name="description">تفصیل</string>
+    <string name="are_you_sure_you_want_to_logout_your_account">کیا آپ واقعی اپنے اکاؤنٹ سے لاگ آؤٹ کرنا چاہتے ہیں؟</string>
+    <string name="write_something">کچھ لکھیں</string>
+    <string name = "active"> فعال</string>
+    <string name="live">لائیو</string>
+    <string name="download_membership_card">ممبرشپ کارڈ ڈاؤن لوڈ کریں</string>
+    <string name="venderDetails"><b>وینڈر کی تفصیلات:</b> %s</string>
+    <string name="current_vending_addressStar">موجودہ وینڈنگ پتہ*</string>
+    <string name="membership_Id">رکنیت کی شناخت:</string>
+    <string name="valid_Upto">درست تک:</string>
+    <string name = "passport_size_imageStar"> پاسپورٹ سائز کی تصویر*</string>
+    <string name = "shop_imageStar"> شاپ امیج*</string>
+    <string name="identity_imageStar">شناختی تصویر*</string>
+    <string name="membership_id">رکنیت کی شناخت</string>
+    <string name="schemes_like_pm_swanidhi_yojna_etc">پی ایم سواندھی یوجنا وغیرہ جیسی اسکیمیں</string>
 
 </resources>

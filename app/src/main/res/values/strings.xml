@@ -16,6 +16,7 @@
     <string name="AnInitiativeBy">An Initiative By</string>
     <string name="ConnectingStreetVendorsAllOverIndia">Connecting Street Vendors All Over India</string>
     <string name="StreetVendorSystem">Street Vendor System</string>
+    <string name="powered_by_national_association_of_street_vendors_of_india" translatable="false">Powered by <b>National Association Of Street Vendors Of India</b></string>
 
 
     <string name="street_saarthi">Street Saarthi</string>
@@ -48,7 +49,7 @@
 
 
 
-    <string name="enterMobileNumber">Enter Mobile Number</string>
+    <string name="enterMobileNumber">Enter Valid Mobile Number</string>
 
 
     <string name="login">Login</string>
@@ -78,6 +79,7 @@
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
     <string name="telugu">తెలుగు</string>
+    <string name="assamese">অসমীয়া</string>
     <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
@@ -90,6 +92,7 @@
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
     <string name="teluguVal">te</string>
+    <string name="assameseVal">as</string>
     <string name="urduVal">ur</string>
 
 
@@ -113,7 +116,7 @@
     <string name="profile_details">Profile Details</string>
     <string name="registration_successful">Registration Successful</string>
     <string name="congratulations_your_initial_registration_is_complete">Congratulations!\nYour initial registration is complete</string>
-    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">Someone from our team will contact you within 48Hrs to verify your registration.</string>
+    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">Someone from our team will contact you within 48 Hrs to verify your registration.</string>
     <string name="RegisterNow">Register Now</string>
 
     <string name="resendOtp">Re-send OTP</string>
@@ -343,7 +346,7 @@
 
     <string name="localOrganisationStar">Select Organisation*</string>
 
-    <string name="the_verify_code_will_expire_in_00_59">The verify code will expire in %s</string>
+    <string name="the_verify_code_will_expire_in_00_59">%s</string>
     <string name="your_Profile">Your Profile</string>
     <string name="personal_detailsFull">Personal Details</string>
     <string name="contact_details">Contact Details</string>
@@ -357,14 +360,13 @@
     <string name="training">Training</string>
     <string name="information_center">Information Center</string>
     <string name="membership_details">Membership Details</string>
-
-
-
     <string name="current_addressStar">Current Address*</string>
     <string name="is_your_permanent_residence_same_as_current_residenceStar">Is your permanent residence same as current residence?*</string>
     <string name="current_location_of_businessStar">Current Location of Business*</string>
     <string name="trackingId">Tracking Id: %s</string>
     <string name="settings">Settings</string>
+
+
     <string name="app_settings">App Settings</string>
     <string name="select_language">Select Language</string>
     <string name="notifications">Notifications</string>
@@ -389,14 +391,15 @@
     <string name="live">LIVE</string>
     <string name="download_membership_card">Download Membership Card</string>
     <string name="venderDetails"><b>Vender Details:</b> %s</string>
-    <string name="powered_by_national_association_of_street_vendors_of_india">Powered by <b>National Association Of Street Vendors Of India</b></string>
     <string name="current_vending_addressStar">Current Vending Address*</string>
 
-
-
-
-
-
+    <string name="membership_Id">Membership Id:</string>
+    <string name="valid_Upto">Valid Upto:</string>
+    <string name="passport_size_imageStar">Passport Size Image*</string>
+    <string name="shop_imageStar">Shop image*</string>
+    <string name="identity_imageStar">Identity Image*</string>
+    <string name="membership_id">Membership Id</string>
+    <string name="schemes_like_pm_swanidhi_yojna_etc">Schemes like PM Swanidhi Yojna etc</string>
 
 
 
@@ -461,6 +464,7 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
+
 
 
 </resources>

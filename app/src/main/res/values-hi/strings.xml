@@ -46,7 +46,7 @@
 
 
 
-   <string name="enterMobileNumber">मोबाइल नंबर </string>
+   <string name="enterMobileNumber">मान्य मोबाइल नंबर दर्ज करें</string>
 
 
     <string name="login">लॉग इन करें</string>
@@ -76,6 +76,7 @@
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
     <string name="telugu">తెలుగు</string>
+    <string name="assamese">অসমীয়া</string>
     <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
@@ -88,6 +89,7 @@
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
     <string name="teluguVal">te</string>
+    <string name="assameseVal">as</string>
     <string name="urduVal">ur</string>
 
 
@@ -344,7 +346,7 @@
     <string name="closeStar">बंद करना*</string>
     <string name='localOrganisationStar'>संगठन का चयन करे*</string>
 
-    <string name='the_verify_code_will_expire_in_00_59'>सत्यापित कोड %s में समाप्त हो जाएगा</string>
+    <string name="the_verify_code_will_expire_in_00_59">%s</string>
     <string name='your_Profile'>आपकी प्रोफ़ाइल</string>
     <string name='personal_detailsFull'>व्यक्तिगत विवरण</string>
     <string name='contact_details'>संपर्क विवरण</string>
@@ -354,7 +356,48 @@
     <string name="close_x">बंद करना X</string>
     <string name="x_close">X बंद करना</string>
     <string name="app_version_1_0">एप्लिकेशन वेरीज़न %s</string>
+    <string name='notices'>नोटिस</string>
+    <string name='training'>प्रशिक्षण</string>
     <string name='information_center'>सूचना केंद्र</string>
     <string name='membership_details'>सदस्यता विवरण</string>
+    <string name='current_addressStar'>वर्तमान पता*</string>
+    <string name = "is_your_permanent_residence_same_as_current_residenceStar">क्या आपका स्थायी निवास वर्तमान निवास के समान है?*</string>
+    <string name='current_location_of_businessStar'>व्यवसाय का वर्तमान स्थान*</string>
+    <string name='trackingId'>ट्रैकिंग आईडी: %s</string>
+    <string name='settings'>सेटिंग्स</string>
+    <string name='app_settings'>ऐप सेटिंग</string>
+    <string name='select_language'>भाषा चुनें</string>
+    <string name='notifications'>नोटिफिकेशन</string>
+    <string name='profile_settings'>प्रोफ़ाइल सेटिंग</string>
+    <string name='change_password'>पासवर्ड बदलें</string>
+    <string name='logout_account'>लॉगआउट खाता</string>
+    <string name='delete_your_account'>अपना खाता हटाएं</string>
+    <string name='delete_account'>खाता हटाएं</string>
+    <string name='delete'>हटाएं</string>
+    <string name='edit'>संपादित करें</string>
+    <string name='select_your_choice'>अपनी पसंद चुनें</string>
+    <string name='register_complaint'>शिकायत दर्ज करें</string>
+    <string name='subject_of_complaint'>शिकायत का विषय</string>
+
+    <string name='type_here'>यहां टाइप करें</string>
+    <string name='your_name'>आपका नाम</string>
+    <string name='your_full_name'>आपका पूरा नाम</string>
+    <string name='your_mobile_number'>आपका मोबाइल नंबर</string>
+    <string name='description'>विवरण</string>
+    <string name='are_you_sure_you_want_to_logout_your_account'>क्या आप वाकई अपना खाता लॉगआउट करना चाहते हैं?</string>
+    <string name='write_something'>कुछ लिखें</string>
+    <string name='active'>सक्रिय</string>
+    <string name = "live">लाइव</string>
+    <string name='download_membership_card'>सदस्यता कार्ड डाउनलोड करें</string>
+    <string name='venderDetails'><b>विक्रेता विवरण:</b> %s</string>
+    <string name='current_vending_addressStar'>वर्तमान वेंडिंग पता*</string>
+    <string name='membership_Id'>सदस्यता आईडी:</string>
+    <string name='valid_Upto'>इस तक मान्य:</string>
+    <string name='passport_size_imageStar'>पासपोर्ट आकार छवि*</string>
+    <string name='shop_imageStar'>दुकान की छवि*</string>
+    <string name='identity_imageStar'>पहचान छवि*</string>
+    <string name='membership_id'>सदस्यता आईडी</string>
+    <string name="schemes_like_pm_swanidhi_yojna_etc">पीएम स्वनिधि योजना आदि जैसी योजनाएं</string>
+
 
 </resources>
