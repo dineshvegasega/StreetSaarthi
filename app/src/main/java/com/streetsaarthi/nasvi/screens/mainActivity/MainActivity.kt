@@ -196,11 +196,11 @@ class MainActivity : AppCompatActivity() {
         if (intent!!.hasExtra(Screen)){
             var screen = intent.getStringExtra(Screen)
             Log.e("TAG", "screenAA "+screen)
-//            if(screen == Start){
-//                navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
-//            } else if (screen == Main){
-//                navHostFragment?.navController?.navigate(R.id.action_splash_to_dashboard)
-//            }
+            if(screen == Start){
+                navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
+            } else if (screen == Main){
+                navHostFragment?.navController?.navigate(R.id.action_splash_to_dashboard)
+            }
         }
 
 
