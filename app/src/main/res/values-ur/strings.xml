@@ -166,6 +166,8 @@
     <string name="close_time">قریب وقت</string>
     <string name="document_details">دستاویز کی تفصیلات</string>
     <string name="do_you_have_vending_documents">کیا آپ کے پاس وینڈنگ دستاویزات ہیں؟</string>
+    <string name="do_you_have_government_scheme">کیا آپ نے کسی سرکاری اسکیم سے فائدہ اٹھایا ہے؟</string>
+
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/سروے کی رسید/چالان/میونسپل باڈی سے منظوری کا خط)</string>
     <string name="government_scheme">سرکاری اسکیم</string>
     <string name="yes">جی ہاں</string>

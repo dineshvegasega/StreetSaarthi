@@ -164,6 +164,8 @@
     <string name="close_time">बंद होने का समय</string>
     <string name="document_details">दस्तावेज़ विवरण</string>
     <string name="do_you_have_vending_documents">क्या आपके पास वेंडिंग दस्तावेज़ हैं?</string>
+    <string name="do_you_have_government_scheme">क्या आपने किसी सरकारी योजना का लाभ उठाया है?</string>
+
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(नगर निकाय से सीओवी/एलओआर/सर्वेक्षण रसीद/चालान/अनुमोदन पत्र)</string>
     <string name="government_scheme">सरकारी योजना</string>
     <string name="yes">हाँ</string>

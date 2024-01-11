@@ -164,6 +164,8 @@
     <string name="close_time">അടയ്ക്കുന്ന സമയം</string>
     <string name="document_details">പ്രമാണ വിശദാംശങ്ങൾ</string>
     <string name="do_you_have_vending_documents">നിങ്ങൾക്ക് വെൻഡിംഗ് ഡോക്യുമെന്റുകൾ ഉണ്ടോ?</string>
+    <string name="do_you_have_government_scheme">அரசு திட்டத்தில் பயன் பெற்றுள்ளீர்களா?</string>
+
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/സർവേ രസീത്/ചലാൻ/മുനിസിപ്പൽ ബോഡിയിൽ നിന്നുള്ള അംഗീകാര കത്ത്)</string>
     <string name="government_scheme">സർക്കാർ സ്കീം</string>
     <string name="yes">അതെ</string>

@@ -169,7 +169,9 @@
     <string name = "close_time">বন্ধ করার সময়</string>
     <string name="document_details">নথির বিবরণ</string>
 
-    <string name="do_you_have_vending_documents">আপনার কি ভেন্ডিং ডকুমেন্ট আছে?*</string>
+    <string name="do_you_have_vending_documents">আপনার কি ভেন্ডিং ডকুমেন্ট আছে?</string>
+    <string name="do_you_have_government_scheme">আপনি কি কোনো সরকারি প্রকল্প থেকে উপকৃত হয়েছেন?</string>
+
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/মিউনিসিপ্যাল ​​বডি থেকে সার্ভে রসিদ/চালান/অনুমোদন পত্র)</string>
     <string name = "government_scheme">সরকারি স্কিম</string>
     <string name="yes">হ্যাঁ</string>৷

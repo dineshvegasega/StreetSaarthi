@@ -166,6 +166,8 @@
     <string name = "close_time">बंद करण्याची वेळ</string>
     <string name="document_details">दस्तऐवज तपशील</string>
     <string name="do_you_have_vending_documents">तुमच्याकडे व्हेंडिंग दस्तऐवज आहेत का?</string>
+    <string name="do_you_have_government_scheme">तुम्ही कोणत्याही सरकारी योजनेचा लाभ घेतला आहे का?</string>
+
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/सर्वेक्षण पावती/चलान/महानगरपालिकेकडून मंजूरी पत्र)</string>
     <string name = "government_scheme">शासकीय योजना</string>
     <string name="yes">होय</string>

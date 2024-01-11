@@ -677,7 +677,7 @@
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_regular"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/do_you_have_vending_documents"
+                android:text="@string/do_you_have_government_scheme"
                 android:visibility="visible"
                 />
 

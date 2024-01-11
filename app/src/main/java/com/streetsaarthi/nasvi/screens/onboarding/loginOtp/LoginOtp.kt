@@ -54,6 +54,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
             }
 
             viewModel.isSend.observe(viewLifecycleOwner, Observer {
+                editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
                 if (it == true){
                     OtpTimer.startTimer()
                     binding.btSignIn.setEnabled(true)

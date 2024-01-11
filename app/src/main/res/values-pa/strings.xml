@@ -162,6 +162,8 @@
     <string name="close_time">ਨੇੜੇ</string>
     <string name="document_details">ਦਸਤਾਵੇਜ਼ ਵੇਰਵੇ</string>
     <string name="do_you_have_vending_documents">ਕੀ ਤੁਹਾਡੇ ਕੋਲ ਡੈਂਡਿੰਗ ਦਸਤਾਵੇਜ਼ ਹਨ?</string>
+    <string name="do_you_have_government_scheme">ਕੀ ਤੁਸੀਂ ਕਿਸੇ ਸਰਕਾਰੀ ਸਕੀਮ ਦਾ ਲਾਭ ਲਿਆ ਹੈ?</string>
+
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV / Lor / ਸਰਵੇ ਦੀ ਰਸੀਦ / ਮਿ municipal ਂਸਪਲ ਬਾਡੀ ਤੋਂ ਚੇਲਿਆਂ / ਪ੍ਰਵਾਨਗੀ ਪੱਤਰ)</string>
     <string name="government_scheme">ਸਰਕਾਰੀ ਯੋਜਨਾ</string>
     <string name="yes">ਹਾਂ</string>

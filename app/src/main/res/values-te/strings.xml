@@ -164,6 +164,8 @@
     <string name="close_time">మూసివేత సమయం</string>
     <string name="document_details">పత్ర వివరాలు</string>
     <string name="do_you_have_vending_documents">మీకు వెండింగ్ పత్రాలు ఉన్నాయా?</string>
+    <string name="do_you_have_government_scheme">మీరు ఏదైనా ప్రభుత్వ పథకాన్ని వినియోగించుకున్నారా?</string>
+
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/సర్వే రసీదు/చలాన్/మునిసిపల్ బాడీ నుండి ఆమోదం లేఖ)</string>
     <string name="government_scheme">ప్రభుత్వ పథకం</string>
     <string name="yes">అవును</string>

@@ -166,6 +166,7 @@
     <string name="close_time">Close Time</string>
     <string name="document_details">Document Details</string>
     <string name="do_you_have_vending_documents">Do you have vending documents?</string>
+    <string name="do_you_have_government_scheme">Have you availed any government scheme?</string>
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/Survey Receipt/Challan/Approval Letter from Municipal Body)</string>
     <string name="government_scheme">Government Scheme</string>
     <string name="yes">Yes</string>

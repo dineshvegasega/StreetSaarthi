@@ -165,6 +165,8 @@
     <string name="close_time">ಮುಚ್ಚಿದ ಸಮಯ</string>
     <string name="document_details">ಡಾಕ್ಯುಮೆಂಟ್ ವಿವರಗಳು</string>
     <string name="do_you_have_vending_documents">ನೀವು ವಿತರಣಾ ದಾಖಲೆಗಳನ್ನು ಹೊಂದಿದ್ದೀರಾ?</string>
+    <string name="do_you_have_government_scheme">ನೀವು ಯಾವುದಾದರೂ ಸರ್ಕಾರದ ಯೋಜನೆಯನ್ನು ಪಡೆದುಕೊಂಡಿದ್ದೀರಾ?</string>
+
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/ಸರ್ವೇ ರಸೀದಿ/ಚಲನ್/ಪುರಸಭೆಯ ಅಂಗೀಕಾರ ಪತ್ರ)</string>
     <string name="government_scheme">ಸರ್ಕಾರಿ ಯೋಜನೆ</string>
     <string name="yes">ಹೌದು</string>
