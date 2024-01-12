@@ -1,12 +1,20 @@
 package com.streetsaarthi.nasvi.screens.main.profiles
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
 import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
+import com.google.gson.Gson
+import com.google.gson.JsonElement
+import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.datastore.DataStoreKeys
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemDistrict
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemOrganization
@@ -15,9 +23,12 @@ import com.streetsaarthi.nasvi.models.mix.ItemPincode
 import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.register.RegisterVM
+import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
@@ -345,6 +356,74 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
             }
         )
     }
+
+
+
+
+
+
+    fun profileUpdate(view: View, _id: String, hashMap: RequestBody) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.profileUpdate(_id, hashMap)
+
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        showSnackBar(response.body()?.message.orEmpty())
+//                        if(response.body()!!.data != null){
+//                            Log.e("TAG", "aaaaaZZ")
+                            profile(view, response.body()!!.vendor_id!!)
+//                        }
+                    }
+                }
+                override fun error(message: String) {
+                    super.error(message)
+                }
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+
+
+
+
+    fun profile(view: View, _id: String) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.profile(_id)
+
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        showSnackBar(response.body()?.message.orEmpty())
+                        if(response.body()!!.data != null){
+                            Log.e("TAG", "aaaaa")
+                            DataStoreUtil.saveData(
+                                DataStoreKeys.AUTH,
+                                response.body()!!.token ?: ""
+                            )
+                            DataStoreUtil.saveObject(
+                                DataStoreKeys.LOGIN_DATA,
+                                Gson().fromJson(response.body()!!.data, Login::class.java)
+                            )
+                        }
+                    }
+                }
+                override fun error(message: String) {
+                    super.error(message)
+                }
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
 
 
 

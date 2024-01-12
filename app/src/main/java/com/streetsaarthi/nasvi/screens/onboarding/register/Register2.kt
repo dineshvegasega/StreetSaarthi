@@ -70,43 +70,48 @@ class Register2  : Fragment() , CallBackListener {
     var imagePosition = 0
     private var pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null) {
-                when (imagePosition) {
-                    11 -> {
-                        // binding.inclideDocuments.cbRememberImageUploadCOV.isChecked = true
-                        viewModel.data.shopImage = requireContext().getMediaFilePathFor(uri)
-                        binding.textViewlayoutShopImage.setText(File(viewModel.data.shopImage!!).name)
-                    }
+            lifecycleScope.launch {
+                if (uri != null) {
+                    when (imagePosition) {
+                        11 -> {
+                            val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
+                            viewModel.data.shopImage = compressedImageFile.path
+                            binding.textViewlayoutShopImage.setText(File(viewModel.data.shopImage!!).name)
+                        }
 
-                    1 -> {
-                        viewModel.data.ImageUploadCOV = requireContext().getMediaFilePathFor(uri)
-                        binding.inclideDocuments.textViewImageUploadCOV.setText(File(viewModel.data.ImageUploadCOV!!).name)
-                    }
+                        1 -> {
+                            val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
+                            viewModel.data.ImageUploadCOV = compressedImageFile.path
+                            binding.inclideDocuments.textViewImageUploadCOV.setText(File(viewModel.data.ImageUploadCOV!!).name)
+                        }
 
-                    2 -> {
-                        viewModel.data.ImageUploadLOR = requireContext().getMediaFilePathFor(uri)
-                        binding.inclideDocuments.textViewImageUploadLOR.setText(File(viewModel.data.ImageUploadLOR!!).name)
-                    }
+                        2 -> {
+                            val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
+                            viewModel.data.ImageUploadLOR = compressedImageFile.path
+                            binding.inclideDocuments.textViewImageUploadLOR.setText(File(viewModel.data.ImageUploadLOR!!).name)
+                        }
 
-                    3 -> {
-                        viewModel.data.UploadSurveyReceipt =
-                            requireContext().getMediaFilePathFor(uri)
-                        binding.inclideDocuments.textViewUploadSurveyReceipt.setText(File(viewModel.data.UploadSurveyReceipt!!).name)
-                    }
+                        3 -> {
+                            val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
+                            viewModel.data.UploadSurveyReceipt = compressedImageFile.path
+                            binding.inclideDocuments.textViewUploadSurveyReceipt.setText(File(viewModel.data.UploadSurveyReceipt!!).name)
+                        }
 
-                    4 -> {
-                        viewModel.data.UploadChallan = requireContext().getMediaFilePathFor(uri)
-                        binding.inclideDocuments.textViewUploadChallan.setText(File(viewModel.data.UploadChallan!!).name)
-                    }
+                        4 -> {
+                            val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
+                            viewModel.data.UploadChallan = compressedImageFile.path
+                            binding.inclideDocuments.textViewUploadChallan.setText(File(viewModel.data.UploadChallan!!).name)
+                        }
 
-                    5 -> {
-                        viewModel.data.UploadApprovalLetter =
-                            requireContext().getMediaFilePathFor(uri)
-                        binding.inclideDocuments.textViewUploadApprovalLetter.setText(File(viewModel.data.UploadApprovalLetter!!).name)
+                        5 -> {
+                            val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
+                            viewModel.data.UploadApprovalLetter = compressedImageFile.path
+                            binding.inclideDocuments.textViewUploadApprovalLetter.setText(File(viewModel.data.UploadApprovalLetter!!).name)
+                        }
                     }
                 }
-            } else {
             }
+
         }
 
 
@@ -154,7 +159,6 @@ class Register2  : Fragment() , CallBackListener {
                         binding.inclideDocuments.textViewUploadApprovalLetter.setText(compressedImageFile.name)
                     }
                 }
-            } else {
             }
         }
 

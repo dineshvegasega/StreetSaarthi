@@ -17,6 +17,7 @@
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:visibility="visible"
         android:backgroundTint="@color/_E79D46"
+
         >
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -33,8 +34,8 @@
             >
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivImageProfile"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +43,7 @@
                 app:srcCompat="@drawable/user_icon"
                 android:theme="@style/RoundCorner50"
                 android:scaleType="centerCrop"
+                android:layout_marginVertical="@dimen/_5sdp"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -56,7 +58,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                android:visibility="gone"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

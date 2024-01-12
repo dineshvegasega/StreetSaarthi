@@ -20,7 +20,7 @@ object OtpTimer {
     @JvmStatic
     var sendOtpTimerData: SendOtpTimerData? = null
 
-    private var maxTime: Long = 30000
+    private var maxTime: Long = 60000
     private var timeInterval: Long = 1000
 
 
@@ -28,17 +28,17 @@ object OtpTimer {
      * Start Time
      * */
     fun startTimer() = try {
-//        stopTimer()
-//        countDownTimer = object : CountDownTimer(maxTime, timeInterval) {
-//            override fun onTick(long: Long) {
-//                if ((long / timeInterval) < 10) "00:0${(long / timeInterval)}".sendTimerData()
-//                else "00:${(long / timeInterval)}".sendTimerData()
-//            }
-//
-//            override fun onFinish() {
-//                "".sendTimerData()
-//            }
-//        }.start()
+        stopTimer()
+        countDownTimer = object : CountDownTimer(maxTime, timeInterval) {
+            override fun onTick(long: Long) {
+                if ((long / timeInterval) < 10) "00:0${(long / timeInterval)}".sendTimerData()
+                else "00:${(long / timeInterval)}".sendTimerData()
+            }
+
+            override fun onFinish() {
+                "".sendTimerData()
+            }
+        }.start()
     } catch (e: Exception) {
         e.printStackTrace()
     }

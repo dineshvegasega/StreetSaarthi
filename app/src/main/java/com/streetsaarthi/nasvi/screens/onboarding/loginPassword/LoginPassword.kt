@@ -30,9 +30,6 @@ class LoginPassword : Fragment() {
     private var _binding: LoginPasswordBinding? = null
     private val binding get() = _binding!!
 
-
-    private var util: PhoneNumberUtil? = null
-
     var itemMain : ArrayList<Item> ?= ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,

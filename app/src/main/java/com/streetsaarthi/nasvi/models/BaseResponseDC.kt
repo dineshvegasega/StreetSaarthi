@@ -13,5 +13,9 @@ data class BaseResponseDC<T>(
     @SerializedName("token")
     val token: String? = null,
     @SerializedName("success")
-    val success: Boolean? = false
+    val success: Boolean? = false,
+    @SerializedName("vendor_id")
+    val vendor_id: String? = null,
+
+
 )

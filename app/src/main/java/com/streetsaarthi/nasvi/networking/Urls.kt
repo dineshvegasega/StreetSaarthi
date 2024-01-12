@@ -12,6 +12,7 @@ const val URL = BASE_URL+"api/"
 
 const val LOGIN = "login"
 const val VENDER_PROFILE = "vendor-profile"
+const val VENDER_PROFILE_UPDATE = "vendor-profile-update"
 const val SEND_OTP = "send-otp"
 const val VERIFY_OTP = "verify-otp"
 const val SIGN_UP = "vendor-signup"

@@ -82,9 +82,9 @@ class Dashboard : Fragment() {
 //                    put("search_input", USER_TYPE)
                     put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                viewModel.liveScheme(view = requireView(), obj)
-                viewModel.liveTraining(view = requireView(), obj)
-                viewModel.liveNotice(view = requireView(), obj)
+//                viewModel.liveScheme(view = requireView(), obj)
+//                viewModel.liveTraining(view = requireView(), obj)
+//                viewModel.liveNotice(view = requireView(), obj)
             }
         }
 

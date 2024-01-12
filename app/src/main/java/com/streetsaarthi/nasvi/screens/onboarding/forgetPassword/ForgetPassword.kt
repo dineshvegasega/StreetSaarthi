@@ -2,6 +2,8 @@ package com.streetsaarthi.nasvi.screens.onboarding.forgetPassword
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +18,10 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ForgetPasswordBinding
 import com.streetsaarthi.nasvi.databinding.LoginPasswordBinding
 import com.streetsaarthi.nasvi.models.Item
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistrationVM
 import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,6 +58,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 
 
             viewModel.isSend.observe(viewLifecycleOwner, Observer {
+                editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
                 if (it == true){
                     OtpTimer.startTimer()
                     editTextVeryfyOtp.setEnabled(true)
@@ -113,6 +118,9 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
+                    tvTime.visibility = View.GONE
+                    OtpTimer.sendOtpTimerData = null
+                    OtpTimer.stopTimer()
                     editTextSendOtp.setEnabled(false)
                     editTextVeryfyOtp.setEnabled(false)
                     editTextSendOtp.setBackgroundTintList(
@@ -139,7 +147,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
                     val obj: JSONObject = JSONObject().apply {
-                        put("mobile_no", binding.editTextMobileNumber.text.toString())
+                        put("mobile_no", editTextMobileNumber.text.toString())
                         put("slug", "login")
                         put("user_type", USER_TYPE)
                     }
@@ -153,8 +161,8 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
                     val obj: JSONObject = JSONObject().apply {
-                        put("mobile_no", binding.editTextMobileNumber.text.toString())
-                        put("otp", binding.editTextOtp.text.toString())
+                        put("mobile_no", editTextMobileNumber.text.toString())
+                        put("otp", editTextOtp.text.toString())
                         put("slug", "login")
                         put("user_type", USER_TYPE)
                     }
@@ -189,21 +197,28 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 
 
     override fun otpData(string: String) {
-        binding.tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
-        binding.tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
-        if(string.isEmpty()){
-            binding.editTextSendOtp.setText(getString(R.string.resendOtp))
-            binding.editTextSendOtp.setEnabled(true)
-            binding.editTextSendOtp.setBackgroundTintList(
-                ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        getResources(), R.color._E79D46, null)))
-        } else {
-            binding.editTextSendOtp.setEnabled(false)
-            binding.editTextSendOtp.setBackgroundTintList(
-                ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        getResources(), R.color._999999, null)))
+        binding.apply {
+            tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
+            tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
+
+            if(MainActivity.isOpen.get() == true){
+                editTextOtp.focus()
+            }
+
+            if(string.isEmpty()){
+                editTextSendOtp.setText(getString(R.string.resendOtp))
+                editTextSendOtp.setEnabled(true)
+                editTextSendOtp.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        ResourcesCompat.getColor(
+                            getResources(), R.color._E79D46, null)))
+            } else {
+                editTextSendOtp.setEnabled(false)
+                editTextSendOtp.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        ResourcesCompat.getColor(
+                            getResources(), R.color._999999, null)))
+            }
         }
     }
 

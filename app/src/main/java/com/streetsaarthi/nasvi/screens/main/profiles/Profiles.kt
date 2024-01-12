@@ -8,18 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
-import com.squareup.picasso.Picasso
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ProfilesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.GlideApp
+import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.myOptionsGlide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,16 +48,16 @@ class Profiles : Fragment() {
 
             var adapter= ProfilePagerAdapter(requireActivity())
             adapter.notifyDataSetChanged()
-//            introViewPager.setUserInputEnabled(false)
+            introViewPager.setUserInputEnabled(false)
 
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     Log.e("TAG","loginUser "+loginUser)
                     introViewPager.adapter=adapter
                     adapter.addFragment(PersonalDetails())
-                    adapter.addFragment(ContactDetails())
-                    adapter.addFragment(OtherDetails())
-                    var array = listOf<String>(getString(R.string.personal_detailsFull), getString(R.string.contact_details), getString(R.string.other_details))
+                    adapter.addFragment(ProfessionalDetails())
+//                    adapter.addFragment(OtherDetails())
+                    var array = listOf<String>(getString(R.string.personal_detailsFull), getString(R.string.professional_details))
                     TabLayoutMediator(tabLayout, introViewPager) { tab, position ->
                         tab.text = array[position]
                     }.attach()
@@ -70,10 +68,13 @@ class Profiles : Fragment() {
 //                        data.profile_image_name.url
 //                    ).into( inclidePersonalProfile.ivImageProfile)
 
-                    GlideApp.with(requireContext())
-                        .load(Gson().fromJson(loginUser, Login::class.java).profile_image_name.url)
-                        .apply(myOptionsGlide)
-                        .into(inclidePersonalProfile.ivImageProfile)
+                    inclidePersonalProfile.ivImageProfile.loadImage(url = { data.profile_image_name.url })
+
+
+//                    GlideApp.with(requireContext())
+//                        .load(Gson().fromJson(loginUser, Login::class.java).profile_image_name.url)
+//                        .apply(myOptionsGlide)
+//                        .into(inclidePersonalProfile.ivImageProfile)
 
                     inclidePersonalProfile.textNameOfMember.text = "${data.vendor_first_name} ${data.vendor_last_name}"
                     inclidePersonalProfile.textMobileNumber.text = "${data.mobile_no}"

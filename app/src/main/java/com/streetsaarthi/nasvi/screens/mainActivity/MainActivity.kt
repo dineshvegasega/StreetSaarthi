@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -49,6 +50,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
 import java.util.Locale
 import com.streetsaarthi.nasvi.utils.GlideApp
+import com.streetsaarthi.nasvi.utils.loadImage
 
 
 @AndroidEntryPoint
@@ -74,6 +76,11 @@ class MainActivity : AppCompatActivity() {
 
         private var _binding: MainActivityBinding? = null
         val binding get() = _binding!!
+
+
+        @JvmStatic
+        lateinit var isOpen : WeakReference<Boolean>
+
     }
 
 
@@ -111,6 +118,33 @@ class MainActivity : AppCompatActivity() {
         mainActivity = WeakReference(this)
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+        window.decorView.viewTreeObserver.addOnGlobalLayoutListener {
+            val r = Rect()
+            window.decorView.getWindowVisibleDisplayFrame(r)
+            val height = window.decorView.height
+            if (height - r.bottom > height * 0.1399) {
+                isOpen = WeakReference(true)
+            } else {
+                isOpen = WeakReference(false)
+            }
+        }
+
+
+//        val activityRootView: View = findViewById(R.id.layoutRoot)
+//        activityRootView.viewTreeObserver.addOnGlobalLayoutListener {
+//            val r = Rect()
+//            activityRootView.getWindowVisibleDisplayFrame(r)
+//            val heightDiff: Int = activityRootView.rootView.height - (r.bottom - r.top)
+//            if (heightDiff > 100) {
+//                //enter your code here
+//                Log.e("TAG", "isOpenA ")
+//            } else {
+//                Log.e("TAG", "isOpenB ")
+//            }
+//        }
+
+
 //        navHostFragment!!.navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener {
 //            override fun onDestinationChanged(
 //                controller: NavController,
@@ -473,11 +507,11 @@ class MainActivity : AppCompatActivity() {
 //                                .networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.OFFLINE)
 //                                .into(binding.topLayout.ivImage)
 
-                            GlideApp.with(binding.root)
-                                .load(Gson().fromJson(loginUser, Login::class.java).profile_image_name.url)
-                                .apply(myOptionsGlide)
-                                .into(binding.topLayout.ivImage)
-
+//                            GlideApp.with(binding.root)
+//                                .load(Gson().fromJson(loginUser, Login::class.java).profile_image_name.url)
+//                                .apply(myOptionsGlide)
+//                                .into(binding.topLayout.ivImage)
+                            topLayout.ivImage.loadImage(url = { Gson().fromJson(loginUser, Login::class.java).profile_image_name.url })
                         }
                     }
                 }

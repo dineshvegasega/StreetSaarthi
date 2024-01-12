@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi.screens.onboarding.quickRegistration
 
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -12,10 +13,10 @@ import com.demo.networking.Repository
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Response
@@ -23,7 +24,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuickRegistrationVM @Inject constructor(private val repository: Repository): ViewModel() {
-
     var data : Model = Model()
 
     var isSend = MutableLiveData<Boolean>(false)

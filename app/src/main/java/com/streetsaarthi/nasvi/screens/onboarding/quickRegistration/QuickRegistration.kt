@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,22 +17,17 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.QuickRegistrationBinding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
+import com.streetsaarthi.nasvi.utils.OtpTimer
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
-import java.io.File
 
 
 @AndroidEntryPoint
-class QuickRegistration : Fragment(), CallBackListener {
+class QuickRegistration : Fragment(), CallBackListener{
     private var _binding: QuickRegistrationBinding? = null
     private val binding get() = _binding!!
     private val viewModel: QuickRegistrationVM by activityViewModels()
     var tabPosition: Int = 0;
-//    var itemMain : ArrayList<Item> ?= ArrayList()
 
     companion object{
         var callBackListener: CallBackListener? = null
@@ -54,23 +48,6 @@ class QuickRegistration : Fragment(), CallBackListener {
         super.onViewCreated(view, savedInstanceState)
         callBackListener = this
 
-//        viewModel.isSend.observe(viewLifecycleOwner, Observer {
-//            binding.editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
-//        })
-//
-//
-
-//        binding.btSignIn.setOnClickListener {
-//            if(viewModel.isOtpVerified == true){
-//                view.findNavController().navigate(R.id.action_quickRegistration_to_onboard)
-//            } else{
-//                showSnackBar(getString(R.string.OTPnotverified))
-//            }
-//        }
-
-//        onRestartListener = this as OnTabListener
-
-
         binding.apply {
             var adapter= QuickRegistrationAdapter(requireActivity())
             adapter.notifyDataSetChanged()
@@ -88,17 +65,6 @@ class QuickRegistration : Fragment(), CallBackListener {
                             getResources(), R.color._E79D46, null)))
                 }
             })
-
-
-
-//            var screen = arguments?.getString(Screen)
-//            if (screen == QuickRegister){
-//                loading.visibility = View.GONE
-//            } else if (screen == CompleteRegister){
-//                loading.visibility = View.VISIBLE
-//            } else if (screen == LoginPassword){
-//                // loading.visibility = View.GONE
-//            }
 
 
             btSignIn.setOnClickListener {
@@ -179,7 +145,11 @@ class QuickRegistration : Fragment(), CallBackListener {
 
 
 
+
+
     override fun onDestroyView() {
+        OtpTimer.sendOtpTimerData = null
+        OtpTimer.stopTimer()
         _binding = null
         super.onDestroyView()
     }

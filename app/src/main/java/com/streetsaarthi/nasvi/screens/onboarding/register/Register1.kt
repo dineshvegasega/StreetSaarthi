@@ -64,19 +64,23 @@ class Register1  : Fragment() , CallBackListener {
 
     var imagePosition = 0
     private var pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) {
-            when (imagePosition) {
-                1 -> {
-                    viewModel.data.passportSizeImage = requireContext().getMediaFilePathFor(uri)
-                    binding.textViewPassportSizeImage.setText(File(viewModel.data.passportSizeImage!!).name)
-                }
-                2 -> {
-                    viewModel.data.identificationImage = requireContext().getMediaFilePathFor(uri)
-                    binding.textViewIdentificationImage.setText(File(viewModel.data.identificationImage!!).name)
+        lifecycleScope.launch {
+            if (uri != null) {
+                when (imagePosition) {
+                    1 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
+                        viewModel.data.passportSizeImage = compressedImageFile.path
+                        binding.textViewPassportSizeImage.setText(File(viewModel.data.passportSizeImage!!).name)
+                    }
+                    2 -> {
+                        val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
+                        viewModel.data.identificationImage = compressedImageFile.path
+                        binding.textViewIdentificationImage.setText(File(viewModel.data.identificationImage!!).name)
+                    }
                 }
             }
-        } else {
         }
+
     }
 
 
@@ -100,10 +104,8 @@ class Register1  : Fragment() , CallBackListener {
                         binding.textViewIdentificationImage.setText(compressedImageFile.name)
                     }
                 }
-            } else {
             }
         }
-
     }
 
 

@@ -41,7 +41,7 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
                         if(response.body()!!.data != null){
-                            profiles(view, ""+Gson().fromJson(response.body()!!.data, Login::class.java).id)
+                            profile(view, ""+Gson().fromJson(response.body()!!.data, Login::class.java).id)
                         }
                     }
                 }
@@ -58,7 +58,7 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
 
 
 
-    fun profiles(view: View, _id: String) = viewModelScope.launch {
+    fun profile(view: View, _id: String) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =

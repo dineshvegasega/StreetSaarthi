@@ -1,29 +1,32 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Street Saarthi</string>
-    <string name="no_internet_connection">No internet connection</string>
-    <string name="no_image_found">No image found</string>
+
+    <string name="app_name" translatable="false">Street Saarthi</string>
+    <string name="no_image_found" translatable="false">No image found</string>
     <string name="street_vendor_system" translatable="false">Street\nSaarthi</string>
-    <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
-    <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
+    <string name="street_vendor_management_system" translatable="false">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
+    <string name="street_vendor_management_system_under" translatable="false"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
 
-    <string name="click_here_to_agree_to_the"><![CDATA[Click Here to agree on the]]></string>
-    <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
-    <string name="title">Title</string>
-    <string name="submit">Submit</string>
-
-    <string name="PoweredbyVegaSegaSolutions">Powered by VegaSega Solutions</string>
-    <string name="NationalAssociation">National Association Of Street Vendors Of India</string>
-    <string name="AnInitiativeBy">An Initiative By</string>
-    <string name="ConnectingStreetVendorsAllOverIndia">Connecting Street Vendors All Over India</string>
-    <string name="StreetVendorSystem">Street Vendor System</string>
+    <string name="PoweredbyVegaSegaSolutions" translatable="false">Powered by VegaSega Solutions</string>
+    <string name="NationalAssociation" translatable="false">National Association Of Street Vendors Of India</string>
+    <string name="AnInitiativeBy" translatable="false">An Initiative By</string>
+    <string name="ConnectingStreetVendorsAllOverIndia" translatable="false">Connecting Street Vendors All Over India</string>
+    <string name="StreetVendorSystem" translatable="false">Street Vendor System</string>
     <string name="powered_by_national_association_of_street_vendors_of_india" translatable="false">Powered by <b>National Association Of Street Vendors Of India</b></string>
 
 
-    <string name="street_saarthi">Street Saarthi</string>
+    <string name="street_saarthi" translatable="false">Street Saarthi</string>
+
+
     <string name="google_place_key" tools:ignore="MissingTranslation">AIzaSyAuptk-VCeLs864df80F1PIzsxL5RM9F1c</string>
 
+    <string name="click_here_to_agree_to_the"><![CDATA[Click Here to agree on the]]></string>
+    <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
 
     <string name="Pleaseselectagree">Please select agree on the Terms &amp; Conditions</string>
+
+    <string name="title">Title</string>
+    <string name="submit" translatable="false">Submit</string>
+    <string name="no_internet_connection">No internet connection</string>
 
 
     <string name="quick_registation">Quick Register</string>

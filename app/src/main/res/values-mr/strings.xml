@@ -1,29 +1,15 @@
 <resources>
-    <string name="app_name">Street Saarthi</string>
-    <string name="no_internet_connection">No internet connection</string>
-    <string name="no_image_found">No image found</string>
-    <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
-    <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
 
     <string name="click_here_to_agree_to_the"><![CDATA[यावर सहमत होण्यासाठी येथे क्लिक करा]]></string>
     <string name="terms_amp_conditions"><u>अटी &amp; अटी</u></string>
 
-    <string name="title">Title</string>
-    <string name="submit">Submit</string>
-
-    <string name="PoweredbyVegaSegaSolutions">Powered by VegaSega Solutions</string>
-    <string name="NationalAssociation">National Association Of Street Vendors Of India</string>
-    <string name="AnInitiativeBy">An Initiative By</string>
-    <string name="ConnectingStreetVendorsAllOverIndia">Connecting Street Vendors All Over India</string>
-    <string name="StreetVendorSystem">Street Vendor System</string>
-
-
-    <string name="street_saarthi">Street Saarthi</string>
 
 
     <string name="Pleaseselectagree">कृपया अटींवर सहमती निवडा &amp; अटी</string>
 
-
+    <string name="title">शीर्षक</string>
+    <string name="submit">सबमिट करा</string>
+    <string name="no_internet_connection">इंटरनेट कनेक्शन नाही</string>
 
     <string name = "quick_registation">त्वरित नोंदणी</string>
     <string name="loginWithPassword">पासवर्डसह लॉगिन करा</string>

@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:fillViewport="true"
     android:background="@color/_ffffffff"
+
     >
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -111,7 +112,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editTextVeryfyOtp"
-      />
+        android:focusable="true"
+        />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextVeryfyOtp"
@@ -128,7 +130,6 @@
         android:backgroundTint="@color/_999999"
         android:visibility="visible"
         />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

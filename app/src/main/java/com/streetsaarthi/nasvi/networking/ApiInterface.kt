@@ -25,6 +25,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.SIGN_UP
 import com.streetsaarthi.nasvi.screens.onboarding.networking.STATE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeHistoryList
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE
+import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE_UPDATE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VERIFY_OTP
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Vending
 import okhttp3.RequestBody
@@ -42,6 +43,14 @@ interface ApiInterface {
     @GET(VENDER_PROFILE+ "/{id}")
     suspend fun profile(
         @Path("id") id: String,
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @Headers("Accept: application/json")
+    @POST(VENDER_PROFILE_UPDATE+ "/{id}")
+    suspend fun profileUpdate(
+        @Path("id") id: String,
+        @Body hashMap: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 
 
@@ -75,7 +84,7 @@ interface ApiInterface {
     @Headers("Accept: application/json")
     @POST(SIGN_UP)
     suspend fun registerWithFiles(
-    @Body hashMap: RequestBody
+        @Body hashMap: RequestBody
     ): Response<BaseResponseDC<Any>>
 
     @POST(PASSWORD_UPDATE)

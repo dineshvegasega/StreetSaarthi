@@ -3,6 +3,8 @@ package com.streetsaarthi.nasvi.screens.onboarding.register
 import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +21,9 @@ import com.google.android.material.button.MaterialButton
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register3Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,9 +52,10 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
         super.onViewCreated(view, savedInstanceState)
         callBackListener = this
         OtpTimer.sendOtpTimerData = this
-        binding.editTextVeryfyOtp.setEnabled(false)
 
         binding.apply {
+            editTextVeryfyOtp.setEnabled(false)
+
             var counter = 0
             var start: Int
             var end: Int
@@ -99,14 +104,14 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
                 if (it == true){
                     OtpTimer.startTimer()
-                    binding.editTextVeryfyOtp.setEnabled(true)
-                    binding.editTextVeryfyOtp.setBackgroundTintList(
+                    editTextVeryfyOtp.setEnabled(true)
+                    editTextVeryfyOtp.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._E79D46, null)))
                 }else{
-                    binding.editTextVeryfyOtp.setEnabled(false)
-                    binding.editTextVeryfyOtp.setBackgroundTintList(
+                    editTextVeryfyOtp.setEnabled(false)
+                    editTextVeryfyOtp.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._999999, null)))
@@ -115,13 +120,16 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
+                    tvTime.visibility = View.GONE
+                    OtpTimer.sendOtpTimerData = null
+                    OtpTimer.stopTimer()
                     editTextSendOtp.setEnabled(false)
                     editTextVeryfyOtp.setEnabled(false)
-                    binding.editTextSendOtp.setBackgroundTintList(
+                    editTextSendOtp.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._999999, null)))
-                    binding.editTextVeryfyOtp.setBackgroundTintList(
+                    editTextVeryfyOtp.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._999999, null)))
@@ -139,7 +147,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
                     val obj: JSONObject = JSONObject().apply {
-                        put("mobile_no", binding.editTextMobileNumber.text.toString())
+                        put("mobile_no", editTextMobileNumber.text.toString())
                         put("slug", "signup")
                         put("user_type", USER_TYPE)
                     }
@@ -147,13 +155,13 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
             }
 
-            binding.editTextVeryfyOtp.setOnClickListener {
+            editTextVeryfyOtp.setOnClickListener {
                 if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
                     val obj: JSONObject = JSONObject().apply {
-                        put("mobile_no", binding.editTextMobileNumber.text.toString())
-                        put("otp", binding.editTextOtp.text.toString())
+                        put("mobile_no", editTextMobileNumber.text.toString())
+                        put("otp", editTextOtp.text.toString())
                         put("slug", "signup")
                         put("user_type", USER_TYPE)
                     }
@@ -220,22 +228,30 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
 
     override fun otpData(string: String) {
-        binding.tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
-        binding.tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
-        if(string.isEmpty()){
-            binding.editTextSendOtp.setText(getString(R.string.resendOtp))
-            binding.editTextSendOtp.setEnabled(true)
-            binding.editTextSendOtp.setBackgroundTintList(
-                ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        getResources(), R.color._E79D46, null)))
-        } else {
-            binding.editTextSendOtp.setEnabled(false)
-            binding.editTextSendOtp.setBackgroundTintList(
-                ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        getResources(), R.color._999999, null)))
+        binding.apply {
+            tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
+            tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
+
+            if(MainActivity.isOpen.get() == true){
+                editTextOtp.focus()
+            }
+
+            if(string.isEmpty()){
+                editTextSendOtp.setText(getString(R.string.resendOtp))
+                editTextSendOtp.setEnabled(true)
+                editTextSendOtp.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        ResourcesCompat.getColor(
+                            getResources(), R.color._E79D46, null)))
+            } else {
+                editTextSendOtp.setEnabled(false)
+                editTextSendOtp.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        ResourcesCompat.getColor(
+                            getResources(), R.color._999999, null)))
+            }
         }
+
     }
 
     override fun onDestroyView() {

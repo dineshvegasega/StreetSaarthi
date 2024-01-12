@@ -60,3 +60,4 @@ data class Login(
     val vendor_first_name: String,
     val vendor_last_name: String
 )
+

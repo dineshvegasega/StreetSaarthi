@@ -137,6 +137,9 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences-core:1.0.0")
 
     implementation ("id.zelory:compressor:3.0.1")
+    implementation ("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2")
+
+    
 
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 //    implementation ("com.google.firebase:firebase-auth-ktx")
