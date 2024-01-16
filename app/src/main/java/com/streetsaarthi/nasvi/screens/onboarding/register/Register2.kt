@@ -216,22 +216,50 @@ class Register2  : Fragment() , CallBackListener {
             viewModel.stateCurrent(view)
             editTextSelectState.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownStateDialog()
+                if(viewModel.itemStateVending.size > 0){
+                    showDropDownStateDialog()
+                } else {
+                    showSnackBar(getString(R.string.not_state))
+                }
             }
 
             editTextSelectDistrict.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownDistrictDialog()
+                if (!(viewModel.stateIdVending > 0)){
+                    showSnackBar(getString(R.string.select_state_))
+                }else{
+                    if(viewModel.itemDistrictVending.size > 0){
+                        showDropDownDistrictDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_district))
+                    }
+                }
             }
 
             editTextMunicipalityPanchayat.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownPanchayatDialog()
+                if (!(viewModel.stateIdVending > 0)){
+                    showSnackBar(getString(R.string.select_state_))
+                }else{
+                    if(viewModel.itemPanchayatVending.size > 0){
+                        showDropDownPanchayatDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_municipality_panchayat))
+                    }
+                }
             }
 
             editTextSelectPincode.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownPincodeDialog()
+                if (!(viewModel.districtIdVending > 0)){
+                    showSnackBar(getString(R.string.select_district_))
+                } else {
+                    if(viewModel.itemPincodeVending.size > 0){
+                        showDropDownPincodeDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_pincode))
+                    }
+                }
             }
 
 
@@ -248,7 +276,11 @@ class Register2  : Fragment() , CallBackListener {
 
             editTextLocalOrganisation.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownLocalOrganisationDialog()
+                if (viewModel.itemLocalOrganizationVending.size > 0){
+                    showDropDownLocalOrganisationDialog()
+                } else {
+                    showSnackBar(getString(R.string.not_Organisation))
+                }
             }
 
 
@@ -615,38 +647,33 @@ class Register2  : Fragment() , CallBackListener {
 
     private fun showDropDownStateDialog() {
         var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemStateCurrent.size)
-        for (value in viewModel.itemStateCurrent) {
+        val list = arrayOfNulls<String>(viewModel.itemStateVending.size)
+        for (value in viewModel.itemStateVending) {
             list[index] = value.name
             index++
         }
         MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
             .setTitle(resources.getString(R.string.select_state))
             .setItems(list) { _, which ->
-//                viewModel.districtIdCurrent = 0
-//                binding.editTextSelectDistrict.setText("")
-//                viewModel.panchayatIdCurrent = 0
-//                binding.editTextMunicipalityPanchayat.setText("")
-////                viewModel.pincodeIdCurrent = 0
-////                binding.editTextSelectPincode.setText("")
-//                viewModel.localOrganizationIdCurrent = 0
-//                binding.editTextLocalOrganisation.setText("")
-
                 binding.editTextSelectState.setText(list[which])
-                viewModel.stateIdCurrent = viewModel.itemStateCurrent[which].id
-                view?.let { viewModel.districtCurrent(it, viewModel.stateIdCurrent) }
-                view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdCurrent) }
+                viewModel.stateIdVending = viewModel.itemStateVending[which].id
+                view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
+                view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
                 view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                    put("state_id", viewModel.stateIdCurrent)
+                    put("state_id", viewModel.stateIdVending)
                 })}
+                binding.editTextSelectDistrict.setText("")
+                binding.editTextMunicipalityPanchayat.setText("")
+                viewModel.districtIdVending = 0
+                viewModel.panchayatIdVending = 0
             }.show()
     }
 
 
     private fun showDropDownDistrictDialog() {
         var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemDistrictCurrent.size)
-        for (value in viewModel.itemDistrictCurrent) {
+        val list = arrayOfNulls<String>(viewModel.itemDistrictVending.size)
+        for (value in viewModel.itemDistrictVending) {
             list[index] = value.name
             index++
         }
@@ -654,20 +681,22 @@ class Register2  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.select_district))
             .setItems(list) { _, which ->
                 binding.editTextSelectDistrict.setText(list[which])
-                viewModel.districtIdCurrent = viewModel.itemDistrictCurrent[which].id
-                view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdCurrent) }
+                viewModel.districtIdVending = viewModel.itemDistrictVending[which].id
+                view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdVending) }
                 view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                    put("state_id", viewModel.stateIdCurrent)
-                    put("district_id", viewModel.districtIdCurrent)
+                    put("state_id", viewModel.stateIdVending)
+                    put("district_id", viewModel.districtIdVending)
                 })}
+                binding.editTextSelectPincode.setText("")
+                viewModel.pincodeIdVending = ""
             }.show()
     }
 
 
     private fun showDropDownPanchayatDialog() {
         var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemPanchayatCurrent.size)
-        for (value in viewModel.itemPanchayatCurrent) {
+        val list = arrayOfNulls<String>(viewModel.itemPanchayatVending.size)
+        for (value in viewModel.itemPanchayatVending) {
             list[index] = value.name
             index++
         }
@@ -675,15 +704,15 @@ class Register2  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.municipality_panchayat))
             .setItems(list) { _, which ->
                 binding.editTextMunicipalityPanchayat.setText(list[which])
-                viewModel.panchayatIdCurrent = viewModel.itemPanchayatCurrent[which].id
+                viewModel.panchayatIdVending = viewModel.itemPanchayatVending[which].id
             }.show()
     }
 
 
     private fun showDropDownPincodeDialog() {
         var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemPincodeCurrent.size)
-        for (value in viewModel.itemPincodeCurrent) {
+        val list = arrayOfNulls<String>(viewModel.itemPincodeVending.size)
+        for (value in viewModel.itemPincodeVending) {
             list[index] = value.pincode
             index++
         }
@@ -692,15 +721,15 @@ class Register2  : Fragment() , CallBackListener {
             .setItems(list) { _, which ->
                 binding.editTextSelectPincode.setText(list[which])
 //                viewModel.pincodeIdCurrent = viewModel.itemPincodeCurrent[which].id
-                viewModel.pincodeIdCurrent = binding.editTextSelectPincode.text.toString().toInt()
+                viewModel.pincodeIdVending = binding.editTextSelectPincode.text.toString()
             }.show()
     }
 
 
     private fun showDropDownLocalOrganisationDialog() {
         var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemLocalOrganizationCurrent.size)
-        for (value in viewModel.itemLocalOrganizationCurrent) {
+        val list = arrayOfNulls<String>(viewModel.itemLocalOrganizationVending.size)
+        for (value in viewModel.itemLocalOrganizationVending) {
             list[index] = value.local_organisation_name
             index++
         }
@@ -708,7 +737,7 @@ class Register2  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.localOrganisation))
             .setItems(list) { _, which ->
                 binding.editTextLocalOrganisation.setText(list[which])
-                viewModel.localOrganizationIdCurrent = viewModel.itemLocalOrganizationCurrent[which].id
+                viewModel.localOrganizationIdVending = viewModel.itemLocalOrganizationVending[which].id
             }.show()
     }
 
@@ -719,6 +748,7 @@ class Register2  : Fragment() , CallBackListener {
         Log.e("TAG", "onCallBackB " + pos)
         binding.apply {
             if (pos == 3) {
+//                Register.callBackListener!!.onCallBack(4)
                 if (editTextTypeofMarketPlace.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.type_of_market_place))
                 } else if (viewModel.marketplaceId == 7 && editTextTypeofMarketPlaceEnter.text.toString()
@@ -735,11 +765,11 @@ class Register2  : Fragment() , CallBackListener {
                     showSnackBar(getString(R.string.open_time))
                 } else if (editTextVendingTimeClose.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.close_time))
-                } else if (!(viewModel.stateIdCurrent > 0)) {
+                } else if (!(viewModel.stateIdVending > 0)) {
                     showSnackBar(getString(R.string.select_state))
-                } else if (!(viewModel.districtIdCurrent > 0)) {
+                } else if (!(viewModel.districtIdVending > 0)) {
                     showSnackBar(getString(R.string.select_district))
-                } else if (!(viewModel.panchayatIdCurrent > 0)) {
+                } else if (!(viewModel.panchayatIdVending > 0)) {
                     showSnackBar(getString(R.string.municipality_panchayat))
                 } else if (editTextAddress.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.address_mention_village))
@@ -789,12 +819,12 @@ class Register2  : Fragment() , CallBackListener {
             viewModel.data.vending_others = editTextTypeofVendingEnter.text.toString()
 
             viewModel.data.total_years_of_business = editTextTotalYearsofVending.text.toString()
-            viewModel.data.vending_state = ""+viewModel.stateIdCurrent
-            viewModel.data.vending_district = ""+viewModel.districtIdCurrent
-            viewModel.data.vending_municipality_panchayat = ""+viewModel.panchayatIdCurrent
-            viewModel.data.vending_pincode = ""+viewModel.pincodeIdCurrent
+            viewModel.data.vending_state = ""+viewModel.stateIdVending
+            viewModel.data.vending_district = ""+viewModel.districtIdVending
+            viewModel.data.vending_municipality_panchayat = ""+viewModel.panchayatIdVending
+            viewModel.data.vending_pincode = ""+viewModel.pincodeIdVending
             viewModel.data.vending_address = ""+editTextAddress.text.toString()
-            viewModel.data.localOrganisation = ""+viewModel.localOrganizationIdCurrent
+            viewModel.data.localOrganisation = ""+viewModel.localOrganizationIdVending
 
             viewModel.data.documentDetails = viewModel.documentDetails
             viewModel.data.ImageUploadCOVBoolean = binding.inclideDocuments.cbRememberImageUploadCOV.isChecked

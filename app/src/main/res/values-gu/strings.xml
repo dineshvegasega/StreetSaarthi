@@ -108,9 +108,9 @@
     <string name="YourNewPassword">તમારો નવો પાસવર્ડ</string>
     <string name="back_to_home">ઘરે પાછા</string>
     <string name="back_to_home_u"><u>ઘરે પાછા</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">પાસવર્ડ બનાવો અને પાસવર્ડ ફરીથી દાખલ કરો એ સમાન નથી</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*પાસવર્ડ મેળ ખાતો નથી</string>
 
-    <string name="InvalidPassword">પાસવર્ડ 1 અપરકેસ, 1 લોઅરકેસ, 1 નંબર અને 1 વિશેષ અક્ષર સાથે ઓછામાં ઓછા 8 અક્ષરનો હોવો જોઈએ</string>
+    <string name="InvalidPassword">*1 અપરકેસ, 1 લોઅરકેસ, 1 નંબર અને 1 વિશેષ અક્ષર ધરાવતા ઓછામાં ઓછા 8 અક્ષરો</string>
     <string name="father_s_first_name">પિતાનું પ્રથમ નામ</string>
     <string name="father_s_last_name">પિતાનું છેલ્લું નામ</string>
     <string name="gender">લિંગ</string>

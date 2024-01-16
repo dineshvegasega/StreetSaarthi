@@ -109,9 +109,9 @@
     <string name="YourNewPassword">ನಿಮ್ಮ ಹೊಸ ಪಾಸ್‌ವರ್ಡ್</string>
     <string name="back_to_home">ಮನೆಗೆ ಹಿಂತಿರುಗಿ</string>
     <string name="back_to_home_u"><u>ಮನೆಗೆ ಹಿಂತಿರುಗಿ</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">ಪಾಸ್‌ವರ್ಡ್ ರಚಿಸಿ ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಮರು-ನಮೂದಿಸುವುದು ಒಂದೇ ಅಲ್ಲ</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ</string>
 
-    <string name="InvalidPassword">ಪಾಸ್‌ವರ್ಡ್ 1 ದೊಡ್ಡಕ್ಷರ, 1 ಸಣ್ಣಕ್ಷರ, 1 ಸಂಖ್ಯೆ ಮತ್ತು 1 ವಿಶೇಷ ಅಕ್ಷರದೊಂದಿಗೆ ಕನಿಷ್ಠ 8 ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರಬೇಕು</string>
+    <string name="InvalidPassword">*ಕನಿಷ್ಠ 8 ಅಕ್ಷರಗಳು 1 ದೊಡ್ಡಕ್ಷರ, 1 ಸಣ್ಣಕ್ಷರ, 1 ಸಂಖ್ಯೆ ಮತ್ತು 1 ವಿಶೇಷ ಅಕ್ಷರವನ್ನು ಒಳಗೊಂಡಿರುತ್ತವೆ</string>
     <string name="father_s_first_name">ತಂದೆಯ ಮೊದಲ ಹೆಸರು</string>
     <string name="father_s_last_name">ತಂದೆಯ ಕೊನೆಯ ಹೆಸರು</string>
     <string name="gender">ಲಿಂಗ</string>

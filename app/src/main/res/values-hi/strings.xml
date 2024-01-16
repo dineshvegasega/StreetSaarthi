@@ -110,9 +110,9 @@
     <string name="YourNewPassword">Your New Password</string>
     <string name="back_to_home">मुख्य पृष्ठ पर जाये</string>
     <string name="back_to_home_u"><u>मुख्य पृष्ठ पर जाये</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">पासवर्ड बनाना और पासवर्ड पुनः दर्ज करना एक ही बात नहीं है</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*पासवर्ड मेल नहीं खाता</string>
 
-    <string name="InvalidPassword">पासवर्ड 1 अपरकेस, 1 लोअरकेस, 1 नंबर और 1 विशेष अक्षर के साथ कम से कम 8 अक्षर का होना चाहिए</string>
+    <string name="InvalidPassword">*न्यूनतम 8 अक्षर जिसमें 1 अपरकेस, 1 लोअरकेस, 1 नंबर और 1 विशेष अक्षर हों</string>
     <string name="father_s_first_name">पिता का पहला नाम</string>
     <string name="father_s_last_name">पिता का उपनाम</string>
     <string name="gender">लिंग</string>

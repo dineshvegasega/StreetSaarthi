@@ -24,6 +24,23 @@
         tools:ignore="HardcodedText" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textHeaderEditTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/edit"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:fontFamily="@font/roboto_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:drawableStart="@drawable/bxs_edit"
+        android:drawablePadding="@dimen/_5sdp"
+        tools:ignore="HardcodedText"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textHeaderCountTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -74,15 +74,35 @@ var tabPosition: Int = 0;
             introViewPager.adapter=adapter
             introViewPager.setUserInputEnabled(false);
 
+//            viewModel.isAgree.value = false
+            viewModel.isAgree.observe(viewLifecycleOwner, Observer {
+                if (tabPosition == 2){
+                    if (it == true){
+                        btSignIn.setEnabled(true)
+                        btSignIn.setBackgroundTintList(
+                            ColorStateList.valueOf(
+                                ResourcesCompat.getColor(
+                                    getResources(), R.color._E79D46, null)))
+                    } else {
+                        btSignIn.setEnabled(false)
+                        btSignIn.setBackgroundTintList(
+                            ColorStateList.valueOf(
+                                ResourcesCompat.getColor(
+                                    getResources(), R.color._999999, null)))
+                    }
+                }
+
+            })
+
 
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
-                if (it == true){
-                    btSignIn.setEnabled(true)
-                    btSignIn.setBackgroundTintList(
-                        ColorStateList.valueOf(
-                            ResourcesCompat.getColor(
-                                getResources(), R.color._E79D46, null)))
-                }
+//                if (it == true){
+//                    btSignIn.setEnabled(true)
+//                    btSignIn.setBackgroundTintList(
+//                        ColorStateList.valueOf(
+//                            ResourcesCompat.getColor(
+//                                getResources(), R.color._E79D46, null)))
+//                }
             })
 
 
@@ -196,7 +216,13 @@ var tabPosition: Int = 0;
         Log.e("TAG", "onCallBack " + pos)
 
         binding.apply {
-            if (pos == 2){
+         if (pos == 21){
+            btSignIn.setEnabled(false)
+            btSignIn.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        getResources(), R.color._999999, null)))
+        } else if (pos == 2){
                 introViewPager.setCurrentItem(1, false)
                 btSignIn.setText(getString(R.string.continues))
             } else if (pos == 4) {

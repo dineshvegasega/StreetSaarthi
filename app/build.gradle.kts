@@ -138,7 +138,7 @@ dependencies {
 
     implementation ("id.zelory:compressor:3.0.1")
     implementation ("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2")
-
+    implementation ("com.airbnb.android:lottie:6.3.0")
     
 
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))

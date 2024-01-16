@@ -24,12 +24,32 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuickRegistrationVM @Inject constructor(private val repository: Repository): ViewModel() {
+
+    var addTime=MutableLiveData<String>("")
+
+//    val testInt: MutableLiveData<Int> = MutableLiveData()
+//
+//    init {
+//        testInt.value = 10
+//    }
+//
+//    fun increase() {
+//        testInt.value = testInt.value?.plus(1)
+//    }
+
+    var isAgree = MutableLiveData<Boolean>(false)
+
     var data : Model = Model()
 
     var isSend = MutableLiveData<Boolean>(false)
     var isSendMutable = MutableLiveData<Boolean>(false)
 
     var isOtpVerified = false
+
+    init {
+
+       // addTime.postValue("bjaa")
+    }
 
     fun sendOTP(view: View, jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(

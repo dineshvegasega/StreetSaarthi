@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,11 +26,16 @@ import com.streetsaarthi.nasvi.databinding.ItemRecentActivitiesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.ItemContributors
+import com.streetsaarthi.nasvi.models.mix.ItemAds
 import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
+import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.GlideApp
+import com.streetsaarthi.nasvi.utils.myOptionsGlide
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -93,19 +99,24 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
         override fun onBindHolder(binding: ItemDashboardMenusBinding, dataClass: ItemModel, position: Int) {
             binding.apply {
                 val anim = ValueAnimator.ofFloat(1f, 0.8f)
-                if(dataClass.isNew == true){
-                    anim.setDuration(1000)
-                    anim.addUpdateListener { animation ->
-                        ivLogo.setScaleX(animation.animatedValue as Float)
-                        ivLogo.setScaleY(animation.animatedValue as Float)
-                    }
-                    anim.repeatCount = 500
-                    anim.repeatMode = ValueAnimator.REVERSE
-                    anim.start()
-                }
+//                if(dataClass.isNew == false){
+//                    anim.setDuration(1000)
+//                    anim.addUpdateListener { animation ->
+//                        ivLogo.setScaleX(animation.animatedValue as Float)
+//                        ivLogo.setScaleY(animation.animatedValue as Float)
+//                    }
+//                    anim.repeatCount = 500
+//                    anim.repeatMode = ValueAnimator.REVERSE
+//                    anim.start()
+//                }
 
                 textHeaderadfdsfTxt.setText(dataClass.name)
                 ivLogo.setImageResource(dataClass.image)
+//                ivLogo.setImageResource(dataClass.image)
+//                GlideApp.with(root.context)
+//                        .load(R.drawable.animate_bubble)
+//                        .apply(myOptionsGlide)
+//                        .into(ivLogo)
                 root.setOnClickListener {
                     when (position) {
                         0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
@@ -318,6 +329,36 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
             }
         )
     }
+
+
+
+
+    private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
+    val itemAds : LiveData< ArrayList<ItemAds>> get() = itemAdsResult
+    fun adsList(view: View) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.adsList()
+
+                override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
+                    if (response.isSuccessful){
+                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
 
 
 }

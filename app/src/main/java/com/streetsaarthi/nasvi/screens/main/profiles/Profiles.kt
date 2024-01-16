@@ -2,6 +2,8 @@ package com.streetsaarthi.nasvi.screens.main.profiles
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,18 +18,25 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
+import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1
 import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.myOptionsGlide
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Profiles : Fragment() {
+class Profiles : Fragment() , CallBackListener {
     private val viewModel: ProfilesVM by activityViewModels()
     private var _binding: ProfilesBinding? = null
     private val binding get() = _binding!!
 
-    var itemMain : ArrayList<Item> ?= ArrayList()
+    companion object{
+        var callBackListener: CallBackListener? = null
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,10 +50,31 @@ class Profiles : Fragment() {
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        callBackListener = this
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.your_Profile)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
+
+            inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+            inclideHeaderSearch.textHeaderEditTxt.setOnClickListener {
+                inclideHeaderSearch.textHeaderEditTxt.visibility = View.INVISIBLE
+                btSave.visibility = View.VISIBLE
+                btCancel.visibility = View.VISIBLE
+            }
+
+            btSave.setOnClickListener {
+                inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                btSave.visibility = View.GONE
+                btCancel.visibility = View.GONE
+                PersonalDetails.callBackListener!!.onCallBack(1)
+            }
+
+            btCancel.setOnClickListener {
+                inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                btSave.visibility = View.GONE
+                btCancel.visibility = View.GONE
+            }
 
             var adapter= ProfilePagerAdapter(requireActivity())
             adapter.notifyDataSetChanged()
@@ -86,6 +116,15 @@ class Profiles : Fragment() {
     }
 
 
+    override fun onCallBack(pos: Int) {
+        Log.e("TAG", "onCallBack " + pos)
+        if (pos == 11){
+            binding.introViewPager.setCurrentItem(1, false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                ProfessionalDetails.callBackListener!!.onCallBack(22)
+            }, 100)
+        }
+    }
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()

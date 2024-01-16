@@ -109,9 +109,9 @@
     <string name="YourNewPassword">آپ کا نیا پاس ورڈ</string>
     <string name="back_to_home">واپس گھر</string>
     <string name="back_to_home_u"><u>واپس گھر</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">پاس ورڈ بنائیں اور دوبارہ داخل ہونے والا پاس ورڈ ایک جیسا نہیں ہے</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">* پاس ورڈ مماثل نہیں ہے۔</string>
 
-    <string name="InvalidPassword">پاس ورڈ کم از کم 8 حروف کے ساتھ ساتھ 1 بڑے ، 1 چھوٹے ، 1 نمبر اور 1 خصوصی کردار کے ساتھ</string>
+    <string name="InvalidPassword">*کم از کم 8 حروف جن میں 1 اپر کیس، 1 لوئر کیس، 1 نمبر اور 1 خصوصی کریکٹر</string>
     <string name="father_s_first_name">والد کا پہلا نام</string>
     <string name="father_s_last_name"> کا پہلا نامباپ کا آخری نام</string>
     <string name="gender">صنف</string>

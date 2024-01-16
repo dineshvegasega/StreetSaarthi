@@ -27,14 +27,24 @@
             >
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_96sdp"
+                android:layout_height="@dimen/_96sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/item_profile"
+                android:layout_marginTop="@dimen/_10sdp"
                 />
-
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="@dimen/_96sdp"
+                android:layout_height="@dimen/_96sdp"
+                android:id="@+id/animation_view"
+                app:lottie_rawRes="@raw/animate_bubble"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textHeaderadfdsfTxt"
                 android:layout_width="wrap_content"

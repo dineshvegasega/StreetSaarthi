@@ -109,9 +109,9 @@
     <string name="YourNewPassword">మీ కొత్త పాస్‌వర్డ్</string>
     <string name="back_to_home">తిరిగి ఇంటికి</string>
     <string name="back_to_home_u"><u>తిరిగి ఇంటికి</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">పాస్‌వర్డ్‌ని సృష్టించండి మరియు పాస్‌వర్డ్‌ని మళ్లీ నమోదు చేయండి ఒకేలా ఉండదు</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*పాస్‌వర్డ్ సరిపోలలేదు</string>
 
-    <string name="InvalidPassword">పాస్‌వర్డ్‌లో 1 పెద్ద అక్షరం, 1 చిన్న అక్షరం, 1 సంఖ్య మరియు 1 ప్రత్యేక అక్షరంతో పాటు కనీసం 8 అక్షరాలు ఉండాలి</string>
+    <string name="InvalidPassword">*కనీసం 8 అక్షరాలు 1 పెద్ద అక్షరం, 1 చిన్న అక్షరం, 1 సంఖ్య &amp; 1 ప్రత్యేక అక్షరం</string>
     <string name="father_s_first_name">తండ్రి\'s మొదటి పేరు</string>
     <string name="father_s_last_name">తండ్రి\'s చివరి పేరు</string>
     <string name="gender">లింగం</string>

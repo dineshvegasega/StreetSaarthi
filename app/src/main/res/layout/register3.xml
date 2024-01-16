@@ -79,6 +79,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="0dp"
+                    android:imeOptions="actionNext"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -98,13 +101,29 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textCreatePasswrordMsg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_F02A2A"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                app:layout_constraintTop_toBottomOf="@+id/layoutCreatePassword"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_regular"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/createPassword"
+                android:visibility="gone"
+                />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutReEnterPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/layoutCreatePassword"
+                app:layout_constraintTop_toBottomOf="@+id/textCreatePasswrordMsg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_10sdp">
@@ -119,7 +138,10 @@
                     android:inputType="textPassword"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="0dp" />
+                    android:layout_marginTop="0dp"
+                    android:imeOptions="actionNext"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
 
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -140,6 +162,24 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textReEnterPasswrordMsg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_F02A2A"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                app:layout_constraintTop_toBottomOf="@+id/layoutReEnterPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_regular"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/createPassword"
+                android:visibility="gone"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textTitlePermanentAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -147,7 +187,7 @@
                 android:textSize="@dimen/_12ssp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
-                app:layout_constraintTop_toBottomOf="@+id/layoutReEnterPassword"
+                app:layout_constraintTop_toBottomOf="@+id/textReEnterPasswrordMsg"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_medium"
@@ -163,7 +203,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/layoutReEnterPassword"
+                app:layout_constraintTop_toBottomOf="@+id/textReEnterPasswrordMsg"
                 app:layout_constraintStart_toEndOf="@+id/textTitlePermanentAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="MissingConstraints"
@@ -186,9 +226,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/editTextSendOtp"
                 app:layout_constraintTop_toBottomOf="@+id/textTitlePermanentAddress"
+                android:imeOptions="actionNext"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/editTextSendOtp"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
@@ -201,7 +244,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/textTitlePermanentAddress"
                 android:focusable="false"
                 android:backgroundTint="@color/_E79D46"
-
+                android:cursorVisible="false"
+                android:gravity="center"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -233,9 +277,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/editTextVeryfyOtp"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime"
+                android:imeOptions="actionDone"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/editTextVeryfyOtp"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
@@ -247,6 +294,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime"
                 android:focusable="false"
+                android:cursorVisible="false"
+                android:gravity="center"
                 android:backgroundTint="@color/_999999"
                 />
 

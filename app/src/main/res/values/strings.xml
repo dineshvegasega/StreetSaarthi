@@ -11,7 +11,7 @@
     <string name="AnInitiativeBy" translatable="false">An Initiative By</string>
     <string name="ConnectingStreetVendorsAllOverIndia" translatable="false">Connecting Street Vendors All Over India</string>
     <string name="StreetVendorSystem" translatable="false">Street Vendor System</string>
-    <string name="powered_by_national_association_of_street_vendors_of_india" translatable="false">Powered by <b>National Association Of Street Vendors Of India</b></string>
+    <string name="powered_by_national_association_of_street_vendors_of_india" translatable="false">Powered by <b><u>National Association Of Street Vendors Of India</u></b></string>
 
 
     <string name="street_saarthi" translatable="false">Street Saarthi</string>
@@ -127,9 +127,9 @@
     <string name="YourNewPassword">Your New Password</string>
     <string name="back_to_home">Back To Home</string>
     <string name="back_to_home_u"><u>Back To Home</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">Create Password and Re-Enter Password is not same</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*Password not match</string>
 
-    <string name="InvalidPassword">Password should be atleast 8 characters along with 1 uppercase, 1 lowercase,1 number and 1 special character</string>
+    <string name="InvalidPassword">*Minimum 8 characters containing 1 Uppercase, 1 Lowercase, 1 Number &amp; 1 Special Character</string>
     <string name="father_s_first_name">Father\'s First Name</string>
     <string name="father_s_last_name">Father\'s Last Name</string>
     <string name="gender">Gender</string>
@@ -404,6 +404,21 @@
     <string name="identity_imageStar">Identity Image*</string>
     <string name="membership_id">Membership Id</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">Schemes like PM Swanidhi Yojna etc</string>
+
+    <string name="survey_receipt">Survey Receipt</string>
+    <string name="challan">Challan</string>
+    <string name="approval_letter_from_municipality">Approval Letter From Municipality</string>
+    <string name="select_state_">Select State</string>
+    <string name="select_district_">Select District</string>
+    <string name="municipality_panchayat_">Select Municipality/Panchayat</string>
+
+    <string name="not_state">You have no State</string>
+    <string name="not_district">You have no District</string>
+    <string name="not_municipality_panchayat">You have not Municipality/Panchayat</string>
+    <string name="not_pincode">You have no Pincode</string>
+    <string name="not_Organisation">You have no Organisation</string>
+    <string name="saveUpdate">Save &amp; Update</string>
+
 
 
 

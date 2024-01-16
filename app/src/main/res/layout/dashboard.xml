@@ -35,8 +35,44 @@
         tools:itemCount="6"
         android:paddingHorizontal="@dimen/_5sdp"
         app:spanCount="2"
-        app:layout_constraintBottom_toTopOf="@+id/textHeaderTxt1"
+        app:layout_constraintBottom_toTopOf="@+id/layoutBanner"
         />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textHeaderTxt1"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/banner"
+            app:layout_constraintDimensionRatio="700:152"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_banner"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabDots"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/_00000000"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textHeaderTxt1"

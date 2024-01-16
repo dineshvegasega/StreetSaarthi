@@ -2,6 +2,7 @@ package com.streetsaarthi.nasvi.screens.main.profiles
 
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
@@ -47,7 +48,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
     var panchayatId : Int = 0
 
     var itemPincode : ArrayList<ItemPincode> = ArrayList()
-    var pincodeId : Int = 0
+    var pincodeId : String = ""
 
     var currentAddress : String = ""
 
@@ -155,20 +156,20 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
 
 
-    var itemStateCurrent : ArrayList<ItemState> = ArrayList()
-    var stateIdCurrent : Int = 0
+    var itemStateVending : ArrayList<ItemState> = ArrayList()
+    var stateIdVending : Int = 0
 
-    var itemDistrictCurrent : ArrayList<ItemDistrict> = ArrayList()
-    var districtIdCurrent : Int = 0
+    var itemDistrictVending : ArrayList<ItemDistrict> = ArrayList()
+    var districtIdVending : Int = 0
 
-    var itemPanchayatCurrent : ArrayList<ItemPanchayat> = ArrayList()
-    var panchayatIdCurrent : Int = 0
+    var itemPanchayatVending : ArrayList<ItemPanchayat> = ArrayList()
+    var panchayatIdVending : Int = 0
 
-    var itemPincodeCurrent : ArrayList<ItemPincode> = ArrayList()
-    var pincodeIdCurrent : Int = 0
+    var itemPincodeVending : ArrayList<ItemPincode> = ArrayList()
+    var pincodeIdVending : String = ""
 
-    var itemLocalOrganizationCurrent : ArrayList<ItemOrganization> = ArrayList()
-    var localOrganizationIdCurrent : Int = 0
+    var itemLocalOrganizationVending : ArrayList<ItemOrganization> = ArrayList()
+    var localOrganizationIdVending : Int = 0
 
     var currentAddressCurrent : String = ""
 
@@ -180,7 +181,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
                     if (response.isSuccessful){
-                        itemStateCurrent = response.body()?.data as ArrayList<ItemState>
+                        itemStateVending = response.body()?.data as ArrayList<ItemState>
                     }
                 }
 
@@ -205,7 +206,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemDistrict>>>) {
                     if (response.isSuccessful){
-                        itemDistrictCurrent = response.body()?.data as ArrayList<ItemDistrict>
+                        itemDistrictVending = response.body()?.data as ArrayList<ItemDistrict>
                     }
                 }
 
@@ -230,7 +231,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemPanchayat>>>) {
                     if (response.isSuccessful){
-                        itemPanchayatCurrent = response.body()?.data as ArrayList<ItemPanchayat>
+                        itemPanchayatVending = response.body()?.data as ArrayList<ItemPanchayat>
                     }
                 }
 
@@ -255,7 +256,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemPincode>>>) {
                     if (response.isSuccessful){
-                        itemPincodeCurrent = response.body()?.data as ArrayList<ItemPincode>
+                        itemPincodeVending = response.body()?.data as ArrayList<ItemPincode>
                     }
                 }
 
@@ -281,7 +282,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemOrganization>>>) {
                     if (response.isSuccessful){
-                        itemLocalOrganizationCurrent = response.body()?.data as ArrayList<ItemOrganization>
+                        itemLocalOrganizationVending = response.body()?.data as ArrayList<ItemOrganization>
                     }
                 }
 
@@ -306,10 +307,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
     var itemVending : ArrayList<ItemVending> = ArrayList()
     var vendingId : Int = 0
-
-    var itemMarketplace : ArrayList<ItemMarketplace> = ArrayList()
-    var marketplaceId : Int = 0
-
+    var vendingTrue = MutableLiveData<Boolean>(false)
     fun vending(view: View) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemVending>>>> {
@@ -319,6 +317,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<List<ItemVending>>>) {
                     if (response.isSuccessful){
                         itemVending = response.body()?.data as ArrayList<ItemVending>
+                        vendingTrue.value = true
                     }
                 }
 
@@ -334,6 +333,10 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
     }
 
 
+
+    var itemMarketplace : ArrayList<ItemMarketplace> = ArrayList()
+    var marketplaceId : Int = 0
+    var marketPlaceTrue = MutableLiveData<Boolean>(false)
     fun marketplace(view: View) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemMarketplace>>>> {
@@ -343,6 +346,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<List<ItemMarketplace>>>) {
                     if (response.isSuccessful){
                         itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
+                        marketPlaceTrue.value = true
                     }
                 }
 

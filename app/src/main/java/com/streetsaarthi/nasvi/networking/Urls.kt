@@ -34,7 +34,7 @@ const val NoticeHistoryList = "notice-history-list"
 const val LiveScheme = "live-scheme"
 const val NoticeLiveList = "notice-live-list"
 const val LiveTraining = "live-training"
-
+const val ADS_LIST = "ads-list?page=1"
 
 
 const val TRANSLATE_URL = "https://translation.googleapis.com/language/"

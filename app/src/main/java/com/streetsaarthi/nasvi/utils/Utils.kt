@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.res.Configuration
 import android.database.Cursor
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
@@ -17,6 +19,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import androidx.viewpager.widget.ViewPager
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 
 import com.streetsaarthi.nasvi.R
@@ -246,12 +249,50 @@ fun isValidPassword(password: String): Boolean {
 
 fun AppCompatEditText.focus() {
 //    text?.let { setSelection(it.length) }
-    postDelayed({
-        requestFocus()
-        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-    }, 100)
+//    postDelayed({
+//        requestFocus()
+//        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+//    }, 100)
 }
+
+
+
+fun ViewPager.autoScroll(pos: Int , interval: Long) {
+    val handler = Handler(Looper.getMainLooper())
+    var scrollPosition = 0
+    val runnable = object : Runnable {
+        override fun run() {
+            val count = adapter?.count ?: 0
+            setCurrentItem(scrollPosition++ % count, true)
+            handler.postDelayed(this, interval)
+        }
+    }
+
+    addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        override fun onPageSelected(position: Int) {
+            scrollPosition = position + 1
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            // Not necessary
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            // Not necessary
+        }
+    })
+    handler.post(runnable)
+
+    if(pos == 2){
+        handler.removeCallbacks(runnable)
+    }
+}
+
 
 fun Context.isTablet(): Boolean {
     return this.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_LARGE

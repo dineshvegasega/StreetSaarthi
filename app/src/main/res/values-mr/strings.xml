@@ -110,9 +110,9 @@
     <string name="YourNewPassword">तुमचा नवीन पासवर्ड</string>
     <string name="back_to_home">घरी परत</string>
     <string name="back_to_home_u"><u>घरी परत</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">पासवर्ड तयार करा आणि पासवर्ड पुन्हा एंटर करा सारखा नाही</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*पासवर्ड जुळत नाही</string>
 
-    <string name="InvalidPassword">पासवर्ड 1 अपरकेस, 1 लोअरकेस, 1 नंबर आणि 1 स्पेशल कॅरेक्टरसह किमान 8 वर्णांचा असावा</string>
+    <string name="InvalidPassword">*किमान 8 वर्ण ज्यात 1 अप्परकेस, 1 लोअरकेस, 1 संख्या आणि 1 विशेष वर्ण</string>
     <string name = "father_s_first_name"> वडिलांचे नाव</string>
     <string name="father_s_last_name">वडिलांचे आडनाव</string>
     <string name="gender">लिंग</string>

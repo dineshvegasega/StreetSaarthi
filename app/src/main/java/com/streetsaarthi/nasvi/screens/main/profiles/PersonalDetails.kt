@@ -28,7 +28,9 @@ import com.streetsaarthi.nasvi.databinding.PersonalDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -44,12 +46,15 @@ import java.time.Period
 import java.util.Calendar
 
 @AndroidEntryPoint
-class PersonalDetails : Fragment() {
+class PersonalDetails : Fragment() , CallBackListener {
     private val viewModel: ProfilesVM by activityViewModels()
     private var _binding: PersonalDetailsBinding? = null
     private val binding get() = _binding!!
 
-//    var itemMain: ArrayList<Item>? = ArrayList()
+    companion object{
+        var callBackListener: CallBackListener? = null
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -155,6 +160,7 @@ class PersonalDetails : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        callBackListener = this
 
         binding.apply {
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
@@ -172,9 +178,6 @@ class PersonalDetails : Fragment() {
                     viewModel.data.education_qualification = data.education_qualification
                     ivImagePassportsizeImage.loadImage(url = { data.profile_image_name.url })
                     ivImageIdentityImage.loadImage(url = { data.identity_image_name.url })
-
-//                    Picasso.get().load(data.profile_image_name.url).placeholder(R.drawable.no_image_modified).into(ivImagePassportsizeImage)
-//                    Picasso.get().load(data.identity_image_name.url).placeholder(R.drawable.no_image_modified).into(ivImageIdentityImage)
 
                     viewModel.data.passportSizeImage = data.profile_image_name.url
                     viewModel.data.identificationImage = data.identity_image_name.url
@@ -259,7 +262,6 @@ class PersonalDetails : Fragment() {
                     } else {
                         editTextSelectPincode.setText("")
                     }
-
                     editTextAddress.setText("${data.residential_address}")
 
 
@@ -277,9 +279,9 @@ class PersonalDetails : Fragment() {
                     viewModel.districtId = data.residential_district.id
                     viewModel.panchayatId = data.residential_municipality_panchayat.id
                     if(data.residential_pincode != null){
-                        viewModel.pincodeId = data.residential_pincode.pincode.toInt()
+                        viewModel.pincodeId = data.residential_pincode.pincode
                     } else {
-                        viewModel.pincodeId = 0
+                        viewModel.pincodeId = ""
                     }
 
                 } else if ((viewModel.stateId > 0)){
@@ -371,7 +373,7 @@ class PersonalDetails : Fragment() {
                     }
 
                     viewModel.data.social_category = editTextSocialCategory.text.toString()
-
+                    viewModel.data.current_address = editTextAddress.text.toString()
 
                     val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
@@ -584,8 +586,7 @@ class PersonalDetails : Fragment() {
                     1-> viewModel.data.marital_status = "Married"
                     2-> viewModel.data.marital_status = "Widowed"
                     3-> viewModel.data.marital_status = "Divorced"
-                    4-> viewModel.data.marital_status = "Graduation"
-                    5-> viewModel.data.marital_status = "Separated"
+                    4-> viewModel.data.marital_status = "Separated"
                 }
             }.show()
     }
@@ -610,6 +611,10 @@ class PersonalDetails : Fragment() {
                 view?.let { viewModel.district(it, viewModel.stateId) }
                 view?.let { viewModel.panchayat(it, viewModel.stateId) }
                 viewModel.data.current_state = ""+viewModel.stateId
+                binding.editTextSelectDistrict.setText("")
+                binding.editTextMunicipalityPanchayat.setText("")
+                viewModel.districtId = 0
+                viewModel.panchayatId = 0
             }.show()
     }
 
@@ -628,6 +633,8 @@ class PersonalDetails : Fragment() {
                 viewModel.districtId =  viewModel.itemDistrict[which].id
                 view?.let { viewModel.pincode(it, viewModel.districtId) }
                 viewModel.data.current_district = ""+viewModel.districtId
+                binding.editTextSelectPincode.setText("")
+                viewModel.pincodeId = ""
             }.show()
     }
 
@@ -661,7 +668,7 @@ class PersonalDetails : Fragment() {
             .setItems(list) {_,which->
                 binding.editTextSelectPincode.setText(list[which])
 //                viewModel.pincodeId =  viewModel.itemPincode[which].id
-                viewModel.pincodeId = binding.editTextSelectPincode.text.toString().toInt()
+                viewModel.pincodeId = binding.editTextSelectPincode.text.toString()
                 viewModel.data.current_pincode = ""+viewModel.pincodeId
             }.show()
     }
@@ -711,7 +718,6 @@ class PersonalDetails : Fragment() {
 
 
 
-
     private fun forCamera() {
         requireActivity().runOnUiThread(){
             val directory = File(requireContext().filesDir, "camera_images")
@@ -731,6 +737,137 @@ class PersonalDetails : Fragment() {
     }
 
 
+
+    override fun onCallBack(pos: Int) {
+        Log.e("TAG", "onCallBackPersonal " + pos)
+        if(pos == 1){
+            update()
+        }
+    }
+
+    private fun update() {
+        binding.apply {
+            if(editTextFN.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.first_name))
+            } else if (editTextLN.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.last_name))
+            } else if (editTextFatherFN.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.father_s_first_name))
+            } else if (editTextFatherLN.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.father_s_last_name))
+            } else if (editTextGender.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.gender))
+            } else if (editTextDateofBirth.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.date_of_birth))
+            } else if (editTextMaritalStatus.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.marital_status))
+            } else if (editTextMaritalStatus.text.toString() == getString(R.string.married) && editTextSpouseName.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.spouse_s_name))
+            } else if (editTextSocialCategory.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.social_category))
+            } else if (editTextEducationQualifacation.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.education_qualifacation))
+            } else if (!(viewModel.stateId > 0)){
+                showSnackBar(getString(R.string.select_state))
+            } else if (!(viewModel.districtId > 0)){
+                showSnackBar(getString(R.string.select_district))
+            } else if (!(viewModel.panchayatId > 0)){
+                showSnackBar(getString(R.string.municipality_panchayat))
+            } else if (editTextAddress.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.address_mention_village))
+            } else {
+                viewModel.data.vendor_first_name = editTextFN.text.toString()
+                viewModel.data.vendor_last_name = editTextLN.text.toString()
+                viewModel.data.parent_first_name = editTextFatherFN.text.toString()
+                viewModel.data.parent_last_name = editTextFatherLN.text.toString()
+
+                viewModel.data.spouse_name = editTextSpouseName.text.toString()
+
+                if (viewModel.data.marital_status == "Married"){
+                    viewModel.data.spouse_name = editTextSpouseName.text.toString()
+                } else {
+                    viewModel.data.spouse_name = null
+                }
+
+                viewModel.data.social_category = editTextSocialCategory.text.toString()
+                viewModel.data.current_address = editTextAddress.text.toString()
+
+                val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("user_role", USER_TYPE)
+                if(viewModel.data.vendor_first_name  != null){
+                    requestBody.addFormDataPart("vendor_first_name", viewModel.data.vendor_first_name!!)
+                }
+                if(viewModel.data.vendor_last_name  != null){
+                    requestBody.addFormDataPart("vendor_last_name", viewModel.data.vendor_last_name!!)
+                }
+                if(viewModel.data.parent_first_name  != null){
+                    requestBody.addFormDataPart("parent_first_name", viewModel.data.parent_first_name!!)
+                }
+                if(viewModel.data.parent_last_name  != null){
+                    requestBody.addFormDataPart("parent_last_name", viewModel.data.parent_last_name!!)
+                }
+                if(viewModel.data.gender  != null){
+                    requestBody.addFormDataPart("gender", viewModel.data.gender!!)
+                }
+                if(viewModel.data.date_of_birth  != null){
+                    requestBody.addFormDataPart("date_of_birth", viewModel.data.date_of_birth!!)
+                }
+                if(viewModel.data.social_category  != null){
+                    requestBody.addFormDataPart("social_category", viewModel.data.social_category!!)
+                }
+                if(viewModel.data.education_qualification  != null){
+                    requestBody.addFormDataPart("education_qualification", viewModel.data.education_qualification!!)
+                }
+                if(viewModel.data.marital_status  != null){
+                    requestBody.addFormDataPart("marital_status", viewModel.data.marital_status!!)
+                }
+                if(viewModel.data.spouse_name  != null){
+                    requestBody.addFormDataPart("spouse_name", viewModel.data.spouse_name!!)
+                }
+                if(viewModel.data.current_state  != null){
+                    requestBody.addFormDataPart("residential_state", viewModel.data.current_state!!)
+                }
+                if(viewModel.data.current_district  != null){
+                    requestBody.addFormDataPart("residential_district", viewModel.data.current_district!!)
+                }
+                if(viewModel.data.municipality_panchayat_current  != null){
+                    requestBody.addFormDataPart("residential_municipality_panchayat", viewModel.data.municipality_panchayat_current!!)
+                }
+                if(viewModel.data.current_pincode  != null){
+                    requestBody.addFormDataPart("residential_pincode", viewModel.data.current_pincode!!)
+                }
+                if(viewModel.data.current_address  != null){
+                    requestBody.addFormDataPart("residential_address", viewModel.data.current_address!!)
+                }
+                if(viewModel.data.passportSizeImage != null && (!viewModel.data.passportSizeImage!!.startsWith("http"))){
+                    requestBody.addFormDataPart(
+                        "profile_image_name",
+                        File(viewModel.data.passportSizeImage!!).name,
+                        File(viewModel.data.passportSizeImage!!).asRequestBody("image/*".toMediaTypeOrNull())
+                    )
+                }
+
+                if(viewModel.data.identificationImage != null && (!viewModel.data.identificationImage!!.startsWith("http"))){
+                    requestBody.addFormDataPart(
+                        "identity_image_name",
+                        File(viewModel.data.identificationImage!!).name,
+                        File(viewModel.data.identificationImage!!).asRequestBody("image/*".toMediaTypeOrNull())
+                    )
+                }
+
+//                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+//                    if (loginUser != null) {
+//                        val data = Gson().fromJson(loginUser, Login::class.java)
+//                        viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build())
+//                    }
+//                }
+
+                Profiles.callBackListener!!.onCallBack(11)
+
+            }
+        }
+    }
 
 
     override fun onDestroyView() {

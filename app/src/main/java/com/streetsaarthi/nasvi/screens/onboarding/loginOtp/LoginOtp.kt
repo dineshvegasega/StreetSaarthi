@@ -53,6 +53,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
                 view.findNavController().navigateUp()
             }
 
+            viewModel.isSend.value = false
             viewModel.isSend.observe(viewLifecycleOwner, Observer {
                 editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
                 if (it == true){
@@ -71,7 +72,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
                 }
             })
 
-
+            viewModel.isSendMutable.value = false
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
                     tvTime.visibility = View.GONE

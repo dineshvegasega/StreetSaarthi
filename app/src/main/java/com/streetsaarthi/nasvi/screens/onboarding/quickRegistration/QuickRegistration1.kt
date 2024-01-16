@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.QuickRegistration1Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
@@ -36,7 +39,6 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
     private var _binding: QuickRegistration1Binding? = null
     private val binding get() = _binding!!
     private val viewModel: QuickRegistrationVM by activityViewModels()
-
 
     companion object{
         var callBackListener: CallBackListener? = null
@@ -58,12 +60,23 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.model = viewModel
+        binding.lifecycleOwner = this
+
         callBackListener = this
         OtpTimer.sendOtpTimerData = this
 
+//        viewModel.addTime.value = "bj"
+//        binding.tvTime.visibility = View.VISIBLE
+
+
+//        viewModel.addTime.observe(viewLifecycleOwner, Observer {
+//            binding.tvTime.text = it
+//        })
         binding.apply {
             editTextVeryfyOtp.setEnabled(false)
 
+            viewModel.isSend.value = false
             viewModel.isSend.observe(viewLifecycleOwner, Observer {
                 editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
                 if (it == true){
@@ -83,26 +96,29 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
             })
 
 
+            viewModel.isSendMutable.value = false
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
-                  if (it == true){
-                      tvTime.visibility = View.GONE
-                      OtpTimer.sendOtpTimerData = null
-                      OtpTimer.stopTimer()
-                      editTextSendOtp.setEnabled(false)
-                      editTextVeryfyOtp.setEnabled(false)
-                      editTextSendOtp.setBackgroundTintList(
-                          ColorStateList.valueOf(
-                              ResourcesCompat.getColor(
-                                  getResources(), R.color._999999, null)))
-                      editTextVeryfyOtp.setBackgroundTintList(
-                          ColorStateList.valueOf(
-                              ResourcesCompat.getColor(
-                                  getResources(), R.color._999999, null)))
-                  }
+                if (it == true){
+                    tvTime.visibility = View.GONE
+                    OtpTimer.sendOtpTimerData = null
+                    OtpTimer.stopTimer()
+                    editTextSendOtp.setEnabled(false)
+                    editTextVeryfyOtp.setEnabled(false)
+                    editTextSendOtp.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._999999, null)))
+                    editTextVeryfyOtp.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._999999, null)))
+                }
             })
 
 
+
             editTextSendOtp.setOnClickListener {
+//                viewModel.addTime.postValue("bjaa")
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 } else{
@@ -128,8 +144,47 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
                     viewModel.verifyOTP(view = requireView(), obj)
                 }
             }
+
+
+            editTextMobileNumber.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    editTextSendOtp.setEnabled(true)
+                    editTextSendOtp.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._E79D46, null)))
+                    QuickRegistration.callBackListener!!.onCallBack(21)
+                    editTextMobileNumber.requestFocus()
+                }
+            })
+
+            editTextOtp.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    editTextSendOtp.setEnabled(true)
+                    editTextSendOtp.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._E79D46, null)))
+                    QuickRegistration.callBackListener!!.onCallBack(21)
+                    editTextOtp.requestFocus()
+                }
+            })
+
         }
     }
+
 
 
     override fun onCallBack(pos: Int) {
@@ -156,6 +211,9 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
 
                     QuickRegistration.callBackListener!!.onCallBack(2)
                 }
+//            } else if (pos == 111){
+//                viewModel.isSend.value = false
+//                viewModel.isSendMutable.value = false
             }
         }
 
@@ -166,11 +224,14 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
     override fun otpData(string: String) {
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
-            tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
+//            viewModel.addTime.value = getString(R.string.the_verify_code_will_expire_in_00_59, string)
+           // tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
 
-            if(MainActivity.isOpen.get() == true){
-                editTextOtp.focus()
-            }
+
+
+//            if(MainActivity.isOpen.get() == true){
+//                editTextOtp.focus()
+//            }
 
             if(string.isEmpty()){
                 editTextSendOtp.setText(getString(R.string.resendOtp))
@@ -188,6 +249,8 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
             }
         }
     }
+
+
 
     override fun onDestroyView() {
         OtpTimer.sendOtpTimerData = null

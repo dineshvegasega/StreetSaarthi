@@ -109,9 +109,9 @@
     <string name="YourNewPassword">നിങ്ങളുടെ പുതിയ പാസ്‌വേഡ്</string>
     <string name="back_to_home">വീട്ടിലേക്ക് മടങ്ങുക</string>
     <string name="back_to_home_u"><u>വീട്ടിലേക്ക് മടങ്ങുക</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">പാസ്‌വേഡ് സൃഷ്‌ടിക്കുക, പാസ്‌വേഡ് വീണ്ടും നൽകുക എന്നിവ സമാനമല്ല</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*പാസ്‌വേഡ് പൊരുത്തപ്പെടുന്നില്ല</string>
 
-    <string name="InvalidPassword">പാസ്‌വേഡിന് 1 വലിയക്ഷരം, 1 ചെറിയക്ഷരം, 1 നമ്പർ, 1 പ്രത്യേക പ്രതീകം എന്നിവയ്‌ക്കൊപ്പം കുറഞ്ഞത് 8 പ്രതീകങ്ങളെങ്കിലും ഉണ്ടായിരിക്കണം</string>
+    <string name="InvalidPassword">*ഒരു ​​വലിയക്ഷരം, 1 ചെറിയക്ഷരം, 1 അക്കവും 1 പ്രത്യേക പ്രതീകവും അടങ്ങുന്ന ഏറ്റവും കുറഞ്ഞത് 8 പ്രതീകങ്ങൾ</string>
     <string name="father_s_first_name">അച്ഛന്റെ ആദ്യ നാമം</string>
     <string name="father_s_last_name">അച്ഛന്റെ അവസാന നാമം</string>
     <string name="gender">ലിംഗഭേദം</string>

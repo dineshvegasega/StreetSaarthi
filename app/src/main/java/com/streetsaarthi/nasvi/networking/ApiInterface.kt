@@ -2,6 +2,7 @@ package com.demo.networking
 
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.mix.ItemAds
 import com.streetsaarthi.nasvi.models.mix.ItemDistrict
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemOrganization
@@ -9,6 +10,7 @@ import com.streetsaarthi.nasvi.models.mix.ItemPanchayat
 import com.streetsaarthi.nasvi.models.mix.ItemPincode
 import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
+import com.streetsaarthi.nasvi.screens.onboarding.networking.ADS_LIST
 import com.streetsaarthi.nasvi.screens.onboarding.networking.DISTRICT
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LOCAL_ORGANISATION
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGIN
@@ -148,4 +150,8 @@ interface ApiInterface {
     suspend fun liveTraining(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
+
+
+    @GET(ADS_LIST)
+    suspend fun adsList(): Response<BaseResponseDC<List<ItemAds>>>
 }

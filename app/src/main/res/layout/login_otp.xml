@@ -74,7 +74,7 @@
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editTextMobileNumber"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/_40sdp"
                     style="@style/PrimaryEditText"
                     android:hint="@string/mobileNumber"
@@ -82,10 +82,13 @@
                     android:maxLength="10"
                     android:text=""
                     android:layout_marginTop="@dimen/_18sdp"
+                    android:imeOptions="actionNext"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/editTextSendOtp"
                     app:layout_constraintTop_toBottomOf="@+id/textHeaderTxt22"
                     />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/editTextSendOtp"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"
@@ -98,6 +101,8 @@
                     android:layout_marginTop="@dimen/_18sdp"
                     app:layout_constraintTop_toBottomOf="@+id/textHeaderTxt22"
                     android:focusable="false"
+                    android:cursorVisible="false"
+                    android:gravity="center"
                     android:backgroundTint="@color/_E79D46"
                     />
 
@@ -127,6 +132,7 @@
                     android:inputType="number"
                     android:maxLength="6"
                     android:text=""
+                    android:imeOptions="actionDone"
                     app:layout_constraintTop_toBottomOf="@+id/tvTime"
               />
 

@@ -1,10 +1,13 @@
 package com.streetsaarthi.nasvi.screens.onboarding.register
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +25,7 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register3Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
 import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.isValidPassword
@@ -99,7 +103,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
             }
 
-
+            viewModel.isSend.value = false
             viewModel.isSend.observe(viewLifecycleOwner, Observer {
                 editTextSendOtp.setText(if (it == true) {getString(R.string.resendOtp)} else {getString(R.string.send_otp)})
                 if (it == true){
@@ -118,6 +122,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
             })
 
+            viewModel.isSendMutable.value = false
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
                     tvTime.visibility = View.GONE
@@ -133,6 +138,47 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._999999, null)))
+                    getAgreeValue()
+                }
+            })
+
+
+
+            editTextMobileNumber.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    editTextSendOtp.setEnabled(true)
+                    editTextSendOtp.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._E79D46, null)))
+                    viewModel.isOtpVerified = false
+                    Register.callBackListener!!.onCallBack(21)
+                    editTextMobileNumber.requestFocus()
+                }
+            })
+
+            editTextOtp.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    editTextSendOtp.setEnabled(true)
+                    editTextSendOtp.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._E79D46, null)))
+                    viewModel.isOtpVerified = false
+                    Register.callBackListener!!.onCallBack(21)
+                    editTextOtp.requestFocus()
                 }
             })
 
@@ -168,6 +214,71 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                     viewModel.verifyOTP(view = requireView(), obj)
                 }
             }
+
+
+
+            cbRememberMe.setOnClickListener {
+                getAgreeValue()
+            }
+
+
+
+
+            editTextCreatePassword.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if(!editTextCreatePassword.text.toString().isEmpty()){
+                        if(editTextCreatePassword.text.toString().length >= 0 && editTextCreatePassword.text.toString().length < 8){
+                            textCreatePasswrordMsg.setText(R.string.InvalidPassword)
+                            textCreatePasswrordMsg.visibility = View.VISIBLE
+                        } else if(!isValidPassword(editTextCreatePassword.text.toString().trim())){
+                            textCreatePasswrordMsg.setText(R.string.InvalidPassword)
+                            textCreatePasswrordMsg.visibility = View.VISIBLE
+                        } else {
+                            textCreatePasswrordMsg.visibility = View.GONE
+                        }
+                    }
+                    getAgreeValue()
+                }
+            })
+
+
+            editTextReEnterPassword.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                @SuppressLint("SuspiciousIndentation")
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if(!editTextCreatePassword.text.toString().isEmpty()){
+                        if(!editTextReEnterPassword.text.toString().isEmpty()){
+//                            if(editTextReEnterPassword.text.toString().length >= 0 && editTextReEnterPassword.text.toString().length < 8){
+//                                textReEnterPasswrordMsg.setText(R.string.InvalidPassword)
+//                                textReEnterPasswrordMsg.visibility = View.VISIBLE
+//                            } else
+                            if (editTextCreatePassword.text.toString() != editTextReEnterPassword.text.toString()){
+                                textReEnterPasswrordMsg.setText(R.string.CreatePasswordReEnterPasswordisnotsame)
+                                textReEnterPasswrordMsg.visibility = View.VISIBLE
+                                getAgreeValue()
+                            } else {
+                                textReEnterPasswrordMsg.visibility = View.GONE
+                                getAgreeValue()
+                            }
+                        }
+                    }
+                    getAgreeValue()
+                }
+            })
+
+
+
         }
     }
 
@@ -254,7 +365,45 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
     }
 
+
+    fun getAgreeValue(){
+        binding.apply {
+            if(editTextCreatePassword.text.toString().isEmpty()){
+                viewModel.isAgree.value = false
+            } else if(editTextCreatePassword.text.toString().length >= 0 && editTextCreatePassword.text.toString().length < 8){
+                viewModel.isAgree.value = false
+            } else if(!isValidPassword(editTextCreatePassword.text.toString().trim())){
+                viewModel.isAgree.value = false
+            } else if (editTextReEnterPassword.text.toString().isEmpty()){
+                viewModel.isAgree.value = false
+//            } else if(editTextReEnterPassword.text.toString().length >= 0 && editTextReEnterPassword.text.toString().length < 8){
+//                viewModel.isAgree.value = false
+//            } else if(!isValidPassword(editTextReEnterPassword.text.toString().trim())){
+//                viewModel.isAgree.value = false
+//            } else if (editTextCreatePassword.text.toString() != editTextReEnterPassword.text.toString()){
+//                viewModel.isAgree.value = false
+            }  else if (viewModel.isOtpVerified == false){
+                viewModel.isAgree.value = false
+            } else if (!cbRememberMe.isChecked){
+                viewModel.isAgree.value = false
+            } else {
+                viewModel.isAgree.value = true
+            }
+        }
+    }
+
+
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("TAG", "onResumeZZZ")
+        Handler(Looper.getMainLooper()).postDelayed({
+            getAgreeValue()
+        }, 200)
+    }
+
     override fun onDestroyView() {
+        viewModel.isAgree.value = false
         OtpTimer.sendOtpTimerData = null
         OtpTimer.stopTimer()
         _binding = null

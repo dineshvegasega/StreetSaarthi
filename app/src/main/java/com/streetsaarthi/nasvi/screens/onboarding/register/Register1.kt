@@ -180,22 +180,50 @@ class Register1  : Fragment() , CallBackListener {
 //            viewModel.translate(view)
             editTextSelectState.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownStateDialog()
+                if(viewModel.itemState.size > 0){
+                    showDropDownStateDialog()
+                } else {
+                    showSnackBar(getString(R.string.not_state))
+                }
             }
 
             editTextSelectDistrict.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownDistrictDialog()
+                if (!(viewModel.stateId > 0)){
+                    showSnackBar(getString(R.string.select_state_))
+                }else{
+                    if(viewModel.itemDistrict.size > 0){
+                        showDropDownDistrictDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_district))
+                    }
+                }
             }
 
             editTextMunicipalityPanchayat.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownPanchayatDialog()
+                if (!(viewModel.stateId > 0)){
+                    showSnackBar(getString(R.string.select_state_))
+                }else{
+                    if(viewModel.itemPanchayat.size > 0){
+                        showDropDownPanchayatDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_municipality_panchayat))
+                    }
+                }
             }
 
             editTextSelectPincode.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownPincodeDialog()
+                if (!(viewModel.districtId > 0)){
+                    showSnackBar(getString(R.string.select_district_))
+                } else {
+                    if(viewModel.itemPincode.size > 0){
+                        showDropDownPincodeDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_pincode))
+                    }
+                }
             }
 
             layoutPassportSizeImage.setOnClickListener {
@@ -357,8 +385,7 @@ class Register1  : Fragment() , CallBackListener {
                     1-> viewModel.data.marital_status = "Married"
                     2-> viewModel.data.marital_status = "Widowed"
                     3-> viewModel.data.marital_status = "Divorced"
-                    4-> viewModel.data.marital_status = "Graduation"
-                    5-> viewModel.data.marital_status = "Separated"
+                    4-> viewModel.data.marital_status = "Separated"
                 }
             }.show()
     }
@@ -379,6 +406,10 @@ class Register1  : Fragment() , CallBackListener {
                 viewModel.stateId =  viewModel.itemState[which].id
                 view?.let { viewModel.district(it, viewModel.stateId) }
                 view?.let { viewModel.panchayat(it, viewModel.stateId) }
+                binding.editTextSelectDistrict.setText("")
+                binding.editTextMunicipalityPanchayat.setText("")
+                viewModel.districtId = 0
+                viewModel.panchayatId = 0
 
 //                val options = LanguageDetectionEvent.Builder()
 //                    .setSourceLanguage(FirebaseTranslateLanguage.EN)
@@ -402,6 +433,8 @@ class Register1  : Fragment() , CallBackListener {
                 binding.editTextSelectDistrict.setText(list[which])
                 viewModel.districtId =  viewModel.itemDistrict[which].id
                 view?.let { viewModel.pincode(it, viewModel.districtId) }
+                binding.editTextSelectPincode.setText("")
+                viewModel.pincodeId = ""
             }.show()
     }
 
@@ -434,7 +467,7 @@ class Register1  : Fragment() , CallBackListener {
             .setItems(list) {_,which->
                 binding.editTextSelectPincode.setText(list[which])
 //                viewModel.pincodeId =  viewModel.itemPincode[which].id
-                viewModel.pincodeId = binding.editTextSelectPincode.text.toString().toInt()
+                viewModel.pincodeId = binding.editTextSelectPincode.text.toString()
             }.show()
     }
 

@@ -111,9 +111,9 @@
     <string name="YourNewPassword">আপনার নতুন পাসওয়ার্ড</string>
     <string name="back_to_home">বাড়িতে ফিরে যান</string>
     <string name="back_to_home_u"><u>বাড়িতে ফিরুন</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">পাসওয়ার্ড তৈরি করুন এবং পাসওয়ার্ড পুনরায় লিখুন এক নয়</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*পাসওয়ার্ড মেলে না়</string>
 
-    <string name="InvalidPassword">পাসওয়ার্ডটি 1টি বড় হাতের, 1টি ছোট হাতের, 1টি সংখ্যা এবং 1টি বিশেষ অক্ষরের সাথে কমপক্ষে 8টি অক্ষরের হওয়া উচিত</string>
+    <string name="InvalidPassword">*সর্বনিম্ন 8টি অক্ষর যাতে 1টি বড় হাতের, 1টি ছোট হাতের অক্ষর, 1টি সংখ্যা এবং 1টি বিশেষ অক্ষর থাকে</string>
     <string name="father_s_first_name">পিতার প্রথম নাম</string>
     <string name="father_s_last_name">পিতার শেষ নাম</string>
     <string name = "gender"> লিঙ্গ</string>

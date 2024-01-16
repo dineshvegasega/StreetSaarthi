@@ -108,9 +108,9 @@
     <string name="YourNewPassword">ਤੁਹਾਡਾ ਨਵਾਂ ਪਾਸਵਰਡ</string>
     <string name="back_to_home">ਵਾਪਸ ਘਰ</string>
     <string name="back_to_home_u"><u>ਵਾਪਸ ਘਰ</u></string>
-    <string name = "CreatePasswordReEnterPasswordisnotsame">ਪਾਸਵਰਡ ਬਣਾਓ ਅਤੇ ਪਾਸਵਰਡ ਦੁਬਾਰਾ ਦਰਜ ਕਰੋ</string>
+    <string name = "CreatePasswordReEnterPasswordisnotsame">*ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦਾ</string>
 
-    <string name="InvalidPassword">ਪਾਸਵਰਡ 1 ਵੱਡੇ ਅੱਖਰ, 1 ਛੋਟੇ ਅੱਖਰ, 1 ਨੰਬਰ ਅਤੇ 1 ਵਿਸ਼ੇਸ਼ ਅੱਖਰ ਦੇ ਨਾਲ ਘੱਟੋ-ਘੱਟ 8 ਅੱਖਰਾਂ ਦਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ</string>
+    <string name="InvalidPassword">*ਘੱਟੋ-ਘੱਟ 8 ਅੱਖਰ ਜਿਸ ਵਿੱਚ 1 ਅੱਪਰਕੇਸ, 1 ਲੋਅਰਕੇਸ, 1 ਨੰਬਰ ਅਤੇ 1 ਖਾਸ ਅੱਖਰ</string>
     <string name="father_s_first_name">ਪਿਤਾ ਦਾ ਪਹਿਲਾ ਨਾਮ</string>
     <string name="father_s_last_name">ਪਿਤਾ ਦਾ ਆਖਰੀ ਨਾਮ </string>
     <string name="gender">ਲਿੰਗ</string>
