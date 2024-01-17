@@ -20,6 +20,10 @@ class LiveTraining : Fragment() {
     private var _binding: LiveTrainingBinding? = null
     private val binding get() = _binding!!
 
+    companion object{
+        var isReadLiveTraining: Boolean? = false
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +36,8 @@ class LiveTraining : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isReadLiveTraining = true
+
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_training)
 

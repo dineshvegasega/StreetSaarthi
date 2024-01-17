@@ -30,6 +30,18 @@
             android:orientation="vertical"
             >
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutMain"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            >
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivImage"
                 android:layout_width="match_parent"
@@ -40,6 +52,7 @@
                 app:srcCompat="@drawable/background"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -61,6 +74,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ivImage"
                 app:strokeColor="@color/_E79D46"
                 android:layout_marginHorizontal="@dimen/_30sdp"
+                android:visibility="gone"
                 />
 
 

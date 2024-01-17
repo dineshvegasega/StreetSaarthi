@@ -385,5 +385,9 @@
     <string name="membership_id">সদস্যতা আইডি</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">প্রধানমন্ত্রী স্বানিধি যোজনা ইত্যাদির মতো প্রকল্পগুলি</string>
 
+    <string name="otp_sent">ওটিপি আপনার মোবাইল নম্বরে পাঠানো হয়েছে +91-%s</string>
+    <string name="user_already_exist">ব্যবহারকারী ইতিমধ্যেই বিদ্যমান</string>৷
+    <string name="otp_Verified_successfully">OTP সফলভাবে যাচাই করা হয়েছে</string>
+    <string name="invalid_OTP">অবৈধ OTP</string>
 
 </resources>

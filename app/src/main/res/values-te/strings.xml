@@ -389,4 +389,9 @@
     <string name="membership_id">సభ్యత్వ ID</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">PM స్వానిధి యోజన మొదలైన పథకాలు</string>
 
+    <string name="otp_sent">OTP మీ మొబైల్ నంబర్ +91-%sకి పంపబడింది</string>
+    <string name="user_already_exist">వినియోగదారు ఇప్పటికే ఉన్నారు</string>
+    <string name="otp_Verified_successfully">OTP విజయవంతంగా ధృవీకరించబడింది</string>
+    <string name="invalid_OTP">చెల్లని OTP</string>
+
 </resources>

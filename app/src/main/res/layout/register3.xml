@@ -96,6 +96,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:focusable="false"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -114,8 +115,9 @@
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_regular"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="@string/createPassword"
+                android:text="@string/InvalidPassword"
                 android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
 
@@ -156,6 +158,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:focusable="false"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -174,8 +177,9 @@
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_regular"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="@string/createPassword"
+                android:text="@string/InvalidPassword"
                 android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
 

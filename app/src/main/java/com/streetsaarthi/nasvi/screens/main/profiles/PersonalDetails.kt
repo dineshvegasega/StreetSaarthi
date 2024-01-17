@@ -6,6 +6,8 @@ import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -176,11 +178,16 @@ class PersonalDetails : Fragment() , CallBackListener {
                     viewModel.data.spouse_name = data.spouse_name
                     viewModel.data.social_category = data.social_category
                     viewModel.data.education_qualification = data.education_qualification
-                    ivImagePassportsizeImage.loadImage(url = { data.profile_image_name.url })
-                    ivImageIdentityImage.loadImage(url = { data.identity_image_name.url })
 
-                    viewModel.data.passportSizeImage = data.profile_image_name.url
-                    viewModel.data.identificationImage = data.identity_image_name.url
+                    data.profile_image_name?.let {
+                        ivImagePassportsizeImage.loadImage(url = { data.profile_image_name.url })
+                        viewModel.data.passportSizeImage = data.profile_image_name.url
+                    }
+
+                    data.identity_image_name?.let {
+                        ivImageIdentityImage.loadImage(url = { data.identity_image_name.url })
+                        viewModel.data.identificationImage = data.identity_image_name.url
+                    }
 
 
                     val listGender =resources.getStringArray(R.array.gender_array)
@@ -253,10 +260,16 @@ class PersonalDetails : Fragment() , CallBackListener {
                         }
                     }
 
+                    data.residential_state?.let {
+                        editTextSelectState.setText("${data.residential_state.name}")
+                    }
+                    data.residential_district?.let {
+                        editTextSelectDistrict.setText("${data.residential_district.name}")
+                    }
+                    data.residential_municipality_panchayat?.let {
+                        editTextMunicipalityPanchayat.setText("${data.residential_municipality_panchayat.name}")
+                    }
 
-                    editTextSelectState.setText("${data.residential_state.name}")
-                    editTextSelectDistrict.setText("${data.residential_district.name}")
-                    editTextMunicipalityPanchayat.setText("${data.residential_municipality_panchayat.name}")
                     if(data.residential_pincode != null){
                         editTextSelectPincode.setText(""+data.residential_pincode.pincode.toInt())
                     } else {
@@ -264,10 +277,16 @@ class PersonalDetails : Fragment() , CallBackListener {
                     }
                     editTextAddress.setText("${data.residential_address}")
 
+                    data.residential_state?.let {
+                        viewModel.data.current_state = ""+data.residential_state.id
+                    }
+                    data.residential_district?.let {
+                        viewModel.data.current_district = ""+data.residential_district.id
+                    }
+                    data.residential_municipality_panchayat?.let {
+                        viewModel.data.municipality_panchayat_current = ""+data.residential_municipality_panchayat.id
+                    }
 
-                    viewModel.data.current_state = ""+data.residential_state.id
-                    viewModel.data.current_district = ""+data.residential_district.id
-                    viewModel.data.municipality_panchayat_current = ""+data.residential_municipality_panchayat.id
                     if(data.residential_pincode != null){
                         viewModel.data.current_pincode = ""+data.residential_pincode.pincode
                     } else {
@@ -275,21 +294,29 @@ class PersonalDetails : Fragment() , CallBackListener {
                     }
                     viewModel.data.current_address = ""+data.residential_address
 
-                    viewModel.stateId = data.residential_state.id
-                    viewModel.districtId = data.residential_district.id
-                    viewModel.panchayatId = data.residential_municipality_panchayat.id
+
+                    data.residential_state?.let {
+                        viewModel.stateId = data.residential_state.id
+                    }
+                    data.residential_district?.let {
+                        viewModel.districtId = data.residential_district.id
+                    }
+                    data.residential_municipality_panchayat?.let {
+                        viewModel.panchayatId = data.residential_municipality_panchayat.id
+                    }
+
                     if(data.residential_pincode != null){
                         viewModel.pincodeId = data.residential_pincode.pincode
                     } else {
                         viewModel.pincodeId = ""
                     }
 
-                } else if ((viewModel.stateId > 0)){
-                    showSnackBar(getString(R.string.select_state))
-                } else if ((viewModel.districtId > 0)){
-                    showSnackBar(getString(R.string.select_district))
-                } else if ((viewModel.panchayatId > 0)){
-
+//                } else if ((viewModel.stateId > 0)){
+//                    showSnackBar(getString(R.string.select_state))
+//                } else if ((viewModel.districtId > 0)){
+//                    showSnackBar(getString(R.string.select_district))
+//                } else if ((viewModel.panchayatId > 0)){
+//
                 }
             }
 
@@ -315,17 +342,41 @@ class PersonalDetails : Fragment() , CallBackListener {
 
             editTextSelectDistrict.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownDistrictDialog()
+                if (!(viewModel.stateId > 0)){
+                    showSnackBar(getString(R.string.select_state_))
+                }else{
+                    if(viewModel.itemDistrict.size > 0){
+                        showDropDownDistrictDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_district))
+                    }
+                }
             }
 
             editTextMunicipalityPanchayat.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownPanchayatDialog()
+                if (!(viewModel.stateId> 0)){
+                    showSnackBar(getString(R.string.select_state_))
+                }else{
+                    if(viewModel.itemPanchayat.size > 0){
+                        showDropDownPanchayatDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_municipality_panchayat))
+                    }
+                }
             }
 
             editTextSelectPincode.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownPincodeDialog()
+                if (!(viewModel.districtId > 0)){
+                    showSnackBar(getString(R.string.select_district_))
+                } else {
+                    if(viewModel.itemPincode.size > 0){
+                        showDropDownPincodeDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_pincode))
+                    }
+                }
             }
 
 
@@ -439,12 +490,12 @@ class PersonalDetails : Fragment() , CallBackListener {
                         )
                     }
 
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                        if (loginUser != null) {
-                            val data = Gson().fromJson(loginUser, Login::class.java)
-                            viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build())
-                        }
-                    }
+//                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+//                        if (loginUser != null) {
+//                            val data = Gson().fromJson(loginUser, Login::class.java)
+//                            viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build())
+//                        }
+//                    }
                 }
 
 
@@ -856,14 +907,24 @@ class PersonalDetails : Fragment() , CallBackListener {
                     )
                 }
 
-//                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-//                    if (loginUser != null) {
-//                        val data = Gson().fromJson(loginUser, Login::class.java)
-//                        viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build())
-//                    }
-//                }
 
-                Profiles.callBackListener!!.onCallBack(11)
+
+                if (ProfessionalDetails.callBackListener != null){
+                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        if (loginUser != null) {
+                            val data = Gson().fromJson(loginUser, Login::class.java)
+                            viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build(), 222)
+                        }
+                    }
+                } else {
+                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        if (loginUser != null) {
+                            val data = Gson().fromJson(loginUser, Login::class.java)
+                            viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build(), 111)
+                        }
+                    }
+                }
+
 
             }
         }

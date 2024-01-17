@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.utils.navigateBack
@@ -36,10 +37,12 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
+                            var number = jsonObject.getString("mobile_no")
+                            showSnackBar(view.resources.getString(R.string.otp_sent, number))
                         } else {
                             isSend.value = false
+                            showSnackBar(view.resources.getString(R.string.user_already_exist))
                         }
-                        showSnackBar(response.body()?.message.orEmpty())
                     } else{
                         isSend.value = false
                         showSnackBar(response.body()?.message.orEmpty())
@@ -65,24 +68,17 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
             callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
-
                 override fun success(response: Response<BaseResponseDC<Any>>) {
                     Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
-//                        if(response.body()?.message == view.rootView.context.getString(R.string.InvalidOTP)){
-//                            isOtpVerified = false
-                        // showSnackBar(response.body()?.message.orEmpty())
-//                        } else {
-//                            isOtpVerified = true
-//                            showSnackBar(response.body()?.message.orEmpty())
-//                        }
-                        showSnackBar(response.body()?.message.orEmpty())
                         if(response.body()?.data != null){
                             isOtpVerified = true
                             isSendMutable.value = true
+                            showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
                         } else {
                             isOtpVerified = false
                             isSendMutable.value = false
+                            showSnackBar(view.resources.getString(R.string.invalid_OTP))
                         }
                     } else{
                         isOtpVerified = false

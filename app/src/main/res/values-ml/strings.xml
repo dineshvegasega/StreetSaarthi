@@ -387,5 +387,9 @@
     <string name="membership_id">അംഗത്വ ഐഡി</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">പിഎം സ്വാനിധി യോജന തുടങ്ങിയ പദ്ധതികൾ</string>
 
+    <string name="otp_sent">നിങ്ങളുടെ +91-%s എന്ന മൊബൈൽ നമ്പറിലേക്ക് OTP അയച്ചു</string>
+    <string name="user_already_exist">ഉപയോക്താവ് ഇതിനകം നിലവിലുണ്ട്</string>
+    <string name="otp_Verified_successfully">OTP വിജയകരമായി പരിശോധിച്ചു</string>
+    <string name="invalid_OTP">അസാധുവായ OTP</string>
 
 </resources>

@@ -386,5 +386,9 @@
     <string name="membership_id">உறுப்பினர் ஐடி</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">PM ஸ்வாநிதி யோஜனா போன்ற திட்டங்கள்</string>
 
+    <string name="otp_sent">OTP ஆனது உங்கள் மொபைல் எண்ணான +91-%sக்கு அனுப்பப்பட்டது</string>
+    <string name="user_already_exist">பயனர் ஏற்கனவே இருக்கிறார்</string>
+    <string name="otp_Verified_successfully">OTP வெற்றிகரமாக சரிபார்க்கப்பட்டது</string>
+    <string name="invalid_OTP">தவறான OTP</string>
 
 </resources>

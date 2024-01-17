@@ -405,6 +405,12 @@
     <string name="membership_id">Membership Id</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">Schemes like PM Swanidhi Yojna etc</string>
 
+    <string name="otp_sent">OTP is sent to your Mobile Number +91-%s</string>
+    <string name="user_already_exist">User already exist</string>
+    <string name="otp_Verified_successfully">OTP Verified successfully</string>
+    <string name="invalid_OTP">Invalid OTP</string>
+
+
     <string name="survey_receipt">Survey Receipt</string>
     <string name="challan">Challan</string>
     <string name="approval_letter_from_municipality">Approval Letter From Municipality</string>
@@ -418,6 +424,9 @@
     <string name="not_pincode">You have no Pincode</string>
     <string name="not_Organisation">You have no Organisation</string>
     <string name="saveUpdate">Save &amp; Update</string>
+
+
+
 
 
 

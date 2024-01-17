@@ -33,6 +33,9 @@ import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
+import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
+import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.myOptionsGlide
@@ -98,25 +101,18 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
 
         override fun onBindHolder(binding: ItemDashboardMenusBinding, dataClass: ItemModel, position: Int) {
             binding.apply {
-                val anim = ValueAnimator.ofFloat(1f, 0.8f)
-//                if(dataClass.isNew == false){
-//                    anim.setDuration(1000)
-//                    anim.addUpdateListener { animation ->
-//                        ivLogo.setScaleX(animation.animatedValue as Float)
-//                        ivLogo.setScaleY(animation.animatedValue as Float)
-//                    }
-//                    anim.repeatCount = 500
-//                    anim.repeatMode = ValueAnimator.REVERSE
-//                    anim.start()
-//                }
+                if(dataClass.isNew == true){
+                    animationView.visibility = View.VISIBLE
+                    textDotTxt.visibility = View.VISIBLE
+                    layoutBottomRed.visibility = View.VISIBLE
+                } else {
+                    animationView.visibility = View.GONE
+                    textDotTxt.visibility = View.GONE
+                    layoutBottomRed.visibility = View.GONE
+                }
 
-                textHeaderadfdsfTxt.setText(dataClass.name)
+                textHeaderTxt.setText(dataClass.name)
                 ivLogo.setImageResource(dataClass.image)
-//                ivLogo.setImageResource(dataClass.image)
-//                GlideApp.with(root.context)
-//                        .load(R.drawable.animate_bubble)
-//                        .apply(myOptionsGlide)
-//                        .into(ivLogo)
                 root.setOnClickListener {
                     when (position) {
                         0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
@@ -197,32 +193,30 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.liveScheme(requestBody = jsonObject.getJsonRequestBody())
-
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-//                        isScheme.value = true
                         val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(response.body()!!.data), typeToken)
-//                        readResult.value.apply {
-//                            changeValue.listIterator()
-//                        }
-
                         DataStoreUtil.readData(DataStoreKeys.LIVE_SCHEME_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveScheme>>(loginUser, typeToken)
-                                if(changeValue!= savedValue){
-                                    Log.e("TAG", "responseAA11AA ")
+                                if(changeValue != savedValue){
                                     isScheme.value = true
                                 } else {
-                                    Log.e("TAG", "responseAA22AA ")
+                                    isScheme.value = false
                                 }
+                            } else {
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
+                                isScheme.value = false
                             }
-                            Log.e("TAG", "responseAA33AA ")
-                            DataStoreUtil.saveObject(
-                                DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
-                        }
-                    } else{
+                            if (LiveSchemes.isReadLiveSchemes == true){
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
+                                isScheme.value = false
+                            }
 
+                        }
                     }
                 }
 
@@ -246,29 +240,29 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.liveNotice(requestBody = jsonObject.getJsonRequestBody())
-
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-//                        isNotice.value = true
                         val typeToken = object : TypeToken<List<ItemLiveNotice>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveNotice>>(Gson().toJson(response.body()!!.data), typeToken)
-//                        readResult.value.apply {
-//                            changeValue.listIterator()
-//                        }
-
                         DataStoreUtil.readData(DataStoreKeys.LIVE_NOTICE_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveNotice>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
-                                    Log.e("TAG", "responseAA11AA ")
                                     isNotice.value = true
+                                } else {
+                                    isNotice.value = false
                                 }
+                            } else {
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.LIVE_NOTICE_DATA, changeValue)
+                                isNotice.value = false
                             }
-                            DataStoreUtil.saveObject(
-                                DataStoreKeys.LIVE_NOTICE_DATA, changeValue)
+                            if (LiveNotices.isReadLiveNotices == true){
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.LIVE_NOTICE_DATA, changeValue)
+                                isNotice.value = false
+                            }
                         }
-                    } else{
-
                     }
                 }
 
@@ -292,29 +286,31 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.liveTraining(requestBody = jsonObject.getJsonRequestBody())
-
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         //isTraining.value = true
                         val typeToken = object : TypeToken<List<ItemLiveTraining>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(response.body()!!.data), typeToken)
-//                        readResult.value.apply {
-//                            changeValue.listIterator()
-//                        }
-
                         DataStoreUtil.readData(DataStoreKeys.LIVE_TRAINING_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveTraining>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
-                                    Log.e("TAG", "responseAA11AA ")
                                     isTraining.value = true
+                                } else {
+                                    isTraining.value = false
                                 }
+                            }  else {
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.LIVE_TRAINING_DATA, changeValue)
+                                isTraining.value = false
                             }
-                            DataStoreUtil.saveObject(
-                                DataStoreKeys.LIVE_TRAINING_DATA, changeValue)
-                        }
-                    } else{
 
+                            if (LiveTraining.isReadLiveTraining == true){
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.LIVE_TRAINING_DATA, changeValue)
+                                isTraining.value = false
+                            }
+                        }
                     }
                 }
 

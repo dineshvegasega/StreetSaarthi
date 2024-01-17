@@ -37,6 +37,9 @@ class Profiles : Fragment() , CallBackListener {
         var callBackListener: CallBackListener? = null
     }
 
+    lateinit var adapter : ProfilePagerAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,9 +67,6 @@ class Profiles : Fragment() , CallBackListener {
             }
 
             btSave.setOnClickListener {
-                inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
-                btSave.visibility = View.GONE
-                btCancel.visibility = View.GONE
                 PersonalDetails.callBackListener!!.onCallBack(1)
             }
 
@@ -76,57 +76,81 @@ class Profiles : Fragment() , CallBackListener {
                 btCancel.visibility = View.GONE
             }
 
-            var adapter= ProfilePagerAdapter(requireActivity())
+
+            adapter= ProfilePagerAdapter(requireActivity())
             adapter.notifyDataSetChanged()
             introViewPager.setUserInputEnabled(false)
+            adapter.addFragment(PersonalDetails())
+            adapter.addFragment(ProfessionalDetails())
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                introViewPager.adapter=adapter
+                var array = listOf<String>(getString(R.string.personal_detailsFull), getString(R.string.professional_details))
+                TabLayoutMediator(tabLayout, introViewPager) { tab, position ->
+                    tab.text = array[position]
+                }.attach()
+            }, 100)
+
+
+            updateData()
+
+
+        }
+    }
+
+    private fun updateData() {
+        binding.apply {
 
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     Log.e("TAG","loginUser "+loginUser)
-                    introViewPager.adapter=adapter
-                    adapter.addFragment(PersonalDetails())
-                    adapter.addFragment(ProfessionalDetails())
-//                    adapter.addFragment(OtherDetails())
-                    var array = listOf<String>(getString(R.string.personal_detailsFull), getString(R.string.professional_details))
-                    TabLayoutMediator(tabLayout, introViewPager) { tab, position ->
-                        tab.text = array[position]
-                    }.attach()
 
 
                     var data = Gson().fromJson(loginUser, Login::class.java)
-//                    Picasso.get().load(
-//                        data.profile_image_name.url
-//                    ).into( inclidePersonalProfile.ivImageProfile)
 
                     inclidePersonalProfile.ivImageProfile.loadImage(url = { data.profile_image_name.url })
-
-
-//                    GlideApp.with(requireContext())
-//                        .load(Gson().fromJson(loginUser, Login::class.java).profile_image_name.url)
-//                        .apply(myOptionsGlide)
-//                        .into(inclidePersonalProfile.ivImageProfile)
 
                     inclidePersonalProfile.textNameOfMember.text = "${data.vendor_first_name} ${data.vendor_last_name}"
                     inclidePersonalProfile.textMobileNumber.text = "${data.mobile_no}"
                     inclidePersonalProfile.textMembershipIdValue.text = "${data.member_id}"
                     inclidePersonalProfile.textValidUptoValue.text = "${data.validity_to}"
+
+                    MainActivity.mainActivity.get()!!.callBack()
                 }
             }
         }
+
     }
 
 
     override fun onCallBack(pos: Int) {
         Log.e("TAG", "onCallBack " + pos)
         if (pos == 11){
-            binding.introViewPager.setCurrentItem(1, false)
+//            binding.introViewPager.setCurrentItem(1, false)
             Handler(Looper.getMainLooper()).postDelayed({
                 ProfessionalDetails.callBackListener!!.onCallBack(22)
             }, 100)
+        }else if (pos == 33){
+            binding.apply {
+                inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                btSave.visibility = View.GONE
+                btCancel.visibility = View.GONE
+
+                updateData()
+            }
         }
     }
     override fun onDestroyView() {
         _binding = null
+//        viewModel.itemState.clear()
+//        viewModel.itemDistrict.clear()
+//        viewModel.itemPanchayat.clear()
+//        viewModel.itemPincode.clear()
+//        viewModel.itemStateVending.clear()
+//        viewModel.itemDistrictVending.clear()
+//        viewModel.itemPanchayatVending.clear()
+//        viewModel.itemPincodeVending.clear()
+//        viewModel.itemLocalOrganizationVending.clear()
         super.onDestroyView()
     }
 }

@@ -2,6 +2,7 @@ package com.streetsaarthi.nasvi.screens.onboarding.register
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
@@ -13,25 +14,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.google.android.material.button.MaterialButton
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register3Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
+
 
 @AndroidEntryPoint
 class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
@@ -226,14 +226,17 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
             editTextCreatePassword.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
+//                    editTextCreatePassword.requestFocus()
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//                    editTextCreatePassword.requestFocus()
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    Log.e("TAG", "countAA "+start)
                     if(!editTextCreatePassword.text.toString().isEmpty()){
-                        if(editTextCreatePassword.text.toString().length >= 0 && editTextCreatePassword.text.toString().length < 8){
+                        if(start >= 0 && start < 8){
                             textCreatePasswrordMsg.setText(R.string.InvalidPassword)
                             textCreatePasswrordMsg.visibility = View.VISIBLE
                         } else if(!isValidPassword(editTextCreatePassword.text.toString().trim())){
@@ -243,7 +246,17 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                             textCreatePasswrordMsg.visibility = View.GONE
                         }
                     }
+                    editTextCreatePassword.requestFocus()
+//                    editTextCreatePassword.setCursorVisible(true)
                     getAgreeValue()
+
+//                    editText.postDelayed(Runnable {
+//                        val keyboard = catalougeJobDetailFragment
+//                            .getActivity().getSystemService(
+//                                Context.INPUT_METHOD_SERVICE
+//                            ) as InputMethodManager
+//                        keyboard.showSoftInput(commentEt, 0)
+//                    }, 20)
                 }
             })
 
@@ -273,6 +286,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                             }
                         }
                     }
+                    editTextReEnterPassword.requestFocus()
                     getAgreeValue()
                 }
             })

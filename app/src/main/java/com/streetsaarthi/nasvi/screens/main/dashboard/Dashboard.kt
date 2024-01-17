@@ -58,21 +58,36 @@ class Dashboard : Fragment() {
                     viewModel.itemMain?.get(1)?.apply {
                         isNew = true
                     }
+                } else {
+                    viewModel.itemMain?.get(1)?.apply {
+                        isNew = false
+                    }
                 }
+                viewModel.dashboardAdapter.notifyDataSetChanged()
             })
             viewModel.isNotice.observe(viewLifecycleOwner, Observer {
                 if (it) {
                     viewModel.itemMain?.get(2)?.apply {
                         isNew = true
                     }
+                } else {
+                    viewModel.itemMain?.get(2)?.apply {
+                        isNew = false
+                    }
                 }
+                viewModel.dashboardAdapter.notifyDataSetChanged()
             })
             viewModel.isTraining.observe(viewLifecycleOwner, Observer {
                 if (it) {
                     viewModel.itemMain?.get(3)?.apply {
                         isNew = true
                     }
+                } else {
+                    viewModel.itemMain?.get(3)?.apply {
+                        isNew = false
+                    }
                 }
+                viewModel.dashboardAdapter.notifyDataSetChanged()
             })
             viewModel.dashboardAdapter.notifyDataSetChanged()
             viewModel.dashboardAdapter.submitList(viewModel.itemMain)
@@ -86,8 +101,8 @@ class Dashboard : Fragment() {
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
                 viewModel.liveScheme(view = requireView(), obj)
-//                viewModel.liveTraining(view = requireView(), obj)
-//                viewModel.liveNotice(view = requireView(), obj)
+                viewModel.liveTraining(view = requireView(), obj)
+                viewModel.liveNotice(view = requireView(), obj)
                 }
             }
 
@@ -95,7 +110,6 @@ class Dashboard : Fragment() {
 
             viewModel.adsList(view)
             val adapter = BannerViewPagerAdapter(requireContext())
-
 
             viewModel.itemAds.observe(viewLifecycleOwner, Observer {
                 if (it != null) {

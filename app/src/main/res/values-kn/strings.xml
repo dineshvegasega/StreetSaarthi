@@ -387,4 +387,9 @@
     <string name="membership_id">ಸದಸ್ಯತ್ವ ಐಡಿ</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">ಪ್ರಧಾನಿ ಸ್ವಾನಿಧಿ ಯೋಜನೆ ಇತ್ಯಾದಿ ಯೋಜನೆಗಳು</string>
 
+    <string name="otp_sent">OTP ಅನ್ನು ನಿಮ್ಮ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ +91-%s ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ</string>
+    <string name="user_already_exist">ಬಳಕೆದಾರರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದ್ದಾರೆ</string>
+    <string name="otp_Verified_successfully">OTP ಯಶಸ್ವಿಯಾಗಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ</string>
+    <string name="invalid_OTP">ಅಮಾನ್ಯ OTP</string>
+
 </resources>

@@ -387,4 +387,9 @@
     <string name="membership_id">رکنیت کی شناخت</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">پی ایم سواندھی یوجنا وغیرہ جیسی اسکیمیں</string>
 
+    <string name="otp_sent">OTP آپ کے موبائل نمبر +91-%s پر بھیجا جاتا ہے</string>
+    <string name="user_already_exist">صارف پہلے سے موجود ہے</string>
+    <string name="otp_Verified_successfully">OTP کامیابی سے تصدیق شدہ</string>
+    <string name="invalid_OTP">غلط OTP</string>
+
 </resources>

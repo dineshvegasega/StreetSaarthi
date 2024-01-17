@@ -389,5 +389,9 @@
     <string name='membership_id'>सदस्यता आईडी</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">पीएम स्वनिधि योजना आदि जैसी योजनाएं</string>
 
+    <string name='otp_sent'>OTP आपके मोबाइल नंबर +91-%s पर भेजा जाता है</string>
+    <string name='user_already_exist'>उपयोगकर्ता पहले से मौजूद है</string>
+    <string name='otp_Verified_successfully'>OTP सफलतापूर्वक सत्यापित</string>
+    <string name='invalid_OTP'>अमान्य OTP</string>
 
 </resources>

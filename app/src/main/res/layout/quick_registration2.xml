@@ -87,8 +87,9 @@
             tools:ignore="MissingConstraints"
             app:fontFamily="@font/roboto_regular"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="@string/createPassword"
+            android:text="@string/InvalidPassword"
             android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
 
@@ -149,8 +150,9 @@
             tools:ignore="MissingConstraints"
             app:fontFamily="@font/roboto_regular"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="@string/createPassword"
+            android:text="@string/InvalidPassword"
             android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
     <androidx.constraintlayout.widget.ConstraintLayout

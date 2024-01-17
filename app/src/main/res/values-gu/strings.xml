@@ -383,5 +383,10 @@
     <string name = "membership_id">સદસ્યતા ID</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">PM સ્વાનિધિ યોજના વગેરે જેવી યોજનાઓ</string>
 
+    <string name="otp_sent">તમારા મોબાઇલ નંબર +91-%s પર OTP મોકલવામાં આવે છે</string>
+    <string name="user_already_exist">વપરાશકર્તા પહેલેથી જ અસ્તિત્વમાં છે</string>
+    <string name="otp_Verified_successfully">OTP સફળતાપૂર્વક ચકાસાયેલ</string>
+    <string name="invalid_OTP">અમાન્ય OTP</string>
+
 
 </resources>

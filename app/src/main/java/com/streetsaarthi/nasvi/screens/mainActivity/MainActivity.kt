@@ -131,6 +131,15 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+//        var zz = "9988397522"
+//        var aa = zz.substring(0,2)
+//        Log.e("TAG", "aaAA "+aa)
+//
+//        var bb = zz.substring(zz.length - 2,zz.length)
+//        Log.e("TAG", "aaBB "+bb)
+//
+//        Log.e("TAG", "aaCC "+aa+"XXXXXX"+bb)
+
 //        val activityRootView: View = findViewById(R.id.layoutRoot)
 //        activityRootView.viewTreeObserver.addOnGlobalLayoutListener {
 //            val r = Rect()

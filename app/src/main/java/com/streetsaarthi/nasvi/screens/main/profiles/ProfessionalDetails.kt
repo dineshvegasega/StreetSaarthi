@@ -238,10 +238,16 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     })
                     viewModel.marketplaceId = data.type_of_marketplace.toInt()
                     viewModel.data.type_of_marketplace = ""+viewModel.marketplaceId
-                    viewModel.data.marketpalce_others = ""+data.marketpalce_others
-                    editTextTypeofMarketPlaceEnter.setText("${data.marketpalce_others}")
 
-
+                    if(data.type_of_marketplace.toInt() == 7){
+                        editTextTypeofMarketPlaceEnter.visibility = View.VISIBLE
+                        viewModel.data.marketpalce_others = ""+data.marketpalce_others
+                        editTextTypeofMarketPlaceEnter.setText("${data.marketpalce_others}")
+                    } else {
+                        editTextTypeofMarketPlaceEnter.visibility = View.GONE
+                        viewModel.data.marketpalce_others = null
+                        editTextTypeofMarketPlaceEnter.setText("")
+                    }
 
 
                     viewModel.vending(view)
@@ -256,8 +262,16 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     })
                     viewModel.vendingId = data.type_of_vending.toInt()
                     viewModel.data.type_of_vending = ""+viewModel.vendingId
-                    viewModel.data.vending_others = ""+data.vending_others
-                    editTextTypeofVendingEnter.setText("${data.vending_others}")
+                    if(data.type_of_vending.toInt() == 11){
+                        editTextTypeofVendingEnter.visibility = View.VISIBLE
+                        viewModel.data.vending_others = ""+data.vending_others
+                        editTextTypeofVendingEnter.setText("${data.vending_others}")
+                    } else {
+                        editTextTypeofVendingEnter.visibility = View.GONE
+                        viewModel.data.vending_others = null
+                        editTextTypeofVendingEnter.setText("")
+                    }
+
 
 
                     editTextTotalYearsofVending.setText("${data.total_years_of_business}")
@@ -269,7 +283,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     viewModel.data.open = ""+data.vending_time_from
                     viewModel.data.close = ""+data.vending_time_to
 
-                    data.vending_time_from.let {
+                    data.vending_time_from?.let {
                         val datetime = Calendar.getInstance()
                         datetime[Calendar.HOUR_OF_DAY] = data.vending_time_from.split(":")[0].toInt()
                         datetime[Calendar.MINUTE] = data.vending_time_from.split(":")[1].toInt()
@@ -290,7 +304,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
 
-                    data.vending_time_to.let {
+                    data.vending_time_to?.let {
                         val datetime = Calendar.getInstance()
                         datetime[Calendar.HOUR_OF_DAY] = data.vending_time_to.split(":")[0].toInt()
                         datetime[Calendar.MINUTE] = data.vending_time_to.split(":")[1].toInt()
@@ -310,53 +324,86 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     }
 
 
-
-                    editTextVendingSelectState.setText("${data.vending_state.name}")
-                    editTextVendingSelectDistrict.setText("${data.vending_district.name}")
-                    editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat.name}")
+                    editTextVendingSelectState.setText("${data.vending_state?.name}")
+                    editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
+                    editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
                     if(data.vending_pincode != null){
-                        editTextVendingSelectPincode.setText(""+data.vending_pincode.pincode.toInt())
+                        editTextVendingSelectPincode.setText(""+data.vending_pincode?.pincode!!.toInt())
                     } else {
                         editTextVendingSelectPincode.setText("")
                     }
                     editTextVendingAddress.setText("${data.vending_address}")
 
-                    viewModel.data.vending_state = ""+data.vending_state.id
-                    viewModel.data.vending_district = ""+data.vending_district.id
-                    viewModel.data.vending_municipality_panchayat = ""+data.vending_municipality_panchayat.id
+                    viewModel.data.vending_state = ""+data.vending_state?.id
+                    viewModel.data.vending_district = ""+data.vending_district?.id
+                    viewModel.data.vending_municipality_panchayat = ""+data.vending_municipality_panchayat?.id
+                    if(data.vending_pincode != null){
+                        viewModel.data.vending_pincode = data.vending_pincode?.pincode
+                    } else {
+                        viewModel.data.vending_pincode = "0"
+                    }
+                    viewModel.data.vending_address = ""+data.vending_address
+
+                    data.vending_state?.let {
+                        viewModel.stateIdVending = data.vending_state.id
+                    }
+                    data.vending_district?.let {
+                        viewModel.districtIdVending = data.vending_district.id
+                    }
+                    data.vending_municipality_panchayat?.let {
+                        viewModel.panchayatIdVending = data.vending_municipality_panchayat.id
+                    }
+
                     if(data.vending_pincode != null){
                         viewModel.pincodeIdVending = data.vending_pincode.pincode
                     } else {
                         viewModel.pincodeIdVending = ""
                     }
-                    viewModel.data.vending_address = ""+data.vending_address
-
 
                     Log.e("TAG", "data.local_organisationAA "+data.local_organisation)
 
+
+                    viewModel.localOrganisation(requireView(), JSONObject().apply {
+                        put("state_id", data.vending_state?.id)
+                    })
+
                     if (data.local_organisation != null){
-                        editTextLocalOrganisation.setText("${data.local_organisation.name}")
+                        editTextLocalOrganisation.setText("${data.local_organisation?.name}")
                         editTextLocalOrganisation.visibility = View.VISIBLE
                         ivRdLocalOrgnaizationYes.isChecked = true
-                        viewModel.data.localOrganisation = ""+data.local_organisation.id
+                        viewModel.data.localOrganisation = ""+data.local_organisation?.id
                     } else {
                         editTextLocalOrganisation.visibility = View.GONE
                         ivRdLocalOrgnaizationYes.isChecked = false
+                        viewModel.data.localOrganisation = "-1"
                     }
 
-                    viewModel.data.shopImage = data.shop_image.url
-                    viewModel.data.ImageUploadCOV = data.cov_image.url
-                    viewModel.data.UploadSurveyReceipt = data.survey_receipt_image.url
-                    viewModel.data.ImageUploadLOR = data.lor_image.url
-                    viewModel.data.UploadChallan = data.challan_image.url
-                    viewModel.data.UploadApprovalLetter = data.approval_letter_image.url
 
-                    ivImageShopImage.loadImage(url = { data.shop_image.url })
-                    ivImageCOV.loadImage(url = { data.cov_image.url })
-                    ivImageSurveyReceipt.loadImage(url = { data.survey_receipt_image.url })
-                    ivImageLOR.loadImage(url = { data.lor_image.url })
-                    ivImageUploadChallan.loadImage(url = { data.challan_image.url })
-                    ivImageApprovalLetter.loadImage(url = { data.approval_letter_image.url })
+
+                    data.shop_image?.let {
+                        viewModel.data.shopImage = data.shop_image?.url
+                        ivImageShopImage.loadImage(url = { data.shop_image.url })
+                    }
+                    data.cov_image?.let {
+                        viewModel.data.ImageUploadCOV = data.cov_image?.url
+                        ivImageCOV.loadImage(url = { data.cov_image.url })
+                    }
+                    data.survey_receipt_image?.let {
+                        viewModel.data.UploadSurveyReceipt = data.survey_receipt_image?.url
+                        ivImageSurveyReceipt.loadImage(url = { data.survey_receipt_image.url })
+                    }
+                    data.lor_image?.let {
+                        viewModel.data.ImageUploadLOR = data.lor_image?.url
+                        ivImageLOR.loadImage(url = { data.lor_image.url })
+                    }
+                    data.challan_image?.let {
+                        viewModel.data.UploadChallan = data.challan_image?.url
+                        ivImageUploadChallan.loadImage(url = { data.challan_image.url })
+                    }
+                    data.approval_letter_image?.let {
+                        viewModel.data.UploadApprovalLetter = data.approval_letter_image?.url
+                        ivImageApprovalLetter.loadImage(url = { data.approval_letter_image.url })
+                    }
                 }
             }
 
@@ -397,17 +444,41 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
             editTextVendingSelectDistrict.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownVendingDistrictDialog()
+                if (!(viewModel.stateIdVending > 0)){
+                    showSnackBar(getString(R.string.select_state_))
+                }else{
+                    if(viewModel.itemDistrictVending.size > 0){
+                        showDropDownVendingDistrictDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_district))
+                    }
+                }
             }
 
             editTextVendingMunicipalityPanchayat.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownVendingPanchayatDialog()
+                if (!(viewModel.stateIdVending > 0)){
+                    showSnackBar(getString(R.string.select_state_))
+                }else{
+                    if(viewModel.itemPanchayatVending.size > 0){
+                        showDropDownVendingPanchayatDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_municipality_panchayat))
+                    }
+                }
             }
 
             editTextVendingSelectPincode.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownVendingPincodeDialog()
+                if (!(viewModel.districtIdVending > 0)){
+                    showSnackBar(getString(R.string.select_district_))
+                } else {
+                    if(viewModel.itemPincodeVending.size > 0){
+                        showDropDownVendingPincodeDialog()
+                    } else {
+                        showSnackBar(getString(R.string.not_pincode))
+                    }
+                }
             }
 
 
@@ -425,7 +496,11 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
             editTextLocalOrganisation.setOnClickListener {
                 requireActivity().hideKeyboard()
-                showDropDownLocalOrganisationDialog()
+                if (viewModel.itemLocalOrganizationVending.size > 0){
+                    showDropDownLocalOrganisationDialog()
+                } else {
+                    showSnackBar(getString(R.string.not_Organisation))
+                }
             }
 
 
@@ -520,8 +595,11 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 viewModel.data.type_of_marketplace = ""+viewModel.marketplaceId
                 if (viewModel.marketplaceId == 7) {
                     binding.editTextTypeofMarketPlaceEnter.visibility = View.VISIBLE
+                    viewModel.data.marketpalce_others = ""+binding.editTextTypeofMarketPlaceEnter.text.toString()
                 } else {
                     binding.editTextTypeofMarketPlaceEnter.visibility = View.GONE
+                    viewModel.data.marketpalce_others = ""
+                    binding.editTextTypeofMarketPlaceEnter.setText("")
                 }
             }.show()
     }
@@ -541,8 +619,11 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 viewModel.data.type_of_vending = ""+viewModel.vendingId
                 if (viewModel.vendingId == 11) {
                     binding.editTextTypeofVendingEnter.visibility = View.VISIBLE
+                    viewModel.data.vending_others = ""+binding.editTextTypeofVendingEnter.text.toString()
                 } else {
                     binding.editTextTypeofVendingEnter.visibility = View.GONE
+                    viewModel.data.vending_others = ""
+                    binding.editTextTypeofVendingEnter.setText("")
                 }
             }.show()
     }
@@ -582,11 +663,13 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
                         am_pm = "PM";
                     binding.editTextVendingTimeOpen.setText(
-                        strHrsToShow + ":" + (if (minute.toString().length == 1) "0"+datetime.get(
-                            Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
+                        strHrsToShow + ":" + (if (minute.toString().length == 1) "0" + datetime.get(
+                            Calendar.MINUTE
+                        ) else datetime.get(Calendar.MINUTE)) + " " + am_pm
                     )
 
-                    viewModel.data.open = "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
+                    viewModel.data.open =
+                        "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0" + minute else minute) + ":00"
                     // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
                     //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
                     Log.e("TAG", "AAAA " + viewModel.data.open)
@@ -597,36 +680,8 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             false
         )
         mTimePicker.show()
-
-
-//        val timeSetListener =
-//            OnTimeSetListener { view, hourOfDay, minute ->
-//                val datetime = Calendar.getInstance()
-//                datetime[Calendar.HOUR_OF_DAY] = hourOfDay
-//                datetime[Calendar.MINUTE] = minute
-//                val strHrsToShow =
-//                    if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
-//                        datetime.get(Calendar.HOUR)
-//                    )
-//                var am_pm = ""
-//                if (datetime.get(Calendar.AM_PM) == Calendar.AM)
-//                    am_pm = "AM";
-//                else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
-//                    am_pm = "PM";
-//                binding.editTextVendingTimeOpen.setText(strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm)
-//                viewModel.data.open = ""+hourOfDay+":"+minute+":00"
-//                Log.e("TAG", "AAAA "+ viewModel.data.open)
-//            }
-//        val timePickerDialog = CustomTimePickerDialog(
-//            requireContext(), timeSetListener,
-//            Calendar.getInstance()[Calendar.HOUR],
-//            CustomTimePickerDialog.getRoundedMinute(Calendar.getInstance()[Calendar.MINUTE] + CustomTimePickerDialog.TIME_PICKER_INTERVAL),
-//            false,
-//            R.style.TimeDialogTheme
-//        )
-//        timePickerDialog.show()
-
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -739,7 +794,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     put("district_id", viewModel.districtIdVending)
                 })}
                 binding.editTextVendingSelectPincode.setText("")
-                viewModel.districtIdVending = 0
+                viewModel.pincodeId = ""
             }.show()
     }
 
@@ -844,7 +899,9 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
     override fun onCallBack(pos: Int) {
         Log.e("TAG", "onCallBackProfessional " + pos)
-        update()
+        if (pos == 22){
+            update()
+        }
     }
 
 
@@ -866,6 +923,14 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 showSnackBar(getString(R.string.open_time))
             } else if (editTextVendingTimeClose.text.toString().isEmpty()) {
                 showSnackBar(getString(R.string.close_time))
+            } else if (!(viewModel.stateIdVending > 0)){
+                showSnackBar(getString(R.string.select_state))
+            } else if (!(viewModel.districtIdVending > 0)){
+                showSnackBar(getString(R.string.select_district))
+            } else if (!(viewModel.panchayatIdVending > 0)){
+                showSnackBar(getString(R.string.municipality_panchayat))
+            } else if (editTextVendingAddress.text.toString().isEmpty()){
+                showSnackBar(getString(R.string.address_mention_village))
             } else if (binding.ivRdLocalOrgnaizationYes.isChecked == true && editTextLocalOrganisation.text.toString().isEmpty()) {
                 showSnackBar(getString(R.string.localOrganisation))
             } else {
@@ -882,9 +947,9 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 if(viewModel.data.type_of_vending  != null){
                     requestBody.addFormDataPart("type_of_vending", viewModel.data.type_of_vending!!)
                 }
-                if(viewModel.data.vending_others  != null){
+//                if(viewModel.data.vending_others  != null){
                     requestBody.addFormDataPart("vending_others", viewModel.data.vending_others!!)
-                }
+//                }
                 if(viewModel.data.total_years_of_business  != null){
                     requestBody.addFormDataPart("total_years_of_business", viewModel.data.total_years_of_business!!)
                 }
@@ -1009,7 +1074,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val data = Gson().fromJson(loginUser, Login::class.java)
-                        viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build())
+                        viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build(), 111)
                     }
                 }
 

@@ -3,12 +3,8 @@ package com.streetsaarthi.nasvi.screens.onboarding.quickRegistration
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
-import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -20,14 +16,13 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import com.stfalcon.smsverifycatcher.OnSmsCatchListener
+import com.stfalcon.smsverifycatcher.SmsVerifyCatcher
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.QuickRegistration1Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
-import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -44,6 +39,7 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
         var callBackListener: CallBackListener? = null
     }
 
+    private var smsVerifyCatcher: SmsVerifyCatcher? = null
 
 
     override fun onCreateView(
@@ -116,9 +112,13 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
             })
 
 
-
+            smsVerifyCatcher = SmsVerifyCatcher(requireActivity(),
+                OnSmsCatchListener<String?> { message ->
+                    var otp = message.trim().substring(0,6)
+                    Log.e("TAG", "messageAAA "+otp)
+                })
             editTextSendOtp.setOnClickListener {
-//                viewModel.addTime.postValue("bjaa")
+                //smsVerifyCatcher!!.onStart()
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 } else{
@@ -249,6 +249,7 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
             }
         }
     }
+
 
 
 

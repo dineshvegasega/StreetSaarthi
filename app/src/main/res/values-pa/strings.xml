@@ -391,4 +391,9 @@
     <string name="membership_id">ਮੈਂਬਰਸ਼ਿਪ ਆਈ.ਡੀ.</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਸਵਾਨਿਧੀ ਯੋਜਨਾ ਆਦਿ ਵਰਗੀਆਂ ਯੋਜਨਾਵਾਂ</string>
 
+    <string name = "otp_sent"> OTP ਤੁਹਾਡੇ ਮੋਬਾਈਲ ਨੰਬਰ +91-%s \'ਤੇ ਭੇਜਿਆ ਜਾਂਦਾ ਹੈ</string>
+    <string name="user_already_exist">ਉਪਭੋਗਤਾ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ</string>
+    <string name="otp_Verified_successfully">OTP ਸਫਲਤਾਪੂਰਵਕ ਪ੍ਰਮਾਣਿਤ</string>
+    <string name="invalid_OTP">ਅਵੈਧ OTP</string>
+
 </resources>

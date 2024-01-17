@@ -11,6 +11,7 @@ import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.databinding.LiveNoticesBinding
 import com.streetsaarthi.nasvi.databinding.LiveSchemesBinding
 import com.streetsaarthi.nasvi.models.Item
+import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +20,10 @@ class LiveSchemes : Fragment() {
     private val viewModel: LiveSchemesVM by viewModels()
     private var _binding: LiveSchemesBinding? = null
     private val binding get() = _binding!!
+
+    companion object{
+        var isReadLiveSchemes: Boolean? = false
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +37,7 @@ class LiveSchemes : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isReadLiveSchemes = true
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_schemes)
@@ -40,6 +46,7 @@ class LiveSchemes : Fragment() {
             binding.recyclerView.adapter = viewModel.photosAdapter
 //            viewModel.photosAdapter.notifyDataSetChanged()
 //            viewModel.photosAdapter.submitList(viewModel.itemMain)
+
 
         }
     }

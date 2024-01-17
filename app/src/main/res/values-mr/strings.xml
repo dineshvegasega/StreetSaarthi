@@ -386,4 +386,9 @@
     <string name="membership_id">सदस्यत्व आयडी</string>
     <string name="schemes_like_pm_swanidhi_yojna_etc">PM स्वानिधी योजना इत्यादी योजना</string>
 
+    <string name="otp_sent">ओटीपी तुमच्या मोबाइल नंबर +91-%s वर पाठवला आहे</string>
+    <string name="user_already_exist">वापरकर्ता आधीपासून अस्तित्वात आहे</string>
+    <string name="otp_Verified_successfully">OTP यशस्वीरित्या सत्यापित</string>
+    <string name="invalid_OTP">अवैध OTP</string>
+
 </resources>

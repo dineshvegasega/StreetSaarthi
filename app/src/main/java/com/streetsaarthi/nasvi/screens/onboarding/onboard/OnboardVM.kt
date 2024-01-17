@@ -62,10 +62,10 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
         when(whichScreen) {
                     0 -> it.findNavController().navigate(R.id.action_onboard_to_quickRegistration)
                     1 ->
-//                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
-//                        putString(Screen, LoginPassword)
-//                    })
-            it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
+                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
+                        putString(Screen, LoginPassword)
+                    })
+//            it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
                     2 ->
                         it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
                         putString(Screen, LoginOtp)

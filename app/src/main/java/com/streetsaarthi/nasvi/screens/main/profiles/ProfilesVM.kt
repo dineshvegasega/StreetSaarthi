@@ -1,5 +1,7 @@
 package com.streetsaarthi.nasvi.screens.main.profiles
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -366,19 +368,27 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
 
 
-    fun profileUpdate(view: View, _id: String, hashMap: RequestBody) = viewModelScope.launch {
+    fun profileUpdate(view: View, _id: String, hashMap: RequestBody, value: Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.profileUpdate(_id, hashMap)
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
-                    if (response.isSuccessful){
-                        showSnackBar(response.body()?.message.orEmpty())
+                    if (response.isSuccessful) {
+                        //showSnackBar(response.body()?.message.orEmpty())
 //                        if(response.body()!!.data != null){
 //                            Log.e("TAG", "aaaaaZZ")
-                            profile(view, response.body()!!.vendor_id!!)
-//                        }
+//                    }
+                        if (value == 111){
+                            profile(view, response.body()!!.vendor_id!!, 111)
+                        } else if (value == 222){
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                ProfessionalDetails.callBackListener!!.onCallBack(22)
+                            }, 100)
+                        } else if (value == 333){
+                            profile(view, response.body()!!.vendor_id!!, 111)
+                        }
                     }
                 }
                 override fun error(message: String) {
@@ -396,7 +406,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
 
 
-    fun profile(view: View, _id: String) = viewModelScope.launch {
+    fun profile(view: View, _id: String, value: Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -404,7 +414,10 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        showSnackBar(response.body()?.message.orEmpty())
+                        if (value == 111){
+                            showSnackBar(response.body()?.message.orEmpty())
+                        }
+
                         if(response.body()!!.data != null){
                             Log.e("TAG", "aaaaa")
                             DataStoreUtil.saveData(
@@ -415,6 +428,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
                                 DataStoreKeys.LOGIN_DATA,
                                 Gson().fromJson(response.body()!!.data, Login::class.java)
                             )
+                            Profiles.callBackListener!!.onCallBack(33)
                         }
                     }
                 }
@@ -497,5 +511,19 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
         var otp : String ?= null,
         var password : String ?= null
     )
+
+
+    override fun onCleared() {
+        super.onCleared()
+//        itemState.clear()
+//        itemDistrict.clear()
+//        itemPanchayat.clear()
+//        itemPincode.clear()
+//        itemStateVending.clear()
+//        itemDistrictVending.clear()
+//        itemPanchayatVending.clear()
+//        itemPincodeVending.clear()
+//        itemLocalOrganizationVending.clear()
+    }
 
 }

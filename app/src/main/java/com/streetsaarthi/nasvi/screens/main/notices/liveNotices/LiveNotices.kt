@@ -11,6 +11,7 @@ import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.databinding.LiveNoticesBinding
 import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
+import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,10 @@ class LiveNotices : Fragment() {
     private val viewModel: LiveNoticesVM by viewModels()
     private var _binding: LiveNoticesBinding? = null
     private val binding get() = _binding!!
+
+    companion object{
+        var isReadLiveNotices: Boolean? = false
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +36,7 @@ class LiveNotices : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isReadLiveNotices = true
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_notices)
 

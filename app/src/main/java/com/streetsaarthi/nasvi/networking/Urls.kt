@@ -41,10 +41,8 @@ const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
 const val TRANSLATE = "translate/v2?key="
 
 
-
-
-
 const val USER_TYPE = "member"
+
 
 const val Screen = "screen"
 const val Start = "Start"
