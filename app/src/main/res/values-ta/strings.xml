@@ -375,7 +375,7 @@
     <string name="write_something">எதையாவது எழுது</string>
     <string name="active">செயலில்</string>
     <string name="live">நேரலை</string>
-    <string name="download_membership_card">உறுப்பினர் அட்டையைப் பதிவிறக்கு</string>
+    <string name="download_membership_card">பதிவிறக்கு</string>
     <string name="venderDetails"><b>விற்பனையாளர் விவரங்கள்:</b> %s</string>
     <string name="current_vending_addressStar">தற்போதைய விற்பனை முகவரி*</string>
     <string name="membership_Id">உறுப்பினர் ஐடி:</string>
@@ -390,5 +390,36 @@
     <string name="user_already_exist">பயனர் ஏற்கனவே இருக்கிறார்</string>
     <string name="otp_Verified_successfully">OTP வெற்றிகரமாக சரிபார்க்கப்பட்டது</string>
     <string name="invalid_OTP">தவறான OTP</string>
+
+    <string name="survey_receipt">கணக்கெடுப்பு ரசீது</string>
+    <string name="challan">சலன்</string>
+    <string name="approval_letter_from_municipality">நகராட்சியின் ஒப்புதல் கடிதம்</string>
+    <string name="select_state_">நிலையைத் தேர்ந்தெடு</string>
+    <string name="select_district_">மாவட்டத்தைத் தேர்ந்தெடு</string>
+    <string name="municipality_panchayat_">நகராட்சி/பஞ்சாயத்தை தேர்ந்தெடு</string>
+
+    <string name="not_state">உங்களிடம் மாநிலம் இல்லை</string>
+    <string name="not_district">உங்களிடம் மாவட்டம் இல்லை</string>
+    <string name="not_municipality_panchayat">உங்களுக்கு நகராட்சி/பஞ்சாயத்து இல்லை</string>
+    <string name="not_pincode">உங்களிடம் பின்கோடு இல்லை</string>
+    <string name="not_Organisation">உங்களிடம் எந்த அமைப்பும் இல்லை</string>
+    <string name="saveUpdate">சேமி &amp; புதுப்பி</string>
+
+    <string name="current_Vending_Address_underline"><u>தற்போதைய விற்பனை முகவரி:</u></string>
+    <string name="associated_organizationSemi">தொடர்புடைய நிறுவனம்:</string>
+    <string name="firstNameSemi">முதல் பெயர்:</string>
+    <string name="lastNameSemi">கடைசி பெயர்:</string>
+    <string name="genderSemi">பாலினம்:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">மொபைல்:</string>
+    <string name="typeofVendingSemi">விற்பனையின் வகை:</string>
+    <string name="typeofMarketPlaceSemi">சந்தை இடத்தின் வகை:</string>
+    <string name="stateSemi">மாநிலம்:</string>
+    <string name="districtSemi">மாவட்டம்:</string>
+    <string name="municipalitySemi">நகராட்சி:</string>
+    <string name="addressSemi">முகவரி:</string>
+    <string name="membershipIDSemi">உறுப்பினர் ஐடி: %s</string>
+    <string name="validUptoSemi">இதுவரை செல்லுபடியாகும்: %s</string>
+    <string name="successfully_downloaded">வெற்றிகரமாக பதிவிறக்கப்பட்டது</string>
 
 </resources>

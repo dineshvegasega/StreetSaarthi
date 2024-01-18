@@ -376,7 +376,7 @@
     <string name="write_something">ಏನನ್ನಾದರೂ ಬರೆಯಿರಿ</string>
     <string name="active">ಸಕ್ರಿಯ</string>
     <string name="live">ಲೈವ್</string>
-    <string name="download_membership_card">ಸದಸ್ಯತ್ವ ಕಾರ್ಡ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="download_membership_card">ಡೌನ್‌ಲೋಡ್</string>
     <string name="venderDetails"><b>ವೆಂಡರ್ ವಿವರಗಳು:</b> %s</string>
     <string name="current_vending_addressStar">ಪ್ರಸ್ತುತ ವಿತರಣಾ ವಿಳಾಸ*</string>
     <string name="membership_Id">ಸದಸ್ಯತ್ವ ಐಡಿ:</string>
@@ -391,5 +391,36 @@
     <string name="user_already_exist">ಬಳಕೆದಾರರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದ್ದಾರೆ</string>
     <string name="otp_Verified_successfully">OTP ಯಶಸ್ವಿಯಾಗಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ</string>
     <string name="invalid_OTP">ಅಮಾನ್ಯ OTP</string>
+
+    <string name="survey_receipt">ಸಮೀಕ್ಷೆ ರಶೀದಿ</string>
+    <string name="challan">ಚಲನ್</string>
+    <string name="approval_letter_from_municipality">ಪುರಸಭೆಯಿಂದ ಅನುಮೋದನೆ ಪತ್ರ</string>
+    <string name="select_state_">ರಾಜ್ಯವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="select_district_">ಜಿಲ್ಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="municipality_panchayat_">ಪುರಸಭೆ/ಪಂಚಾಯತ್ ಆಯ್ಕೆಮಾಡಿ</string>
+
+    <string name="not_state">ನೀವು ಯಾವುದೇ ರಾಜ್ಯವನ್ನು ಹೊಂದಿಲ್ಲ</string>
+    <string name="not_district">ನೀವು ಯಾವುದೇ ಜಿಲ್ಲೆಯನ್ನು ಹೊಂದಿಲ್ಲ</string>
+    <string name="not_municipality_panchayat">ನೀವು ಪುರಸಭೆ/ಪಂಚಾಯತ್ ಹೊಂದಿಲ್ಲ</string>
+    <string name="not_pincode">ನೀವು ಯಾವುದೇ ಪಿನ್‌ಕೋಡ್ ಹೊಂದಿಲ್ಲ</string>
+    <string name="not_Organisation">ನೀವು ಯಾವುದೇ ಸಂಸ್ಥೆಯನ್ನು ಹೊಂದಿಲ್ಲ</string>
+    <string name="saveUpdate">ಉಳಿಸು &amp; ನವೀಕರಿಸಿ</string>
+
+    <string name="current_Vending_Address_underline"><u>ಪ್ರಸ್ತುತ ಮಾರಾಟದ ವಿಳಾಸ:</u></string>
+    <string name="associated_organizationSemi">ಸಂಯೋಜಿತ ಸಂಸ್ಥೆ:</string>
+    <string name="firstNameSemi">ಮೊದಲ ಹೆಸರು:</string>
+    <string name="lastNameSemi">ಕೊನೆಯ ಹೆಸರು:</string>
+    <string name="genderSemi">ಲಿಂಗ:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">ಮೊಬೈಲ್:</string>
+    <string name="typeofVendingSemi">ವಿತರಣೆಯ ಪ್ರಕಾರ:</string>
+    <string name="typeofMarketPlaceSemi">ಮಾರುಕಟ್ಟೆ ಸ್ಥಳದ ಪ್ರಕಾರ:</string>
+    <string name="stateSemi">ರಾಜ್ಯ:</string>
+    <string name="districtSemi">ಜಿಲ್ಲೆ:</string>
+    <string name="municipalitySemi">ಪುರಸಭೆ:</string>
+    <string name="addressSemi">ವಿಳಾಸ:</string>
+    <string name="membershipIDSemi">ಸದಸ್ಯತ್ವ ID: %s</string>
+    <string name="validUptoSemi">ಇದಕ್ಕೆ ಮಾನ್ಯ: %s</string>
+    <string name="successfully_downloaded">ಯಶಸ್ವಿಯಾಗಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
 
 </resources>

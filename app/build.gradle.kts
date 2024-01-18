@@ -140,6 +140,8 @@ dependencies {
     implementation ("com.airbnb.android:lottie:6.3.0")
     implementation ("com.github.stfalcon-studio:SmsVerifyCatcher:0.3.3")
 
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
+
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 //    implementation ("com.google.firebase:firebase-auth-ktx")
 //    implementation ("com.google.firebase:firebase-database-ktx")

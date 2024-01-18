@@ -157,6 +157,11 @@ class Settings : Fragment() {
                 pastBookingAdapter.submitList(viewModel.itemMain)
                 recyclerView.adapter = pastBookingAdapter
             }
+
+
+            btLogout.setOnClickListener {
+                MainActivity.mainActivity.get()!!.callLogoutDialog()
+            }
         }
     }
 

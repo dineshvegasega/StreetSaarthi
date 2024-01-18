@@ -25,6 +25,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.autoScroll
+import com.streetsaarthi.nasvi.utils.autoScrollStop
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -100,9 +101,9 @@ class Dashboard : Fragment() {
 //                    put("search_input", USER_TYPE)
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
-                viewModel.liveScheme(view = requireView(), obj)
-                viewModel.liveTraining(view = requireView(), obj)
-                viewModel.liveNotice(view = requireView(), obj)
+                viewModel.liveScheme(view = view, obj)
+                viewModel.liveTraining(view = view, obj)
+                viewModel.liveNotice(view = view, obj)
                 }
             }
 
@@ -117,7 +118,7 @@ class Dashboard : Fragment() {
                         adapter.submitData(it1)
                         banner.adapter = adapter
                         tabDots.setupWithViewPager(banner, true)
-                        banner.autoScroll(1, 3000)
+                        banner.autoScroll()
                     }
                 }
             })
@@ -128,7 +129,7 @@ class Dashboard : Fragment() {
     override fun onStop() {
         super.onStop()
         binding.apply {
-            banner.autoScroll(2, 0)
+            banner.autoScrollStop()
         }
     }
 

@@ -380,7 +380,7 @@
     <string name="write_something">ਕੁਝ ਲਿਖੋ</string>
     <string name="active">ਕਿਰਿਆਸ਼ੀਲ</string>
     <string name="live">ਲਾਈਵ</string>
-    <string name="download_membership_card">ਮੈਂਬਰਸ਼ਿਪ ਕਾਰਡ ਡਾਊਨਲੋਡ ਕਰੋ</string>
+    <string name="download_membership_card">ਡਾਊਨਲੋਡ ਕਰੋ</string>
     <string name="venderDetails"><b>ਵੈਂਡਰ ਵੇਰਵੇ:</b> %s</string>
     <string name="current_vending_addressStar">ਮੌਜੂਦਾ ਵਿਕਰੇਤਾ ਪਤਾ*</string>
     <string name="membership_Id">ਮੈਂਬਰਸ਼ਿਪ ਆਈ.ਡੀ.:</string>
@@ -395,5 +395,36 @@
     <string name="user_already_exist">ਉਪਭੋਗਤਾ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ</string>
     <string name="otp_Verified_successfully">OTP ਸਫਲਤਾਪੂਰਵਕ ਪ੍ਰਮਾਣਿਤ</string>
     <string name="invalid_OTP">ਅਵੈਧ OTP</string>
+
+    <string name="survey_receipt">ਸਰਵੇਖਣ ਰਸੀਦ</string>
+    <string name="challan">ਚਾਲਾਨ</string>
+    <string name="approval_letter_from_municipality">ਨਗਰਪਾਲਿਕਾ ਤੋਂ ਮਨਜ਼ੂਰੀ ਪੱਤਰ</string>
+    <string name="select_state_">ਰਾਜ ਚੁਣੋ</string>
+    <string name = "select_district_">ਜ਼ਿਲ੍ਹਾ ਚੁਣੋ</string>
+    <string name="municipality_panchayat_">ਨਗਰਪਾਲਿਕਾ/ਪੰਚਾਇਤ ਚੁਣੋ</string>
+
+    <string name="not_state">ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਰਾਜ ਨਹੀਂ ਹੈ</string>
+    <string name="not_district">ਤੁਹਾਡਾ ਕੋਈ ਜ਼ਿਲ੍ਹਾ ਨਹੀਂ ਹੈ</string>
+    <string name="not_municipality_panchayat">ਤੁਹਾਡੇ ਕੋਲ ਨਗਰਪਾਲਿਕਾ/ਪੰਚਾਇਤ ਨਹੀਂ ਹੈ</string>
+    <string name="not_pincode">ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਪਿਨਕੋਡ ਨਹੀਂ ਹੈ</string>
+    <string name="not_Organisation">ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਸੰਗਠਨ ਨਹੀਂ ਹੈ</string>
+    <string name="saveUpdate">ਸੇਵ ਕਰੋ &amp; ਅੱਪਡੇਟ ਕਰੋ</string>
+
+    <string name="current_Vending_Address_underline"><u>ਮੌਜੂਦਾ ਵੈਂਡਿੰਗ ਪਤਾ:</u></string>
+    <string name="associated_organizationSemi">ਸਬੰਧਤ ਸੰਸਥਾ:</string>
+    <string name="firstNameSemi">ਪਹਿਲਾ ਨਾਮ:</string>
+    <string name="lastNameSemi">ਆਖਰੀ ਨਾਮ:</string>
+    <string name = "genderSemi"> ਲਿੰਗ:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">ਮੋਬਾਈਲ:</string>
+    <string name="typeofVendingSemi">ਵੇਡਿੰਗ ਦੀ ਕਿਸਮ:</string>
+    <string name="typeofMarketPlaceSemi">ਮਾਰਕੀਟ ਪਲੇਸ ਦੀ ਕਿਸਮ:</string>
+    <string name="stateSemi">ਰਾਜ:</string>
+    <string name="districtSemi">ਜ਼ਿਲ੍ਹਾ:</string>
+    <string name="municipalitySemi">ਨਗਰਪਾਲਿਕਾ:</string>
+    <string name="addressSemi">ਪਤਾ:</string>
+    <string name="membershipIDSemi">ਮੈਂਬਰਸ਼ਿਪ ID: %s</string>
+    <string name = "validUptoSemi"> ਤੱਕ ਵੈਧ: %s</string>
+    <string name="successfully_downloaded">ਸਫਲਤਾਪੂਰਵਕ ਡਾਊਨਲੋਡ ਕੀਤਾ</string>
 
 </resources>

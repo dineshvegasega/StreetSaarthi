@@ -236,7 +236,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     Log.e("TAG", "countAA "+start)
                     if(!editTextCreatePassword.text.toString().isEmpty()){
-                        if(start >= 0 && start < 8){
+                        if(editTextCreatePassword.text.toString().length >= 0 && editTextCreatePassword.text.toString().length < 8){
                             textCreatePasswrordMsg.setText(R.string.InvalidPassword)
                             textCreatePasswrordMsg.visibility = View.VISIBLE
                         } else if(!isValidPassword(editTextCreatePassword.text.toString().trim())){

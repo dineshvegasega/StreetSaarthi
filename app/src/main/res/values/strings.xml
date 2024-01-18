@@ -393,7 +393,7 @@
     <string name="write_something">Write Something</string>
     <string name="active">Active</string>
     <string name="live">LIVE</string>
-    <string name="download_membership_card">Download Membership Card</string>
+    <string name="download_membership_card">Download</string>
     <string name="venderDetails"><b>Vender Details:</b> %s</string>
     <string name="current_vending_addressStar">Current Vending Address*</string>
 
@@ -425,6 +425,22 @@
     <string name="not_Organisation">You have no Organisation</string>
     <string name="saveUpdate">Save &amp; Update</string>
 
+    <string name="current_Vending_Address_underline"><u>Current Vending Address:</u></string>
+    <string name="associated_organizationSemi">Associated Organization:</string>
+    <string name="firstNameSemi">First Name:</string>
+    <string name="lastNameSemi">Last Name:</string>
+    <string name="genderSemi">Gender:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">Mobile:</string>
+    <string name="typeofVendingSemi">Type of Vending:</string>
+    <string name="typeofMarketPlaceSemi">Type of Market Place:</string>
+    <string name="stateSemi">State:</string>
+    <string name="districtSemi">District:</string>
+    <string name="municipalitySemi">Municipality:</string>
+    <string name="addressSemi">Address:</string>
+    <string name="membershipIDSemi">Membership ID: %s</string>
+    <string name="validUptoSemi">Valid Upto: %s</string>
+    <string name="successfully_downloaded">Successfully Downloaded</string>
 
 
 

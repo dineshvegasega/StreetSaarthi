@@ -273,11 +273,17 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     }
 
 
+                    data.total_years_of_business?.let {
+                        editTextTotalYearsofVending.setText("${data.total_years_of_business}")
+                    }
 
-                    editTextTotalYearsofVending.setText("${data.total_years_of_business}")
-                    editTextVendingTimeOpen.setText("${data.vending_time_from}")
-                    editTextVendingTimeClose.setText("${data.vending_time_to}")
+                    data.vending_time_from?.let {
+                        editTextVendingTimeOpen.setText("${data.vending_time_from}")
+                    }
 
+                    data.vending_time_to?.let {
+                        editTextVendingTimeClose.setText("${data.vending_time_to}")
+                    }
 
                     viewModel.data.total_years_of_business = ""+data.total_years_of_business
                     viewModel.data.open = ""+data.vending_time_from
@@ -323,16 +329,28 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         )
                     }
 
+                    data.vending_state?.let {
+                        editTextVendingSelectState.setText("${data.vending_state?.name}")
+                    }
 
-                    editTextVendingSelectState.setText("${data.vending_state?.name}")
-                    editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
-                    editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
+                    data.vending_district?.let {
+                        editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
+                    }
+
+                    data.vending_municipality_panchayat?.let {
+                        editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
+                    }
+
                     if(data.vending_pincode != null){
                         editTextVendingSelectPincode.setText(""+data.vending_pincode?.pincode!!.toInt())
                     } else {
                         editTextVendingSelectPincode.setText("")
                     }
-                    editTextVendingAddress.setText("${data.vending_address}")
+
+                    data.vending_address?.let {
+                        editTextVendingAddress.setText("${data.vending_address}")
+                    }
+
 
                     viewModel.data.vending_state = ""+data.vending_state?.id
                     viewModel.data.vending_district = ""+data.vending_district?.id

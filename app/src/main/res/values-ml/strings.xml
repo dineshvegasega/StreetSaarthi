@@ -376,7 +376,7 @@
     <string name="write_something">എന്തെങ്കിലും എഴുതുക</string>
     <string name="active">സജീവ</string>
     <string name="live">ലൈവ്</string>
-    <string name="download_membership_card">അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക</string>
+    <string name="download_membership_card">ഡൗൺലോഡ്</string>
     <string name="venderDetails"><b>വെണ്ടർ വിശദാംശങ്ങൾ:</b> %s</string>
     <string name="current_vending_addressStar">നിലവിലെ വെൻഡിംഗ് വിലാസം*</string>
     <string name="membership_Id">അംഗത്വ ഐഡി:</string>
@@ -391,5 +391,36 @@
     <string name="user_already_exist">ഉപയോക്താവ് ഇതിനകം നിലവിലുണ്ട്</string>
     <string name="otp_Verified_successfully">OTP വിജയകരമായി പരിശോധിച്ചു</string>
     <string name="invalid_OTP">അസാധുവായ OTP</string>
+
+    <string name="survey_receipt">സർവേ രസീത്</string>
+    <string name="challan">ചലൻ</string>
+    <string name="approval_letter_from_municipality">മുനിസിപ്പാലിറ്റിയിൽ നിന്നുള്ള അംഗീകാര കത്ത്</string>
+    <string name="select_state_">സംസ്ഥാനം തിരഞ്ഞെടുക്കുക</string>
+    <string name="select_district_">ജില്ല തിരഞ്ഞെടുക്കുക</string>
+    <string name="municipality_panchayat_">മുനിസിപ്പാലിറ്റി/പഞ്ചായത്ത് തിരഞ്ഞെടുക്കുക</string>
+
+    <string name="not_state">നിങ്ങൾക്ക് സംസ്ഥാനമില്ല</string>
+    <string name="not_district">നിങ്ങൾക്ക് ജില്ലയില്ല</string>
+    <string name="not_municipality_panchayat">നിങ്ങൾക്ക് മുനിസിപ്പാലിറ്റി/പഞ്ചായത്ത് ഇല്ല</string>
+    <string name="not_pincode">നിങ്ങൾക്ക് പിൻകോഡ് ഇല്ല</string>
+    <string name="not_Organisation">നിങ്ങൾക്ക് ഒരു ഓർഗനൈസേഷനും ഇല്ല</string>
+    <string name="saveUpdate">സംരക്ഷിക്കുക &amp; അപ്ഡേറ്റ്</string>
+
+    <string name="current_Vending_Address_underline"><u>നിലവിലെ വെൻഡിംഗ് വിലാസം:</u></string>
+    <string name="associated_organizationSemi">അനുബന്ധ സംഘടന:</string>
+    <string name="firstNameSemi">ആദ്യ നാമം:</string>
+    <string name="lastNameSemi">അവസാന നാമം:</string>
+    <string name="genderSemi">ലിംഗഭേദം:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">മൊബൈൽ:</string>
+    <string name="typeofVendingSemi">വെൻഡിംഗ് തരം:</string>
+    <string name="typeofMarketPlaceSemi">വിപണി സ്ഥലത്തിന്റെ തരം:</string>
+    <string name="stateSemi">സംസ്ഥാനം:</string>
+    <string name="districtSemi">ജില്ല:</string>
+    <string name="municipalitySemi">മുനിസിപ്പാലിറ്റി:</string>
+    <string name="addressSemi">വിലാസം:</string>
+    <string name="membershipIDSemi">അംഗത്വ ഐഡി: %s</string>
+    <string name="validUptoSemi">സാധുതയുള്ളത്: %s</string>
+    <string name="successfully_downloaded">വിജയകരമായി ഡൗൺലോഡ് ചെയ്തു</string>
 
 </resources>

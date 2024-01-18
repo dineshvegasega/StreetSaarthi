@@ -51,6 +51,8 @@ import java.lang.ref.WeakReference
 import java.util.Locale
 import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.mainThread
+import kotlinx.coroutines.delay
 
 
 @AndroidEntryPoint
@@ -239,10 +241,14 @@ class MainActivity : AppCompatActivity() {
         if (intent!!.hasExtra(Screen)){
             var screen = intent.getStringExtra(Screen)
             Log.e("TAG", "screenAA "+screen)
+            callBack()
+            val navOptions: NavOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.navigation_bar, true)
+                .build()
             if(screen == Start){
-                navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
+                navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
             } else if (screen == Main){
-                navHostFragment?.navController?.navigate(R.id.action_splash_to_dashboard)
+                navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
             }
         }
 
@@ -255,39 +261,7 @@ class MainActivity : AppCompatActivity() {
         binding.textVersion.text = getString(R.string.app_version_1_0, versionName)
 
         binding.btLogout.setOnClickListener {
-            // MainActivity.mainActivity.get()!!.callBack()
-            if(logoutAlert?.isShowing == true) {
-                return@setOnClickListener
-            }
-            logoutAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
-                .setTitle(resources.getString(R.string.logout))
-                .setMessage(resources.getString(R.string.are_your_sure_want_to_logout))
-                .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
-                    dialog.dismiss()
-                    DataStoreUtil.removeKey(DataStoreKeys.LOGIN_DATA) {}
-                    DataStoreUtil.removeKey(DataStoreKeys.AUTH) {}
-                    DataStoreUtil.removeKey(DataStoreKeys.LIVE_SCHEME_DATA) {}
-                    DataStoreUtil.removeKey(DataStoreKeys.LIVE_NOTICE_DATA) {}
-                    DataStoreUtil.removeKey(DataStoreKeys.LIVE_TRAINING_DATA) {}
-                    DataStoreUtil.clearDataStore {  }
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        binding.drawerLayout.close()
-                    }, 500)
-
-                    callBack()
-                    val navOptions: NavOptions = NavOptions.Builder()
-                        .setPopUpTo(R.id.navigation_bar, true)
-                        .build()
-                    navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
-                }
-                .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
-                    dialog.dismiss()
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        binding.drawerLayout.close()
-                    }, 500)
-                }
-                .setCancelable(false)
-                .show()
+            callLogoutDialog()
         }
 
 
@@ -396,7 +370,42 @@ class MainActivity : AppCompatActivity() {
 //        )
     }
 
-//    private fun initLanguage(idSL: Any?, idTL: Any?, text: String?) {
+    fun callLogoutDialog() {
+        if(logoutAlert?.isShowing == true) {
+            return
+        }
+        logoutAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.logout))
+            .setMessage(resources.getString(R.string.are_your_sure_want_to_logout))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                DataStoreUtil.removeKey(DataStoreKeys.LOGIN_DATA) {}
+                DataStoreUtil.removeKey(DataStoreKeys.AUTH) {}
+                DataStoreUtil.removeKey(DataStoreKeys.LIVE_SCHEME_DATA) {}
+                DataStoreUtil.removeKey(DataStoreKeys.LIVE_NOTICE_DATA) {}
+                DataStoreUtil.removeKey(DataStoreKeys.LIVE_TRAINING_DATA) {}
+                DataStoreUtil.clearDataStore {  }
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.drawerLayout.close()
+                }, 500)
+
+                callBack()
+                val navOptions: NavOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.navigation_bar, true)
+                    .build()
+                navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    //    private fun initLanguage(idSL: Any?, idTL: Any?, text: String?) {
 //        val option = FirebaseTranslatorOptions.Builder()
 //            .setSourceLanguage(idSL as Int)
 //            .setTargetLanguage(idTL as Int)
@@ -489,13 +498,16 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-//    override fun onResume() {
-//        super.onResume()
-//
-//        Log.e("TAG", "onResume1 "+hideValue)
-//
-//        callBack()
-//    }
+    override fun onResume() {
+        super.onResume()
+
+        Log.e("TAG", "onResume1 "+hideValue)
+        mainThread {
+            delay(2500)
+            callBack()
+        }
+
+    }
 
 
 
@@ -510,17 +522,9 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                     readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if(loginUser != null){
-//                            Picasso.get().load(
-//                                Gson().fromJson(loginUser, Login::class.java).profile_image_name.url
-//                            ).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE)
-//                                .networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.OFFLINE)
-//                                .into(binding.topLayout.ivImage)
-
-//                            GlideApp.with(binding.root)
-//                                .load(Gson().fromJson(loginUser, Login::class.java).profile_image_name.url)
-//                                .apply(myOptionsGlide)
-//                                .into(binding.topLayout.ivImage)
-                            topLayout.ivImage.loadImage(url = { Gson().fromJson(loginUser, Login::class.java).profile_image_name.url })
+                            Gson().fromJson(loginUser, Login::class.java).profile_image_name?.let {
+                                topLayout.ivImage.loadImage(url = { Gson().fromJson(loginUser, Login::class.java).profile_image_name.url })
+                            }
                         }
                     }
                 }

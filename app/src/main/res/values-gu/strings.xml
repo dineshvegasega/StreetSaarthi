@@ -372,7 +372,7 @@
     <string name="write_something">કંઈક લખો</string>
     <string name="active">સક્રિય</string>
     <string name="live">લાઈવ</string>
-    <string name="download_membership_card">સદસ્યતા કાર્ડ ડાઉનલોડ કરો</string>
+    <string name="download_membership_card">ડાઉનલોડ કરો</string>
     <string name="venderDetails"><b>વેન્ડર વિગતો:</b> %s</string>
     <string name="current_vending_addressStar">વર્તમાન વેન્ડિંગ સરનામું*</string>
     <string name = "membership_Id">સદસ્યતા ID:</string>
@@ -388,5 +388,35 @@
     <string name="otp_Verified_successfully">OTP સફળતાપૂર્વક ચકાસાયેલ</string>
     <string name="invalid_OTP">અમાન્ય OTP</string>
 
+    <string name="survey_receipt">સર્વેની રસીદ</string>
+    <string name = "challan">ચલણ</string>
+    <string name="approval_letter_from_municipality">નગરપાલિકા તરફથી મંજૂરી પત્ર</string>
+    <string name="select_state_">રાજ્ય પસંદ કરો</string>
+    <string name="select_district_">જિલ્લો પસંદ કરો</string>
+    <string name="municipality_panchayat_">નગરપાલિકા/પંચાયત પસંદ કરો</string>
+
+    <string name="not_state">તમારી પાસે કોઈ રાજ્ય નથી</string>
+    <string name="not_district">તમારી પાસે કોઈ જિલ્લો નથી</string>
+    <string name="not_municipality_panchayat">તમારી પાસે નગરપાલિકા/પંચાયત નથી</string>
+    <string name="not_pincode">તમારી પાસે કોઈ પિનકોડ નથી</string>
+    <string name="not_Organisation">તમારી પાસે કોઈ સંસ્થા નથી</string>
+    <string name="saveUpdate">સાચવો &amp; અપડેટ કરો</string>
+
+    <string name="current_Vending_Address_underline"><u>વર્તમાન વેન્ડિંગ સરનામું:</u></string>
+    <string name="associated_organizationSemi">સંકળાયેલ સંસ્થા:</string>
+    <string name="firstNameSemi">પ્રથમ નામ:</string>
+    <string name="lastNameSemi">છેલ્લું નામ:</string>
+    <string name="genderSemi">લિંગ:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">મોબાઇલ:</string>
+    <string name = "typeofVendingSemi">વેન્ડિંગનો પ્રકાર:</string>
+    <string name="typeofMarketPlaceSemi">માર્કેટ પ્લેસનો પ્રકાર:</string>
+    <string name="stateSemi">રાજ્ય:</string>
+    <string name="districtSemi">જિલ્લો:</string>
+    <string name="municipalitySemi">મ્યુનિસિપાલિટી:</string>
+    <string name="addressSemi">સરનામું:</string>
+    <string name="membershipIDSemi">સદસ્યતા ID: %s</string>
+    <string name="validUptoSemi">સુધી માન્ય: %s</string>
+    <string name="successfully_downloaded">સફળતાપૂર્વક ડાઉનલોડ</string>
 
 </resources>

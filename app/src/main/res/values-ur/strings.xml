@@ -376,7 +376,7 @@
     <string name="write_something">کچھ لکھیں</string>
     <string name = "active"> فعال</string>
     <string name="live">لائیو</string>
-    <string name="download_membership_card">ممبرشپ کارڈ ڈاؤن لوڈ کریں</string>
+    <string name="download_membership_card">ڈاؤن لوڈ کریں</string>
     <string name="venderDetails"><b>وینڈر کی تفصیلات:</b> %s</string>
     <string name="current_vending_addressStar">موجودہ وینڈنگ پتہ*</string>
     <string name="membership_Id">رکنیت کی شناخت:</string>
@@ -392,4 +392,36 @@
     <string name="otp_Verified_successfully">OTP کامیابی سے تصدیق شدہ</string>
     <string name="invalid_OTP">غلط OTP</string>
 
+
+    <string name="survey_receipt">سروے کی رسید</string>
+    <string name="challan">چالان</string>
+    <string name = "approval_letter_from_municipality"> بلدیہ کی جانب سے منظوری کا خط</string>
+    <string name = "select_state_"> ریاست کو منتخب کریں</string>
+    <string name="select_district_">ضلع منتخب کریں</string>
+    <string name = "municipality_panchayat_"> میونسپلٹی/پنچایت کو منتخب کریں</string>
+
+    <string name="not_state">آپ کی کوئی ریاست نہیں ہے</string>
+    <string name="not_district">آپ کا کوئی ضلع نہیں ہے</string>
+    <string name="not_municipality_panchayat">آپ کے پاس میونسپلٹی/پنچایت نہیں ہے</string>
+    <string name="not_pincode">آپ کے پاس کوئی پن کوڈ نہیں ہے</string>
+    <string name="not_Organisation">آپ کی کوئی تنظیم نہیں ہے</string>
+    <string name="saveUpdate">محفوظ کریں &amp; اپ ڈیٹ کریں</string>
+
+    <string name="current_Vending_Address_underline"><u>موجودہ وینڈنگ پتہ:</u></string>
+    <string name = "associated_organizationSemi"> وابستہ تنظیم:</string>
+    <string name = "firstNameSemi"> پہلا نام:</string>
+    <string name="lastNameSemi">آخری نام:</string>
+    <string name="genderSemi">جنس:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">موبائل:</string>
+    <string name = "typeofVendingSemi"> وینڈنگ کی قسم:</string>
+    <string name="typeofMarketPlaceSemi">مارکیٹ کی جگہ کی قسم:</string>
+    <string name="stateSemi">ریاست:</string>
+    <string name="districtSemi">ضلع:</string>
+    <string name="municipalitySemi">میونسپلٹی:</string>
+    <string name = "addressSemi"> پتہ:</string>
+    <string name="membershipIDSemi">ممبرشپ ID: %s</string>
+    <string name="validUptoSemi">درست تک: %s</string>
+    <string name="successfully_downloaded">کامیابی سے ڈاؤن لوڈ ہو گیا</string>
+    
 </resources>

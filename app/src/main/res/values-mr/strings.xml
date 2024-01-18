@@ -375,7 +375,7 @@
     <string name="write_something">काहीतरी लिहा</string>
     <string name="active">सक्रिय</string>
     <string name="live">लाइव्ह</string>
-    <string name="download_membership_card">सदस्यत्व कार्ड डाउनलोड करा</string>
+    <string name="download_membership_card">डाउनलोड करा</string>
     <string name="venderDetails"><b>वेंडर तपशील:</b> %s</string>
     <string name = "current_vending_addressStar"> सध्याचा विक्री पत्ता*</string>
     <string name="membership_Id">सदस्यत्व आयडी:</string>
@@ -390,5 +390,37 @@
     <string name="user_already_exist">वापरकर्ता आधीपासून अस्तित्वात आहे</string>
     <string name="otp_Verified_successfully">OTP यशस्वीरित्या सत्यापित</string>
     <string name="invalid_OTP">अवैध OTP</string>
+
+
+    <string name="survey_receipt">सर्वेक्षण पावती</string>
+    <string name="challan">चलान</string>
+    <string name="approval_letter_from_municipality">नगरपालिकेकडून मंजूरी पत्र</string>
+    <string name="select_state_">राज्य निवडा</string>
+    <string name="select_district_">जिल्हा निवडा</string>
+    <string name="municipality_panchayat_">नगरपालिका/पंचायत निवडा</string>
+
+    <string name="not_state">तुमच्याकडे कोणतेही राज्य नाही</string>
+    <string name="not_district">तुमच्याकडे कोणताही जिल्हा नाही</string>
+    <string name="not_municipality_panchayat">तुमच्याकडे नगरपालिका/पंचायत नाही</string>
+    <string name="not_pincode">तुमच्याकडे पिनकोड नाही</string>
+    <string name="not_Organisation">तुमच्याकडे कोणतीही संस्था नाही</string>
+    <string name="saveUpdate">जतन करा &amp; अपडेट करा</string>
+
+    <string name="current_Vending_Address_underline"><u>वर्तमान वेंडिंग पत्ता:</u></string>
+    <string name="associated_organizationSemi">संबंधित संस्था:</string>
+    <string name="firstNameSemi">नाव:</string>
+    <string name="lastNameSemi">आडनाव:</string>
+    <string name="genderSemi">लिंग:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">मोबाइल:</string>
+    <string name = "typeofVendingSemi">विक्रीचा प्रकार:</string>
+    <string name="typeofMarketPlaceSemi">बाजार ठिकाणाचा प्रकार:</string>
+    <string name="stateSemi">राज्य:</string>
+    <string name="districtSemi">जिल्हा:</string>
+    <string name="municipalitySemi">नगरपालिका:</string>
+    <string name="addressSemi">पत्ता:</string>
+    <string name="membershipIDSemi">सदस्यत्व आयडी: %s</string>
+    <string name = "validUptoSemi"> पर्यंत वैध: %s</string>
+    <string name="successfully_downloaded">यशस्वीरित्या डाउनलोड केले</string>
 
 </resources>

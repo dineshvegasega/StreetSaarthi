@@ -378,7 +378,7 @@
     <string name='write_something'>कुछ लिखें</string>
     <string name='active'>सक्रिय</string>
     <string name = "live">लाइव</string>
-    <string name='download_membership_card'>सदस्यता कार्ड डाउनलोड करें</string>
+    <string name='download_membership_card'>डाउनलोड करें</string>
     <string name='venderDetails'><b>विक्रेता विवरण:</b> %s</string>
     <string name='current_vending_addressStar'>वर्तमान वेंडिंग पता*</string>
     <string name='membership_Id'>सदस्यता आईडी:</string>
@@ -393,5 +393,36 @@
     <string name='user_already_exist'>उपयोगकर्ता पहले से मौजूद है</string>
     <string name='otp_Verified_successfully'>OTP सफलतापूर्वक सत्यापित</string>
     <string name='invalid_OTP'>अमान्य OTP</string>
+
+    <string name='survey_receipt'>सर्वेक्षण रसीद</string>
+    <string name='challan'>चालान</string>
+    <string name='approval_letter_from_municipality'>नगर पालिका से अनुमोदन पत्र</string>
+    <string name='select_state_'>राज्य चुनें</string>
+    <string name='select_district_'>जिला चुनें</string>
+    <string name = "municipality_panchayat_">नगर पालिका/पंचायत चुनें</string>
+
+    <string name='not_state'>आपके पास कोई राज्य नहीं है</string>
+    <string name='not_district'>आपके पास कोई जिला नहीं है</string>
+    <string name='not_municipality_panchayat'>आपके पास नगर पालिका/पंचायत नहीं है</string>
+    <string name='not_pincode'>आपके पास कोई पिनकोड नहीं है</string>
+    <string name='not_Organisation'>आपके पास कोई संगठन नहीं है</string>
+    <string name='saveUpdate'>सहेजें &amp; अपडेट करें</string>
+
+    <string name='current_Vending_Address_underline'><u>वर्तमान वेंडिंग पता:</u></string>
+    <string name='associated_organizationSemi'>संबद्ध संगठन:</string>
+    <string name='firstNameSemi'>प्रथम नाम:</string>
+    <string name='lastNameSemi'>अंतिम नाम:</string>
+    <string name='genderSemi'>लिंग:</string>
+    <string name='dobSemi'>D.O.B:</string>
+    <string name='mobileSemi'>मोबाइल:</string>
+    <string name='typeofVendingSemi'>वेंडिंग का प्रकार:</string>
+    <string name='typeofMarketPlaceSemi'>मार्केट प्लेस का प्रकार:</string>
+    <string name='stateSemi'>राज्य:</string>
+    <string name='districtSemi'>जिला:</string>
+    <string name='municipalitySemi'>नगर पालिका:</string>
+    <string name='addressSemi'>पता:</string>
+    <string name='membershipIDSemi'>सदस्यता आईडी: %s</string>
+    <string name='validUptoSemi'>इस तक वैध: %s</string>
+    <string name='successfully_downloaded'>सफलतापूर्वक डाउनलोड किया गया</string>
 
 </resources>

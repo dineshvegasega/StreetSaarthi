@@ -54,9 +54,11 @@ class Splash : Fragment() {
             delay(2000)
             readData(LOGIN_DATA) { loginUser ->
                 if(loginUser == null){
+                    Log.e("TAG", "onResume2AAA ")
                     requireView().findNavController().navigate(R.id.action_splash_to_start)
                     MainActivity.mainActivity.get()!!.callBack()
                 }else{
+                    Log.e("TAG", "onResume2BBB ")
                     requireView().findNavController().navigate(R.id.action_splash_to_dashboard)
                     MainActivity.mainActivity.get()!!.callBack()
                 }

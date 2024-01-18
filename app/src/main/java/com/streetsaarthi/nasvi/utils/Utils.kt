@@ -257,42 +257,48 @@ fun AppCompatEditText.focus() {
 }
 
 
-
-fun ViewPager.autoScroll(pos: Int , interval: Long) {
-    val handler = Handler(Looper.getMainLooper())
-    var scrollPosition = 0
-    val runnable = object : Runnable {
-        override fun run() {
-            val count = adapter?.count ?: 0
-            setCurrentItem(scrollPosition++ % count, true)
-            handler.postDelayed(this, interval)
-        }
-    }
-
-    addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-        override fun onPageSelected(position: Int) {
-            scrollPosition = position + 1
+var handler = Handler(Looper.getMainLooper())
+var runnable : Runnable ?= null
+fun ViewPager.autoScroll() {
+    Log.e("TAG", "runnableAA "+runnable)
+        var scrollPosition = 0
+        runnable = object : Runnable {
+            override fun run() {
+                val count = adapter?.count ?: 0
+                setCurrentItem(scrollPosition++ % count, true)
+                handler?.let {
+                    postDelayed(this, 3000)
+                }
+            }
         }
 
-        override fun onPageScrollStateChanged(state: Int) {
-            // Not necessary
-        }
+//        addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+//            override fun onPageSelected(position: Int) {
+//                scrollPosition = position + 1
+//            }
+//
+//            override fun onPageScrollStateChanged(state: Int) {
+//
+//            }
+//
+//            override fun onPageScrolled(
+//                position: Int,
+//                positionOffset: Float,
+//                positionOffsetPixels: Int
+//            ) {
+//
+//            }
+//        })
 
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int
-        ) {
-            // Not necessary
-        }
-    })
-    handler.post(runnable)
-
-    if(pos == 2){
-        handler.removeCallbacks(runnable)
+    handler?.let {
+        post(runnable as Runnable)
     }
 }
 
+
+fun ViewPager.autoScrollStop() {
+    runnable?.let { handler.removeCallbacks(it) };
+}
 
 fun Context.isTablet(): Boolean {
     return this.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_LARGE

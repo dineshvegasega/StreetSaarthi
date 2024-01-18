@@ -390,4 +390,35 @@
     <string name="otp_Verified_successfully">OTP সফলভাবে যাচাই করা হয়েছে</string>
     <string name="invalid_OTP">অবৈধ OTP</string>
 
+    <string name="survey_receipt">জরিপ রসিদ</string>
+    <string name="challan">চালান</string>
+    <string name="approval_letter_from_municipality">পৌরসভা থেকে অনুমোদন পত্র</string>
+    <string name="select_state_">রাজ্য নির্বাচন করুন</string>
+    <string name="select_district_">জেলা নির্বাচন করুন</string>
+    <string name="municipality_panchayat_">পৌরসভা/পঞ্চায়েত নির্বাচন করুন</string>
+
+    <string name="not_state">আপনার কোনো রাজ্য নেই</string>
+    <string name="not_district">আপনার কোনো জেলা নেই</string>
+    <string name="not_municipality_panchayat">আপনার পৌরসভা/পঞ্চায়েত নেই</string>
+    <string name="not_pincode">আপনার কোনো পিনকোড নেই</string>
+    <string name="not_Organisation">আপনার কোন সংগঠন নেই</string>
+    <string name="saveUpdate">সংরক্ষণ করুন &amp; আপডেট করুন</string>
+
+    <string name="current_Vending_Address_underline"><u>বর্তমান ভেন্ডিং ঠিকানা:</u></string>
+    <string name="associated_organizationSemi">সংশ্লিষ্ট সংস্থা:</string>
+    <string name="firstNameSemi">প্রথম নাম:</string>
+    <string name="lastNameSemi">শেষ নাম:</string>
+    <string name="genderSemi">লিঙ্গ:</string>
+    <string name="dobSemi">ডিওবি:</string>
+    <string name="mobileSemi">মোবাইল:</string>
+    <string name="typeofVendingSemi">ভেন্ডিংয়ের ধরন:</string>
+    <string name="typeofMarketPlaceSemi">বাজার স্থানের ধরন:</string>
+    <string name="stateSemi">রাজ্য:</string>
+    <string name="districtSemi">জেলা:</string>
+    <string name="municipalitySemi">পৌরসভা:</string>
+    <string name="addressSemi">ঠিকানা:</string>
+    <string name="membershipIDSemi">মেম্বারশিপ আইডি: %s</string>
+    <string name = "validUptoSemi"> পর্যন্ত বৈধ: %s</string>
+    <string name="successfully_downloaded">সফলভাবে ডাউনলোড করা হয়েছে</string>
+
 </resources>

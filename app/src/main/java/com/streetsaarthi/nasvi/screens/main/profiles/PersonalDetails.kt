@@ -212,23 +212,28 @@ class PersonalDetails : Fragment() , CallBackListener {
                         when(it){
                             "Single" -> {
                                 editTextMaritalStatus.setText(listMaritalStatus[0])
+                                textSpouseNameTxt.visibility = View.GONE
                                 editTextSpouseName.visibility = View.GONE
                             }
                             "Married" -> {
                                 editTextMaritalStatus.setText(listMaritalStatus[1])
                                 editTextSpouseName.setText("${data.spouse_name}")
+                                textSpouseNameTxt.visibility = View.VISIBLE
                                 editTextSpouseName.visibility = View.VISIBLE
                             }
                             "Widowed" -> {
                                 editTextMaritalStatus.setText(listMaritalStatus[2])
+                                textSpouseNameTxt.visibility = View.GONE
                                 editTextSpouseName.visibility = View.GONE
                             }
                             "Divorced" -> {
                                 editTextMaritalStatus.setText(listMaritalStatus[3])
+                                textSpouseNameTxt.visibility = View.GONE
                                 editTextSpouseName.visibility = View.GONE
                             }
                             "Separated" -> {
                                 editTextMaritalStatus.setText(listMaritalStatus[4])
+                                textSpouseNameTxt.visibility = View.GONE
                                 editTextSpouseName.visibility = View.GONE
                             }
                         }
@@ -275,7 +280,10 @@ class PersonalDetails : Fragment() , CallBackListener {
                     } else {
                         editTextSelectPincode.setText("")
                     }
-                    editTextAddress.setText("${data.residential_address}")
+
+                    data.residential_address?.let {
+                        editTextAddress.setText("${data.residential_address}")
+                    }
 
                     data.residential_state?.let {
                         viewModel.data.current_state = ""+data.residential_state.id
@@ -627,8 +635,10 @@ class PersonalDetails : Fragment() , CallBackListener {
             .setItems(list) {_,which->
                 binding.editTextMaritalStatus.setText(list[which])
                 if (list[which] == getString(R.string.married)){
+                    binding.textSpouseNameTxt.visibility = View.VISIBLE
                     binding.editTextSpouseName.visibility = View.VISIBLE
                 }else{
+                    binding.textSpouseNameTxt.visibility = View.GONE
                     binding.editTextSpouseName.visibility = View.GONE
                     viewModel.data.spouse_name = null
                 }
