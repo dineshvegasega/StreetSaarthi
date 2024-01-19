@@ -231,19 +231,19 @@ var tabPosition: Int = 0;
             } else if (pos == 6) {
                 var docs = StringBuffer()
                 if(viewModel.data.ImageUploadCOVBoolean == true){
-                    docs.append(getString(R.string.COVText))
+                    docs.append(getString(R.string.COVText)+" ")
                 }
                 if(viewModel.data.ImageUploadLORBoolean == true){
-                    docs.append(getString(R.string.LORText))
+                    docs.append(getString(R.string.LORText)+" ")
                 }
                 if(viewModel.data.UploadSurveyReceiptBoolean == true){
-                    docs.append(getString(R.string.Survery_ReceiptText))
+                    docs.append(getString(R.string.Survery_ReceiptText)+" ")
                 }
                 if(viewModel.data.UploadChallanBoolean == true){
-                    docs.append(getString(R.string.ChallanText))
+                    docs.append(getString(R.string.ChallanText)+" ")
                 }
                 if(viewModel.data.UploadApprovalLetterBoolean == true){
-                    docs.append(getString(R.string.Approval_LetterText))
+                    docs.append(getString(R.string.Approval_LetterText)+" ")
                 }
 
                 val requestBody: MultipartBody.Builder = MultipartBody.Builder()

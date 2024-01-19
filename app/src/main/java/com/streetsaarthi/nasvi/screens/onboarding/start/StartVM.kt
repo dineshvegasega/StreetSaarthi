@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi.screens.onboarding.start
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.demo.networking.Repository
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
@@ -12,80 +13,35 @@ import javax.inject.Inject
 class StartVM @Inject constructor(private val repository: Repository): ViewModel() {
 
     var itemMain : ArrayList<Item> ?= ArrayList()
-    val locale: Locale = MainActivity.context.get()!!.resources.configuration.locales[0]
+    val locale: Locale = Locale.getDefault()
+
+    var appLanguage = MutableLiveData<String>("")
 
     init {
-        if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.english), MainActivity.context.get()!!.getString(R.string.englishVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.english), MainActivity.context.get()!!.getString(R.string.englishVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.english), MainActivity.context.get()!!.getString(R.string.englishVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.bengali), MainActivity.context.get()!!.getString(R.string.bengaliVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.gujarati), MainActivity.context.get()!!.getString(R.string.gujaratiVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.hindi), MainActivity.context.get()!!.getString(R.string.hindiVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.kannada), MainActivity.context.get()!!.getString(R.string.kannadaVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.malayalam), MainActivity.context.get()!!.getString(R.string.malayalamVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.marathi), MainActivity.context.get()!!.getString(R.string.marathiVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.punjabi), MainActivity.context.get()!!.getString(R.string.punjabiVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.tamil), MainActivity.context.get()!!.getString(R.string.tamilVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.telugu), MainActivity.context.get()!!.getString(R.string.teluguVal),false))
+        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.urdu), MainActivity.context.get()!!.getString(R.string.urduVal),false))
+//        itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.assamese), MainActivity.context.get()!!.getString(R.string.assameseVal),false))
+
+
+        for (item in itemMain!!.iterator()) {
+            if(item.locale == ""+locale){
+                item.apply {
+                    item.isSelected = true
+                }
+                appLanguage.value = item.name
+            }
         }
 
-        if (MainActivity.context.get()!!.getString(R.string.bengaliVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.bengali), MainActivity.context.get()!!.getString(R.string.bengaliVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.bengali), MainActivity.context.get()!!.getString(R.string.bengaliVal),false))
-        }
 
-        if (MainActivity.context.get()!!.getString(R.string.gujaratiVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.gujarati), MainActivity.context.get()!!.getString(R.string.gujaratiVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.gujarati), MainActivity.context.get()!!.getString(R.string.gujaratiVal),false))
-        }
-
-        if (MainActivity.context.get()!!.getString(R.string.hindiVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.hindi), MainActivity.context.get()!!.getString(R.string.hindiVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.hindi), MainActivity.context.get()!!.getString(R.string.hindiVal),false))
-        }
-
-        if (MainActivity.context.get()!!.getString(R.string.kannadaVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.kannada), MainActivity.context.get()!!.getString(R.string.kannadaVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.kannada), MainActivity.context.get()!!.getString(R.string.kannadaVal),false))
-        }
-
-        if (MainActivity.context.get()!!.getString(R.string.malayalamVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.malayalam), MainActivity.context.get()!!.getString(R.string.malayalamVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.malayalam), MainActivity.context.get()!!.getString(R.string.malayalamVal),false))
-        }
-
-        if (MainActivity.context.get()!!.getString(R.string.marathiVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.marathi), MainActivity.context.get()!!.getString(R.string.marathiVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.marathi), MainActivity.context.get()!!.getString(R.string.marathiVal),false))
-        }
-
-        if (MainActivity.context.get()!!.getString(R.string.punjabiVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.punjabi), MainActivity.context.get()!!.getString(R.string.punjabiVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.punjabi), MainActivity.context.get()!!.getString(R.string.punjabiVal),false))
-        }
-
-        if (MainActivity.context.get()!!.getString(R.string.tamilVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.tamil), MainActivity.context.get()!!.getString(R.string.tamilVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.tamil), MainActivity.context.get()!!.getString(R.string.tamilVal),false))
-        }
-
-        if (MainActivity.context.get()!!.getString(R.string.teluguVal) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.telugu), MainActivity.context.get()!!.getString(R.string.teluguVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.telugu), MainActivity.context.get()!!.getString(R.string.teluguVal),false))
-        }
-
-//        if (MainActivity.context.get()!!.getString(R.string.assamese) == ""+locale){
-//            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.assamese), MainActivity.context.get()!!.getString(R.string.assameseVal),true))
-//        }else{
-//            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.assamese), MainActivity.context.get()!!.getString(R.string.assameseVal),false))
-//        }
-
-        if (MainActivity.context.get()!!.getString(R.string.urdu) == ""+locale){
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.urdu), MainActivity.context.get()!!.getString(R.string.urduVal),true))
-        }else{
-            itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.urdu), MainActivity.context.get()!!.getString(R.string.urduVal),false))
-        }
     }
 
     data class Item (

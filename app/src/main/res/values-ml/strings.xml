@@ -259,12 +259,6 @@
     </string-array>
 
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
-
 
     <string name="or">അഥവാ</string>
     <string name="enterOtpHere">OTP ഇവിടെ നൽകുക</string>
@@ -422,5 +416,8 @@
     <string name="membershipIDSemi">അംഗത്വ ഐഡി: %s</string>
     <string name="validUptoSemi">സാധുതയുള്ളത്: %s</string>
     <string name="successfully_downloaded">വിജയകരമായി ഡൗൺലോഡ് ചെയ്തു</string>
+    <string name="logged_in_successfully">വിജയകരമായി ലോഗിൻ ചെയ്തു</string>
+    <string name="please_provide_valid_password">ദയവായി സാധുവായ പാസ്‌വേഡ് നൽകുക</string>
+    <string name="user_does_not_exist">ഉപയോക്താവ് നിലവിലില്ല</string>
 
 </resources>

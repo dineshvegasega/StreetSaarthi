@@ -788,7 +788,7 @@ class Register2  : Fragment() , CallBackListener {
                             }else{
                                 Log.e(TAG, "schemeNameAA22 ")
                                 if(binding.inclideGovernment.cbRememberPMSwanidhiScheme.isChecked == true){
-                                    schemeName.append(getString(R.string.pm_swanidhi_scheme)+", ")
+                                    schemeName.append(getString(R.string.pm_swanidhi_schemeSingle)+" ")
                                 }
                                 if(binding.inclideGovernment.cbRememberOthersPleaseName.isChecked == true){
                                     schemeName.append(binding.inclideGovernment.editTextSchemeName.text.toString())

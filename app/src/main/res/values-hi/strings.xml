@@ -107,7 +107,7 @@
 
     <string name="resendOtp">OTP पुनः भेजें</string>
     <string name="OTPnotverified">ओटीपी सत्यापित नहीं है</string>
-    <string name="YourNewPassword">Your New Password</string>
+    <string name="YourNewPassword">आपका नया पासवर्ड</string>
     <string name="back_to_home">मुख्य पृष्ठ पर जाये</string>
     <string name="back_to_home_u"><u>मुख्य पृष्ठ पर जाये</u></string>
     <string name="CreatePasswordReEnterPasswordisnotsame">*पासवर्ड मेल नहीं खाता</string>
@@ -264,11 +264,6 @@
         </string-array>
 
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
 
     <string name="or">या</string>
     <string name="enterOtpHere">यहां OTP दर्ज करें</string>
@@ -424,5 +419,8 @@
     <string name='membershipIDSemi'>सदस्यता आईडी: %s</string>
     <string name='validUptoSemi'>इस तक वैध: %s</string>
     <string name='successfully_downloaded'>सफलतापूर्वक डाउनलोड किया गया</string>
+    <string name='logged_in_successfully'>सफलतापूर्वक लॉग इन किया गया</string>
+    <string name='please_provide_valid_password'>कृपया वैध पासवर्ड प्रदान करें</string>
+    <string name='user_does_not_exist'>उपयोगकर्ता मौजूद नहीं है</string>
 
 </resources>

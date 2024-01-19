@@ -1,6 +1,8 @@
 package com.streetsaarthi.nasvi.screens.onboarding.quickRegistration
 
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -136,7 +138,7 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
                     Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_quickRegistration_to_registerSuccessful)
+                            view.findNavController().navigate(R.id.action_quickRegistration_to_registerSuccessful)
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
                     }
@@ -169,7 +171,7 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
                     Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_register_to_registerSuccessful)
+                            view.findNavController().navigate(R.id.action_register_to_registerSuccessful)
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
                     }

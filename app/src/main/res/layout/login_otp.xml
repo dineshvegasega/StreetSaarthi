@@ -88,12 +88,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/textHeaderTxt22"
                     />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/editTextSendOtp"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/white_round_corner"
-                    style="@style/PrimaryEditText"
+                    style="@style/PrimaryButtonYellow"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:hint="@string/Forgot"
                     android:inputType="number"
                     android:text="@string/send_otp"
@@ -104,6 +105,9 @@
                     android:cursorVisible="false"
                     android:gravity="center"
                     android:backgroundTint="@color/_E79D46"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:cornerRadius="@dimen/_5sdp"
+                    android:textSize="@dimen/_11ssp"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -240,12 +244,13 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/editTextLoginWith"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/white_round_corner"
-                    style="@style/PrimaryEditText"
+                    style="@style/PrimaryButtonYellow"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:hint="@string/loginWithPassword"
                     android:text="@string/loginWithPassword"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -253,6 +258,11 @@
                     android:focusable="false"
                     android:paddingHorizontal="@dimen/_30sdp"
                     app:layout_constraintTop_toBottomOf="@+id/layoutOr"
+                    app:cornerRadius="@dimen/_5sdp"
+                    app:strokeColor="@color/_868686"
+                    android:textColor="@color/_999999"
+                    android:textColorHint="@color/_999999"
+                    android:textSize="@dimen/_11ssp"
                     />
 
 

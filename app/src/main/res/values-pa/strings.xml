@@ -262,11 +262,6 @@
     </string-array>
 
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
 
 
     <string name="or">ਜਾਂ</string>
@@ -426,5 +421,8 @@
     <string name="membershipIDSemi">ਮੈਂਬਰਸ਼ਿਪ ID: %s</string>
     <string name = "validUptoSemi"> ਤੱਕ ਵੈਧ: %s</string>
     <string name="successfully_downloaded">ਸਫਲਤਾਪੂਰਵਕ ਡਾਊਨਲੋਡ ਕੀਤਾ</string>
+    <string name="logged_in_successfully">ਸਫਲਤਾ ਨਾਲ ਲੌਗਇਨ ਕੀਤਾ</string>
+    <string name="please_provide_valid_password">ਕਿਰਪਾ ਕਰਕੇ ਵੈਧ ਪਾਸਵਰਡ ਪ੍ਰਦਾਨ ਕਰੋ</string>
+    <string name="user_does_not_exist">ਉਪਭੋਗਤਾ ਮੌਜੂਦ ਨਹੀਂ ਹੈ</string>
 
 </resources>

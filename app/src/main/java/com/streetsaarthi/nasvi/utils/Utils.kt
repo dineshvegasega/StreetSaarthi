@@ -20,18 +20,19 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.viewpager.widget.ViewPager
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-
-import com.streetsaarthi.nasvi.R
-import com.google.android.material.snackbar.Snackbar
-import org.json.JSONObject
-import java.io.File
-import java.io.FileOutputStream
-import java.util.*
 import coil.load
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import com.kochia.customer.utils.hideKeyboard
+import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -228,7 +229,7 @@ fun ImageView.loadImage(
 
 
 val myOptionsGlide: RequestOptions = RequestOptions()
-    .placeholder(R.drawable.user_icon)
+    .placeholder(R.drawable.no_image)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .dontAnimate()
     //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
@@ -297,8 +298,32 @@ fun ViewPager.autoScroll() {
 
 
 fun ViewPager.autoScrollStop() {
-    runnable?.let { handler.removeCallbacks(it) };
+    runnable?.let { handler.removeCallbacks(it) }
 }
+
+
+@SuppressLint("SimpleDateFormat")
+fun String.changeDateFormat() : String? {
+    var str : String ?= ""
+    try {
+        val inputPattern = "yyyy-MM-dd"
+        val outputPattern = "dd-MMM-yyyy"
+        val inputFormat = SimpleDateFormat(inputPattern)
+        val outputFormat = SimpleDateFormat(outputPattern)
+        var date: Date? = null
+        try {
+            date = inputFormat.parse(this)
+            str = date?.let { outputFormat.format(it) }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+    }catch (e: Exception){
+        str = ""
+    }
+    return str
+}
+
+
 
 fun Context.isTablet(): Boolean {
     return this.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_LARGE

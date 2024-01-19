@@ -1,5 +1,7 @@
 package com.streetsaarthi.nasvi.screens.onboarding.register
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -444,7 +446,9 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_register_to_registerSuccessful)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            view.findNavController().navigate(R.id.action_register_to_registerSuccessful)
+                        },100)
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
                     }

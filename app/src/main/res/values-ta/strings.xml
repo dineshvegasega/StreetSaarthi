@@ -257,11 +257,7 @@
         <item>വേർപെടുത്തി</item>
     </string-array>
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
+
 
 
     <string name="or">அல்லது</string>
@@ -421,5 +417,8 @@
     <string name="membershipIDSemi">உறுப்பினர் ஐடி: %s</string>
     <string name="validUptoSemi">இதுவரை செல்லுபடியாகும்: %s</string>
     <string name="successfully_downloaded">வெற்றிகரமாக பதிவிறக்கப்பட்டது</string>
+    <string name="logged_in_successfully">வெற்றிகரமாக உள்நுழைந்துள்ளீர்கள்</string>
+    <string name="please_provide_valid_password">சரியான கடவுச்சொல்லை வழங்கவும்</string>
+    <string name="user_does_not_exist">பயனர் இல்லை</string>
 
 </resources>

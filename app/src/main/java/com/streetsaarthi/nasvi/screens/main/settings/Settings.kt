@@ -4,14 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -25,6 +29,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
 import com.streetsaarthi.nasvi.screens.onboarding.start.StartVM
 import com.streetsaarthi.nasvi.utils.LocaleHelper
+import com.streetsaarthi.nasvi.utils.OtpTimer
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +39,9 @@ class Settings : Fragment() {
     private val binding get() = _binding!!
 
     var itemMain : ArrayList<Item> ?= ArrayList()
+
+    var languageAlert : BottomSheetDialog?= null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,47 +58,29 @@ class Settings : Fragment() {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.settings)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
-            if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""){
-            } else if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.english)
-            } else if (MainActivity.context.get()!!.getString(R.string.bengaliVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.bengali)
-            } else if (MainActivity.context.get()!!.getString(R.string.gujaratiVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.gujarati)
-            } else if (MainActivity.context.get()!!.getString(R.string.hindiVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.hindi)
-            } else if (MainActivity.context.get()!!.getString(R.string.kannadaVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.kannada)
-            } else if (MainActivity.context.get()!!.getString(R.string.malayalamVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.malayalam)
-            } else if (MainActivity.context.get()!!.getString(R.string.marathiVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.marathi)
-            } else if (MainActivity.context.get()!!.getString(R.string.punjabiVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.punjabi)
-            } else if (MainActivity.context.get()!!.getString(R.string.tamilVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.tamil)
-            } else if (MainActivity.context.get()!!.getString(R.string.teluguVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.telugu)
-//            } else if (MainActivity.context.get()!!.getString(R.string.assameseVal) == ""+viewModel.locale){
-//                editTextSelectLanguage.setText(R.string.assamese)
-            } else if (MainActivity.context.get()!!.getString(R.string.urduVal) == ""+viewModel.locale){
-                editTextSelectLanguage.setText(R.string.urdu)
-            }
+            viewModel.appLanguage.observe(viewLifecycleOwner, Observer {
+                editTextSelectLanguage.setText(it)
+            })
 
 
 
             editTextSelectLanguage.setOnClickListener {
+                if(languageAlert?.isShowing == true) {
+                    return@setOnClickListener
+                }
                 val dialogView: View = LayoutInflater.from(requireContext())
                     .inflate(R.layout.dialog_bottom_your_booking2, null)
-                val dialog = BottomSheetDialog(requireContext())
-                dialog.setContentView(dialogView)
-                dialog.show()
-                val window = dialog.window
+                languageAlert = BottomSheetDialog(requireContext())
+                languageAlert?.setContentView(dialogView)
+                languageAlert?.let {
+                    languageAlert?.show()
+                }
+                val window = languageAlert?.window
                 window!!.setLayout(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-                window!!.setBackgroundDrawableResource(android.R.color.transparent)
+                window?.setBackgroundDrawableResource(android.R.color.transparent)
 
                 val pastBookingAdapter =
                     object : GenericAdapter<ItemLanguageStartBinding, SettingsVM.Item>() {
@@ -123,13 +113,16 @@ class Settings : Fragment() {
                                 notifyDataSetChanged()
 
                                 LocaleHelper.setLocale(requireContext(), dataClass.locale)
-                                val refresh =
-                                    Intent(Intent(requireActivity(), MainActivity::class.java))
-                                refresh.putExtra(Screen, Main)
-                                refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(refresh)
-                                MainActivity.activity.get()!!.finish()
-                                MainActivity.activity.get()!!.finishAffinity()
+//                                Handler(Looper.getMainLooper()).postDelayed({
+                                    val refresh =
+                                        Intent(Intent(requireActivity(), MainActivity::class.java))
+                                    refresh.putExtra(Screen, Main)
+                                    refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    startActivity(refresh)
+                                    MainActivity.activity.get()!!.finish()
+                                    MainActivity.activity.get()!!.finishAffinity()
+//                                },100)
+
                             }
 
                             binding.btImage.setOnClickListener {
@@ -142,13 +135,15 @@ class Settings : Fragment() {
                                 notifyDataSetChanged()
 
                                 LocaleHelper.setLocale(requireContext(), dataClass.locale)
-                                val refresh =
-                                    Intent(Intent(requireActivity(), MainActivity::class.java))
-                                refresh.putExtra(Screen, Main)
-                                refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(refresh)
-                                MainActivity.activity.get()!!.finish()
-                                MainActivity.activity.get()!!.finishAffinity()
+//                                Handler(Looper.getMainLooper()).postDelayed({
+                                    val refresh =
+                                        Intent(Intent(requireActivity(), MainActivity::class.java))
+                                    refresh.putExtra(Screen, Main)
+                                    refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    startActivity(refresh)
+                                    MainActivity.activity.get()!!.finish()
+                                    MainActivity.activity.get()!!.finishAffinity()
+//                                },100)
                             }
                         }
                     }
@@ -167,6 +162,9 @@ class Settings : Fragment() {
 
 
     override fun onDestroyView() {
+        languageAlert?.let {
+            languageAlert!!.cancel()
+        }
         _binding = null
         super.onDestroyView()
     }

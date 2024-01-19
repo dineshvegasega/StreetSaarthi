@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
@@ -42,6 +45,7 @@ class Start : Fragment() {
     @get:JvmName("getAdapterContext")
     lateinit var resources : Resources
 
+    var languageAlert : BottomSheetDialog?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,107 +71,36 @@ class Start : Fragment() {
 
         binding.apply {
             btSignIn.setOnClickListener {
-                requireView().findNavController().navigate(R.id.action_start_to_walkThrough)
+                    view.findNavController().navigate(R.id.action_start_to_walkThrough)
             }
             btSignIn.setText(R.string.explore_app)
             btSignIn.setEnabled(false)
-            if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""){
-                btSignIn.setEnabled(false)
-            } else if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.english)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.bengaliVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.bengali)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.gujaratiVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.gujarati)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.hindiVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.hindi)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.kannadaVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.kannada)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.malayalamVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.malayalam)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.marathiVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.marathi)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.punjabiVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.punjabi)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.tamilVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.tamil)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.teluguVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.telugu)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.assameseVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.assamese)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            } else if (MainActivity.context.get()!!.getString(R.string.urduVal) == ""+viewModel.locale){
-                btLanguage.setText(R.string.urdu)
-                btSignIn.setEnabled(true)
-                btSignIn.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
-            }
 
-
+            viewModel.appLanguage.observe(viewLifecycleOwner, Observer {
+                if(it == ""){
+                    btSignIn.setEnabled(false)
+                }else{
+                    btLanguage.setText(it)
+                    btSignIn.setEnabled(true)
+                    btSignIn.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._E79D46, null)))
+                }
+            })
 
             btLanguage.setOnClickListener {
+                if(languageAlert?.isShowing == true) {
+                    return@setOnClickListener
+                }
                 val dialogView: View = LayoutInflater.from(requireContext())
                     .inflate(R.layout.dialog_bottom_your_booking2, null)
-                val dialog = BottomSheetDialog(requireContext())
-                dialog.setContentView(dialogView)
-                dialog.show()
-                val window=dialog.window
+                languageAlert = BottomSheetDialog(requireContext())
+                languageAlert?.setContentView(dialogView)
+                languageAlert?.let {
+                    languageAlert?.show()
+                }
+                val window=languageAlert?.window
                 window!!.setLayout(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
@@ -198,12 +131,12 @@ class Start : Fragment() {
                             notifyDataSetChanged()
 
                             LocaleHelper.setLocale(requireContext(),dataClass.locale)
-                            val refresh = Intent(Intent(requireActivity(), MainActivity::class.java))
-                            refresh.putExtra(Screen, Start)
-                            refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(refresh)
-                            MainActivity.activity.get()!!.finish()
-                            MainActivity.activity.get()!!.finishAffinity()
+                                val refresh = Intent(Intent(requireActivity(), MainActivity::class.java))
+                                refresh.putExtra(Screen, Start)
+                                refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(refresh)
+                                MainActivity.activity.get()!!.finish()
+                                MainActivity.activity.get()!!.finishAffinity()
                         }
 
                         binding.btImage.setOnClickListener {
@@ -216,12 +149,12 @@ class Start : Fragment() {
                             notifyDataSetChanged()
 
                             LocaleHelper.setLocale(requireContext(),dataClass.locale)
-                            val refresh = Intent(Intent(requireActivity(), MainActivity::class.java))
-                            refresh.putExtra(Screen, Start)
-                            refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(refresh)
-                            MainActivity.activity.get()!!.finish()
-                            MainActivity.activity.get()!!.finishAffinity()
+                                val refresh = Intent(Intent(requireActivity(), MainActivity::class.java))
+                                refresh.putExtra(Screen, Start)
+                                refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(refresh)
+                                MainActivity.activity.get()!!.finish()
+                                MainActivity.activity.get()!!.finishAffinity()
                         }
                     }
                 }
@@ -233,13 +166,14 @@ class Start : Fragment() {
 
             }
         }
-
-
     }
 
 
 
     override fun onDestroyView() {
+        languageAlert?.let {
+            languageAlert!!.cancel()
+        }
         _binding = null
         super.onDestroyView()
         Log.e("TAG", "onDestroyView")

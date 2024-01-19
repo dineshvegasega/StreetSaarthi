@@ -259,11 +259,6 @@
         <item>અલગ કરેલ</item>
     </string-array>
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
 
 
     <string name="or">અથવા</string>
@@ -418,5 +413,8 @@
     <string name="membershipIDSemi">સદસ્યતા ID: %s</string>
     <string name="validUptoSemi">સુધી માન્ય: %s</string>
     <string name="successfully_downloaded">સફળતાપૂર્વક ડાઉનલોડ</string>
+    <string name = "logged_in_successfully">સફળતાપૂર્વક લોગ ઇન થયા</string>
+    <string name="please_provide_valid_password">કૃપા કરીને માન્ય પાસવર્ડ આપો</string>
+    <string name="user_does_not_exist">વપરાશકર્તા અસ્તિત્વમાં નથી</string>
 
 </resources>

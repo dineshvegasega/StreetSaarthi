@@ -215,17 +215,137 @@ class ProfessionalDetails : Fragment() , CallBackListener {
         callBackListener = this
     }
 
+    var docs : String ?= ""
+    var stringCOV = ""
+    var stringSurveyReceipt = ""
+    var stringLOR = ""
+    var stringChallan = ""
+    var stringApprovalLetter = ""
+
+    var scheme : String ?= ""
+    var stringPm_swanidhi_schemeSingle = ""
+    var stringOtherSchemeName = ""
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         callBackListener = this
 
+
         binding.apply {
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
                     Log.e("TAG", "dataZZ "+data.toString())
+
+
+                    if(data.vending_documents != "null"){
+                        if(data.vending_documents.contains(getString(R.string.COVText))){
+                            cbRememberCOV.isChecked = true
+                            stringCOV = getString(R.string.COVText)+" "
+                        }
+                        if(data.vending_documents.contains(getString(R.string.LORText))){
+                            cbRememberSurveyReceipt.isChecked = true
+                            stringSurveyReceipt = getString(R.string.Survery_ReceiptText)+" "
+                        }
+                        if(data.vending_documents.contains(getString(R.string.Survery_ReceiptText))){
+                            cbRememberLOR.isChecked = true
+                            stringLOR = getString(R.string.LORText)+" "
+                        }
+                        if(data.vending_documents.contains(getString(R.string.ChallanText))){
+                            cbRememberChallan.isChecked = true
+                            stringChallan = getString(R.string.ChallanText)+" "
+                        }
+                        if(data.vending_documents.contains(getString(R.string.Approval_LetterText))){
+                            cbRememberApprovalLetter.isChecked = true
+                            stringApprovalLetter = getString(R.string.Approval_LetterText)+" "
+                        }
+                    }
+
+                    docs = stringCOV+stringSurveyReceipt+stringLOR+stringChallan+stringApprovalLetter
+                    viewModel.data.vending_documents = docs
+
+
+                    cbRememberCOV.setOnClickListener {
+                        if (cbRememberCOV.isChecked){
+                            stringCOV = getString(R.string.COVText)+" "
+                        } else {
+                            stringCOV = ""
+                        }
+                    }
+
+                    cbRememberSurveyReceipt.setOnClickListener {
+                        if (cbRememberSurveyReceipt.isChecked){
+                            stringSurveyReceipt = getString(R.string.Survery_ReceiptText)+" "
+                        } else {
+                            stringSurveyReceipt = ""
+                        }
+                    }
+
+                    cbRememberLOR.setOnClickListener {
+                        if (cbRememberLOR.isChecked){
+                            stringLOR = getString(R.string.LORText)+" "
+                        } else {
+                            stringLOR = ""
+                        }
+                    }
+
+                    cbRememberChallan.setOnClickListener {
+                        if (cbRememberChallan.isChecked){
+                            stringChallan = getString(R.string.ChallanText)+" "
+                        } else {
+                            stringChallan = ""
+                        }
+                    }
+
+                    cbRememberApprovalLetter.setOnClickListener {
+                        if (cbRememberApprovalLetter.isChecked){
+                            stringApprovalLetter = getString(R.string.Approval_LetterText)+" "
+                        } else {
+                            stringApprovalLetter = ""
+                        }
+                    }
+
+
+                    if(data.availed_scheme != "null"){
+                        inclideGovernment.root.visibility = View.VISIBLE
+                        if(data.availed_scheme.contains(getString(R.string.pm_swanidhi_schemeSingle))){
+                            inclideGovernment.cbRememberPMSwanidhiScheme.isChecked = true
+                            stringPm_swanidhi_schemeSingle = getString(R.string.pm_swanidhi_schemeSingle)+" "
+                        }
+
+                        var xx = data.availed_scheme.split(" ")
+                        for (item in xx!!.iterator()) {
+                            if(item != getString(R.string.pm_swanidhi_schemeSingle)){
+                                inclideGovernment.cbRememberOthersPleaseName.isChecked = true
+                                stringOtherSchemeName = item+" "
+                                inclideGovernment.editTextSchemeName.setText(stringOtherSchemeName)
+                            }
+                        }
+                    } else {
+                        inclideGovernment.root.visibility = View.GONE
+                    }
+                    scheme = stringPm_swanidhi_schemeSingle+stringOtherSchemeName
+                    viewModel.data.schemeName = scheme
+
+
+                    inclideGovernment.cbRememberPMSwanidhiScheme.setOnClickListener {
+                        if (inclideGovernment.cbRememberPMSwanidhiScheme.isChecked){
+                            stringPm_swanidhi_schemeSingle = getString(R.string.pm_swanidhi_schemeSingle)+" "
+                        } else {
+                            stringPm_swanidhi_schemeSingle = ""
+                        }
+                    }
+
+                    inclideGovernment.cbRememberOthersPleaseName.setOnClickListener {
+                        if (inclideGovernment.cbRememberOthersPleaseName.isChecked){
+                            scheme = stringOtherSchemeName+" "
+                        } else {
+                            scheme = ""
+                        }
+                    }
+
+
                     viewModel.marketplace(view)
                     viewModel.marketPlaceTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
@@ -568,11 +688,20 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
                 viewModel.data.vending_address = ""+editTextVendingAddress.text.toString()
 
+                docs = stringCOV+stringSurveyReceipt+stringLOR+stringChallan+stringApprovalLetter
+                viewModel.data.vending_documents = docs
+
+                scheme = stringPm_swanidhi_schemeSingle+stringOtherSchemeName
+                viewModel.data.schemeName = scheme
+
+
+                Log.e("TAG", "docsAA "+scheme.toString())
+
                 Log.e("TAG", "viewModel2.data2 "+ viewModel.data.toString())
 
 
 
-                update()
+               // update()
 
             }
 
@@ -1025,11 +1154,13 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 //                }
 
-//                if(!docs.toString().isEmpty()){
-//                    requestBody.addFormDataPart("vending_documents", docs.toString())
-//                } else{
-//                    requestBody.addFormDataPart("vending_documents", "null")
-//                }
+                docs = stringCOV+stringSurveyReceipt+stringLOR+stringChallan+stringApprovalLetter
+                viewModel.data.vending_documents = docs
+                if(!docs.toString().isEmpty()){
+                    requestBody.addFormDataPart("vending_documents", docs.toString())
+                } else{
+                    requestBody.addFormDataPart("vending_documents", "null")
+                }
 
 //                if(!viewModel.data.schemeName!!.isEmpty()){
 //                    requestBody.addFormDataPart("availed_scheme",viewModel.data.schemeName!!)

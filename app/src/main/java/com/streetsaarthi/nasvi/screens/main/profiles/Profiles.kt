@@ -23,6 +23,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
 import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1
 import com.streetsaarthi.nasvi.utils.GlideApp
+import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.myOptionsGlide
 import dagger.hilt.android.AndroidEntryPoint
@@ -79,7 +80,7 @@ class Profiles : Fragment() , CallBackListener {
 
             adapter= ProfilePagerAdapter(requireActivity())
             adapter.notifyDataSetChanged()
-            introViewPager.setUserInputEnabled(false)
+            introViewPager.isUserInputEnabled = false
             adapter.addFragment(PersonalDetails())
             adapter.addFragment(ProfessionalDetails())
 
@@ -100,28 +101,23 @@ class Profiles : Fragment() , CallBackListener {
 
     private fun updateData() {
         binding.apply {
-
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     Log.e("TAG","loginUser "+loginUser)
-
-
                     var data = Gson().fromJson(loginUser, Login::class.java)
-
                     data.profile_image_name?.let {
                         inclidePersonalProfile.ivImageProfile.loadImage(url = { data.profile_image_name.url })
                     }
-
                     inclidePersonalProfile.textNameOfMember.text = "${data.vendor_first_name} ${data.vendor_last_name}"
                     inclidePersonalProfile.textMobileNumber.text = "+91-${data.mobile_no}"
                     inclidePersonalProfile.textMembershipIdValue.text = "${data.member_id}"
-                    inclidePersonalProfile.textValidUptoValue.text = "${data.validity_to}"
-
+                    data.validity_to?.let {
+                        inclidePersonalProfile.textValidUptoValue.text = "${data.validity_to.changeDateFormat()}"
+                    }
                     MainActivity.mainActivity.get()!!.callBack()
                 }
             }
         }
-
     }
 
 

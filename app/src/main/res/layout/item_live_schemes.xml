@@ -21,13 +21,13 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivMap"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_180sdp"
+            android:layout_height="@dimen/_170sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="visible"
             android:theme="@style/RoundCorner5"
-            app:srcCompat="@drawable/background"
+            app:srcCompat="@drawable/no_image"
             android:scaleType="centerCrop"
             />
 
@@ -117,7 +117,7 @@
                     android:id="@+id/textValidDateTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Watch Now"
+                    android:text="View Details"
                     android:textColor="@color/_000000"
                     android:textSize="@dimen/_10ssp"
                     app:fontFamily="@font/roboto_medium"

@@ -259,11 +259,6 @@
         <item>विभक्त</item>
     </string-array>
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
 
 
     <string name="or">किंवा</string>
@@ -422,5 +417,8 @@
     <string name="membershipIDSemi">सदस्यत्व आयडी: %s</string>
     <string name = "validUptoSemi"> पर्यंत वैध: %s</string>
     <string name="successfully_downloaded">यशस्वीरित्या डाउनलोड केले</string>
+    <string name="logged_in_successfully">यशस्वीपणे लॉग इन केले</string>
+    <string name="please_provide_valid_password">कृपया वैध पासवर्ड द्या</string>
+    <string name="user_does_not_exist">वापरकर्ता अस्तित्वात नाही</string>
 
 </resources>

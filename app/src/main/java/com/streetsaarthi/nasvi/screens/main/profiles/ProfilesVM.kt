@@ -502,6 +502,8 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
         var UploadChallanBoolean : Boolean ?= false,
         var UploadApprovalLetterBoolean : Boolean ?= false,
 
+        var vending_documents : String ?= "null",
+
         var governmentScheme : Boolean ?= false,
         var pmSwanidhiScheme : Boolean ?= false,
         var otherScheme : Boolean ?= false,

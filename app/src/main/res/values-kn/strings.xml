@@ -259,11 +259,6 @@
         <item>ಬೇರ್ಪಡಿಸಲಾಗಿದೆ</item>
     </string-array>
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
 
 
     <string name="or">ಅಥವಾ</string>
@@ -422,5 +417,8 @@
     <string name="membershipIDSemi">ಸದಸ್ಯತ್ವ ID: %s</string>
     <string name="validUptoSemi">ಇದಕ್ಕೆ ಮಾನ್ಯ: %s</string>
     <string name="successfully_downloaded">ಯಶಸ್ವಿಯಾಗಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="logged_in_successfully">ಯಶಸ್ವಿಯಾಗಿ ಲಾಗ್ ಇನ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="please_provide_valid_password">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್ ಒದಗಿಸಿ</string>
+    <string name="user_does_not_exist">ಬಳಕೆದಾರರು ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ</string>
 
 </resources>

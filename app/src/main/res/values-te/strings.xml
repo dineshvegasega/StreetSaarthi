@@ -261,11 +261,7 @@
     </string-array>
 
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
+
 
     <string name="or">లేదా</string>
     <string name="enterOtpHere">OTP ని ఇక్కడ నమోదు చేయండి</string>
@@ -425,5 +421,8 @@
     <string name="membershipIDSemi">సభ్యత్వ ID: %s</string>
     <string name="validUptoSemi">వరకు చెల్లుబాటు: %s</string>
     <string name="successfully_downloaded">విజయవంతంగా డౌన్‌లోడ్ చేయబడింది</string>
+    <string name="logged_in_successfully">విజయవంతంగా లాగ్ ఇన్ చేసారు</string>
+    <string name="please_provide_valid_password">దయచేసి చెల్లుబాటు అయ్యే పాస్‌వర్డ్ అందించండి</string>
+    <string name="user_does_not_exist">వినియోగదారు లేడు</string>
 
 </resources>

@@ -178,6 +178,7 @@
     <string name="upload_challan">Upload Challan</string>
     <string name="upload_approval_letter_from_municipality">Upload Approval Letter From Municipality</string>
     <string name="pm_swanidhi_scheme">PM Swanidhi Scheme</string>
+    <string name="pm_swanidhi_schemeSingle" translatable="false">PM_Swanidhi_Scheme</string>
     <string name="others_please_name">Others, Please Name</string>
     <string name="scheme_name">Scheme Name</string>
     <string name="professional_details">Professional Details</string>
@@ -278,11 +279,11 @@
     </string-array>
 
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
+    <string name="COVText" translatable="false">COV</string>
+    <string name="LORText" translatable="false">LOR</string>
+    <string name="Survery_ReceiptText" translatable="false">Survery_Receipt</string>
+    <string name="ChallanText" translatable="false">Challan</string>
+    <string name="Approval_LetterText" translatable="false">Approval_Letter</string>
 
     <string name="or">OR</string>
     <string name="enterOtpHere">Enter OTP Here</string>
@@ -441,8 +442,9 @@
     <string name="membershipIDSemi">Membership ID: %s</string>
     <string name="validUptoSemi">Valid Upto: %s</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
-
-
+    <string name="logged_in_successfully">Logged In  successfully</string>
+    <string name="please_provide_valid_password">Please provide valid password</string>
+    <string name="user_does_not_exist">User does not exist</string>
 
 
 

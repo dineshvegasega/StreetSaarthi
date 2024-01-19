@@ -1,6 +1,9 @@
 package com.streetsaarthi.nasvi.screens.onboarding.walkThrough
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +39,7 @@ class WalkThrough : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,13 +81,13 @@ class WalkThrough : Fragment() {
 
 
         binding.btSignIn.setOnClickListener {
-            if (tabPosition == 0){
-                binding.introViewPager.setCurrentItem(1, false)
-            } else if (tabPosition == 1){
-                binding.introViewPager.setCurrentItem(2, false)
-            } else {
-                requireView().findNavController().navigate(R.id.action_walkThrough_to_onBoard)
-            }
+                if (tabPosition == 0){
+                    binding.introViewPager.setCurrentItem(1, false)
+                } else if (tabPosition == 1){
+                    binding.introViewPager.setCurrentItem(2, false)
+                } else {
+                    requireView().findNavController().navigate(R.id.action_walkThrough_to_onBoard)
+                }
         }
 
 

@@ -1,16 +1,19 @@
 package com.streetsaarthi.nasvi.screens.onboarding.quickRegistration
 
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -53,7 +56,7 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
 
 
     @RequiresApi(Build.VERSION_CODES.R)
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.model = viewModel
@@ -114,20 +117,22 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
 
             smsVerifyCatcher = SmsVerifyCatcher(requireActivity(),
                 OnSmsCatchListener<String?> { message ->
-                    var otp = message.trim().substring(0,6)
-                    Log.e("TAG", "messageAAA "+otp)
+                    if(message != null && message.length >= 6){
+                        var otp = message.trim().substring(0,6).toInt()
+                            editTextOtp.setText("${otp}")
+                            var start2=editTextOtp.getSelectionStart()
+                            var end2=editTextOtp.getSelectionEnd()
+                            editTextOtp.setSelection(start2,end2)
+                    }
                 })
+
             editTextSendOtp.setOnClickListener {
                 //smsVerifyCatcher!!.onStart()
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 } else{
-                    val obj: JSONObject = JSONObject().apply {
-                        put("mobile_no", editTextMobileNumber.text.toString())
-                        put("slug", "signup")
-                        put("user_type", USER_TYPE)
-                    }
-                    viewModel.sendOTP(view = requireView(), obj)
+                    isFree = true
+                    callMediaPermissions()
                 }
             }
 
@@ -184,6 +189,49 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
 
         }
     }
+
+
+
+
+
+    private fun callMediaPermissions() {
+        activityResultLauncher.launch(
+                arrayOf(
+                    Manifest.permission.RECEIVE_SMS,
+                    Manifest.permission.READ_SMS)
+            )
+    }
+
+
+
+    var isFree = false
+    private val activityResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions())
+        { permissions ->
+            permissions.entries.forEach {
+                val permissionName = it.key
+                val isGranted = it.value
+                Log.e("TAG", "00000 "+permissionName)
+                if (isGranted) {
+                    Log.e("TAG", "11111"+permissionName)
+                    if(isFree){
+                        val obj: JSONObject = JSONObject().apply {
+                            put("mobile_no", binding.editTextMobileNumber.text.toString())
+                            put("slug", "signup")
+                            put("user_type", USER_TYPE)
+                        }
+                        viewModel.sendOTP(view = requireView(), obj)
+                        smsVerifyCatcher!!.onStart()
+                    }
+                    isFree = false
+                } else {
+                    // Permission is denied
+                    Log.e("TAG", "222222"+permissionName)
+                }
+            }
+        }
+
 
 
 

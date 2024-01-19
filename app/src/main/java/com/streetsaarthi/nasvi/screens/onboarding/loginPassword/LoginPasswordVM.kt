@@ -1,5 +1,7 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginPassword
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
@@ -36,12 +38,13 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.login(requestBody = jsonObject.getJsonRequestBody())
-
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        showSnackBar(response.body()?.message.orEmpty())
                         if(response.body()!!.data != null){
                             profile(view, ""+Gson().fromJson(response.body()!!.data, Login::class.java).id)
+                            showSnackBar(view.resources.getString(R.string.logged_in_successfully))
+                        } else {
+                            showSnackBar(view.resources.getString(R.string.please_provide_valid_password))
                         }
                     }
                 }
@@ -66,13 +69,13 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        showSnackBar(response.body()?.message.orEmpty())
+//                        showSnackBar(response.body()?.message.orEmpty())
                         if(response.body()!!.data != null){
                             Log.e("TAG", "aaaaa")
                             saveData(AUTH, response.body()!!.token ?: "")
                             saveObject(LOGIN_DATA, Gson().fromJson(response.body()!!.data, Login::class.java))
                             MainActivity.mainActivity.get()!!.callBack()
-                            view.findNavController().navigate(R.id.action_loginPassword_to_dashboard)
+                                view.findNavController().navigate(R.id.action_loginPassword_to_dashboard)
                         }
                     }
                 }

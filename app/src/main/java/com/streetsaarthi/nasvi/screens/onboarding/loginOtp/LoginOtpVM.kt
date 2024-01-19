@@ -1,5 +1,7 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginOtp
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -45,10 +47,14 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                             isSend.value = true
                             var number = jsonObject.getString("mobile_no")
                             showSnackBar(view.resources.getString(R.string.otp_sent, number))
-                        } else {
+                        } else if(response.body()?.message == "User already exist"){
                             isSend.value = false
                             showSnackBar(view.resources.getString(R.string.user_already_exist))
+                        } else {
+                            isSend.value = false
+                            showSnackBar(view.resources.getString(R.string.user_does_not_exist))
                         }
+
                     } else{
                         isSend.value = false
                         showSnackBar(response.body()?.message.orEmpty())

@@ -1,17 +1,21 @@
 package com.streetsaarthi.nasvi.screens.onboarding.splash
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys.LOGIN_DATA
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.SplashBinding
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.navHostFragment
 
 import com.streetsaarthi.nasvi.utils.mainThread
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +30,7 @@ class Splash : Fragment() {
 //    @Inject
 //    lateinit var dataStore: DataStoreUtil
 
-
+var viewOf : View ?= null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +42,7 @@ class Splash : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewOf = view
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -53,15 +58,15 @@ class Splash : Fragment() {
         mainThread {
             delay(2000)
             readData(LOGIN_DATA) { loginUser ->
-                if(loginUser == null){
-                    Log.e("TAG", "onResume2AAA ")
-                    requireView().findNavController().navigate(R.id.action_splash_to_start)
-                    MainActivity.mainActivity.get()!!.callBack()
-                }else{
-                    Log.e("TAG", "onResume2BBB ")
-                    requireView().findNavController().navigate(R.id.action_splash_to_dashboard)
-                    MainActivity.mainActivity.get()!!.callBack()
-                }
+                    if(loginUser == null){
+                        Log.e("TAG", "onResume2AAA ")
+                        requireView().findNavController().navigate(R.id.action_splash_to_start)
+                        MainActivity.mainActivity.get()!!.callBack()
+                    }else{
+                        Log.e("TAG", "onResume2BBB ")
+                        requireView().findNavController().navigate(R.id.action_splash_to_dashboard)
+                        MainActivity.mainActivity.get()!!.callBack()
+                    }
             }
         }
     }

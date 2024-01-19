@@ -1,6 +1,8 @@
 package com.streetsaarthi.nasvi.screens.onboarding.registerSuccessful
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +31,7 @@ class RegisterSuccessful : Fragment() {
 
         binding.apply {
             btSignIn.setOnClickListener {
-                 requireView().findNavController().navigate(R.id.action_registerSuccessful_to_loginPassword)
+                requireView().findNavController().navigate(R.id.action_registerSuccessful_to_loginPassword)
             }
         }
     }

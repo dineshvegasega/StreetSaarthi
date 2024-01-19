@@ -261,11 +261,7 @@
     </string-array>
 
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
+
 
     <string name="or">یا</string>
     <string name="enterOtpHere">یہاں OTP درج کریں</string>
@@ -423,5 +419,8 @@
     <string name="membershipIDSemi">ممبرشپ ID: %s</string>
     <string name="validUptoSemi">درست تک: %s</string>
     <string name="successfully_downloaded">کامیابی سے ڈاؤن لوڈ ہو گیا</string>
-    
+    <string name="logged_in_successfully">کامیابی سے لاگ ان ہوا</string>
+    <string name="please_provide_valid_password">براہ کرم درست پاس ورڈ فراہم کریں</string>
+    <string name="user_does_not_exist">صارف موجود نہیں ہے</string>
+
 </resources>

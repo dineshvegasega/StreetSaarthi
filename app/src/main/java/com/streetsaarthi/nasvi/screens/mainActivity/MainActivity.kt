@@ -2,10 +2,12 @@ package com.streetsaarthi.nasvi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -41,6 +43,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
@@ -130,6 +133,23 @@ class MainActivity : AppCompatActivity() {
             } else {
                 isOpen = WeakReference(false)
             }
+        }
+
+        var cc = "COV LOR Survery_Receipt Challan Approval_Letter"
+        if(cc.contains("COV")){
+
+        }
+        if(cc.contains("LOR")){
+
+        }
+        if(cc.contains("Survery_Receipt")){
+
+        }
+        if(cc.contains("Challan")){
+
+        }
+        if(cc.contains("Approval_Letter")){
+
         }
 
 
@@ -245,11 +265,14 @@ class MainActivity : AppCompatActivity() {
             val navOptions: NavOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.navigation_bar, true)
                 .build()
-            if(screen == Start){
-                navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
-            } else if (screen == Main){
-                navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
-            }
+//            Handler(Looper.getMainLooper()).postDelayed(Thread {
+                    if(screen == Start){
+                        navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
+                    } else if (screen == Main){
+                        navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
+                    }
+//            }, 100)
+
         }
 
 
@@ -393,7 +416,12 @@ class MainActivity : AppCompatActivity() {
                 val navOptions: NavOptions = NavOptions.Builder()
                     .setPopUpTo(R.id.navigation_bar, true)
                     .build()
-                navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
+//                Handler(Looper.getMainLooper()).postDelayed(Thread {
+                    runOnUiThread {
+                        navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
+                    }
+//                }, 100)
+
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
@@ -488,7 +516,9 @@ class MainActivity : AppCompatActivity() {
 //            navHostFragment?.navController?.navigate(R.id.start)
 //            navHostFragment?.navController?.popBackStack(R.id.start, true)
 //            setIntent(intent)
-            navHostFragment?.navController?.navigate(R.id.start)
+//            Handler(Looper.getMainLooper()).postDelayed(Thread {
+                navHostFragment?.navController?.navigate(R.id.start)
+//            },100)
 
         }
     }
@@ -548,5 +578,13 @@ class MainActivity : AppCompatActivity() {
 
     fun callUpdateData() {
 
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        logoutAlert?.let {
+            logoutAlert!!.cancel()
+        }
     }
 }

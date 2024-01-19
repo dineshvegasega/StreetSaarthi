@@ -14,7 +14,6 @@
         android:id="@+id/splash"
         tools:layout="@layout/splash">
 
-
         <action
             android:id="@+id/action_splash_to_start"
             app:destination="@id/start"

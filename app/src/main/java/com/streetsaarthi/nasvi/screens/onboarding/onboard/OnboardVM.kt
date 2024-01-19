@@ -2,6 +2,8 @@ package com.streetsaarthi.nasvi.screens.onboarding.onboard
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,22 +61,23 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
     var clickEvent = MutableLiveData<Boolean>(false)
 
     fun callNextPage(it: View) {
-        when(whichScreen) {
-                    0 -> it.findNavController().navigate(R.id.action_onboard_to_quickRegistration)
-                    1 ->
+            when(whichScreen) {
+                0 -> it.findNavController().navigate(R.id.action_onboard_to_quickRegistration)
+                1 ->
 //                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
 //                        putString(Screen, LoginPassword)
 //                    })
-            it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
-                    2 ->
+                    it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
+                2 ->
 //                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
 //                        putString(Screen, LoginOtp)
 //                    })
-            it.findNavController().navigate(R.id.action_onboard_to_loginOtp)
-                    3 -> it.findNavController().navigate(R.id.action_onboard_to_register, Bundle().apply {
-                        putString(Screen, CompleteRegister)
-                    })
-                }
+                    it.findNavController().navigate(R.id.action_onboard_to_loginOtp)
+                3 -> it.findNavController().navigate(R.id.action_onboard_to_register, Bundle().apply {
+                    putString(Screen, CompleteRegister)
+                })
+            }
+
     }
 
     val photosAdapter = object : GenericAdapter<OnboardItemBinding, Onboard.Item>() {

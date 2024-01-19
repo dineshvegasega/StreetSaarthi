@@ -235,21 +235,26 @@
                 android:focusableInTouchMode="true"
                 />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/editTextSendOtp"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/white_round_corner"
-                style="@style/PrimaryEditText"
+                style="@style/PrimaryButtonYellow"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:hint="@string/Forgot"
                 android:inputType="number"
                 android:text="@string/send_otp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textTitlePermanentAddress"
                 android:focusable="false"
-                android:backgroundTint="@color/_E79D46"
                 android:cursorVisible="false"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
+                android:backgroundTint="@color/_E79D46"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cornerRadius="@dimen/_5sdp"
+                android:textSize="@dimen/_11ssp"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -286,12 +291,13 @@
                 android:focusableInTouchMode="true"
                 />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/editTextVeryfyOtp"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/white_round_corner"
-                style="@style/PrimaryEditText"
+                style="@style/PrimaryButtonYellow"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:hint="@string/Forgot"
                 android:inputType="number"
                 android:text="@string/verify_otp"
@@ -299,8 +305,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvTime"
                 android:focusable="false"
                 android:cursorVisible="false"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
                 android:backgroundTint="@color/_999999"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cornerRadius="@dimen/_5sdp"
+                android:textSize="@dimen/_11ssp"
                 />
 
             <androidx.constraintlayout.widget.ConstraintLayout

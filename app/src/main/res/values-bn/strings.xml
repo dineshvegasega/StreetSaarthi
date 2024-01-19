@@ -262,11 +262,7 @@
         <item>বিচ্ছিন্ন</item>
     </string-array>
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
+
 
     <string name="or">বা</string>
     <string name="enterOtpHere">এখানে OTP লিখুন</string>
@@ -420,5 +416,8 @@
     <string name="membershipIDSemi">মেম্বারশিপ আইডি: %s</string>
     <string name = "validUptoSemi"> পর্যন্ত বৈধ: %s</string>
     <string name="successfully_downloaded">সফলভাবে ডাউনলোড করা হয়েছে</string>
+    <string name="logged_in_successfully">সফলভাবে লগ ইন হয়েছে</string>
+    <string name="please_provide_valid_password">অনুগ্রহ করে বৈধ পাসওয়ার্ড প্রদান করুন</string>
+    <string name="user_does_not_exist">ব্যবহারকারীর অস্তিত্ব নেই</string>
 
 </resources>

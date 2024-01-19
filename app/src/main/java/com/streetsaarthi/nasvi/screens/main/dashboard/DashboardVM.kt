@@ -336,7 +336,6 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.adsList()
-
                 override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
                     if (response.isSuccessful){
                         itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>

@@ -31,7 +31,6 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
             callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
-
                 override fun success(response: Response<BaseResponseDC<Any>>) {
                     Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
