@@ -11,6 +11,7 @@ import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.databinding.HistoryBinding
 import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
+import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +20,10 @@ class History : Fragment() {
     private var _binding: HistoryBinding? = null
     private val binding get() = _binding!!
 
+    companion object{
+        var isReadComplaintFeedback: Boolean? = false
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,11 +31,12 @@ class History : Fragment() {
     ): View {
         _binding = HistoryBinding.inflate(inflater)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isReadComplaintFeedback = true
+
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.AllComplaintsFeedback)
             recyclerView.setHasFixedSize(true)

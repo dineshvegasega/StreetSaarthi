@@ -7,12 +7,6 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="                            android:layout_margin=&quot;@dimen/_3sdp&quot;&#xA;" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
@@ -880,13 +874,129 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTitleGovernmentScheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                app:layout_constraintTop_toBottomOf="@+id/linear4"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_medium"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@string/government_scheme"
+                android:visibility="visible"
+                />
+
+            <View
+                android:id="@+id/textView222"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/linear4"
+                app:layout_constraintStart_toEndOf="@+id/textTitleGovernmentScheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/profile_details"
+                android:visibility="visible"
+                android:background="@color/black"
+
+                />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTitleDoyouhavevendingdocuments2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleGovernmentScheme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/do_you_have_government_scheme"
+                android:visibility="visible"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTitledocumentsLike2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_9A9A9A"
+                android:textSize="@dimen/_11ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleDoyouhavevendingdocuments2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_regular"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="@string/schemes_like_pm_swanidhi_yojna_etc"
+                android:visibility="visible"
+                />
+
+            <RadioGroup
+                android:id="@+id/radioGroupGovernment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/textTitledocumentsLike2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                >
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/ivRdGovernmentYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:buttonTint="@color/black"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:text="@string/yes"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTitledocumentsLike2" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/ivRdGovernmentNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:buttonTint="@color/black"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:text="@string/no"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTitledocumentsLike2"
+                    android:checked="true"/>
+            </RadioGroup>
+
+
 
             <include layout="@layout/register2_government"
                 android:id="@+id/inclide_government"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/linear4"
-                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroupGovernment"
+                android:visibility="visible"
                 />
 
 
@@ -907,7 +1017,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inclide_government"
                 android:layout_marginRight="@dimen/_5sdp"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

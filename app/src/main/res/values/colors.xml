@@ -62,6 +62,7 @@
     <color name="_FF5555">#FF5555</color>
     <color name="_262626">#262626</color>
     <color name="_FFE45F">#FFE45F</color>
-
+    <color name="placeholder_grey">#AAADC4</color>
+    <color name="placeholder_grey_20">#33AAADC4</color>
 
 </resources>

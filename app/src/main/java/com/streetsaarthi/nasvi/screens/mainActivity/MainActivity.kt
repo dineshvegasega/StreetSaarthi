@@ -135,22 +135,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        var cc = "COV LOR Survery_Receipt Challan Approval_Letter"
-        if(cc.contains("COV")){
 
-        }
-        if(cc.contains("LOR")){
-
-        }
-        if(cc.contains("Survery_Receipt")){
-
-        }
-        if(cc.contains("Challan")){
-
-        }
-        if(cc.contains("Approval_Letter")){
-
-        }
 
 
 //        var zz = "9988397522"

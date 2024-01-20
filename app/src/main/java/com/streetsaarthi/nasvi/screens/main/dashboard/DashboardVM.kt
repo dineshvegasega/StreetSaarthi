@@ -1,6 +1,5 @@
 package com.streetsaarthi.nasvi.screens.main.dashboard
 
-import android.animation.ValueAnimator
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,19 +25,20 @@ import com.streetsaarthi.nasvi.databinding.ItemRecentActivitiesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.ItemContributors
+import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemAds
+import com.streetsaarthi.nasvi.models.mix.ItemComplaintFeedback
+import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
 import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
-import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
+import com.streetsaarthi.nasvi.screens.main.informationCenter.InformationCenter
 import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.GlideApp
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -114,14 +114,31 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 textHeaderTxt.setText(dataClass.name)
                 ivLogo.setImageResource(dataClass.image)
                 root.setOnClickListener {
-                    when (position) {
-                        0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
-                        1 -> it.findNavController().navigate(R.id.action_dashboard_to_liveSchemes)
-                        2 -> it.findNavController().navigate(R.id.action_dashboard_to_liveNotices)
-                        3 -> it.findNavController().navigate(R.id.action_dashboard_to_liveTraining)
-                        4 -> it.findNavController().navigate(R.id.action_dashboard_to_history)
-                        5 -> it.findNavController().navigate(R.id.action_dashboard_to_informationCenter)
+                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        if (loginUser != null) {
+                            val data = Gson().fromJson(loginUser, Login::class.java)
+                               when (data.status) {
+                                   "approved" -> {
+                                       when (position) {
+                                           0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           1 -> it.findNavController().navigate(R.id.action_dashboard_to_liveSchemes)
+                                           2 -> it.findNavController().navigate(R.id.action_dashboard_to_liveNotices)
+                                           3 -> it.findNavController().navigate(R.id.action_dashboard_to_liveTraining)
+                                           4 -> it.findNavController().navigate(R.id.action_dashboard_to_history)
+                                           5 -> it.findNavController().navigate(R.id.action_dashboard_to_informationCenter)
+                                       }
+                                   }
+                                   "unverified" -> {
+                                    //   showSnackBar(root.resources.getString(R.string.registration_processed))
+                                       when (position) {
+                                           0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           else -> showSnackBar(root.resources.getString(R.string.registration_processed))
+                                       }
+                                   }
+                               }
+                        }
                     }
+
                 }
             }
 
@@ -328,6 +345,103 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
 
 
 
+    var isComplaintFeedback = MutableLiveData<Boolean>(false)
+    fun complaintFeedback(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.complaintFeedback(requestBody = jsonObject.getJsonRequestBody())
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        //isTraining.value = true
+                        val typeToken = object : TypeToken<List<ItemComplaintFeedback>>() {}.type
+                        val changeValue = Gson().fromJson<List<ItemComplaintFeedback>>(Gson().toJson(response.body()!!.data), typeToken)
+                        DataStoreUtil.readData(DataStoreKeys.Complaint_Feedback_DATA) { loginUser ->
+                            if (loginUser != null) {
+                                val savedValue = Gson().fromJson<List<ItemComplaintFeedback>>(loginUser, typeToken)
+                                if(changeValue!= savedValue){
+                                    isComplaintFeedback.value = true
+                                } else {
+                                    isComplaintFeedback.value = false
+                                }
+                            }  else {
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.Complaint_Feedback_DATA, changeValue)
+                                isComplaintFeedback.value = false
+                            }
+
+                            if (History.isReadComplaintFeedback == true){
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.Complaint_Feedback_DATA, changeValue)
+                                isComplaintFeedback.value = false
+                            }
+                        }
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                    showSnackBar(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+
+
+    var isInformationCenter = MutableLiveData<Boolean>(false)
+    fun informationCenter(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.informationCenter(requestBody = jsonObject.getJsonRequestBody())
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        //isTraining.value = true
+                        val typeToken = object : TypeToken<List<ItemInformationCenter>>() {}.type
+                        val changeValue = Gson().fromJson<List<ItemInformationCenter>>(Gson().toJson(response.body()!!.data), typeToken)
+                        DataStoreUtil.readData(DataStoreKeys.Information_Center_DATA) { loginUser ->
+                            if (loginUser != null) {
+                                val savedValue = Gson().fromJson<List<ItemInformationCenter>>(loginUser, typeToken)
+                                if(changeValue!= savedValue){
+                                    isInformationCenter.value = true
+                                } else {
+                                    isInformationCenter.value = false
+                                }
+                            }  else {
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.Information_Center_DATA, changeValue)
+                                isInformationCenter.value = false
+                            }
+
+                            if (InformationCenter.isReadInformationCenter == true){
+                                DataStoreUtil.saveObject(
+                                    DataStoreKeys.Information_Center_DATA, changeValue)
+                                isInformationCenter.value = false
+                            }
+                        }
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                    showSnackBar(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+
 
     private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
     val itemAds : LiveData< ArrayList<ItemAds>> get() = itemAdsResult
@@ -353,6 +467,38 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
         )
     }
 
+
+
+    fun profile(view: View, _id: String) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.profile(_id)
+
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        if(response.body()!!.data != null){
+                            Log.e("TAG", "aaaaa")
+                            DataStoreUtil.saveData(
+                                DataStoreKeys.AUTH,
+                                response.body()!!.token ?: ""
+                            )
+                            DataStoreUtil.saveObject(
+                                DataStoreKeys.LOGIN_DATA,
+                                Gson().fromJson(response.body()!!.data, Login::class.java)
+                            )
+                        }
+                    }
+                }
+                override fun error(message: String) {
+                    super.error(message)
+                }
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
 
 
 

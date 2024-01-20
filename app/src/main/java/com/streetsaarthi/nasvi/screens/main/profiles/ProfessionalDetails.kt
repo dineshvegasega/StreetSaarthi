@@ -306,8 +306,9 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         }
                     }
 
-
                     if(data.availed_scheme != "null"){
+                        viewModel.data.governmentScheme = true
+                        ivRdGovernmentYes.isChecked = true
                         inclideGovernment.root.visibility = View.VISIBLE
                         if(data.availed_scheme.contains(getString(R.string.pm_swanidhi_schemeSingle))){
                             inclideGovernment.cbRememberPMSwanidhiScheme.isChecked = true
@@ -318,11 +319,13 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         for (item in xx!!.iterator()) {
                             if(item != getString(R.string.pm_swanidhi_schemeSingle)){
                                 inclideGovernment.cbRememberOthersPleaseName.isChecked = true
-                                stringOtherSchemeName = item+" "
+                                stringOtherSchemeName += item+" "
                                 inclideGovernment.editTextSchemeName.setText(stringOtherSchemeName)
                             }
                         }
                     } else {
+                        viewModel.data.governmentScheme = false
+                        ivRdGovernmentYes.isChecked = false
                         inclideGovernment.root.visibility = View.GONE
                     }
                     scheme = stringPm_swanidhi_schemeSingle+stringOtherSchemeName
@@ -337,14 +340,30 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         }
                     }
 
+
                     inclideGovernment.cbRememberOthersPleaseName.setOnClickListener {
                         if (inclideGovernment.cbRememberOthersPleaseName.isChecked){
-                            scheme = stringOtherSchemeName+" "
+                            stringOtherSchemeName = inclideGovernment.editTextSchemeName.text.toString()
                         } else {
-                            scheme = ""
+                            stringOtherSchemeName = ""
                         }
                     }
 
+                    binding.scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                        scrollPoistion = scrollY
+                    })
+
+                    ivRdGovernmentYes.setOnClickListener {
+                        viewModel.data.governmentScheme = true
+                        inclideGovernment.layoutGovernmentScheme.visibility = View.VISIBLE
+                        setScrollPosition(2, true)
+                    }
+
+                    ivRdGovernmentNo.setOnClickListener {
+                        viewModel.data.governmentScheme = false
+                        inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
+                        setScrollPosition(2, false)
+                    }
 
                     viewModel.marketplace(view)
                     viewModel.marketPlaceTrue.observe(viewLifecycleOwner, Observer {
@@ -1162,11 +1181,24 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     requestBody.addFormDataPart("vending_documents", "null")
                 }
 
-//                if(!viewModel.data.schemeName!!.isEmpty()){
-//                    requestBody.addFormDataPart("availed_scheme",viewModel.data.schemeName!!)
-//                } else {
-//                    requestBody.addFormDataPart("availed_scheme", "null")
-//                }
+                if (inclideGovernment.cbRememberOthersPleaseName.isChecked){
+                    stringOtherSchemeName = inclideGovernment.editTextSchemeName.text.toString()
+                } else {
+                    stringOtherSchemeName = ""
+                }
+                scheme = stringPm_swanidhi_schemeSingle+stringOtherSchemeName
+                viewModel.data.schemeName = scheme
+
+                if(viewModel.data.governmentScheme == true){
+                    if(!viewModel.data.schemeName!!.isEmpty()){
+                        requestBody.addFormDataPart("availed_scheme",viewModel.data.schemeName!!)
+                    } else {
+                        requestBody.addFormDataPart("availed_scheme", "null")
+                    }
+                } else {
+                    requestBody.addFormDataPart("availed_scheme", "null")
+                }
+
 
 
 

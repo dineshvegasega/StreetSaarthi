@@ -11,7 +11,9 @@ import com.streetsaarthi.nasvi.models.mix.ItemPincode
 import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
 import com.streetsaarthi.nasvi.screens.onboarding.networking.ADS_LIST
+import com.streetsaarthi.nasvi.screens.onboarding.networking.ComplaintFeedback
 import com.streetsaarthi.nasvi.screens.onboarding.networking.DISTRICT
+import com.streetsaarthi.nasvi.screens.onboarding.networking.InformationCenter
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LOCAL_ORGANISATION
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGIN
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveScheme
@@ -148,6 +150,18 @@ interface ApiInterface {
 
     @POST(LiveTraining)
     suspend fun liveTraining(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(ComplaintFeedback)
+    suspend fun complaintFeedback(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(InformationCenter)
+    suspend fun informationCenter(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 

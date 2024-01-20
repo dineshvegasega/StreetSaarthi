@@ -90,6 +90,30 @@ class Dashboard : Fragment() {
                 }
                 viewModel.dashboardAdapter.notifyDataSetChanged()
             })
+            viewModel.isComplaintFeedback.observe(viewLifecycleOwner, Observer {
+                if (it) {
+                    viewModel.itemMain?.get(4)?.apply {
+                        isNew = true
+                    }
+                } else {
+                    viewModel.itemMain?.get(4)?.apply {
+                        isNew = false
+                    }
+                }
+                viewModel.dashboardAdapter.notifyDataSetChanged()
+            })
+            viewModel.isInformationCenter.observe(viewLifecycleOwner, Observer {
+                if (it) {
+                    viewModel.itemMain?.get(5)?.apply {
+                        isNew = true
+                    }
+                } else {
+                    viewModel.itemMain?.get(5)?.apply {
+                        isNew = false
+                    }
+                }
+                viewModel.dashboardAdapter.notifyDataSetChanged()
+            })
             viewModel.dashboardAdapter.notifyDataSetChanged()
             viewModel.dashboardAdapter.submitList(viewModel.itemMain)
 
@@ -101,9 +125,12 @@ class Dashboard : Fragment() {
 //                    put("search_input", USER_TYPE)
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
-                viewModel.liveScheme(view = view, obj)
-                viewModel.liveTraining(view = view, obj)
-                viewModel.liveNotice(view = view, obj)
+                    viewModel.liveScheme(view = view, obj)
+                    viewModel.liveTraining(view = view, obj)
+                    viewModel.liveNotice(view = view, obj)
+                    viewModel.complaintFeedback(view = view, obj)
+                    viewModel.informationCenter(view = view, obj)
+                    viewModel.profile(view = view, ""+Gson().fromJson(loginUser, Login::class.java).id)
                 }
             }
 

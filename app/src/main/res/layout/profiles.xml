@@ -41,7 +41,7 @@
         android:paddingHorizontal="@dimen/_20sdp"
         android:paddingVertical="@dimen/_7sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:text="@string/saveUpdate"
         android:textSize="@dimen/_11ssp"
         app:cornerRadius="@dimen/_4sdp"

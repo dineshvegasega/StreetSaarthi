@@ -15,8 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.Repository
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemMenuBinding
+import com.streetsaarthi.nasvi.datastore.DataStoreKeys
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew.CreateNew
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.dashboard.Dashboard
@@ -35,6 +39,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.navHo
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemChildMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
+import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale
 import javax.inject.Inject
@@ -83,40 +88,65 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
                 root.setOnClickListener {
                         var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
-                        when(position) {
-                            0 -> {
-                                if (fragmentInFrame !is Dashboard){
-                                    navHostFragment?.navController?.navigate(R.id.dashboard)
-                                }
-                            }
-                            1 -> {
-                                if (fragmentInFrame !is Profiles){
-                                    navHostFragment?.navController?.navigate(R.id.profiles)
-                                }
-                            }
-                            2 -> {
-                                if (fragmentInFrame !is Notifications){
-                                    navHostFragment?.navController?.navigate(R.id.notifications)
-                                }
-                            }
-                            3 -> {
-                                if (fragmentInFrame !is MembershipDetails){
-                                    navHostFragment?.navController?.navigate(R.id.membershipDetails)
-                                }
-                            }
-                            8 -> {
-                                if (fragmentInFrame !is InformationCenter){
-                                    navHostFragment?.navController?.navigate(R.id.informationCenter)
-                                }
-                            }
-                            9 -> {
-                                if (fragmentInFrame !is Settings){
-                                    navHostFragment?.navController?.navigate(R.id.settings)
+                        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                            if (loginUser != null) {
+                                val data = Gson().fromJson(loginUser, Login::class.java)
+                                when (data.status) {
+                                    "approved" -> {
+                                        when(position) {
+                                            0 -> {
+                                                if (fragmentInFrame !is Dashboard){
+                                                    navHostFragment?.navController?.navigate(R.id.dashboard)
+                                                }
+                                            }
+                                            1 -> {
+                                                if (fragmentInFrame !is Profiles){
+                                                    navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            2 -> {
+                                                if (fragmentInFrame !is Notifications){
+                                                    navHostFragment?.navController?.navigate(R.id.notifications)
+                                                }
+                                            }
+                                            3 -> {
+                                                if (fragmentInFrame !is MembershipDetails){
+                                                    navHostFragment?.navController?.navigate(R.id.membershipDetails)
+                                                }
+                                            }
+                                            8 -> {
+                                                if (fragmentInFrame !is InformationCenter){
+                                                    navHostFragment?.navController?.navigate(R.id.informationCenter)
+                                                }
+                                            }
+                                            9 -> {
+                                                if (fragmentInFrame !is Settings){
+                                                    navHostFragment?.navController?.navigate(R.id.settings)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    "unverified" -> {
+                                        when(position) {
+                                            0 -> {
+                                                if (fragmentInFrame !is Dashboard){
+                                                    navHostFragment?.navController?.navigate(R.id.dashboard)
+                                                }
+                                            }
+                                            1 -> {
+                                                if (fragmentInFrame !is Profiles) {
+                                                    navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            else -> {
+                                                showSnackBar(root.resources.getString(R.string.registration_processed))
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                         MainActivity.binding.drawerLayout.close()
-
                 }
             }
         }
@@ -125,6 +155,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
     class ChildMenuAdapter(context: Context, data: List<ItemChildMenuModel>?, mainPosition: Int) :
         RecyclerView.Adapter<ChildMenuAdapter.ChildViewHolder>() {
+        var mainContext : Context = context
         private var items: List<ItemChildMenuModel>? = data
         private var inflater: LayoutInflater = LayoutInflater.from(context)
         private var parentPosition: Int = mainPosition
@@ -141,58 +172,70 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
             holder.tvTitle.text = item?.title
             holder.itemView.setOnClickListener {
                     var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
-                    when(parentPosition) {
-                        4 -> when(position) {
-                            0 -> {
-                                if (fragmentInFrame !is LiveSchemes){
-                                    navHostFragment?.navController?.navigate(R.id.liveSchemes)
+                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    if (loginUser != null) {
+                        val data = Gson().fromJson(loginUser, Login::class.java)
+                        when (data.status) {
+                            "approved" -> {
+                                when(parentPosition) {
+                                    4 -> when(position) {
+                                        0 -> {
+                                            if (fragmentInFrame !is LiveSchemes){
+                                                navHostFragment?.navController?.navigate(R.id.liveSchemes)
+                                            }
+                                        }
+                                        1 -> {
+                                            if (fragmentInFrame !is AllSchemes){
+                                                navHostFragment?.navController?.navigate(R.id.allSchemes)
+                                            }
+                                        }
+                                    }
+                                    5 -> when(position) {
+                                        0 -> {
+                                            if (fragmentInFrame !is LiveNotices){
+                                                navHostFragment?.navController?.navigate(R.id.liveNotices)
+                                            }
+                                        }
+                                        1 -> {
+                                            if (fragmentInFrame !is AllNotices){
+                                                navHostFragment?.navController?.navigate(R.id.allNotices)
+                                            }
+                                        }
+                                    }
+                                    6 -> when(position) {
+                                        0 -> {
+                                            if (fragmentInFrame !is LiveTraining){
+                                                navHostFragment?.navController?.navigate(R.id.liveTraining)
+                                            }
+                                        }
+                                        1 -> {
+                                            if (fragmentInFrame !is AllTraining){
+                                                navHostFragment?.navController?.navigate(R.id.allTraining)
+                                            }
+                                        }
+                                    }
+                                    7 -> when(position) {
+                                        0 -> {
+                                            if (fragmentInFrame !is CreateNew){
+                                                navHostFragment?.navController?.navigate(R.id.createNew)
+                                            }
+                                        }
+                                        1 -> {
+                                            if (fragmentInFrame !is History){
+                                                navHostFragment?.navController?.navigate(R.id.history)
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                            1 -> {
-                                if (fragmentInFrame !is AllSchemes){
-                                    navHostFragment?.navController?.navigate(R.id.allSchemes)
-                                }
-                            }
-                        }
-                        5 -> when(position) {
-                            0 -> {
-                                if (fragmentInFrame !is LiveNotices){
-                                    navHostFragment?.navController?.navigate(R.id.liveNotices)
-                                }
-                            }
-                            1 -> {
-                                if (fragmentInFrame !is AllNotices){
-                                    navHostFragment?.navController?.navigate(R.id.allNotices)
-                                }
-                            }
-                        }
-                        6 -> when(position) {
-                            0 -> {
-                                if (fragmentInFrame !is LiveTraining){
-                                    navHostFragment?.navController?.navigate(R.id.liveTraining)
-                                }
-                            }
-                            1 -> {
-                                if (fragmentInFrame !is AllTraining){
-                                    navHostFragment?.navController?.navigate(R.id.allTraining)
-                                }
-                            }
-                        }
-                        7 -> when(position) {
-                            0 -> {
-                                if (fragmentInFrame !is CreateNew){
-                                    navHostFragment?.navController?.navigate(R.id.createNew)
-                                }
-                            }
-                            1 -> {
-                                if (fragmentInFrame !is History){
-                                    navHostFragment?.navController?.navigate(R.id.history)
-                                }
+                            "unverified" -> {
+                                showSnackBar(mainContext.resources.getString(R.string.registration_processed))
                             }
                         }
                     }
-                    MainActivity.binding.drawerLayout.close()
-                    Log.e("TAG", ""+parentPosition +" SSS "+position)
+                }
+
+                MainActivity.binding.drawerLayout.close()
             }
         }
 

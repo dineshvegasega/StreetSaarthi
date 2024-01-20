@@ -16,6 +16,15 @@ data class BaseResponseDC<T>(
     val success: Boolean? = false,
     @SerializedName("vendor_id")
     val vendor_id: String? = null,
+    @SerializedName("meta")
+    val meta: Meta? = null,
+)
 
-
+data class Meta(
+    val first_page: String,
+    val last_page: String,
+    val per_page: Int,
+    val prev_page_url: String,
+    val total_items: Int,
+    val total_pages: Int
 )

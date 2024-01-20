@@ -1,6 +1,7 @@
 package com.streetsaarthi.nasvi.di
 
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.demo.networking.ApiInterface
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -31,7 +32,8 @@ class AppModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        cache: Cache
+        cache: Cache,
+        @ApplicationContext context: Context
     ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -40,6 +42,7 @@ class AppModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(ChuckerInterceptor(context))
             .retryOnConnectionFailure(true)
             .cache(cache)
             .build()

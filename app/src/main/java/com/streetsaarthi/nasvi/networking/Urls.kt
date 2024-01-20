@@ -34,6 +34,8 @@ const val NoticeHistoryList = "notice-history-list"
 const val LiveScheme = "live-scheme"
 const val NoticeLiveList = "notice-live-list"
 const val LiveTraining = "live-training"
+const val ComplaintFeedback = "feedback-history-all"
+const val InformationCenter = "information-history-list"
 const val ADS_LIST = "ads-list?page=1"
 
 

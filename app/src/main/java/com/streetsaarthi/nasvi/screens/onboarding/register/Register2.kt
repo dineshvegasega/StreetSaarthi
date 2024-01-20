@@ -334,7 +334,6 @@ class Register2  : Fragment() , CallBackListener {
                     scrollPoistion = scrollY
             })
 
-
             ivRdGovernmentYes.setOnClickListener {
                 viewModel.governmentScheme = true
                 inclideGovernment.layoutGovernmentScheme.visibility = View.VISIBLE
