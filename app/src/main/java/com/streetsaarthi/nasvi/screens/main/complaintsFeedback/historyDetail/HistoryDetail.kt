@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import com.demo.home.HomeAdapter
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.HistoryDetailBinding
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -37,7 +38,7 @@ class HistoryDetail : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MODE_CHANGED)
-
+        MainActivity.mainActivity.get()?.callFragment(0)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = HtmlCompat.fromHtml(getString(R.string.trackingId, "<b>12344682</b>"), HtmlCompat.FROM_HTML_MODE_LEGACY);
          //   "Tracking Id: #12344682"

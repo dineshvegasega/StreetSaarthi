@@ -19,9 +19,10 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.LiveSchemesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +36,11 @@ class LiveSchemes : Fragment() {
 
     companion object{
         var isReadLiveSchemes: Boolean? = false
+//        var callBackListener: ListCallBackListener? = null
+
     }
 
-    private val pageStart: Int = 1
+    private var pageStart: Int = 1
     private var isLoading: Boolean = false
     private var isLastPage: Boolean = false
     private var totalPages: Int = 1
@@ -55,7 +58,9 @@ class LiveSchemes : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         isReadLiveSchemes = true
+//        callBackListener = this
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_schemes)
@@ -71,7 +76,6 @@ class LiveSchemes : Fragment() {
 
             inclideHeaderSearch.editTextSearch.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    currentPage = 1
                     loadFirstPage()
                 }
                 true
@@ -86,14 +90,12 @@ class LiveSchemes : Fragment() {
                 override fun loadMoreItems() {
                     isLoading = true
                     currentPage += 1
-                    Log.e("TAG", "totalPagesAA "+totalPages)
                     if(totalPages >= currentPage){
                         Handler(Looper.myLooper()!!).postDelayed({
                             loadNextPage()
                         }, 1000)
-                    } else {
-//                        isLoading = false
                     }
+                    Log.e("TAG", "currentPage "+currentPage)
                 }
                 override fun getTotalPageCount(): Int {
                     return totalPages
@@ -110,7 +112,12 @@ class LiveSchemes : Fragment() {
 
 
     private fun loadFirstPage() {
-        Log.e("TAG", "loadFirstPage "+currentPage)
+        pageStart  = 1
+        isLoading = false
+        isLastPage = false
+        totalPages  = 1
+        currentPage  = pageStart
+        results.clear()
         if (CheckValidation.isConnected(requireContext())) {
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
@@ -145,25 +152,20 @@ class LiveSchemes : Fragment() {
 
 
 
-
-
-    @SuppressLint("NotifyDataSetChanged")
+    var results: MutableList<ItemLiveScheme> = ArrayList()
+        @SuppressLint("NotifyDataSetChanged")
     private fun observerDataRequest(){
         viewModel.itemLiveSchemes.observe(requireActivity()) {
             val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
             val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
-            val results: MutableList<ItemLiveScheme> = changeValue as MutableList<ItemLiveScheme>
-            Log.e("TAG", "resultsAAA "+results.size)
-//            results.clear()
+            results.addAll(changeValue as MutableList<ItemLiveScheme>)
             viewModel.adapter.addAllSearch(results)
 
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
-                Log.e("TAG", "AAAAAAA1111")
-                isLastPage = true
+                viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {
-                Log.e("TAG", "AAAAAAA222222222")
-                viewModel.adapter.addLoadingFooter()
+                 viewModel.adapter.addLoadingFooter()
                 isLastPage = false
             } else {
                 isLastPage = true
@@ -179,14 +181,24 @@ class LiveSchemes : Fragment() {
         viewModel.itemLiveSchemesSecond.observe(requireActivity()) {
             val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
             val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
-            val results: MutableList<ItemLiveScheme> = changeValue as MutableList<ItemLiveScheme>
+            results.addAll(changeValue as MutableList<ItemLiveScheme>)
             viewModel.adapter.removeLoadingFooter()
             isLoading = false
-            viewModel.adapter.addAll(results)
-//            results.clear()
+            viewModel.adapter.addAllSearch(results)
             if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
             else isLastPage = true
         }
+
+
+            viewModel.applyLink.observe(requireActivity()) { position ->
+                if (position != -1){
+                    var data = results.get(position).apply {
+                        user_scheme_status = "applied"
+                    }
+                    viewModel.adapter.notifyDataSetChanged()
+                    viewModel.viewDetail(""+data.scheme_id, position = position, requireView(), 3)
+                }
+            }
     }
 
 
@@ -195,4 +207,7 @@ class LiveSchemes : Fragment() {
         _binding = null
         super.onDestroyView()
     }
+
+
+
 }

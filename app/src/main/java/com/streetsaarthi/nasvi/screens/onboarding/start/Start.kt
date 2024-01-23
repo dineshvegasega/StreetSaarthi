@@ -67,7 +67,7 @@ class Start : Fragment() {
         Log.e("TAG", "onViewCreated")
         //val current = resources.configuration.locale
 
-
+        MainActivity.mainActivity.get()?.callFragment(0)
 
         binding.apply {
             btSignIn.setOnClickListener {

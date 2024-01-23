@@ -384,7 +384,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         editTextTypeofMarketPlaceEnter.setText("${data.marketpalce_others}")
                     } else {
                         editTextTypeofMarketPlaceEnter.visibility = View.GONE
-                        viewModel.data.marketpalce_others = null
+                        viewModel.data.marketpalce_others = "null"
                         editTextTypeofMarketPlaceEnter.setText("")
                     }
 
@@ -407,7 +407,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         editTextTypeofVendingEnter.setText("${data.vending_others}")
                     } else {
                         editTextTypeofVendingEnter.visibility = View.GONE
-                        viewModel.data.vending_others = null
+                        viewModel.data.vending_others = "null"
                         editTextTypeofVendingEnter.setText("")
                     }
 
@@ -1107,13 +1107,17 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 if(viewModel.data.type_of_marketplace  != null){
                     requestBody.addFormDataPart("type_of_marketplace", viewModel.data.type_of_marketplace!!)
                 }
-                if(viewModel.data.marketpalce_others  != null){
+               // if(viewModel.data.marketpalce_others  != null){
+                viewModel.data.marketpalce_others = ""+ editTextTypeofMarketPlaceEnter.text.toString()
                     requestBody.addFormDataPart("marketpalce_others", viewModel.data.marketpalce_others!!)
-                }
+               // }
+                Log.e("TAG", "type_of_vendingAA "+viewModel.data.type_of_vending!!)
                 if(viewModel.data.type_of_vending  != null){
                     requestBody.addFormDataPart("type_of_vending", viewModel.data.type_of_vending!!)
                 }
+
 //                if(viewModel.data.vending_others  != null){
+                viewModel.data.vending_others = ""+ editTextTypeofVendingEnter.text.toString()
                     requestBody.addFormDataPart("vending_others", viewModel.data.vending_others!!)
 //                }
                 if(viewModel.data.total_years_of_business  != null){

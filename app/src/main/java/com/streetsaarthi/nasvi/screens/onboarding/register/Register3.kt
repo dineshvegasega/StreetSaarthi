@@ -22,8 +22,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.stfalcon.smsverifycatcher.OnSmsCatchListener
-import com.stfalcon.smsverifycatcher.SmsVerifyCatcher
+//import com.stfalcon.smsverifycatcher.OnSmsCatchListener
+//import com.stfalcon.smsverifycatcher.SmsVerifyCatcher
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register3Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
@@ -43,7 +43,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
     private val binding get() = _binding!!
     private val viewModel: RegisterVM by activityViewModels()
 
-    private var smsVerifyCatcher: SmsVerifyCatcher? = null
+//    private var smsVerifyCatcher: SmsVerifyCatcher? = null
 
     companion object{
         var callBackListener: CallBackListener? = null
@@ -194,24 +194,30 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             }
 
 
-            smsVerifyCatcher = SmsVerifyCatcher(requireActivity(),
-                OnSmsCatchListener<String?> { message ->
-                    if(message != null && message.length >= 6){
-                        var otp = message.trim().substring(0,6).toInt()
-                        editTextOtp.setText("${otp}")
-                        var start2=editTextOtp.getSelectionStart()
-                        var end2=editTextOtp.getSelectionEnd()
-                        editTextOtp.setSelection(start2,end2)
-                    }
-                })
-
+//            smsVerifyCatcher = SmsVerifyCatcher(requireActivity(),
+//                OnSmsCatchListener<String?> { message ->
+//                    if(message != null && message.length >= 6){
+//                        var otp = message.trim().substring(0,6).toInt()
+//                        editTextOtp.setText("${otp}")
+//                        var start2=editTextOtp.getSelectionStart()
+//                        var end2=editTextOtp.getSelectionEnd()
+//                        editTextOtp.setSelection(start2,end2)
+//                    }
+//                })
+//
 
             editTextSendOtp.setOnClickListener {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
-                    isFree = true
-                    callMediaPermissions()
+//                    isFree = true
+//                    callMediaPermissions()
+                    val obj: JSONObject = JSONObject().apply {
+                        put("mobile_no", binding.editTextMobileNumber.text.toString())
+                        put("slug", "signup")
+                        put("user_type", USER_TYPE)
+                    }
+                    viewModel.sendOTP(view = requireView(), obj)
                 }
             }
 
@@ -333,9 +339,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
     private fun callMediaPermissions() {
         activityResultLauncher.launch(
-            arrayOf(
-                Manifest.permission.RECEIVE_SMS,
-                Manifest.permission.READ_SMS)
+            arrayOf()
         )
     }
 
@@ -359,7 +363,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                             put("user_type", USER_TYPE)
                         }
                         viewModel.sendOTP(view = requireView(), obj)
-                        smsVerifyCatcher!!.onStart()
+//                        smsVerifyCatcher!!.onStart()
                     }
                     isFree = false
                 } else {

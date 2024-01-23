@@ -303,13 +303,11 @@ fun ViewPager.autoScrollStop() {
 
 
 @SuppressLint("SimpleDateFormat")
-fun String.changeDateFormat() : String? {
+fun String.changeDateFormat(inDate : String, outDate: String) : String? {
     var str : String ?= ""
     try {
-        val inputPattern = "yyyy-MM-dd"
-        val outputPattern = "dd-MMM-yyyy"
-        val inputFormat = SimpleDateFormat(inputPattern)
-        val outputFormat = SimpleDateFormat(outputPattern)
+        val inputFormat = SimpleDateFormat(inDate)
+        val outputFormat = SimpleDateFormat(outDate)
         var date: Date? = null
         try {
             date = inputFormat.parse(this)

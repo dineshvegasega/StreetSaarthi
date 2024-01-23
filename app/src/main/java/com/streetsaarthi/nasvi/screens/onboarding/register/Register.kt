@@ -37,6 +37,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 
 
 @AndroidEntryPoint
@@ -65,8 +66,8 @@ var tabPosition: Int = 0;
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         callBackListener = this
-
 
         binding.apply {
             var adapter= RegisterAdapter(requireActivity())

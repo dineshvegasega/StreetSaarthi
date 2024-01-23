@@ -17,6 +17,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.LoginPasswordBinding
 import com.streetsaarthi.nasvi.models.Item
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +45,7 @@ class LoginPassword : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        MainActivity.mainActivity.get()?.callFragment(0)
 
 //
 //        if (util == null) {

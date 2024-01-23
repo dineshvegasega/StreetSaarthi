@@ -43,13 +43,15 @@ class BannerViewPagerAdapter(private val context: Context) : PagerAdapter() {
         view.setOnClickListener {
             Handler(Looper.getMainLooper()).post(Thread {
                 MainActivity.activity.get()?.runOnUiThread {
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(itemMain?.get(position)!!.ad_link)
-                    )
-                    try {
-                        context.startActivity(webIntent)
-                    } catch (ex: ActivityNotFoundException) {
+                    itemMain?.get(position)!!.ad_link?.let {
+                            val webIntent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(itemMain?.get(position)!!.ad_link)
+                            )
+                            try {
+                                context.startActivity(webIntent)
+                            } catch (ex: ActivityNotFoundException) {
+                            }
                     }
                 }
             })

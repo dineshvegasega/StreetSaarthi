@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.OnboardBinding
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +33,7 @@ class Onboard : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        MainActivity.mainActivity.get()?.callFragment(0)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.adapter = viewModel.photosAdapter
         viewModel.photosAdapter.submitList(viewModel.itemMain)

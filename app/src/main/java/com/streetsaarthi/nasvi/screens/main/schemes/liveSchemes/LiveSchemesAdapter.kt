@@ -1,14 +1,12 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.streetsaarthi.nasvi.R
 
 import com.streetsaarthi.nasvi.databinding.ItemLiveSchemesBinding
@@ -16,7 +14,7 @@ import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.BR
-import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
+import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.myOptionsGlide
@@ -26,9 +24,9 @@ import com.streetsaarthi.nasvi.utils.myOptionsGlide
  * Class do :
  * Date 12/28/2020 - 3:12 PM
  */
-class LiveSchemesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
-    PaginationAdapterCallback {
-
+class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
+    PaginationAdapterCallback, CallBackListener {
+    var viewModel = liveSchemesVM
     private val item: Int = 0
     private val loading: Int = 1
 
@@ -39,22 +37,31 @@ class LiveSchemesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
 
     private var itemModels: MutableList<ItemLiveScheme> = ArrayList()
 
+    companion object{
+        var callBackListener: CallBackListener? = null
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return  if(viewType == item){
             val binding: ItemLiveSchemesBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_live_schemes, parent, false)
+            callBackListener = this
+
             TopMoviesVH(binding)
         }else{
             val binding: ItemLoadingBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_loading, parent, false)
             LoadingVH(binding)
         }
+
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = itemModels[position]
         if(getItemViewType(position) == item){
+            callBackListener = this
+
             val myOrderVH: TopMoviesVH = holder as TopMoviesVH
 //            myOrderVH.itemRowBinding.movieProgress.visibility = View.VISIBLE
-            myOrderVH.bind(model)
+            myOrderVH.bind(model, viewModel, position)
         }else{
             val loadingVH: LoadingVH = holder as LoadingVH
             if (retryPageLoad) {
@@ -101,15 +108,16 @@ class LiveSchemesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
     }
 
 
+
     class TopMoviesVH(binding: ItemLiveSchemesBinding) : RecyclerView.ViewHolder(binding.root) {
         var itemRowBinding: ItemLiveSchemesBinding = binding
-        fun bind(obj: Any?) {
+        fun bind(obj: Any?, viewModel: LiveSchemesVM, position: Int) {
             itemRowBinding.setVariable(BR.model, obj)
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveScheme
             itemRowBinding.apply {
                 GlideApp.with(itemRowBinding.root.context)
-                    .load(dataClass.scheme_image.url)
+                    .load(dataClass.scheme_image?.url)
                     .apply(myOptionsGlide)
                     .into(ivMap)
                 textTitle.setText(dataClass.name)
@@ -117,36 +125,17 @@ class LiveSchemesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
                 textHeaderTxt4.setText(dataClass.status)
 
                 root.setOnClickListener {
-                    val dialogBinding = DialogBottomLiveSchemeBinding.inflate(root.context.getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
-                    dialogBinding.apply {
-                        val dialog = BottomSheetDialog(root.context)
-                        dialog.setContentView(root)
-                        dialog.setOnShowListener { dia ->
-                            val bottomSheetDialog = dia as BottomSheetDialog
-                            val bottomSheetInternal: FrameLayout =
-                                bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-                            bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+                        if (dataClass.user_scheme_status == "applied"){
+                            viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 1)
+                        }else{
+                            viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
                         }
-                        dialog.show()
-
-                        GlideApp.with(root.context)
-                            .load(dataClass.scheme_image.url)
-                            .apply(myOptionsGlide)
-                            .into(ivMap)
-                        textTitle.setText(dataClass.name)
-                        textDesc.setText(dataClass.description)
-                        textHeaderTxt4.setText(dataClass.status)
-
-
-                        btClose.setOnClickListener {
-                            dialog.dismiss()
-                        }
-                    }
                 }
 
             }
         }
+
+
     }
 
     class LoadingVH(binding: ItemLoadingBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -188,12 +177,18 @@ class LiveSchemesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
     fun removeLoadingFooter() {
         isLoadingAdded = false
 
-        val position: Int =itemModels.size -1
-        val movie: ItemLiveScheme = itemModels[position]
+//        val position: Int =itemModels.size -1
+//        val movie: ItemLiveScheme = itemModels[position]
+//
+//        if(movie != null){
+//            itemModels.removeAt(position)
+//            notifyItemRemoved(position)
+//        }
+    }
 
-        if(movie != null){
-            itemModels.removeAt(position)
-            notifyItemRemoved(position)
-        }
+    override fun onCallBack(pos: Int) {
+        Log.e("TAG", "onCallBack "+pos)
+//        onCallBack(pos)
+
     }
 }

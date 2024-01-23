@@ -11,6 +11,9 @@ import com.streetsaarthi.nasvi.models.mix.ItemPincode
 import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
 import com.streetsaarthi.nasvi.screens.onboarding.networking.ADS_LIST
+import com.streetsaarthi.nasvi.screens.onboarding.networking.AllNoticeHistory
+import com.streetsaarthi.nasvi.screens.onboarding.networking.AllSchemeHistory
+import com.streetsaarthi.nasvi.screens.onboarding.networking.AllTrainingHistory
 import com.streetsaarthi.nasvi.screens.onboarding.networking.ComplaintFeedback
 import com.streetsaarthi.nasvi.screens.onboarding.networking.DISTRICT
 import com.streetsaarthi.nasvi.screens.onboarding.networking.InformationCenter
@@ -19,6 +22,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGIN
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveScheme
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveTraining
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Marketplace
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeLiveList
 import com.streetsaarthi.nasvi.screens.onboarding.networking.PANCHAYAT
 import com.streetsaarthi.nasvi.screens.onboarding.networking.PASSWORD_UPDATE
@@ -27,7 +31,10 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.RESEND_OTP
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SEND_OTP
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SIGN_UP
 import com.streetsaarthi.nasvi.screens.onboarding.networking.STATE
+import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeApply
+import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeHistoryList
+import com.streetsaarthi.nasvi.screens.onboarding.networking.TrainingDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE_UPDATE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VERIFY_OTP
@@ -141,6 +148,26 @@ interface ApiInterface {
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 
+    @POST(SchemeApply)
+    suspend fun applyLink(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+    @GET(SchemeDetail+ "/{id}")
+    suspend fun schemeDetail(
+        @Path("id") id: String,
+    ): Response<BaseResponseDC<JsonElement>>
+
+    @GET(TrainingDetail+ "/{id}")
+    suspend fun trainingDetail(
+        @Path("id") id: String,
+    ): Response<BaseResponseDC<JsonElement>>
+
+    @GET(NoticeDetail+ "/{id}")
+    suspend fun noticeDetail(
+        @Path("id") id: String,
+    ): Response<BaseResponseDC<JsonElement>>
+
 
     @POST(NoticeLiveList)
     suspend fun liveNotice(
@@ -150,6 +177,25 @@ interface ApiInterface {
 
     @POST(LiveTraining)
     suspend fun liveTraining(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+
+    @POST(AllSchemeHistory)
+    suspend fun allSchemeList(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(AllTrainingHistory)
+    suspend fun allTrainingList(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(AllNoticeHistory)
+    suspend fun allNoticeList(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 

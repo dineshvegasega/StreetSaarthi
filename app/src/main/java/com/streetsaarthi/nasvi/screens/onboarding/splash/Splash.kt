@@ -44,6 +44,7 @@ var viewOf : View ?= null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewOf = view
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
     }
 
 

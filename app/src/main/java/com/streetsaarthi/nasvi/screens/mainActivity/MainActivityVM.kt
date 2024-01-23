@@ -9,10 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
+import com.demo.networking.ApiInterface
+import com.demo.networking.CallHandler
 import com.demo.networking.Repository
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
@@ -20,7 +25,9 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemMenuBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.mix.ItemAds
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew.CreateNew
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.dashboard.Dashboard
@@ -41,6 +48,8 @@ import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.util.Locale
 import javax.inject.Inject
 
@@ -268,6 +277,33 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 //            }
 //        }
 //    }
+
+
+
+
+    private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
+    val itemAds : LiveData<ArrayList<ItemAds>> get() = itemAdsResult
+    fun adsList() = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.adsList()
+                override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
+                    if (response.isSuccessful){
+                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
 
 
 }

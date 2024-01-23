@@ -51,27 +51,27 @@ class OtherDetails : Fragment() {
 
 
                     Picasso.get().load(
-                        Gson().fromJson(loginUser, Login::class.java).profile_image_name.url
+                        Gson().fromJson(loginUser, Login::class.java).profile_image_name?.url
                     ).placeholder(R.drawable.no_image_modified).into(ivImagePassportsizeImage)
 
                     Picasso.get().load(
-                        Gson().fromJson(loginUser, Login::class.java).shop_image.url
+                        Gson().fromJson(loginUser, Login::class.java).shop_image?.url
                     ).placeholder(R.drawable.no_image_modified).into(ivImageShopimage)
 
                     Picasso.get().load(
-                        Gson().fromJson(loginUser, Login::class.java).identity_image_name.url
+                        Gson().fromJson(loginUser, Login::class.java).identity_image_name?.url
                     ).placeholder(R.drawable.no_image_modified).into(ivImageIdentityImage)
 
                     Picasso.get().load(
-                        Gson().fromJson(loginUser, Login::class.java).cov_image.url
+                        Gson().fromJson(loginUser, Login::class.java).cov_image?.url
                     ).placeholder(R.drawable.no_image_modified).into(ivImageCOV)
 
                     Picasso.get().load(
-                        Gson().fromJson(loginUser, Login::class.java).membership_image.url
+                        Gson().fromJson(loginUser, Login::class.java).membership_image?.url
                     ).placeholder(R.drawable.no_image_modified).into(ivImageMembershipId)
 
                     Picasso.get().load(
-                        Gson().fromJson(loginUser, Login::class.java).lor_image.url
+                        Gson().fromJson(loginUser, Login::class.java).lor_image?.url
                     ).placeholder(R.drawable.no_image_modified).into(ivImageLOR)
 
                 }

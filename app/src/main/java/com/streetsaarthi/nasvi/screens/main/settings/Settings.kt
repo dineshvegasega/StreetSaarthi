@@ -54,6 +54,7 @@ class Settings : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.settings)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE

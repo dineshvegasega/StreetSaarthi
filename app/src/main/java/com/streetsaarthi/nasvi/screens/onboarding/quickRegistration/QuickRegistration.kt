@@ -17,6 +17,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.QuickRegistrationBinding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.OtpTimer
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
@@ -46,6 +47,7 @@ class QuickRegistration : Fragment(), CallBackListener{
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         callBackListener = this
         binding.apply {
             var adapter= QuickRegistrationAdapter(requireActivity())

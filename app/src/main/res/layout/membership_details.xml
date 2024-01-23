@@ -407,17 +407,20 @@
                             android:textColor="@color/_262626"
                             android:textSize="@dimen/_9ssp"
                             app:fontFamily="@font/roboto_bold"
-                            tools:ignore="MissingConstraints" />
+                            tools:ignore="MissingConstraints"
+                            />
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/textStateValueTxt"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/_262626"
                             android:textSize="@dimen/_9ssp"
                             android:layout_marginStart="@dimen/_2sdp"
                             app:fontFamily="@font/roboto_regular"
-                            tools:ignore="MissingConstraints" />
+                            tools:ignore="MissingConstraints"
+                            android:maxLines="2"
+                            android:layout_weight="1"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/textDistrictTxt"
@@ -431,14 +434,16 @@
                             tools:ignore="MissingConstraints" />
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/textDistrictValueTxt"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/_262626"
                             android:textSize="@dimen/_9ssp"
                             android:layout_marginStart="@dimen/_2sdp"
                             app:fontFamily="@font/roboto_regular"
-                            tools:ignore="MissingConstraints" />
+                            tools:ignore="MissingConstraints"
+                            android:maxLines="2"
+                            android:layout_weight="1"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/textMunicipalityTxt"
@@ -452,14 +457,17 @@
                             tools:ignore="MissingConstraints" />
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/textMunicipalityValueTxt"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/_262626"
                             android:textSize="@dimen/_9ssp"
                             android:layout_marginStart="@dimen/_2sdp"
                             app:fontFamily="@font/roboto_regular"
-                            tools:ignore="MissingConstraints" />
+                            tools:ignore="MissingConstraints"
+                            android:maxLines="2"
+                            android:layout_weight="1"/>
+
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -568,7 +576,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/textHeaderTxt1"
         android:layout_marginVertical="@dimen/_5sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp">
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:visibility="gone">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/banner"
@@ -614,6 +623,7 @@
         app:fontFamily="@font/roboto_regular"
         android:layout_marginTop="@dimen/_7sdp"
         android:text="@string/powered_by_national_association_of_street_vendors_of_india"
+        android:visibility="gone"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

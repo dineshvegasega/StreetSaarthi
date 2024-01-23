@@ -20,8 +20,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.ConfigurationCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +45,8 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.networking.ConnectivityManager
+import com.streetsaarthi.nasvi.screens.main.dashboard.BannerViewPagerAdapter
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
@@ -53,6 +57,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
 import java.util.Locale
 import com.streetsaarthi.nasvi.utils.GlideApp
+import com.streetsaarthi.nasvi.utils.autoScroll
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.mainThread
 import kotlinx.coroutines.delay
@@ -91,6 +96,9 @@ class MainActivity : AppCompatActivity() {
 
 
     private val viewModel: MainActivityVM by viewModels()
+
+    private val connectivityManager by lazy { ConnectivityManager(this) }
+
 
     private val pushNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -136,7 +144,20 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        val adapter = BannerViewPagerAdapter(this@MainActivity)
+        viewModel.itemAds.observe(this@MainActivity, Observer {
+            if (it != null) {
+                viewModel.itemAds.value?.let { it1 ->
+                    adapter.submitData(it1)
+                    binding.banner.adapter = adapter
+                    binding.tabDots.setupWithViewPager(binding.banner, true)
+                    binding.banner.autoScroll()
+                }
+            }
+        })
 
+
+        observeConnectivityManager()
 
 //        var zz = "9988397522"
 //        var aa = zz.substring(0,2)
@@ -532,9 +553,12 @@ class MainActivity : AppCompatActivity() {
                 if (loginUser == null) {
                     binding.topLayout.topToolbar.visibility = View.GONE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    binding.layoutBanner.visibility = View.GONE
+                    binding.textHeaderTxt1.visibility = View.GONE
                 } else {
                     binding.topLayout.topToolbar.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
                     readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if(loginUser != null){
                             Gson().fromJson(loginUser, Login::class.java).profile_image_name?.let {
@@ -548,21 +572,59 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun callFragment() {
-        navHostFragment?.navController?.navigateUp()
-//         getSupportFragmentManager().popBackStack();
-
-        val navOptions: NavOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.navigation_bar, true)
-            .build()
-        navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
+    fun callFragment(screen : Int) {
+        binding.apply {
+            when(screen){
+                0-> {
+                    binding.textHeaderTxt1.visibility = View.GONE
+                    binding.layoutBanner.visibility = View.GONE
+                }
+                1-> {
+                    binding.textHeaderTxt1.visibility = View.VISIBLE
+                    binding.mainLayout.setBackgroundResource(R.color.white)
+                    viewModel.itemAds.value?.let { it1 ->
+                        if (it1.size > 0){
+                            if(screen == 1){
+                                binding.layoutBanner.visibility = View.VISIBLE
+                            }else{
+                                binding.layoutBanner.visibility = View.GONE
+                            }
+                        } else {
+                            binding.layoutBanner.visibility = View.GONE
+                        }
+                    }
+                }
+                2-> {
+                    binding.textHeaderTxt1.visibility = View.VISIBLE
+                    binding.mainLayout.setBackgroundResource(R.color._FFF3E4)
+                    viewModel.itemAds.value?.let { it1 ->
+                        if (it1.size > 0){
+                            if(screen == 2){
+                                binding.layoutBanner.visibility = View.VISIBLE
+                            }else{
+                                binding.layoutBanner.visibility = View.GONE
+                            }
+                        } else {
+                            binding.layoutBanner.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
+    private fun observeConnectivityManager() = try {
+        connectivityManager.observe(this) {
+            binding.tvInternet.isVisible = !it
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 
-
-    fun callUpdateData() {
-
+    override fun onStart() {
+        super.onStart()
+        viewModel.adsList()
     }
 
 

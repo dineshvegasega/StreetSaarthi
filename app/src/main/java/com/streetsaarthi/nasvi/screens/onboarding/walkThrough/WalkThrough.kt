@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.WalkThroughBinding
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1
 import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration2
 import com.streetsaarthi.nasvi.utils.mainThread
@@ -42,7 +43,7 @@ class WalkThrough : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        MainActivity.mainActivity.get()?.callFragment(0)
         binding.apply {
             var adapter= WalkThroughPagerAdapter()
             adapter.submitList(viewModel.itemMain)

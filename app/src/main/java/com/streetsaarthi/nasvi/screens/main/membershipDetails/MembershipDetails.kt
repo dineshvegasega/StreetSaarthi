@@ -114,14 +114,15 @@ class MembershipDetails  : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(2)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.membership_details)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
-
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
+                    Log.e("TAG", "dataLogin "+data.toString())
                     textFirstNameValueTxt.setText(data.vendor_first_name)
                     textLastNameValueTxt.setText(data.vendor_last_name)
 //                    textGenderValueTxt.setText(data.gender)
@@ -144,12 +145,18 @@ class MembershipDetails  : Fragment() {
                     textDOBValueTxt.setText(data.date_of_birth)
                     textMobileValueTxt.setText("+91-"+data.mobile_no)
 
+
                     viewModel.vending(view)
                     viewModel.vendingTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
                             for (item in viewModel.itemVending) {
                                 if (item.vending_id == data.type_of_vending){
-                                    binding.textTypeofVendingValueTxt.setText(""+data.vending_others)
+                                    if (item.vending_id == 11){
+                                        binding.textTypeofVendingValueTxt.setText(""+data.vending_others)
+                                    } else {
+                                        binding.textTypeofVendingValueTxt.setText(""+item.name)
+                                    }
+                                    break
                                 } else {
                                     binding.textTypeofVendingValueTxt.setText(""+item.name)
                                 }
@@ -157,12 +164,18 @@ class MembershipDetails  : Fragment() {
                         }
                     })
 
+
                     viewModel.marketplace(view)
                     viewModel.marketPlaceTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
                             for (item in viewModel.itemMarketplace) {
                                 if (item.marketplace_id == data.type_of_marketplace){
-                                    binding.textTypeofMarketPlaceValueTxt.setText(""+data.marketpalce_others)
+                                    if (item.marketplace_id == 7){
+                                        binding.textTypeofMarketPlaceValueTxt.setText(""+data.marketpalce_others)
+                                    } else {
+                                        binding.textTypeofMarketPlaceValueTxt.setText(""+item.name)
+                                    }
+                                    break
                                 } else {
                                     binding.textTypeofMarketPlaceValueTxt.setText(""+item.name)
                                 }
@@ -210,7 +223,6 @@ class MembershipDetails  : Fragment() {
 
 
                     data.profile_image_name?.let {
-//                        ivIcon.loadImage(url = { data.profile_image_name.url })
                         val imageLoader = ImageLoader.Builder(requireContext())
                             .memoryCache {
                                 MemoryCache.Builder(requireContext())
@@ -226,7 +238,7 @@ class MembershipDetails  : Fragment() {
                             .error(R.drawable.no_image_modified)
                             .placeholder(R.drawable.no_image_modified)
                             .build()
-                        ivIcon.load(data.profile_image_name.url, imageLoader){
+                        ivIcon.load(data.profile_image_name?.url, imageLoader){
                             allowHardware(false)
                         }
                     }
@@ -240,19 +252,19 @@ class MembershipDetails  : Fragment() {
             }
 
 
-            viewModel.adsList(view)
-            val adapter = BannerViewPagerAdapter(requireContext())
-
-            viewModel.itemAds.observe(viewLifecycleOwner, Observer {
-                if (it != null) {
-                    viewModel.itemAds.value?.let { it1 ->
-                        adapter.submitData(it1)
-                        banner.adapter = adapter
-                        tabDots.setupWithViewPager(banner, true)
-                        banner.autoScroll()
-                    }
-                }
-            })
+//            viewModel.adsList(view)
+//            val adapter = BannerViewPagerAdapter(requireContext())
+//
+//            viewModel.itemAds.observe(viewLifecycleOwner, Observer {
+//                if (it != null) {
+//                    viewModel.itemAds.value?.let { it1 ->
+//                        adapter.submitData(it1)
+//                        banner.adapter = adapter
+//                        tabDots.setupWithViewPager(banner, true)
+//                        banner.autoScroll()
+//                    }
+//                }
+//            })
         }
     }
 

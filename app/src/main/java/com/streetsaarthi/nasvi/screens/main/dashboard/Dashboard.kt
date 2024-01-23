@@ -50,7 +50,7 @@ class Dashboard : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // val menuHost: MenuHost = requireActivity()
         //createMenu(menuHost)
-
+        MainActivity.mainActivity.get()?.callFragment(1)
         binding.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = viewModel.dashboardAdapter
@@ -136,19 +136,19 @@ class Dashboard : Fragment() {
 
 
 
-            viewModel.adsList(view)
-            val adapter = BannerViewPagerAdapter(requireContext())
-
-            viewModel.itemAds.observe(viewLifecycleOwner, Observer {
-                if (it != null) {
-                    viewModel.itemAds.value?.let { it1 ->
-                        adapter.submitData(it1)
-                        banner.adapter = adapter
-                        tabDots.setupWithViewPager(banner, true)
-                        banner.autoScroll()
-                    }
-                }
-            })
+//            viewModel.adsList(view)
+//            val adapter = BannerViewPagerAdapter(requireContext())
+//
+//            viewModel.itemAds.observe(viewLifecycleOwner, Observer {
+//                if (it != null) {
+//                    viewModel.itemAds.value?.let { it1 ->
+//                        adapter.submitData(it1)
+//                        banner.adapter = adapter
+//                        tabDots.setupWithViewPager(banner, true)
+//                        banner.autoScroll()
+//                    }
+//                }
+//            })
         }
     }
 

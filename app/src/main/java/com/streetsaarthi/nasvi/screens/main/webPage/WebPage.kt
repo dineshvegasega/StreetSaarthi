@@ -99,7 +99,7 @@ class WebPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = view.findNavController()
-
+        MainActivity.mainActivity.get()?.callFragment(0)
 
 
         binding.webView.webViewClient = object : WebViewClient() {
@@ -319,14 +319,16 @@ class WebPage : Fragment() {
             Handler(Looper.getMainLooper()).post(Thread {
                 MainActivity.activity.get()?.runOnUiThread {
 //                    Toast.makeText(mContext, "AA1"+toast, Toast.LENGTH_SHORT).show()
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(toast)
-                    )
-                    try {
-                        binding.root.context.startActivity(webIntent)
-                    } catch (ex: ActivityNotFoundException) {
-                        //binding.root.context.startActivity(webIntent)
+                    toast?.let {
+                        val webIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(toast)
+                        )
+                        try {
+                            binding.root.context.startActivity(webIntent)
+                        } catch (ex: ActivityNotFoundException) {
+                            //binding.root.context.startActivity(webIntent)
+                        }
                     }
                 }
             })
@@ -338,15 +340,16 @@ class WebPage : Fragment() {
             Log.e("TAG", "sendVideoLinkToAndroid "+toast)
             Handler(Looper.getMainLooper()).post(Thread {
                 MainActivity.activity.get()?.runOnUiThread {
-//                    Toast.makeText(mContext, "AA2"+toast, Toast.LENGTH_SHORT).show()
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(toast)
-                    )
-                    try {
-                        binding.root.context.startActivity(webIntent)
-                    } catch (ex: ActivityNotFoundException) {
-                        //binding.root.context.startActivity(webIntent)
+                    toast?.let {
+                        val webIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(toast)
+                        )
+                        try {
+                            binding.root.context.startActivity(webIntent)
+                        } catch (ex: ActivityNotFoundException) {
+                            //binding.root.context.startActivity(webIntent)
+                        }
                     }
                 }
             })

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.NotificationsBinding
 import com.streetsaarthi.nasvi.models.Item
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +33,7 @@ class Notifications : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.notifications)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE

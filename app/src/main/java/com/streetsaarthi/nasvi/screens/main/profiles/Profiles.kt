@@ -54,6 +54,7 @@ class Profiles : Fragment() , CallBackListener {
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         callBackListener = this
 
         binding.apply {
@@ -112,7 +113,7 @@ class Profiles : Fragment() , CallBackListener {
                     inclidePersonalProfile.textMobileNumber.text = "+91-${data.mobile_no}"
                     inclidePersonalProfile.textMembershipIdValue.text = "${data.member_id}"
                     data.validity_to?.let {
-                        inclidePersonalProfile.textValidUptoValue.text = "${data.validity_to.changeDateFormat()}"
+                        inclidePersonalProfile.textValidUptoValue.text = "${data.validity_to.changeDateFormat("yyyy-MM-dd", "dd-MMM-yyyy")}"
                     }
                     MainActivity.mainActivity.get()!!.callBack()
                 }

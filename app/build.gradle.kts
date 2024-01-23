@@ -17,8 +17,8 @@ android {
         applicationId = "com.streetsaarthi.nasvi"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -138,13 +138,13 @@ dependencies {
     implementation ("id.zelory:compressor:3.0.1")
     implementation ("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2")
     implementation ("com.airbnb.android:lottie:6.3.0")
-    implementation ("com.github.stfalcon-studio:SmsVerifyCatcher:0.3.3")
+//    implementation ("com.github.stfalcon-studio:SmsVerifyCatcher:0.3.3")
 
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
 
     //Chucker for Network Inspection
-    debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
-    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+//    debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
+//    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 //    implementation ("com.google.firebase:firebase-auth-ktx")

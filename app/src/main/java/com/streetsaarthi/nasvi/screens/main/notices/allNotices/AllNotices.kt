@@ -11,6 +11,7 @@ import com.streetsaarthi.nasvi.databinding.AllNoticesBinding
 import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +32,7 @@ class AllNotices : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.all_notices)
 

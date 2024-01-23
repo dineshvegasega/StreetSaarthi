@@ -19,6 +19,7 @@ import com.demo.ui.detail.DetailVM
 import com.streetsaarthi.nasvi.databinding.DetailBinding
 import com.streetsaarthi.nasvi.models.Item
 import com.squareup.picasso.Picasso
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -45,7 +46,7 @@ class Detail : Fragment() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        MainActivity.mainActivity.get()?.callFragment(0)
         var data = if (SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable("data" , Item::class.java)
         } else {

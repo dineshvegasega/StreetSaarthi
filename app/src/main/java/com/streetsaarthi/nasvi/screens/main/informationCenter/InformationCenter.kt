@@ -11,6 +11,7 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.InformationCenterBinding
 import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +38,7 @@ class InformationCenter : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         isReadInformationCenter = true
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.information_center)

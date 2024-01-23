@@ -12,6 +12,7 @@ import com.streetsaarthi.nasvi.databinding.HistoryBinding
 import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +36,7 @@ class History : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.mainActivity.get()?.callFragment(0)
         isReadComplaintFeedback = true
 
         binding.apply {
