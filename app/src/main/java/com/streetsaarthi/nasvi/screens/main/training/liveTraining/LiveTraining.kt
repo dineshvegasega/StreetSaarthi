@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +31,7 @@ import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -43,6 +46,7 @@ class LiveTraining : Fragment() {
         var isReadLiveTraining: Boolean? = false
     }
 
+    private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
     private var isLoading: Boolean = false
     private var isLastPage: Boolean = false
@@ -77,6 +81,15 @@ class LiveTraining : Fragment() {
 
             recyclerViewScroll()
 
+            searchHandler()
+
+
+        }
+    }
+
+
+    private fun searchHandler() {
+        binding.apply {
             inclideHeaderSearch.editTextSearch.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     loadFirstPage()
@@ -84,11 +97,22 @@ class LiveTraining : Fragment() {
                 true
             }
 
+            inclideHeaderSearch.editTextSearch.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    inclideHeaderSearch.editTextSearch.setCompoundDrawablesWithIntrinsicBounds(0, 0, if(count >= 1) R.drawable.ic_cross_white else R.drawable.ic_search, 0);
+                }
+            })
 
+            inclideHeaderSearch.editTextSearch.onRightDrawableClicked {
+                it.text.clear()
+                loadFirstPage()
+            }
         }
     }
-
-
 
 
     private fun recyclerViewScroll() {
@@ -100,7 +124,7 @@ class LiveTraining : Fragment() {
                     if(totalPages >= currentPage){
                         Handler(Looper.myLooper()!!).postDelayed({
                             loadNextPage()
-                        }, 1000)
+                        }, LOADER_TIME)
                     }
                 }
                 override fun getTotalPageCount(): Int {

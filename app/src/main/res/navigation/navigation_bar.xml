@@ -53,23 +53,6 @@
         android:label="WalkThrough"
         android:id="@+id/walkThrough"
         tools:layout="@layout/walk_through">
-        <action
-            android:id="@+id/action_walkThrough_to_loginPassword"
-            app:destination="@id/loginPassword"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/walkThrough"
-            app:popUpToInclusive="true"
-            />
-
-        <action
-            android:id="@+id/action_walkThrough_to_Registar"
-            app:destination="@id/register"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/walkThrough"
-            app:popUpToInclusive="true"
-            />
-
-
 
         <action
             android:id="@+id/action_walkThrough_to_onBoard"

@@ -58,7 +58,7 @@
             android:theme="@style/Theme.StreetSaarthi"
             android:launchMode="standard"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            >
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

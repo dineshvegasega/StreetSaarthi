@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,6 +32,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.main.dashboard.ItemModel
@@ -150,11 +153,11 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
     }
 
 
-    fun viewDetail(_id: String, position: Int, root: View, status : Int) = viewModelScope.launch {
+    fun viewDetail(oldItemLiveScheme: ItemLiveScheme, position: Int, root: View, status : Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.schemeDetail(id = _id)
+                    apiInterface.schemeDetail(id = ""+oldItemLiveScheme.scheme_id)
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         var data = Gson().fromJson(response.body()!!.data, ItemSchemeDetail::class.java)
@@ -181,14 +184,25 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                                         .into(ivMap)
                                     textTitle.setText(data.name)
                                     textDesc.setText(data.description)
-                                    textHeaderTxt4.setText(data.status)
+//                                    textHeaderTxt4.setText(data.status)
+
+                                    if (data.status == "Active" && oldItemLiveScheme.user_scheme_status == "applied"){
+                                        textHeaderTxt4.text = root.context.resources.getText(R.string.applied)
+                                        textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._138808)
+                                    } else if (data.status == "Active"){
+                                        textHeaderTxt4.text = root.context.resources.getText(R.string.active)
+                                        textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._138808)
+                                    }  else {
+                                        textHeaderTxt4.text = root.context.resources.getText(R.string.expired)
+                                        textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._F02A2A)
+                                    }
 
                                     data.start_at?.let {
-                                        textStartDate.text = "${data.start_at.changeDateFormat("yyyy-MM-dd", "dd-MMM-yyyy")}"
+                                        textStartDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.start_date, "<b>"+data.start_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
                                     data.end_at?.let {
-                                        textEndDate.text = "${data.end_at.changeDateFormat("yyyy-MM-dd", "dd-MMM-yyyy")}"
+                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
 

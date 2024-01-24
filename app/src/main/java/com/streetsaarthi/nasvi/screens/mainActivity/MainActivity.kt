@@ -68,9 +68,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         @JvmStatic
-        var hideValue: Boolean = false
-
-        @JvmStatic
         lateinit var context: WeakReference<Context>
 
         @JvmStatic
@@ -158,6 +155,8 @@ class MainActivity : AppCompatActivity() {
 
 
         observeConnectivityManager()
+
+        checkUpdate()
 
 //        var zz = "9988397522"
 //        var aa = zz.substring(0,2)
@@ -536,8 +535,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        Log.e("TAG", "onResume1 "+hideValue)
         mainThread {
             delay(2500)
             callBack()
@@ -559,12 +556,8 @@ class MainActivity : AppCompatActivity() {
                     binding.topLayout.topToolbar.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
-                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                        if(loginUser != null){
-                            Gson().fromJson(loginUser, Login::class.java).profile_image_name?.let {
-                                topLayout.ivImage.loadImage(url = { Gson().fromJson(loginUser, Login::class.java).profile_image_name.url })
-                            }
-                        }
+                    Gson().fromJson(loginUser, Login::class.java).profile_image_name?.let {
+                        topLayout.ivImage.loadImage(url = { Gson().fromJson(loginUser, Login::class.java).profile_image_name.url })
                     }
                 }
             }
@@ -624,7 +617,32 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.adsList()
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                viewModel.adsList()
+            }
+        }
+    }
+
+
+    /** Check app update from playstore */
+    private fun checkUpdate() {
+        val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(this)
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability()
+                    == UpdateAvailability.UPDATE_AVAILABLE
+                ) {
+                    // If an in-app update is already running, resume the update.
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        AppUpdateType.IMMEDIATE,
+                        this,
+                        1234
+                    )
+                }
+            }
     }
 
 

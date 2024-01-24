@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.BR
@@ -117,7 +118,9 @@ class LiveTrainingAdapter(liveSchemesVM: LiveTrainingVM) : RecyclerView.Adapter<
                     .into(ivMap)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
-                textHeaderTxt4.setText(dataClass.status)
+
+                textHeaderTxt4.setText(if (dataClass.status == "Active") root.context.resources.getString(R.string.live) else root.context.resources.getString(R.string.expired))
+                textHeaderTxt4.backgroundTintList = if (dataClass.status == "Active") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A)
 
                 root.setOnClickListener {
 //                    if (dataClass.user_scheme_status == "applied"){

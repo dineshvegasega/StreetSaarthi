@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -10,6 +11,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,6 +29,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.main.webPage.WebPage
@@ -130,11 +134,12 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
     }
 
 
-    fun viewDetail(_id: String, position: Int, root: View, status : Int) = viewModelScope.launch {
+    fun viewDetail(oldItemLiveScheme: ItemLiveScheme, position: Int, root: View, status : Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.schemeDetail(id = _id)
+                    apiInterface.schemeDetail(id = ""+oldItemLiveScheme.scheme_id)
+                @SuppressLint("ResourceAsColor")
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         var data = Gson().fromJson(response.body()!!.data, ItemSchemeDetail::class.java)
@@ -161,14 +166,24 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                         .into(ivMap)
                                     textTitle.setText(data.name)
                                     textDesc.setText(data.description)
-                                    textHeaderTxt4.setText(data.status)
+
+                                    if (data.status == "Active" && oldItemLiveScheme.user_scheme_status == "applied"){
+                                        textHeaderTxt4.text = root.context.resources.getText(R.string.applied)
+                                        textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._138808)
+                                    } else if (data.status == "Active"){
+                                        textHeaderTxt4.text = root.context.resources.getText(R.string.live)
+                                        textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._138808)
+                                    }  else {
+                                        textHeaderTxt4.text = root.context.resources.getText(R.string.not_live)
+                                        textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._F02A2A)
+                                    }
 
                                     data.start_at?.let {
-                                        textStartDate.text = "${data.start_at.changeDateFormat("yyyy-MM-dd", "dd-MMM-yyyy")}"
+                                        textStartDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.start_date, "<b>"+data.start_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
                                     data.end_at?.let {
-                                        textEndDate.text = "${data.end_at.changeDateFormat("yyyy-MM-dd", "dd-MMM-yyyy")}"
+                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
 

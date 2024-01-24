@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.R
@@ -111,6 +112,7 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
 
     class TopMoviesVH(binding: ItemLiveSchemesBinding) : RecyclerView.ViewHolder(binding.root) {
         var itemRowBinding: ItemLiveSchemesBinding = binding
+        @SuppressLint("ResourceAsColor")
         fun bind(obj: Any?, viewModel: LiveSchemesVM, position: Int) {
             itemRowBinding.setVariable(BR.model, obj)
             itemRowBinding.executePendingBindings()
@@ -122,13 +124,15 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
                     .into(ivMap)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
-                textHeaderTxt4.setText(dataClass.status)
+
+                textHeaderTxt4.setText(if (dataClass.status == "Active") root.context.resources.getString(R.string.live) else root.context.resources.getString(R.string.not_live))
+                textHeaderTxt4.backgroundTintList = (if(dataClass.status == "Active") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A))
 
                 root.setOnClickListener {
                         if (dataClass.user_scheme_status == "applied"){
-                            viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 1)
+                            viewModel.viewDetail(dataClass, position = position, root, 1)
                         }else{
-                            viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
+                            viewModel.viewDetail(dataClass, position = position, root, 2)
                         }
                 }
 

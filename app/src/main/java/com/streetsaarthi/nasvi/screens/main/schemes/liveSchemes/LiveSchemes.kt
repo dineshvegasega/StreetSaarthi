@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
@@ -22,11 +26,12 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
+
 
 @AndroidEntryPoint
 class LiveSchemes : Fragment() {
@@ -37,9 +42,9 @@ class LiveSchemes : Fragment() {
     companion object{
         var isReadLiveSchemes: Boolean? = false
 //        var callBackListener: ListCallBackListener? = null
-
     }
 
+    private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
     private var isLoading: Boolean = false
     private var isLastPage: Boolean = false
@@ -55,7 +60,7 @@ class LiveSchemes : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         MainActivity.mainActivity.get()?.callFragment(0)
@@ -74,6 +79,13 @@ class LiveSchemes : Fragment() {
 
             recyclerViewScroll()
 
+            searchHandler()
+
+        }
+    }
+
+    private fun searchHandler() {
+        binding.apply {
             inclideHeaderSearch.editTextSearch.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     loadFirstPage()
@@ -81,6 +93,20 @@ class LiveSchemes : Fragment() {
                 true
             }
 
+            inclideHeaderSearch.editTextSearch.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    inclideHeaderSearch.editTextSearch.setCompoundDrawablesWithIntrinsicBounds(0, 0, if(count >= 1) R.drawable.ic_cross_white else R.drawable.ic_search, 0);
+                }
+            })
+
+            inclideHeaderSearch.editTextSearch.onRightDrawableClicked {
+                it.text.clear()
+                loadFirstPage()
+            }
         }
     }
 
@@ -93,7 +119,7 @@ class LiveSchemes : Fragment() {
                     if(totalPages >= currentPage){
                         Handler(Looper.myLooper()!!).postDelayed({
                             loadNextPage()
-                        }, 1000)
+                        }, LOADER_TIME)
                     }
                     Log.e("TAG", "currentPage "+currentPage)
                 }
@@ -196,7 +222,7 @@ class LiveSchemes : Fragment() {
                         user_scheme_status = "applied"
                     }
                     viewModel.adapter.notifyDataSetChanged()
-                    viewModel.viewDetail(""+data.scheme_id, position = position, requireView(), 3)
+                    viewModel.viewDetail(data, position = position, requireView(), 3)
                 }
             }
     }

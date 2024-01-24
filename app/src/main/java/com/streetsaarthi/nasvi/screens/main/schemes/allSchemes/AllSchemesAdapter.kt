@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.R
@@ -124,21 +125,23 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
                     .into(ivIcon)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
-                textHeaderTxt4.setText(dataClass.status)
 
-                dataClass.end_at?.let {
-                    textValidDateValue.text = "${dataClass.end_at.changeDateFormat("yyyy-MM-dd", "dd-MMM-yyyy")}"
-                }
+                textHeaderTxt4.setText(if (dataClass.status == "Active") root.context.resources.getString(R.string.active) else root.context.resources.getString(R.string.expired))
+                textHeaderTxt4.backgroundTintList = if (dataClass.status == "Active") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A)
+
 
                 textStatusValueTxt.setText(if (dataClass.user_scheme_status == "applied") root.context.resources.getString(R.string.applied) else root.context.resources.getString(R.string.not_applied))
+                textStatusValueTxt.setTextColor(if(dataClass.user_scheme_status == "applied") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A))
 
-
+                dataClass.end_at?.let {
+                    textValidDateValue.text = "${dataClass.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM")}"
+                }
 
                 root.setOnClickListener {
                         if (dataClass.user_scheme_status == "applied"){
-                            viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 1)
+                            viewModel.viewDetail(dataClass, position = position, root, 1)
                         }else{
-                            viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
+                            viewModel.viewDetail(dataClass, position = position, root, 2)
                         }
                 }
 

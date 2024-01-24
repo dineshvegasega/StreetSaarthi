@@ -43,9 +43,11 @@ const val SchemeDetail = "scheme-detail"
 const val TrainingDetail = "training-detail"
 const val NoticeDetail = "notice-detail"
 
-const val AllSchemeHistory = "scheme-history-list"
+const val AllSchemeHistory = "user-scheme-history-list"
 const val AllTrainingHistory = "training-list"
 const val AllNoticeHistory = "notice-history-list"
+
+const val Notifications = "notification-list"
 
 const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
 const val TRANSLATE = "translate/v2?key="
@@ -54,7 +56,6 @@ const val TRANSLATE = "translate/v2?key="
 const val USER_TYPE = "member"
 
 const val PING = "8.8.8.8"
-
 
 
 const val Screen = "screen"

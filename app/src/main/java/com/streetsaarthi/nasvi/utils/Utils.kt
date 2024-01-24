@@ -11,6 +11,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -321,6 +322,23 @@ fun String.changeDateFormat(inDate : String, outDate: String) : String? {
     return str
 }
 
+
+
+@SuppressLint("ClickableViewAccessibility")
+fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit) {
+    this.setOnTouchListener { v, event ->
+        var hasConsumed = false
+        if (v is EditText) {
+            if (event.x >= v.width - v.totalPaddingRight) {
+                if (event.action == MotionEvent.ACTION_UP) {
+                    onClicked(this)
+                }
+                hasConsumed = true
+            }
+        }
+        hasConsumed
+    }
+}
 
 
 fun Context.isTablet(): Boolean {

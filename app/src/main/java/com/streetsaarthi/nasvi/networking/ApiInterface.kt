@@ -24,6 +24,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveTraining
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Marketplace
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeLiveList
+import com.streetsaarthi.nasvi.screens.onboarding.networking.Notifications
 import com.streetsaarthi.nasvi.screens.onboarding.networking.PANCHAYAT
 import com.streetsaarthi.nasvi.screens.onboarding.networking.PASSWORD_UPDATE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.PINCODE
@@ -197,6 +198,15 @@ interface ApiInterface {
     @POST(AllNoticeHistory)
     suspend fun allNoticeList(
         @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+
+    @GET(Notifications)
+    suspend fun notifications(
+        @Query("page")  page: Int,
+        @Query("is_read")  is_read: Boolean,
+        @Query("user_id")  user_id: String
     ): Response<BaseResponseDC<JsonElement>>
 
 

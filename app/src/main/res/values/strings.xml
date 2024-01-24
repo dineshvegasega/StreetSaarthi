@@ -452,6 +452,10 @@
     <string name="watch">Watch</string>
     <string name="applied">Applied</string>
     <string name="not_applied">Not Applied</string>
+    <string name="not_live">NOT_LIVE</string>
+    <string name="expired">Expired</string>
+    <string name="start_date">Start Date %s</string>
+    <string name="end_date">End Date %s</string>
 
 
 

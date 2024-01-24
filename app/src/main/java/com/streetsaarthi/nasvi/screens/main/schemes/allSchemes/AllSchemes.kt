@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,16 +19,15 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.AllSchemesBinding
-import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
-import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -36,6 +37,7 @@ class AllSchemes : Fragment() {
     private var _binding: AllSchemesBinding? = null
     private val binding get() = _binding!!
 
+    private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
     private var isLoading: Boolean = false
     private var isLastPage: Boolean = false
@@ -68,6 +70,14 @@ class AllSchemes : Fragment() {
 
             recyclerViewScroll()
 
+            searchHandler()
+
+        }
+    }
+
+
+    private fun searchHandler() {
+        binding.apply {
             inclideHeaderSearch.editTextSearch.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     loadFirstPage()
@@ -75,9 +85,22 @@ class AllSchemes : Fragment() {
                 true
             }
 
+            inclideHeaderSearch.editTextSearch.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    inclideHeaderSearch.editTextSearch.setCompoundDrawablesWithIntrinsicBounds(0, 0, if(count >= 1) R.drawable.ic_cross_white else R.drawable.ic_search, 0);
+                }
+            })
+
+            inclideHeaderSearch.editTextSearch.onRightDrawableClicked {
+                it.text.clear()
+                loadFirstPage()
+            }
         }
     }
-
 
 
     private fun recyclerViewScroll() {
@@ -89,7 +112,7 @@ class AllSchemes : Fragment() {
                     if(totalPages >= currentPage){
                         Handler(Looper.myLooper()!!).postDelayed({
                             loadNextPage()
-                        }, 1000)
+                        }, LOADER_TIME)
                     }
                 }
                 override fun getTotalPageCount(): Int {
@@ -118,7 +141,7 @@ class AllSchemes : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
-//                        put("status", "Active")
+                        put("user_type", USER_TYPE)
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
@@ -135,7 +158,7 @@ class AllSchemes : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
-//                        put("status", "Active")
+                        put("user_type", USER_TYPE)
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
@@ -191,7 +214,7 @@ class AllSchemes : Fragment() {
                     user_scheme_status = "applied"
                 }
                 viewModel.adapter.notifyDataSetChanged()
-                viewModel.viewDetail(""+data.scheme_id, position = position, requireView(), 3)
+                viewModel.viewDetail(data, position = position, requireView(), 3)
             }
         }
     }

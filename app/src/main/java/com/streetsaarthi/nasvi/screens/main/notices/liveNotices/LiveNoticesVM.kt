@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -143,9 +144,10 @@ class LiveNoticesVM @Inject constructor(private val repository: Repository): Vie
                                     textTitle.setText(data.name)
                                     textDesc.setText(data.description)
                                     textHeaderTxt4.setText(data.status)
+                                    textHeaderTxt4.visibility = View.GONE
 
                                     data.end_date?.let {
-                                        textEndDate.text = "${data.end_date.changeDateFormat("yyyy-MM-dd", "dd-MMM-yyyy")}"
+                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_date.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
                                     btApply.visibility = View.GONE
@@ -173,4 +175,6 @@ class LiveNoticesVM @Inject constructor(private val repository: Repository): Vie
             }
         )
     }
+
+
 }
