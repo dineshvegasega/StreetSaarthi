@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -26,6 +28,17 @@ android {
         }
     }
 
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:\\Users\\admin\\AndroidStudioProjects\\StreetSaarthi\\nasvi.jks")
+            storePassword = rootProject.extra["storePassword"] as String
+            keyAlias = "nasvi"
+            keyPassword = rootProject.extra["keyPassword"] as String
+        }
+    }
+
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -33,6 +46,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -139,6 +153,8 @@ dependencies {
 //    debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
 //    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
+//    implementation ("com.google.android.gms:play-services-auth:20.7.0")
+    implementation ("com.google.android.play:core:1.10.3")
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 //    implementation ("com.google.firebase:firebase-auth-ktx")
 //    implementation ("com.google.firebase:firebase-database-ktx")

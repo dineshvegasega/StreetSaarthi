@@ -14,6 +14,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -29,6 +30,14 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.util.Util
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.common.IntentSenderForResultStarter
+import com.google.android.play.core.install.model.ActivityResult
+import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.Gson
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
@@ -58,6 +67,7 @@ import java.lang.ref.WeakReference
 import java.util.Locale
 import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.autoScroll
+import com.streetsaarthi.nasvi.utils.ioThread
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.mainThread
 import kotlinx.coroutines.delay
@@ -108,11 +118,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SdCardPath", "MutableImplicitPendingIntent")
+    @SuppressLint("SdCardPath", "MutableImplicitPendingIntent", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//        checkUpdate()
 
 //        setIntent(intent)
 //
@@ -156,7 +167,6 @@ class MainActivity : AppCompatActivity() {
 
         observeConnectivityManager()
 
-        checkUpdate()
 
 //        var zz = "9988397522"
 //        var aa = zz.substring(0,2)
@@ -398,6 +408,7 @@ class MainActivity : AppCompatActivity() {
 //        )
     }
 
+    @SuppressLint("SuspiciousIndentation")
     fun callLogoutDialog() {
         if(logoutAlert?.isShowing == true) {
             return
@@ -412,6 +423,9 @@ class MainActivity : AppCompatActivity() {
                 DataStoreUtil.removeKey(DataStoreKeys.LIVE_SCHEME_DATA) {}
                 DataStoreUtil.removeKey(DataStoreKeys.LIVE_NOTICE_DATA) {}
                 DataStoreUtil.removeKey(DataStoreKeys.LIVE_TRAINING_DATA) {}
+                DataStoreUtil.removeKey(DataStoreKeys.Complaint_Feedback_DATA) {}
+                DataStoreUtil.removeKey(DataStoreKeys.Information_Center_DATA) {}
+
                 DataStoreUtil.clearDataStore {  }
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.drawerLayout.close()
@@ -533,14 +547,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        mainThread {
-            delay(2500)
-            callBack()
-        }
 
-    }
 
 
 
@@ -615,6 +622,44 @@ class MainActivity : AppCompatActivity() {
         e.printStackTrace()
     }
 
+
+
+    var resultUpdate = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){ result->
+            if (result.resultCode == RESULT_OK) {
+                    // Handle successful app update
+            } else if (result.resultCode == RESULT_CANCELED) {
+                finish()
+            } else if (result.resultCode == RESULT_IN_APP_UPDATE_FAILED) {
+                finish()
+            } else {
+                finish()
+            }
+    }
+
+    private fun checkUpdate() {
+        val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(this)
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener { appUpdateInfo ->
+                val starter =
+                    IntentSenderForResultStarter { intent, _, fillInIntent, flagsMask, flagsValues, _, _ ->
+                        val request = IntentSenderRequest.Builder(intent)
+                            .setFillInIntent(fillInIntent)
+                            .setFlags(flagsValues, flagsMask)
+                            .build()
+                        resultUpdate.launch(request)
+                    }
+
+                appUpdateManager.startUpdateFlowForResult(
+                    appUpdateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    starter,
+                    123,
+                )
+            }
+    }
+
+
     override fun onStart() {
         super.onStart()
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
@@ -624,27 +669,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    /** Check app update from playstore */
-    private fun checkUpdate() {
-        val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(this)
-        appUpdateManager
-            .appUpdateInfo
-            .addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.updateAvailability()
-                    == UpdateAvailability.UPDATE_AVAILABLE
-                ) {
-                    // If an in-app update is already running, resume the update.
-                    appUpdateManager.startUpdateFlowForResult(
-                        appUpdateInfo,
-                        AppUpdateType.IMMEDIATE,
-                        this,
-                        1234
-                    )
-                }
-            }
+    override fun onResume() {
+        super.onResume()
+        ioThread {
+            delay(2500)
+            callBack()
+        }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

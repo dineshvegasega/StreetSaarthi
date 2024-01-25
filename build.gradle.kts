@@ -12,3 +12,5 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.44" apply false
     id("com.google.gms.google-services") version "4.4.0" apply false
 }
+val storePassword by extra("android")
+val keyPassword by extra("android")

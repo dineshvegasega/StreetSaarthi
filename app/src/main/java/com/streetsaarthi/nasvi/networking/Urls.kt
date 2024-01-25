@@ -1,10 +1,10 @@
 package com.streetsaarthi.nasvi.screens.onboarding.networking
 
-//const val BASE_URL = "https://v2.nasvi.in/"
-//const val WEB_URL = "https://nasvi.in/"
+const val BASE_URL = "https://v2.nasvi.in/"
+const val WEB_URL = "https://nasvi.in/"
 
-const val BASE_URL = "http://167.71.225.20:8081/"
-const val WEB_URL = "http://167.71.225.20:8080/"
+//const val BASE_URL = "http://167.71.225.20:8081/"
+//const val WEB_URL = "http://167.71.225.20:8080/"
 
 const val URL = BASE_URL+"api/"
 
@@ -34,6 +34,7 @@ const val NoticeHistoryList = "notice-history-list"
 const val LiveScheme = "live-scheme"
 const val NoticeLiveList = "notice-live-list"
 const val LiveTraining = "live-training"
+
 const val ComplaintFeedback = "feedback-history-all"
 const val InformationCenter = "information-history-list"
 const val ADS_LIST = "ads-list?page=1"

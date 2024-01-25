@@ -144,7 +144,7 @@ class AllNotices : Fragment() {
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
-                    viewModel.liveNotice(view = requireView(), obj)
+                 //   viewModel.liveNotice(view = requireView(), obj)
                 }
             }
         }

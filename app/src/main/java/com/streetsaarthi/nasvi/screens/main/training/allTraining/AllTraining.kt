@@ -150,7 +150,7 @@ class AllTraining : Fragment() {
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
-                    viewModel.allTraining(view = requireView(), obj)
+                   // viewModel.allTraining(view = requireView(), obj)
                 }
             }
         }

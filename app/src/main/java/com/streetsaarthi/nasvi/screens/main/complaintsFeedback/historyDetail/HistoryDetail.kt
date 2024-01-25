@@ -48,7 +48,7 @@ class HistoryDetail : Fragment() {
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
 
-            val strings = java.util.ArrayList<HistoryDetailVM.ItemModel>()
+            val strings = ArrayList<HistoryDetailVM.ItemModel>()
 
             strings.add(HistoryDetailVM.ItemModel(R.drawable.item_feedback, "Orders"))
             strings.add(HistoryDetailVM.ItemModel(R.drawable.item_feedback, "How it Works"))

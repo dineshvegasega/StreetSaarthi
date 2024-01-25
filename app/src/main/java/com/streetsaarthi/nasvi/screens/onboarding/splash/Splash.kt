@@ -58,24 +58,24 @@ var viewOf : View ?= null
     }
 
     private fun handleSplashTime() {
-        mainThread {
+        ioThread {
             delay(2000)
             readData(LOGIN_DATA) { loginUser ->
                 var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                 if(loginUser == null){
                     Log.e("TAG", "onResume2AAA ")
-                    //if (fragmentInFrame !is Start){
-//                            navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
-                    requireView().findNavController().navigate(R.id.action_splash_to_start)
-                    MainActivity.mainActivity.get()!!.callBack()
-                   // }
+                    if (fragmentInFrame !is Start){
+                        navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
+//                      requireView().findNavController().navigate(R.id.action_splash_to_start)
+                        MainActivity.mainActivity.get()!!.callBack()
+                    }
                 }else{
                     Log.e("TAG", "onResume2BBB ")
-                  //  if (fragmentInFrame !is Dashboard){
-//                            navHostFragment?.navController?.navigate(R.id.action_splash_to_dashboard)
-                    requireView().findNavController().navigate(R.id.action_splash_to_dashboard)
-                    MainActivity.mainActivity.get()!!.callBack()
-                  // }
+                    if (fragmentInFrame !is Dashboard){
+                        navHostFragment?.navController?.navigate(R.id.action_splash_to_dashboard)
+//                      requireView().findNavController().navigate(R.id.action_splash_to_dashboard)
+                        MainActivity.mainActivity.get()!!.callBack()
+                   }
                 }
             }
         }
