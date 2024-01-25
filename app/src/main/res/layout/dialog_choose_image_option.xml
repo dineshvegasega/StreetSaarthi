@@ -24,7 +24,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tvPhotosDesc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvPhotos"
-            app:tint="@color/app_color" />
+            app:tint="@color/_E79D46" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCamera"
@@ -68,7 +68,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tvCameraDesc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvCamera"
-            app:tint="@color/app_color" />
+            app:tint="@color/_E79D46" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPhotos"

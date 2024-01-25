@@ -1,26 +1,32 @@
-<resources>
-    <string name="app_name">Street Saarthi</string>
-    <string name="no_internet_connection">No internet connection</string>
-    <string name="no_image_found">No image found</string>
-    <string name="street_vendor_management_system">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
-    <string name="street_vendor_management_system_under"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name" translatable="false">Street Saarthi</string>
+    <string name="no_image_found" translatable="false">No image found</string>
+    <string name="street_vendor_system" translatable="false">Street\nSaarthi</string>
+    <string name="street_vendor_management_system" translatable="false">STREET VENDOR\nMANAGEMENT\nSYSTEM</string>
+    <string name="street_vendor_management_system_under" translatable="false"><u>STREET VENDOR MANAGEMENT\nSYSTEM</u></string>
+
+    <string name="PoweredbyVegaSegaSolutions" translatable="false">Powered by VegaSega Solutions</string>
+    <string name="NationalAssociation" translatable="false">National Association Of Street Vendors Of India</string>
+    <string name="AnInitiativeBy" translatable="false">An Initiative By</string>
+    <string name="ConnectingStreetVendorsAllOverIndia" translatable="false">Connecting Street Vendors All Over India</string>
+    <string name="StreetVendorSystem" translatable="false">Street Vendor System</string>
+    <string name="powered_by_national_association_of_street_vendors_of_india" translatable="false">Powered by <b><u>National Association Of Street Vendors Of India</u></b></string>
+
+
+    <string name="street_saarthi" translatable="false">Street Saarthi</string>
+
+
+    <string name="google_place_key" tools:ignore="MissingTranslation">AIzaSyAuptk-VCeLs864df80F1PIzsxL5RM9F1c</string>
 
     <string name="click_here_to_agree_to_the"><![CDATA[Click Here to agree on the]]></string>
     <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
-    <string name="title">Title</string>
-    <string name="submit">Submit</string>
-
-    <string name="PoweredbyVegaSegaSolutions">Powered by VegaSega Solutions</string>
-    <string name="NationalAssociation">National Association Of Street Vendors Of India</string>
-    <string name="AnInitiativeBy">An Initiative By</string>
-    <string name="ConnectingStreetVendorsAllOverIndia">Connecting Street Vendors All Over India</string>
-    <string name="StreetVendorSystem">Street Vendor System</string>
-
-
-    <string name="street_saarthi">Street Saarthi</string>
-
 
     <string name="Pleaseselectagree">Please select agree on the Terms &amp; Conditions</string>
+
+    <string name="title">Title</string>
+    <string name="submit" translatable="false">Submit</string>
+    <string name="no_internet_connection">No internet connection</string>
 
 
     <string name="quick_registation">Quick Register</string>
@@ -46,7 +52,7 @@
 
 
 
-    <string name="enterMobileNumber">Enter Mobile Number</string>
+    <string name="enterMobileNumber">Enter Valid Mobile Number</string>
 
 
     <string name="login">Login</string>
@@ -75,6 +81,9 @@
     <string name="marathi">मराठी</string>
     <string name="punjabi">ਪੰਜਾਬੀ</string>
     <string name="tamil">தமிழ்</string>
+    <string name="telugu">తెలుగు</string>
+    <string name="assamese">অসমীয়া</string>
+    <string name="urdu">اردو</string>
 
     <string name="englishVal">en</string>
     <string name="bengaliVal">bn</string>
@@ -85,6 +94,10 @@
     <string name="marathiVal">mr</string>
     <string name="punjabiVal">pa</string>
     <string name="tamilVal">ta</string>
+    <string name="teluguVal">te</string>
+    <string name="assameseVal">as</string>
+    <string name="urduVal">ur</string>
+
 
     <string name="RegisterHere">Register Here</string>
     <string name="SelectYourchoiceofregistration">Select Your choice of registration</string>
@@ -106,7 +119,7 @@
     <string name="profile_details">Profile Details</string>
     <string name="registration_successful">Registration Successful</string>
     <string name="congratulations_your_initial_registration_is_complete">Congratulations!\nYour initial registration is complete</string>
-    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">Someone from our team will contact you within 48Hrs to verify your registration.</string>
+    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">Someone from our team will contact you within 48 Hrs to verify your registration.</string>
     <string name="RegisterNow">Register Now</string>
 
     <string name="resendOtp">Re-send OTP</string>
@@ -114,9 +127,9 @@
     <string name="YourNewPassword">Your New Password</string>
     <string name="back_to_home">Back To Home</string>
     <string name="back_to_home_u"><u>Back To Home</u></string>
-    <string name="CreatePasswordReEnterPasswordisnotsame">Create Password and Re-Enter Password is not same</string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">*Password not match</string>
 
-    <string name="InvalidPassword">Password should be atleast 8 characters along with 1 uppercase, 1 lowercase,1 number and 1 special character</string>
+    <string name="InvalidPassword">*Minimum 8 characters containing 1 Uppercase, 1 Lowercase, 1 Number &amp; 1 Special Character</string>
     <string name="father_s_first_name">Father\'s First Name</string>
     <string name="father_s_last_name">Father\'s Last Name</string>
     <string name="gender">Gender</string>
@@ -144,7 +157,7 @@
     <string name="photos">Photos</string>
     <string name="browse_images_from_gallery">Browse Images From Gallery</string>
     <string name="cancel">Cancel</string>
-    <string name="choose_your_preference">Choose your preference</string>
+    <string name="choose_your_preference">Choose Your Preference</string>
     <string name="complete_profile_registration">Complete Profile Registration</string>
     <string name="otp_verification">OTP Verification</string>
     <string name="current_vending_address">Current Vending Address</string>
@@ -156,6 +169,7 @@
     <string name="close_time">Close Time</string>
     <string name="document_details">Document Details</string>
     <string name="do_you_have_vending_documents">Do you have vending documents?</string>
+    <string name="do_you_have_government_scheme">Have you availed any government scheme?</string>
     <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/Survey Receipt/Challan/Approval Letter from Municipal Body)</string>
     <string name="government_scheme">Government Scheme</string>
     <string name="yes">Yes</string>
@@ -164,6 +178,7 @@
     <string name="upload_challan">Upload Challan</string>
     <string name="upload_approval_letter_from_municipality">Upload Approval Letter From Municipality</string>
     <string name="pm_swanidhi_scheme">PM Swanidhi Scheme</string>
+    <string name="pm_swanidhi_schemeSingle" translatable="false">PM_Swanidhi_Scheme</string>
     <string name="others_please_name">Others, Please Name</string>
     <string name="scheme_name">Scheme Name</string>
     <string name="professional_details">Professional Details</string>
@@ -264,15 +279,184 @@
     </string-array>
 
 
-    <string name="COVText">COV</string>
-    <string name="LORText">,LOR</string>
-    <string name="Survery_ReceiptText">,Survery_Receipt</string>
-    <string name="ChallanText">,Challan</string>
-    <string name="Approval_LetterText">,Approval_Letter</string>
-
+    <string name="COVText" translatable="false">COV</string>
+    <string name="LORText" translatable="false">LOR</string>
+    <string name="Survery_ReceiptText" translatable="false">Survery_Receipt</string>
+    <string name="ChallanText" translatable="false">Challan</string>
+    <string name="Approval_LetterText" translatable="false">Approval_Letter</string>
 
     <string name="or">OR</string>
     <string name="enterOtpHere">Enter OTP Here</string>
+    <string name="img_description">This is an image</string>
+    <string name="logout">Logout</string>
+    <string name="are_your_sure_want_to_logout">Are you sure, You want to Logout?</string>
+    <string name="enter_market_place">Enter Market Place</string>
+    <string name="enter_vending">Enter Vending</string>
+    <string name="select_scheme">Select Scheme</string>
+    <string name="NASVI_Street_Vendor_Dashboard" translatable="false">Welcome to Street Saarthi Dashboard</string>
+
+    <string name="profiles">Profile</string>
+    <string name="live_schemes">Live Schemes</string>
+    <string name="all_schemes">All Schemes</string>
+    <string name="live_notices">Live Notices</string>
+    <string name="all_notices">All Notices</string>
+    <string name="live_training">Live Training</string>
+    <string name="all_training">All Training</string>
+    <string name="complaints_feedback">Complaints &amp;\nFeedback</string>
+    <string name="recent_activites">Recent Activites</string>
+    <string name="viewMore">View More</string>
+    <string name="search">Search</string>
+
+    <string name="complaintsSlashfeedback">Complaints/Feedback</string>
+    <string name="AllComplaintsFeedback">All Complaints/Feedback</string>
+
+    <string name="localOrganisation">Select Organisation</string>
+    <string name="do_you_have_localOrgnaization">Are you Affiliated with any Organization?</string>
+
+    <string name="apply">Apply</string>
+
+
+    <string name="first_nameStar">First Name*</string>
+    <string name="last_nameStar">Last Name*</string>
+    <string name="mobileNumberStar">Mobile Number*</string>
+    <string name="YourPasswordStar">Your Password*</string>
+    <string name="enterOtpStar">Enter OTP*</string>
+
+    <string name="createPasswordStar">Create Password*</string>
+    <string name="reEnterPasswordStar">Re-Enter Password*</string>
+
+    <string name="father_s_first_nameStar">Father\'s First Name*</string>
+    <string name="father_s_last_nameStar">Father\'s Last Name*</string>
+    <string name="genderStar">Gender*</string>
+    <string name="date_of_birthStar">Date of Birth*</string>
+    <string name="social_categoryStar">Category*</string>
+    <string name="education_qualifacationStar">Education Qualification*</string>
+    <string name="select_stateStar">State*</string>
+    <string name="select_districtStar">District*</string>
+    <string name="municipality_panchayatStar">Municipality/Panchayat*</string>
+    <string name="select_pincodeStar">Pincode*</string>
+    <string name="marital_statusStar">Marital Status*</string>
+    <string name="spouse_s_nameStar">Spouse\'s Name*</string>
+    <string name="address_mention_villageStar">Address (Mention Village)*</string>
+    <string name="upload_mediaStar">Upload Media*</string>
+
+    <string name="type_of_market_placeStar">Type of Market Place*</string>
+    <string name="type_of_vendingStar">Type of Vending*</string>
+    <string name="total_years_of_vendingStar">Total Years of Vending*</string>
+    <string name="enter_market_placeStar">Enter Market Place*</string>
+    <string name="enter_vendingStar">Enter Vending*</string>
+
+    <string name="openStar">Open*</string>
+    <string name="closeStar">Close*</string>
+
+    <string name="localOrganisationStar">Select Organisation*</string>
+
+    <string name="the_verify_code_will_expire_in_00_59">%s</string>
+    <string name="your_Profile">Your Profile</string>
+    <string name="personal_detailsFull">Personal Details</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="other_details">Other Details</string>
+
+
+    <string name="x_close">X Close</string>
+    <string name="close_x">CLOSE X</string>
+    <string name="app_version_1_0">App Version %s</string>
+    <string name="notices">Notices</string>
+    <string name="training">Training</string>
+    <string name="information_center">Information Center</string>
+    <string name="membership_details">Membership Details</string>
+    <string name="current_addressStar">Current Address*</string>
+    <string name="is_your_permanent_residence_same_as_current_residenceStar">Is your permanent residence same as current residence?*</string>
+    <string name="current_location_of_businessStar">Current Location of Business*</string>
+    <string name="trackingId">Tracking Id: %s</string>
+    <string name="settings">Settings</string>
+
+
+    <string name="app_settings">App Settings</string>
+    <string name="select_language">Select Language</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile_settings">Profile Settings</string>
+    <string name="change_password">Change Password</string>
+    <string name="logout_account">Logout Account</string>
+    <string name="delete_your_account">Delete Your Account</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="select_your_choice">Select Your Choice</string>
+    <string name="register_complaint">Register Complaint</string>
+    <string name="subject_of_complaint">Subject Of Complaint</string>
+    <string name="type_here">Type Here</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_full_name">Your Full Name</string>
+    <string name="your_mobile_number">Your Mobile Number</string>
+    <string name="description">Description</string>
+    <string name="are_you_sure_you_want_to_logout_your_account">Are you sure you want to logout your account ?</string>
+    <string name="write_something">Write Something</string>
+    <string name="active">Active</string>
+    <string name="live">LIVE</string>
+    <string name="download_membership_card">Download</string>
+    <string name="venderDetails"><b>Vender Details:</b> %s</string>
+    <string name="current_vending_addressStar">Current Vending Address*</string>
+
+    <string name="membership_Id">Membership Id:</string>
+    <string name="valid_Upto">Valid Upto:</string>
+    <string name="passport_size_imageStar">Passport Size Image*</string>
+    <string name="shop_imageStar">Shop image*</string>
+    <string name="identity_imageStar">Identity Image*</string>
+    <string name="membership_id">Membership Id</string>
+    <string name="schemes_like_pm_swanidhi_yojna_etc">Schemes like PM Swanidhi Yojna etc</string>
+
+    <string name="otp_sent">OTP is sent to your Mobile Number +91-%s</string>
+    <string name="user_already_exist">User already exist</string>
+    <string name="otp_Verified_successfully">OTP Verified successfully</string>
+    <string name="invalid_OTP">Invalid OTP</string>
+
+
+    <string name="survey_receipt">Survey Receipt</string>
+    <string name="challan">Challan</string>
+    <string name="approval_letter_from_municipality">Approval Letter From Municipality</string>
+    <string name="select_state_">Select State</string>
+    <string name="select_district_">Select District</string>
+    <string name="municipality_panchayat_">Select Municipality/Panchayat</string>
+
+    <string name="not_state">You have no State</string>
+    <string name="not_district">You have no District</string>
+    <string name="not_municipality_panchayat">You have not Municipality/Panchayat</string>
+    <string name="not_pincode">You have no Pincode</string>
+    <string name="not_Organisation">You have no Organisation</string>
+    <string name="saveUpdate">Save &amp; Update</string>
+
+    <string name="current_Vending_Address_underline"><u>Current Vending Address:</u></string>
+    <string name="associated_organizationSemi">Associated Organization:</string>
+    <string name="firstNameSemi">First Name:</string>
+    <string name="lastNameSemi">Last Name:</string>
+    <string name="genderSemi">Gender:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">Mobile:</string>
+    <string name="typeofVendingSemi">Type of Vending:</string>
+    <string name="typeofMarketPlaceSemi">Type of Market Place:</string>
+    <string name="stateSemi">State:</string>
+    <string name="districtSemi">District:</string>
+    <string name="municipalitySemi">Municipality:</string>
+    <string name="addressSemi">Address:</string>
+    <string name="membershipIDSemi">Membership ID: %s</string>
+    <string name="validUptoSemi">Valid Upto: %s</string>
+    <string name="successfully_downloaded">Successfully Downloaded</string>
+    <string name="logged_in_successfully">Logged In  successfully</string>
+    <string name="please_provide_valid_password">Please provide valid password</string>
+    <string name="user_does_not_exist">User does not exist</string>
+    <string name="tap_to_reload">Tap to reload</string>
+    <string name="error_msg_unknown">An unexpected error occurred</string>
+    <string name="registration_processed">Thank Your for registering on STREET SAARTHI by NASVI. Your verification is UNDER PROCESS. Your registration will be processed within 2 to 3 working days.</string>
+    <string name="view">View</string>
+    <string name="watch">Watch</string>
+    <string name="applied">Applied</string>
+    <string name="not_applied">Not Applied</string>
+    <string name="not_live">NOT_LIVE</string>
+    <string name="expired">Expired</string>
+    <string name="start_date">Start Date %s</string>
+    <string name="end_date">End Date %s</string>
+
 
 
 
@@ -337,5 +521,7 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
+
+
 
 </resources>

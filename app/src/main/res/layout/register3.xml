@@ -57,27 +57,129 @@
                 android:background="@color/black"
                 />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/editTextCreatePassword"
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutCreatePassword"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                style="@style/PrimaryEditText"
-                android:hint="@string/createPassword"
-                android:inputType="textPassword"
-                android:text=""
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/textTitleMain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editTextCreatePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    style="@style/PrimaryEditText"
+                    android:hint="@string/createPasswordStar"
+                    android:text=""
+                    android:inputType="textPassword"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="0dp"
+                    android:imeOptions="actionNext"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgCreatePassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/_10sdp"
+                    android:tint="@android:color/darker_gray"
+                    app:srcCompat="@drawable/ic_eye_closed"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:focusable="false"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textCreatePasswrordMsg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_F02A2A"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                app:layout_constraintTop_toBottomOf="@+id/layoutCreatePassword"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_regular"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/InvalidPassword"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/editTextReEnterPassword"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutReEnterPassword"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                style="@style/PrimaryEditText"
-                android:hint="@string/reEnterPassword"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:inputType="textPassword"
-                android:text=""
-                app:layout_constraintTop_toBottomOf="@+id/editTextCreatePassword"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/textCreatePasswrordMsg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editTextReEnterPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    style="@style/PrimaryEditText"
+                    android:hint="@string/reEnterPasswordStar"
+                    android:text=""
+                    android:inputType="textPassword"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="0dp"
+                    android:imeOptions="actionNext"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgReEnterPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/_10sdp"
+                    android:tint="@android:color/darker_gray"
+                    app:srcCompat="@drawable/ic_eye_closed"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:focusable="false"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textReEnterPasswrordMsg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_F02A2A"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                app:layout_constraintTop_toBottomOf="@+id/layoutReEnterPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_regular"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/InvalidPassword"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
 
@@ -89,7 +191,7 @@
                 android:textSize="@dimen/_12ssp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
-                app:layout_constraintTop_toBottomOf="@+id/editTextReEnterPassword"
+                app:layout_constraintTop_toBottomOf="@+id/textReEnterPasswrordMsg"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_medium"
@@ -105,7 +207,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/editTextReEnterPassword"
+                app:layout_constraintTop_toBottomOf="@+id/textReEnterPasswrordMsg"
                 app:layout_constraintStart_toEndOf="@+id/textTitlePermanentAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="MissingConstraints"
@@ -118,58 +220,97 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextMobileNumber"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/mobileNumber"
+                android:hint="@string/mobileNumberStar"
                 android:text=""
                 android:inputType="number"
                 android:maxLength="10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editTextSendOtp"
                 app:layout_constraintTop_toBottomOf="@+id/textTitlePermanentAddress"
+                android:imeOptions="actionNext"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/editTextSendOtp"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/white_round_corner"
-                style="@style/PrimaryEditText"
+                style="@style/PrimaryButtonYellow"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:hint="@string/Forgot"
                 android:inputType="number"
                 android:text="@string/send_otp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textTitlePermanentAddress"
                 android:focusable="false"
+                android:cursorVisible="false"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
                 android:backgroundTint="@color/_E79D46"
-
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cornerRadius="@dimen/_5sdp"
+                android:textSize="@dimen/_11ssp"
                 />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:includeFontPadding="false"
+                android:text="00:27"
+                android:textColor="@color/_B3261E"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:gravity="end"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="gone"/>
 
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextOtp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/enterOtp"
+                android:hint="@string/enterOtpStar"
                 android:text=""
                 android:inputType="number"
                 android:maxLength="6"
-                app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editTextVeryfyOtp"
+                app:layout_constraintTop_toBottomOf="@+id/tvTime"
+                android:imeOptions="actionDone"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/editTextVeryfyOtp"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/white_round_corner"
-                style="@style/PrimaryEditText"
+                style="@style/PrimaryButtonYellow"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:hint="@string/Forgot"
                 android:inputType="number"
                 android:text="@string/verify_otp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
+                app:layout_constraintTop_toBottomOf="@+id/tvTime"
                 android:focusable="false"
+                android:cursorVisible="false"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
                 android:backgroundTint="@color/_999999"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cornerRadius="@dimen/_5sdp"
+                android:textSize="@dimen/_11ssp"
                 />
 
             <androidx.constraintlayout.widget.ConstraintLayout

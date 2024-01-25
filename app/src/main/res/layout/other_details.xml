@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_10sdp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTypeofMarketPlaceTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_2C2C2C"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_medium"
+                android:text="@string/type_of_market_placeStar"
+                android:visibility="visible"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTypeofMarketPlace"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                style="@style/PrimaryEditText"
+                android:hint="@string/type_of_market_placeStar"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/textTypeofMarketPlaceTxt"
+                android:focusable="false"
+                android:drawableEnd="@drawable/ic_down_arrow"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTypeofMarketPlaceEnter"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                style="@style/PrimaryEditText"
+                android:hint="@string/enter_market_placeStar"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofMarketPlace"
+                android:visibility="visible"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTypeofVendingTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_2C2C2C"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofMarketPlaceEnter"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_medium"
+                android:text="@string/type_of_vendingStar"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/_10sdp"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTypeofVending"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                style="@style/PrimaryEditText"
+                android:hint="@string/type_of_vendingStar"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/textTypeofVendingTxt"
+                android:focusable="false"
+                android:drawableEnd="@drawable/ic_down_arrow"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTypeofVendingEnter"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                style="@style/PrimaryEditText"
+                android:hint="@string/enter_vendingStar"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofVending"
+                android:visibility="visible"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTotalYearsofVendingTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_2C2C2C"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTypeofVendingEnter"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_medium"
+                android:text="@string/total_years_of_vendingStar"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/_10sdp"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTotalYearsofVending"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                style="@style/PrimaryEditText"
+                android:hint="@string/total_years_of_vendingStar"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/textTotalYearsofVendingTxt"
+                android:focusable="false"
+                android:drawableEnd="@drawable/ic_down_arrow"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textCurrent_location_of_businessTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_2C2C2C"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTotalYearsofVending"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_medium"
+                android:text="@string/current_location_of_businessStar"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextCurrent_location_of_business"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                style="@style/PrimaryEditText"
+                android:hint="@string/current_location_of_businessStar"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@+id/textCurrent_location_of_businessTxt"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linear1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/editTextCurrent_location_of_business">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearChild1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/_2C2C2C"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints"
+                        app:fontFamily="@font/roboto_medium"
+                        android:text="@string/passport_size_imageStar"
+                        android:visibility="visible"
+                        />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivImagePassportsizeImage"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        app:srcCompat="@drawable/no_image_modified"
+                        android:theme="@style/RoundCorner5"
+                        android:scaleType="centerCrop"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearChild2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/_2C2C2C"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints"
+                        app:fontFamily="@font/roboto_medium"
+                        android:text="@string/shop_imageStar"
+                        android:visibility="visible"
+                        />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivImageShopimage"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        app:srcCompat="@drawable/no_image_modified"
+                        android:theme="@style/RoundCorner5"
+                        android:scaleType="centerCrop"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/linear1">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearChild3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/_2C2C2C"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints"
+                        app:fontFamily="@font/roboto_medium"
+                        android:text="@string/identity_imageStar"
+                        android:visibility="visible"
+                        />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivImageIdentityImage"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        app:srcCompat="@drawable/no_image_modified"
+                        android:theme="@style/RoundCorner5"
+                        android:scaleType="centerCrop"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearChild4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/_2C2C2C"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints"
+                        app:fontFamily="@font/roboto_medium"
+                        android:text="COV"
+                        android:visibility="visible"
+                        />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivImageCOV"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        app:srcCompat="@drawable/no_image_modified"
+                        android:theme="@style/RoundCorner5"
+                        android:scaleType="centerCrop"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linear3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/linear2">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearChild5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/_2C2C2C"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints"
+                        app:fontFamily="@font/roboto_medium"
+                        android:text="@string/membership_id"
+                        android:visibility="visible"
+                        />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivImageMembershipId"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        app:srcCompat="@drawable/no_image_modified"
+                        android:theme="@style/RoundCorner5"
+                        android:scaleType="centerCrop"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearChild6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/_2C2C2C"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints"
+                        app:fontFamily="@font/roboto_medium"
+                        android:text="LOR"
+                        android:visibility="visible"
+                        />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivImageLOR"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        app:srcCompat="@drawable/no_image_modified"
+                        android:theme="@style/RoundCorner5"
+                        android:scaleType="centerCrop"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

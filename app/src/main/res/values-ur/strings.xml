@@ -1,0 +1,426 @@
+<resources>
+
+    <string name="click_here_to_agree_to_the"><![CDATA[پر اتفاق کرنے کے لیے یہاں کلک کریں]]></string>
+    <string name="terms_amp_conditions"><u>شرائط &amp; شرائط</u></string>
+
+
+    <string name="Pleaseselectagree"> براہ کرم شرائط پر اتفاق کریں &amp; ؛ شرائط</string>
+
+    <string name="title">عنوان</string>
+    <string name="submit">جمع کروائیں</string>
+    <string name="no_internet_connection">کوئی انٹرنیٹ کنکشن نہیں ہے</string>
+
+    <string name="quick_registation">فوری رجسٹر</string>
+    <string name="loginWithPassword">پاس ورڈ کے ساتھ لاگ ان کریں</string>
+    <string name="loginWithMobileOTP">موبائل او ٹی پی کے ساتھ لاگ ان کریں</string>
+    <string name="enterOtp">OTP درج کریں</string>
+
+    <string name="completeProfileRegistration">مکمل پروفائل رجسٹریشن</string>
+    <string name="fast_process">تیز عمل</string>
+    <string name="login_here">یہاں لاگ ان کریں</string>
+    <string name="enter_your_login_details_here">اپنی لاگ ان کی تفصیلات یہاں درج کریں</string>
+    <string name="login_with_otp">OTP کے ساتھ لاگ ان</string>
+    <string name="quick_registration">فوری رجسٹریشن</string>
+    <string name="enter_your_details_for_quick_register">فوری رجسٹر کے لئے اپنی تفصیلات درج کریں</string>
+    <string name="first_name">پہلا نام</string>
+
+    <string name="last_name">آخری نام/</string>
+
+    <string name="createPassword">پاسورڈ بنائیں</string>
+
+    <string name="EnterPassword">پاس ورڈ درج کریں</string>
+    <string name="reEnterPassword">پاس ورڈ دوبارہ درج</string>
+
+
+
+    <string name="enterMobileNumber">درست موبائل نمبر درج کریں۔</string>
+
+
+    <string name="login">لاگ ان کریں</string>
+
+
+    <string name="explore_app">ایپ کو دریافت کریں</string>
+
+    <string name="register">رجسٹر کریں</string>
+
+    <string name="LearnAboutSchemes">اسکیموں کے بارے میں جانیں</string>
+    <string name="ComplaintRedressal">شکایت کا ازالہ کریں/string></string>
+    <string name="KnowYourRights">اپنے حقوق جانو</string>
+
+    <string name="desc1">تازہ ترین اسکیموں کے بارے میں جانیں جو آپ پر لاگو ہیں۔</string>
+    <string name="desc2">آپ کی تمام شکایات کا فوری فائلنگ ، نگرانی اور بروقت حل۔</string>
+    <string name="desc3">یہاں آپ کے قانونی اور شہری حقوق کیا ہیں ، ان کو استعمال کرنے کا طریقہ کے بارے میں سیکھیں۔</string>
+
+    <string name="SelectLanguage">زبان منتخب کریں۔</string>
+
+    <string name="english">English</string>
+    <string name="bengali">বাংলা</string>
+    <string name="gujarati">ગુજરાતી</string>
+    <string name="hindi">हिन्दी</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="marathi">मराठी</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="tamil">தமிழ்</string>
+    <string name="telugu">తెలుగు</string>
+    <string name="assamese">অসমীয়া</string>
+    <string name="urdu">اردو</string>
+
+    <string name="englishVal">en</string>
+    <string name="bengaliVal">bn</string>
+    <string name="gujaratiVal">gu</string>
+    <string name="hindiVal">hi</string>
+    <string name="kannadaVal">kn</string>
+    <string name="malayalamVal">ml</string>
+    <string name="marathiVal">mr</string>
+    <string name="punjabiVal">pa</string>
+    <string name="tamilVal">ta</string>
+    <string name="teluguVal">te</string>
+    <string name="assameseVal">as</string>
+    <string name="urduVal">ur</string>
+
+
+
+    <string name="RegisterHere">یہاں اندراج کریں</string>
+    <string name="SelectYourchoiceofregistration">رجسٹریشن کا اپنا انتخاب منتخب کریں</string>
+    <string name="continues">جاری رہے</string>
+
+
+    <string name="mobileNumber">موبائل فون کانمبر</string>
+    <string name="YourPassword">آپ کا پاس ورڈ</string>
+    <string name="register_for_new_account">نئے اکاؤنٹ کے لئے اندراج؟</string>
+    <string name="Forgot">بھول</string>
+    <string name="ForgotPassword">پاسورڈ بھول گے</string>
+    <string name="EnterDetailstoSetpassword">پاس ورڈ سیٹ کرنے کے لئے تفصیلات درج کریں</string>
+    <string name="send_otp">OTP بھیجیں</string>
+    <string name="verify_otp">او ٹی پی کی تصدیق کریں</string>
+    <string name="set_password">پاس ورڈ رکھیں</string>
+    <string name="back_to_login">لاگ ان پر واپس جائیں</string>
+    <string name="back">پیچھے</string>
+    <string name="enter_details_to_register_with_us">ہمارے ساتھ اندراج کے لئے تفصیلات درج کریں</string>
+    <string name="profile_details">پروفائل کی تفصیلات</string>
+    <string name="registration_successful">رجسٹریشن کامیاب</string>
+    <string name="congratulations_your_initial_registration_is_complete">مبارک ہو!\nآپ کی ابتدائی رجسٹریشن مکمل ہے</string>
+    <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ہماری ٹیم کا کوئی شخص آپ کی رجسٹریشن کی تصدیق کے ل 48 گھنٹوں کے اندر آپ سے رابطہ کرے گا۔</string>
+    <string name="RegisterNow">ابھی رجسٹر کریں</string>
+
+    <string name="resendOtp">او ٹی پی کو دوبارہ جاری کریں</string>
+    <string name="OTPnotverified">OTP کی تصدیق نہیں ہوئی</string>
+    <string name="YourNewPassword">آپ کا نیا پاس ورڈ</string>
+    <string name="back_to_home">واپس گھر</string>
+    <string name="back_to_home_u"><u>واپس گھر</u></string>
+    <string name="CreatePasswordReEnterPasswordisnotsame">* پاس ورڈ مماثل نہیں ہے۔</string>
+
+    <string name="InvalidPassword">*کم از کم 8 حروف جن میں 1 اپر کیس، 1 لوئر کیس، 1 نمبر اور 1 خصوصی کریکٹر</string>
+    <string name="father_s_first_name">والد کا پہلا نام</string>
+    <string name="father_s_last_name"> کا پہلا نامباپ کا آخری نام</string>
+    <string name="gender">صنف</string>
+    <string name="date_of_birth">پیدائش کی تاریخ</string>
+    <string name="social_category">قسم</string>
+    <string name="education_qualifacation">تعلیمی قابلیت</string>
+    <string name="select_state">حالت</string>
+    <string name="select_district">ضلع</string>
+    <string name="municipality_panchayat">میونسپلٹی/پنچایت</string>
+    <string name="select_pincode">خفیہ نمبر</string>
+    <string name="marital_status">ازدواجی حیثیت</string>
+    <string name="spouse_s_name">زوجہ کا نام</string>
+    <string name="enter_address">ایڈریس درج کریں۔</string>
+    <string name="current_residential_address">موجودہ رہائشی پتہ</string>
+    <string name="age_minimum">آپ کی عمر کم از کم 14 سال ہونی چاہیے۔</string>
+    <string name="type_of_market_place">مارکیٹ کی جگہ کی قسم</string>
+    <string name="type_of_vending">وینڈنگ کی قسم</string>
+    <string name="total_years_of_vending">وینڈنگ کے کل سال</string>
+    <string name="current_location_of_business">کاروبار کا موجودہ مقام</string>
+    <string name="upload_shop_image">دکان کی تصویر اپ لوڈ کریں۔</string>
+    <string name="upload_cov">COV اپ لوڈ کریں</string>
+    <string name="upload_lor">لور اپ لوڈ کریںپ لوڈ کریں</string>
+    <string name="camera">کیمرہ</string>
+    <string name="open_camera_to_capture_image">تصویر کیپچر کرنے کے لیے کیمرہ کھولیں۔</string>
+    <string name="photos">تصاویر</string>
+    <string name="browse_images_from_gallery">گیلری سے تصاویر براؤز کریں۔</string>
+    <string name="cancel">منسوخ کریں۔</string>
+    <string name="choose_your_preference">اپنی ترجیح کا انتخاب کریں</string>
+    <string name="complete_profile_registration">مکمل پروفائل رجسٹریشن</string>
+    <string name="otp_verification">او ٹی پی کی توثیق</string>
+    <string name="current_vending_address">موجودہ وینڈنگ ایڈریس</string>
+    <string name="vending_time">وقت کا وقت</string>
+    <string name="to">کو</string>
+    <string name="open">کھلا</string>
+    <string name="close">بند کریں</string>
+    <string name="open_time">کھلا وقت</string>
+    <string name="close_time">قریب وقت</string>
+    <string name="document_details">دستاویز کی تفصیلات</string>
+    <string name="do_you_have_vending_documents">کیا آپ کے پاس وینڈنگ دستاویزات ہیں؟</string>
+    <string name="do_you_have_government_scheme">کیا آپ نے کسی سرکاری اسکیم سے فائدہ اٹھایا ہے؟</string>
+
+    <string name="cov_lor_survey_receipt_challan_approval_letter_from_municipal_body">(COV/LOR/سروے کی رسید/چالان/میونسپل باڈی سے منظوری کا خط)</string>
+    <string name="government_scheme">سرکاری اسکیم</string>
+    <string name="yes">جی ہاں</string>
+    <string name="no">نہیں</string>
+    <string name="upload_survey_receipt">سروے کی رسید اپ لوڈ کریں</string>
+    <string name="upload_challan">چالان اپ لوڈ کریں</string>
+    <string name="upload_approval_letter_from_municipality">میونسپلٹی سے منظوری کا خط اپ لوڈ کریں</string>
+    <string name="pm_swanidhi_scheme">وزیر اعظم سوانیدھی اسکیم</string>
+    <string name="others_please_name">دوسرے ، براہ کرم نام رکھیں</string>
+    <string name="scheme_name">اسکیم کا نام</string>
+    <string name="professional_details">پیشہ ورn/انہ تفصیلات</string>
+    <string name="personal_details">ذاتی معلوماتn\تفصیلات</string>
+    <string name="professional_details_2">پیشہ ورانہ\nتفصیلات</string>
+    <string name="SetPassword_details">سیٹ\nپاس ورڈ</string>
+    <string name="passport_size_image">پاسپورٹ سائز کی تصویر</string>
+    <string name="upload_media">میڈیا اپ لوڈ کریں</string>
+    <string name="aadhar_voter_id_pan_card_driving_license">(آدھار / ووٹر آئی ڈی / پین کارڈ / ڈرائیونگ لائسنس)</string>
+    <string name="address_mention_village">پتہ (ذکر گاؤں)</string>
+    <string name="upload_shop">دکان کی تصویر اپ لوڈ کریں</string>
+    <string name="identification_image">شناختی امیج</string>
+
+
+    <string-array name="gender_array">
+        <item>مرد</item>
+        <item>عورت</item>
+        <item>دیگر</item>
+    </string-array>
+
+
+
+    <string-array name="years_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+    </string-array>
+
+
+    <string-array name="socialCategory_array">
+        <item>ST</item>
+        <item>SC</item>
+        <item>GEN</item>
+        <item>OBC</item>
+        <item>PWD</item>
+    </string-array>
+
+
+
+    <string-array name="socialEducation_array">
+        <item>کوئی تعلیم نہیں</item>
+        <item>ابتدائی تعلیم (پہلی سے پانچویں تک)</item>
+        <item>مڈل ایجوکیشن (6ویں سے 9ویں)</item>
+        <item>اعلیٰ تعلیم (10ویں سے 12ویں)</item>
+        <item>گریجویشن</item>
+        <item>پوسٹ گریجویشن</item>
+    </string-array>
+
+    <string name="married">شادی شدہ</string>
+    <string-array name="maritalStatus_array">
+        <item>سنگل</item>
+        <item>شادی شدہ</item>
+        <item>بیوہ</item>
+        <item>طلاق شدہ</item>
+        <item>علیحدہ</item>
+    </string-array>
+
+
+
+
+    <string name="or">یا</string>
+    <string name="enterOtpHere">یہاں OTP درج کریں</string>
+    <string name="img_description">یہ ایک تصویر ہے۔</string>
+    <string name="logout">لاگ آوٹ</string>
+    <string name="are_your_sure_want_to_logout">کیا آپ کو یقین ہے کہ آپ لاگ آؤٹ کرنا چاہتے ہیں؟</string>
+    <string name="enter_market_place">مارکیٹ پلیس میں داخل ہوں۔</string>
+    <string name="enter_vending">وینڈنگ درج کریں۔</string>
+    <string name="select_scheme">سکیم منتخب کریں۔</string>
+
+    <string name="profiles">پروفائل</string>
+    <string name = "live_schemes"> لائیو اسکیمیں</string>
+    <string name = "all_schemes">تمام اسکیمیں</string>
+    <string name="live_notices">لائیو نوٹسز</string>
+    <string name="all_notices">تمام نوٹسز</string>
+    <string name = "live_training"> لائیو ٹریننگ</string>
+    <string name = "all_training">تمام تربیت</string>
+    <string name="complaints_feedback">شکایات اور\nفیڈ بیک</string>
+    <string name = "recent_activites"> حالیہ سرگرمیاں</string>
+    <string name="viewMore">مزید دیکھیں</string>
+    <string name="search">تلاش</string>
+
+    <string name="complaintsSlashfeedback">شکایات/فیڈ بیک</string>
+    <string name="AllComplaintsFeedback">تمام شکایات/فیڈ بیک</string>
+
+    <string name="localOrganisation">منتخب تنظیم</string>
+    <string name="do_you_have_localOrgnaization">کیا آپ کسی تنظیم سے وابستہ ہیں؟</string>
+
+    <string name = "apply"> اپلائی کریں</string>
+
+
+
+
+    <string name="first_nameStar">پہلا نام*</string>
+    <string name="last_nameStar">آخری نام*</string>
+    <string name="mobileNumberStar">موبائل فون کانمبر*</string>
+    <string name="YourPasswordStar">آپ کا پاس ورڈ*</string>
+    <string name="enterOtpStar">OTP درج کریں*</string>
+
+    <string name="createPasswordStar">پاسورڈ بنائیں*</string>
+    <string name="reEnterPasswordStar">پاس ورڈ دوبارہ درج*</string>
+
+    <string name="father_s_first_nameStar">والد کا پہلا نام*</string>
+    <string name="father_s_last_nameStar">باپ کا آخری نام*</string>
+    <string name="genderStar">صنف*</string>
+    <string name="date_of_birthStar">پیدائش کی تاریخ*</string>
+    <string name="social_categoryStar">قسم*</string>
+    <string name="education_qualifacationStar">تعلیمی قابلیت*</string>
+    <string name="select_stateStar">حالت*</string>
+    <string name="select_districtStar">ضلع*</string>
+    <string name="municipality_panchayatStar">میونسپلٹی/پنچایت*</string>
+    <string name="select_pincodeStar">خفیہ نمبر*</string>
+    <string name="marital_statusStar">ازدواجی حیثیت*</string>
+    <string name="spouse_s_nameStar">شریک حیات کا نام*</string>
+    <string name="address_mention_villageStar">پتہ (ذکر گاؤں)*</string>
+    <string name="upload_mediaStar">میڈیا اپ لوڈ کریں*</string>
+
+    <string name="type_of_market_placeStar">مارکیٹ کی جگہ کی قسم*</string>
+    <string name="type_of_vendingStar">وینڈنگ کی قسم*</string>
+    <string name="total_years_of_vendingStar">وینڈنگ کے کل سال*</string>
+    <string name="enter_market_placeStar">مارکیٹ کی جگہ داخل کریں*</string>
+    <string name="enter_vendingStar">وینڈنگ درج کریں*</string>
+
+    <string name="openStar">کھلا*</string>
+    <string name="closeStar">بند کریں*</string>
+
+    <string name="localOrganisationStar">تنظیم منتخب کریں*</string>
+
+    <string name="the_verify_code_will_expire_in_00_59">%s</string>
+    <string name="your_Profile">آپ کا پروفائل</string>
+    <string name = "personal_detailsFull">ذاتی تفصیلات</string>
+    <string name="contact_details">رابطے کی تفصیلات</string>
+    <string name="other_details">دیگر تفصیلات</string>
+
+
+    <string name="close_x">X بند کریں</string>
+    <string name="x_close">X بند کریں</string>
+    <string name="app_version_1_0">اپ ورژن %s</string>
+    <string name = "notices"> نوٹسز</string>
+    <string name="training">ٹریننگ</string>
+    <string name = "information_center"> معلوماتی مرکز</string>
+    <string name="membership_details">رکنیت کی تفصیلات</string>
+    <string name="current_addressStar">موجودہ پتہ*</string>
+    <string name="is_your_permanent_residence_same_as_current_residenceStar">کیا آپ کی مستقل رہائش موجودہ رہائش گاہ جیسی ہے؟*</string>
+    <string name = "current_location_of_businessStar">کاروبار کا موجودہ مقام*</string>
+    <string name = "trackingId"> ٹریکنگ آئی ڈی: %s</string>
+    <string name="settings">ترتیبات</string>
+    <string name="app_settings">ایپ کی ترتیبات</string>
+    <string name="select_language">زبان منتخب کریں</string>
+    <string name="notifications">اطلاعات</string>
+    <string name="profile_settings">پروفائل کی ترتیبات</string>
+    <string name = "change_password"> پاس ورڈ تبدیل کریں</string>
+    <string name="logout_account">لاگ آؤٹ اکاؤنٹ</string>
+    <string name="delete_your_account">اپنا اکاؤنٹ حذف کریں</string>
+    <string name="delete_account">اکاؤنٹ حذف کریں</string>
+    <string name="delete">حذف کریں</string>
+    <string name="edit">ترمیم کریں</string>
+    <string name="select_your_choice">اپنی پسند منتخب کریں</string>
+    <string name="register_complaint">شکایت رجسٹر کریں</string>
+    <string name="subject_of_complaint">شکایت کا موضوع</string>
+
+    <string name="type_here">یہاں ٹائپ کریں</string>
+    <string name="your_name">آپ کا نام</string>
+    <string name="your_full_name">آپ کا پورا نام</string>
+    <string name="your_mobile_number">آپ کا موبائل نمبر</string>
+    <string name="description">تفصیل</string>
+    <string name="are_you_sure_you_want_to_logout_your_account">کیا آپ واقعی اپنے اکاؤنٹ سے لاگ آؤٹ کرنا چاہتے ہیں؟</string>
+    <string name="write_something">کچھ لکھیں</string>
+    <string name = "active"> فعال</string>
+    <string name="live">لائیو</string>
+    <string name="download_membership_card">ڈاؤن لوڈ کریں</string>
+    <string name="venderDetails"><b>وینڈر کی تفصیلات:</b> %s</string>
+    <string name="current_vending_addressStar">موجودہ وینڈنگ پتہ*</string>
+    <string name="membership_Id">رکنیت کی شناخت:</string>
+    <string name="valid_Upto">درست تک:</string>
+    <string name = "passport_size_imageStar"> پاسپورٹ سائز کی تصویر*</string>
+    <string name = "shop_imageStar"> شاپ امیج*</string>
+    <string name="identity_imageStar">شناختی تصویر*</string>
+    <string name="membership_id">رکنیت کی شناخت</string>
+    <string name="schemes_like_pm_swanidhi_yojna_etc">پی ایم سواندھی یوجنا وغیرہ جیسی اسکیمیں</string>
+
+    <string name="otp_sent">OTP آپ کے موبائل نمبر +91-%s پر بھیجا جاتا ہے</string>
+    <string name="user_already_exist">صارف پہلے سے موجود ہے</string>
+    <string name="otp_Verified_successfully">OTP کامیابی سے تصدیق شدہ</string>
+    <string name="invalid_OTP">غلط OTP</string>
+
+
+    <string name="survey_receipt">سروے کی رسید</string>
+    <string name="challan">چالان</string>
+    <string name = "approval_letter_from_municipality"> بلدیہ کی جانب سے منظوری کا خط</string>
+    <string name = "select_state_"> ریاست کو منتخب کریں</string>
+    <string name="select_district_">ضلع منتخب کریں</string>
+    <string name = "municipality_panchayat_"> میونسپلٹی/پنچایت کو منتخب کریں</string>
+
+    <string name="not_state">آپ کی کوئی ریاست نہیں ہے</string>
+    <string name="not_district">آپ کا کوئی ضلع نہیں ہے</string>
+    <string name="not_municipality_panchayat">آپ کے پاس میونسپلٹی/پنچایت نہیں ہے</string>
+    <string name="not_pincode">آپ کے پاس کوئی پن کوڈ نہیں ہے</string>
+    <string name="not_Organisation">آپ کی کوئی تنظیم نہیں ہے</string>
+    <string name="saveUpdate">محفوظ کریں &amp; اپ ڈیٹ کریں</string>
+
+    <string name="current_Vending_Address_underline"><u>موجودہ وینڈنگ پتہ:</u></string>
+    <string name = "associated_organizationSemi"> وابستہ تنظیم:</string>
+    <string name = "firstNameSemi"> پہلا نام:</string>
+    <string name="lastNameSemi">آخری نام:</string>
+    <string name="genderSemi">جنس:</string>
+    <string name="dobSemi">D.O.B:</string>
+    <string name="mobileSemi">موبائل:</string>
+    <string name = "typeofVendingSemi"> وینڈنگ کی قسم:</string>
+    <string name="typeofMarketPlaceSemi">مارکیٹ کی جگہ کی قسم:</string>
+    <string name="stateSemi">ریاست:</string>
+    <string name="districtSemi">ضلع:</string>
+    <string name="municipalitySemi">میونسپلٹی:</string>
+    <string name = "addressSemi"> پتہ:</string>
+    <string name="membershipIDSemi">ممبرشپ ID: %s</string>
+    <string name="validUptoSemi">درست تک: %s</string>
+    <string name="successfully_downloaded">کامیابی سے ڈاؤن لوڈ ہو گیا</string>
+    <string name="logged_in_successfully">کامیابی سے لاگ ان ہوا</string>
+    <string name="please_provide_valid_password">براہ کرم درست پاس ورڈ فراہم کریں</string>
+    <string name="user_does_not_exist">صارف موجود نہیں ہے</string>
+
+</resources>

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -63,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/first_name"
+                android:hint="@string/first_nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/textTitleMain"
                 />
@@ -73,18 +74,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/last_name"
+                android:hint="@string/last_nameStar"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/editTextFN"
                 />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/editTextFaterFN"
+                android:id="@+id/editTextFatherFN"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/father_s_first_name"
+                android:hint="@string/father_s_first_nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/editTextLN"
                 />
@@ -94,9 +95,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/father_s_last_name"
+                android:hint="@string/father_s_last_nameStar"
                 android:text=""
-                app:layout_constraintTop_toBottomOf="@+id/editTextFaterFN"
+                app:layout_constraintTop_toBottomOf="@+id/editTextFatherFN"
                 />
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -111,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     style="@style/PrimaryEditText"
-                    android:hint="@string/gender"
+                    android:hint="@string/genderStar"
                     android:text=""
                     android:focusable="false"
                     app:layout_constraintTop_toBottomOf="@+id/editTextFatherLN"
@@ -125,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     style="@style/PrimaryEditText"
-                    android:hint="@string/date_of_birth"
+                    android:hint="@string/date_of_birthStar"
                     android:text=""
                     android:focusable="false"
                     app:layout_constraintTop_toBottomOf="@+id/editTextGender"
@@ -144,7 +145,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/social_category"
+                android:hint="@string/social_categoryStar"
                 android:text=""
                 android:focusable="false"
                 app:layout_constraintTop_toBottomOf="@+id/linearGender"
@@ -159,7 +160,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/education_qualifacation"
+                android:hint="@string/education_qualifacationStar"
                 android:singleLine="true"
                 android:text=""
                 android:focusable="false"
@@ -173,7 +174,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/marital_status"
+                android:hint="@string/marital_statusStar"
                 android:singleLine="true"
                 android:text=""
                 android:focusable="false"
@@ -186,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
-                android:hint="@string/spouse_s_name"
+                android:hint="@string/spouse_s_nameStar"
                 android:singleLine="true"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/editTextMaritalStatus"
@@ -242,7 +243,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     style="@style/PrimaryEditText"
-                    android:hint="@string/select_state"
+                    android:hint="@string/select_stateStar"
                     android:focusable="false"
                     app:layout_constraintTop_toBottomOf="@+id/textTitlePermanentAddress"
                     android:drawableEnd="@drawable/ic_down_arrow"
@@ -255,7 +256,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     style="@style/PrimaryEditText"
-                    android:hint="@string/select_district"
+                    android:hint="@string/select_districtStar"
                     android:text=""
                     android:focusable="false"
                     app:layout_constraintTop_toBottomOf="@+id/editTextSelectState"
@@ -279,7 +280,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     style="@style/PrimaryEditText"
-                    android:hint="@string/municipality_panchayat"
+                    android:hint="@string/municipality_panchayatStar"
                     android:text=""
                     android:focusable="false"
                     app:layout_constraintTop_toBottomOf="@+id/linearStateDistrict"
@@ -296,7 +297,6 @@
                     android:hint="@string/select_pincode"
                     android:text=""
                     android:focusable="false"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextMunicipalityPanchayat"
                     android:drawableEnd="@drawable/ic_down_arrow"
                     android:layout_weight="1.3"
                     />
@@ -312,7 +312,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="top"
-                android:hint="@string/address_mention_village"
+                android:hint="@string/address_mention_villageStar"
                 android:maxLines="4"
                 android:minHeight="@dimen/_80sdp"
                 android:paddingVertical="@dimen/_10sdp"
@@ -383,7 +383,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/imagePassportSizeImage"
                     android:singleLine="true"
-                    android:text="@string/upload_media"
+                    android:text="@string/upload_mediaStar"
                     android:checked="false"
                     android:button="@drawable/check_box_button"
                     android:buttonTint="@color/_999999"
@@ -490,7 +490,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/imageIdentificationImage"
                     android:singleLine="true"
-                    android:text="@string/upload_media"
+                    android:text="@string/upload_mediaStar"
                     android:checked="false"
                     android:button="@drawable/check_box_button"
                     android:buttonTint="@color/_999999"
@@ -518,6 +518,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
