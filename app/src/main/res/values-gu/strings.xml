@@ -483,5 +483,7 @@
     <string name="conversation_marked_reOpen">આ વાર્તાલાપને સભ્ય દ્વારા પુનઃ ખોલો તરીકે ચિહ્નિત કરવામાં આવ્યો હતો</string>
     <string name="are_your_sure_want_to_delete_all_notifications">શું તમે ખરેખર તમામ સૂચનાઓ કાઢી નાખવા માંગો છો?</string>
     <string name="required_permissions">કૃપા કરીને બધી જરૂરી પરવાનગીઓ આપો?</string>
+    <string name="notification_not_enabled">તમારી સૂચના સક્ષમ નથી</string>
+
 
 </resources>

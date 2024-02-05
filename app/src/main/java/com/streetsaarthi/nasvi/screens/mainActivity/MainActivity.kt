@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
+
         context = WeakReference(this)
         activity = WeakReference(this)
         mainActivity = WeakReference(this)
@@ -445,7 +446,7 @@ class MainActivity : AppCompatActivity() {
             .show()
 
 
-
+        viewModel.itemLogoutResult.value = false
         viewModel.itemLogoutResult.observe(this@MainActivity, Observer {
             if (it) {
                 clearData()
@@ -487,6 +488,7 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .show()
 
+        viewModel.itemDeleteResult.value = false
         viewModel.itemDeleteResult.observe(this@MainActivity, Observer {
             if (it) {
                 clearData()

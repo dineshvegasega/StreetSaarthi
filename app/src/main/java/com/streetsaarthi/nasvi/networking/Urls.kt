@@ -65,8 +65,12 @@ const val PasswordUpdate = "password-update"
 const val USER_TYPE = "member"
 const val PING = "8.8.8.8"
 
-const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
-const val TRANSLATE = "translate/v2?key="
+//const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
+//const val TRANSLATE = "translate/v2?key="
+
+const val TRANSLATE_URL = "https://translate.googleapis.com/translate_a/"
+const val TRANSLATE = "single?client=gtx&sl=en&tl=hi&dt=t&dt=t"
+
 
 const val Screen = "screen"
 const val Start = "Start"

@@ -11,15 +11,19 @@ import androidx.navigation.findNavController
 import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemDistrict
+import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemOrganization
 import com.streetsaarthi.nasvi.models.mix.ItemPanchayat
 import com.streetsaarthi.nasvi.models.mix.ItemPincode
 import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
+import com.streetsaarthi.nasvi.models.test.ItemT
 import com.streetsaarthi.nasvi.models.translate.ItemTranslate
 import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
 import com.streetsaarthi.nasvi.networking.CallHandlerTranslate
@@ -117,6 +121,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
                     if (response.isSuccessful){
                         itemState = response.body()?.data as ArrayList<ItemState>
+//                        translate(response.body()?.data.toString())
                     }
                 }
 
@@ -130,6 +135,30 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
             }
         )
     }
+
+    fun state1(view: View) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemState>>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.state()
+
+                override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
+                    if (response.isSuccessful){
+                        itemState = response.body()?.data as ArrayList<ItemState>
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
 
     fun district(view: View, id: Int) = viewModelScope.launch {
         val obj: JSONObject = JSONObject()
@@ -499,18 +528,36 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         )
     }
 
-    fun translate(view: View) = viewModelScope.launch {
+    fun translate(words: String) = viewModelScope.launch {
         repository.callApiTranslate(
-            callHandler = object : CallHandlerTranslate<Response<ItemTranslate>> {
+            callHandler = object : CallHandlerTranslate<Response<ItemT>> {
                 override suspend fun sendRequest(apiInterface: ApiTranslateInterface) =
-                    apiInterface.translate()
+                    apiInterface.translate(words)
 
-                override fun success(response: Response<ItemTranslate>) {
+                override fun success(response: Response<ItemT>) {
 //                    if (response.isSuccessful){
 //                        itemState = response.body()?.data as ArrayList<ItemState>
 //                    }
 
-                    Log.e("TAG", "XXXX "+response.getJsonRequestBody())
+                    var aa = response.body()?.get(0)
+                    val typeToken = object : TypeToken<List<Any>>() {}.type
+                    val changeValue = Gson().fromJson<List<Any>>(Gson().toJson(aa), typeToken)
+
+//                    var aa = response.body()?.get(0)
+//                    val typeToken = object : TypeToken<List<Any>>() {}.type
+//                    val changeValue = Gson().fromJson<List<Any>>(Gson().toJson(aa), typeToken)
+
+//                    var bb = aa?.get(0).toString()
+
+                    var stringValue = String()
+
+                    changeValue.map {
+                        stringValue += it.toString()
+                    }
+                    Log.e("TAG", "XXXX "+stringValue.toString())
+
+
+
                 }
 
                 override fun error(message: String) {

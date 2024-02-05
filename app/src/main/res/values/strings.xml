@@ -511,7 +511,7 @@
     <string name="conversation_marked_reOpen">This Conversation was marked Re-Open by member on</string>
     <string name="are_your_sure_want_to_delete_all_notifications">Are you sure, You want to Delete all Notifications?</string>
     <string name="required_permissions">Please allow all required permissions?</string>
-
+    <string name="notification_not_enabled">Your Notification is not enabled</string>
 
 
 

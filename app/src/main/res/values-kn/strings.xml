@@ -487,5 +487,7 @@
     <string name="conversation_marked_reOpen">ಈ ಸಂವಾದವನ್ನು ಸದಸ್ಯರಿಂದ ಮರು-ತೆರೆಯಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>
     <string name="are_your_sure_want_to_delete_all_notifications">ನಿಮಗೆ ಖಚಿತವಾಗಿದೆಯೇ, ನೀವು ಎಲ್ಲಾ ಅಧಿಸೂಚನೆಗಳನ್ನು ಅಳಿಸಲು ಬಯಸುವಿರಾ?</string>
     <string name="required_permissions">ದಯವಿಟ್ಟು ಅಗತ್ಯವಿರುವ ಎಲ್ಲಾ ಅನುಮತಿಗಳನ್ನು ಅನುಮತಿಸುವುದೇ?</string>
+    <string name="notification_not_enabled">ನಿಮ್ಮ ಅಧಿಸೂಚನೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿಲ್ಲ</string>
+
 
 </resources>

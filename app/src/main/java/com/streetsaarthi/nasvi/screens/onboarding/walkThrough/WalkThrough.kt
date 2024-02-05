@@ -76,7 +76,7 @@ class WalkThrough : Fragment() {
         }
 
 
-        binding.btSignIn.singleClick {
+        binding.btSignIn.setOnClickListener {
                 if (tabPosition == 0){
                     binding.introViewPager.setCurrentItem(1, false)
                 } else if (tabPosition == 1){

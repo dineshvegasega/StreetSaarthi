@@ -1,5 +1,7 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginOtp
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -119,15 +121,17 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.verifyOTPData(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        DataStoreUtil.saveData(DataStoreKeys.AUTH, response.body()!!.token ?: "")
-                        DataStoreUtil.saveObject(
-                            DataStoreKeys.LOGIN_DATA,
-                            Gson().fromJson(response.body()!!.data, Login::class.java)
-                        )
                         if(response.body()?.data != null){
+                            DataStoreUtil.saveData(DataStoreKeys.AUTH, response.body()!!.token ?: "")
+                            DataStoreUtil.saveObject(
+                                DataStoreKeys.LOGIN_DATA,
+                                Gson().fromJson(response.body()!!.data, Login::class.java)
+                            )
                             showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
-                            MainActivity.mainActivity.get()!!.callBack()
-                            view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
+                            Handler(Looper.getMainLooper()).postDelayed(Thread {
+                                MainActivity.mainActivity.get()!!.callBack()
+                                view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
+                            }, 100)
                         } else {
                             showSnackBar(view.resources.getString(R.string.invalid_OTP))
                         }

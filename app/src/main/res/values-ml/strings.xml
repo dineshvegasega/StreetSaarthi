@@ -486,5 +486,6 @@
     <string name="conversation_marked_reOpen">ഈ സംഭാഷണം അംഗം വീണ്ടും തുറക്കുക എന്ന് അടയാളപ്പെടുത്തി</string>
     <string name="are_your_sure_want_to_delete_all_notifications">നിങ്ങൾക്ക് ഉറപ്പാണോ, നിങ്ങൾക്ക് എല്ലാ അറിയിപ്പുകളും ഇല്ലാതാക്കണോ?</string>
     <string name="required_permissions">ആവശ്യമായ എല്ലാ അനുമതികളും അനുവദിക്കണോ?</string>
+    <string name="notification_not_enabled">നിങ്ങളുടെ അറിയിപ്പ് പ്രവർത്തനക്ഷമമാക്കിയിട്ടില്ല</string>
 
 </resources>

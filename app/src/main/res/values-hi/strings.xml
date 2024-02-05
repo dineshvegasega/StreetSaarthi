@@ -489,4 +489,6 @@
     <string name='conversation_marked_reOpen'>सदस्य द्वारा इस वार्तालाप को पुनः खोलें के रूप में चिह्नित किया गया था</string>
     <string name='are_your_sure_want_to_delete_all_notifications'>क्या आप वाकई सभी सूचनाएं हटाना चाहते हैं?</string>
     <string name='required_permissions'>कृपया सभी आवश्यक अनुमतियाँ दें?</string>
+    <string name='notification_not_enabled'>आपका नोटिफिकेशन सक्षम नहीं है</string>
+
 </resources>

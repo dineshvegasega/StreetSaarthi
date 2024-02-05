@@ -489,4 +489,6 @@
     <string name = "conversation_marked_reOpen"> اس گفتگو کو ممبر نے دوبارہ کھولنے کا نشان لگایا تھا</string>
     <string name="are_your_sure_want_to_delete_all_notifications">کیا آپ واقعی تمام اطلاعات کو حذف کرنا چاہتے ہیں؟</string>
     <string name="required_permissions">براہ کرم تمام مطلوبہ اجازتوں کی اجازت دیں؟</string>
+    <string name="notification_not_enabled">آپ کی اطلاع فعال نہیں ہے</string>
+
 </resources>

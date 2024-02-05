@@ -124,6 +124,10 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
                 textHeaderTxt4.setText(if (dataClass.status == "Active") root.context.resources.getString(R.string.live) else root.context.resources.getString(R.string.not_live))
                 textHeaderTxt4.backgroundTintList = (if(dataClass.status == "Active") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A))
 
+                textHeaderStatusTxt4.setText(if (dataClass.user_scheme_status == "applied") root.context.resources.getString(R.string.applied) else root.context.resources.getString(R.string.not_applied))
+                textHeaderStatusTxt4.visibility = if (dataClass.user_scheme_status == "applied") View.VISIBLE else View.GONE
+
+
                 root.singleClick {
                         if (dataClass.user_scheme_status == "applied"){
                             viewModel.viewDetail(dataClass, position = position, root, 1)

@@ -491,5 +491,6 @@
     <string name="conversation_marked_reOpen">ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ ਮੈਂਬਰ ਦੁਆਰਾ ਰੀ-ਓਪਨ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
     <string name="are_your_sure_want_to_delete_all_notifications">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਹੋ, ਤੁਸੀਂ ਸਾਰੀਆਂ ਸੂਚਨਾਵਾਂ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="required_permissions">ਕਿਰਪਾ ਕਰਕੇ ਸਾਰੀਆਂ ਲੋੜੀਂਦੀਆਂ ਇਜਾਜ਼ਤਾਂ ਦਿਓ?</string>
+    <string name="notification_not_enabled">ਤੁਹਾਡੀ ਸੂਚਨਾ ਸਮਰੱਥ ਨਹੀਂ ਹੈ</string>
 
 </resources>

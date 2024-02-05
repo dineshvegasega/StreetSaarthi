@@ -491,4 +491,6 @@
     <string name="conversation_marked_reOpen">ఈ సంభాషణను సభ్యునిచే మళ్లీ తెరువు అని గుర్తు పెట్టారు</string>
     <string name="are_your_sure_want_to_delete_all_notifications">మీరు ఖచ్చితంగా అన్ని నోటిఫికేషన్‌లను తొలగించాలనుకుంటున్నారా?</string>
     <string name="required_permissions">దయచేసి అవసరమైన అన్ని అనుమతులను అనుమతించాలా?</string>
+    <string name="notification_not_enabled">మీ నోటిఫికేషన్ ప్రారంభించబడలేదు</string>
+    
 </resources>

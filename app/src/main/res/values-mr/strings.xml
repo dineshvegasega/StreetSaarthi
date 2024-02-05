@@ -487,5 +487,6 @@
     <string name="conversation_marked_reOpen">या संभाषणावर सदस्याद्वारे री-ओपन म्हणून चिन्हांकित केले होते</string>
     <string name="are_your_sure_want_to_delete_all_notifications">तुम्हाला खात्री आहे का, तुम्ही सर्व सूचना हटवू इच्छिता?</string>
     <string name="required_permissions">कृपया सर्व आवश्यक परवानग्या द्यायच्या?</string>
+    <string name="notification_not_enabled">तुमची सूचना सक्षम केलेली नाही</string>
 
 </resources>

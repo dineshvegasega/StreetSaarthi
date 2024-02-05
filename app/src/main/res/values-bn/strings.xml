@@ -486,4 +486,6 @@
     <string name="conversation_marked_reOpen">এই কথোপকথনটিকে সদস্য দ্বারা পুনরায় খোলা হিসাবে চিহ্নিত করা হয়েছিল</string>
     <string name="are_your_sure_want_to_delete_all_notifications">আপনি কি নিশ্চিত, আপনি সমস্ত বিজ্ঞপ্তি মুছে ফেলতে চান?</string>
     <string name="required_permissions">অনুগ্রহ করে সমস্ত প্রয়োজনীয় অনুমতি দেবেন?</string>
+    <string name="notification_not_enabled">আপনার বিজ্ঞপ্তি সক্ষম করা নেই</string>
+
 </resources>
