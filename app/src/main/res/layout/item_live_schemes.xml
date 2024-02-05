@@ -123,7 +123,7 @@
                     android:id="@+id/textValidDateTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View Details"
+                    android:text="@string/view_details"
                     android:textColor="@color/_000000"
                     android:textSize="@dimen/_10ssp"
                     app:fontFamily="@font/roboto_medium"

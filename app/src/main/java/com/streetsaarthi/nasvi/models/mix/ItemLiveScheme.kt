@@ -8,5 +8,6 @@ data class ItemLiveScheme(
     val scheme_id: Int,
     val scheme_image: SchemeImage,
     val status: String,
-    var user_scheme_status: String
+    var user_scheme_status: String,
+//    var isRead : Boolean = false
 )

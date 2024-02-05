@@ -2,7 +2,9 @@ package com.demo.networking
 
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.chat.ItemChat
 import com.streetsaarthi.nasvi.models.mix.ItemAds
+import com.streetsaarthi.nasvi.models.mix.ItemComplaintType
 import com.streetsaarthi.nasvi.models.mix.ItemDistrict
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemOrganization
@@ -11,27 +13,37 @@ import com.streetsaarthi.nasvi.models.mix.ItemPincode
 import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
 import com.streetsaarthi.nasvi.screens.onboarding.networking.ADS_LIST
+import com.streetsaarthi.nasvi.screens.onboarding.networking.AddFeedbackConversation
 import com.streetsaarthi.nasvi.screens.onboarding.networking.AllNoticeHistory
 import com.streetsaarthi.nasvi.screens.onboarding.networking.AllSchemeHistory
 import com.streetsaarthi.nasvi.screens.onboarding.networking.AllTrainingHistory
 import com.streetsaarthi.nasvi.screens.onboarding.networking.ComplaintFeedback
+import com.streetsaarthi.nasvi.screens.onboarding.networking.ComplaintFeedbackHistory
+import com.streetsaarthi.nasvi.screens.onboarding.networking.Complaint_Type
 import com.streetsaarthi.nasvi.screens.onboarding.networking.DISTRICT
+import com.streetsaarthi.nasvi.screens.onboarding.networking.DeleteNotification
+import com.streetsaarthi.nasvi.screens.onboarding.networking.FeedbackConversationDetails
 import com.streetsaarthi.nasvi.screens.onboarding.networking.InformationCenter
+import com.streetsaarthi.nasvi.screens.onboarding.networking.InformationDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LOCAL_ORGANISATION
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGIN
+import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGOUT
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveScheme
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveTraining
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Marketplace
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NewFeedback
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeLiveList
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Notifications
 import com.streetsaarthi.nasvi.screens.onboarding.networking.PANCHAYAT
 import com.streetsaarthi.nasvi.screens.onboarding.networking.PASSWORD_UPDATE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.PINCODE
+import com.streetsaarthi.nasvi.screens.onboarding.networking.PasswordUpdate
 import com.streetsaarthi.nasvi.screens.onboarding.networking.RESEND_OTP
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SEND_OTP
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SIGN_UP
 import com.streetsaarthi.nasvi.screens.onboarding.networking.STATE
+import com.streetsaarthi.nasvi.screens.onboarding.networking.SaveSettings
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeApply
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeHistoryList
@@ -50,6 +62,7 @@ interface ApiInterface {
     suspend fun login(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
+
 
 
     @GET(VENDER_PROFILE+ "/{id}")
@@ -94,10 +107,19 @@ interface ApiInterface {
     ): Response<BaseResponseDC<Any>>
 
     @Headers("Accept: application/json")
+    @POST(NewFeedback)
+    suspend fun newFeedback(
+        @Body hashMap: RequestBody
+    ): Response<BaseResponseDC<Any>>
+
+
+
+    @Headers("Accept: application/json")
     @POST(SIGN_UP)
     suspend fun registerWithFiles(
         @Body hashMap: RequestBody
     ): Response<BaseResponseDC<Any>>
+
 
     @POST(PASSWORD_UPDATE)
     suspend fun passwordupdate(
@@ -176,6 +198,12 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
+    @GET(InformationDetail+ "/{id}")
+    suspend fun informationDetail(
+        @Path("id") id: String,
+    ): Response<BaseResponseDC<JsonElement>>
+
+
     @POST(LiveTraining)
     suspend fun liveTraining(
         @Body requestBody: RequestBody
@@ -205,13 +233,27 @@ interface ApiInterface {
     @GET(Notifications)
     suspend fun notifications(
         @Query("page")  page: Int,
-        @Query("is_read")  is_read: Boolean,
+//        @Query("is_read")  is_read: Boolean,
         @Query("user_id")  user_id: String
     ): Response<BaseResponseDC<JsonElement>>
 
 
+    @POST(DeleteNotification)
+    suspend fun deleteNotification(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+
     @POST(ComplaintFeedback)
     suspend fun complaintFeedback(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+
+    @POST(ComplaintFeedbackHistory)
+    suspend fun complaintFeedbackHistory(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 
@@ -224,4 +266,42 @@ interface ApiInterface {
 
     @GET(ADS_LIST)
     suspend fun adsList(): Response<BaseResponseDC<List<ItemAds>>>
+
+
+    @GET(Complaint_Type)
+    suspend fun complaintType(): Response<BaseResponseDC<List<ItemComplaintType>>>
+
+
+
+    @GET(FeedbackConversationDetails+ "/{id}")
+    suspend fun feedbackConversationDetails(
+        @Path("id") id: String,
+    ): Response<ItemChat>
+
+
+
+    @Headers("Accept: application/json")
+    @POST(AddFeedbackConversation)
+    suspend fun addFeedbackConversation(
+        @Body hashMap: RequestBody
+    ): Response<BaseResponseDC<Any>>
+
+
+    @POST(SaveSettings)
+    suspend fun saveSettings(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(LOGOUT)
+    suspend fun logout(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(PasswordUpdate)
+    suspend fun passwordUpdate(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
 }

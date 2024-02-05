@@ -2,20 +2,25 @@ package com.streetsaarthi.nasvi.screens.onboarding.register
 
 import android.Manifest
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
@@ -29,6 +34,7 @@ import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register2Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +54,7 @@ class Register2  : Fragment() , CallBackListener {
 
     var scrollPoistion = 0
 
+    var permissionAlert : AlertDialog?= null
 
     companion object {
         var TAG = "Register2"
@@ -286,7 +293,6 @@ class Register2  : Fragment() , CallBackListener {
 
             layoutShopImage.setOnClickListener {
                 imagePosition = 11
-                isFree = true
                 callMediaPermissions()
             }
 
@@ -304,27 +310,22 @@ class Register2  : Fragment() , CallBackListener {
 
             inclideDocuments.layoutImageUploadCOV.setOnClickListener {
                 imagePosition = 1
-                isFree = true
                 callMediaPermissions()
             }
             inclideDocuments.layoutImageUploadLOR.setOnClickListener {
                 imagePosition = 2
-                isFree = true
                 callMediaPermissions()
             }
             inclideDocuments.layoutUploadSurveyReceipt.setOnClickListener {
                 imagePosition = 3
-                isFree = true
                 callMediaPermissions()
             }
             inclideDocuments.layoutUploadChallan.setOnClickListener {
                 imagePosition = 4
-                isFree = true
                 callMediaPermissions()
             }
             inclideDocuments.layoutUploadApprovalLetter.setOnClickListener {
                 imagePosition = 5
-                isFree = true
                 callMediaPermissions()
             }
 
@@ -393,30 +394,50 @@ class Register2  : Fragment() , CallBackListener {
 
 
 
-    var isFree = false
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
-            // Handle Permission granted/rejected
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        showOptions()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
+            if(!permissions.entries.toString().contains("false")){
+                showOptions()
+            } else {
+                callPermissionDialog()
             }
         }
 
 
+
+    var someActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        callMediaPermissions()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callPermissionDialog() {
+        if(permissionAlert?.isShowing == true) {
+            return
+        }
+        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.required_permissions))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                val i= Intent()
+                i.action= Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                i.data= Uri.parse("package:" + requireActivity().packageName)
+                someActivityResultLauncher.launch(i)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    MainActivity.binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+    }
 
 
     private fun showOptions() = try {

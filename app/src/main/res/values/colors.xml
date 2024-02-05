@@ -65,4 +65,6 @@
     <color name="placeholder_grey">#AAADC4</color>
     <color name="placeholder_grey_20">#33AAADC4</color>
 
+    <color name="_D9000000">#D9000000</color>
+
 </resources>

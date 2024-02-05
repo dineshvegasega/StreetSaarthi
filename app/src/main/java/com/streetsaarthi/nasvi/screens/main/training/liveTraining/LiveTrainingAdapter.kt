@@ -16,8 +16,7 @@ import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.GlideApp
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
 
 class LiveTrainingAdapter(liveSchemesVM: LiveTrainingVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
     PaginationAdapterCallback, CallBackListener {
@@ -112,10 +111,7 @@ class LiveTrainingAdapter(liveSchemesVM: LiveTrainingVM) : RecyclerView.Adapter<
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveTraining
             itemRowBinding.apply {
-                GlideApp.with(itemRowBinding.root.context)
-                    .load(dataClass.cover_image?.url)
-                    .apply(myOptionsGlide)
-                    .into(ivMap)
+                dataClass.cover_image?.url?.glideImage(itemRowBinding.root.context, ivMap)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
 

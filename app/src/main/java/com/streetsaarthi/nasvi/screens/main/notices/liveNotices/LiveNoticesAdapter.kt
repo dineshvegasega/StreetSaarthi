@@ -16,8 +16,7 @@ import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.GlideApp
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
 
 class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
     PaginationAdapterCallback, CallBackListener {
@@ -112,10 +111,7 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveNotice
             itemRowBinding.apply {
-                GlideApp.with(itemRowBinding.root.context)
-                    .load(dataClass.notice_image?.url)
-                    .apply(myOptionsGlide)
-                    .into(ivMap)
+                dataClass.notice_image?.url?.glideImage(itemRowBinding.root.context, ivMap)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
 

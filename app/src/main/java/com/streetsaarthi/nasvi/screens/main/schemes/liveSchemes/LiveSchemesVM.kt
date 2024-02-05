@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -32,12 +31,10 @@ import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.screens.main.webPage.WebPage
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.changeDateFormat
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -160,10 +157,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                 dialog.show()
 
                                 dialogBinding.apply {
-                                    GlideApp.with(root.context)
-                                        .load(data.scheme_image?.url)
-                                        .apply(myOptionsGlide)
-                                        .into(ivMap)
+                                    data.scheme_image?.url?.glideImage(root.context, ivMap)
                                     textTitle.setText(data.name)
                                     textDesc.setText(data.description)
 
@@ -179,11 +173,11 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                     }
 
                                     data.start_at?.let {
-                                        textStartDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.start_date, "<b>"+data.start_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                                        textStartDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.start_date, "<b>"+data.start_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
                                     data.end_at?.let {
-                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
 

@@ -60,6 +60,7 @@ class AllSchemes : Fragment() {
         MainActivity.mainActivity.get()?.callFragment(0)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.all_schemes)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_schemes)
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)

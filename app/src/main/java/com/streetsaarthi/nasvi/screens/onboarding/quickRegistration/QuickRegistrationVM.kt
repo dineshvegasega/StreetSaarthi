@@ -49,7 +49,6 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
     var isOtpVerified = false
 
     init {
-
        // addTime.postValue("bjaa")
     }
 

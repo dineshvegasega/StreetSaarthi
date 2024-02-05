@@ -6,8 +6,6 @@
     app:startDestination="@id/splash"
     >
 
-
-
     <fragment
         android:name="com.streetsaarthi.nasvi.screens.onboarding.splash.Splash"
         android:label="Splash"
@@ -433,6 +431,31 @@
         android:label="Notifications"
         android:id="@+id/notifications"
         tools:layout="@layout/notifications">
+        <action
+            android:id="@+id/action_notifications_to_profile"
+            app:destination="@id/profiles"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_notifications_to_liveSchemes"
+            app:destination="@id/liveSchemes"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_notifications_to_liveNotices"
+            app:destination="@id/liveNotices"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_notifications_to_liveTraining"
+            app:destination="@id/liveTraining"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_notifications_to_historyDetail"
+            app:destination="@id/historyDetail"
+            app:launchSingleTop="true"
+            />
     </fragment>
 
 
@@ -448,9 +471,20 @@
         android:label="Settings"
         android:id="@+id/settings"
         tools:layout="@layout/settings">
+        <action
+            android:id="@+id/action_settings_to_changePassword"
+            app:destination="@id/changePassword"
+            app:launchSingleTop="true"
+            />
     </fragment>
 
 
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.changePassword.ChangePassword"
+        android:label="ChangePassword"
+        android:id="@+id/changePassword"
+        tools:layout="@layout/change_password">
+    </fragment>
 
     <fragment
         android:name="com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes"
@@ -502,6 +536,13 @@
         android:label="CreateNew"
         android:id="@+id/createNew"
         tools:layout="@layout/create_new">
+        <action
+            android:id="@+id/action_createNew_to_history"
+            app:destination="@id/history"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/createNew"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 
     <fragment

@@ -2,10 +2,22 @@ package com.streetsaarthi.nasvi.screens.main.settings
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.demo.networking.ApiInterface
+import com.demo.networking.CallHandler
 import com.demo.networking.Repository
+import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.datastore.DataStoreKeys
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import okhttp3.RequestBody
+import retrofit2.Response
 import java.util.Locale
 import javax.inject.Inject
 
@@ -51,5 +63,62 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
         var isSelected: Boolean? = false
     )
 
+
+
+
+
+    fun notificationUpdate(_id : String,  hashMap: RequestBody) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.saveSettings(hashMap)
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        profile(_id)
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+    var itemNotificationUpdateResult = MutableLiveData<Boolean>(false)
+    fun profile(_id: String) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.profile(_id)
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        if(response.body()!!.data != null){
+                            DataStoreUtil.saveData(
+                                DataStoreKeys.AUTH,
+                                response.body()!!.token ?: ""
+                            )
+                            DataStoreUtil.saveObject(
+                                DataStoreKeys.LOGIN_DATA,
+                                Gson().fromJson(response.body()!!.data, Login::class.java)
+                            )
+                            itemNotificationUpdateResult.value = true
+                        }
+                    }
+                }
+                override fun error(message: String) {
+                    super.error(message)
+                }
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
 
 }

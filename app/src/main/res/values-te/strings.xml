@@ -425,4 +425,70 @@
     <string name="please_provide_valid_password">దయచేసి చెల్లుబాటు అయ్యే పాస్‌వర్డ్ అందించండి</string>
     <string name="user_does_not_exist">వినియోగదారు లేడు</string>
 
+    <string name="tap_to_reload">రీలోడ్ చేయడానికి నొక్కండి</string>
+    <string name="error_msg_unknown">ఊహించని లోపం సంభవించింది</string>
+    <string name="registration_processed">NASVI ద్వారా STREET SAARTHIలో నమోదు చేసుకున్నందుకు ధన్యవాదాలు. మీ ధృవీకరణ ప్రక్రియలో ఉంది. మీ రిజిస్ట్రేషన్ 2 నుండి 3 పని రోజులలోపు ప్రాసెస్ చేయబడుతుంది.</string>
+    <string name="view">వీక్షణ</string>
+    <string name="watch">చూడండి</string>
+    <string name="applied">వర్తింపబడింది</string>
+    <string name="not_applied">వర్తించబడలేదు</string>
+    <string name="not_live">ప్రత్యక్షంగా లేదు</string>
+    <string name="expired">గడువు ముగిసింది</string>
+    <string name="start_date">ప్రారంభ తేదీ %s</string>
+    <string name="end_date">ముగింపు తేదీ %s</string>
+    <string name="clear_all">అన్నీ క్లియర్ చేయండి</string>
+    <string name="all_information">అన్ని సమాచారం</string>
+    <string name="view_details">వివరాలను వీక్షించండి</string>
+    <string name="valid_date">చెల్లుబాటు అయ్యే తేదీ</string>
+    <string name="status">స్థితి</string>
+
+    <string name="nothing_here_right_now">ఇప్పుడు ఇక్కడ ఏమీ లేదు</string>
+    <string name="currently_no_schemes">ప్రస్తుతం, ఇక్కడ స్కీమ్‌లు ఏవీ కనుగొనబడలేదు. మీరు పథకాలు అందుబాటులో ఉన్నప్పుడు వాటి కోసం దరఖాస్తు చేసుకోవచ్చు.</string>
+    <string name="currently_no_notice">ప్రస్తుతం, ఇక్కడ నోటీస్ ఏవీ కనుగొనబడలేదు. అవి అందుబాటులో ఉన్నప్పుడు మీరు నోటీసు కోసం దరఖాస్తు చేసుకోవచ్చు.</string>
+    <string name="currently_no_training">ప్రస్తుతం, ఇక్కడ శిక్షణ ఏదీ కనుగొనబడలేదు. వారు అందుబాటులో ఉన్నప్పుడు మీరు శిక్షణ కోసం దరఖాస్తు చేసుకోవచ్చు.</string>
+    <string name="currently_no_notifications">ప్రస్తుతం, ఇక్కడ నోటిఫికేషన్‌లు ఏవీ కనుగొనబడలేదు.</string>
+    <string name="currently_no_information">ప్రస్తుతం, ఇక్కడ సమాచారం ఏదీ కనుగొనబడలేదు.</string>
+
+    <string name="submit_feedback">అభిప్రాయాన్ని సమర్పించండి</string>
+    <string-array name="type_array">
+        <item>ఫిర్యాదును నమోదు చేయండి</item>
+        <item>అభిప్రాయాన్ని సమర్పించండి</item>
+    </string-array>
+    <string name="type">రకం</string>
+    <string name="select_complaint_type">ఫిర్యాదు రకాన్ని ఎంచుకోండి</string>
+    <string name="subject_of_feedback">అభిప్రాయ విషయం</string>
+    <string name="not_complaint_type">మీకు ఫిర్యాదు రకం లేదు</string>
+    <string name="tracking_id">ట్రాకింగ్ ID</string>
+    <string name="feedback">అభిప్రాయం</string>
+    <string name="complaint">ఫిర్యాదు</string>
+    <string name="Pleaseentertextormedia">దయచేసి టెక్స్ట్ లేదా మీడియాను నమోదు చేయండి</string>
+
+    <string name="re_open">రీ-ఓపెన్</string>
+    <string name="pending">పెండింగ్ లో ఉంది</string>
+    <string name="resolved">పరిష్కరించబడింది</string>
+    <string name="in_progress">ప్రోగ్రెస్‌లో ఉంది</string>
+    <string name="close_conversation">మీరు ఖచ్చితంగా ఈ సంభాషణను మూసివేయాలనుకుంటున్నారా?</string>
+    <string name="open_conversation">మీరు ఖచ్చితంగా ఈ సంభాషణను తెరవాలనుకుంటున్నారా?</string>
+    <string name="are_your_sure_want_to_delete">మీరు ఖచ్చితంగా, మీ ఖాతాను తొలగించాలనుకుంటున్నారా?</string>
+    <string name="are_your_sure_want_to_turn_Off">మీరు ఖచ్చితంగా నోటిఫికేషన్‌ను ఆఫ్ చేయాలనుకుంటున్నారా?</string>
+    <string name="are_your_sure_want_to_turn_On">మీరు ఖచ్చితంగా నోటిఫికేషన్‌ని ఆన్ చేయాలనుకుంటున్నారా?</string>
+    <string name="reset_password">పాస్‌వర్డ్‌ని రీసెట్ చేయండి</string>
+    <string name="enter_new_password_for_login">లాగిన్ కోసం కొత్త పాస్‌వర్డ్‌ని నమోదు చేయండి</string>
+    <string name="newPasswordStar">కొత్త పాస్‌వర్డ్*</string>
+    <string name="reEnterNewPasswordStar">కొత్త పాస్‌వర్డ్‌ని మళ్లీ నమోదు చేయండి*</string>
+
+    <string name="typeColon">రకం:</string>
+    <string name="registration_dateColon">నమోదు తేదీ:</string>
+    <string name="subjectColon">విషయం:</string>
+    <string name="complaint_typeColon">ఫిర్యాదు రకం:</string>
+
+    <string name="message_by_admin">అడ్మిన్ ద్వారా సందేశం</string>
+    <string name="message_by_member">సభ్యుని ద్వారా సందేశం</string>
+    <string name="admin_txt">అడ్మిన్</string>
+    <string name="member_txt">సభ్యుడు</string>
+
+    <string name="conversation_marked_Close">ఈ సంభాషణలో సభ్యులు మూసివేయబడ్డారు</string>
+    <string name="conversation_marked_reOpen">ఈ సంభాషణను సభ్యునిచే మళ్లీ తెరువు అని గుర్తు పెట్టారు</string>
+    <string name="are_your_sure_want_to_delete_all_notifications">మీరు ఖచ్చితంగా అన్ని నోటిఫికేషన్‌లను తొలగించాలనుకుంటున్నారా?</string>
+    <string name="required_permissions">దయచేసి అవసరమైన అన్ని అనుమతులను అనుమతించాలా?</string>
 </resources>

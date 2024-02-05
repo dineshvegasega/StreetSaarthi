@@ -132,7 +132,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
                     tvTime.visibility = View.GONE
-                    OtpTimer.sendOtpTimerData = null
+//                    OtpTimer.sendOtpTimerData = null
                     OtpTimer.stopTimer()
                     editTextSendOtp.setEnabled(false)
                     editTextVeryfyOtp.setEnabled(false)
@@ -158,14 +158,16 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    editTextSendOtp.setEnabled(true)
-                    editTextSendOtp.setBackgroundTintList(
-                        ColorStateList.valueOf(
-                            ResourcesCompat.getColor(
-                                getResources(), R.color._E79D46, null)))
-                    viewModel.isOtpVerified = false
-                    Register.callBackListener!!.onCallBack(21)
-                    editTextMobileNumber.requestFocus()
+                    if (!isTimer.isNotEmpty()) {
+                        editTextSendOtp.setEnabled(true)
+                        editTextSendOtp.setBackgroundTintList(
+                            ColorStateList.valueOf(
+                                ResourcesCompat.getColor(
+                                    getResources(), R.color._E79D46, null)))
+                        viewModel.isOtpVerified = false
+                        Register.callBackListener!!.onCallBack(21)
+                        editTextMobileNumber.requestFocus()
+                    }
                 }
             })
 
@@ -177,14 +179,16 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    editTextSendOtp.setEnabled(true)
-                    editTextSendOtp.setBackgroundTintList(
-                        ColorStateList.valueOf(
-                            ResourcesCompat.getColor(
-                                getResources(), R.color._E79D46, null)))
-                    viewModel.isOtpVerified = false
-                    Register.callBackListener!!.onCallBack(21)
-                    editTextOtp.requestFocus()
+                    if (!isTimer.isNotEmpty()) {
+                        editTextSendOtp.setEnabled(true)
+                        editTextSendOtp.setBackgroundTintList(
+                            ColorStateList.valueOf(
+                                ResourcesCompat.getColor(
+                                    getResources(), R.color._E79D46, null)))
+                        viewModel.isOtpVerified = false
+                        Register.callBackListener!!.onCallBack(21)
+                        editTextOtp.requestFocus()
+                    }
                 }
             })
 
@@ -413,15 +417,16 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
         }
     }
 
-
+    var isTimer = ""
     override fun otpData(string: String) {
+        isTimer = string
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
             tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
 
-            if(MainActivity.isOpen.get() == true){
-                editTextOtp.focus()
-            }
+//            if(MainActivity.isOpen.get() == true){
+//                editTextOtp.focus()
+//            }
 
             if(string.isEmpty()){
                 editTextSendOtp.setText(getString(R.string.resendOtp))

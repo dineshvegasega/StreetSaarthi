@@ -1,10 +1,10 @@
 package com.streetsaarthi.nasvi.screens.onboarding.networking
 
-const val BASE_URL = "https://v2.nasvi.in/"
-const val WEB_URL = "https://nasvi.in/"
+//const val BASE_URL = "https://v2.nasvi.in/"
+//const val WEB_URL = "https://nasvi.in/"
 
-//const val BASE_URL = "http://167.71.225.20:8081/"
-//const val WEB_URL = "http://167.71.225.20:8080/"
+const val BASE_URL = "http://167.71.225.20:8081/"
+const val WEB_URL = "http://167.71.225.20:8080/"
 
 const val URL = BASE_URL+"api/"
 
@@ -36,6 +36,7 @@ const val NoticeLiveList = "notice-live-list"
 const val LiveTraining = "live-training"
 
 const val ComplaintFeedback = "feedback-history-all"
+const val ComplaintFeedbackHistory = "feedback-history-user"
 const val InformationCenter = "information-history-list"
 const val ADS_LIST = "ads-list?page=1"
 
@@ -43,20 +44,31 @@ const val SchemeApply = "scheme-apply"
 const val SchemeDetail = "scheme-detail"
 const val TrainingDetail = "training-detail"
 const val NoticeDetail = "notice-detail"
+const val InformationDetail = "information-detail"
+
 
 const val AllSchemeHistory = "user-scheme-history-list"
 const val AllTrainingHistory = "training-list"
 const val AllNoticeHistory = "notice-history-list"
 
 const val Notifications = "notification-list"
+const val DeleteNotification = "delete-notification"
+
+const val FeedbackConversationDetails = "feedback-conversation-details"
+const val AddFeedbackConversation = "feedback-conversation"
 
 const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
 const val TRANSLATE = "translate/v2?key="
+const val Complaint_Type = "complaint-type"
+const val NewFeedback = "new-feedback"
+const val SaveSettings = "save-settings"
+const val LOGOUT = "logout"
+const val PasswordUpdate = "password-update"
 
 
 const val USER_TYPE = "member"
-
 const val PING = "8.8.8.8"
+
 
 
 const val Screen = "screen"

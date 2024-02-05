@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.R
-
 import com.streetsaarthi.nasvi.databinding.ItemLiveSchemesBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
@@ -17,8 +16,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.BR
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.GlideApp
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
 
 /**
  * Created by ( Eng Ali Al Fayed)
@@ -118,10 +116,7 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveScheme
             itemRowBinding.apply {
-                GlideApp.with(itemRowBinding.root.context)
-                    .load(dataClass.scheme_image?.url)
-                    .apply(myOptionsGlide)
-                    .into(ivMap)
+                dataClass.scheme_image?.url?.glideImage(itemRowBinding.root.context, ivMap)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
 

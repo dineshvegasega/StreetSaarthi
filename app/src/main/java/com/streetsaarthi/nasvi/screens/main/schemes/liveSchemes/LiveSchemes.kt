@@ -8,9 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
@@ -69,6 +67,7 @@ class LiveSchemes : Fragment() {
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_schemes)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_schemes)
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)

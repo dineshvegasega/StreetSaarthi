@@ -114,7 +114,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
         android:includeFontPadding="false"
-        android:text="@={model.addTime}"
+        android:text=""
         android:textColor="@color/_B3261E"
         android:textSize="@dimen/_11ssp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,8 +140,9 @@
         app:layout_constraintEnd_toStartOf="@+id/editTextVeryfyOtp"
         android:imeOptions="actionDone"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        />
+        android:focusableInTouchMode="true">
+    <requestFocus />
+    </androidx.appcompat.widget.AppCompatEditText>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/editTextVeryfyOtp"

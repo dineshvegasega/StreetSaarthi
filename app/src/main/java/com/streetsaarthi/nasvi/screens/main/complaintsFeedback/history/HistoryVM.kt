@@ -1,38 +1,81 @@
 package com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.demo.genericAdapter.GenericAdapter
+import androidx.lifecycle.viewModelScope
+import com.demo.networking.ApiInterface
+import com.demo.networking.CallHandler
 import com.demo.networking.Repository
-import com.streetsaarthi.nasvi.databinding.ItemAllSchemesBinding
-import com.streetsaarthi.nasvi.databinding.ItemHistoryBinding
+import com.google.gson.JsonElement
+import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryVM @Inject constructor(private val repository: Repository): ViewModel() {
-    var itemMain : ArrayList<String> ?= ArrayList()
-    init {
-        itemMain?.add("")
-        itemMain?.add("")
-        itemMain?.add("")
-        itemMain?.add("")
-        itemMain?.add("")
-        itemMain?.add("")
+    val adapter by lazy { HistoryAdapter(this) }
+
+
+
+    private var itemHistoryResult = MutableLiveData<BaseResponseDC<Any>>()
+    val itemHistory : LiveData<BaseResponseDC<Any>> get() = itemHistoryResult
+    fun history(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.complaintFeedbackHistory(requestBody = jsonObject.getJsonRequestBody())
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        itemHistoryResult.value = response.body() as BaseResponseDC<Any>
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                    showSnackBar(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
     }
 
 
-    val photosAdapter = object : GenericAdapter<ItemHistoryBinding, String>() {
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            parent: ViewGroup,
-            viewType: Int
-        ) = ItemHistoryBinding.inflate(inflater, parent, false)
 
-        override fun onBindHolder(binding: ItemHistoryBinding, dataClass: String, position: Int) {
+    private var itemHistoryResultSecond = MutableLiveData<BaseResponseDC<Any>>()
+    val itemHistorySecond : LiveData<BaseResponseDC<Any>> get() = itemHistoryResultSecond
+    fun historySecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.complaintFeedbackHistory(requestBody = jsonObject.getJsonRequestBody())
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        itemHistoryResultSecond.value =  response.body() as BaseResponseDC<Any>
+                    }
+                }
 
-        }
+                override fun error(message: String) {
+                    super.error(message)
+                    showSnackBar(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
     }
+
+
 
 }

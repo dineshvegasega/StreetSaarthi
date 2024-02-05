@@ -1,20 +1,26 @@
 package com.streetsaarthi.nasvi.screens.main.membershipDetails
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.Canvas
-import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
@@ -25,18 +31,14 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.load
 import coil.memory.MemoryCache
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.MembershipDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.screens.main.dashboard.BannerViewPagerAdapter
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.autoScroll
-import com.streetsaarthi.nasvi.utils.autoScrollStop
-import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -50,7 +52,8 @@ class MembershipDetails  : Fragment() {
     private var _binding: MembershipDetailsBinding? = null
     private val binding get() = _binding!!
 
-    var itemMain : ArrayList<Item> ?= ArrayList()
+    var permissionAlert : AlertDialog?= null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -85,30 +88,49 @@ class MembershipDetails  : Fragment() {
         }
     }
 
-
-
-    var isFree = false
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
-            // Handle Permission granted/rejected
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        dispatchTakePictureIntent()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
+            if(!permissions.entries.toString().contains("false")){
+                dispatchTakePictureIntent()
+            } else {
+                callPermissionDialog()
             }
         }
+
+
+    var someActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        callMediaPermissions()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callPermissionDialog() {
+        if(permissionAlert?.isShowing == true) {
+            return
+        }
+        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.required_permissions))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                val i=Intent()
+                i.action=Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                i.data= Uri.parse("package:" + requireActivity().packageName)
+                someActivityResultLauncher.launch(i)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    MainActivity.binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+    }
 
 
 
@@ -128,7 +150,7 @@ class MembershipDetails  : Fragment() {
 //                    textGenderValueTxt.setText(data.gender)
 
                     val listGender =resources.getStringArray(R.array.gender_array)
-                    data.gender.let{
+                    data.gender?.let{
                         when(it){
                             "Male" -> {
                                 textGenderValueTxt.setText(listGender[0])
@@ -158,7 +180,9 @@ class MembershipDetails  : Fragment() {
                                     }
                                     break
                                 } else {
-                                    binding.textTypeofVendingValueTxt.setText(""+item.name)
+                                    data.vending_others?.let {
+                                        binding.textTypeofVendingValueTxt.setText(""+data.vending_others)
+                                    }
                                 }
                             }
                         }
@@ -177,7 +201,9 @@ class MembershipDetails  : Fragment() {
                                     }
                                     break
                                 } else {
-                                    binding.textTypeofMarketPlaceValueTxt.setText(""+item.name)
+                                    data.marketpalce_others?.let {
+                                        binding.textTypeofMarketPlaceValueTxt.setText(""+data.marketpalce_others)
+                                    }
                                 }
                             }
                         }
@@ -247,7 +273,7 @@ class MembershipDetails  : Fragment() {
             }
 
             btDownload.setOnClickListener {
-                isFree = true
+//                isFree = true
                 callMediaPermissions()
             }
 
@@ -329,7 +355,7 @@ class MembershipDetails  : Fragment() {
     override fun onStop() {
         super.onStop()
         binding.apply {
-            banner.autoScrollStop()
+//            banner.autoScrollStop()
         }
     }
 

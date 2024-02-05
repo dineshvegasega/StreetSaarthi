@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi.screens.main.dashboard
+package com.streetsaarthi.nasvi.screens.mainActivity
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -14,16 +14,12 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.models.mix.ItemAds
-import com.streetsaarthi.nasvi.screens.main.webPage.WebPage
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.loadImageBanner
 
-class BannerViewPagerAdapter(private val context: Context) : PagerAdapter() {
+class BannerViewPagerAdapter() : PagerAdapter() {
 
     private var inflater: LayoutInflater? = null
-    private val images = arrayOf(R.drawable.background, R.drawable.background, R.drawable.background, R.drawable.background)
     var itemMain : ArrayList<ItemAds> ?= ArrayList()
-
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
 
@@ -35,11 +31,11 @@ class BannerViewPagerAdapter(private val context: Context) : PagerAdapter() {
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        inflater = MainActivity.activity.get()?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater!!.inflate(R.layout.item_banner, null)
         var bannerItem = view.findViewById<AppCompatImageView>(R.id.bannerItem)
 //        bannerItem.setImageResource(images[0])
-        bannerItem.loadImage(url = { itemMain?.get(position)!!.ad_media })
+        bannerItem.loadImageBanner(url = { itemMain?.get(position)!!.ad_media })
         view.setOnClickListener {
             Handler(Looper.getMainLooper()).post(Thread {
                 MainActivity.activity.get()?.runOnUiThread {
@@ -49,7 +45,7 @@ class BannerViewPagerAdapter(private val context: Context) : PagerAdapter() {
                                 Uri.parse(itemMain?.get(position)!!.ad_link)
                             )
                             try {
-                                context.startActivity(webIntent)
+                                MainActivity.activity.get()?.startActivity(webIntent)
                             } catch (ex: ActivityNotFoundException) {
                             }
                     }

@@ -15,8 +15,8 @@ import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.GlideApp
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.changeDateFormat
+import com.streetsaarthi.nasvi.utils.glideImage
 
 class AllNoticesAdapter(liveSchemesVM: AllNoticesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
     PaginationAdapterCallback, CallBackListener {
@@ -111,14 +111,13 @@ class AllNoticesAdapter(liveSchemesVM: AllNoticesVM) : RecyclerView.Adapter<Recy
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveNotice
             itemRowBinding.apply {
-                GlideApp.with(itemRowBinding.root.context)
-                    .load(dataClass.notice_image?.url)
-                    .apply(myOptionsGlide)
-                    .into(ivIcon)
+                dataClass.notice_image?.url?.glideImage(itemRowBinding.root.context, ivIcon)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
-//                textHeaderTxt4.setText(dataClass.status)
 
+                dataClass.end_date?.let {
+                    textValidDateValue.text = "${dataClass.end_date.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")}"
+                }
                 root.setOnClickListener {
 //                    if (dataClass.user_scheme_status == "applied"){
                     viewModel.viewDetail(""+dataClass.notice_id, position = position, root, 1)

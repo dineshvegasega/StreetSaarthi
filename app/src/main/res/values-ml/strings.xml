@@ -420,4 +420,71 @@
     <string name="please_provide_valid_password">ദയവായി സാധുവായ പാസ്‌വേഡ് നൽകുക</string>
     <string name="user_does_not_exist">ഉപയോക്താവ് നിലവിലില്ല</string>
 
+    <string name="tap_to_reload">റീലോഡ് ചെയ്യാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="error_msg_unknown">ഒരു അപ്രതീക്ഷിത പിശക് സംഭവിച്ചു</string>
+    <string name="registration_processed">NASVI വഴി STREET SAARTHI-ൽ രജിസ്റ്റർ ചെയ്തതിന് നന്ദി. നിങ്ങളുടെ പരിശോധിച്ചുറപ്പിക്കൽ പ്രക്രിയയിലാണ്. നിങ്ങളുടെ രജിസ്ട്രേഷൻ 2 മുതൽ 3 പ്രവൃത്തി ദിവസങ്ങൾക്കുള്ളിൽ പ്രോസസ്സ് ചെയ്യും.</string>
+    <string name="view">കാണുക</string>
+    <string name="watch">വാച്ച്</string>
+    <string name="applied">പ്രയോഗിച്ചു</string>
+    <string name="not_applied">പ്രയോഗിച്ചിട്ടില്ല</string>
+    <string name="not_live">ലൈവ് അല്ല</string>
+    <string name="expired">കാലഹരണപ്പെട്ടു</string>
+    <string name="start_date">ആരംഭ തീയതി %s</string>
+    <string name="end_date">അവസാന തീയതി %s</string>
+    <string name="clear_all">എല്ലാം മായ്‌ക്കുക</string>
+    <string name="all_information">എല്ലാ വിവരങ്ങളും</string>
+    <string name="view_details">വിശദാംശങ്ങൾ കാണുക</string>
+    <string name="valid_date">സാധുവായ തീയതി</string>
+    <string name="status">നില</string>
+
+    <string name="nothing_here_right_now">ഇപ്പോൾ ഇവിടെ ഒന്നുമില്ല</string>
+    <string name="currently_no_schemes">നിലവിൽ, ഇവിടെ സ്കീമുകളൊന്നും കണ്ടെത്തിയില്ല. സ്കീമുകൾ ലഭ്യമാകുമ്പോൾ നിങ്ങൾക്ക് അപേക്ഷിക്കാം.</string>
+    <string name="currently_no_notice">നിലവിൽ, അറിയിപ്പുകളൊന്നും ഇവിടെ കാണുന്നില്ല. അവ ലഭ്യമാകുമ്പോൾ നിങ്ങൾക്ക് അറിയിപ്പിനായി അപേക്ഷിക്കാം.</string>
+    <string name="currently_no_training">നിലവിൽ, പരിശീലനമൊന്നും ഇവിടെ കാണുന്നില്ല. അവ ലഭ്യമാകുമ്പോൾ നിങ്ങൾക്ക് പരിശീലനത്തിന് അപേക്ഷിക്കാം.</string>
+    <string name="currently_no_notifications">നിലവിൽ, അറിയിപ്പുകളൊന്നും ഇവിടെ കാണുന്നില്ല.</string>
+    <string name="currently_no_information">നിലവിൽ, ഇവിടെ വിവരങ്ങളൊന്നും കണ്ടെത്തിയില്ല.</string>
+
+    <string name="submit_feedback">ഫീഡ്‌ബാക്ക് സമർപ്പിക്കുക</string>
+    <string-array name="type_array">
+        <item>പരാതി രജിസ്റ്റർ ചെയ്യുക</item>
+        <item>ഫീഡ്‌ബാക്ക് സമർപ്പിക്കുക</item>
+    </string-array>
+    <string name="type">തരം</string>
+    <string name="select_complaint_type">പരാതി തരം തിരഞ്ഞെടുക്കുക</string>
+    <string name="subject_of_feedback">ഫീഡ്‌ബാക്കിൻ്റെ വിഷയം</string>
+    <string name="not_complaint_type">നിങ്ങൾക്ക് പരാതി തരമില്ല</string>
+    <string name="tracking_id">ട്രാക്കിംഗ് ഐഡി</string>
+    <string name="feedback">ഫീഡ്‌ബാക്ക്</string>
+    <string name="complaint">പരാതി</string>
+    <string name="Pleaseentertextormedia">ദയവായി ടെക്‌സ്‌റ്റോ മീഡിയയോ നൽകുക</string>
+
+    <string name="re_open">വീണ്ടും തുറക്കുക</string>
+    <string name="pending">തീർച്ചപ്പെടുത്താത്തത്</string>
+    <string name="resolved">പരിഹരിച്ചു</string>
+    <string name="in_progress">പുരോഗതിയിലാണ്</string>
+    <string name="close_conversation">ഈ സംഭാഷണം അവസാനിപ്പിക്കണമെന്ന് തീർച്ചയാണോ?</string>
+    <string name="open_conversation">ഈ സംഭാഷണം തുറക്കണമെന്ന് തീർച്ചയാണോ?</string>
+    <string name="are_your_sure_want_to_delete">നിങ്ങൾക്ക് ഉറപ്പാണോ, നിങ്ങളുടെ അക്കൗണ്ട് ഇല്ലാതാക്കണോ?</string>
+    <string name="are_your_sure_want_to_turn_Off">അറിയിപ്പ് ഓഫാക്കണമെന്ന് തീർച്ചയാണോ?</string>
+    <string name="are_your_sure_want_to_turn_On">അറിയിപ്പ് ഓണാക്കണമെന്ന് തീർച്ചയാണോ?</string>
+    <string name="reset_password">പാസ്‌വേഡ് പുനഃസജ്ജമാക്കുക</string>
+    <string name="enter_new_password_for_login">ലോഗിൻ ചെയ്യുന്നതിനായി പുതിയ പാസ്‌വേഡ് നൽകുക</string>
+    <string name="newPasswordStar">പുതിയ പാസ്‌വേഡ്*</string>
+    <string name="reEnterNewPasswordStar">പുതിയ പാസ്‌വേഡ് വീണ്ടും നൽകുക*</string>
+
+    <string name="typeColon">തരം:</string>
+    <string name="registration_dateColon">രജിസ്‌ട്രേഷൻ തീയതി:</string>
+    <string name="subjectColon">വിഷയം:</string>
+    <string name="complaint_typeColon">പരാതി തരം:</string>
+
+    <string name="message_by_admin">അഡ്‌മിൻ്റെ സന്ദേശം</string>
+    <string name="message_by_member">അംഗം മുഖേനയുള്ള സന്ദേശം</string>
+    <string name="admin_txt">അഡ്മിൻ</string>
+    <string name="member_txt">അംഗം</string>
+
+    <string name="conversation_marked_Close">അംഗം ഈ സംഭാഷണം അടയ്ക്കുക എന്ന് അടയാളപ്പെടുത്തി</string>
+    <string name="conversation_marked_reOpen">ഈ സംഭാഷണം അംഗം വീണ്ടും തുറക്കുക എന്ന് അടയാളപ്പെടുത്തി</string>
+    <string name="are_your_sure_want_to_delete_all_notifications">നിങ്ങൾക്ക് ഉറപ്പാണോ, നിങ്ങൾക്ക് എല്ലാ അറിയിപ്പുകളും ഇല്ലാതാക്കണോ?</string>
+    <string name="required_permissions">ആവശ്യമായ എല്ലാ അനുമതികളും അനുവദിക്കണോ?</string>
+
 </resources>

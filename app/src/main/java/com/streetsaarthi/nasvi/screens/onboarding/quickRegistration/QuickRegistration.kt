@@ -7,22 +7,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.QuickRegistrationBinding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.utils.updatePagerHeightForChild
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
-
 
 @AndroidEntryPoint
 class QuickRegistration : Fragment(), CallBackListener{
@@ -86,18 +85,18 @@ class QuickRegistration : Fragment(), CallBackListener{
                     btSignIn.setEnabled(true)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                            getResources(), R.color._E79D46, null)))
+                            ResourcesCompat.getColor(
+                                getResources(), R.color._E79D46, null)))
                 }
             })
 
 
             btSignIn.setOnClickListener {
-                    if (tabPosition == 0){
-                        QuickRegistration1.callBackListener!!.onCallBack(1)
-                    } else if (tabPosition == 1){
-                        QuickRegistration2.callBackListener!!.onCallBack(3)
-                    }
+                if (tabPosition == 0){
+                    QuickRegistration1.callBackListener!!.onCallBack(1)
+                } else if (tabPosition == 1){
+                    QuickRegistration2.callBackListener!!.onCallBack(3)
+                }
                 loadProgress(tabPosition)
             }
 
@@ -117,6 +116,8 @@ class QuickRegistration : Fragment(), CallBackListener{
                 loadProgress(tabPosition)
             }
 
+
+
             introViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(
                     position: Int,
@@ -127,16 +128,10 @@ class QuickRegistration : Fragment(), CallBackListener{
                 }
 
                 override fun onPageSelected(position: Int) {
+                    introViewPager.requestLayout()
                     super.onPageSelected(position)
                     tabPosition = position
                     Log.e("Selected_Page", position.toString())
-//                    if(position == 0) {
-//                        btSignIn.setEnabled(true)
-//                        btSignIn.setBackgroundTintList(
-//                            ColorStateList.valueOf(
-//                                ResourcesCompat.getColor(
-//                                    getResources(), R.color._E79D46, null)))
-//                    }
                     if(position == 1) {
                         btSignIn.setEnabled(false)
                         btSignIn.setBackgroundTintList(
@@ -150,8 +145,14 @@ class QuickRegistration : Fragment(), CallBackListener{
                     super.onPageScrollStateChanged(state)
                 }
             })
+
+
+            introViewPager.setPageTransformer { page, position ->
+                introViewPager.updatePagerHeightForChild(page)
+            }
         }
     }
+
 
 
     private fun loadProgress(tabPosition: Int) {
@@ -164,13 +165,13 @@ class QuickRegistration : Fragment(), CallBackListener{
     override fun onCallBack(pos: Int) {
         Log.e("TAG", "onCallBack "+pos)
         binding.apply {
-          if (pos == 21){
-            btSignIn.setEnabled(false)
-            btSignIn.setBackgroundTintList(
-                ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        getResources(), R.color._999999, null)))
-        } else if (pos == 2){
+            if (pos == 21){
+                btSignIn.setEnabled(false)
+                btSignIn.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        ResourcesCompat.getColor(
+                            getResources(), R.color._999999, null)))
+            } else if (pos == 2){
                 introViewPager.setCurrentItem(1, false)
                 btSignIn.setText(getString(R.string.RegisterNow))
             } else if (pos == 4){
@@ -186,7 +187,6 @@ class QuickRegistration : Fragment(), CallBackListener{
         }
         loadProgress(tabPosition)
     }
-
 
 
 

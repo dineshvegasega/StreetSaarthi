@@ -1,13 +1,22 @@
 package com.streetsaarthi.nasvi.screens.mainActivity
 
+//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
+//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
+//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
+
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ActivityNotFoundException
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.Rect
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -20,34 +29,20 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.ConfigurationCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.util.Util
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.common.IntentSenderForResultStarter
-import com.google.android.play.core.install.model.ActivityResult
 import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.Gson
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
-//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
-import com.squareup.picasso.Picasso
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.MainActivityBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
@@ -55,22 +50,20 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.ConnectivityManager
-import com.streetsaarthi.nasvi.screens.main.dashboard.BannerViewPagerAdapter
-import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.LocaleHelper
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
-import dagger.hilt.android.AndroidEntryPoint
-import java.lang.ref.WeakReference
-import java.util.Locale
-import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.autoScroll
+import com.streetsaarthi.nasvi.utils.getToken
+import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
 import com.streetsaarthi.nasvi.utils.loadImage
-import com.streetsaarthi.nasvi.utils.mainThread
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import okhttp3.MultipartBody
+import java.lang.ref.WeakReference
 
 
 @AndroidEntryPoint
@@ -87,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var mainActivity: WeakReference<MainActivity>
 
         var logoutAlert : AlertDialog?= null
+        var deleteAlert : AlertDialog?= null
 
         @SuppressLint("StaticFieldLeak")
         var navHostFragment : NavHostFragment? = null
@@ -99,8 +93,6 @@ class MainActivity : AppCompatActivity() {
         lateinit var isOpen : WeakReference<Boolean>
 
     }
-
-
 
     private val viewModel: MainActivityVM by viewModels()
 
@@ -123,6 +115,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 //        checkUpdate()
 
 //        setIntent(intent)
@@ -152,14 +145,18 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val adapter = BannerViewPagerAdapter(this@MainActivity)
+        loadBanner()
         viewModel.itemAds.observe(this@MainActivity, Observer {
             if (it != null) {
                 viewModel.itemAds.value?.let { it1 ->
-                    adapter.submitData(it1)
-                    binding.banner.adapter = adapter
+                    viewModel.bannerAdapter.submitData(it1)
+                    binding.banner.adapter = viewModel.bannerAdapter
                     binding.tabDots.setupWithViewPager(binding.banner, true)
                     binding.banner.autoScroll()
+                    when(screenValue){
+                        0 -> binding.layoutBanner.visibility = View.GONE
+                        in 1..2 -> binding.layoutBanner.visibility = View.VISIBLE
+                    }
                 }
             }
         })
@@ -167,6 +164,18 @@ class MainActivity : AppCompatActivity() {
 
         observeConnectivityManager()
 
+        getToken(){
+            Log.e("TAG", "getToken "+this)
+        }
+
+
+        val bundle=intent?.extras
+
+        if(bundle != null) {
+            showData(bundle)
+        }
+
+//        Log.e("TAG", "bundleAA "+bundle?.getString("key"))
 
 //        var zz = "9988397522"
 //        var aa = zz.substring(0,2)
@@ -226,12 +235,12 @@ class MainActivity : AppCompatActivity() {
 //      //  intent.setDataAndType(data, "image/*")
 //        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 //
-////            val pendingIntent=if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-////                PendingIntent.getActivity(requireContext(),0,intent,PendingIntent.FLAG_MUTABLE)
-////            } else {
-////                PendingIntent.getActivity(requireContext(),0,intent,
-////                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
-////            }
+//////            val pendingIntent=if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//////                PendingIntent.getActivity(requireContext(),0,intent,PendingIntent.FLAG_MUTABLE)
+//////            } else {
+//////                PendingIntent.getActivity(requireContext(),0,intent,
+//////                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+//////            }
 //
 //        val pendingIntent= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
 //            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT)
@@ -408,39 +417,29 @@ class MainActivity : AppCompatActivity() {
 //        )
     }
 
+
+
     @SuppressLint("SuspiciousIndentation")
     fun callLogoutDialog() {
         if(logoutAlert?.isShowing == true) {
             return
         }
         logoutAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
-            .setTitle(resources.getString(R.string.logout))
+            .setTitle(resources.getString(R.string.app_name))
             .setMessage(resources.getString(R.string.are_your_sure_want_to_logout))
             .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
                 dialog.dismiss()
-                DataStoreUtil.removeKey(DataStoreKeys.LOGIN_DATA) {}
-                DataStoreUtil.removeKey(DataStoreKeys.AUTH) {}
-                DataStoreUtil.removeKey(DataStoreKeys.LIVE_SCHEME_DATA) {}
-                DataStoreUtil.removeKey(DataStoreKeys.LIVE_NOTICE_DATA) {}
-                DataStoreUtil.removeKey(DataStoreKeys.LIVE_TRAINING_DATA) {}
-                DataStoreUtil.removeKey(DataStoreKeys.Complaint_Feedback_DATA) {}
-                DataStoreUtil.removeKey(DataStoreKeys.Information_Center_DATA) {}
-
-                DataStoreUtil.clearDataStore {  }
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.drawerLayout.close()
                 }, 500)
-
-                callBack()
-                val navOptions: NavOptions = NavOptions.Builder()
-                    .setPopUpTo(R.id.navigation_bar, true)
-                    .build()
-//                Handler(Looper.getMainLooper()).postDelayed(Thread {
-                    runOnUiThread {
-                        navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    if (loginUser != null) {
+                        val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                        requestBody.addFormDataPart("mobile_number", ""+Gson().fromJson(loginUser, Login::class.java).mobile_no)
+                        viewModel.logoutAccount(requestBody.build())
                     }
-//                }, 100)
-
+                }
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
@@ -450,7 +449,79 @@ class MainActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
+
+
+
+        viewModel.itemLogoutResult.observe(this@MainActivity, Observer {
+            if (it) {
+                clearData()
+            }
+        })
     }
+
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callDeleteDialog() {
+        if(deleteAlert?.isShowing == true) {
+            return
+        }
+        deleteAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.are_your_sure_want_to_delete))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.drawerLayout.close()
+                }, 500)
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    if (loginUser != null) {
+                        val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("user_type", USER_TYPE)
+                        requestBody.addFormDataPart("user_id", ""+Gson().fromJson(loginUser, Login::class.java).id)
+                        requestBody.addFormDataPart("delete_account", "Yes")
+                        viewModel.deleteAccount(requestBody.build())
+                    }
+                }
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+
+        viewModel.itemDeleteResult.observe(this@MainActivity, Observer {
+            if (it) {
+                clearData()
+            }
+        })
+
+
+    }
+
+
+
+    fun clearData(){
+        DataStoreUtil.removeKey(DataStoreKeys.LOGIN_DATA) {}
+        DataStoreUtil.removeKey(DataStoreKeys.AUTH) {}
+        DataStoreUtil.removeKey(DataStoreKeys.LIVE_SCHEME_DATA) {}
+        DataStoreUtil.removeKey(DataStoreKeys.LIVE_NOTICE_DATA) {}
+        DataStoreUtil.removeKey(DataStoreKeys.LIVE_TRAINING_DATA) {}
+        DataStoreUtil.removeKey(DataStoreKeys.Complaint_Feedback_DATA) {}
+        DataStoreUtil.removeKey(DataStoreKeys.Information_Center_DATA) {}
+        DataStoreUtil.clearDataStore {  }
+        callBack()
+        val navOptions: NavOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.navigation_bar, true)
+            .build()
+        runOnUiThread {
+            navHostFragment?.navController?.navigate(R.id.onboard, null, navOptions)
+        }
+    }
+
 
     //    private fun initLanguage(idSL: Any?, idTL: Any?, text: String?) {
 //        val option = FirebaseTranslatorOptions.Builder()
@@ -523,24 +594,29 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        Log.e("TAG", "onNewIntent "+intent)
-        //navHostFragment!!.navController.navigate(R.id.start)
-
-//        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-
-        if (intent!!.hasExtra(Screen)){
-            var screen = intent.getStringExtra(Screen)
-            Log.e("TAG", "screen "+screen)
-//            navHostFragment?.navController?.navigate(R.id.start)
-//            navHostFragment?.navController?.popBackStack(R.id.start, true)
-//            setIntent(intent)
-//            Handler(Looper.getMainLooper()).postDelayed(Thread {
-                navHostFragment?.navController?.navigate(R.id.start)
-//            },100)
-
+        if(intent?.extras != null) {
+            showData(intent?.extras!!)
         }
     }
+
+
+    private fun showData(bundle: Bundle) {
+        try {
+            var key = bundle?.getString("key")
+            var _id = bundle?.getString("_id")
+//            Log.e("TAG", "showData "+res)
+            when(key){
+                "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes)
+                "notice" -> navHostFragment!!.navController.navigate(R.id.liveNotices)
+                "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining)
+                "profile" -> navHostFragment!!.navController.navigate(R.id.profiles)
+                "Feedback" -> navHostFragment!!.navController.navigate(R.id.historyDetail, Bundle().apply {
+                    putString("key", _id)
+                })
+            }
+        }catch (e: Exception){}
+    }
+
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase,""))
@@ -563,16 +639,21 @@ class MainActivity : AppCompatActivity() {
                     binding.topLayout.topToolbar.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
-                    Gson().fromJson(loginUser, Login::class.java).profile_image_name?.let {
-                        topLayout.ivImage.loadImage(url = { Gson().fromJson(loginUser, Login::class.java).profile_image_name.url })
+                    var imageUrl = Gson().fromJson(loginUser, Login::class.java).profile_image_name?.url ?: ""
+                    topLayout.ivImage.loadImage(url = { imageUrl })
+                    topLayout.ivImage.setOnClickListener {
+                        arrayListOf(imageUrl).imageZoom(topLayout.ivImage)
                     }
                 }
             }
+            loadBanner()
         }
     }
 
 
+var screenValue = 0
     fun callFragment(screen : Int) {
+        screenValue = screen
         binding.apply {
             when(screen){
                 0-> {
@@ -625,7 +706,8 @@ class MainActivity : AppCompatActivity() {
 
 
     var resultUpdate = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){ result->
-            if (result.resultCode == RESULT_OK) {
+            Log.e("TAG", "result.resultCode "+result.resultCode)
+        if (result.resultCode == RESULT_OK) {
                     // Handle successful app update
             } else if (result.resultCode == RESULT_CANCELED) {
                 finish()
@@ -652,22 +734,66 @@ class MainActivity : AppCompatActivity() {
 
                 appUpdateManager.startUpdateFlowForResult(
                     appUpdateInfo,
-                    AppUpdateType.IMMEDIATE,
+                    AppUpdateType.FLEXIBLE,
                     starter,
                     123,
                 )
             }
+
+//        val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(this)
+//        appUpdateManager
+//            .appUpdateInfo
+//            .addOnSuccessListener { appUpdateInfo ->
+//                if (appUpdateInfo.updateAvailability()
+//                    == UpdateAvailability.UPDATE_AVAILABLE
+//                ) {
+//                    // If an in-app update is already running, resume the update.
+//                    appUpdateManager.startUpdateFlowForResult(
+//                        appUpdateInfo,
+//                        AppUpdateType.IMMEDIATE,
+//                        this,
+//                        1234
+//                    )
+//                }
+//            }
     }
 
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        when (requestCode) {
+//            1234 -> {
+//                when (resultCode) {
+//                    Activity.RESULT_OK -> {
+//                        Log.e("MainActivity", "onActivityResult" + "Result Ok")
+//                        //  handle user's approval }
+//                    }
+//                    Activity.RESULT_CANCELED -> {
+//                        Log.e("MainActivity", "onActivityResult" + "Result Cancelled")
+//                        //  handle user's rejection  }
+//                        finish()
+//                    }
+//                    ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> {
+//                        //if you want to request the update again just call checkUpdate()
+//                        Log.e("MainActivity", "onActivityResult" + "Update Failure")
+//                        //  handle update failure
+//                        finish()
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-    override fun onStart() {
-        super.onStart()
+
+
+
+    fun loadBanner() {
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
                 viewModel.adsList()
             }
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -681,6 +807,9 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         logoutAlert?.let {
             logoutAlert!!.cancel()
+        }
+        deleteAlert?.let {
+            deleteAlert!!.cancel()
         }
     }
 }

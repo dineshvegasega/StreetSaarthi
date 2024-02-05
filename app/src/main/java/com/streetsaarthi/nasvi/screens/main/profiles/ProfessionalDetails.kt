@@ -4,17 +4,23 @@ import android.Manifest
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
@@ -32,8 +38,8 @@ import com.streetsaarthi.nasvi.databinding.ProfessionalDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.networking.getFormDataBody
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.loadImage
@@ -41,10 +47,8 @@ import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
-import okhttp3.FormBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
 import java.io.File
@@ -56,6 +60,8 @@ class ProfessionalDetails : Fragment() , CallBackListener {
     private val viewModel: ProfilesVM by activityViewModels()
     private var _binding: ProfessionalDetailsBinding? = null
     private val binding get() = _binding!!
+
+    var permissionAlert : AlertDialog?= null
 
     companion object{
         var callBackListener: CallBackListener? = null
@@ -71,9 +77,6 @@ class ProfessionalDetails : Fragment() , CallBackListener {
     }
 
     var scrollPoistion = 0
-
-
-
 
 
 
@@ -103,28 +106,52 @@ class ProfessionalDetails : Fragment() , CallBackListener {
         }
     }
 
-    var isFree = false
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
-            // Handle Permission granted/rejected
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        showOptions()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
+            if(!permissions.entries.toString().contains("false")){
+                showOptions()
+            } else {
+                callPermissionDialog()
             }
         }
+
+
+
+
+    var someActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        callMediaPermissions()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callPermissionDialog() {
+        if(permissionAlert?.isShowing == true) {
+            return
+        }
+        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.required_permissions))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                val i= Intent()
+                i.action= Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                i.data= Uri.parse("package:" + requireActivity().packageName)
+                someActivityResultLauncher.launch(i)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    MainActivity.binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+    }
+
 
 
     var imagePosition = 0
@@ -233,6 +260,8 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
         binding.apply {
+            fieldsEdit()
+
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
@@ -240,23 +269,23 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
                     if(data.vending_documents != "null"){
-                        if(data.vending_documents.contains(getString(R.string.COVText))){
+                        if(data.vending_documents?.contains(getString(R.string.COVText)) == true){
                             cbRememberCOV.isChecked = true
                             stringCOV = getString(R.string.COVText)+" "
                         }
-                        if(data.vending_documents.contains(getString(R.string.LORText))){
+                        if(data.vending_documents?.contains(getString(R.string.LORText)) == true){
                             cbRememberSurveyReceipt.isChecked = true
                             stringSurveyReceipt = getString(R.string.Survery_ReceiptText)+" "
                         }
-                        if(data.vending_documents.contains(getString(R.string.Survery_ReceiptText))){
+                        if(data.vending_documents?.contains(getString(R.string.Survery_ReceiptText)) == true){
                             cbRememberLOR.isChecked = true
                             stringLOR = getString(R.string.LORText)+" "
                         }
-                        if(data.vending_documents.contains(getString(R.string.ChallanText))){
+                        if(data.vending_documents?.contains(getString(R.string.ChallanText)) == true){
                             cbRememberChallan.isChecked = true
                             stringChallan = getString(R.string.ChallanText)+" "
                         }
-                        if(data.vending_documents.contains(getString(R.string.Approval_LetterText))){
+                        if(data.vending_documents?.contains(getString(R.string.Approval_LetterText)) == true){
                             cbRememberApprovalLetter.isChecked = true
                             stringApprovalLetter = getString(R.string.Approval_LetterText)+" "
                         }
@@ -306,23 +335,26 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         }
                     }
 
-                    if(data.availed_scheme != "null"){
+                    if(data.availed_scheme != "null" && data.availed_scheme != null){
                         viewModel.data.governmentScheme = true
                         ivRdGovernmentYes.isChecked = true
                         inclideGovernment.root.visibility = View.VISIBLE
-                        if(data.availed_scheme.contains(getString(R.string.pm_swanidhi_schemeSingle))){
+                        if(data.availed_scheme?.contains(getString(R.string.pm_swanidhi_schemeSingle)) == true){
                             inclideGovernment.cbRememberPMSwanidhiScheme.isChecked = true
                             stringPm_swanidhi_schemeSingle = getString(R.string.pm_swanidhi_schemeSingle)+" "
                         }
 
-                        var xx = data.availed_scheme.split(" ")
-                        for (item in xx!!.iterator()) {
-                            if(item != getString(R.string.pm_swanidhi_schemeSingle)){
-                                inclideGovernment.cbRememberOthersPleaseName.isChecked = true
-                                stringOtherSchemeName += item+" "
-                                inclideGovernment.editTextSchemeName.setText(stringOtherSchemeName)
+                        var xx = data.availed_scheme?.split(" ")
+                        xx?.let {
+                            for (item in xx.iterator()) {
+                                if(item != getString(R.string.pm_swanidhi_schemeSingle)){
+                                    inclideGovernment.cbRememberOthersPleaseName.isChecked = true
+                                    stringOtherSchemeName += item+" "
+                                    inclideGovernment.editTextSchemeName.setText(stringOtherSchemeName)
+                                }
                             }
                         }
+
                     } else {
                         viewModel.data.governmentScheme = false
                         ivRdGovernmentYes.isChecked = false
@@ -487,7 +519,9 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     }
 
                     data.vending_address?.let {
-                        editTextVendingAddress.setText("${data.vending_address}")
+                            if(data.vending_address != "null"){
+                            editTextVendingAddress.setText("${data.vending_address}")
+                        }
                     }
 
 
@@ -665,32 +699,26 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
             btnImageShopImage.setOnClickListener {
                 imagePosition = 1
-                isFree = true
                 callMediaPermissions()
             }
             btnImageCOV.setOnClickListener {
                 imagePosition = 2
-                isFree = true
                 callMediaPermissions()
             }
             btnImageSurveyReceipt.setOnClickListener {
                 imagePosition = 3
-                isFree = true
                 callMediaPermissions()
             }
             btnImageLOR.setOnClickListener {
                 imagePosition = 4
-                isFree = true
                 callMediaPermissions()
             }
             btnImageUploadChallan.setOnClickListener {
                 imagePosition = 5
-                isFree = true
                 callMediaPermissions()
             }
             btnImageApprovalLetter.setOnClickListener {
                 imagePosition = 6
-                isFree = true
                 callMediaPermissions()
             }
 
@@ -724,9 +752,53 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
             }
 
-
         }
     }
+
+
+    private fun fieldsEdit() {
+        binding.apply {
+            viewModel.isEditable.observe(viewLifecycleOwner, Observer {
+                Log.e("TAG", "isEditable "+it)
+                editTextTypeofMarketPlace.isEnabled = it
+                editTextTypeofMarketPlaceEnter.isEnabled = it
+                editTextTypeofVending.isEnabled = it
+                editTextTypeofVendingEnter.isEnabled = it
+                editTextTotalYearsofVending.isEnabled = it
+                editTextVendingTimeOpen.isEnabled = it
+                editTextVendingTimeClose.isEnabled = it
+                editTextVendingSelectState.isEnabled = it
+                editTextVendingSelectDistrict.isEnabled = it
+                editTextVendingMunicipalityPanchayat.isEnabled = it
+                editTextVendingSelectPincode.isEnabled = it
+                editTextVendingAddress.isEnabled = it
+                ivRdLocalOrgnaizationYes.isEnabled = it
+                ivRdLocalOrgnaizationNo.isEnabled = it
+                editTextLocalOrganisation.isEnabled = it
+
+                btnImageShopImage.isEnabled = it
+                btnImageCOV.isEnabled = it
+                btnImageSurveyReceipt.isEnabled = it
+                btnImageLOR.isEnabled = it
+                btnImageUploadChallan.isEnabled = it
+                btnImageApprovalLetter.isEnabled = it
+
+                cbRememberCOV.isEnabled = it
+                cbRememberSurveyReceipt.isEnabled = it
+                cbRememberLOR.isEnabled = it
+                cbRememberChallan.isEnabled = it
+                cbRememberApprovalLetter.isEnabled = it
+
+                ivRdGovernmentYes.isEnabled = it
+                ivRdGovernmentNo.isEnabled = it
+                inclideGovernment.cbRememberPMSwanidhiScheme.isEnabled = it
+                inclideGovernment.cbRememberOthersPleaseName.isEnabled = it
+                inclideGovernment.editTextSchemeName.isEnabled = it
+            })
+        }
+    }
+
+
 
 
 
@@ -1142,9 +1214,14 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 if(viewModel.data.vending_pincode  != null){
                     requestBody.addFormDataPart("vending_pincode", viewModel.data.vending_pincode!!)
                 }
-                if(viewModel.data.vending_address  != null){
+
+                viewModel.data.vending_address = ""+editTextVendingAddress.text.toString()
+                if(viewModel.data.vending_address != null){
                     requestBody.addFormDataPart("vending_address", viewModel.data.vending_address!!)
                 }
+
+//                Log.e("TAG", "viewModel.data.vending_addressAA "+viewModel.data.vending_address)
+
 //                if(viewModel.data.localOrganisation  != null){
 //
 //                }

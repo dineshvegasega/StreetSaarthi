@@ -15,8 +15,8 @@ import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.GlideApp
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.changeDateFormat
+import com.streetsaarthi.nasvi.utils.glideImage
 
 class AllTrainingAdapter(liveSchemesVM: AllTrainingVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
     PaginationAdapterCallback, CallBackListener {
@@ -111,13 +111,13 @@ class AllTrainingAdapter(liveSchemesVM: AllTrainingVM) : RecyclerView.Adapter<Re
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveTraining
             itemRowBinding.apply {
-                GlideApp.with(itemRowBinding.root.context)
-                    .load(dataClass.cover_image?.url)
-                    .apply(myOptionsGlide)
-                    .into(ivIcon)
+                dataClass.cover_image?.url?.glideImage(itemRowBinding.root.context, ivIcon)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
-//                textHeaderTxt4.setText(dataClass.status)
+
+                dataClass.training_end_at?.let {
+                    textValidDateValue.text = "${dataClass.training_end_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")}"
+                }
 
                 root.setOnClickListener {
 //                    if (dataClass.user_scheme_status == "applied"){

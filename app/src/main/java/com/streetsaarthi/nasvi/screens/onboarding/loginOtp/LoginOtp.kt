@@ -1,10 +1,7 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginOtp
 
-import android.Manifest
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +17,8 @@ import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.LoginOtpBinding
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.OtpTimer
-import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
@@ -35,7 +30,6 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
 
     private val viewModel: LoginOtpVM by activityViewModels()
 
-    var itemMain : ArrayList<Item> ?= ArrayList()
 
 //    private var smsVerifyCatcher: SmsVerifyCatcher? = null
 
@@ -85,7 +79,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
                     tvTime.visibility = View.GONE
-                    OtpTimer.sendOtpTimerData = null
+//                    OtpTimer.sendOtpTimerData = null
                     OtpTimer.stopTimer()
 //                    editTextSendOtp.setEnabled(false)
 //                    editTextVeryfyOtp.setEnabled(false)
@@ -142,7 +136,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
                         put("slug", "login")
                         put("user_type", USER_TYPE)
                     }
-                    viewModel.verifyOTP(view = requireView(), obj)
+                    viewModel.verifyOTPData(view = requireView(), obj)
                 }
             }
 
@@ -215,14 +209,16 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
         }
 
 
+    var isTimer = ""
     override fun otpData(string: String) {
+        isTimer = string
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
             tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
 
-            if(MainActivity.isOpen.get() == true){
-                editTextOtp.focus()
-            }
+//            if(MainActivity.isOpen.get() == true){
+//                editTextOtp.focus()
+//            }
 
             if(string.isEmpty()){
                 editTextSendOtp.setText(getString(R.string.resendOtp))

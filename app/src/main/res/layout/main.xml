@@ -8,7 +8,75 @@
     android:background="@color/white">
 
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextOtp"
+        style="@style/PrimaryEditText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="900dp"
+        android:hint="@string/enterOtpHere"
+        android:inputType="number"
+        android:maxLength="6"
+        android:text=""
+        android:imeOptions="actionDone"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:includeFontPadding="false"
+        android:text="@={model.addTime}"
+        android:textColor="@color/_B3261E"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextOtp"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:visibility="visible"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/editTextVeryfyOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        style="@style/PrimaryButtonYellow"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:hint="@string/verify_otp"
+        android:inputType="number"
+        android:text="@string/verify_otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTime"
+        android:focusable="false"
+        android:cursorVisible="false"
+        android:backgroundTint="@color/_999999"
+        android:visibility="visible"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:cornerRadius="@dimen/_5sdp"
+        android:textSize="@dimen/_11ssp"
+        />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -421,4 +421,71 @@
     <string name="please_provide_valid_password">சரியான கடவுச்சொல்லை வழங்கவும்</string>
     <string name="user_does_not_exist">பயனர் இல்லை</string>
 
+    <string name="tap_to_reload">மீண்டும் ஏற்றுவதற்கு தட்டவும்</string>
+    <string name="error_msg_unknown">எதிர்பாராத பிழை ஏற்பட்டது</string>
+    <string name="registration_processed">NASVI மூலம் STREET SAARTHI இல் பதிவு செய்ததற்கு நன்றி. உங்கள் சரிபார்ப்பு செயல்பாட்டில் உள்ளது. உங்கள் பதிவு 2 முதல் 3 வேலை நாட்களுக்குள் செயல்படுத்தப்படும்.</string>
+    <string name="view">பார்க்கவும்</string>
+    <string name="watch">வாட்ச்</string>
+    <string name="applied">பயன்படுத்தப்பட்டது</string>
+    <string name="not_applied">பயன்படுத்தப்படவில்லை</string>
+    <string name="not_live">நேரலையில் இல்லை</string>
+    <string name="expired">காலாவதியானது</string>
+    <string name="start_date">தொடக்க தேதி %s</string>
+    <string name="end_date">முடிவு தேதி %s</string>
+    <string name="clear_all">அனைத்தையும் அழி</string>
+    <string name="all_information">அனைத்து தகவல்</string>
+    <string name="view_details">விவரங்களைக் காண்க</string>
+    <string name="valid_date">செல்லுபடியான தேதி</string>
+    <string name="status">நிலை</string>
+
+    <string name="nothing_here_right_now">இப்போது இங்கு எதுவும் இல்லை</string>
+    <string name="currently_no_schemes">தற்போது, ​​எந்த திட்டமும் இங்கு இல்லை. திட்டங்கள் கிடைக்கும் போது நீங்கள் விண்ணப்பிக்கலாம்.</string>
+    <string name="currently_no_notice">தற்போது, ​​இங்கு எந்த அறிவிப்பும் இல்லை. அவை கிடைக்கும் போது நீங்கள் அறிவிப்புக்கு விண்ணப்பிக்கலாம்.</string>
+    <string name="currently_no_training">தற்போது, ​​இங்கு பயிற்சி எதுவும் இல்லை. அவர்கள் கிடைக்கும் போது நீங்கள் பயிற்சிக்கு விண்ணப்பிக்கலாம்.</string>
+    <string name="currently_no_notifications">தற்போது, ​​இங்கு எந்த அறிவிப்பும் இல்லை.</string>
+    <string name="currently_no_information">தற்போது, ​​இங்கு எந்த தகவலும் இல்லை.</string>
+
+    <string name="submit_feedback">கருத்தை சமர்ப்பிக்கவும்</string>
+    <string-array name="type_array">
+        <item>புகார் பதிவு</item>
+        <item>கருத்தை சமர்ப்பிக்கவும்</item>
+    </string-array>
+    <string name="type">வகை</string>
+    <string name="select_complaint_type">புகார் வகையைத் தேர்ந்தெடு</string>
+    <string name="subject_of_feedback">கருத்து பொருள்</string>
+    <string name="not_complaint_type">உங்களிடம் புகார் வகை இல்லை</string>
+    <string name="tracking_id">டிராக்கிங் ஐடி</string>
+    <string name="feedback">கருத்து</string>
+    <string name="complaint">புகார்</string>
+    <string name="Pleaseentertextormedia">உரை அல்லது ஊடகத்தை உள்ளிடவும்</string>
+
+    <string name="re_open">மீண்டும் திற</string>
+    <string name="pending">நிலுவையில் உள்ளது</string>
+    <string name="resolved">தீர்ந்தது</string>
+    <string name="in_progress">செயல்படுகிறது</string>
+    <string name="close_conversation">இந்த உரையாடலை நிச்சயமாக மூட விரும்புகிறீர்களா?</string>
+    <string name="open_conversation">நிச்சயமாக இந்த உரையாடலைத் திறக்க விரும்புகிறீர்களா?</string>
+    <string name="are_your_sure_want_to_delete">உங்கள் கணக்கை நீக்க விரும்புகிறீர்களா?</string>
+    <string name="are_your_sure_want_to_turn_Off">நிச்சயமாக அறிவிப்பை முடக்க விரும்புகிறீர்களா?</string>
+    <string name="are_your_sure_want_to_turn_On">நிச்சயமாக அறிவிப்பை இயக்க விரும்புகிறீர்களா?</string>
+    <string name="reset_password">கடவுச்சொல்லை மீட்டமைக்கவும்</string>
+    <string name="enter_new_password_for_login">உள்நுழைவுக்கான புதிய கடவுச்சொல்லை உள்ளிடவும்</string>
+    <string name="newPasswordStar">புதிய கடவுச்சொல்*</string>
+    <string name="reEnterNewPasswordStar">புதிய கடவுச்சொல்லை மீண்டும் உள்ளிடவும்*</string>
+
+    <string name="typeColon">வகை:</string>
+    <string name="registration_dateColon">பதிவு தேதி:</string>
+    <string name="subjectColon">தலைப்பு:</string>
+    <string name="complaint_typeColon">புகார் வகை:</string>
+
+    <string name="message_by_admin">நிர்வாகம் மூலம் செய்தி</string>
+    <string name="message_by_member">உறுப்பினர் மூலம் செய்தி</string>
+    <string name="admin_txt">நிர்வாகம்</string>
+    <string name="member_txt">உறுப்பினர்</string>
+
+    <string name="conversation_marked_Close">உறுப்பினரால் இந்த உரையாடல் மூடப்பட்டதாகக் குறிக்கப்பட்டது</string>
+    <string name="conversation_marked_reOpen">உறுப்பினரால் இந்த உரையாடல் மீண்டும் திறக்கப்பட்டது எனக் குறிக்கப்பட்டது</string>
+    <string name="are_your_sure_want_to_delete_all_notifications">நிச்சயமாக, எல்லா அறிவிப்புகளையும் நீக்க விரும்புகிறீர்களா?</string>
+    <string name="required_permissions">தேவையான அனைத்து அனுமதிகளையும் அனுமதிக்கவா?</string>
+
 </resources>

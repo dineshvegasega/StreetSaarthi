@@ -19,6 +19,7 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -125,8 +126,15 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                             DataStoreKeys.LOGIN_DATA,
                             Gson().fromJson(response.body()!!.data, Login::class.java)
                         )
+                        if(response.body()?.data != null){
+                            showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
+                            MainActivity.mainActivity.get()!!.callBack()
+                            view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
+                        } else {
+                            showSnackBar(view.resources.getString(R.string.invalid_OTP))
+                        }
+                    } else {
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
                     }
                 }
 

@@ -1,11 +1,13 @@
 package com.streetsaarthi.nasvi.screens.main.notifications
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.BR
 import com.streetsaarthi.nasvi.R
@@ -112,10 +114,6 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemNotification
             itemRowBinding.apply {
-//                GlideApp.with(itemRowBinding.root.context)
-//                    .load(dataClass.notice_image?.url)
-//                    .apply(myOptionsGlide)
-//                    .into(ivIcon)
                 textTitle.setText(dataClass.type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(
                     Locale.getDefault()) else it.toString() } +" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a"))
 
@@ -128,6 +126,15 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
 //                    }else{
 //                        viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
 //                    }
+                    when(dataClass.type){
+                        "VendorDetails" -> root.findNavController().navigate(R.id.action_notifications_to_profile)
+                        "scheme" -> root.findNavController().navigate(R.id.action_notifications_to_liveSchemes)
+                        "notice" -> root.findNavController().navigate(R.id.action_notifications_to_liveNotices)
+                        "training" -> root.findNavController().navigate(R.id.action_notifications_to_liveTraining)
+                        "Feedback" -> root.findNavController().navigate(R.id.action_notifications_to_historyDetail, Bundle().apply {
+                            putString("key", ""+dataClass.type_id)
+                        })
+                    }
                 }
 
             }

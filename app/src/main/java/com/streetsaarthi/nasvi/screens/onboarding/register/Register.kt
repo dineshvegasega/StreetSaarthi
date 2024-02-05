@@ -38,6 +38,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.updatePagerHeightForChild
 
 
 @AndroidEntryPoint
@@ -174,6 +175,10 @@ var tabPosition: Int = 0;
                     super.onPageScrollStateChanged(state)
                 }
             })
+
+            introViewPager.setPageTransformer { page, position ->
+                introViewPager.updatePagerHeightForChild(page)
+            }
         }
 
     }

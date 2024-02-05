@@ -20,9 +20,8 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomLiveNoticeBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemNoticeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.changeDateFormat
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -117,17 +116,14 @@ class AllNoticesVM @Inject constructor(private val repository: Repository): View
                                 dialog.show()
 
                                 dialogBinding.apply {
-                                    GlideApp.with(root.context)
-                                        .load(data.notice_image?.url)
-                                        .apply(myOptionsGlide)
-                                        .into(ivMap)
+                                    data.notice_image?.url?.glideImage(root.context, ivMap)
                                     textTitle.setText(data.name)
                                     textDesc.setText(data.description)
                                     textHeaderTxt4.setText(data.status)
                                     textHeaderTxt4.visibility = View.GONE
 
                                     data.end_date?.let {
-                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_date.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_date.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
                                     btApply.visibility = View.GONE

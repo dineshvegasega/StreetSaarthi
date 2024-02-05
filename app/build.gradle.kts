@@ -7,7 +7,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
-//    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.crashlytics")
     id("com.google.gms.google-services")
 }
 
@@ -19,7 +19,7 @@ android {
         applicationId = "com.streetsaarthi.nasvi"
         minSdk = 24
         targetSdk = 34
-        versionCode = 3
+        versionCode = 1
         versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -149,19 +149,19 @@ dependencies {
 
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
 
-    //Chucker for Network Inspection
-//    debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
-//    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+//    Chucker for Network Inspection
+    debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
+    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
 //    implementation ("com.google.android.gms:play-services-auth:20.7.0")
-    implementation ("com.google.android.play:core:1.10.3")
-//    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-//    implementation ("com.google.firebase:firebase-auth-ktx")
-//    implementation ("com.google.firebase:firebase-database-ktx")
-////    implementation ("com.google.firebase:firebase-messaging-ktx")
-//    implementation ("com.google.firebase:firebase-analytics-ktx")
-//    implementation ("com.google.firebase:firebase-crashlytics-ktx")
-//    implementation ("com.google.firebase:firebase-config-ktx")
+    implementation ("com.google.android.play:core-ktx:1.8.1")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation ("com.google.firebase:firebase-database-ktx")
+    implementation ("com.google.firebase:firebase-messaging-ktx")
+    implementation ("com.google.firebase:firebase-analytics-ktx")
+    implementation ("com.google.firebase:firebase-crashlytics-ktx")
+    implementation ("com.google.firebase:firebase-config-ktx")
 
 
 //    implementation ("com.google.firebase:firebase-ml-natural-language:22.0.1")
@@ -197,5 +197,10 @@ dependencies {
 //        }
 //    }
 
+    implementation ("com.github.stfalcon-studio:StfalconImageViewer:v1.0.1")
+//    implementation ("com.android.support:support-v4:28.0.0")
+//    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
+//    //noinspection GradleCompatible
+//    implementation ("com.android.support:support-compat:28.0.0")
 
 }

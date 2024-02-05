@@ -8,14 +8,12 @@ import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.demo.genericAdapter.GenericAdapter
 import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
@@ -24,14 +22,12 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveTrainingBinding
-import com.streetsaarthi.nasvi.databinding.ItemAllTrainingBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemTrainingDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.changeDateFormat
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -123,17 +119,14 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
                                 dialog.show()
 
                                 dialogBinding.apply {
-                                    GlideApp.with(root.context)
-                                        .load(data.cover_image?.url)
-                                        .apply(myOptionsGlide)
-                                        .into(ivMap)
+                                    data.cover_image?.url?.glideImage(root.context, ivMap)
                                     textTitle.setText(data.name)
                                     textDesc.setText(data.description)
                                     textHeaderTxt4.setText(data.status)
                                     textHeaderTxt4.visibility = View.GONE
 
                                     data.training_end_at?.let {
-                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.training_end_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.training_end_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
                                     btApply.setOnClickListener {

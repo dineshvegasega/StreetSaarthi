@@ -122,7 +122,6 @@
 
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/textHeaderTxt21"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"

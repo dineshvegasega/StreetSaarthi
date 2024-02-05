@@ -18,13 +18,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.AllNoticesBinding
-import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
@@ -60,6 +57,7 @@ class AllNotices : Fragment() {
         MainActivity.mainActivity.get()?.callFragment(0)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.all_notices)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_notice)
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)
@@ -144,7 +142,7 @@ class AllNotices : Fragment() {
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
-                 //   viewModel.liveNotice(view = requireView(), obj)
+                    viewModel.liveNotice(view = requireView(), obj)
                 }
             }
         }

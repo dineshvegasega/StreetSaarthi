@@ -6,18 +6,14 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
@@ -25,8 +21,6 @@ import com.streetsaarthi.nasvi.databinding.LiveTrainingBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
@@ -71,6 +65,7 @@ class LiveTraining : Fragment() {
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_training)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_training)
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)

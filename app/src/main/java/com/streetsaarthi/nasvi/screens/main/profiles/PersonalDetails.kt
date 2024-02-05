@@ -3,23 +3,28 @@ package com.streetsaarthi.nasvi.screens.main.profiles
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,8 +36,8 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -52,6 +57,8 @@ class PersonalDetails : Fragment() , CallBackListener {
     private val viewModel: ProfilesVM by activityViewModels()
     private var _binding: PersonalDetailsBinding? = null
     private val binding get() = _binding!!
+
+    var permissionAlert : AlertDialog?= null
 
     companion object{
         var callBackListener: CallBackListener? = null
@@ -93,28 +100,52 @@ class PersonalDetails : Fragment() , CallBackListener {
         }
     }
 
-    var isFree = false
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
-            // Handle Permission granted/rejected
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        showOptions()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
+            if(!permissions.entries.toString().contains("false")){
+                showOptions()
+            } else {
+                callPermissionDialog()
             }
         }
+
+
+
+    var someActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        callMediaPermissions()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callPermissionDialog() {
+        if(permissionAlert?.isShowing == true) {
+            return
+        }
+        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.required_permissions))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                val i= Intent()
+                i.action= Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                i.data= Uri.parse("package:" + requireActivity().packageName)
+                someActivityResultLauncher.launch(i)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    MainActivity.binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+
 
 
     var imagePosition = 0
@@ -165,6 +196,9 @@ class PersonalDetails : Fragment() , CallBackListener {
         callBackListener = this
 
         binding.apply {
+
+            fieldsEdit()
+
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
@@ -190,8 +224,8 @@ class PersonalDetails : Fragment() , CallBackListener {
                     }
 
 
-                    val listGender =resources.getStringArray(R.array.gender_array)
-                    data.gender.let{
+                    val listGender = resources.getStringArray(R.array.gender_array)
+                    data.gender?.let{
                         when(it){
                             "Male" -> {
                                editTextGender.setText(listGender[0])
@@ -207,8 +241,8 @@ class PersonalDetails : Fragment() , CallBackListener {
 
                     editTextDateofBirth.setText(data.date_of_birth)
 
-                    val listMaritalStatus= resources.getStringArray(R.array.maritalStatus_array)
-                    data.marital_status.let{
+                    val listMaritalStatus = resources.getStringArray(R.array.maritalStatus_array)
+                    data.marital_status?.let{
                         when(it){
                             "Single" -> {
                                 editTextMaritalStatus.setText(listMaritalStatus[0])
@@ -241,8 +275,8 @@ class PersonalDetails : Fragment() , CallBackListener {
 
                     editTextSocialCategory.setText(data.social_category)
 
-                    val listEducation= resources.getStringArray(R.array.socialEducation_array)
-                    data.education_qualification.let{
+                    val listEducation = resources.getStringArray(R.array.socialEducation_array)
+                    data.education_qualification?.let{
                         when(it){
                             "No Education" -> {
                                 editTextEducationQualifacation.setText(listEducation[0])
@@ -331,12 +365,10 @@ class PersonalDetails : Fragment() , CallBackListener {
 
             btnImagePassportsize.setOnClickListener {
                 imagePosition = 1
-                isFree = true
                 callMediaPermissions()
             }
             btnIdentityImage.setOnClickListener {
                 imagePosition = 2
-                isFree = true
                 callMediaPermissions()
             }
 
@@ -538,16 +570,36 @@ class PersonalDetails : Fragment() , CallBackListener {
 
 
 
-
-
-
-
         }
 
 
     }
 
 
+    private fun fieldsEdit() {
+        binding.apply {
+            viewModel.isEditable.observe(viewLifecycleOwner, Observer {
+                Log.e("TAG", "isEditable "+it)
+                editTextFN.isEnabled = it
+                editTextLN.isEnabled = it
+                editTextFatherFN.isEnabled = it
+                editTextFatherLN.isEnabled = it
+                editTextGender.isEnabled = it
+                editTextDateofBirth.isEnabled = it
+                editTextMaritalStatus.isEnabled = it
+                editTextSpouseName.isEnabled = it
+                editTextSocialCategory.isEnabled = it
+                editTextEducationQualifacation.isEnabled = it
+                editTextSelectState.isEnabled = it
+                editTextSelectDistrict.isEnabled = it
+                editTextMunicipalityPanchayat.isEnabled = it
+                editTextSelectPincode.isEnabled = it
+                editTextAddress.isEnabled = it
+                btnImagePassportsize.isEnabled = it
+                btnIdentityImage.isEnabled = it
+            })
+        }
+    }
 
 
     private fun showDropDownGenderDialog() {

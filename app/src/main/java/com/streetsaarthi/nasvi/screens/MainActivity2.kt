@@ -1,11 +1,25 @@
 package com.streetsaarthi.nasvi
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.webkit.WebView
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.button.MaterialButton
 import com.google.gson.JsonParser
+import com.streetsaarthi.nasvi.databinding.MainActivityBinding
+import com.streetsaarthi.nasvi.databinding.MainBinding
+import com.streetsaarthi.nasvi.databinding.WebpageBinding
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.OtpTimer
+import kotlinx.coroutines.DelicateCoroutinesApi
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.Calendar
@@ -22,19 +36,34 @@ import java.util.Calendar
 //import org.json.JSONObject
 
 
-class MainActivity2 : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() , OtpTimer.SendOtpTimerData {
 
-    private lateinit var webView: WebView
-    private lateinit var button: Button
+    private var _binding: MainBinding? = null
+    val binding get() = _binding!!
+
+////    private lateinit var webView: WebView
+//    private lateinit var editTextOtp: AppCompatEditText
+//    private lateinit var tvTime: TextView
+//    private lateinit var button: MaterialButton
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.webpage)
-        webView = findViewById(R.id.webView)
-//        button = findViewById(R.id.button)
+//        setContentView(R.layout.webpage)
+//        webView = findViewById(R.id.webView)
+//        editTextOtp = findViewById(R.id.editTextOtp)
+//        tvTime = findViewById(R.id.tvTime)
+//        button = findViewById(R.id.editTextVeryfyOtp)
 
-        button.setOnClickListener {
+        _binding = MainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        OtpTimer.sendOtpTimerData = this
+
+        binding.editTextVeryfyOtp.setOnClickListener {
+            Log.e("TAG", "setOnClickListener")
+//            OtpTimer.sendOtpTimerData = null
+            OtpTimer.startTimer()
 
 //            val client = OkHttpClient()
 //            val request: Request = Calendar.Builder()
@@ -116,10 +145,21 @@ class MainActivity2 : AppCompatActivity() {
 //        }
 //
 //
-
-
         }
+
+
+
     }
+
+
+
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun otpData(string: String) {
+        Log.e("TAG", "string "+string)
+        binding.tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
+    }
+
 
 
 
@@ -151,11 +191,12 @@ class MainActivity2 : AppCompatActivity() {
 //            }
 //    }
 
-override fun onBackPressed() {
-    if (webView.canGoBack())
-        webView.goBack()
-    else
-        super.onBackPressed()
-}
+
+    override fun onBackPressed() {
+    //    if (webView.canGoBack())
+    //        webView.goBack()
+    //    else
+    //        super.onBackPressed()
+    }
 
 }
