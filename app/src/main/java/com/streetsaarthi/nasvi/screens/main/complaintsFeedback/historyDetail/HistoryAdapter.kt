@@ -13,6 +13,7 @@ import com.streetsaarthi.nasvi.models.chat.DataX
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.imageZoom
+import com.streetsaarthi.nasvi.utils.singleClick
 
 
 class HistoryAdapter () :
@@ -39,7 +40,7 @@ class HistoryAdapter () :
 
                     ivMap.visibility = View.VISIBLE
 
-                    ivMap.setOnClickListener {
+                    ivMap.singleClick {
                         model.media?.let {
                             arrayListOf(it.url).imageZoom(ivMap)
                         }
@@ -103,7 +104,7 @@ class HistoryAdapter () :
                     model.media?.url?.glideImage(binding.root.context, ivMap)
                     ivMap.visibility = View.VISIBLE
 
-                    ivMap.setOnClickListener {
+                    ivMap.singleClick {
                         model.media?.let {
                             arrayListOf(it.url).imageZoom(ivMap)
                         }

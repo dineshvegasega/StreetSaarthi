@@ -44,6 +44,7 @@ import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
@@ -97,7 +98,7 @@ class HistoryDetail : Fragment() {
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
 
-            inclideHeaderSearch.btClose.setOnClickListener {
+            inclideHeaderSearch.btClose.singleClick {
                 var msg = ""
                 val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -117,7 +118,7 @@ class HistoryDetail : Fragment() {
                 }
 
                 if(logoutAlert?.isShowing == true) {
-                    return@setOnClickListener
+                    return@singleClick
                 }
                 logoutAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
                     .setTitle(resources.getString(R.string.app_name))
@@ -210,12 +211,12 @@ class HistoryDetail : Fragment() {
             }
 
 
-            ivAttach.setOnClickListener {
+            ivAttach.singleClick {
                 imagePosition = 1
                 callMediaPermissions()
             }
 
-            ivSend.setOnClickListener {
+            ivSend.singleClick {
                 val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("user_type", USER_TYPE)
@@ -372,23 +373,22 @@ class HistoryDetail : Fragment() {
         dialog.setContentView(dialogView)
         dialog.show()
 
-        btnCancel.setOnClickListener {
+        btnCancel.singleClick {
             dialog.dismiss()
         }
-        tvCamera.setOnClickListener {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvCameraDesc.setOnClickListener {
+        tvCamera.singleClick {
             dialog.dismiss()
             forCamera()
         }
-
-        tvPhotos.setOnClickListener {
+        tvCameraDesc.singleClick {
+            dialog.dismiss()
+            forCamera()
+        }
+        tvPhotos.singleClick {
             dialog.dismiss()
             forGallery()
         }
-        tvPhotosDesc.setOnClickListener {
+        tvPhotosDesc.singleClick {
             dialog.dismiss()
             forGallery()
         }

@@ -60,7 +60,7 @@
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/banner"
-                    app:layout_constraintDimensionRatio="800:152"
+                    app:layout_constraintDimensionRatio="100:17"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"

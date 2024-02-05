@@ -1,7 +1,6 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginPassword
 
-import android.os.Handler
-import android.os.Looper
+
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
@@ -21,7 +20,6 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
-
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

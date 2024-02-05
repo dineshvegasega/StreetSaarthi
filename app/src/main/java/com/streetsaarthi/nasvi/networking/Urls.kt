@@ -29,7 +29,6 @@ const val LOCAL_ORGANISATION = "local-organisation"
 const val Vending = "vending-list?page=1"
 const val Marketplace = "marketplace-list?page=1"
 const val SchemeHistoryList = "scheme-history-list"
-const val NoticeHistoryList = "notice-history-list"
 
 const val LiveScheme = "live-scheme"
 const val NoticeLiveList = "notice-live-list"
@@ -57,24 +56,21 @@ const val DeleteNotification = "delete-notification"
 const val FeedbackConversationDetails = "feedback-conversation-details"
 const val AddFeedbackConversation = "feedback-conversation"
 
-const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
-const val TRANSLATE = "translate/v2?key="
 const val Complaint_Type = "complaint-type"
 const val NewFeedback = "new-feedback"
 const val SaveSettings = "save-settings"
 const val LOGOUT = "logout"
 const val PasswordUpdate = "password-update"
 
-
 const val USER_TYPE = "member"
 const val PING = "8.8.8.8"
 
-
+const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
+const val TRANSLATE = "translate/v2?key="
 
 const val Screen = "screen"
 const val Start = "Start"
 const val Main = "Main"
-const val QuickRegister = "QuickRegister"
 const val CompleteRegister = "CompleteRegister"
 const val LoginPassword = "LoginPassword"
 const val LoginOtp = "LoginOtp"

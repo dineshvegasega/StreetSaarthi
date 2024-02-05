@@ -6,10 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.SplashBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys.LOGIN_DATA
@@ -19,7 +15,6 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.navHostFragment
 import com.streetsaarthi.nasvi.screens.onboarding.start.Start
 import com.streetsaarthi.nasvi.utils.ioThread
-import com.streetsaarthi.nasvi.utils.mainThread
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 

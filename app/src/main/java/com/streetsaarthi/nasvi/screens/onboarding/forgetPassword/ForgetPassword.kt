@@ -22,6 +22,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -53,7 +54,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
         binding.apply {
             editTextVeryfyOtp.isEnabled = false
             btSignIn.isEnabled = false
-            textBack.setOnClickListener {
+            textBack.singleClick {
                 view.findNavController().navigateUp()
             }
 
@@ -79,7 +80,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
             var counter = 0
             var start: Int
             var end: Int
-            imgCreatePassword.setOnClickListener {
+            imgCreatePassword.singleClick {
                 if(counter == 0){
                     counter = 1
                     imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
@@ -155,7 +156,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 //                })
 
 
-            editTextSendOtp.setOnClickListener {
+            editTextSendOtp.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
@@ -171,7 +172,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
             }
 
 
-            editTextVeryfyOtp.setOnClickListener {
+            editTextVeryfyOtp.singleClick {
                 if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
@@ -187,7 +188,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 
 
 
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
 //                } else if (binding.editTextOtp.text.toString().isEmpty()){

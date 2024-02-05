@@ -443,7 +443,7 @@
     <string name="currently_no_training">বর্তমানে, এখানে কোন প্রশিক্ষণ পাওয়া যায় না। সেগুলি উপলব্ধ হলে আপনি প্রশিক্ষণের জন্য আবেদন করতে পারেন৷</string>
     <string name="currently_no_notifications">বর্তমানে, এখানে কোনো বিজ্ঞপ্তি পাওয়া যায় না৷</string>
     <string name="currently_no_information">বর্তমানে, এখানে কোন তথ্য পাওয়া যায় না।</string>
-
+    <string name="currently_no_complaints">বর্তমানে, এখানে কোনো অভিযোগ/প্রতিক্রিয়া পাওয়া যায় না৷</string>
     <string name="submit_feedback">প্রতিক্রিয়া জমা দিন</string>
     <string-array name="type_array">
         <item>অভিযোগ নিবন্ধন করুন</item>

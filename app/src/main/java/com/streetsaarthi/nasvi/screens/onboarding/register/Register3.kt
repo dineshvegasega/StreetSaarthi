@@ -27,12 +27,11 @@ import androidx.lifecycle.Observer
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register3Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
-import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -69,7 +68,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             var counter = 0
             var start: Int
             var end: Int
-            imgCreatePassword.setOnClickListener {
+            imgCreatePassword.singleClick {
                 if(counter == 0){
                     counter = 1
                     imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
@@ -91,7 +90,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             var counter2 = 0
             var start2: Int
             var end2: Int
-            imgReEnterPassword.setOnClickListener {
+            imgReEnterPassword.singleClick {
                 if(counter2 == 0){
                     counter2 = 1
                     imgReEnterPassword.setImageResource(R.drawable.ic_eye_open)
@@ -193,7 +192,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             })
 
 
-            textTerms.setOnClickListener {
+            textTerms.singleClick {
                 openTermConditionsDialog()
             }
 
@@ -210,7 +209,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 //                })
 //
 
-            editTextSendOtp.setOnClickListener {
+            editTextSendOtp.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
@@ -225,7 +224,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
             }
 
-            editTextVeryfyOtp.setOnClickListener {
+            editTextVeryfyOtp.singleClick {
                 if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
@@ -241,7 +240,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
 
 
-            cbRememberMe.setOnClickListener {
+            cbRememberMe.singleClick {
                 getAgreeValue()
             }
 
@@ -332,7 +331,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
         window!!.setBackgroundDrawableResource(R.color._00000000)
 
         val yes = mybuilder.findViewById<AppCompatImageView>(R.id.imageCross)
-        yes?.setOnClickListener {
+        yes?.singleClick {
             mybuilder.dismiss()
         }
     }

@@ -469,6 +469,7 @@
     <string name="currently_no_training">Currently, No Training are found here. You can apply for training when they are available.</string>
     <string name="currently_no_notifications">Currently, No Notifications are found here.</string>
     <string name="currently_no_information">Currently, No Information are found here.</string>
+    <string name="currently_no_complaints">Currently, No Complaints/Feedbacks are found here.</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string-array name="type_array">
         <item>Register Complaint</item>

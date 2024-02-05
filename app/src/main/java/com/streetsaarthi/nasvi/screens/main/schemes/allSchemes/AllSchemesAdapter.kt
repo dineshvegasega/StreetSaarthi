@@ -18,6 +18,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.singleClick
 
 /**
  * Created by ( Eng Ali Al Fayed)
@@ -76,11 +77,11 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
             }
 
-            loadingVH.itemRowBinding.loadmoreRetry.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
@@ -131,7 +132,7 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
                     textValidDateValue.text = "${dataClass.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")}"
                 }
 
-                root.setOnClickListener {
+                root.singleClick {
                         if (dataClass.user_scheme_status == "applied"){
                             viewModel.viewDetail(dataClass, position = position, root, 1)
                         }else{

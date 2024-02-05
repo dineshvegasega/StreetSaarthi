@@ -448,7 +448,7 @@
     <string name="currently_no_training">ప్రస్తుతం, ఇక్కడ శిక్షణ ఏదీ కనుగొనబడలేదు. వారు అందుబాటులో ఉన్నప్పుడు మీరు శిక్షణ కోసం దరఖాస్తు చేసుకోవచ్చు.</string>
     <string name="currently_no_notifications">ప్రస్తుతం, ఇక్కడ నోటిఫికేషన్‌లు ఏవీ కనుగొనబడలేదు.</string>
     <string name="currently_no_information">ప్రస్తుతం, ఇక్కడ సమాచారం ఏదీ కనుగొనబడలేదు.</string>
-
+    <string name="currently_no_complaints">ప్రస్తుతం, ఇక్కడ ఎటువంటి ఫిర్యాదులు/ఫీడ్‌బ్యాక్‌లు కనుగొనబడలేదు.</string>
     <string name="submit_feedback">అభిప్రాయాన్ని సమర్పించండి</string>
     <string-array name="type_array">
         <item>ఫిర్యాదును నమోదు చేయండి</item>

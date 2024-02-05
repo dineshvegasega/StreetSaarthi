@@ -2,8 +2,6 @@ package com.streetsaarthi.nasvi.screens.onboarding.walkThrough
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +14,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.WalkThroughBinding
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration2
-import com.streetsaarthi.nasvi.utils.mainThread
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 
 
 @AndroidEntryPoint
@@ -81,7 +76,7 @@ class WalkThrough : Fragment() {
         }
 
 
-        binding.btSignIn.setOnClickListener {
+        binding.btSignIn.singleClick {
                 if (tabPosition == 0){
                     binding.introViewPager.setCurrentItem(1, false)
                 } else if (tabPosition == 1){

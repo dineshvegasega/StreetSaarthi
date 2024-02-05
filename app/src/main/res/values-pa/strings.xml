@@ -448,7 +448,7 @@
     <string name="currently_no_training">ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਸਿਖਲਾਈ ਨਹੀਂ ਮਿਲਦੀ ਹੈ। ਜਦੋਂ ਉਹ ਉਪਲਬਧ ਹੋਣ ਤਾਂ ਤੁਸੀਂ ਸਿਖਲਾਈ ਲਈ ਅਰਜ਼ੀ ਦੇ ਸਕਦੇ ਹੋ।</string>
     <string name = "currently_no_notifications"> ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਸੂਚਨਾਵਾਂ ਨਹੀਂ ਮਿਲੀਆਂ ਹਨ।</string>
     <string name = "currently_no_information"> ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਜਾਣਕਾਰੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</string>
-
+    <string name="currently_no_complaints">ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਸ਼ਿਕਾਇਤ/ਫੀਡਬੈਕ ਨਹੀਂ ਮਿਲਦੀਆਂ ਹਨ।</string>
     <string name="submit_feedback">ਫੀਡਬੈਕ ਜਮ੍ਹਾਂ ਕਰੋ</string>
     <string-array name="type_array">
         <item>ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ</item>

@@ -15,6 +15,7 @@ import com.streetsaarthi.nasvi.databinding.ItemInformationCenterBinding
 import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.singleClick
 import com.streetsaarthi.nasvi.utils.glideImage
 
 /**
@@ -74,11 +75,11 @@ class InformationCenterAdapter(liveSchemesVM: InformationCenterVM) : RecyclerVie
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
             }
 
-            loadingVH.itemRowBinding.loadmoreRetry.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
@@ -122,12 +123,8 @@ class InformationCenterAdapter(liveSchemesVM: InformationCenterVM) : RecyclerVie
 //                textHeaderTxt4.setText(if (dataClass.status == "Active") root.context.resources.getString(R.string.live) else root.context.resources.getString(R.string.not_live))
 //                textHeaderTxt4.backgroundTintList = (if(dataClass.status == "Active") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A))
 
-                root.setOnClickListener {
-//                        if (dataClass.user_scheme_status == "applied"){
+                root.singleClick{
                     viewModel.viewDetail(""+dataClass.information_id, position = position, root, 1)
-//                        }else{
-//                            viewModel.viewDetail(dataClass, position = position, root, 2)
-//                        }
                 }
 
             }

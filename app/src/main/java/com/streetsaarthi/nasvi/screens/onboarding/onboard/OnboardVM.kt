@@ -2,8 +2,6 @@ package com.streetsaarthi.nasvi.screens.onboarding.onboard
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +16,8 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.OnboardItemBinding
 import com.squareup.picasso.Picasso
 import com.streetsaarthi.nasvi.screens.onboarding.networking.CompleteRegister
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginOtp
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginPassword
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -114,7 +111,7 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
 
             binding.btImage.setImageDrawable(ContextCompat.getDrawable(binding.root.context, if (dataClass.isSelected == true) R.drawable.radio_sec_filled else R.drawable.radio_sec_empty));
 
-            binding.root.setOnClickListener {
+            binding.root.singleClick {
                 whichScreen = position
                 val list = currentList
                 list.forEach {

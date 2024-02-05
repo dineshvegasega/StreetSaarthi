@@ -27,6 +27,7 @@ import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -132,7 +133,7 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
 
                                     btApply.text = root.context.resources.getString(R.string.watch)
 
-                                    btApply.setOnClickListener {
+                                    btApply.singleClick {
                                         if (status == 1){
                                             Handler(Looper.getMainLooper()).post(Thread {
                                                 MainActivity.activity.get()?.runOnUiThread {
@@ -152,7 +153,7 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
                                         dialog.dismiss()
                                     }
 
-                                    btClose.setOnClickListener {
+                                    btClose.singleClick {
                                         dialog.dismiss()
                                     }
                                 }

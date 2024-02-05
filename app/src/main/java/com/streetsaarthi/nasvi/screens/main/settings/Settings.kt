@@ -31,6 +31,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.LocaleHelper
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
 
@@ -65,9 +66,9 @@ class Settings : Fragment() {
             })
 
 
-            editTextSelectLanguage.setOnClickListener {
+            editTextSelectLanguage.singleClick {
                 if (languageAlert?.isShowing == true) {
-                    return@setOnClickListener
+                    return@singleClick
                 }
                 val dialogView: View = LayoutInflater.from(requireContext())
                     .inflate(R.layout.dialog_bottom_your_booking2, null)
@@ -104,7 +105,7 @@ class Settings : Fragment() {
                                 )
                             );
                             binding.btLanguage.text = dataClass.name
-                            binding.btLanguage.setOnClickListener {
+                            binding.btLanguage.singleClick {
                                 Log.e("TAG", "asdsfs " + dataClass.name)
 
                                 val list = currentList
@@ -126,7 +127,7 @@ class Settings : Fragment() {
 
                             }
 
-                            binding.btImage.setOnClickListener {
+                            binding.btImage.singleClick {
                                 Log.e("TAG", "asdsfs " + dataClass.name)
 
                                 val list = currentList
@@ -164,9 +165,9 @@ class Settings : Fragment() {
 
 
 
-            switchNotifications.setOnClickListener {
+            switchNotifications.singleClick {
                 if (notificationAlert?.isShowing == true) {
-                    return@setOnClickListener
+                    return@singleClick
                 }
 
 
@@ -220,17 +221,17 @@ class Settings : Fragment() {
             }
 
 
-            editTextChangePassword.setOnClickListener {
+            editTextChangePassword.singleClick {
                 view.findNavController().navigate(R.id.action_settings_to_changePassword)
             }
 
 
-            btLogout.setOnClickListener {
+            btLogout.singleClick {
                 MainActivity.mainActivity.get()!!.callLogoutDialog()
             }
 
 
-            btDeleteAccount.setOnClickListener {
+            btDeleteAccount.singleClick {
                 MainActivity.mainActivity.get()!!.callDeleteDialog()
             }
         }

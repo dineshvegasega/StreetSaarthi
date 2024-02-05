@@ -9,15 +9,9 @@ package com.streetsaarthi.nasvi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -29,7 +23,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -60,6 +53,7 @@ import com.streetsaarthi.nasvi.utils.getToken
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import okhttp3.MultipartBody
@@ -307,12 +301,12 @@ class MainActivity : AppCompatActivity() {
         val versionName = info?.versionName
         binding.textVersion.text = getString(R.string.app_version_1_0, versionName)
 
-        binding.btLogout.setOnClickListener {
+        binding.btLogout.singleClick {
             callLogoutDialog()
         }
 
 
-//        binding.btLogout.setOnClickListener {
+//        binding.btLogout.singleClick {
 //            MainActivity.mainActivity.get()!!.callBack()
 //
 //            var logoutAlert = MaterialAlertDialogBuilder(this)
@@ -355,11 +349,11 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
-            textTitleMain.setOnClickListener {
+            textTitleMain.singleClick {
                 drawerLayout.close()
             }
 
-            topLayout.ivMenu.setOnClickListener {
+            topLayout.ivMenu.singleClick {
                 drawerLayout.open()
             }
 
@@ -639,9 +633,9 @@ class MainActivity : AppCompatActivity() {
                     binding.topLayout.topToolbar.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
-                    var imageUrl = Gson().fromJson(loginUser, Login::class.java).profile_image_name?.url ?: ""
+                    var imageUrl = Gson().fromJson(loginUser, Login::class.java)?.profile_image_name?.url ?: ""
                     topLayout.ivImage.loadImage(url = { imageUrl })
-                    topLayout.ivImage.setOnClickListener {
+                    topLayout.ivImage.singleClick {
                         arrayListOf(imageUrl).imageZoom(topLayout.ivImage)
                     }
                 }
@@ -787,9 +781,11 @@ var screenValue = 0
 
 
     fun loadBanner() {
-        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-            if (loginUser != null) {
-                viewModel.adsList()
+        if(viewModel.itemAds.value == null){
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                if (loginUser != null) {
+                    viewModel.adsList()
+                }
             }
         }
     }

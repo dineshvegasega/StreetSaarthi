@@ -444,7 +444,7 @@
     <string name="currently_no_training">தற்போது, ​​இங்கு பயிற்சி எதுவும் இல்லை. அவர்கள் கிடைக்கும் போது நீங்கள் பயிற்சிக்கு விண்ணப்பிக்கலாம்.</string>
     <string name="currently_no_notifications">தற்போது, ​​இங்கு எந்த அறிவிப்பும் இல்லை.</string>
     <string name="currently_no_information">தற்போது, ​​இங்கு எந்த தகவலும் இல்லை.</string>
-
+    <string name="currently_no_complaints">தற்போது, ​​இங்கு புகார்கள்/கருத்துகள் எதுவும் இல்லை.</string>
     <string name="submit_feedback">கருத்தை சமர்ப்பிக்கவும்</string>
     <string-array name="type_array">
         <item>புகார் பதிவு</item>

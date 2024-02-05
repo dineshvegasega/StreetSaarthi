@@ -446,7 +446,7 @@
     <string name='currently_no_training'>फिलहाल, यहां कोई प्रशिक्षण नहीं मिला है। जब प्रशिक्षण उपलब्ध हो तो आप उनके लिए आवेदन कर सकते हैं।</string>
     <string name='currently_no_notifications'>वर्तमान में, यहां कोई अधिसूचना नहीं मिली है।</string>
     <string name='currently_no_information'>वर्तमान में, यहां कोई जानकारी नहीं मिली है।</string>
-
+    <string name='currently_no_complaints'>वर्तमान में, यहां कोई शिकायत/प्रतिक्रिया नहीं मिली है।</string>
     <string name='submit_feedback'>प्रतिक्रिया सबमिट करें</string>
     <string-array name="type_array">
         <item>शिकायत दर्ज करें</item>

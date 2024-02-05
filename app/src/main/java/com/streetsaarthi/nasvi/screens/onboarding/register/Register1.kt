@@ -40,17 +40,12 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register1Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.Permissions
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.time.LocalDate
 import java.time.Period
@@ -133,7 +128,7 @@ class Register1  : Fragment() , CallBackListener {
 
 
 
-//        binding.btSignIn.setOnClickListener {
+//        binding.btSignIn.singleClick {
 //            val requestBody: MultipartBody.Builder = MultipartBody.Builder()
 //                .setType(MultipartBody.FORM)
 //                .addFormDataPart("user_role", USER_TYPE)
@@ -154,27 +149,27 @@ class Register1  : Fragment() , CallBackListener {
 
 
         binding.apply {
-            editTextGender.setOnClickListener {
+            editTextGender.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownGenderDialog()
             }
 
-            editTextDateofBirth.setOnClickListener {
+            editTextDateofBirth.singleClick {
                 requireActivity().hideKeyboard()
                 showDOBDialog()
             }
 
-            editTextSocialCategory.setOnClickListener {
+            editTextSocialCategory.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownCategoryDialog()
             }
 
-            editTextEducationQualifacation.setOnClickListener {
+            editTextEducationQualifacation.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownEducationQualifacationDialog()
             }
 
-            editTextMaritalStatus.setOnClickListener {
+            editTextMaritalStatus.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownMaritalStatusDialog()
             }
@@ -182,7 +177,7 @@ class Register1  : Fragment() , CallBackListener {
 
             viewModel.state(view)
 //            viewModel.translate(view)
-            editTextSelectState.setOnClickListener {
+            editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemState.size > 0){
                     showDropDownStateDialog()
@@ -191,7 +186,7 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectDistrict.setOnClickListener {
+            editTextSelectDistrict.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateId > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -204,7 +199,7 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextMunicipalityPanchayat.setOnClickListener {
+            editTextMunicipalityPanchayat.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateId > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -217,7 +212,7 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectPincode.setOnClickListener {
+            editTextSelectPincode.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.districtId > 0)){
                     showSnackBar(getString(R.string.select_district_))
@@ -230,12 +225,12 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
 
-            layoutPassportSizeImage.setOnClickListener {
+            layoutPassportSizeImage.singleClick {
                 imagePosition = 1
                 callMediaPermissions()
             }
 
-            layoutIdentificationImage.setOnClickListener {
+            layoutIdentificationImage.singleClick {
                 imagePosition = 2
                 callMediaPermissions()
             }
@@ -507,23 +502,23 @@ class Register1  : Fragment() , CallBackListener {
         dialog.setContentView(dialogView)
         dialog.show()
 
-        btnCancel.setOnClickListener {
+        btnCancel.singleClick {
             dialog.dismiss()
         }
-        tvCamera.setOnClickListener {
+        tvCamera.singleClick {
             dialog.dismiss()
             forCamera()
         }
-        tvCameraDesc.setOnClickListener {
+        tvCameraDesc.singleClick {
             dialog.dismiss()
             forCamera()
         }
 
-        tvPhotos.setOnClickListener {
+        tvPhotos.singleClick {
             dialog.dismiss()
             forGallery()
         }
-        tvPhotosDesc.setOnClickListener {
+        tvPhotosDesc.singleClick {
             dialog.dismiss()
             forGallery()
         }

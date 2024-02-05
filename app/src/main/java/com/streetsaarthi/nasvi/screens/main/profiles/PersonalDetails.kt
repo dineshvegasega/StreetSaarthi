@@ -41,6 +41,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
@@ -363,11 +364,11 @@ class PersonalDetails : Fragment() , CallBackListener {
             }
 
 
-            btnImagePassportsize.setOnClickListener {
+            btnImagePassportsize.singleClick {
                 imagePosition = 1
                 callMediaPermissions()
             }
-            btnIdentityImage.setOnClickListener {
+            btnIdentityImage.singleClick {
                 imagePosition = 2
                 callMediaPermissions()
             }
@@ -375,12 +376,12 @@ class PersonalDetails : Fragment() , CallBackListener {
 
 
             viewModel.state(view)
-            editTextSelectState.setOnClickListener {
+            editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownStateDialog()
             }
 
-            editTextSelectDistrict.setOnClickListener {
+            editTextSelectDistrict.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateId > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -393,7 +394,7 @@ class PersonalDetails : Fragment() , CallBackListener {
                 }
             }
 
-            editTextMunicipalityPanchayat.setOnClickListener {
+            editTextMunicipalityPanchayat.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateId> 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -406,7 +407,7 @@ class PersonalDetails : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectPincode.setOnClickListener {
+            editTextSelectPincode.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.districtId > 0)){
                     showSnackBar(getString(R.string.select_district_))
@@ -420,7 +421,7 @@ class PersonalDetails : Fragment() , CallBackListener {
             }
 
 
-            btnAddtoCart.setOnClickListener {
+            btnAddtoCart.singleClick {
                 if(editTextFN.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.first_name))
                 } else if (editTextLN.text.toString().isEmpty()){
@@ -543,27 +544,27 @@ class PersonalDetails : Fragment() , CallBackListener {
             }
 
 
-            editTextGender.setOnClickListener {
+            editTextGender.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownGenderDialog()
             }
 
-            editTextDateofBirth.setOnClickListener {
+            editTextDateofBirth.singleClick {
                 requireActivity().hideKeyboard()
                 showDOBDialog()
             }
 
-            editTextSocialCategory.setOnClickListener {
+            editTextSocialCategory.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownCategoryDialog()
             }
 
-            editTextEducationQualifacation.setOnClickListener {
+            editTextEducationQualifacation.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownEducationQualifacationDialog()
             }
 
-            editTextMaritalStatus.setOnClickListener {
+            editTextMaritalStatus.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownMaritalStatusDialog()
             }
@@ -802,23 +803,23 @@ class PersonalDetails : Fragment() , CallBackListener {
         dialog.setContentView(dialogView)
         dialog.show()
 
-        btnCancel.setOnClickListener {
+        btnCancel.singleClick {
             dialog.dismiss()
         }
-        tvCamera.setOnClickListener {
+        tvCamera.singleClick {
             dialog.dismiss()
             forCamera()
         }
-        tvCameraDesc.setOnClickListener {
+        tvCameraDesc.singleClick {
             dialog.dismiss()
             forCamera()
         }
 
-        tvPhotos.setOnClickListener {
+        tvPhotos.singleClick {
             dialog.dismiss()
             forGallery()
         }
-        tvPhotosDesc.setOnClickListener {
+        tvPhotosDesc.singleClick {
             dialog.dismiss()
             forGallery()
         }

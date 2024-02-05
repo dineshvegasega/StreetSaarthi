@@ -6,8 +6,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +26,7 @@ import com.streetsaarthi.nasvi.databinding.StartBinding
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLanguageStartBinding
 import com.streetsaarthi.nasvi.utils.LocaleHelper
-
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -70,7 +68,7 @@ class Start : Fragment() {
         MainActivity.mainActivity.get()?.callFragment(0)
 
         binding.apply {
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                     view.findNavController().navigate(R.id.action_start_to_walkThrough)
             }
             btSignIn.setText(R.string.explore_app)
@@ -89,9 +87,9 @@ class Start : Fragment() {
                 }
             })
 
-            btLanguage.setOnClickListener {
+            btLanguage.singleClick {
                 if(languageAlert?.isShowing == true) {
-                    return@setOnClickListener
+                    return@singleClick
                 }
                 val dialogView: View = LayoutInflater.from(requireContext())
                     .inflate(R.layout.dialog_bottom_your_booking2, null)
@@ -121,7 +119,7 @@ class Start : Fragment() {
                     ) {
                         binding.btImage.setImageDrawable(ContextCompat.getDrawable(binding.root.context, if (dataClass.isSelected == true) R.drawable.radio_sec_filled else R.drawable.radio_sec_empty));
                         binding.btLanguage.text = dataClass.name
-                        binding.btLanguage.setOnClickListener {
+                        binding.btLanguage.singleClick {
                             Log.e("TAG" , "asdsfs "+dataClass.name)
 
                             val list = currentList
@@ -139,7 +137,7 @@ class Start : Fragment() {
                                 MainActivity.activity.get()!!.finishAffinity()
                         }
 
-                        binding.btImage.setOnClickListener {
+                        binding.btImage.singleClick {
                             Log.e("TAG" , "asdsfs "+dataClass.name)
 
                             val list = currentList

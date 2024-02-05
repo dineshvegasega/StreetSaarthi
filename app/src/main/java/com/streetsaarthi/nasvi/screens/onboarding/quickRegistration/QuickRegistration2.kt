@@ -12,8 +12,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -22,6 +20,7 @@ import com.streetsaarthi.nasvi.databinding.QuickRegistration2Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -52,7 +51,7 @@ class QuickRegistration2 : Fragment() , CallBackListener {
             var counter = 0
             var start: Int
             var end: Int
-            imgCreatePassword.setOnClickListener {
+            imgCreatePassword.singleClick {
                 if(counter == 0){
                     counter = 1
                     imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
@@ -74,7 +73,7 @@ class QuickRegistration2 : Fragment() , CallBackListener {
             var counter2 = 0
             var start2: Int
             var end2: Int
-            imgReEnterPassword.setOnClickListener {
+            imgReEnterPassword.singleClick {
                 if(counter2 == 0){
                     counter2 = 1
                     imgReEnterPassword.setImageResource(R.drawable.ic_eye_open)
@@ -93,11 +92,11 @@ class QuickRegistration2 : Fragment() , CallBackListener {
             }
 
 
-            cbRememberMe.setOnClickListener {
+            cbRememberMe.singleClick {
                 getAgreeValue()
             }
 
-            textTerms.setOnClickListener {
+            textTerms.singleClick {
                 openTermConditionsDialog()
                 Log.e("sadf", "ffff")
             }
@@ -237,7 +236,7 @@ class QuickRegistration2 : Fragment() , CallBackListener {
         window!!.setBackgroundDrawableResource(R.color._00000000)
 
         val yes = mybuilder.findViewById<AppCompatImageView>(R.id.imageCross)
-        yes?.setOnClickListener {
+        yes?.singleClick {
             mybuilder.dismiss()
         }
     }

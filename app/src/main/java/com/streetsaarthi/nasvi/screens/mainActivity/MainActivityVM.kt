@@ -2,9 +2,6 @@ package com.streetsaarthi.nasvi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +13,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.home.HistoryAdapter
 import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
-import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
@@ -50,6 +44,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemChildMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
@@ -95,13 +90,13 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 recyclerViewChild.adapter = headlineAdapter
                 recyclerViewChild.layoutManager = LinearLayoutManager(binding.root.context)
 
-                ivArrow.setOnClickListener {
+                ivArrow.singleClick {
                         dataClass.isExpanded = !dataClass.isExpanded!!
                         val list = currentList
                         notifyItemRangeChanged(position, list.size)
                 }
 
-                root.setOnClickListener {
+                root.singleClick {
                         var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                         DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                             if (loginUser != null) {
@@ -185,7 +180,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
         fun onBindViewHolder(holder: ChildViewHolder, position: Int) {
             val item = items?.get(position)
             holder.tvTitle.text = item?.title
-            holder.itemView.setOnClickListener {
+            holder.itemView.singleClick {
                     var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                 DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
@@ -277,7 +272,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 //            binding.apply {
 //                val list = currentList
 //                titleChild.text = list[position].title
-//                root.setOnClickListener {
+//                root.singleClick {
 //
 //                }
 //            }

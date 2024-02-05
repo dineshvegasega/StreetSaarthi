@@ -1,7 +1,5 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginOtp
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData

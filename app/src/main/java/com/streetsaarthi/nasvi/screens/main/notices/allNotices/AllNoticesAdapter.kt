@@ -17,6 +17,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.singleClick
 
 class AllNoticesAdapter(liveSchemesVM: AllNoticesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
     PaginationAdapterCallback, CallBackListener {
@@ -71,11 +72,11 @@ class AllNoticesAdapter(liveSchemesVM: AllNoticesVM) : RecyclerView.Adapter<Recy
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
             }
 
-            loadingVH.itemRowBinding.loadmoreRetry.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
@@ -118,7 +119,7 @@ class AllNoticesAdapter(liveSchemesVM: AllNoticesVM) : RecyclerView.Adapter<Recy
                 dataClass.end_date?.let {
                     textValidDateValue.text = "${dataClass.end_date.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")}"
                 }
-                root.setOnClickListener {
+                root.singleClick {
 //                    if (dataClass.user_scheme_status == "applied"){
                     viewModel.viewDetail(""+dataClass.notice_id, position = position, root, 1)
 //                    }else{

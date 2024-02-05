@@ -36,7 +36,7 @@ class WalkThroughVM @Inject constructor(private val repository: Repository): Vie
 //            Picasso.get().load(
 //                dataClass.image
 //            ).into(binding!!.imageLogo)
-//            binding.root.setOnClickListener {
+//            binding.root.singleClick {
 //                when(position) {
 //                    0 -> it.findNavController().navigate(R.id.action_onboard_to_quickRegistration)
 //                    1 -> it.findNavController().navigate(R.id.action_onboard_to_loginPassword)

@@ -440,7 +440,7 @@
     <string name="currently_no_training">હાલમાં, અહીં કોઈ તાલીમ મળતી નથી. જ્યારે તેઓ ઉપલબ્ધ હોય ત્યારે તમે તાલીમ માટે અરજી કરી શકો છો.</string>
     <string name="currently_no_notifications">હાલમાં, અહીં કોઈ સૂચનાઓ મળી નથી.</string>
     <string name="currently_no_information">હાલમાં, અહીં કોઈ માહિતી મળી નથી.</string>
-
+    <string name="currently_no_complaints">હાલમાં, અહીં કોઈ ફરિયાદ/પ્રતિસાદ જોવા મળતા નથી.</string>
     <string name="submit_feedback">પ્રતિસાદ સબમિટ કરો</string>
     <string-array name="type_array">
         <item>ફરિયાદ નોંધો</item>

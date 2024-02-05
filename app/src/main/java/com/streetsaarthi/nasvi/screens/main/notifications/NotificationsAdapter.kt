@@ -18,6 +18,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
+import com.streetsaarthi.nasvi.utils.singleClick
 import java.util.Locale
 
 class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
@@ -73,11 +74,11 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
             }
 
-            loadingVH.itemRowBinding.loadmoreRetry.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
@@ -120,7 +121,7 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                 textDesc.setText(dataClass.title)
 //                textHeaderTxt4.setText(dataClass.status)
 
-                root.setOnClickListener {
+                root.singleClick {
 //                    if (dataClass.user_scheme_status == "applied"){
                     //viewModel.viewDetail(""+dataClass.notice_id, position = position, root, 1)
 //                    }else{

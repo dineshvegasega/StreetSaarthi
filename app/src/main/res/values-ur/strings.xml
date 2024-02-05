@@ -446,7 +446,7 @@
     <string name="currently_no_training">فی الحال، یہاں کوئی تربیت نہیں ملتی ہے۔ جب وہ دستیاب ہوں تو آپ تربیت کے لیے درخواست دے سکتے ہیں۔</string>
     <string name="currently_no_notifications">فی الحال، یہاں کوئی اطلاع نہیں ملی۔</string>
     <string name="currently_no_information">فی الحال، یہاں کوئی معلومات نہیں ملی۔</string>
-
+    <string name="currently_no_complaints">فی الحال، یہاں کوئی شکایت/رائے نہیں ملے۔</string>
     <string name = "submit_feedback"> تاثرات جمع کروائیں</string>
     <string-array name="type_array">
         <item>شکایت درج کریں</item>

@@ -40,6 +40,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
@@ -272,7 +273,7 @@ class MembershipDetails  : Fragment() {
                 }
             }
 
-            btDownload.setOnClickListener {
+            btDownload.singleClick {
 //                isFree = true
                 callMediaPermissions()
             }

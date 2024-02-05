@@ -444,7 +444,7 @@
     <string name="currently_no_training">सध्या, येथे कोणतेही प्रशिक्षण आढळत नाही. जेव्हा ते उपलब्ध असतील तेव्हा तुम्ही प्रशिक्षणासाठी अर्ज करू शकता.</string>
     <string name="currently_no_notifications">सध्या, येथे कोणत्याही सूचना आढळत नाहीत.</string>
     <string name="currently_no_information">सध्या, येथे कोणतीही माहिती आढळत नाही.</string>
-
+    <string name="currently_no_complaints">सध्या, येथे कोणत्याही तक्रारी/फीडबॅक आढळत नाहीत.</string>
     <string name="submit_feedback">फीडबॅक सबमिट करा</string>
     <string-array name="type_array">
         <item>तक्रार नोंदवा</item>

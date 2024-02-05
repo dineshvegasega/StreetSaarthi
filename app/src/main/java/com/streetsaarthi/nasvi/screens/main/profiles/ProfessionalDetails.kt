@@ -44,6 +44,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
@@ -295,7 +296,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     viewModel.data.vending_documents = docs
 
 
-                    cbRememberCOV.setOnClickListener {
+                    cbRememberCOV.singleClick {
                         if (cbRememberCOV.isChecked){
                             stringCOV = getString(R.string.COVText)+" "
                         } else {
@@ -303,7 +304,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         }
                     }
 
-                    cbRememberSurveyReceipt.setOnClickListener {
+                    cbRememberSurveyReceipt.singleClick {
                         if (cbRememberSurveyReceipt.isChecked){
                             stringSurveyReceipt = getString(R.string.Survery_ReceiptText)+" "
                         } else {
@@ -311,7 +312,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         }
                     }
 
-                    cbRememberLOR.setOnClickListener {
+                    cbRememberLOR.singleClick {
                         if (cbRememberLOR.isChecked){
                             stringLOR = getString(R.string.LORText)+" "
                         } else {
@@ -319,7 +320,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         }
                     }
 
-                    cbRememberChallan.setOnClickListener {
+                    cbRememberChallan.singleClick {
                         if (cbRememberChallan.isChecked){
                             stringChallan = getString(R.string.ChallanText)+" "
                         } else {
@@ -327,7 +328,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         }
                     }
 
-                    cbRememberApprovalLetter.setOnClickListener {
+                    cbRememberApprovalLetter.singleClick {
                         if (cbRememberApprovalLetter.isChecked){
                             stringApprovalLetter = getString(R.string.Approval_LetterText)+" "
                         } else {
@@ -364,7 +365,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     viewModel.data.schemeName = scheme
 
 
-                    inclideGovernment.cbRememberPMSwanidhiScheme.setOnClickListener {
+                    inclideGovernment.cbRememberPMSwanidhiScheme.singleClick {
                         if (inclideGovernment.cbRememberPMSwanidhiScheme.isChecked){
                             stringPm_swanidhi_schemeSingle = getString(R.string.pm_swanidhi_schemeSingle)+" "
                         } else {
@@ -373,7 +374,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     }
 
 
-                    inclideGovernment.cbRememberOthersPleaseName.setOnClickListener {
+                    inclideGovernment.cbRememberOthersPleaseName.singleClick {
                         if (inclideGovernment.cbRememberOthersPleaseName.isChecked){
                             stringOtherSchemeName = inclideGovernment.editTextSchemeName.text.toString()
                         } else {
@@ -385,13 +386,13 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         scrollPoistion = scrollY
                     })
 
-                    ivRdGovernmentYes.setOnClickListener {
+                    ivRdGovernmentYes.singleClick {
                         viewModel.data.governmentScheme = true
                         inclideGovernment.layoutGovernmentScheme.visibility = View.VISIBLE
                         setScrollPosition(2, true)
                     }
 
-                    ivRdGovernmentNo.setOnClickListener {
+                    ivRdGovernmentNo.singleClick {
                         viewModel.data.governmentScheme = false
                         inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
                         setScrollPosition(2, false)
@@ -600,27 +601,27 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
 
-            editTextTypeofMarketPlace.setOnClickListener {
+            editTextTypeofMarketPlace.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownMarketPlaceDialog()
             }
 
-            editTextTypeofVending.setOnClickListener {
+            editTextTypeofVending.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownVendingDialog()
             }
 
-            editTextTotalYearsofVending.setOnClickListener {
+            editTextTotalYearsofVending.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownYearsDialog()
             }
 
 
-            editTextVendingTimeOpen.setOnClickListener {
+            editTextVendingTimeOpen.singleClick {
                 requireActivity().hideKeyboard()
                 showOpenDialog()
             }
-            editTextVendingTimeClose.setOnClickListener {
+            editTextVendingTimeClose.singleClick {
                 requireActivity().hideKeyboard()
                 showCloseDialog()
             }
@@ -628,12 +629,12 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
             viewModel.stateCurrent(view)
-            editTextVendingSelectState.setOnClickListener {
+            editTextVendingSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownVendingStateDialog()
             }
 
-            editTextVendingSelectDistrict.setOnClickListener {
+            editTextVendingSelectDistrict.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateIdVending > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -646,7 +647,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 }
             }
 
-            editTextVendingMunicipalityPanchayat.setOnClickListener {
+            editTextVendingMunicipalityPanchayat.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateIdVending > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -659,7 +660,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 }
             }
 
-            editTextVendingSelectPincode.setOnClickListener {
+            editTextVendingSelectPincode.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.districtIdVending > 0)){
                     showSnackBar(getString(R.string.select_district_))
@@ -673,19 +674,19 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             }
 
 
-            ivRdLocalOrgnaizationYes.setOnClickListener {
+            ivRdLocalOrgnaizationYes.singleClick {
                 editTextLocalOrganisation.visibility = View.VISIBLE
                 setScrollPosition(1, true)
             }
 
-            ivRdLocalOrgnaizationNo.setOnClickListener {
+            ivRdLocalOrgnaizationNo.singleClick {
                 editTextLocalOrganisation.visibility = View.GONE
                 setScrollPosition(1, false)
                 viewModel.data.localOrganisation = "-1"
             }
 
 
-            editTextLocalOrganisation.setOnClickListener {
+            editTextLocalOrganisation.singleClick {
                 requireActivity().hideKeyboard()
                 if (viewModel.itemLocalOrganizationVending.size > 0){
                     showDropDownLocalOrganisationDialog()
@@ -697,27 +698,27 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
 
-            btnImageShopImage.setOnClickListener {
+            btnImageShopImage.singleClick {
                 imagePosition = 1
                 callMediaPermissions()
             }
-            btnImageCOV.setOnClickListener {
+            btnImageCOV.singleClick {
                 imagePosition = 2
                 callMediaPermissions()
             }
-            btnImageSurveyReceipt.setOnClickListener {
+            btnImageSurveyReceipt.singleClick {
                 imagePosition = 3
                 callMediaPermissions()
             }
-            btnImageLOR.setOnClickListener {
+            btnImageLOR.singleClick {
                 imagePosition = 4
                 callMediaPermissions()
             }
-            btnImageUploadChallan.setOnClickListener {
+            btnImageUploadChallan.singleClick {
                 imagePosition = 5
                 callMediaPermissions()
             }
-            btnImageApprovalLetter.setOnClickListener {
+            btnImageApprovalLetter.singleClick {
                 imagePosition = 6
                 callMediaPermissions()
             }
@@ -729,7 +730,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
 
-            btnAddtoCart.setOnClickListener {
+            btnAddtoCart.singleClick {
                 viewModel.data.marketpalce_others = ""+ editTextTypeofMarketPlaceEnter.text.toString()
                 viewModel.data.vending_others = ""+ editTextTypeofVendingEnter.text.toString()
 
@@ -1087,23 +1088,22 @@ class ProfessionalDetails : Fragment() , CallBackListener {
         dialog.setContentView(dialogView)
         dialog.show()
 
-        btnCancel.setOnClickListener {
+        btnCancel.singleClick {
             dialog.dismiss()
         }
-        tvCamera.setOnClickListener {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvCameraDesc.setOnClickListener {
+        tvCamera.singleClick {
             dialog.dismiss()
             forCamera()
         }
-
-        tvPhotos.setOnClickListener {
+        tvCameraDesc.singleClick {
+            dialog.dismiss()
+            forCamera()
+        }
+        tvPhotos.singleClick {
             dialog.dismiss()
             forGallery()
         }
-        tvPhotosDesc.setOnClickListener {
+        tvPhotosDesc.singleClick {
             dialog.dismiss()
             forGallery()
         }

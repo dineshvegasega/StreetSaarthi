@@ -13,6 +13,7 @@ import com.streetsaarthi.nasvi.databinding.LoginPasswordBinding
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -57,14 +58,14 @@ class LoginPassword : Fragment() {
 
 
         binding.apply {
-            textBack.setOnClickListener {
+            textBack.singleClick {
                 view.findNavController().navigateUp()
             }
 
             var counter = 0
             var start: Int
             var end: Int
-            imgCreatePassword.setOnClickListener {
+            imgCreatePassword.singleClick {
                 if(counter == 0){
                     counter = 1
                     imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
@@ -82,7 +83,7 @@ class LoginPassword : Fragment() {
                 }
             }
 
-            editTextLoginWith.setOnClickListener {
+            editTextLoginWith.singleClick {
                 view.findNavController().navigate(R.id.action_loginPassword_to_loginOtp)
             }
 
@@ -92,32 +93,32 @@ class LoginPassword : Fragment() {
 //            Log.e("TAG", "xxx "+xxx)
 
 
-            binding.btSignIn.setOnClickListener {
-                if (binding.editTextMobileNumber.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.enterMobileNumber))
-                } else if (binding.editTextPassword.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.EnterPassword))
-                } else if(binding.editTextPassword.text.toString().length >= 0 && binding.editTextPassword.text.toString().length < 8){
-                    showSnackBar(getString(R.string.InvalidPassword))
-                } else if(!isValidPassword(editTextPassword.text.toString().trim())){
-                    showSnackBar(getString(R.string.InvalidPassword))
-                } else {
-                    val obj: JSONObject = JSONObject().apply {
-                        put("mobile_number", binding.editTextMobileNumber.text.toString())
-                        put("password", binding.editTextPassword.text.toString())
+            binding.btSignIn.singleClick {
+                if(binding.editTextMobileNumber.text.toString().isEmpty() || binding.editTextMobileNumber.text.toString().length != 10){
+                        showSnackBar(getString(R.string.enterMobileNumber))
+                    } else if (binding.editTextPassword.text.toString().isEmpty()){
+                        showSnackBar(getString(R.string.EnterPassword))
+                    } else if(binding.editTextPassword.text.toString().length >= 0 && binding.editTextPassword.text.toString().length < 8){
+                        showSnackBar(getString(R.string.InvalidPassword))
+                    } else if(!isValidPassword(editTextPassword.text.toString().trim())){
+                        showSnackBar(getString(R.string.InvalidPassword))
+                    } else {
+                        val obj: JSONObject = JSONObject().apply {
+                            put("mobile_number", binding.editTextMobileNumber.text.toString())
+                            put("password", binding.editTextPassword.text.toString())
+                        }
+                        viewModel.login(view = requireView(), obj)
                     }
-                    viewModel.login(view = requireView(), obj)
                 }
             }
 
 
-            binding.editTextForgot.setOnClickListener {
+            binding.editTextForgot.singleClick {
                 view.findNavController().navigate(R.id.action_loginPassword_to_forgetPassword)
             }
 
         }
 
-    }
 
     override fun onDestroyView() {
         _binding = null

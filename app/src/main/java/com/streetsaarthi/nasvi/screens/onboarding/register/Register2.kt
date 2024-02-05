@@ -37,6 +37,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
@@ -192,36 +193,36 @@ class Register2  : Fragment() , CallBackListener {
             viewModel.vending(view)
             viewModel.marketplace(view)
 
-//            btSignIn.setOnClickListener {
+//            btSignIn.singleClick {
 //                Log.e("TAG", "viewModel.dataB "+viewModel.data.toString())
 //            }
 
-            editTextTypeofMarketPlace.setOnClickListener {
+            editTextTypeofMarketPlace.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownMarketPlaceDialog()
             }
 
-            editTextTypeofVending.setOnClickListener {
+            editTextTypeofVending.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownVendingDialog()
             }
 
-            editTextTotalYearsofVending.setOnClickListener {
+            editTextTotalYearsofVending.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownYearsDialog()
             }
 
-            editTextVendingTimeOpen.setOnClickListener {
+            editTextVendingTimeOpen.singleClick {
                 requireActivity().hideKeyboard()
                 showOpenDialog()
             }
-            editTextVendingTimeClose.setOnClickListener {
+            editTextVendingTimeClose.singleClick {
                 requireActivity().hideKeyboard()
                 showCloseDialog()
             }
 
             viewModel.stateCurrent(view)
-            editTextSelectState.setOnClickListener {
+            editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemStateVending.size > 0){
                     showDropDownStateDialog()
@@ -230,7 +231,7 @@ class Register2  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectDistrict.setOnClickListener {
+            editTextSelectDistrict.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateIdVending > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -243,7 +244,7 @@ class Register2  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextMunicipalityPanchayat.setOnClickListener {
+            editTextMunicipalityPanchayat.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateIdVending > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -256,7 +257,7 @@ class Register2  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectPincode.setOnClickListener {
+            editTextSelectPincode.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.districtIdVending > 0)){
                     showSnackBar(getString(R.string.select_district_))
@@ -270,18 +271,18 @@ class Register2  : Fragment() , CallBackListener {
             }
 
 
-            ivRdLocalOrgnaizationYes.setOnClickListener {
+            ivRdLocalOrgnaizationYes.singleClick {
                 editTextLocalOrganisation.visibility = View.VISIBLE
                 setScrollPosition(1, true)
             }
 
-            ivRdLocalOrgnaizationNo.setOnClickListener {
+            ivRdLocalOrgnaizationNo.singleClick {
                 editTextLocalOrganisation.visibility = View.GONE
                 setScrollPosition(1, false)
             }
 
 
-            editTextLocalOrganisation.setOnClickListener {
+            editTextLocalOrganisation.singleClick {
                 requireActivity().hideKeyboard()
                 if (viewModel.itemLocalOrganizationVending.size > 0){
                     showDropDownLocalOrganisationDialog()
@@ -291,40 +292,40 @@ class Register2  : Fragment() , CallBackListener {
             }
 
 
-            layoutShopImage.setOnClickListener {
+            layoutShopImage.singleClick {
                 imagePosition = 11
                 callMediaPermissions()
             }
 
 
-            ivRdDocumentYes.setOnClickListener {
+            ivRdDocumentYes.singleClick {
                 viewModel.documentDetails = true
                 inclideDocuments.layoutDocuments.visibility = View.VISIBLE
                 setScrollPosition(1, true)
             }
-            ivRdDocumentNo.setOnClickListener {
+            ivRdDocumentNo.singleClick {
                 viewModel.documentDetails = false
                 inclideDocuments.layoutDocuments.visibility = View.GONE
                 setScrollPosition(1, false)
             }
 
-            inclideDocuments.layoutImageUploadCOV.setOnClickListener {
+            inclideDocuments.layoutImageUploadCOV.singleClick {
                 imagePosition = 1
                 callMediaPermissions()
             }
-            inclideDocuments.layoutImageUploadLOR.setOnClickListener {
+            inclideDocuments.layoutImageUploadLOR.singleClick {
                 imagePosition = 2
                 callMediaPermissions()
             }
-            inclideDocuments.layoutUploadSurveyReceipt.setOnClickListener {
+            inclideDocuments.layoutUploadSurveyReceipt.singleClick {
                 imagePosition = 3
                 callMediaPermissions()
             }
-            inclideDocuments.layoutUploadChallan.setOnClickListener {
+            inclideDocuments.layoutUploadChallan.singleClick {
                 imagePosition = 4
                 callMediaPermissions()
             }
-            inclideDocuments.layoutUploadApprovalLetter.setOnClickListener {
+            inclideDocuments.layoutUploadApprovalLetter.singleClick {
                 imagePosition = 5
                 callMediaPermissions()
             }
@@ -335,13 +336,13 @@ class Register2  : Fragment() , CallBackListener {
                     scrollPoistion = scrollY
             })
 
-            ivRdGovernmentYes.setOnClickListener {
+            ivRdGovernmentYes.singleClick {
                 viewModel.governmentScheme = true
                 inclideGovernment.layoutGovernmentScheme.visibility = View.VISIBLE
                 setScrollPosition(2, true)
             }
 
-            ivRdGovernmentNo.setOnClickListener {
+            ivRdGovernmentNo.singleClick {
                 viewModel.governmentScheme = false
                 inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
                 setScrollPosition(2, false)
@@ -448,23 +449,22 @@ class Register2  : Fragment() , CallBackListener {
         val tvCamera = dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
         val tvCameraDesc = dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
         val dialog = BottomSheetDialog(requireContext(), R.style.TransparentDialog)
-        btnCancel.setOnClickListener {
+        btnCancel.singleClick {
             dialog.dismiss()
         }
-        tvCamera.setOnClickListener {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvCameraDesc.setOnClickListener {
+        tvCamera.singleClick {
             dialog.dismiss()
             forCamera()
         }
-
-        tvPhotos.setOnClickListener {
+        tvCameraDesc.singleClick {
+            dialog.dismiss()
+            forCamera()
+        }
+        tvPhotos.singleClick {
             dialog.dismiss()
             forGallery()
         }
-        tvPhotosDesc.setOnClickListener {
+        tvPhotosDesc.singleClick {
             dialog.dismiss()
             forGallery()
         }

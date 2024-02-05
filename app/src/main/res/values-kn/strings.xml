@@ -444,7 +444,7 @@
     <string name="currently_no_training">ಪ್ರಸ್ತುತ, ಇಲ್ಲಿ ಯಾವುದೇ ತರಬೇತಿ ಕಂಡುಬಂದಿಲ್ಲ. ಅವರು ಲಭ್ಯವಿದ್ದಾಗ ನೀವು ತರಬೇತಿಗಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಬಹುದು.</string>
     <string name="currently_no_notifications">ಪ್ರಸ್ತುತ, ಇಲ್ಲಿ ಯಾವುದೇ ಅಧಿಸೂಚನೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ.</string>
     <string name="currently_no_information">ಪ್ರಸ್ತುತ, ಇಲ್ಲಿ ಯಾವುದೇ ಮಾಹಿತಿ ಕಂಡುಬಂದಿಲ್ಲ.</string>
-
+    <string name="currently_no_complaints">ಪ್ರಸ್ತುತ, ಇಲ್ಲಿ ಯಾವುದೇ ದೂರುಗಳು/ಪ್ರತಿಕ್ರಿಯೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ.</string>
     <string name="submit_feedback">ಪ್ರತಿಕ್ರಿಯೆ ಸಲ್ಲಿಸಿ</string>
     <string-array name="type_array">
         <item>ದೂರು ನೋಂದಾಯಿಸಿ</item>

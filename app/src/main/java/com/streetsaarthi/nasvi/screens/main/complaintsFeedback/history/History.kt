@@ -66,7 +66,7 @@ class History : Fragment() {
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.AllComplaintsFeedback)
-            idDataNotFound.textDesc.text = getString(R.string.currently_no_information)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_complaints)
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)

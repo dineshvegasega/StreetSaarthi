@@ -23,6 +23,7 @@ import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -33,7 +34,6 @@ import javax.inject.Inject
 class LiveNoticesVM @Inject constructor(private val repository: Repository): ViewModel() {
 
     val adapter by lazy { LiveNoticesAdapter(this) }
-
 
 
     private var itemLiveNoticeResult = MutableLiveData<BaseResponseDC<Any>>()
@@ -127,7 +127,7 @@ class LiveNoticesVM @Inject constructor(private val repository: Repository): Vie
 
                                     btApply.visibility = View.GONE
 
-                                    btClose.setOnClickListener {
+                                    btClose.singleClick {
                                         dialog.dismiss()
                                     }
                                 }

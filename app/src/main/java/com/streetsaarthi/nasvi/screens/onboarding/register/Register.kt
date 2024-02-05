@@ -1,9 +1,6 @@
 package com.streetsaarthi.nasvi.screens.onboarding.register
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
@@ -12,15 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.demo.utils.PermissionUtils
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.RegisterBinding
@@ -28,16 +22,10 @@ import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.json.JSONObject
 import java.io.File
-import android.provider.Settings
-import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.singleClick
 import com.streetsaarthi.nasvi.utils.updatePagerHeightForChild
 
 
@@ -110,7 +98,7 @@ var tabPosition: Int = 0;
 
             loadProgress(tabPosition)
 
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                     if (tabPosition == 0){
                         Register1.callBackListener!!.onCallBack(1)
                         btSignIn.setText(getString(R.string.continues))
@@ -125,7 +113,7 @@ var tabPosition: Int = 0;
 
             }
 
-            textBack.setOnClickListener {
+            textBack.singleClick {
                 Log.e("Selected_PagetabPosition", ""+tabPosition)
                 if (tabPosition == 0){
                     view.findNavController().navigateUp()

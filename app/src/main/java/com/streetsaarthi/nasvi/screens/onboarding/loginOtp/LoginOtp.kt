@@ -20,6 +20,7 @@ import com.streetsaarthi.nasvi.databinding.LoginOtpBinding
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -52,7 +53,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
 //            editTextVeryfyOtp.isEnabled = false
 //            btSignIn.isEnabled = false
 
-            textBack.setOnClickListener {
+            textBack.singleClick {
                 view.findNavController().navigateUp()
             }
 
@@ -112,7 +113,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
 //                    }
 //                })
 
-            editTextSendOtp.setOnClickListener {
+            editTextSendOtp.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
@@ -126,7 +127,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
             }
 
 
-            editTextVeryfyOtp.setOnClickListener {
+            editTextVeryfyOtp.singleClick {
                 if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
@@ -142,7 +143,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
 
 
 
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 } else if (editTextOtp.text.toString().isEmpty()){
@@ -162,7 +163,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
 
 
 
-            editTextLoginWith.setOnClickListener {
+            editTextLoginWith.singleClick {
                 view.findNavController().navigate(R.id.action_loginOtp_to_loginPassword)
             }
         }

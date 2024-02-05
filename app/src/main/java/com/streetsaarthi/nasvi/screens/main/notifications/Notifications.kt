@@ -24,6 +24,7 @@ import com.streetsaarthi.nasvi.models.mix.ItemNotification
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -65,9 +66,9 @@ class Notifications : Fragment() {
 
             idDataNotFound.textDesc.text = getString(R.string.currently_no_notifications)
 
-            inclideHeaderSearch.btClose.setOnClickListener {
+            inclideHeaderSearch.btClose.singleClick {
                 if(logoutAlert?.isShowing == true) {
-                    return@setOnClickListener
+                    return@singleClick
                 }
 
                 logoutAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
@@ -140,7 +141,7 @@ class Notifications : Fragment() {
         isLastPage = false
         totalPages  = 1
         currentPage  = pageStart
-        results.clear()
+//        results.clear()
         if (CheckValidation.isConnected(requireContext())) {
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {

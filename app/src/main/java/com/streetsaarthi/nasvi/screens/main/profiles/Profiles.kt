@@ -22,6 +22,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,19 +59,19 @@ class Profiles : Fragment() , CallBackListener {
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
             inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
-            inclideHeaderSearch.textHeaderEditTxt.setOnClickListener {
+            inclideHeaderSearch.textHeaderEditTxt.singleClick {
                 inclideHeaderSearch.textHeaderEditTxt.visibility = View.INVISIBLE
                 btSave.visibility = View.VISIBLE
                 btCancel.visibility = View.VISIBLE
                 viewModel.isEditable.value = true
             }
 
-            btSave.setOnClickListener {
+            btSave.singleClick {
                 PersonalDetails.callBackListener!!.onCallBack(1)
                 viewModel.isEditable.value = false
             }
 
-            btCancel.setOnClickListener {
+            btCancel.singleClick {
                 inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
                 btSave.visibility = View.GONE
                 btCancel.visibility = View.GONE
@@ -107,7 +108,7 @@ class Profiles : Fragment() , CallBackListener {
                     var data = Gson().fromJson(loginUser, Login::class.java)
                     data.profile_image_name?.let {
                         inclidePersonalProfile.ivImageProfile.loadImage(url = { data.profile_image_name.url })
-                        inclidePersonalProfile.ivImageProfile.setOnClickListener {
+                        inclidePersonalProfile.ivImageProfile.singleClick {
                             data.profile_image_name?.let {
                                 arrayListOf(it.url).imageZoom(inclidePersonalProfile.ivImageProfile)
                             }

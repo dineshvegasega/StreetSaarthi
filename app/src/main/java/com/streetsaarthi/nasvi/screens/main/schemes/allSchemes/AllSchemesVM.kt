@@ -35,6 +35,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -205,7 +206,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
 //                                        btApply.visibility = View.VISIBLE
 //                                    }
 
-                                    btApply.setOnClickListener {
+                                    btApply.singleClick {
                                         if (status == 1){
                                             Handler(Looper.getMainLooper()).post(Thread {
                                                 MainActivity.activity.get()?.runOnUiThread {
@@ -236,7 +237,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                                         dialog.dismiss()
                                     }
 
-                                    btClose.setOnClickListener {
+                                    btClose.singleClick {
                                         dialog.dismiss()
                                     }
                                 }

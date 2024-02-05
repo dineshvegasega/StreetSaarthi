@@ -8,6 +8,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
@@ -431,4 +432,18 @@ fun String.glideImage(context : Context, ivMap: ShapeableImageView) {
         .load(this)
         .apply(myOptionsGlide)
         .into(ivMap)
+}
+
+
+
+fun View.singleClick(throttleTime: Long = 600L, action: () -> Unit) {
+    this.setOnClickListener(object : View.OnClickListener {
+        private var lastClickTime: Long = 0
+        override fun onClick(v: View) {
+            if (SystemClock.elapsedRealtime() - lastClickTime < throttleTime) return
+            else action()
+
+            lastClickTime = SystemClock.elapsedRealtime()
+        }
+    })
 }

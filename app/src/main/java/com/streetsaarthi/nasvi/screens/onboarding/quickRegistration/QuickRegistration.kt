@@ -19,6 +19,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.utils.singleClick
 import com.streetsaarthi.nasvi.utils.updatePagerHeightForChild
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
@@ -91,7 +92,7 @@ class QuickRegistration : Fragment(), CallBackListener{
             })
 
 
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                 if (tabPosition == 0){
                     QuickRegistration1.callBackListener!!.onCallBack(1)
                 } else if (tabPosition == 1){
@@ -100,7 +101,7 @@ class QuickRegistration : Fragment(), CallBackListener{
                 loadProgress(tabPosition)
             }
 
-            textBack.setOnClickListener {
+            textBack.singleClick {
                 Log.e("Selected_PagetabPosition", ""+tabPosition)
                 if (tabPosition == 0){
                     view.findNavController().navigateUp()

@@ -22,6 +22,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.isValidPassword
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
 
@@ -68,7 +69,7 @@ class ChangePassword : Fragment() {
             var counter = 0
             var start: Int
             var end: Int
-            imgCreatePassword.setOnClickListener {
+            imgCreatePassword.singleClick {
                 if(counter == 0){
                     counter = 1
                     imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
@@ -90,7 +91,7 @@ class ChangePassword : Fragment() {
             var counter2 = 0
             var start2: Int
             var end2: Int
-            imgReEnterPassword.setOnClickListener {
+            imgReEnterPassword.singleClick {
                 if(counter2 == 0){
                     counter2 = 1
                     imgReEnterPassword.setImageResource(R.drawable.ic_eye_open)
@@ -164,7 +165,7 @@ class ChangePassword : Fragment() {
             })
 
 
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                 Log.e("TAG", "setOnClickListener")
                 DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {

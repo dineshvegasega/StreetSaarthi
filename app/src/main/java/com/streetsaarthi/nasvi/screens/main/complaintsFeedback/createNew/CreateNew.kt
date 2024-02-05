@@ -28,6 +28,7 @@ import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
@@ -59,12 +60,12 @@ class CreateNew : Fragment() {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.complaintsSlashfeedback)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
-            editTextSelectYourChoice.setOnClickListener {
+            editTextSelectYourChoice.singleClick {
                 showDropDownDialog()
             }
 
             viewModel.complaintType(view)
-            editTextSelectComplaintType.setOnClickListener {
+            editTextSelectComplaintType.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemComplaintType.size > 0){
                     showDropDownComplaintTypeDialog()
@@ -73,13 +74,13 @@ class CreateNew : Fragment() {
                 }
             }
 
-            btUploadMedia.setOnClickListener {
+            btUploadMedia.singleClick {
                 imagePosition = 1
                 isFree = true
                 callMediaPermissions()
             }
 
-            btSubmit.setOnClickListener {
+            btSubmit.singleClick {
                 if(editTextSubjectOfComplaint.text.toString().isEmpty()){
                     if (viewModel.type == "complaint"){
                         showSnackBar(getString(R.string.subject_of_complaint))
@@ -90,7 +91,7 @@ class CreateNew : Fragment() {
                     showSnackBar(getString(R.string.select_complaint_type))
                 } else if (editTextYourName.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.your_full_name))
-                } else if (editTextYourMobileNumber.text.toString().isEmpty()) {
+                } else if (editTextYourMobileNumber.text.toString().isEmpty() || editTextYourMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.your_mobile_number))
                 } else if (editTextTypeHere.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.description))
@@ -273,23 +274,22 @@ class CreateNew : Fragment() {
         dialog.setContentView(dialogView)
         dialog.show()
 
-        btnCancel.setOnClickListener {
+        btnCancel.singleClick {
             dialog.dismiss()
         }
-        tvCamera.setOnClickListener {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvCameraDesc.setOnClickListener {
+        tvCamera.singleClick {
             dialog.dismiss()
             forCamera()
         }
-
-        tvPhotos.setOnClickListener {
+        tvCameraDesc.singleClick {
+            dialog.dismiss()
+            forCamera()
+        }
+        tvPhotos.singleClick {
             dialog.dismiss()
             forGallery()
         }
-        tvPhotosDesc.setOnClickListener {
+        tvPhotosDesc.singleClick {
             dialog.dismiss()
             forGallery()
         }

@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,8 +27,6 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.chat.ItemChat
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemAds
-import com.streetsaarthi.nasvi.models.mix.ItemComplaintFeedback
 import com.streetsaarthi.nasvi.models.mix.ItemHistory
 import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
 import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
@@ -43,10 +40,9 @@ import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.RawValue
 import org.json.JSONObject
 import retrofit2.Response
@@ -119,25 +115,25 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
 
                 textHeaderTxt.setText(dataClass.name)
                 ivLogo.setImageResource(dataClass.image)
-                root.setOnClickListener {
+                root.singleClick {
                     DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val data = Gson().fromJson(loginUser, Login::class.java)
                                when (data.status) {
                                    "approved" -> {
                                        when (position) {
-                                           0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
-                                           1 -> it.findNavController().navigate(R.id.action_dashboard_to_liveSchemes)
-                                           2 -> it.findNavController().navigate(R.id.action_dashboard_to_liveNotices)
-                                           3 -> it.findNavController().navigate(R.id.action_dashboard_to_liveTraining)
-                                           4 -> it.findNavController().navigate(R.id.action_dashboard_to_history)
-                                           5 -> it.findNavController().navigate(R.id.action_dashboard_to_informationCenter)
+                                           0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           1 -> root.findNavController().navigate(R.id.action_dashboard_to_liveSchemes)
+                                           2 -> root.findNavController().navigate(R.id.action_dashboard_to_liveNotices)
+                                           3 -> root.findNavController().navigate(R.id.action_dashboard_to_liveTraining)
+                                           4 -> root.findNavController().navigate(R.id.action_dashboard_to_history)
+                                           5 -> root.findNavController().navigate(R.id.action_dashboard_to_informationCenter)
                                        }
                                    }
                                    "unverified" -> {
                                     //   showSnackBar(root.resources.getString(R.string.registration_processed))
                                        when (position) {
-                                           0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
                                            else -> showSnackBar(root.resources.getString(R.string.registration_processed))
                                        }
                                    }
@@ -192,7 +188,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
         fun onBindViewHolder(holder: ChildViewHolder, position: Int) {
 //            val item = items?.get(position)
             //holder.tvTitle.text = item?.title
-            holder.itemView.setOnClickListener {
+            holder.itemView.singleClick {
             }
         }
 
@@ -505,30 +501,30 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
 
 
 
-
-    private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
-    val itemAds : LiveData< ArrayList<ItemAds>> get() = itemAdsResult
-    fun adsList(view: View) = viewModelScope.launch {
-        repository.callApi(
-            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
-                override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.adsList()
-                override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
-                    if (response.isSuccessful){
-                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
-                    }
-                }
-
-                override fun error(message: String) {
-                    super.error(message)
-                }
-
-                override fun loading() {
-                    super.loading()
-                }
-            }
-        )
-    }
+//
+//    private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
+//    val itemAds : LiveData< ArrayList<ItemAds>> get() = itemAdsResult
+//    fun adsList(view: View) = viewModelScope.launch {
+//        repository.callApi(
+//            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
+//                override suspend fun sendRequest(apiInterface: ApiInterface) =
+//                    apiInterface.adsList()
+//                override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
+//                    if (response.isSuccessful){
+//                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+//                    }
+//                }
+//
+//                override fun error(message: String) {
+//                    super.error(message)
+//                }
+//
+//                override fun loading() {
+//                    super.loading()
+//                }
+//            }
+//        )
+//    }
 
 
 

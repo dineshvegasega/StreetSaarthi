@@ -20,6 +20,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.singleClick
 
 
 class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
@@ -75,11 +76,11 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
             }
 
-            loadingVH.itemRowBinding.loadmoreRetry.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
@@ -144,7 +145,7 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
                 dataClass.date?.let {
                     textValidDateValue.text = "${dataClass.date.changeDateFormat("dd-MM-yyyy", "dd MMM, yyyy")}"
                 }
-                root.setOnClickListener {
+                root.singleClick {
                     view.findNavController().navigate(R.id.action_history_to_historyDetail, Bundle().apply {
                         putString("key", ""+dataClass.feedback_id)
                     })
