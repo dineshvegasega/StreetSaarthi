@@ -490,5 +490,7 @@
     <string name="are_your_sure_want_to_delete_all_notifications">کیا آپ واقعی تمام اطلاعات کو حذف کرنا چاہتے ہیں؟</string>
     <string name="required_permissions">براہ کرم تمام مطلوبہ اجازتوں کی اجازت دیں؟</string>
     <string name="notification_not_enabled">آپ کی اطلاع فعال نہیں ہے</string>
+    <string name="request_delete">آپ کی درخواست کا شکریہ۔ آپ کا اکاؤنٹ 2 – 3 کام کے دنوں میں حذف کر دیا جائے گا۔</string>
+    <string name="profile_updated_successfully">پروفائل کامیابی کے ساتھ اپ ڈیٹ ہو گیا</string>
 
 </resources>

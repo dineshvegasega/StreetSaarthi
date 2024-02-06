@@ -492,5 +492,7 @@
     <string name="are_your_sure_want_to_delete_all_notifications">మీరు ఖచ్చితంగా అన్ని నోటిఫికేషన్‌లను తొలగించాలనుకుంటున్నారా?</string>
     <string name="required_permissions">దయచేసి అవసరమైన అన్ని అనుమతులను అనుమతించాలా?</string>
     <string name="notification_not_enabled">మీ నోటిఫికేషన్ ప్రారంభించబడలేదు</string>
-    
+    <string name="request_delete">మీ అభ్యర్థనకు ధన్యవాదాలు. మీ ఖాతా 2 – 3 పని దినాలలో తొలగించబడుతుంది.</string>
+    <string name="profile_updated_successfully">ప్రొఫైల్ విజయవంతంగా నవీకరించబడింది</string>
+
 </resources>

@@ -27,11 +27,13 @@ import com.streetsaarthi.nasvi.models.test.ItemT
 import com.streetsaarthi.nasvi.models.translate.ItemTranslate
 import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
 import com.streetsaarthi.nasvi.networking.CallHandlerTranslate
+import com.streetsaarthi.nasvi.networking.convertGsonString
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
@@ -540,8 +542,8 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
 //                    }
 
                     var aa = response.body()?.get(0)
-                    val typeToken = object : TypeToken<List<Any>>() {}.type
-                    val changeValue = Gson().fromJson<List<Any>>(Gson().toJson(aa), typeToken)
+//                    val typeToken = object : TypeToken<List<String>>() {}.type
+//                    val changeValue = Gson().fromJson<List<String>>(Gson().toJson(aa), typeToken)
 
 //                    var aa = response.body()?.get(0)
 //                    val typeToken = object : TypeToken<List<Any>>() {}.type
@@ -549,13 +551,17 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
 
 //                    var bb = aa?.get(0).toString()
 
-                    var stringValue = String()
+//                    var stringValue = String()
+//
+//                    changeValue.map {
+//                        stringValue += it.toString()
+//                    }
 
-                    changeValue.map {
-                        stringValue += it.toString()
-                    }
-                    Log.e("TAG", "XXXX "+stringValue.toString())
 
+//                    var bb = Gson().toJson(stringValue.toString())
+//                    var str = bb.substring(2, bb.length - 2);
+//                    var cc = JSONArray(str.toString())
+                    Log.e("TAG", "XXXX "+aa.toString())
 
 
                 }

@@ -53,6 +53,7 @@ import com.streetsaarthi.nasvi.utils.getToken
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -110,7 +111,8 @@ class MainActivity : AppCompatActivity() {
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        checkUpdate()
+
+        checkUpdate()
 
 //        setIntent(intent)
 //
@@ -490,6 +492,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.itemDeleteResult.value = false
         viewModel.itemDeleteResult.observe(this@MainActivity, Observer {
+            showSnackBar(getString(R.string.request_delete))
             if (it) {
                 clearData()
             }
@@ -511,10 +514,10 @@ class MainActivity : AppCompatActivity() {
         DataStoreUtil.clearDataStore {  }
         callBack()
         val navOptions: NavOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.navigation_bar, true)
+            .setPopUpTo(R.id.onboard, true)
             .build()
         runOnUiThread {
-            navHostFragment?.navController?.navigate(R.id.onboard, null, navOptions)
+            navHostFragment?.navController?.navigate(R.id.loginPassword, null, navOptions)
         }
     }
 
@@ -635,7 +638,15 @@ class MainActivity : AppCompatActivity() {
                     binding.topLayout.topToolbar.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
-                    var imageUrl = Gson().fromJson(loginUser, Login::class.java)?.profile_image_name?.url ?: ""
+                    var imageUrl = ""
+                    try {
+                        val imageUrlLogin = Gson().fromJson(loginUser, Login::class.java)
+                        if (imageUrlLogin != null){
+                            val imageUrlName = imageUrlLogin.profile_image_name
+                            imageUrl = imageUrlName.url ?: ""
+                        }
+                    }catch (_: Exception){ }
+
                     topLayout.ivImage.loadImage(url = { imageUrl })
                     topLayout.ivImage.singleClick {
                         arrayListOf(imageUrl).imageZoom(topLayout.ivImage)
@@ -706,11 +717,11 @@ var screenValue = 0
         if (result.resultCode == RESULT_OK) {
                     // Handle successful app update
             } else if (result.resultCode == RESULT_CANCELED) {
-                finish()
+//                finish()
             } else if (result.resultCode == RESULT_IN_APP_UPDATE_FAILED) {
-                finish()
+//                finish()
             } else {
-                finish()
+//                finish()
             }
     }
 

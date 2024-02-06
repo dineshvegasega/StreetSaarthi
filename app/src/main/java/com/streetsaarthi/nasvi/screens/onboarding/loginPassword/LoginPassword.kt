@@ -37,26 +37,6 @@ class LoginPassword : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         MainActivity.mainActivity.get()?.callFragment(0)
 
-//
-//        if (util == null) {
-//            util = PhoneNumberUtil.createInstance(requireContext());
-//        }
-//        try {
-//            val phoneNumber: PhoneNumber = util!!.parse("", "US")
-//            var isValid = util?.isValidNumber(phoneNumber) ?: false
-//            Log.e("TAG", "isValid "+isValid)
-//
-////            textView.setText(
-////                util.format(
-////                    phoneNumber,
-////                    PhoneNumberUtil.PhoneNumberFormat.NATIONAL
-////                )
-////            )
-//        } catch (e: NumberParseException) {
-//            e.printStackTrace()
-//        }
-
-
         binding.apply {
             textBack.singleClick {
                 view.findNavController().navigateUp()

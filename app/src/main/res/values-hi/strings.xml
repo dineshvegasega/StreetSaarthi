@@ -490,5 +490,7 @@
     <string name='are_your_sure_want_to_delete_all_notifications'>क्या आप वाकई सभी सूचनाएं हटाना चाहते हैं?</string>
     <string name='required_permissions'>कृपया सभी आवश्यक अनुमतियाँ दें?</string>
     <string name='notification_not_enabled'>आपका नोटिफिकेशन सक्षम नहीं है</string>
+    <string name='request_delete'>आपके अनुरोध के लिए धन्यवाद। आपका खाता 2–3 कार्य दिवसों के भीतर हटा दिया जाएगा।</string>
+    <string name='profile_updated_successfully'>प्रोफ़ाइल सफलतापूर्वक अपडेट की गई</string>
 
 </resources>

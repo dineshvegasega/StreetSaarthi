@@ -79,7 +79,7 @@
                     app:tabGravity="center"
                     app:tabIndicatorHeight="0dp"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_20sdp"
+                    android:layout_height="@dimen/_15sdp"
                     android:layout_alignParentBottom="true"
                     android:backgroundTint="@color/_00000000"/>
 

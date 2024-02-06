@@ -286,7 +286,7 @@ fun AppCompatEditText.focus() {
 }
 
 
-var handler = Handler(Looper.getMainLooper())
+//var handlerMain = Handler(Looper.getMainLooper())
 var runnable : Runnable ?= null
 fun ViewPager.autoScroll() {
     autoScrollStop()
@@ -295,19 +295,29 @@ fun ViewPager.autoScroll() {
             override fun run() {
                 val count = adapter?.count ?: 0
                 setCurrentItem(scrollPosition++ % count, true)
-                handler?.let {
-                    postDelayed(this, 3000)
+                if (handler != null){
+                    handler?.let {
+                        postDelayed(this, 3000)
+                    }
                 }
             }
         }
-    handler?.let {
-        post(runnable as Runnable)
+    if (handler != null){
+        if (runnable != null){
+            handler?.let {
+                post(runnable as Runnable)
+            }
+        }
     }
 }
 
 
 fun ViewPager.autoScrollStop() {
-    runnable?.let { handler.removeCallbacks(it) }
+    if (handler != null){
+        if (runnable != null){
+            runnable?.let { handler?.removeCallbacks(it) }
+        }
+    }
 }
 
 

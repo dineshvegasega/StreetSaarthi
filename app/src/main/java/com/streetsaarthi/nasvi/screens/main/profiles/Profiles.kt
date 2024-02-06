@@ -68,7 +68,6 @@ class Profiles : Fragment() , CallBackListener {
 
             btSave.singleClick {
                 PersonalDetails.callBackListener!!.onCallBack(1)
-                viewModel.isEditable.value = false
             }
 
             btCancel.singleClick {
@@ -139,7 +138,7 @@ class Profiles : Fragment() , CallBackListener {
                 inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
                 btSave.visibility = View.GONE
                 btCancel.visibility = View.GONE
-
+                viewModel.isEditable.value = false
                 updateData()
             }
         }

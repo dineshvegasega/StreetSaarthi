@@ -12,6 +12,7 @@ import com.demo.networking.CallHandler
 import com.demo.networking.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
+import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
@@ -414,7 +415,8 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if (value == 111){
-                            showSnackBar(response.body()?.message.orEmpty())
+//                            showSnackBar(response.body()?.message.orEmpty())
+                            showSnackBar(view.resources.getString(R.string.profile_updated_successfully))
                         }
 
                         if(response.body()!!.data != null){

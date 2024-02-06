@@ -45,6 +45,8 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                         if(response.body()!!.data != null){
                             profile(view, ""+Gson().fromJson(response.body()!!.data, Login::class.java).id)
                             showSnackBar(view.resources.getString(R.string.logged_in_successfully))
+                        }else if(response.body()!!.message == "User does not exist"){
+                            showSnackBar(view.resources.getString(R.string.user_does_not_exist))
                         } else {
                             showSnackBar(view.resources.getString(R.string.please_provide_valid_password))
                         }

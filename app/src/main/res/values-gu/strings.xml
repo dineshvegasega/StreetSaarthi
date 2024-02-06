@@ -484,6 +484,7 @@
     <string name="are_your_sure_want_to_delete_all_notifications">શું તમે ખરેખર તમામ સૂચનાઓ કાઢી નાખવા માંગો છો?</string>
     <string name="required_permissions">કૃપા કરીને બધી જરૂરી પરવાનગીઓ આપો?</string>
     <string name="notification_not_enabled">તમારી સૂચના સક્ષમ નથી</string>
-
+    <string name="request_delete">તમારી વિનંતી બદલ આભાર. તમારું એકાઉન્ટ 2 – 3 કામકાજી દિવસોમાં કાઢી નાખવામાં આવશે.</string>
+    <string name="profile_updated_successfully">પ્રોફાઇલ સફળતાપૂર્વક અપડેટ થઈ</string>
 
 </resources>

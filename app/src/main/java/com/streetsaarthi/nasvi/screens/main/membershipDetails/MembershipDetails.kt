@@ -222,10 +222,10 @@ class MembershipDetails  : Fragment() {
                     }
 
                     if(data.vending_pincode != null){
-                        textAddressValueTxt.setText("${data.vending_address+", "+data.vending_pincode.pincode}")
+                        textAddressValueTxt.setText("${data.vending_address.replace("\n", ", ")+", "+data.vending_pincode.pincode}")
                     } else {
                         data.vending_address?.let {
-                            textAddressValueTxt.setText("${data.vending_address}")
+                            textAddressValueTxt.setText("${data.vending_address.replace("\n", ", ")}")
                         }
                     }
 

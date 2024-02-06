@@ -99,13 +99,16 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 recyclerViewChild.adapter = headlineAdapter
                 recyclerViewChild.layoutManager = LinearLayoutManager(binding.root.context)
 
+
                 ivArrow.singleClick {
                         dataClass.isExpanded = !dataClass.isExpanded!!
                         val list = currentList
                         notifyItemRangeChanged(position, list.size)
                 }
 
+
                 root.singleClick {
+                    if(dataClass.titleChildArray!!.isEmpty()){
                         var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                         DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                             if (loginUser != null) {
@@ -179,7 +182,14 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                             }
                         }
                         MainActivity.binding.drawerLayout.close()
+                    }else{
+                        dataClass.isExpanded = !dataClass.isExpanded!!
+                        val list = currentList
+                        notifyItemRangeChanged(position, list.size)
+                    }
                 }
+
+
             }
         }
     }
