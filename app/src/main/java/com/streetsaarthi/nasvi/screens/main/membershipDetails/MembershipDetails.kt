@@ -241,7 +241,7 @@ class MembershipDetails  : Fragment() {
 
                     data.local_organisation?.let {
                         layoutMain.setBackgroundResource(R.drawable.membership_card)
-                        (layoutMain.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = "1.1:1"
+                        (layoutMain.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = "1.06:1"
                         layoutAssociatedOrganization.visibility = View.VISIBLE
                         view1.visibility = View.VISIBLE
                         textMarketPlaceTxt.setText(data.local_organisation.name)

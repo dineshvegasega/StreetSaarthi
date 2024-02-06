@@ -45,7 +45,6 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
         return  if(viewType == item){
             val binding: ItemAllSchemesBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_all_schemes, parent, false)
             callBackListener = this
-
             TopMoviesVH(binding)
         }else{
             val binding: ItemLoadingBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_loading, parent, false)

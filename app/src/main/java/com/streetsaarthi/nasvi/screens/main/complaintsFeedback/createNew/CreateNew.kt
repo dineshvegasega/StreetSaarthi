@@ -16,6 +16,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -60,6 +61,10 @@ class CreateNew : Fragment() {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.complaintsSlashfeedback)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
+            btCancel.singleClick {
+               findNavController().navigateUp()
+            }
+
             editTextSelectYourChoice.singleClick {
                 showDropDownDialog()
             }
@@ -95,8 +100,8 @@ class CreateNew : Fragment() {
                     showSnackBar(getString(R.string.your_mobile_number))
                 } else if (editTextTypeHere.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.description))
-                } else if (viewModel.uploadMediaImage == null){
-                    showSnackBar(getString(R.string.upload_media))
+//                } else if (viewModel.uploadMediaImage == null){
+//                    showSnackBar(getString(R.string.upload_media))
                 } else {
                     Log.e("TAG", "typeXX "+viewModel.type)
                     val requestBody: MultipartBody.Builder = MultipartBody.Builder()

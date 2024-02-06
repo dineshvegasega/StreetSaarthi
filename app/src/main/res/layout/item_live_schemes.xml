@@ -33,7 +33,7 @@
             android:visibility="visible"
             android:theme="@style/RoundCorner5"
             app:srcCompat="@drawable/no_image"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             />
 
 

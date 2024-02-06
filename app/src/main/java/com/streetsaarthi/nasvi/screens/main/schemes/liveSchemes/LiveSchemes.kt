@@ -185,7 +185,6 @@ class LiveSchemes : Fragment() {
             val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
             results.addAll(changeValue as MutableList<ItemLiveScheme>)
             viewModel.adapter.addAllSearch(results)
-
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()

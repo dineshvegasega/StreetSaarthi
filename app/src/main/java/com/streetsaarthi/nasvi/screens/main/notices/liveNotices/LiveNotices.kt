@@ -182,7 +182,7 @@ class LiveNotices : Fragment() {
             val changeValue = Gson().fromJson<List<ItemLiveNotice>>(Gson().toJson(it.data), typeToken)
             results.addAll(changeValue as MutableList<ItemLiveNotice>)
             viewModel.adapter.addAllSearch(results)
-
+            totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {

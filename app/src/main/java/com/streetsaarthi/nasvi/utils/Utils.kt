@@ -256,12 +256,7 @@ fun ImageView.loadImageBanner(
 
 
 
-val myOptionsGlide: RequestOptions = RequestOptions()
-    .placeholder(R.drawable.no_image)
-    .diskCacheStrategy(DiskCacheStrategy.ALL)
-    .dontAnimate()
-    //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
-    .skipMemoryCache(false)
+
 
 
 fun isValidPassword(password: String): Boolean {
@@ -436,6 +431,15 @@ fun ViewPager2.updatePagerHeightForChild(view: View) {
 //        .apply(myOptionsGlide)
 //        .into(ivMap)
 //}
+
+
+
+val myOptionsGlide: RequestOptions = RequestOptions()
+    .placeholder(R.drawable.no_image)
+    .diskCacheStrategy(DiskCacheStrategy.ALL)
+    .dontAnimate()
+    //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
+    .skipMemoryCache(false)
 
 fun String.glideImage(context : Context, ivMap: ShapeableImageView) {
     GlideApp.with(context)

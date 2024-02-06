@@ -187,7 +187,6 @@ class InformationCenter : Fragment() {
             val changeValue = Gson().fromJson<List<ItemInformationCenter>>(Gson().toJson(it.data), typeToken)
             results.addAll(changeValue as MutableList<ItemInformationCenter>)
             viewModel.adapter.addAllSearch(results)
-
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()

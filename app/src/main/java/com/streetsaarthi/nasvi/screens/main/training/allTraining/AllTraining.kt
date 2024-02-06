@@ -177,7 +177,7 @@ class AllTraining : Fragment() {
             val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(it.data), typeToken)
             results.addAll(changeValue as MutableList<ItemLiveTraining>)
             viewModel.adapter.addAllSearch(results)
-
+            totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {

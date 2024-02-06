@@ -36,15 +36,16 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivMap"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_140sdp"
+            android:layout_height="@dimen/_160sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvView1"
             android:visibility="visible"
             android:theme="@style/RoundCorner5"
-            app:srcCompat="@drawable/background"
-            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/no_image"
+            android:scaleType="fitXY"
             android:layout_marginTop="@dimen/_12sdp"
+            android:background="@color/white"
             />
 
 
