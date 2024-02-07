@@ -105,7 +105,7 @@
                             android:id="@+id/textMarketPlaceTxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="TF bxbxbxbxbd sudheesh block ehru hrir uriri brur"
+                            android:text=""
                             android:maxLines="2"
                             android:textColor="@color/_262626"
                             android:textSize="@dimen/_9ssp"
@@ -130,36 +130,44 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:layout_weight="0.78"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         >
 
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/ivIcon"
-                            android:layout_width="@dimen/_75sdp"
-                            android:layout_height="@dimen/_90sdp"
-                            app:layout_constraintDimensionRatio="H,1:1.1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/no_image_modified"
-                            android:background="@color/_00000000"
-                            android:theme="@style/RoundCorner5"
-                            android:scaleType="centerCrop"
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ivLayoutIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
                             android:layout_marginStart="@dimen/_10sdp"
-                            />
+                            android:background="@color/white"
+                            >
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/ivIcon"
+                                android:layout_width="@dimen/_85sdp"
+                                android:layout_height="@dimen/_90sdp"
+                                app:layout_constraintDimensionRatio="H,1:1.1"
+                                app:srcCompat="@drawable/no_image_modified"
+                                android:background="@color/white"
+                                android:theme="@style/RoundCorner5"
+                                android:scaleType="fitXY"
+                                />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-                        <com.google.android.flexbox.FlexboxLayout
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:paddingHorizontal="@dimen/_8sdp"
                             app:flexWrap="wrap"
                             app:alignItems="stretch"
                             app:alignContent="stretch"
-                            android:paddingVertical="@dimen/_10sdp"
+                            android:paddingVertical="@dimen/_5sdp"
                             >
 
                             <androidx.appcompat.widget.LinearLayoutCompat
@@ -195,6 +203,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layout_alignSelf="center"
+                                android:layout_marginTop="@dimen/_1sdp"
                                 >
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/textLastNameTxt"
@@ -223,6 +232,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layout_alignSelf="center"
+                                android:layout_marginTop="@dimen/_1sdp"
                                 >
 
                                 <androidx.appcompat.widget.AppCompatTextView
@@ -278,6 +288,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layout_alignSelf="center"
+                                android:layout_marginTop="@dimen/_1sdp"
                                 >
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/textMobileTxt"
@@ -306,6 +317,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layout_alignSelf="center"
+                                android:layout_marginTop="@dimen/_1sdp"
                                 >
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/textTypeofVendingTxt"
@@ -334,6 +346,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layout_alignSelf="center"
+                                android:layout_marginTop="@dimen/_1sdp"
                                 >
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/textTypeofMarketPlaceTxt"
@@ -357,7 +370,7 @@
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        </com.google.android.flexbox.FlexboxLayout>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -18,6 +18,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.glideImagePortrait
 import com.streetsaarthi.nasvi.utils.singleClick
 
 /**
@@ -116,7 +117,7 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveScheme
             itemRowBinding.apply {
-                dataClass.scheme_image?.url?.glideImage(itemRowBinding.root.context, ivIcon)
+                dataClass.scheme_image?.url?.glideImagePortrait(itemRowBinding.root.context, ivIcon)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
 

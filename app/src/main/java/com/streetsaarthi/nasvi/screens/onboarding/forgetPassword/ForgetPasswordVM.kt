@@ -32,7 +32,6 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
@@ -68,7 +67,6 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.data != null){
                             isOtpVerified = true

@@ -17,6 +17,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.glideImagePortrait
 import com.streetsaarthi.nasvi.utils.singleClick
 
 class AllTrainingAdapter(liveSchemesVM: AllTrainingVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
@@ -112,7 +113,7 @@ class AllTrainingAdapter(liveSchemesVM: AllTrainingVM) : RecyclerView.Adapter<Re
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveTraining
             itemRowBinding.apply {
-                dataClass.cover_image?.url?.glideImage(itemRowBinding.root.context, ivIcon)
+                dataClass.cover_image?.url?.glideImagePortrait(itemRowBinding.root.context, ivIcon)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
 

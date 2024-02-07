@@ -492,5 +492,7 @@
     <string name="notification_not_enabled">آپ کی اطلاع فعال نہیں ہے</string>
     <string name="request_delete">آپ کی درخواست کا شکریہ۔ آپ کا اکاؤنٹ 2 – 3 کام کے دنوں میں حذف کر دیا جائے گا۔</string>
     <string name="profile_updated_successfully">پروفائل کامیابی کے ساتھ اپ ڈیٹ ہو گیا</string>
-
+    <string name="change_mobile_number">موبائل نمبر تبدیل کریں</string>
+    <string name="enter_new_mobile_number_for_login">لاگ ان کے لیے نیا موبائل نمبر درج کریں</string>
+    <string name="mobile_number_updated_successfully">موبائل نمبر کامیابی کے ساتھ اپ ڈیٹ ہو گیا</string>
 </resources>

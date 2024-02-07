@@ -113,17 +113,31 @@
                     tools:ignore="MissingConstraints" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/editTextChangePassword"
+                    android:id="@+id/editTextChangeNumber"
                     style="@style/PrimaryEditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginHorizontal="0dp"
                     android:layout_marginTop="@dimen/_7sdp"
-                    android:text="@string/change_password"
+                    android:text="@string/change_mobile_number"
                     android:textColor="@color/_1D1B20"
                     android:fontFamily="@font/roboto_medium"
                     android:focusable="false"
                     app:layout_constraintTop_toBottomOf="@+id/textProfileSettingsTxt" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editTextChangePassword"
+                    style="@style/PrimaryEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/change_password"
+                    android:textColor="@color/_1D1B20"
+                    android:fontFamily="@font/roboto_medium"
+                    android:focusable="false"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextChangeNumber" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

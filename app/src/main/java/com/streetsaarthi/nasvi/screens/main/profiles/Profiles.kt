@@ -58,7 +58,7 @@ class Profiles : Fragment() , CallBackListener {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.your_Profile)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
-            inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+            inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
             inclideHeaderSearch.textHeaderEditTxt.singleClick {
                 inclideHeaderSearch.textHeaderEditTxt.visibility = View.INVISIBLE
                 btSave.visibility = View.VISIBLE
@@ -70,11 +70,25 @@ class Profiles : Fragment() , CallBackListener {
                 PersonalDetails.callBackListener!!.onCallBack(1)
             }
 
+            viewModel.isEditable.value = false
             btCancel.singleClick {
                 inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
                 btSave.visibility = View.GONE
                 btCancel.visibility = View.GONE
                 viewModel.isEditable.value = false
+            }
+
+            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                if (loginUser != null) {
+                    val data = Gson().fromJson(loginUser, Login::class.java).status
+                    when(data){
+                        "approved" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
+                        "unverified" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                        "pending" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                        "rejected" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                        else -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
+                    }
+                }
             }
 
 

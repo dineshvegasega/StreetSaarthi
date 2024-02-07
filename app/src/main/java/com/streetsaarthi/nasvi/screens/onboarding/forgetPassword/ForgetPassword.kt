@@ -160,8 +160,6 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
-//                    isFree = true
-//                    callMediaPermissions()
                     val obj: JSONObject = JSONObject().apply {
                         put("mobile_no", binding.editTextMobileNumber.text.toString())
                         put("slug", "forgot")
@@ -191,8 +189,6 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
             btSignIn.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
-//                } else if (binding.editTextOtp.text.toString().isEmpty()){
-//                    showSnackBar(getString(R.string.enterOtp))
                 } else if (editTextPassword.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.YourNewPassword))
                 } else if(editTextPassword.text.toString().length >= 0 && editTextPassword.text.toString().length < 8){
@@ -214,44 +210,6 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 
 
 
-    private fun callMediaPermissions() {
-        activityResultLauncher.launch(
-            arrayOf()
-        )
-    }
-
-
-
-    var isFree = false
-    private val activityResultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions())
-        { permissions ->
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        val obj: JSONObject = JSONObject().apply {
-                            put("mobile_no", binding.editTextMobileNumber.text.toString())
-                            put("slug", "forgot")
-                            put("user_type", USER_TYPE)
-                        }
-                        viewModel.sendOTP(view = requireView(), obj)
-//                        smsVerifyCatcher!!.onStart()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
-            }
-        }
-
-
-
 
     var isTimer = ""
     override fun otpData(string: String) {
@@ -259,10 +217,6 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
             tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
-
-//            if(MainActivity.isOpen.get() == true){
-//                editTextOtp.focus()
-//            }
 
             if(string.isEmpty()){
                 editTextSendOtp.setText(getString(R.string.resendOtp))

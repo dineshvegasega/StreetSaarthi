@@ -63,14 +63,12 @@ class QuickRegistration : Fragment(), CallBackListener{
 
             viewModel.isAgree.observe(viewLifecycleOwner, Observer {
                 if (it == true){
-                    Log.e("TAG", "isAgreeAA "+viewModel.isAgree.value)
                     btSignIn.setEnabled(true)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._E79D46, null)))
                 } else {
-                    Log.e("TAG", "isAgreeBB "+viewModel.isAgree.value)
                     btSignIn.setEnabled(false)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -82,7 +80,6 @@ class QuickRegistration : Fragment(), CallBackListener{
             viewModel.isSendMutable.value = false
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
-                    Log.e("TAG", "isSendMutableAA "+viewModel.isSendMutable.value)
                     btSignIn.setEnabled(true)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -102,7 +99,6 @@ class QuickRegistration : Fragment(), CallBackListener{
             }
 
             textBack.singleClick {
-                Log.e("Selected_PagetabPosition", ""+tabPosition)
                 if (tabPosition == 0){
                     view.findNavController().navigateUp()
                 } else if (tabPosition == 1){
@@ -132,7 +128,6 @@ class QuickRegistration : Fragment(), CallBackListener{
                     introViewPager.requestLayout()
                     super.onPageSelected(position)
                     tabPosition = position
-                    Log.e("Selected_Page", position.toString())
                     if(position == 1) {
                         btSignIn.setEnabled(false)
                         btSignIn.setBackgroundTintList(
@@ -164,7 +159,6 @@ class QuickRegistration : Fragment(), CallBackListener{
     }
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBack "+pos)
         binding.apply {
             if (pos == 21){
                 btSignIn.setEnabled(false)
@@ -193,13 +187,6 @@ class QuickRegistration : Fragment(), CallBackListener{
 
 
     override fun onDestroyView() {
-//        binding.apply {
-//            btSignIn.setEnabled(false)
-//            btSignIn.setBackgroundTintList(
-//                ColorStateList.valueOf(
-//                    ResourcesCompat.getColor(
-//                        getResources(), R.color._999999, null)))
-//        }
         viewModel.isAgree.value = false
         OtpTimer.sendOtpTimerData = null
         OtpTimer.stopTimer()

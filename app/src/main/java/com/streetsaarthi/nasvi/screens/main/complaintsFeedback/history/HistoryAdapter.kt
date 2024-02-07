@@ -20,6 +20,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.glideImagePortrait
 import com.streetsaarthi.nasvi.utils.singleClick
 
 
@@ -116,7 +117,7 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemHistory
             itemRowBinding.apply {
-                dataClass.media?.url?.glideImage(itemRowBinding.root.context, ivIcon)
+                dataClass.media?.url?.glideImagePortrait(itemRowBinding.root.context, ivIcon)
                var complaintfeedback = if (dataClass.type == "complaint"){
                     root.context.getString(R.string.complaint)
                 } else {

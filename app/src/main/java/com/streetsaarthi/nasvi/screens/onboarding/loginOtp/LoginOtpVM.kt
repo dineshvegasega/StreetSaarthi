@@ -16,10 +16,13 @@ import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -42,7 +45,6 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
@@ -82,7 +84,6 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.data != null){
                             isOtpVerified = true
@@ -122,16 +123,22 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()?.data != null){
-                            DataStoreUtil.saveData(DataStoreKeys.AUTH, response.body()!!.token ?: "")
-                            DataStoreUtil.saveObject(
-                                DataStoreKeys.LOGIN_DATA,
-                                Gson().fromJson(response.body()!!.data, Login::class.java)
-                            )
+                            saveData(DataStoreKeys.AUTH, response.body()!!.token ?: "")
+                            val data = Gson().fromJson(response.body()!!.data, Login::class.java)
+                            saveObject(DataStoreKeys.LOGIN_DATA, data)
                             showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
-                            Handler(Looper.getMainLooper()).postDelayed(Thread {
-                                MainActivity.mainActivity.get()!!.callBack()
-                                view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
-                            }, 100)
+//                            Handler(Looper.getMainLooper()).postDelayed(Thread {
+//                                MainActivity.mainActivity.get()!!.callBack()
+//                                view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
+//                            }, 100)
+
+                            val last  = if(data.language.contains("/")){
+                                data.language.substring(data.language.lastIndexOf('/') + 1).replace("'", "")
+                            } else {
+                                data.language
+                            }
+
+                            MainActivity.mainActivity.get()?.reloadActivity(last, Main)
                         } else {
                             showSnackBar(view.resources.getString(R.string.invalid_OTP))
                         }

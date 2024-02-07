@@ -490,5 +490,7 @@
     <string name="notification_not_enabled">ನಿಮ್ಮ ಅಧಿಸೂಚನೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿಲ್ಲ</string>
     <string name="request_delete">ನಿಮ್ಮ ವಿನಂತಿಗಾಗಿ ಧನ್ಯವಾದಗಳು. ನಿಮ್ಮ ಖಾತೆಯನ್ನು 2 – 3 ಕೆಲಸದ ದಿನಗಳಲ್ಲಿ ಅಳಿಸಲಾಗುತ್ತದೆ.</string>
     <string name="profile_updated_successfully">ಪ್ರೊಫೈಲ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ</string>
-
+    <string name="change_mobile_number">ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ಬದಲಾಯಿಸಿ</string>
+    <string name="enter_new_mobile_number_for_login">ಲಾಗಿನ್‌ಗಾಗಿ ಹೊಸ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="mobile_number_updated_successfully">ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ</string>
 </resources>

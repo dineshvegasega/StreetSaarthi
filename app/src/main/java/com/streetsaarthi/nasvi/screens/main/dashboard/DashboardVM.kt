@@ -103,7 +103,16 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
         @SuppressLint("SuspiciousIndentation")
         override fun onBindHolder(binding: ItemDashboardMenusBinding, dataClass: ItemModel, position: Int) {
             binding.apply {
-                if(dataClass.isNew == true){
+//                if(dataClass.isNew == true){
+//                    animationView.visibility = View.VISIBLE
+//                    textDotTxt.visibility = View.VISIBLE
+//                    layoutBottomRed.visibility = View.VISIBLE
+//                } else {
+//                    animationView.visibility = View.GONE
+//                    textDotTxt.visibility = View.GONE
+//                    layoutBottomRed.visibility = View.GONE
+//                }
+                if(position != 0){
                     animationView.visibility = View.VISIBLE
                     textDotTxt.visibility = View.VISIBLE
                     layoutBottomRed.visibility = View.VISIBLE
@@ -112,7 +121,6 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     textDotTxt.visibility = View.GONE
                     layoutBottomRed.visibility = View.GONE
                 }
-
                 textHeaderTxt.setText(dataClass.name)
                 ivLogo.setImageResource(dataClass.image)
                 root.singleClick {
@@ -131,7 +139,18 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                        }
                                    }
                                    "unverified" -> {
-                                    //   showSnackBar(root.resources.getString(R.string.registration_processed))
+                                       when (position) {
+                                           0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           else -> showSnackBar(root.resources.getString(R.string.registration_processed))
+                                       }
+                                   }
+                                   "pending" -> {
+                                       when (position) {
+                                           0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           else -> showSnackBar(root.resources.getString(R.string.registration_processed))
+                                       }
+                                   }
+                                   "rejected" -> {
                                        when (position) {
                                            0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
                                            else -> showSnackBar(root.resources.getString(R.string.registration_processed))
@@ -537,7 +556,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            Log.e("TAG", "aaaaa")
+                            Log.e("TAG", "aaaaaAAXX "+response.body()!!.data.toString())
                             DataStoreUtil.saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""

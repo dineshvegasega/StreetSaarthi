@@ -141,7 +141,7 @@
         android:imeOptions="actionDone"
         android:focusable="true"
         android:focusableInTouchMode="true">
-    <requestFocus />
+
     </androidx.appcompat.widget.AppCompatEditText>
 
     <com.google.android.material.button.MaterialButton

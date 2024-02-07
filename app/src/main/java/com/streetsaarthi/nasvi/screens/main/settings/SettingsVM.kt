@@ -1,5 +1,7 @@
 package com.streetsaarthi.nasvi.screens.main.settings
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +16,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
@@ -30,9 +33,7 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
     var appLanguage = MutableLiveData<String>("")
 
 
-
     init {
-
         itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.english), MainActivity.context.get()!!.getString(R.string.englishVal),false))
         itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.bengali), MainActivity.context.get()!!.getString(R.string.bengaliVal),false))
         itemMain?.add(Item(MainActivity.context.get()!!.getString(R.string.gujarati), MainActivity.context.get()!!.getString(R.string.gujaratiVal),false))
@@ -67,14 +68,14 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
 
 
 
-    fun notificationUpdate(_id : String,  hashMap: RequestBody) = viewModelScope.launch {
+    fun notificationUpdate(_id : String,  hashMap: RequestBody, value : Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.saveSettings(hashMap)
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        profile(_id)
+                        profile(_id, value)
                     }
                 }
 
@@ -91,7 +92,7 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
 
 
     var itemNotificationUpdateResult = MutableLiveData<Boolean>(false)
-    fun profile(_id: String) = viewModelScope.launch {
+    fun profile(_id: String, value : Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -103,11 +104,21 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
                             )
+                            val data = Gson().fromJson(response.body()!!.data, Login::class.java)
                             DataStoreUtil.saveObject(
                                 DataStoreKeys.LOGIN_DATA,
-                                Gson().fromJson(response.body()!!.data, Login::class.java)
+                                data
                             )
                             itemNotificationUpdateResult.value = true
+
+                            if(value == 1){
+                                val last  = if(data.language.contains("/")){
+                                    data.language.substring(data.language.lastIndexOf('/') + 1).replace("'", "")
+                                } else {
+                                    data.language
+                                }
+                                MainActivity.mainActivity.get()?.reloadActivity(last, Main)
+                            }
                         }
                     }
                 }

@@ -494,5 +494,7 @@
     <string name="notification_not_enabled">ਤੁਹਾਡੀ ਸੂਚਨਾ ਸਮਰੱਥ ਨਹੀਂ ਹੈ</string>
     <string name="request_delete">ਤੁਹਾਡੀ ਬੇਨਤੀ ਲਈ ਧੰਨਵਾਦ। ਤੁਹਾਡਾ ਖਾਤਾ 2 – 3 ਕੰਮਕਾਜੀ ਦਿਨਾਂ ਦੇ ਅੰਦਰ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</string>
     <string name="profile_updated_successfully">ਪ੍ਰੋਫਾਈਲ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
-
+    <string name="change_mobile_number">ਮੋਬਾਈਲ ਨੰਬਰ ਬਦਲੋ</string>
+    <string name="enter_new_mobile_number_for_login">ਲੌਗਇਨ ਲਈ ਨਵਾਂ ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ</string>
+    <string name="mobile_number_updated_successfully">ਮੋਬਾਈਲ ਨੰਬਰ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
 </resources>

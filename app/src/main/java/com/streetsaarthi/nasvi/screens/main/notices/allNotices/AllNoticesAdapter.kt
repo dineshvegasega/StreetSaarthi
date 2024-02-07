@@ -17,6 +17,7 @@ import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.glideImagePortrait
 import com.streetsaarthi.nasvi.utils.singleClick
 
 class AllNoticesAdapter(liveSchemesVM: AllNoticesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
@@ -112,7 +113,7 @@ class AllNoticesAdapter(liveSchemesVM: AllNoticesVM) : RecyclerView.Adapter<Recy
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveNotice
             itemRowBinding.apply {
-                dataClass.notice_image?.url?.glideImage(itemRowBinding.root.context, ivIcon)
+                dataClass.notice_image?.url?.glideImagePortrait(itemRowBinding.root.context, ivIcon)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
 

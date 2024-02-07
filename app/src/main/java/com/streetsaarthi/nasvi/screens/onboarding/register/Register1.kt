@@ -352,7 +352,6 @@ class Register1  : Fragment() , CallBackListener {
                 binding.editTextDateofBirth.setText("")
             }
         }, year, month, day)
-//        dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
         dpd.show()
     }
 
@@ -362,7 +361,6 @@ class Register1  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.social_category))
             .setItems(list) {_,which->
                 binding.editTextSocialCategory.setText(list[which])
-//                editProfileVM.gender.value = list[which]
             }.show()
     }
 
@@ -426,12 +424,6 @@ class Register1  : Fragment() , CallBackListener {
                 binding.editTextMunicipalityPanchayat.setText("")
                 viewModel.districtId = 0
                 viewModel.panchayatId = 0
-
-//                val options = LanguageDetectionEvent.Builder()
-//                    .setSourceLanguage(FirebaseTranslateLanguage.EN)
-//                    .setTargetLanguage(FirebaseTranslateLanguage.DE)
-//                    .build()
-//                val englishGermanTranslator = FirebaseNaturalLanguage.getInstance().getTranslator(options)
             }.show()
     }
 
@@ -482,7 +474,6 @@ class Register1  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) {_,which->
                 binding.editTextSelectPincode.setText(list[which])
-//                viewModel.pincodeId =  viewModel.itemPincode[which].id
                 viewModel.pincodeId = binding.editTextSelectPincode.text.toString()
             }.show()
     }
@@ -525,7 +516,6 @@ class Register1  : Fragment() , CallBackListener {
 
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG","errorD " + e.message)
     }
 
 
@@ -553,7 +543,6 @@ class Register1  : Fragment() , CallBackListener {
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackA " + pos)
         binding.apply {
 //            Register.callBackListener!!.onCallBack(2)
             if( pos == 1) {
@@ -595,21 +584,15 @@ class Register1  : Fragment() , CallBackListener {
                         viewModel.data.vendor_last_name = editTextLN.text.toString()
                         viewModel.data.parent_first_name = editTextFatherFN.text.toString()
                         viewModel.data.parent_last_name = editTextFatherLN.text.toString()
-//                        viewModel.data.gender = editTextGender.text.toString()
                         viewModel.data.date_of_birth = editTextDateofBirth.text.toString()
                         viewModel.data.social_category = editTextSocialCategory.text.toString()
-//                        viewModel.data.education_qualification = editTextEducationQualifacation.text.toString()
-//                        viewModel.data.marital_status = editTextMaritalStatus.text.toString()
                         viewModel.data.spouse_name = editTextSpouseName.text.toString()
-
                         viewModel.data.current_state = ""+viewModel.stateId
                         viewModel.data.current_district = ""+viewModel.districtId
                         viewModel.data.municipality_panchayat_current = ""+viewModel.panchayatId
                         viewModel.data.current_pincode = ""+viewModel.pincodeId
                         viewModel.currentAddress = editTextAddress.text.toString()
                         viewModel.data.current_address = ""+viewModel.currentAddress
-
-                        Log.e("TAG", "viewModel.dataA "+viewModel.data.toString())
                         Register.callBackListener!!.onCallBack(2)
                     }
                 }

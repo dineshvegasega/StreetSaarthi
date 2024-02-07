@@ -50,9 +50,6 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
         OtpTimer.sendOtpTimerData = this
 
         binding.apply {
-//            editTextVeryfyOtp.isEnabled = false
-//            btSignIn.isEnabled = false
-
             textBack.singleClick {
                 view.findNavController().navigateUp()
             }
@@ -80,24 +77,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
                     tvTime.visibility = View.GONE
-//                    OtpTimer.sendOtpTimerData = null
                     OtpTimer.stopTimer()
-//                    editTextSendOtp.setEnabled(false)
-//                    editTextVeryfyOtp.setEnabled(false)
-//                    binding.editTextSendOtp.setBackgroundTintList(
-//                        ColorStateList.valueOf(
-//                            ResourcesCompat.getColor(
-//                                getResources(), R.color._999999, null)))
-//                    binding.editTextVeryfyOtp.setBackgroundTintList(
-//                        ColorStateList.valueOf(
-//                            ResourcesCompat.getColor(
-//                                getResources(), R.color._999999, null)))
-//
-//                    btSignIn.setEnabled(true)
-//                    btSignIn.setBackgroundTintList(
-//                        ColorStateList.valueOf(
-//                            ResourcesCompat.getColor(
-//                                getResources(), R.color._E79D46, null)))
                 }
             })
 
@@ -149,8 +129,6 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
                 } else if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 } else{
-//                    isFree = true
-//                    callMediaPermissions()
                     val obj: JSONObject = JSONObject().apply {
                         put("mobile_no", binding.editTextMobileNumber.text.toString())
                         put("otp", binding.editTextOtp.text.toString())
@@ -172,54 +150,12 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
 
 
 
-    private fun callMediaPermissions() {
-        activityResultLauncher.launch(
-            arrayOf()
-        )
-    }
-
-
-
-    var isFree = false
-    private val activityResultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions())
-        { permissions ->
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        val obj: JSONObject = JSONObject().apply {
-                            put("mobile_no", binding.editTextMobileNumber.text.toString())
-                            put("otp", binding.editTextOtp.text.toString())
-                            put("slug", "login")
-                            put("user_type", USER_TYPE)
-                        }
-                        viewModel.verifyOTPData(view = requireView(), obj)
-//                        smsVerifyCatcher!!.onStart()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
-            }
-        }
-
-
     var isTimer = ""
     override fun otpData(string: String) {
         isTimer = string
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
             tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
-
-//            if(MainActivity.isOpen.get() == true){
-//                editTextOtp.focus()
-//            }
 
             if(string.isEmpty()){
                 editTextSendOtp.setText(getString(R.string.resendOtp))

@@ -85,16 +85,6 @@ var tabPosition: Int = 0;
             })
 
 
-            viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
-//                if (it == true){
-//                    btSignIn.setEnabled(true)
-//                    btSignIn.setBackgroundTintList(
-//                        ColorStateList.valueOf(
-//                            ResourcesCompat.getColor(
-//                                getResources(), R.color._E79D46, null)))
-//                }
-            })
-
 
             loadProgress(tabPosition)
 
@@ -114,7 +104,6 @@ var tabPosition: Int = 0;
             }
 
             textBack.singleClick {
-                Log.e("Selected_PagetabPosition", ""+tabPosition)
                 if (tabPosition == 0){
                     view.findNavController().navigateUp()
                 } else if (tabPosition == 1){
@@ -149,7 +138,6 @@ var tabPosition: Int = 0;
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     tabPosition = position
-                    Log.e("Selected_Page", position.toString())
                     if(position == 2){
                         btSignIn.setEnabled(false)
                         btSignIn.setBackgroundTintList(
@@ -207,8 +195,6 @@ var tabPosition: Int = 0;
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBack " + pos)
-
         binding.apply {
          if (pos == 21){
             btSignIn.setEnabled(false)
@@ -330,9 +316,6 @@ var tabPosition: Int = 0;
                 if(viewModel.data.localOrganisation  != null){
                     requestBody.addFormDataPart("local_organisation", viewModel.data.localOrganisation!!)
                 }
-//                if(viewModel.data.localOrganisation  != null){
-//                    requestBody.addFormDataPart("local_organisation_others", viewModel.data.localOrganisation!!)
-//                }
                 if(!docs.toString().isEmpty()){
                     requestBody.addFormDataPart("vending_documents", docs.toString())
                 } else{
@@ -351,11 +334,6 @@ var tabPosition: Int = 0;
                 if(viewModel.data.password  != null){
                     requestBody.addFormDataPart("password", viewModel.data.password!!)
                 }
-
-//                requestBody.addFormDataPart("mobile_no", "1234567826")
-//                requestBody.addFormDataPart("password", "Test@123")
-
-//                requestBody.addFormDataPart("status", "unverified")
 
                 if(viewModel.data.passportSizeImage != null){
                         requestBody.addFormDataPart(
@@ -420,9 +398,7 @@ var tabPosition: Int = 0;
                         File(viewModel.data.UploadApprovalLetter!!).asRequestBody("image/*".toMediaTypeOrNull())
                     )
                 }
-
-                Log.e("TAG", "viewModel.dataAll "+viewModel.data.toString())
-                viewModel.registerWithFiles(view = requireView(), requestBody.build())
+              viewModel.registerWithFiles(view = requireView(), requestBody.build())
             }
         }
     }

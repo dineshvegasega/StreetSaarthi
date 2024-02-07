@@ -394,7 +394,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
@@ -429,7 +428,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.data != null){
                             isOtpVerified = true
@@ -474,7 +472,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.register(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
                         Handler(Looper.getMainLooper()).postDelayed({
@@ -509,7 +506,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.registerWithFiles( hashMap)
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
                         view.findNavController().navigate(R.id.action_register_to_registerSuccessful)

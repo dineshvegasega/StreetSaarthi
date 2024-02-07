@@ -489,5 +489,7 @@
     <string name="notification_not_enabled">നിങ്ങളുടെ അറിയിപ്പ് പ്രവർത്തനക്ഷമമാക്കിയിട്ടില്ല</string>
     <string name="request_delete">നിങ്ങളുടെ അഭ്യർത്ഥനയ്ക്ക് നന്ദി. നിങ്ങളുടെ അക്കൗണ്ട് 2 – 3 പ്രവൃത്തി ദിവസങ്ങൾക്കുള്ളിൽ ഇല്ലാതാക്കപ്പെടും.</string>
     <string name="profile_updated_successfully">പ്രൊഫൈൽ വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു</string>
-
+    <string name="change_mobile_number">മൊബൈൽ നമ്പർ മാറ്റുക</string>
+    <string name="enter_new_mobile_number_for_login">ലോഗിൻ ചെയ്യുന്നതിന് പുതിയ മൊബൈൽ നമ്പർ നൽകുക</string>
+    <string name="mobile_number_updated_successfully">മൊബൈൽ നമ്പർ വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു</string>
 </resources>

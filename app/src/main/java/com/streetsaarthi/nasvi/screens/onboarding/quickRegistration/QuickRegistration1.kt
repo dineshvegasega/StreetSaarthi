@@ -71,30 +71,7 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
 
 
 
-//        viewModel.addTime.value = "bj"
-//        binding.tvTime.visibility = View.VISIBLE
-
-
-//        viewModel.addTime.observe(viewLifecycleOwner, Observer {
-//            binding.tvTime.text = it
-//        })
         binding.apply {
-//            editTextOtp.setOnTouchListener(OnTouchListener { v, event ->
-//                if (MotionEvent.ACTION_HOVER_ENTER == event.action) {
-//                   // editTextOtp.setText("" + mQ1)
-//                }
-//                true // return is important...
-//            })
-
-//            editTextOtp.setOnTouchListener(OnTouchListener { v, event ->
-//                Log.i("click", "onMtouch")
-//                editTextOtp.setSelection(editTextOtp.text!!.length)
-//                editTextOtp.setFocusable(true);
-//                editTextOtp.requestFocus();
-//                false
-//            })
-
-
             editTextVeryfyOtp.setEnabled(false)
 
             viewModel.isSend.value = false
@@ -151,13 +128,9 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
 //                })
 
             editTextSendOtp.singleClick {
-//                OtpTimer.startTimer()
-                //smsVerifyCatcher!!.onStart()
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 } else{
-//                    isFree = true
-//                    callMediaPermissions()
                     val obj: JSONObject = JSONObject().apply {
                         put("mobile_no", binding.editTextMobileNumber.text.toString())
                         put("slug", "signup")
@@ -229,44 +202,9 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
 
 
 
-    private fun callMediaPermissions() {
-        activityResultLauncher.launch(
-                arrayOf()
-            )
-    }
-
-
-
-    private val activityResultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions())
-        { permissions ->
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                        val obj: JSONObject = JSONObject().apply {
-                            put("mobile_no", binding.editTextMobileNumber.text.toString())
-                            put("slug", "signup")
-                            put("user_type", USER_TYPE)
-                        }
-                        viewModel.sendOTP(view = requireView(), obj)
-//                        smsVerifyCatcher!!.onStart()
-
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
-            }
-        }
-
-
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackA "+pos)
         binding.apply {
             if( pos == 1){
                 if(editTextFN.text.toString().isEmpty()){
@@ -285,13 +223,8 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
                     viewModel.data.mobile_no = editTextMobileNumber.text.toString()
                     viewModel.data.otp = editTextOtp.text.toString()
 
-                    Log.e("TAG", "viewModel.dataA "+viewModel.data.toString())
-
                     QuickRegistration.callBackListener!!.onCallBack(2)
                 }
-//            } else if (pos == 111){
-//                viewModel.isSend.value = false
-//                viewModel.isSendMutable.value = false
             }
         }
 
@@ -301,7 +234,6 @@ class QuickRegistration1 : Fragment(), CallBackListener , OtpTimer.SendOtpTimerD
     var isTimer = ""
     @OptIn(DelicateCoroutinesApi::class)
     override fun otpData(string: String) {
-        Log.e("TAG", "otpData "+string)
         isTimer = string
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE

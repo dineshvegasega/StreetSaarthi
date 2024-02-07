@@ -148,7 +148,6 @@ class MembershipDetails  : Fragment() {
                     Log.e("TAG", "dataLogin "+data.toString())
                     textFirstNameValueTxt.setText(data.vendor_first_name)
                     textLastNameValueTxt.setText(data.vendor_last_name)
-//                    textGenderValueTxt.setText(data.gender)
 
                     val listGender =resources.getStringArray(R.array.gender_array)
                     data.gender?.let{
@@ -274,24 +273,9 @@ class MembershipDetails  : Fragment() {
             }
 
             btDownload.singleClick {
-//                isFree = true
                 callMediaPermissions()
             }
 
-
-//            viewModel.adsList(view)
-//            val adapter = BannerViewPagerAdapter(requireContext())
-//
-//            viewModel.itemAds.observe(viewLifecycleOwner, Observer {
-//                if (it != null) {
-//                    viewModel.itemAds.value?.let { it1 ->
-//                        adapter.submitData(it1)
-//                        banner.adapter = adapter
-//                        tabDots.setupWithViewPager(banner, true)
-//                        banner.autoScroll()
-//                    }
-//                }
-//            })
         }
     }
 

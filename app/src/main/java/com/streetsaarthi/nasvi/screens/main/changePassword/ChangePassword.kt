@@ -49,14 +49,12 @@ class ChangePassword : Fragment() {
             btSignIn.setEnabled(false)
             viewModel.isAgree.observe(viewLifecycleOwner, Observer {
                 if (it == true){
-                    Log.e("TAG", "isAgreeAA "+viewModel.isAgree.value)
                     btSignIn.setEnabled(true)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._E79D46, null)))
                 } else {
-                    Log.e("TAG", "isAgreeBB "+viewModel.isAgree.value)
                     btSignIn.setEnabled(false)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -146,10 +144,6 @@ class ChangePassword : Fragment() {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if(!editTextCreatePassword.text.toString().isEmpty()){
                         if(!editTextReEnterPassword.text.toString().isEmpty()){
-//                            if(editTextReEnterPassword.text.toString().length >= 0 && editTextReEnterPassword.text.toString().length < 8){
-//                                textReEnterPasswrordMsg.setText(R.string.InvalidPassword)
-//                                textReEnterPasswrordMsg.visibility = View.VISIBLE
-//                            } else
                             if (editTextCreatePassword.text.toString() != editTextReEnterPassword.text.toString()){
                                 textReEnterPasswrordMsg.setText(R.string.CreatePasswordReEnterPasswordisnotsame)
                                 textReEnterPasswrordMsg.visibility = View.VISIBLE
@@ -166,7 +160,6 @@ class ChangePassword : Fragment() {
 
 
             btSignIn.singleClick {
-                Log.e("TAG", "setOnClickListener")
                 DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val requestBody: MultipartBody.Builder = MultipartBody.Builder()

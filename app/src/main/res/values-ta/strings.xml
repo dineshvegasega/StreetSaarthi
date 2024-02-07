@@ -490,5 +490,7 @@
     <string name="notification_not_enabled">உங்கள் அறிவிப்பு இயக்கப்படவில்லை</string>
     <string name="request_delete">உங்கள் கோரிக்கைக்கு நன்றி. உங்கள் கணக்கு 2 – 3 வேலை நாட்களுக்குள் நீக்கப்படும்.</string>
     <string name="profile_updated_successfully">சுயவிவரம் வெற்றிகரமாக புதுப்பிக்கப்பட்டது</string>
-
+    <string name="change_mobile_number">மொபைல் எண்ணை மாற்று</string>
+    <string name="enter_new_mobile_number_for_login">உள்நுழைவதற்கு புதிய மொபைல் எண்ணை உள்ளிடவும்</string>
+    <string name="mobile_number_updated_successfully">மொபைல் எண் வெற்றிகரமாக புதுப்பிக்கப்பட்டது</string>
 </resources>

@@ -1,35 +1,33 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginPassword
 
 
-import android.os.Handler
-import android.os.Looper
+import android.R.string
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
 import com.demo.networking.ApiInterface
 import com.demo.networking.CallHandler
 import com.demo.networking.Repository
-import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys.AUTH
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys.LOGIN_DATA
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
+
 
 @HiltViewModel
 class LoginPasswordVM @Inject constructor(private val repository: Repository
@@ -73,15 +71,18 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-//                        showSnackBar(response.body()?.message.orEmpty())
                         if(response.body()!!.data != null){
-                            Log.e("TAG", "aaaaa")
                             saveData(AUTH, response.body()!!.token ?: "")
-                            saveObject(LOGIN_DATA, Gson().fromJson(response.body()!!.data, Login::class.java))
-                            Handler(Looper.getMainLooper()).postDelayed(Thread {
-                               MainActivity.mainActivity.get()!!.callBack()
-                               view.findNavController().navigate(R.id.action_loginPassword_to_dashboard)
-                            }, 100)
+                            val data = Gson().fromJson(response.body()!!.data, Login::class.java)
+                            saveObject(LOGIN_DATA, data)
+                            val last  = if(data.language.contains("/")){
+                                data.language.substring(data.language.lastIndexOf('/') + 1).replace("'", "")
+                            } else {
+                                data.language
+                            }
+
+                            Log.e("TAG","lastZZ "+last)
+                            MainActivity.mainActivity.get()?.reloadActivity(last, Main)
                         }
                     }
                 }

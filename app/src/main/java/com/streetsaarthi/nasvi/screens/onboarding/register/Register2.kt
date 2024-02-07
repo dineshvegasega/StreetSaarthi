@@ -59,19 +59,6 @@ class Register2  : Fragment() , CallBackListener {
 
     companion object {
         var TAG = "Register2"
-        private val REQUIRED_GALLERY_PERMISSIONS =
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
-            )
-        private const val CAPTURE_IMAGE_REQUEST = 1001
-        private const val GALLERY_IMAGE_REQUEST = 1002
-        private const val GALLERY_PERMISSION_REQUEST = 1004
-        private const val SELECT_ADDRESS_REQUEST_CODE = 1003
-        private const val REQUEST_CODE_PERMISSIONS = 1002
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-
         var callBackListener: CallBackListener? = null
     }
 
@@ -472,7 +459,6 @@ class Register2  : Fragment() , CallBackListener {
         dialog.show()
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG", "errorD " + e.message)
     }
 
     private fun forCamera() {
@@ -541,7 +527,6 @@ class Register2  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.total_years_of_vending))
             .setItems(list) { _, which ->
                 binding.editTextTotalYearsofVending.setText(list[which])
-//                editProfileVM.gender.value = list[which]
             }.show()
     }
 
@@ -571,8 +556,6 @@ class Register2  : Fragment() , CallBackListener {
                     binding.editTextVendingTimeOpen.setText(
                         strHrsToShow + ":" + (if (minute.toString().length == 1) "0"+datetime.get(Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
                     )
-                    //viewModel.data.open = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
-//                    var ss : String =
 
                     if (minute.toString().length == 1){
 
@@ -580,9 +563,6 @@ class Register2  : Fragment() , CallBackListener {
 
                     }
                     viewModel.data.open = "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
-                    // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
-                    //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
-                    Log.e("TAG", "AAAA " + viewModel.data.open)
                 }
             },
             hour,
@@ -590,35 +570,6 @@ class Register2  : Fragment() , CallBackListener {
             false
         )
         mTimePicker.show()
-
-
-//        val timeSetListener =
-//            OnTimeSetListener { view, hourOfDay, minute ->
-//                val datetime = Calendar.getInstance()
-//                datetime[Calendar.HOUR_OF_DAY] = hourOfDay
-//                datetime[Calendar.MINUTE] = minute
-//                val strHrsToShow =
-//                    if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
-//                        datetime.get(Calendar.HOUR)
-//                    )
-//                var am_pm = ""
-//                if (datetime.get(Calendar.AM_PM) == Calendar.AM)
-//                    am_pm = "AM";
-//                else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
-//                    am_pm = "PM";
-//                binding.editTextVendingTimeOpen.setText(strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm)
-//                viewModel.data.open = ""+hourOfDay+":"+minute+":00"
-//                Log.e("TAG", "AAAA "+ viewModel.data.open)
-//            }
-//        val timePickerDialog = CustomTimePickerDialog(
-//            requireContext(), timeSetListener,
-//            Calendar.getInstance()[Calendar.HOUR],
-//            CustomTimePickerDialog.getRoundedMinute(Calendar.getInstance()[Calendar.MINUTE] + CustomTimePickerDialog.TIME_PICKER_INTERVAL),
-//            false,
-//            R.style.TimeDialogTheme
-//        )
-//        timePickerDialog.show()
-
     }
 
 
@@ -632,6 +583,7 @@ class Register2  : Fragment() , CallBackListener {
             requireContext(),
             R.style.TimeDialogTheme,
             object : TimePickerDialog.OnTimeSetListener {
+                @SuppressLint("SetTextI18n")
                 override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
                     val datetime = Calendar.getInstance()
                     datetime[Calendar.HOUR_OF_DAY] = hourOfDay
@@ -647,14 +599,12 @@ class Register2  : Fragment() , CallBackListener {
                     else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
                         am_pm = "PM";
                     binding.editTextVendingTimeClose.setText(
-                        strHrsToShow + ":" + (if (minute.toString().length == 1) "0"+datetime.get(Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
+                        strHrsToShow + ":" + (if (minute.toString().length == 1) "0" + datetime.get(
+                            Calendar.MINUTE
+                        ) else datetime.get(Calendar.MINUTE)) + " " + am_pm
                     )
-
-                    // viewModel.data.close = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
-                    viewModel.data.close = "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
-
-                    // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
-                    //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
+                    viewModel.data.close =
+                        "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0" + minute else minute) + ":00"
                 }
             },
             hour,
@@ -740,7 +690,6 @@ class Register2  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) { _, which ->
                 binding.editTextSelectPincode.setText(list[which])
-//                viewModel.pincodeIdCurrent = viewModel.itemPincodeCurrent[which].id
                 viewModel.pincodeIdVending = binding.editTextSelectPincode.text.toString()
             }.show()
     }
@@ -765,10 +714,8 @@ class Register2  : Fragment() , CallBackListener {
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackB " + pos)
         binding.apply {
             if (pos == 3) {
-//                Register.callBackListener!!.onCallBack(4)
                 if (editTextTypeofMarketPlace.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.type_of_market_place))
                 } else if (viewModel.marketplaceId == 7 && editTextTypeofMarketPlaceEnter.text.toString()
@@ -806,7 +753,6 @@ class Register2  : Fragment() , CallBackListener {
                             if(binding.inclideGovernment.cbRememberOthersPleaseName.isChecked == true && binding.inclideGovernment.editTextSchemeName.text.toString().isEmpty()){
                                 showSnackBar(getString(R.string.scheme_name))
                             }else{
-                                Log.e(TAG, "schemeNameAA22 ")
                                 if(binding.inclideGovernment.cbRememberPMSwanidhiScheme.isChecked == true){
                                     schemeName.append(getString(R.string.pm_swanidhi_schemeSingle)+" ")
                                 }
@@ -820,12 +766,10 @@ class Register2  : Fragment() , CallBackListener {
                             showSnackBar(getString(R.string.select_scheme))
                         }
                     } else if(binding.ivRdGovernmentYes.isChecked == false && binding.ivRdGovernmentNo.isChecked == true){
-                        Log.e(TAG, "schemeNameBB ")
                         viewModel.data.governmentScheme = binding.ivRdGovernmentYes.isChecked
                         viewModel.data.schemeName = ""
                         setAddData()
                     }
-                    Log.e(TAG, "schemeNameCC " + schemeName.toString())
                 }
             }
         }

@@ -489,5 +489,7 @@
     <string name="notification_not_enabled">আপনার বিজ্ঞপ্তি সক্ষম করা নেই</string>
     <string name="request_delete">আপনার অনুরোধের জন্য ধন্যবাদ৷ আপনার অ্যাকাউন্ট 2 – 3 কার্যদিবসের মধ্যে মুছে ফেলা হবে৷</string>
     <string name="profile_updated_successfully">প্রোফাইল সফলভাবে আপডেট হয়েছে</string>
-
+    <string name="change_mobile_number">মোবাইল নম্বর পরিবর্তন করুন</string>
+    <string name="enter_new_mobile_number_for_login">লগইনের জন্য নতুন মোবাইল নম্বর লিখুন</string>
+    <string name="mobile_number_updated_successfully">মোবাইল নম্বর সফলভাবে আপডেট করা হয়েছে</string>
 </resources>

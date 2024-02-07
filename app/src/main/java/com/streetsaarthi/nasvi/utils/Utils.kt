@@ -449,6 +449,21 @@ fun String.glideImage(context : Context, ivMap: ShapeableImageView) {
 }
 
 
+val myOptionsGlidePortrait: RequestOptions = RequestOptions()
+    .placeholder(R.drawable.image_port)
+    .diskCacheStrategy(DiskCacheStrategy.ALL)
+    .dontAnimate()
+    //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
+    .skipMemoryCache(false)
+
+fun String.glideImagePortrait(context : Context, ivMap: ShapeableImageView) {
+    GlideApp.with(context)
+        .load(this)
+        .apply(myOptionsGlidePortrait)
+        .into(ivMap)
+}
+
+
 
 fun View.singleClick(throttleTime: Long = 600L, action: () -> Unit) {
     this.setOnClickListener(object : View.OnClickListener {

@@ -1,7 +1,6 @@
 package com.streetsaarthi.nasvi.screens.main.settings
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -27,11 +26,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.LocaleHelper
-import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
@@ -115,17 +110,14 @@ class Settings : Fragment() {
                                 }
                                 notifyDataSetChanged()
 
-                                LocaleHelper.setLocale(requireContext(), dataClass.locale)
-//                                Handler(Looper.getMainLooper()).postDelayed({
-                                val refresh =
-                                    Intent(Intent(requireActivity(), MainActivity::class.java))
-                                refresh.putExtra(Screen, Main)
-                                refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(refresh)
-                                MainActivity.activity.get()!!.finish()
-                                MainActivity.activity.get()!!.finishAffinity()
-//                                },100)
+                                callLanguageApi(dataClass.locale, 1)
 
+                                Handler(Looper.getMainLooper()).postDelayed(Thread {
+                                    MainActivity.mainActivity.get()?.runOnUiThread {
+                                        languageAlert?.dismiss()
+                                    }
+                                }, 100)
+//                                MainActivity.mainActivity.get()?.reloadActivity(dataClass.locale, Main)
                             }
 
                             binding.btImage.singleClick {
@@ -137,16 +129,14 @@ class Settings : Fragment() {
                                 }
                                 notifyDataSetChanged()
 
-                                LocaleHelper.setLocale(requireContext(), dataClass.locale)
-//                                Handler(Looper.getMainLooper()).postDelayed({
-                                val refresh =
-                                    Intent(Intent(requireActivity(), MainActivity::class.java))
-                                refresh.putExtra(Screen, Main)
-                                refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(refresh)
-                                MainActivity.activity.get()!!.finish()
-                                MainActivity.activity.get()!!.finishAffinity()
-//                                },100)
+                                callLanguageApi(dataClass.locale, 1)
+
+                                Handler(Looper.getMainLooper()).postDelayed(Thread {
+                                    MainActivity.mainActivity.get()?.runOnUiThread {
+                                        languageAlert?.dismiss()
+                                    }
+                                }, 100)
+//                                MainActivity.mainActivity.get()?.reloadActivity(dataClass.locale, Main)
                             }
                         }
                     }
@@ -194,7 +184,7 @@ class Settings : Fragment() {
                                     } else {
                                         requestBody.addFormDataPart("notification", "Yes")
                                     }
-                                    viewModel.notificationUpdate(""+user.id, requestBody.build())
+                                    viewModel.notificationUpdate(""+user.id, requestBody.build(), 0)
                                 }
                                 .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                                     dialog.dismiss()
@@ -209,7 +199,7 @@ class Settings : Fragment() {
                 }
 
 
-
+                viewModel.itemNotificationUpdateResult.value = false
                 viewModel.itemNotificationUpdateResult.observe(requireActivity(), Observer {
                     DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
@@ -219,6 +209,11 @@ class Settings : Fragment() {
                     }
                 })
 
+            }
+
+
+            editTextChangeNumber.singleClick {
+                view.findNavController().navigate(R.id.action_settings_to_changeMobile)
             }
 
 
@@ -237,6 +232,21 @@ class Settings : Fragment() {
             }
         }
     }
+
+
+   fun callLanguageApi(locale: String, value : Int) {
+       DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+           if (loginUser != null) {
+              var _id = Gson().fromJson(loginUser, Login::class.java).id
+               val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                   .setType(MultipartBody.FORM)
+                   .addFormDataPart("user_type", USER_TYPE)
+               requestBody.addFormDataPart("user_id", ""+_id)
+                   requestBody.addFormDataPart("language", locale)
+               viewModel.notificationUpdate(""+_id, requestBody.build(), value)
+           }
+       }
+   }
 
 
     override fun onDestroyView() {

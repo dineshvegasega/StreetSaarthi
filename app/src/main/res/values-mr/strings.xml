@@ -490,5 +490,7 @@
     <string name="notification_not_enabled">तुमची सूचना सक्षम केलेली नाही</string>
     <string name="request_delete">तुमच्या विनंतीबद्दल धन्यवाद. तुमचे खाते 2 – 3 कार्य दिवसात हटवले जाईल.</string>
     <string name="profile_updated_successfully">प्रोफाइल यशस्वीरित्या अपडेट केले</string>
-
+    <string name="change_mobile_number">मोबाइल नंबर बदला</string>
+    <string name="enter_new_mobile_number_for_login">लॉग इन करण्यासाठी नवीन मोबाइल नंबर प्रविष्ट करा</string>
+    <string name="mobile_number_updated_successfully">मोबाइल नंबर यशस्वीरित्या अपडेट झाला</string>
 </resources>

@@ -178,6 +178,40 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                             }
                                         }
                                     }
+                                    "pending" -> {
+                                        when(position) {
+                                            0 -> {
+                                                if (fragmentInFrame !is Dashboard){
+                                                    navHostFragment?.navController?.navigate(R.id.dashboard)
+                                                }
+                                            }
+                                            1 -> {
+                                                if (fragmentInFrame !is Profiles) {
+                                                    navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            else -> {
+                                                showSnackBar(root.resources.getString(R.string.registration_processed))
+                                            }
+                                        }
+                                    }
+                                    "rejected" -> {
+                                        when(position) {
+                                            0 -> {
+                                                if (fragmentInFrame !is Dashboard){
+                                                    navHostFragment?.navController?.navigate(R.id.dashboard)
+                                                }
+                                            }
+                                            1 -> {
+                                                if (fragmentInFrame !is Profiles) {
+                                                    navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            else -> {
+                                                showSnackBar(root.resources.getString(R.string.registration_processed))
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -271,6 +305,12 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                 }
                             }
                             "unverified" -> {
+                                showSnackBar(mainContext.resources.getString(R.string.registration_processed))
+                            }
+                            "pending" -> {
+                                showSnackBar(mainContext.resources.getString(R.string.registration_processed))
+                            }
+                            "rejected" -> {
                                 showSnackBar(mainContext.resources.getString(R.string.registration_processed))
                             }
                         }

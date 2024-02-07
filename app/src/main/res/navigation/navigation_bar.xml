@@ -476,6 +476,20 @@
             app:destination="@id/changePassword"
             app:launchSingleTop="true"
             />
+
+        <action
+            android:id="@+id/action_settings_to_changeMobile"
+            app:destination="@id/changeMobile"
+            app:launchSingleTop="true"
+            />
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.changeMobile.ChangeMobile"
+        android:label="ChangeMobile"
+        android:id="@+id/changeMobile"
+        tools:layout="@layout/change_mobile">
     </fragment>
 
 
@@ -485,6 +499,7 @@
         android:id="@+id/changePassword"
         tools:layout="@layout/change_password">
     </fragment>
+
 
     <fragment
         android:name="com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes"

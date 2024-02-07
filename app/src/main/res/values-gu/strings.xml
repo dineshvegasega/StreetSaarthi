@@ -486,5 +486,7 @@
     <string name="notification_not_enabled">તમારી સૂચના સક્ષમ નથી</string>
     <string name="request_delete">તમારી વિનંતી બદલ આભાર. તમારું એકાઉન્ટ 2 – 3 કામકાજી દિવસોમાં કાઢી નાખવામાં આવશે.</string>
     <string name="profile_updated_successfully">પ્રોફાઇલ સફળતાપૂર્વક અપડેટ થઈ</string>
-
+    <string name="change_mobile_number">મોબાઇલ નંબર બદલો</string>
+    <string name="enter_new_mobile_number_for_login">લોગિન માટે નવો મોબાઇલ નંબર દાખલ કરો</string>
+    <string name="mobile_number_updated_successfully">મોબાઇલ નંબર સફળતાપૂર્વક અપડેટ થયો</string>
 </resources>

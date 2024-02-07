@@ -98,7 +98,6 @@ class QuickRegistration2 : Fragment() , CallBackListener {
 
             textTerms.singleClick {
                 openTermConditionsDialog()
-                Log.e("sadf", "ffff")
             }
 
 
@@ -107,13 +106,6 @@ class QuickRegistration2 : Fragment() , CallBackListener {
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                    Log.e("TAG", "sAA "+s)
-//                    if (editTextCreatePassword == null) {
-//                        editTextCreatePassword.setText(s)
-//                    }
-//                    else {
-//                       // editTextCreatePassword.setText("")
-//                    }
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -144,10 +136,6 @@ class QuickRegistration2 : Fragment() , CallBackListener {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if(!editTextCreatePassword.text.toString().isEmpty()){
                         if(!editTextReEnterPassword.text.toString().isEmpty()){
-//                            if(editTextReEnterPassword.text.toString().length >= 0 && editTextReEnterPassword.text.toString().length < 8){
-//                                textReEnterPasswrordMsg.setText(R.string.InvalidPassword)
-//                                textReEnterPasswrordMsg.visibility = View.VISIBLE
-//                            } else
                                 if (editTextCreatePassword.text.toString() != editTextReEnterPassword.text.toString()){
                                     textReEnterPasswrordMsg.setText(R.string.CreatePasswordReEnterPasswordisnotsame)
                                     textReEnterPasswrordMsg.visibility = View.VISIBLE
@@ -178,10 +166,6 @@ class QuickRegistration2 : Fragment() , CallBackListener {
                 viewModel.isAgree.value = false
             } else if (editTextReEnterPassword.text.toString().isEmpty()){
                 viewModel.isAgree.value = false
-//            } else if(editTextReEnterPassword.text.toString().length >= 0 && editTextReEnterPassword.text.toString().length < 8){
-//                viewModel.isAgree.value = false
-//            } else if(!isValidPassword(editTextReEnterPassword.text.toString().trim())){
-//                viewModel.isAgree.value = false
             } else if (editTextCreatePassword.text.toString() != editTextReEnterPassword.text.toString()){
                 viewModel.isAgree.value = false
             }  else if (!cbRememberMe.isChecked){
@@ -194,8 +178,6 @@ class QuickRegistration2 : Fragment() , CallBackListener {
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackB "+pos)
-
         binding.apply {
             if (pos == 3) {
                 if(editTextCreatePassword.text.toString().isEmpty()){
@@ -216,7 +198,6 @@ class QuickRegistration2 : Fragment() , CallBackListener {
                     showSnackBar(getString(R.string.Pleaseselectagree))
                 } else {
                     viewModel.data.password = editTextCreatePassword.text.toString()
-                    Log.e("TAG", "viewModel.dataB "+viewModel.data.toString())
                     QuickRegistration.callBackListener!!.onCallBack(4)
                 }
             }
@@ -234,7 +215,6 @@ class QuickRegistration2 : Fragment() , CallBackListener {
             ViewGroup.LayoutParams.MATCH_PARENT
         )
         window!!.setBackgroundDrawableResource(R.color._00000000)
-
         val yes = mybuilder.findViewById<AppCompatImageView>(R.id.imageCross)
         yes?.singleClick {
             mybuilder.dismiss()
@@ -244,17 +224,12 @@ class QuickRegistration2 : Fragment() , CallBackListener {
 
     override fun onResume() {
         super.onResume()
-        Log.e("TAG", "onResumeZZ")
         Handler(Looper.getMainLooper()).postDelayed({
             getAgreeValue()
         }, 200)
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.e("TAG", "onStopZZ")
 
-    }
 
     override fun onDestroyView() {
         _binding = null

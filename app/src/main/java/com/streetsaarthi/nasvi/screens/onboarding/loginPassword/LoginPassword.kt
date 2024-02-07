@@ -67,11 +67,6 @@ class LoginPassword : Fragment() {
                 view.findNavController().navigate(R.id.action_loginPassword_to_loginOtp)
             }
 
-//            var phoneNumberValidator =PhoneNumberValidator(requireContext())
-//            var xxx = phoneNumberValidator.checkValidPhoneNumber("+91", "2988397522", "IND")
-//
-//            Log.e("TAG", "xxx "+xxx)
-
 
             binding.btSignIn.singleClick {
                 if(binding.editTextMobileNumber.text.toString().isEmpty() || binding.editTextMobileNumber.text.toString().length != 10){

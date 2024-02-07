@@ -492,5 +492,7 @@
     <string name='notification_not_enabled'>आपका नोटिफिकेशन सक्षम नहीं है</string>
     <string name='request_delete'>आपके अनुरोध के लिए धन्यवाद। आपका खाता 2–3 कार्य दिवसों के भीतर हटा दिया जाएगा।</string>
     <string name='profile_updated_successfully'>प्रोफ़ाइल सफलतापूर्वक अपडेट की गई</string>
-
+    <string name='change_mobile_number'>मोबाइल नंबर बदलें</string>
+    <string name='enter_new_mobile_number_for_login'>लॉगिन के लिए नया मोबाइल नंबर दर्ज करें</string>
+    <string name='mobile_number_updated_successfully'>मोबाइल नंबर सफलतापूर्वक अपडेट किया गया</string>
 </resources>

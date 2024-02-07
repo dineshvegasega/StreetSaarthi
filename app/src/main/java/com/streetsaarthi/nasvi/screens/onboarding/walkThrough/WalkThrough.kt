@@ -59,14 +59,7 @@ class WalkThrough : Fragment() {
 
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    Log.e("Selected_Page", position.toString())
                     tabPosition = position
-//                    if(position == 2) {
-//                        mainThread {
-//                            delay(1000)
-//                            requireView().findNavController().navigate(R.id.action_walkThrough_to_onBoard)
-//                        }
-//                    }
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {
