@@ -112,7 +112,9 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
                             itemNotificationUpdateResult.value = true
 
                             if(value == 1){
-                                val last  = if(data.language.contains("/")){
+                                val last = if(data.language == null){
+                                    "en"
+                                }else if(data.language.contains("/")){
                                     data.language.substring(data.language.lastIndexOf('/') + 1).replace("'", "")
                                 } else {
                                     data.language

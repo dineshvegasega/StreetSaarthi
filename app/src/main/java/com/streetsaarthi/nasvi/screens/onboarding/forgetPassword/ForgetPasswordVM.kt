@@ -37,7 +37,10 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
                             isSend.value = true
                             var number = jsonObject.getString("mobile_no")
                             showSnackBar(view.resources.getString(R.string.otp_sent, number))
-                        } else {
+                        } else if(response.body()?.message == "User does not exist"){
+                            isSend.value = false
+                            showSnackBar(view.resources.getString(R.string.mobile_does_not_exist))
+                        }else {
                             isSend.value = false
                             showSnackBar(view.resources.getString(R.string.user_already_exist))
                         }

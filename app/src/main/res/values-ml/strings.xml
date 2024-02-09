@@ -492,4 +492,6 @@
     <string name="change_mobile_number">മൊബൈൽ നമ്പർ മാറ്റുക</string>
     <string name="enter_new_mobile_number_for_login">ലോഗിൻ ചെയ്യുന്നതിന് പുതിയ മൊബൈൽ നമ്പർ നൽകുക</string>
     <string name="mobile_number_updated_successfully">മൊബൈൽ നമ്പർ വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു</string>
+    <string name="mobile_does_not_exist">മൊബൈൽ നോ നിലവിലില്ല</string>
+
 </resources>

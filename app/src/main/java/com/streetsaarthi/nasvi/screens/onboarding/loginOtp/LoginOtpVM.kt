@@ -132,7 +132,9 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
 //                                view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
 //                            }, 100)
 
-                            val last  = if(data.language.contains("/")){
+                            val last = if(data.language == null){
+                                "en"
+                            }else if(data.language.contains("/")){
                                 data.language.substring(data.language.lastIndexOf('/') + 1).replace("'", "")
                             } else {
                                 data.language

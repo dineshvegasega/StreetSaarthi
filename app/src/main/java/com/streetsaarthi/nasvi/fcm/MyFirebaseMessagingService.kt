@@ -14,7 +14,12 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.datastore.DataStoreKeys
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
+import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
 
 class MyFirebaseMessagingService : FirebaseMessagingService(){
 
@@ -30,7 +35,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         Log.e("TAG", "onMessageReceived: Noti" + remoteMessage.getNotification());
         Log.e("TAG", "onMessageReceived: Data" + remoteMessage.getData());
 
-        noti()
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                noti()
+            }
+        }
+
 
     }
 
@@ -41,8 +51,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         val intent = Intent(this, MainActivity::class.java).putExtras(Bundle().apply {
             putString("key" , "notice")
             putString("_id" , "84")
+            putString(Screen , Main)
         })
-
         val pendingIntent= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT)
         }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

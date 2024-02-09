@@ -10,8 +10,9 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
+        android:background="@color/_ffffffff"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
@@ -743,15 +744,15 @@
             </RadioGroup>
 
 
+
+
             <include layout="@layout/register2_government"
                 android:id="@+id/inclide_government"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroupGovernment"
-                android:visibility="gone"
+                android:visibility="visible"
                 />
-
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btSignIn"

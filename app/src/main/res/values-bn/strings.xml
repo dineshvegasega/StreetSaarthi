@@ -492,4 +492,5 @@
     <string name="change_mobile_number">মোবাইল নম্বর পরিবর্তন করুন</string>
     <string name="enter_new_mobile_number_for_login">লগইনের জন্য নতুন মোবাইল নম্বর লিখুন</string>
     <string name="mobile_number_updated_successfully">মোবাইল নম্বর সফলভাবে আপডেট করা হয়েছে</string>
+    <string name = "mobile_does_not_exist">মোবাইল না বিদ্যমান নেই</string>
 </resources>

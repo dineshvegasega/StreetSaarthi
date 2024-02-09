@@ -529,10 +529,10 @@ var screenValue = 0
         LocaleHelper.setLocale(this, language)
         val refresh = Intent(Intent(this, MainActivity::class.java))
         refresh.putExtra(Screen, screen)
-        refresh.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        startActivity(refresh)
+        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         finish()
         finishAffinity()
+        startActivity(refresh)
     }
 
 

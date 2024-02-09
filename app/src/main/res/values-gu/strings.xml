@@ -489,4 +489,5 @@
     <string name="change_mobile_number">મોબાઇલ નંબર બદલો</string>
     <string name="enter_new_mobile_number_for_login">લોગિન માટે નવો મોબાઇલ નંબર દાખલ કરો</string>
     <string name="mobile_number_updated_successfully">મોબાઇલ નંબર સફળતાપૂર્વક અપડેટ થયો</string>
+    <string name="mobile_does_not_exist">મોબાઇલ નો અસ્તિત્વમાં નથી</string>
 </resources>

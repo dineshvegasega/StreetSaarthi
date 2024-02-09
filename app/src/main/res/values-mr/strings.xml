@@ -493,4 +493,6 @@
     <string name="change_mobile_number">मोबाइल नंबर बदला</string>
     <string name="enter_new_mobile_number_for_login">लॉग इन करण्यासाठी नवीन मोबाइल नंबर प्रविष्ट करा</string>
     <string name="mobile_number_updated_successfully">मोबाइल नंबर यशस्वीरित्या अपडेट झाला</string>
+    <string name="mobile_does_not_exist">मोबाइल नाही अस्तित्वात नाही</string>
+
 </resources>

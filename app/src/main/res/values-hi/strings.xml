@@ -495,4 +495,6 @@
     <string name='change_mobile_number'>मोबाइल नंबर बदलें</string>
     <string name='enter_new_mobile_number_for_login'>लॉगिन के लिए नया मोबाइल नंबर दर्ज करें</string>
     <string name='mobile_number_updated_successfully'>मोबाइल नंबर सफलतापूर्वक अपडेट किया गया</string>
+    <string name='mobile_does_not_exist'>मोबाइल नंबर मौजूद नहीं है</string>
+
 </resources>

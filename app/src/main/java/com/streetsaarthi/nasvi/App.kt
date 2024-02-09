@@ -2,6 +2,7 @@ package com.streetsaarthi.nasvi
 
 import android.app.Application
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 //import com.google.android.datatransport.runtime.scheduling.SchedulingConfigModule_ConfigFactory.config
 //import com.google.firebase.FirebaseApp
 //import com.google.firebase.remoteconfig.BuildConfig
@@ -17,6 +18,7 @@ class App : Application() {
 //   lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 //    FirebaseApp.initializeApp(applicationContext);
 //        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
 

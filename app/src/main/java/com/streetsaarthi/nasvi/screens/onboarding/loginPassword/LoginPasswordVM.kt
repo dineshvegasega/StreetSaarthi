@@ -75,7 +75,9 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                             saveData(AUTH, response.body()!!.token ?: "")
                             val data = Gson().fromJson(response.body()!!.data, Login::class.java)
                             saveObject(LOGIN_DATA, data)
-                            val last  = if(data.language.contains("/")){
+                            val last = if(data.language == null){
+                                "en"
+                            }else if(data.language.contains("/")){
                                 data.language.substring(data.language.lastIndexOf('/') + 1).replace("'", "")
                             } else {
                                 data.language

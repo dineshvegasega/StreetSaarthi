@@ -322,7 +322,9 @@ class Register2  : Fragment() , CallBackListener {
             binding.scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                     scrollPoistion = scrollY
             })
-
+            Handler(Looper.getMainLooper()).postDelayed({
+                inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
+            }, 100)
             ivRdGovernmentYes.singleClick {
                 viewModel.governmentScheme = true
                 inclideGovernment.layoutGovernmentScheme.visibility = View.VISIBLE

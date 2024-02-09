@@ -78,7 +78,7 @@ const val Main = "Main"
 const val CompleteRegister = "CompleteRegister"
 const val LoginPassword = "LoginPassword"
 const val LoginOtp = "LoginOtp"
-
+const val LIVE_SCHEMES = "LIVE_SCHEMES"
 
 
 

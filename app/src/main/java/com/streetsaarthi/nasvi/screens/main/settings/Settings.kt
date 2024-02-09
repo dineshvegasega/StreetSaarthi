@@ -102,8 +102,6 @@ class Settings : Fragment() {
                             );
                             binding.btLanguage.text = dataClass.name
                             binding.btLanguage.singleClick {
-                                Log.e("TAG", "asdsfs " + dataClass.name)
-
                                 val list = currentList
                                 list.forEach {
                                     it.isSelected = dataClass == it
@@ -121,8 +119,6 @@ class Settings : Fragment() {
                             }
 
                             binding.btImage.singleClick {
-                                Log.e("TAG", "asdsfs " + dataClass.name)
-
                                 val list = currentList
                                 list.forEach {
                                     it.isSelected = dataClass == it

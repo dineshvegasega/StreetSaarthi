@@ -497,4 +497,6 @@
     <string name="change_mobile_number">మొబైల్ నంబర్‌ని మార్చండి</string>
     <string name="enter_new_mobile_number_for_login">లాగిన్ కోసం కొత్త మొబైల్ నంబర్‌ని నమోదు చేయండి</string>
     <string name="mobile_number_updated_successfully">మొబైల్ నంబర్ విజయవంతంగా నవీకరించబడింది</string>
+    <string name="mobile_does_not_exist">మొబైల్ నో ఉనికిలో లేదు</string>
+
 </resources>

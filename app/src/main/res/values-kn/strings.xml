@@ -493,4 +493,6 @@
     <string name="change_mobile_number">ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="enter_new_mobile_number_for_login">ಲಾಗಿನ್‌ಗಾಗಿ ಹೊಸ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
     <string name="mobile_number_updated_successfully">ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ</string>
+    <string name="mobile_does_not_exist">ಮೊಬೈಲ್ ಇಲ್ಲ ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ</string>
+
 </resources>

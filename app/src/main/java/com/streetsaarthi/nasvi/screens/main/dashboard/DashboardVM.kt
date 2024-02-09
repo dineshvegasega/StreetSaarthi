@@ -248,7 +248,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
                                 isScheme.value = false
                             }
-                            Log.e("TAG", "LiveSchemes.isReadLiveSchemes"+LiveSchemes.isReadLiveSchemes)
+//                            Log.e("TAG", "LiveSchemes.isReadLiveSchemes"+LiveSchemes.isReadLiveSchemes)
                             if (LiveSchemes.isReadLiveSchemes == true){
                                 DataStoreUtil.saveObject(
                                     DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
@@ -556,7 +556,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            Log.e("TAG", "aaaaaAAXX "+response.body()!!.data.toString())
+//                            Log.e("TAG", "aaaaaAAXX "+response.body()!!.data.toString())
                             DataStoreUtil.saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
