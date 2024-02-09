@@ -202,6 +202,7 @@
 
 
     <string-array name="years_array">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -532,8 +533,8 @@
     <string name="feedback_title">You have a Reply on Your Feedback</string>
     <string name="complaint_title">You have a Reply on Your Complaint</string>
 
-
-
+    <string name="network_failed_please_try_again">Network Failed, Please Try Again!</string>
+    <string name="try_again">Try Again</string>
 
 
     <string name="terms1">Terms and Conditions</string>

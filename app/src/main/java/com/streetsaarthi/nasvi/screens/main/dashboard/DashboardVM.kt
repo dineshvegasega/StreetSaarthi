@@ -39,6 +39,7 @@ import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -262,16 +263,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
-                    Log.e("TAG", "messageAA "+message)
+                   // super.error(message)
+                  //  showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
-
-//                override fun networkFailed(message: String) {
-//                    super.networkFailed(message)
-//                    Log.e("TAG", "networkFailed "+message)
-//                    counterNetwork.value = true
-//                }
 
                 override fun loading() {
                     super.loading()
@@ -316,15 +313,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+                  //  super.error(message)
+                 //   showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
-//                override fun networkFailed(message: String) {
-//                    super.networkFailed(message)
-//                    Log.e("TAG", "networkFailed "+message)
-//                    counterNetwork.value = true
-//                }
                 override fun loading() {
                     super.loading()
                 }
@@ -370,15 +365,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+                   // super.error(message)
+                 //   showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
-
-//                override fun networkFailed(message: String) {
-//                    super.networkFailed(message)
-//                    Log.e("TAG", "networkFailed "+message)
-//                    counterNetwork.value = true
-//                }
 
                 override fun loading() {
                     super.loading()
@@ -447,15 +439,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+                  //  super.error(message)
+               //     showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
-
-//                override fun networkFailed(message: String) {
-//                    super.networkFailed(message)
-//                    Log.e("TAG", "networkFailed "+message)
-//                    counterNetwork.value = true
-//                }
 
                 override fun loading() {
                     super.loading()
@@ -485,7 +474,10 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     }
                 }
                 override fun error(message: String) {
-                    super.error(message)
+                   // super.error(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
                 override fun loading() {
                     super.loading()
@@ -532,15 +524,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+                  //  super.error(message)
+           //         showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
-
-//                override fun networkFailed(message: String) {
-//                    super.networkFailed(message)
-//                    Log.e("TAG", "networkFailed "+message)
-//                    counterNetwork.value = true
-//                }
 
                 override fun loading() {
                     super.loading()
@@ -599,14 +588,11 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     }
                 }
                 override fun error(message: String) {
-                    super.error(message)
+                   // super.error(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
-
-//                override fun networkFailed(message: String) {
-//                    super.networkFailed(message)
-//                    Log.e("TAG", "networkFailed "+message)
-//                    counterNetwork.value = true
-//                }
 
                 override fun loading() {
                     super.loading()

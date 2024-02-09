@@ -41,6 +41,7 @@ import com.streetsaarthi.nasvi.databinding.MainActivityBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.ConnectivityManager
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
@@ -163,6 +164,7 @@ class MainActivity : AppCompatActivity() {
 
         getToken(){
             Log.e("TAG", "getToken "+this)
+            saveData(DataStoreKeys.TOKEN, this ?: "")
         }
 
 

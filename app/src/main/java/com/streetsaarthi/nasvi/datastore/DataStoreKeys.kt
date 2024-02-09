@@ -11,6 +11,7 @@ object DataStoreKeys {
     val THEME_KEY by lazy { stringPreferencesKey("theme_key") }
     val BOOLEAN_DATA by lazy { booleanPreferencesKey("BOOLEAN") }
     val LOGIN_DATA by lazy { stringPreferencesKey("LOGIN_DATA") }
+    val TOKEN by lazy { stringPreferencesKey("TOKEN") }
     val AUTH by lazy { stringPreferencesKey("AUTH") }
     val REMEMBER by lazy { booleanPreferencesKey("REMEMBER") }
     val LOGIN_USER by lazy { stringPreferencesKey("LOGIN_USER") }

@@ -10,6 +10,7 @@ const val URL = BASE_URL+"api/"
 
 
 
+const val MOBILE_TOKEN = "update-mobile-token"
 const val LOGIN = "login"
 const val VENDER_PROFILE = "vendor-profile"
 const val VENDER_PROFILE_UPDATE = "vendor-profile-update"
@@ -82,5 +83,6 @@ const val LoginPassword = "LoginPassword"
 const val LoginOtp = "LoginOtp"
 const val LIVE_SCHEMES = "LIVE_SCHEMES"
 
+const val NETWORK_DIALOG_SHOW = false
 
 

@@ -12,8 +12,10 @@ import com.streetsaarthi.nasvi.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys.AUTH
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys.LOGIN_DATA
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
@@ -21,6 +23,7 @@ import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
+import com.streetsaarthi.nasvi.utils.getToken
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -41,7 +44,14 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            profile(view, ""+Gson().fromJson(response.body()!!.data, Login::class.java).id)
+                            val _id = Gson().fromJson(response.body()!!.data, Login::class.java).id
+                            profile(view, ""+_id)
+                            readData(DataStoreKeys.TOKEN) { token ->
+                                token(JSONObject().apply {
+                                    put("user_id", ""+_id)
+                                    put("mobile_token", token)
+                                })
+                            }
                             showSnackBar(view.resources.getString(R.string.logged_in_successfully))
                         }else if(response.body()!!.message == "User does not exist"){
                             showSnackBar(view.resources.getString(R.string.user_does_not_exist))
@@ -60,6 +70,26 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
         )
     }
 
+
+
+    fun token(jsonObject: JSONObject) = viewModelScope.launch {
+        repository.callApiWithoutLoader(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.mobileToken(requestBody = jsonObject.getJsonRequestBody())
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                    }
+                }
+                override fun error(message: String) {
+//                    super.error(message)
+                }
+                override fun loading() {
+//                    super.loading()
+                }
+            }
+        )
+    }
 
 
 
@@ -82,8 +112,6 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                             } else {
                                 data.language
                             }
-
-                            Log.e("TAG","lastZZ "+last)
                             MainActivity.mainActivity.get()?.reloadActivity(last, Main)
                         }
                     }

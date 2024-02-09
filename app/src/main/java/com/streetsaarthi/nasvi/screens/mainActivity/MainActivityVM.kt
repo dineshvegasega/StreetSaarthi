@@ -370,7 +370,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
+//                    super.error(message)
                 }
 
                 override fun loading() {

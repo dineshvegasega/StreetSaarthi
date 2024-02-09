@@ -23,6 +23,7 @@ import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
+import com.streetsaarthi.nasvi.utils.getToken
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -127,11 +128,12 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                             val data = Gson().fromJson(response.body()!!.data, Login::class.java)
                             saveObject(DataStoreKeys.LOGIN_DATA, data)
                             showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
-//                            Handler(Looper.getMainLooper()).postDelayed(Thread {
-//                                MainActivity.mainActivity.get()!!.callBack()
-//                                view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
-//                            }, 100)
-
+                            DataStoreUtil.readData(DataStoreKeys.TOKEN) { token ->
+                                token(JSONObject().apply {
+                                    put("user_id", "" + data.id)
+                                    put("mobile_token", token)
+                                })
+                            }
                             val last = if(data.language == null){
                                 "en"
                             }else if(data.language.contains("/")){
@@ -160,5 +162,25 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
         )
     }
 
+
+
+    fun token(jsonObject: JSONObject) = viewModelScope.launch {
+        repository.callApiWithoutLoader(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.mobileToken(requestBody = jsonObject.getJsonRequestBody())
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                    }
+                }
+                override fun error(message: String) {
+//                    super.error(message)
+                }
+                override fun loading() {
+//                    super.loading()
+                }
+            }
+        )
+    }
 
 }

@@ -30,6 +30,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGIN
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGOUT
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveScheme
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveTraining
+import com.streetsaarthi.nasvi.screens.onboarding.networking.MOBILE_TOKEN
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Marketplace
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NewFeedback
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeDetail
@@ -58,6 +59,12 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiInterface {
+
+    @POST(MOBILE_TOKEN)
+    suspend fun mobileToken(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
 
     @POST(LOGIN)
     suspend fun login(

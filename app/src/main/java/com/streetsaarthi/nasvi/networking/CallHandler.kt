@@ -20,6 +20,4 @@ fun interface CallHandler<T> {
         showSnackBar(message)
     }
 
-    fun networkFailed(message: String){
-    }
 }

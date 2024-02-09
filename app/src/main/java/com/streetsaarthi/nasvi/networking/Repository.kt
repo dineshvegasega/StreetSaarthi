@@ -73,19 +73,10 @@ class Repository @Inject constructor(
                         if (loader) MainActivity.context?.get()?.showLoader()
                     }
                 }.catch { error ->
-//                    if(error.toString().contains("ConnectException")){
-//                        Log.e("TAG", "itBB11 "+error.toString())
-//                        withContext(mainDispatcher) {
-//                            hideLoader()
-//                            callHandler.networkFailed(error.getErrorMessage())
-//                        }
-//                    } else {
-//                        Log.e("TAG", "itBB22 "+error.toString())
                         withContext(mainDispatcher) {
                             hideLoader()
                             callHandler.error(error.getErrorMessage())
                         }
-//                    }
                 }.collect { response ->
                     withContext(mainDispatcher) {
                         hideLoader()
