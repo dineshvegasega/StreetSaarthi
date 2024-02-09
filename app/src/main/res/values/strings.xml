@@ -519,8 +519,18 @@
     <string name="mobile_number_updated_successfully">Mobile Number Updated Successfully</string>
     <string name="mobile_does_not_exist">Mobile No Does Not Exist</string>
 
-
-
+    <string name="training_type">Training</string>
+    <string name="notice_type">Notice</string>
+    <string name="scheme_type">Scheme</string>
+    <string name="vendor_details_type">Vendor Details</string>
+    <string name="feedback_type">Feedback</string>
+    <string name="complaint_type">Complaint</string>
+    <string name="training_title">You have One New Training</string>
+    <string name="notice_title">You have One New Notice</string>
+    <string name="scheme_title">You have One New  Scheme</string>
+    <string name="vendor_details_title">Congratulations! Your profile has been approved</string>
+    <string name="feedback_title">You have a Reply on Your Feedback</string>
+    <string name="complaint_title">You have a Reply on Your Complaint</string>
 
 
 

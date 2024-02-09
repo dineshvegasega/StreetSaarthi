@@ -15,9 +15,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
@@ -36,6 +36,7 @@ import com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetails
 import com.streetsaarthi.nasvi.screens.main.notices.allNotices.AllNotices
 import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.nasvi.screens.main.notifications.Notifications
+import com.streetsaarthi.nasvi.screens.main.notifications.NotificationsVM
 import com.streetsaarthi.nasvi.screens.main.profiles.Profiles
 import com.streetsaarthi.nasvi.screens.main.schemes.allSchemes.AllSchemes
 import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
@@ -136,6 +137,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                         Log.e("TAG", "isNotification"+isNotification)
                                                         if(isNotification == "Yes"){
                                                             if (fragmentInFrame !is Notifications){
+                                                                NotificationsVM.isNotificationNext = false
                                                                 navHostFragment?.navController?.navigate(R.id.notifications)
                                                             }
                                                         } else {

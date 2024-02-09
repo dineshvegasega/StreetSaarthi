@@ -13,9 +13,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
@@ -52,6 +52,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardVM @Inject constructor(private val repository: Repository): ViewModel() {
 
+    var counterNetwork = MutableLiveData<Boolean>(false)
 
     var itemMain : ArrayList<ItemModel> ?= ArrayList()
     init {
@@ -263,7 +264,14 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun error(message: String) {
                     super.error(message)
                     showSnackBar(message)
+                    Log.e("TAG", "messageAA "+message)
                 }
+
+//                override fun networkFailed(message: String) {
+//                    super.networkFailed(message)
+//                    Log.e("TAG", "networkFailed "+message)
+//                    counterNetwork.value = true
+//                }
 
                 override fun loading() {
                     super.loading()
@@ -312,6 +320,11 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     showSnackBar(message)
                 }
 
+//                override fun networkFailed(message: String) {
+//                    super.networkFailed(message)
+//                    Log.e("TAG", "networkFailed "+message)
+//                    counterNetwork.value = true
+//                }
                 override fun loading() {
                     super.loading()
                 }
@@ -360,6 +373,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     super.error(message)
                     showSnackBar(message)
                 }
+
+//                override fun networkFailed(message: String) {
+//                    super.networkFailed(message)
+//                    Log.e("TAG", "networkFailed "+message)
+//                    counterNetwork.value = true
+//                }
 
                 override fun loading() {
                     super.loading()
@@ -431,6 +450,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     super.error(message)
                     showSnackBar(message)
                 }
+
+//                override fun networkFailed(message: String) {
+//                    super.networkFailed(message)
+//                    Log.e("TAG", "networkFailed "+message)
+//                    counterNetwork.value = true
+//                }
 
                 override fun loading() {
                     super.loading()
@@ -511,6 +536,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     showSnackBar(message)
                 }
 
+//                override fun networkFailed(message: String) {
+//                    super.networkFailed(message)
+//                    Log.e("TAG", "networkFailed "+message)
+//                    counterNetwork.value = true
+//                }
+
                 override fun loading() {
                     super.loading()
                 }
@@ -556,7 +587,6 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-//                            Log.e("TAG", "aaaaaAAXX "+response.body()!!.data.toString())
                             DataStoreUtil.saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
@@ -571,6 +601,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun error(message: String) {
                     super.error(message)
                 }
+
+//                override fun networkFailed(message: String) {
+//                    super.networkFailed(message)
+//                    Log.e("TAG", "networkFailed "+message)
+//                    counterNetwork.value = true
+//                }
+
                 override fun loading() {
                     super.loading()
                 }

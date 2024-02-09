@@ -490,4 +490,18 @@
     <string name="enter_new_mobile_number_for_login">લોગિન માટે નવો મોબાઇલ નંબર દાખલ કરો</string>
     <string name="mobile_number_updated_successfully">મોબાઇલ નંબર સફળતાપૂર્વક અપડેટ થયો</string>
     <string name="mobile_does_not_exist">મોબાઇલ નો અસ્તિત્વમાં નથી</string>
+
+    <string name = "training_type">તાલીમ</string>
+    <string name = "notice_type"> સૂચના</string>
+    <string name = "scheme_type"> યોજના</string>
+    <string name="vendor_details_type">વિક્રેતાની વિગતો</string>
+    <string name="feedback_type">પ્રતિસાદ</string>
+    <string name="complaint_type">ફરિયાદ</string>
+    <string name="training_title">તમારી પાસે એક નવી તાલીમ છે</string>
+    <string name="notice_title">તમારી પાસે એક નવી સૂચના છે</string>
+    <string name="scheme_title">તમારી પાસે એક નવી યોજના છે</string>
+    <string name="vendor_details_title">અભિનંદન! તમારી પ્રોફાઇલ મંજૂર કરવામાં આવી છે</string>
+    <string name="feedback_title">તમારી પાસે તમારા પ્રતિસાદ પર જવાબ છે</string>
+    <string name="complaint_title">તમારી ફરિયાદ પર તમારી પાસે જવાબ છે</string>
+
 </resources>

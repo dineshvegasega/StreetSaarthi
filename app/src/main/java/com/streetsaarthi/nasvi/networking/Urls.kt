@@ -52,6 +52,8 @@ const val AllNoticeHistory = "notice-history-list"
 
 const val Notifications = "notification-list"
 const val DeleteNotification = "delete-notification"
+const val UpdateNotification = "notification-update"
+
 
 const val FeedbackConversationDetails = "feedback-conversation-details"
 const val AddFeedbackConversation = "feedback-conversation"

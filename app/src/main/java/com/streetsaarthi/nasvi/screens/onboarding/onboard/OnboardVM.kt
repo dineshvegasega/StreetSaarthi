@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.OnboardItemBinding

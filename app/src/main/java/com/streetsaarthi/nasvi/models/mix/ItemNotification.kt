@@ -1,6 +1,7 @@
 package com.streetsaarthi.nasvi.models.mix
 
 data class ItemNotification(
+    var position: Int,
     val notification_id: Int,
     val user_id: Int,
     val title: String,

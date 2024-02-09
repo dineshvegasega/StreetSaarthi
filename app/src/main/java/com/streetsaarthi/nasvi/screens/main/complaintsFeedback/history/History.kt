@@ -185,7 +185,7 @@ class History : Fragment() {
                 results.addAll(changeValue as MutableList<ItemHistory>)
             }
             viewModel.adapter.addAllSearch(results)
-
+            totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {

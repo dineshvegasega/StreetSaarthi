@@ -1,4 +1,4 @@
-package com.demo.networking
+package com.streetsaarthi.nasvi
 
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.model.BaseResponseDC
@@ -48,6 +48,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeApply
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeHistoryList
 import com.streetsaarthi.nasvi.screens.onboarding.networking.TrainingDetail
+import com.streetsaarthi.nasvi.screens.onboarding.networking.UpdateNotification
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE_UPDATE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VERIFY_OTP
@@ -233,7 +234,7 @@ interface ApiInterface {
     @GET(Notifications)
     suspend fun notifications(
         @Query("page")  page: Int,
-//        @Query("is_read")  is_read: Boolean,
+        @Query("is_read")  is_read: Boolean,
         @Query("user_id")  user_id: String
     ): Response<BaseResponseDC<JsonElement>>
 
@@ -243,6 +244,12 @@ interface ApiInterface {
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 
+
+
+    @POST(UpdateNotification)
+    suspend fun updateNotification(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
 
 
     @POST(ComplaintFeedback)

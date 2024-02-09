@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +20,10 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.NotificationsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemNotification
+import com.streetsaarthi.nasvi.screens.main.notifications.NotificationsVM.Companion.isNotificationNext
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
@@ -34,7 +37,7 @@ class Notifications : Fragment() {
     private var _binding: NotificationsBinding? = null
     private val binding get() = _binding!!
 
-    var logoutAlert : AlertDialog?= null
+    var deleteAlert : AlertDialog?= null
 
     private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
@@ -67,11 +70,11 @@ class Notifications : Fragment() {
             idDataNotFound.textDesc.text = getString(R.string.currently_no_notifications)
 
             inclideHeaderSearch.btClose.singleClick {
-                if(logoutAlert?.isShowing == true) {
+                if(deleteAlert?.isShowing == true) {
                     return@singleClick
                 }
 
-                logoutAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+                deleteAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
                     .setTitle(resources.getString(R.string.app_name))
                     .setMessage(resources.getString(R.string.are_your_sure_want_to_delete_all_notifications))
                     .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
@@ -93,7 +96,6 @@ class Notifications : Fragment() {
                     .setCancelable(false)
                     .show()
             }
-
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)
@@ -147,7 +149,7 @@ class Notifications : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
-//                        put("is_read", false)
+                        put("is_read", false)
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
                     viewModel.notifications(view = requireView(), obj)
@@ -162,7 +164,7 @@ class Notifications : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
-//                        put("is_read", false)
+                        put("is_read", false)
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
                     viewModel.notificationsSecond(view = requireView(), obj)
@@ -172,10 +174,24 @@ class Notifications : Fragment() {
     }
 
 
-    var results: MutableList<ItemNotification> = ArrayList()
+    var results: ArrayList<ItemNotification> = ArrayList()
 
     @SuppressLint("NotifyDataSetChanged")
     private fun observerDataRequest(){
+
+        viewModel.updateNotifications.value = -1
+        viewModel.updateNotifications.observe(requireActivity()) {
+            if (it != -1){
+                Log.e("TAG", "resultsAA "+results.size)
+                Log.e("TAG", "itAA "+it)
+                results.removeAt(it)
+                viewModel.adapter.addAllSearch(results)
+                viewModel.updateNotifications.value = -1
+            }
+
+        }
+
+
         viewModel.deleteNotifications.observe(requireActivity()) {
             if(it){
                 results.clear()
@@ -183,14 +199,17 @@ class Notifications : Fragment() {
             }
         }
 
+
+
         viewModel.itemNotifications.observe(requireActivity()) {
             val typeToken = object : TypeToken<List<ItemNotification>>() {}.type
             val changeValue = Gson().fromJson<List<ItemNotification>>(Gson().toJson(it.data), typeToken)
-            if(results.size == 0){
+
+            if(isNotificationNext == false){
                 results.addAll(changeValue as MutableList<ItemNotification>)
             }
             viewModel.adapter.addAllSearch(results)
-
+            totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {
@@ -210,7 +229,9 @@ class Notifications : Fragment() {
         viewModel.itemNotificationsSecond.observe(requireActivity()) {
             val typeToken = object : TypeToken<List<ItemNotification>>() {}.type
             val changeValue = Gson().fromJson<List<ItemNotification>>(Gson().toJson(it.data), typeToken)
-            results.addAll(changeValue as MutableList<ItemNotification>)
+            if(isNotificationNext == false){
+                results.addAll(changeValue as MutableList<ItemNotification>)
+            }
             viewModel.adapter.removeLoadingFooter()
             isLoading = false
             viewModel.adapter.addAllSearch(results)
@@ -222,6 +243,9 @@ class Notifications : Fragment() {
 
     override fun onDestroyView() {
         _binding = null
+        deleteAlert?.let {
+            deleteAlert!!.cancel()
+        }
         super.onDestroyView()
     }
 }

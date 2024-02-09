@@ -1,10 +1,11 @@
-package com.demo.networking
+package com.streetsaarthi.nasvi
 
 
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
@@ -72,10 +73,19 @@ class Repository @Inject constructor(
                         if (loader) MainActivity.context?.get()?.showLoader()
                     }
                 }.catch { error ->
-                    withContext(mainDispatcher) {
-                        hideLoader()
-                        callHandler.error(error.getErrorMessage())
-                    }
+//                    if(error.toString().contains("ConnectException")){
+//                        Log.e("TAG", "itBB11 "+error.toString())
+//                        withContext(mainDispatcher) {
+//                            hideLoader()
+//                            callHandler.networkFailed(error.getErrorMessage())
+//                        }
+//                    } else {
+//                        Log.e("TAG", "itBB22 "+error.toString())
+                        withContext(mainDispatcher) {
+                            hideLoader()
+                            callHandler.error(error.getErrorMessage())
+                        }
+//                    }
                 }.collect { response ->
                     withContext(mainDispatcher) {
                         hideLoader()

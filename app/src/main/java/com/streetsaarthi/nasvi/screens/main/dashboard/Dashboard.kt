@@ -128,6 +128,14 @@ class Dashboard : Fragment() {
             }
 
 
+            viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
+                if (it) {
+
+                } else {
+
+                }
+            })
+
 
 //            viewModel.adsList(view)
 //            val adapter = BannerViewPagerAdapter(requireContext())

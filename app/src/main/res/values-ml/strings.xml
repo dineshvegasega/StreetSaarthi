@@ -494,4 +494,17 @@
     <string name="mobile_number_updated_successfully">മൊബൈൽ നമ്പർ വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു</string>
     <string name="mobile_does_not_exist">മൊബൈൽ നോ നിലവിലില്ല</string>
 
+    <string name="training_type">പരിശീലനം</string>
+    <string name="notice_type">അറിയിപ്പ്</string>
+    <string name="scheme_type">സ്കീം</string>
+    <string name="vendor_details_type">വെണ്ടർ വിശദാംശങ്ങൾ</string>
+    <string name="feedback_type">ഫീഡ്‌ബാക്ക്</string>
+    <string name="complaint_type">പരാതി</string>
+    <string name="training_title">നിങ്ങൾക്ക് ഒരു പുതിയ പരിശീലനം ഉണ്ട്</string>
+    <string name="notice_title">നിങ്ങൾക്ക് ഒരു പുതിയ അറിയിപ്പുണ്ട്</string>
+    <string name="scheme_title">നിങ്ങൾക്ക് ഒരു പുതിയ സ്കീം ഉണ്ട്</string>
+    <string name="vendor_details_title">അഭിനന്ദനങ്ങൾ! നിങ്ങളുടെ പ്രൊഫൈൽ അംഗീകരിച്ചു</string>
+    <string name="feedback_title">നിങ്ങളുടെ ഫീഡ്‌ബാക്കിൽ നിങ്ങൾക്ക് ഒരു മറുപടിയുണ്ട്</string>
+    <string name="complaint_title">നിങ്ങളുടെ പരാതിയിൽ നിങ്ങൾക്ക് ഒരു മറുപടിയുണ്ട്</string>
+
 </resources>

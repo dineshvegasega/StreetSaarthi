@@ -1,4 +1,4 @@
-package com.demo.networking
+package com.streetsaarthi.nasvi
 
 import com.streetsaarthi.nasvi.utils.showSnackBar
 
@@ -20,4 +20,6 @@ fun interface CallHandler<T> {
         showSnackBar(message)
     }
 
+    fun networkFailed(message: String){
+    }
 }

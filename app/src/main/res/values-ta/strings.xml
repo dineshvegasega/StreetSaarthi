@@ -495,4 +495,17 @@
     <string name="mobile_number_updated_successfully">மொபைல் எண் வெற்றிகரமாக புதுப்பிக்கப்பட்டது</string>
     <string name="mobile_does_not_exist">மொபைல் இல்லை இல்லை</string>
 
+    <string name="training_type">பயிற்சி</string>
+    <string name="notice_type">அறிவிப்பு</string>
+    <string name="scheme_type">திட்டம்</string>
+    <string name="vendor_details_type">விற்பனையாளர் விவரங்கள்</string>
+    <string name="feedback_type">கருத்து</string>
+    <string name="complaint_type">புகார்</string>
+    <string name="training_title">உங்களுக்கு ஒரு புதிய பயிற்சி உள்ளது</string>
+    <string name="notice_title">உங்களிடம் ஒரு புதிய அறிவிப்பு உள்ளது</string>
+    <string name="scheme_title">உங்களிடம் ஒரு புதிய திட்டம் உள்ளது</string>
+    <string name="vendor_details_title">வாழ்த்துக்கள்! உங்கள் சுயவிவரம் அங்கீகரிக்கப்பட்டது</string>
+    <string name="feedback_title">உங்கள் பின்னூட்டத்தில் பதில் உள்ளது</string>
+    <string name="complaint_title">உங்கள் புகாருக்கு உங்களிடம் பதில் உள்ளது</string>
+
 </resources>

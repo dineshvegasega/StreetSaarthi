@@ -493,4 +493,18 @@
     <string name="enter_new_mobile_number_for_login">লগইনের জন্য নতুন মোবাইল নম্বর লিখুন</string>
     <string name="mobile_number_updated_successfully">মোবাইল নম্বর সফলভাবে আপডেট করা হয়েছে</string>
     <string name = "mobile_does_not_exist">মোবাইল না বিদ্যমান নেই</string>
+
+    <string name = "training_type"> প্রশিক্ষণ</string>
+    <string name="notice_type">বিজ্ঞপ্তি</string>
+    <string name="scheme_type">স্কিম</string>
+    <string name="vendor_details_type">বিক্রেতার বিবরণ</string>
+    <string name="feedback_type">প্রতিক্রিয়া</string>
+    <string name="complaint_type">অভিযোগ</string>
+    <string name="training_title">আপনার একটি নতুন প্রশিক্ষণ আছে</string>
+    <string name="notice_title">আপনার কাছে একটি নতুন বিজ্ঞপ্তি আছে</string>
+    <string name="scheme_title">আপনার একটি নতুন স্কিম আছে</string>৷
+    <string name="vendor_details_title">অভিনন্দন! আপনার প্রোফাইল অনুমোদিত হয়েছে</string>
+    <string name="feedback_title">আপনার প্রতিক্রিয়ার উপর আপনার একটি উত্তর আছে</string>
+    <string name="complaint_title">আপনার অভিযোগের একটি উত্তর আছে</string>
+
 </resources>

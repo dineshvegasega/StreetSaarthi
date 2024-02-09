@@ -1,6 +1,6 @@
 package com.streetsaarthi.nasvi.networking
 
-import com.demo.networking.ApiInterface
+import com.streetsaarthi.nasvi.ApiInterface
 import com.streetsaarthi.nasvi.utils.showSnackBar
 
 fun interface CallHandlerTranslate <T> {

@@ -238,7 +238,7 @@ class Settings : Fragment() {
                    .setType(MultipartBody.FORM)
                    .addFormDataPart("user_type", USER_TYPE)
                requestBody.addFormDataPart("user_id", ""+_id)
-                   requestBody.addFormDataPart("language", locale)
+                   requestBody.addFormDataPart("language", "/en/"+locale)
                viewModel.notificationUpdate(""+_id, requestBody.build(), value)
            }
        }

@@ -499,4 +499,17 @@
     <string name="mobile_number_updated_successfully">మొబైల్ నంబర్ విజయవంతంగా నవీకరించబడింది</string>
     <string name="mobile_does_not_exist">మొబైల్ నో ఉనికిలో లేదు</string>
 
+    <string name="training_type">శిక్షణ</string>
+    <string name="notice_type">నోటీస్</string>
+    <string name="scheme_type">స్కీమ్</string>
+    <string name="vendor_details_type">విక్రేత వివరాలు</string>
+    <string name="feedback_type">అభిప్రాయం</string>
+    <string name="complaint_type">ఫిర్యాదు</string>
+    <string name="training_title">మీకు ఒక కొత్త శిక్షణ ఉంది</string>
+    <string name="notice_title">మీకు ఒక కొత్త నోటీసు ఉంది</string>
+    <string name="scheme_title">మీకు ఒక కొత్త పథకం ఉంది</string>
+    <string name="vendor_details_title">అభినందనలు! మీ ప్రొఫైల్ ఆమోదించబడింది</string>
+    <string name="feedback_title">మీ అభిప్రాయంపై మీకు ప్రత్యుత్తరం ఉంది</string>
+    <string name="complaint_title">మీ ఫిర్యాదుపై మీకు ప్రత్యుత్తరం ఉంది</string>
+
 </resources>

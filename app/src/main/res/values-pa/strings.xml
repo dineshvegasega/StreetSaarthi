@@ -499,4 +499,17 @@
     <string name="mobile_number_updated_successfully">ਮੋਬਾਈਲ ਨੰਬਰ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
     <string name = "mobile_does_not_exist"> ਮੋਬਾਈਲ ਨੰਬਰ ਮੌਜੂਦ ਨਹੀਂ ਹੈ</string>
 
+    <string name = "training_type">ਸਿਖਲਾਈ</string>
+    <string name="notice_type">ਨੋਟਿਸ</string>
+    <string name="scheme_type">ਸਕੀਮ</string>
+    <string name="vendor_details_type">ਵਿਕਰੇਤਾ ਵੇਰਵੇ</string>
+    <string name="feedback_type">ਫੀਡਬੈਕ</string>
+    <string name="complaint_type">ਸ਼ਿਕਾਇਤ</string>
+    <string name="training_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਸਿਖਲਾਈ ਹੈ</string>
+    <string name="notice_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵਾਂ ਨੋਟਿਸ ਹੈ</string>
+    <string name="scheme_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਸਕੀਮ ਹੈ</string>
+    <string name="vendor_details_title">ਵਧਾਈਆਂ! ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਨੂੰ ਮਨਜ਼ੂਰੀ ਦੇ ਦਿੱਤੀ ਗਈ ਹੈ</string>
+    <string name="feedback_title">ਤੁਹਾਡੇ ਫੀਡਬੈਕ \'ਤੇ ਇੱਕ ਜਵਾਬ ਹੈ</string>
+    <string name="complaint_title">ਤੁਹਾਡੇ ਕੋਲ ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ ਦਾ ਜਵਾਬ ਹੈ</string>
+
 </resources>

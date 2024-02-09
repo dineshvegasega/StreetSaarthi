@@ -9,16 +9,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.streetsaarthi.nasvi.BR
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.databinding.ItemNotificationsBinding
+import com.streetsaarthi.nasvi.datastore.DataStoreKeys
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemNotification
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
+import com.streetsaarthi.nasvi.screens.main.notifications.NotificationsVM.Companion.isNotificationNext
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.singleClick
+import org.json.JSONObject
 import java.util.Locale
 
 class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
@@ -113,28 +119,71 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
         fun bind(obj: Any?, viewModel: NotificationsVM, position: Int) {
             itemRowBinding.setVariable(BR.model, obj)
             itemRowBinding.executePendingBindings()
-            var dataClass = obj as ItemNotification
+            val dataClass = obj as ItemNotification
+//            dataClass.apply {
+//                this.position = position
+//            }
             itemRowBinding.apply {
-                textTitle.setText(dataClass.type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(
-                    Locale.getDefault()) else it.toString() } +" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a"))
+//                textTitle.setText(dataClass.type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(
+//                    Locale.getDefault()) else it.toString() } +" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a"))
 
-                textDesc.setText(dataClass.title)
-//                textHeaderTxt4.setText(dataClass.status)
+               var type = if(dataClass.type == "scheme"){
+                   root.resources.getString(R.string.scheme_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
+                } else if(dataClass.type == "notice"){
+                   root.resources.getString(R.string.notice_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
+               } else if(dataClass.type == "training"){
+                   root.resources.getString(R.string.training_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
+               } else if(dataClass.type == "Vendor Details"){
+                   root.resources.getString(R.string.vendor_details_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
+               } else if(dataClass.title.contains("Feedback")){
+                   root.resources.getString(R.string.feedback_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
+               } else if(dataClass.title.contains("Complaint")){
+                   root.resources.getString(R.string.complaint_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
+               }  else {
+                   ""
+               }
+                textTitle.setText(type)
+
+                var title = if(dataClass.type == "scheme"){
+                    root.resources.getString(R.string.scheme_title)
+                } else if(dataClass.type == "notice"){
+                    root.resources.getString(R.string.notice_title)
+                } else if(dataClass.type == "training"){
+                    root.resources.getString(R.string.training_title)
+                } else if(dataClass.type == "Vendor Details"){
+                    root.resources.getString(R.string.vendor_details_title)
+                } else if(dataClass.title.contains("Feedback")){
+                    root.resources.getString(R.string.feedback_title)
+                } else if(dataClass.title.contains("Complaint")){
+                    root.resources.getString(R.string.complaint_title)
+                } else {
+                    ""
+                }
+                textDesc.setText(title)
+
+
 
                 root.singleClick {
-//                    if (dataClass.user_scheme_status == "applied"){
-                    //viewModel.viewDetail(""+dataClass.notice_id, position = position, root, 1)
-//                    }else{
-//                        viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
-//                    }
+                    isNotificationNext = true
                     when(dataClass.type){
-                        "VendorDetails" -> root.findNavController().navigate(R.id.action_notifications_to_profile)
+                        "Vendor Details" -> root.findNavController().navigate(R.id.action_notifications_to_profile)
                         "scheme" -> root.findNavController().navigate(R.id.action_notifications_to_liveSchemes)
                         "notice" -> root.findNavController().navigate(R.id.action_notifications_to_liveNotices)
                         "training" -> root.findNavController().navigate(R.id.action_notifications_to_liveTraining)
                         "Feedback" -> root.findNavController().navigate(R.id.action_notifications_to_historyDetail, Bundle().apply {
                             putString("key", ""+dataClass.type_id)
                         })
+                    }
+
+                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        if (loginUser != null) {
+                            val obj: JSONObject = JSONObject().apply {
+                                put("is_read", true)
+                                put("notification_id", ""+dataClass.notification_id)
+                                put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
+                            }
+                            viewModel.updateNotification(root, obj, position)
+                        }
                     }
                 }
 

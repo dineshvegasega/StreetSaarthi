@@ -497,4 +497,16 @@
     <string name="mobile_number_updated_successfully">موبائل نمبر کامیابی کے ساتھ اپ ڈیٹ ہو گیا</string>
     <string name="mobile_does_not_exist">موبائل نمبر موجود نہیں ہے</string>
 
+    <string name = "training_type">تربیت</string>
+    <string name = "notice_type"> نوٹس</string>
+    <string name = "scheme_type"> اسکیم</string>
+    <string name="vendor_details_type">وینڈر کی تفصیلات</string>
+    <string name="feedback_type">فیڈ بیک</string>
+    <string name="complaint_type">شکایت</string>
+    <string name = "training_title"> آپ کے پاس ایک نئی تربیت ہے</string>
+    <string name="notice_title">آپ کے پاس ایک نیا نوٹس ہے</string>
+    <string name="scheme_title">آپ کے پاس ایک نئی اسکیم ہے</string>
+    <string name="vendor_details_title">مبارک ہو! آپ کا پروفائل منظور ہو گیا ہے</string>
+    <string name="feedback_title">آپ کے تاثرات پر آپ کے پاس ایک جواب ہے</string>
+    <string name="complaint_title">آپ کے پاس آپ کی شکایت کا جواب ہے</string>
 </resources>
