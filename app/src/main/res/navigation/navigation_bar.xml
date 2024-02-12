@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_bar"
-    app:startDestination="@id/splash"
+    app:startDestination="@id/registerSuccessful"
     >
 
     <fragment
@@ -449,6 +449,11 @@
         <action
             android:id="@+id/action_notifications_to_liveTraining"
             app:destination="@id/liveTraining"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_notifications_to_informationCenter"
+            app:destination="@id/informationCenter"
             app:launchSingleTop="true"
             />
         <action

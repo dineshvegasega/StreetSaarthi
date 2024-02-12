@@ -102,7 +102,7 @@
     <string name="enter_details_to_register_with_us">আমাদের সাথে নিবন্ধন করতে বিস্তারিত লিখুন</string>
     <string name="profile_details">প্রোফাইলের বিশদ বিবরণ</string>
     <string name = "registration_successful">নিবন্ধন সফল</string>
-    <string name="congratulations_your_initial_registration_is_complete">অভিনন্দন!\nআপনার প্রাথমিক নিবন্ধন সম্পূর্ণ হয়েছে</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">অভিনন্দন!\nআপনার প্রাথমিক নিবন্ধন সম্পূর্ণ হয়েছে</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">আপনার নিবন্ধন যাচাই করার জন্য আমাদের দলের কেউ 48 ঘন্টার মধ্যে আপনার সাথে যোগাযোগ করবে।</string>
     <string name="RegisterNow">এখনই নিবন্ধন করুন</string>৷
 
@@ -499,6 +499,7 @@
     <string name="notice_type">বিজ্ঞপ্তি</string>
     <string name="scheme_type">স্কিম</string>
     <string name="vendor_details_type">বিক্রেতার বিবরণ</string>
+    <string name="information_type">তথ্য</string>
     <string name="feedback_type">প্রতিক্রিয়া</string>
     <string name="complaint_type">অভিযোগ</string>
     <string name="training_title">আপনার একটি নতুন প্রশিক্ষণ আছে</string>
@@ -507,5 +508,10 @@
     <string name="vendor_details_title">অভিনন্দন! আপনার প্রোফাইল অনুমোদিত হয়েছে</string>
     <string name="feedback_title">আপনার প্রতিক্রিয়ার উপর আপনার একটি উত্তর আছে</string>
     <string name="complaint_title">আপনার অভিযোগের একটি উত্তর আছে</string>
-
+    <string name="information_title">আপনার কাছে একটি নতুন তথ্য আছে</string>
+    <string name="network_failed_please_try_again">নেটওয়ার্ক ব্যর্থ হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন!</string>
+    <string name = "try_again"> আবার চেষ্টা করুন</string>
+    <string name="back_to_login_u"><u>লগইন করতে ফিরে যান</u></string>
+    <string name="complaint_added_successfully">অভিযোগ সফলভাবে যোগ করা হয়েছে</string>
+    <string name="feedback_added_successfully">প্রতিক্রিয়া সফলভাবে যোগ করা হয়েছে</string>
 </resources>

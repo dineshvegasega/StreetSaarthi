@@ -100,7 +100,7 @@
     <string name="enter_details_to_register_with_us">మాతో నమోదు చేసుకోవడానికి వివరాలను నమోదు చేయండి</string>
     <string name="profile_details">ప్రొఫైల్ వివరాలు</string>
     <string name="registration_successful">నమోదు విజయవంతమైంది</string>
-    <string name="congratulations_your_initial_registration_is_complete">అభినందనలు!\nమీ ప్రారంభ రిజిస్ట్రేషన్ పూర్తయింది</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">అభినందనలు!\nమీ ప్రారంభ రిజిస్ట్రేషన్ పూర్తయింది</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">మీ రిజిస్ట్రేషన్‌ను ధృవీకరించడానికి మా బృందం నుండి ఎవరైనా మిమ్మల్ని 48 గంటలలోపు సంప్రదిస్తారు.</string>
     <string name="RegisterNow">ఇప్పుడు నమోదు చేసుకోండి</string>
 
@@ -504,6 +504,7 @@
     <string name="notice_type">నోటీస్</string>
     <string name="scheme_type">స్కీమ్</string>
     <string name="vendor_details_type">విక్రేత వివరాలు</string>
+    <string name="information_type">సమాచారం</string>
     <string name="feedback_type">అభిప్రాయం</string>
     <string name="complaint_type">ఫిర్యాదు</string>
     <string name="training_title">మీకు ఒక కొత్త శిక్షణ ఉంది</string>
@@ -512,5 +513,10 @@
     <string name="vendor_details_title">అభినందనలు! మీ ప్రొఫైల్ ఆమోదించబడింది</string>
     <string name="feedback_title">మీ అభిప్రాయంపై మీకు ప్రత్యుత్తరం ఉంది</string>
     <string name="complaint_title">మీ ఫిర్యాదుపై మీకు ప్రత్యుత్తరం ఉంది</string>
-
+    <string name="information_title">మీకు ఒక కొత్త సమాచారం ఉంది</string>
+    <string name="network_failed_please_try_again">నెట్‌వర్క్ విఫలమైంది, దయచేసి మళ్లీ ప్రయత్నించండి!</string>
+    <string name="try_again">మళ్లీ ప్రయత్నించండి</string>
+    <string name="back_to_login_u"><u>తిరిగి లాగిన్ చేయడానికి</u></string>
+    <string name="complaint_added_successfully">ఫిర్యాదు విజయవంతంగా జోడించబడింది</string>
+    <string name="feedback_added_successfully">అభిప్రాయం విజయవంతంగా జోడించబడింది</string>
 </resources>

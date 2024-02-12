@@ -157,9 +157,9 @@
 
 
 
-                        <androidx.appcompat.widget.LinearLayoutCompat
+                        <com.google.android.flexbox.FlexboxLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/_100sdp"
                             android:orientation="vertical"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
@@ -370,7 +370,7 @@
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        </com.google.android.flexbox.FlexboxLayout>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -100,7 +100,7 @@
     <string name="enter_details_to_register_with_us">ہمارے ساتھ اندراج کے لئے تفصیلات درج کریں</string>
     <string name="profile_details">پروفائل کی تفصیلات</string>
     <string name="registration_successful">رجسٹریشن کامیاب</string>
-    <string name="congratulations_your_initial_registration_is_complete">مبارک ہو!\nآپ کی ابتدائی رجسٹریشن مکمل ہے</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">مبارک ہو!\nآپ کی ابتدائی رجسٹریشن مکمل ہے</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ہماری ٹیم کا کوئی شخص آپ کی رجسٹریشن کی تصدیق کے ل 48 گھنٹوں کے اندر آپ سے رابطہ کرے گا۔</string>
     <string name="RegisterNow">ابھی رجسٹر کریں</string>
 
@@ -502,6 +502,7 @@
     <string name = "notice_type"> نوٹس</string>
     <string name = "scheme_type"> اسکیم</string>
     <string name="vendor_details_type">وینڈر کی تفصیلات</string>
+    <string name="information_type">معلومات</string>
     <string name="feedback_type">فیڈ بیک</string>
     <string name="complaint_type">شکایت</string>
     <string name = "training_title"> آپ کے پاس ایک نئی تربیت ہے</string>
@@ -510,4 +511,10 @@
     <string name="vendor_details_title">مبارک ہو! آپ کا پروفائل منظور ہو گیا ہے</string>
     <string name="feedback_title">آپ کے تاثرات پر آپ کے پاس ایک جواب ہے</string>
     <string name="complaint_title">آپ کے پاس آپ کی شکایت کا جواب ہے</string>
+    <string name="information_title">آپ کے پاس ایک نئی معلومات ہے</string>
+    <string name="network_failed_please_try_again">نیٹ ورک ناکام ہوگیا، براہ کرم دوبارہ کوشش کریں!</string>
+    <string name = "try_again"> دوبارہ کوشش کریں</string>
+    <string name="back_to_login_u"><u>لاگ ان پر واپس</u></string>
+    <string name="complaint_added_successfully">شکایت کامیابی کے ساتھ شامل کی گئی</string>
+    <string name = "feedback_added_successfully">فیڈ بیک کامیابی سے شامل کیا گیا</string>
 </resources>

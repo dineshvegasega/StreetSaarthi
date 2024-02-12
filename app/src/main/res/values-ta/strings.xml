@@ -99,7 +99,7 @@
     <string name="enter_details_to_register_with_us">ഞങ്ങളുമായി രജിസ്റ്റർ ചെയ്യുന്നതിന് വിശദാംശങ്ങൾ നൽകുക</string>
     <string name="profile_details">പ്രൊഫൈൽ വിശദാംശങ്ങൾ</string>
     <string name="registration_successful">രജിസ്‌ട്രേഷൻ വിജയിച്ചു</string>
-    <string name="congratulations_your_initial_registration_is_complete">അഭിനന്ദനങ്ങൾ!\nനിങ്ങളുടെ പ്രാരംഭ രജിസ്ട്രേഷൻ പൂർത്തിയായി</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">അഭിനന്ദനങ്ങൾ!\nനിങ്ങളുടെ പ്രാരംഭ രജിസ്ട്രേഷൻ പൂർത്തിയായി</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">നിങ്ങളുടെ രജിസ്ട്രേഷൻ സ്ഥിരീകരിക്കുന്നതിന് ഞങ്ങളുടെ ടീമിലെ ആരെങ്കിലും 48 മണിക്കൂറിനുള്ളിൽ നിങ്ങളെ ബന്ധപ്പെടും.</string>
     <string name="RegisterNow">ഇപ്പോൾ രജിസ്റ്റർ ചെയ്യുക</string>
 
@@ -500,6 +500,7 @@
     <string name="notice_type">அறிவிப்பு</string>
     <string name="scheme_type">திட்டம்</string>
     <string name="vendor_details_type">விற்பனையாளர் விவரங்கள்</string>
+    <string name="information_type">தகவல்</string>
     <string name="feedback_type">கருத்து</string>
     <string name="complaint_type">புகார்</string>
     <string name="training_title">உங்களுக்கு ஒரு புதிய பயிற்சி உள்ளது</string>
@@ -508,5 +509,10 @@
     <string name="vendor_details_title">வாழ்த்துக்கள்! உங்கள் சுயவிவரம் அங்கீகரிக்கப்பட்டது</string>
     <string name="feedback_title">உங்கள் பின்னூட்டத்தில் பதில் உள்ளது</string>
     <string name="complaint_title">உங்கள் புகாருக்கு உங்களிடம் பதில் உள்ளது</string>
-
+    <string name="information_title">உங்களிடம் ஒரு புதிய தகவல் உள்ளது</string>
+    <string name="network_failed_please_try_again">நெட்வொர்க் தோல்வியடைந்தது, மீண்டும் முயற்சிக்கவும்!</string>
+    <string name="try_again">மீண்டும் முயற்சிக்கவும்</string>
+    <string name="back_to_login_u"><u>மீண்டும் உள்நுழைய</u></string>
+    <string name="complaint_added_successfully">புகார் வெற்றிகரமாக சேர்க்கப்பட்டது</string>
+    <string name="feedback_added_successfully">கருத்து வெற்றிகரமாக சேர்க்கப்பட்டது</string>
 </resources>

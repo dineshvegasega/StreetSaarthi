@@ -33,8 +33,6 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
     private val viewModel: ForgetPasswordVM by viewModels()
 
 
-//    private var smsVerifyCatcher: SmsVerifyCatcher? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

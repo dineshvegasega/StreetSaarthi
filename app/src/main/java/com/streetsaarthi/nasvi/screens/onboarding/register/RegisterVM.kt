@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi.screens.onboarding.register
 
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -475,7 +476,9 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
                         Handler(Looper.getMainLooper()).postDelayed({
-                            view.findNavController().navigate(R.id.action_register_to_registerSuccessful)
+                            view.findNavController().navigate(R.id.action_register_to_registerSuccessful, Bundle().apply {
+                                putString("key", jsonObject.getString("vendor_first_name"))
+                            })
                         },100)
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
@@ -498,7 +501,8 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
 
     fun registerWithFiles(
         view: View,
-        hashMap: RequestBody
+        hashMap: RequestBody,
+        _string: String
     ) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
@@ -508,7 +512,9 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<Any>>) {
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_register_to_registerSuccessful)
+                        view.findNavController().navigate(R.id.action_register_to_registerSuccessful, Bundle().apply {
+                            putString("key", _string)
+                        })
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
                     }

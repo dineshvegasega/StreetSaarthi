@@ -20,7 +20,7 @@
         app:fontFamily="@font/roboto_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginVertical="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/_12sdp"
         tools:ignore="HardcodedText" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -36,6 +36,11 @@
         android:paddingHorizontal="@dimen/_5sdp"
         app:spanCount="2"
         app:layout_constraintBottom_toTopOf="@+id/layoutBanner"
+        android:scrollbars="vertical"
+        android:saveEnabled="true"
+        android:scrollbarSize="@dimen/_4sdp"
+        android:scrollbarThumbVertical="@color/_E79D46"
+        android:fadeScrollbars="false"
         />
 
 

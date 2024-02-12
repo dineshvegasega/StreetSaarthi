@@ -98,7 +98,7 @@
     <string name="enter_details_to_register_with_us">ਸਾਡੇ ਨਾਲ ਰਜਿਸਟਰ ਕਰਨ ਲਈ ਵੇਰਵੇ ਦਰਜ ਕਰੋ</string>
     <string name="profile_details">ਪ੍ਰੋਫਾਈਲ ਵੇਰਵੇ</string>
     <string name="registration_successful">ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਸਫਲ</string>
-    <string name="congratulations_your_initial_registration_is_complete">ਵਧਾਈਆਂ! ਤੁਹਾਡੀ ਸ਼ੁਰੂਆਤੀ ਰਜਿਸਟਰੀ ਪੂਰੀ ਹੋ ਗਈ ਹੈ</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">ਵਧਾਈਆਂ! ਤੁਹਾਡੀ ਸ਼ੁਰੂਆਤੀ ਰਜਿਸਟਰੀ ਪੂਰੀ ਹੋ ਗਈ ਹੈ</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ਸਾਡੀ ਟੀਮ ਦਾ ਕੋਈ ਵਿਅਕਤੀ ਤੁਹਾਡੀ ਰਜਿਸਟਰੀਕਰਣ ਦੀ ਤਸਦੀਕ ਕਰਨ ਲਈ 48 ਵਜੇ ਅੰਦਰ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੇਗਾ.</string>
 
     <string name = "RegisterNow">ਹੁਣੇ ਰਜਿਸਟਰ ਕਰੋ</string>
@@ -504,6 +504,7 @@
     <string name="notice_type">ਨੋਟਿਸ</string>
     <string name="scheme_type">ਸਕੀਮ</string>
     <string name="vendor_details_type">ਵਿਕਰੇਤਾ ਵੇਰਵੇ</string>
+    <string name = "information_type">ਜਾਣਕਾਰੀ</string>
     <string name="feedback_type">ਫੀਡਬੈਕ</string>
     <string name="complaint_type">ਸ਼ਿਕਾਇਤ</string>
     <string name="training_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਸਿਖਲਾਈ ਹੈ</string>
@@ -512,5 +513,10 @@
     <string name="vendor_details_title">ਵਧਾਈਆਂ! ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਨੂੰ ਮਨਜ਼ੂਰੀ ਦੇ ਦਿੱਤੀ ਗਈ ਹੈ</string>
     <string name="feedback_title">ਤੁਹਾਡੇ ਫੀਡਬੈਕ \'ਤੇ ਇੱਕ ਜਵਾਬ ਹੈ</string>
     <string name="complaint_title">ਤੁਹਾਡੇ ਕੋਲ ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ ਦਾ ਜਵਾਬ ਹੈ</string>
-
+    <string name="information_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਜਾਣਕਾਰੀ ਹੈ</string>
+    <string name="network_failed_please_try_again">ਨੈੱਟਵਰਕ ਅਸਫਲ ਰਿਹਾ, ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ!</string>
+    <string name = "try_again"> ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
+    <string name="back_to_login_u"><u>ਲੌਗਇਨ ਕਰਨ ਲਈ ਵਾਪਸ</u></string>
+    <string name="complaint_added_successfully">ਸ਼ਿਕਾਇਤ ਸਫਲਤਾਪੂਰਵਕ ਸ਼ਾਮਲ ਕੀਤੀ ਗਈ</string>
+    <string name="feedback_added_successfully">ਫੀਡਬੈਕ ਸਫਲਤਾਪੂਰਵਕ ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ</string>
 </resources>

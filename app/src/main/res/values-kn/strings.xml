@@ -100,7 +100,7 @@
     <string name="enter_details_to_register_with_us">ನಮ್ಮೊಂದಿಗೆ ನೋಂದಾಯಿಸಲು ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ</string>
     <string name="profile_details">ಪ್ರೊಫೈಲ್ ವಿವರಗಳು</string>
     <string name="registration_successful">ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ</string>
-    <string name="congratulations_your_initial_registration_is_complete">ಅಭಿನಂದನೆಗಳು!\nನಿಮ್ಮ ಆರಂಭಿಕ ನೋಂದಣಿ ಪೂರ್ಣಗೊಂಡಿದೆ</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">ಅಭಿನಂದನೆಗಳು!\nನಿಮ್ಮ ಆರಂಭಿಕ ನೋಂದಣಿ ಪೂರ್ಣಗೊಂಡಿದೆ</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ನಿಮ್ಮ ನೋಂದಣಿಯನ್ನು ಪರಿಶೀಲಿಸಲು ನಮ್ಮ ತಂಡದ ಯಾರಾದರೂ 48ಗಂಟೆಯೊಳಗೆ ನಿಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸುತ್ತಾರೆ.</string>
     <string name="RegisterNow">ಈಗಲೇ ನೋಂದಾಯಿಸಿ</string>
 
@@ -500,6 +500,7 @@
     <string name="notice_type">ಸೂಚನೆ</string>
     <string name="scheme_type">ಸ್ಕೀಮ್</string>
     <string name="vendor_details_type">ಮಾರಾಟಗಾರರ ವಿವರಗಳು</string>
+    <string name="information_type">ಮಾಹಿತಿ</string>
     <string name="feedback_type">ಪ್ರತಿಕ್ರಿಯೆ</string>
     <string name="complaint_type">ದೂರು</string>
     <string name="training_title">ನೀವು ಒಂದು ಹೊಸ ತರಬೇತಿಯನ್ನು ಹೊಂದಿರುವಿರಿ</string>
@@ -508,5 +509,10 @@
     <string name="vendor_details_title">ಅಭಿನಂದನೆಗಳು! ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಅನುಮೋದಿಸಲಾಗಿದೆ</string>
     <string name="feedback_title">ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ ನೀವು ಪ್ರತ್ಯುತ್ತರವನ್ನು ಹೊಂದಿರುವಿರಿ</string>
     <string name="complaint_title">ನಿಮ್ಮ ದೂರಿಗೆ ನೀವು ಪ್ರತ್ಯುತ್ತರವನ್ನು ಹೊಂದಿರುವಿರಿ</string>
-
+    <string name="information_title">ನೀವು ಒಂದು ಹೊಸ ಮಾಹಿತಿಯನ್ನು ಹೊಂದಿರುವಿರಿ</string>
+    <string name="network_failed_please_try_again">ನೆಟ್‌ವರ್ಕ್ ವಿಫಲವಾಗಿದೆ, ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!</string>
+    <string name="try_again">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="back_to_login_u"><u>ಲಾಗಿನ್‌ಗೆ ಹಿಂತಿರುಗಿ</u></string>
+    <string name="complaint_added_successfully">ದೂರು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ</string>
+    <string name="feedback_added_successfully">ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ</string>
 </resources>

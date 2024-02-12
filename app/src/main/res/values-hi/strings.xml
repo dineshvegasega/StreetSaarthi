@@ -101,7 +101,7 @@
     <string name="enter_details_to_register_with_us">हमारे साथ पंजीकरण करने के लिए विवरण दर्ज करें</string>
     <string name="profile_details">प्रोफ़ाइल विवरण</string>
     <string name="registration_successful">सफल पंजीकरण</string>
-    <string name="congratulations_your_initial_registration_is_complete">सफल पंजीकरण! आपका प्रारंभिक पंजीकरण पूरा हो गया है</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">सफल पंजीकरण! आपका प्रारंभिक पंजीकरण पूरा हो गया है</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">आपके पंजीकरण को सत्यापित करने के लिए हमारी टीम का कोई व्यक्ति 48 घंटे के भीतर आपसे संपर्क करेगा।</string>
     <string name="RegisterNow">अभी पंजीकरण करें</string>
 
@@ -502,6 +502,7 @@
     <string name='notice_type'>सूचना</string>
     <string name='scheme_type'>योजना</string>
     <string name='vendor_details_type'>विक्रेता विवरण</string>
+    <string name='information_type'>जानकारी</string>
     <string name='feedback_type'>प्रतिक्रिया</string>
     <string name='complaint_type'>शिकायत</string>
     <string name='training_title'>आपके पास एक नया प्रशिक्षण है</string>
@@ -510,5 +511,10 @@
     <string name='vendor_details_title'>बधाई हो! आपकी प्रोफ़ाइल स्वीकृत हो गई है</string>
     <string name='feedback_title'>आपके पास आपके फ़ीडबैक पर एक उत्तर है</string>
     <string name='complaint_title'>आपके पास आपकी शिकायत का उत्तर है</string>
-
+    <string name='information_title'>आपके पास एक नई जानकारी है</string>
+    <string name='network_failed_please_try_again'>नेटवर्क विफल, कृपया पुनः प्रयास करें!</string>
+    <string name='try_again'>फिर से प्रयास करें</string>
+    <string name='back_to_login_u'><u>लॉगिन पर वापस जाएं</u></string>
+    <string name='complaint_added_successfully'>शिकायत सफलतापूर्वक जोड़ी गई</string>
+    <string name='feedback_added_successfully'>फीडबैक सफलतापूर्वक जोड़ा गया</string>
 </resources>

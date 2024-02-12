@@ -398,7 +398,7 @@ var tabPosition: Int = 0;
                         File(viewModel.data.UploadApprovalLetter!!).asRequestBody("image/*".toMediaTypeOrNull())
                     )
                 }
-              viewModel.registerWithFiles(view = requireView(), requestBody.build())
+              viewModel.registerWithFiles(view = requireView(), requestBody.build(), ""+viewModel.data.vendor_first_name!!)
             }
         }
     }

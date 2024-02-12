@@ -365,7 +365,18 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                     apiInterface.adsList()
                 override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
                     if (response.isSuccessful){
-                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+                        var adsList : ArrayList<ItemAds> = ArrayList()
+                        val ads = response.body()?.data as ArrayList<ItemAds>
+                        ads.map {
+                            when(it.ad_sr_no){
+                                in 3..4 ->  {
+                                    adsList.add(it)
+                                }
+                                else -> {}
+                            }
+                        }
+                        itemAdsResult.value = adsList
+
                     }
                 }
 

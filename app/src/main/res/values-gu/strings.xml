@@ -99,7 +99,7 @@
     <string name="enter_details_to_register_with_us">અમારી સાથે નોંધણી કરાવવા માટે વિગતો દાખલ કરો</string>
     <string name="profile_details">પ્રોફાઇલ વિગતો</string>
     <string name = "registration_successful">નોંધણી સફળ</string>
-    <string name="congratulations_your_initial_registration_is_complete">અભિનંદન!\nતમારી પ્રારંભિક નોંધણી પૂર્ણ થઈ ગઈ છે</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">અભિનંદન!\nતમારી પ્રારંભિક નોંધણી પૂર્ણ થઈ ગઈ છે</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">તમારી નોંધણી ચકાસવા માટે અમારી ટીમમાંથી કોઈ 48 કલાકની અંદર તમારો સંપર્ક કરશે.</string>
     <string name="RegisterNow">હવે નોંધણી કરો</string>
 
@@ -496,6 +496,7 @@
     <string name = "notice_type"> સૂચના</string>
     <string name = "scheme_type"> યોજના</string>
     <string name="vendor_details_type">વિક્રેતાની વિગતો</string>
+    <string name="information_type">માહિતી</string>
     <string name="feedback_type">પ્રતિસાદ</string>
     <string name="complaint_type">ફરિયાદ</string>
     <string name="training_title">તમારી પાસે એક નવી તાલીમ છે</string>
@@ -504,5 +505,10 @@
     <string name="vendor_details_title">અભિનંદન! તમારી પ્રોફાઇલ મંજૂર કરવામાં આવી છે</string>
     <string name="feedback_title">તમારી પાસે તમારા પ્રતિસાદ પર જવાબ છે</string>
     <string name="complaint_title">તમારી ફરિયાદ પર તમારી પાસે જવાબ છે</string>
-
+    <string name="information_title">તમારી પાસે એક નવી માહિતી છે</string>
+    <string name="network_failed_please_try_again">નેટવર્ક નિષ્ફળ થયું, કૃપા કરીને ફરી પ્રયાસ કરો!</string>
+    <string name = "try_again">ફરીથી પ્રયાસ કરો</string>
+    <string name="back_to_login_u"><u>લોગિન પર પાછા</u></string>
+    <string name="complaint_added_successfully">ફરિયાદ સફળતાપૂર્વક ઉમેરાઈ</string>
+    <string name = "feedback_added_successfully"> પ્રતિસાદ સફળતાપૂર્વક ઉમેરાયો</string>
 </resources>

@@ -6,9 +6,10 @@ package com.streetsaarthi.nasvi.screens.mainActivity
 //import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
 //import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
 //import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
-
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityManager
+import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -41,7 +42,6 @@ import com.streetsaarthi.nasvi.databinding.MainActivityBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.ConnectivityManager
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
@@ -50,9 +50,9 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.LocaleHelper
 import com.streetsaarthi.nasvi.utils.autoScroll
-import com.streetsaarthi.nasvi.utils.getToken
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
+import com.streetsaarthi.nasvi.utils.isAppIsInBackground
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -70,23 +70,23 @@ class MainActivity : AppCompatActivity() {
         lateinit var context: WeakReference<Context>
 
         @JvmStatic
-        lateinit var activity:  WeakReference<Activity>
+        lateinit var activity: WeakReference<Activity>
 
         @JvmStatic
         lateinit var mainActivity: WeakReference<MainActivity>
 
-        var logoutAlert : AlertDialog?= null
-        var deleteAlert : AlertDialog?= null
+        var logoutAlert: AlertDialog? = null
+        var deleteAlert: AlertDialog? = null
 
         @SuppressLint("StaticFieldLeak")
-        var navHostFragment : NavHostFragment? = null
+        var navHostFragment: NavHostFragment? = null
 
         private var _binding: MainActivityBinding? = null
         val binding get() = _binding!!
 
 
         @JvmStatic
-        lateinit var isOpen : WeakReference<Boolean>
+        lateinit var isOpen: WeakReference<Boolean>
 
     }
 
@@ -98,11 +98,11 @@ class MainActivity : AppCompatActivity() {
     private val pushNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        if(granted){
-            Log.e("TAG", "AAAAgranted "+granted)
+        if (granted) {
+            Log.e("TAG", "AAAAgranted " + granted)
 
-        }else{
-            Log.e("TAG", "BBBBgranted "+granted)
+        } else {
+            Log.e("TAG", "BBBBgranted " + granted)
         }
     }
 
@@ -124,12 +124,12 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
-
         context = WeakReference(this)
         activity = WeakReference(this)
         mainActivity = WeakReference(this)
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         window.decorView.viewTreeObserver.addOnGlobalLayoutListener {
             val r = Rect()
@@ -150,8 +150,9 @@ class MainActivity : AppCompatActivity() {
                     viewModel.bannerAdapter.submitData(it1)
                     binding.banner.adapter = viewModel.bannerAdapter
                     binding.tabDots.setupWithViewPager(binding.banner, true)
+
                     binding.banner.autoScroll()
-                    when(screenValue){
+                    when (screenValue) {
                         0 -> binding.layoutBanner.visibility = View.GONE
                         in 1..2 -> binding.layoutBanner.visibility = View.VISIBLE
                     }
@@ -162,52 +163,27 @@ class MainActivity : AppCompatActivity() {
 
         observeConnectivityManager()
 
-        getToken(){
-            Log.e("TAG", "getToken "+this)
-            saveData(DataStoreKeys.TOKEN, this ?: "")
-        }
+//        getToken(){
+//            Log.e("TAG", "getToken "+this)
+//            saveData(DataStoreKeys.TOKEN, this)
+//        }
 
 
-        val bundle=intent?.extras
+        val bundle = intent?.extras
 
-        if(bundle != null) {
+        if (bundle != null) {
             showData(bundle)
         }
 
 
-
-        if (intent!!.hasExtra(Screen)){
-            var screen = intent.getStringExtra(Screen)
-            Log.e("TAG", "screenAA "+screen)
-            if (screen == Main){
-                binding.topLayout.topToolbar.visibility = View.VISIBLE
-            }
-            callBack()
-            val navOptions: NavOptions = NavOptions.Builder()
-                .setPopUpTo(R.id.navigation_bar, true)
-                .build()
-//            Handler(Looper.getMainLooper()).postDelayed(Thread {
-                    if(screen == Start){
-                        navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
-                    } else if (screen == Main){
-                        navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
-                    }
-//            }, 100)
-
-        }
-
-
-
-
-        val manager =  packageManager
-        val info = manager?.getPackageInfo( packageName, 0)
+        val manager = packageManager
+        val info = manager?.getPackageInfo(packageName, 0)
         val versionName = info?.versionName
         binding.textVersion.text = getString(R.string.app_version_1_0, versionName)
 
         binding.btLogout.singleClick {
             callLogoutDialog()
         }
-
 
 
         val mDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
@@ -244,14 +220,23 @@ class MainActivity : AppCompatActivity() {
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
-
+//        onBackPressedDispatcher.addCallback(this , object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                val backStackEntryCount = navHostFragment?.childFragmentManager?.backStackEntryCount
+//                Log.e("TAG", "backStackEntryCount "+backStackEntryCount)
+//                if(backStackEntryCount == 0){
+//                    this@MainActivity.finish()
+//                }else if(backStackEntryCount == 1){
+//                    navHostFragment!!.navController.navigate(R.id.dashboard)
+//                }
+//            }
+//        })
     }
-
 
 
     @SuppressLint("SuspiciousIndentation")
     fun callLogoutDialog() {
-        if(logoutAlert?.isShowing == true) {
+        if (logoutAlert?.isShowing == true) {
             return
         }
         logoutAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
@@ -266,7 +251,10 @@ class MainActivity : AppCompatActivity() {
                     if (loginUser != null) {
                         val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
-                        requestBody.addFormDataPart("mobile_number", ""+Gson().fromJson(loginUser, Login::class.java).mobile_no)
+                        requestBody.addFormDataPart(
+                            "mobile_number",
+                            "" + Gson().fromJson(loginUser, Login::class.java).mobile_no
+                        )
                         viewModel.logoutAccount(requestBody.build())
                     }
                 }
@@ -292,7 +280,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SuspiciousIndentation")
     fun callDeleteDialog() {
-        if(deleteAlert?.isShowing == true) {
+        if (deleteAlert?.isShowing == true) {
             return
         }
         deleteAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
@@ -308,7 +296,10 @@ class MainActivity : AppCompatActivity() {
                         val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
                             .addFormDataPart("user_type", USER_TYPE)
-                        requestBody.addFormDataPart("user_id", ""+Gson().fromJson(loginUser, Login::class.java).id)
+                        requestBody.addFormDataPart(
+                            "user_id",
+                            "" + Gson().fromJson(loginUser, Login::class.java).id
+                        )
                         requestBody.addFormDataPart("delete_account", "Yes")
                         viewModel.deleteAccount(requestBody.build())
                     }
@@ -335,8 +326,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-    fun clearData(){
+    fun clearData() {
         DataStoreUtil.removeKey(DataStoreKeys.LOGIN_DATA) {}
         DataStoreUtil.removeKey(DataStoreKeys.AUTH) {}
         DataStoreUtil.removeKey(DataStoreKeys.LIVE_SCHEME_DATA) {}
@@ -344,7 +334,7 @@ class MainActivity : AppCompatActivity() {
         DataStoreUtil.removeKey(DataStoreKeys.LIVE_TRAINING_DATA) {}
         DataStoreUtil.removeKey(DataStoreKeys.Complaint_Feedback_DATA) {}
         DataStoreUtil.removeKey(DataStoreKeys.Information_Center_DATA) {}
-        DataStoreUtil.clearDataStore {  }
+        DataStoreUtil.clearDataStore { }
         callBack()
         val navOptions: NavOptions = NavOptions.Builder()
             .setPopUpTo(R.id.navigation_bar, true)
@@ -357,7 +347,7 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        if(intent?.extras != null) {
+        if (intent?.extras != null) {
             showData(intent?.extras!!)
         }
     }
@@ -365,29 +355,88 @@ class MainActivity : AppCompatActivity() {
 
     private fun showData(bundle: Bundle) {
         try {
-            var key = bundle?.getString("key")
-            var _id = bundle?.getString("_id")
-//            Log.e("TAG", "showData "+res)
-            when(key){
+            val navOptions: NavOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.navigation_bar, true)
+                .build()
+            if (intent!!.hasExtra(Screen)) {
+                var screen = intent.getStringExtra(Screen)
+                Log.e("TAG", "screenAA " + screen)
+                if (screen == Main) {
+                    binding.topLayout.topToolbar.visibility = View.VISIBLE
+                }
+                callBack()
+                if (screen == Start) {
+                    navHostFragment?.navController?.navigate(R.id.start, null, navOptions)
+                } else if (screen == Main) {
+                    if (bundle?.getString("key") != null) {
+                        callRedirect(bundle)
+                    } else {
+                        Log.e("key", "showDataBB ")
+                        Log.e("_id", "showDataBB ")
+                        navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
+                    }
+                }
+            } else {
+                Log.e("TAG", "screenBB ")
+                if (bundle?.getString("key") != null) {
+                    callRedirect(bundle)
+                }
+            }
+
+        } catch (e: Exception) {
+        }
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    private fun callRedirect(bundle: Bundle) {
+        var key = bundle?.getString("key")
+        var _id = bundle?.getString("_id")
+        Log.e("key", "showDataAA " + key)
+        Log.e("_id", "showDataAA " + _id)
+        val navOptions: NavOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.dashboard, true)
+            .build()
+
+//        val myProcess = RunningAppProcessInfo()
+//        ActivityManager.getMyMemoryState(myProcess)
+//        val isInBackground = myProcess.importance != RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+//
+//        Log.e("TAG", "isActivityBackgound$isInBackground")
+
+//        if(bundle.getBoolean("isActivityBackgound")){
+//            Log.e("TAG", "isAppIsInBackgroundAA ")
+//            when (key) {
+//                "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes, null, navOptions)
+//                "notice" -> navHostFragment!!.navController.navigate(R.id.liveNotices, null, navOptions)
+//                "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining, null, navOptions)
+//                "profile" -> navHostFragment!!.navController.navigate(R.id.profiles, null, navOptions)
+//                "Feedback" -> navHostFragment!!.navController.navigate(
+//                    R.id.historyDetail,
+//                    Bundle().apply {
+//                        putString("key", _id)
+//                    }, navOptions)
+//            }
+//        }else{
+//            Log.e("TAG", "isAppIsInBackgroundBB ")
+            when (key) {
                 "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes)
-                "notice" -> navHostFragment!!.navController.navigate(R.id.liveNotices)
+                "notice" ->  navHostFragment!!.navController.navigate(R.id.liveNotices)
                 "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining)
                 "profile" -> navHostFragment!!.navController.navigate(R.id.profiles)
-                "Feedback" -> navHostFragment!!.navController.navigate(R.id.historyDetail, Bundle().apply {
-                    putString("key", _id)
-                })
+                "Feedback" -> navHostFragment!!.navController.navigate(
+                    R.id.historyDetail,
+                    Bundle().apply {
+                        putString("key", _id)
+                    })
             }
-        }catch (e: Exception){}
+//        }
+
     }
 
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(LocaleHelper.onAttach(newBase,""))
+        super.attachBaseContext(LocaleHelper.onAttach(newBase, ""))
     }
-
-
-
-
 
 
     fun callBack() {
@@ -405,11 +454,12 @@ class MainActivity : AppCompatActivity() {
                     var imageUrl = ""
                     try {
                         val imageUrlLogin = Gson().fromJson(loginUser, Login::class.java)
-                        if (imageUrlLogin != null){
+                        if (imageUrlLogin != null) {
                             val imageUrlName = imageUrlLogin.profile_image_name
                             imageUrl = imageUrlName.url ?: ""
                         }
-                    }catch (_: Exception){ }
+                    } catch (_: Exception) {
+                    }
 
                     topLayout.ivImage.loadImage(url = { imageUrl })
                     topLayout.ivImage.singleClick {
@@ -422,23 +472,24 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-var screenValue = 0
-    fun callFragment(screen : Int) {
+    var screenValue = 0
+    fun callFragment(screen: Int) {
         screenValue = screen
         binding.apply {
-            when(screen){
-                0-> {
+            when (screen) {
+                0 -> {
                     binding.textHeaderTxt1.visibility = View.GONE
                     binding.layoutBanner.visibility = View.GONE
                 }
-                1-> {
+
+                1 -> {
                     binding.textHeaderTxt1.visibility = View.VISIBLE
                     binding.mainLayout.setBackgroundResource(R.color.white)
                     viewModel.itemAds.value?.let { it1 ->
-                        if (it1.size > 0){
-                            if(screen == 1){
+                        if (it1.size > 0) {
+                            if (screen == 1) {
                                 binding.layoutBanner.visibility = View.VISIBLE
-                            }else{
+                            } else {
                                 binding.layoutBanner.visibility = View.GONE
                             }
                         } else {
@@ -446,14 +497,15 @@ var screenValue = 0
                         }
                     }
                 }
-                2-> {
+
+                2 -> {
                     binding.textHeaderTxt1.visibility = View.VISIBLE
                     binding.mainLayout.setBackgroundResource(R.color._FFF3E4)
                     viewModel.itemAds.value?.let { it1 ->
-                        if (it1.size > 0){
-                            if(screen == 2){
+                        if (it1.size > 0) {
+                            if (screen == 2) {
                                 binding.layoutBanner.visibility = View.VISIBLE
-                            }else{
+                            } else {
                                 binding.layoutBanner.visibility = View.GONE
                             }
                         } else {
@@ -475,11 +527,11 @@ var screenValue = 0
     }
 
 
-
-    var resultUpdate = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){ result->
-            Log.e("TAG", "result.resultCode "+result.resultCode)
-        if (result.resultCode == RESULT_OK) {
-                    // Handle successful app update
+    var resultUpdate =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            Log.e("TAG", "result.resultCode " + result.resultCode)
+            if (result.resultCode == RESULT_OK) {
+                // Handle successful app update
             } else if (result.resultCode == RESULT_CANCELED) {
 //                finish()
             } else if (result.resultCode == RESULT_IN_APP_UPDATE_FAILED) {
@@ -487,7 +539,7 @@ var screenValue = 0
             } else {
 //                finish()
             }
-    }
+        }
 
     private fun checkUpdate() {
         val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(this)
@@ -513,9 +565,8 @@ var screenValue = 0
     }
 
 
-
     fun loadBanner() {
-        if(viewModel.itemAds.value == null){
+        if (viewModel.itemAds.value == null) {
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     viewModel.adsList()
@@ -523,8 +574,6 @@ var screenValue = 0
             }
         }
     }
-
-
 
 
     fun reloadActivity(language: String, screen: String) {

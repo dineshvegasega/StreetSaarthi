@@ -15,11 +15,12 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
+import com.streetsaarthi.nasvi.utils.isAppIsInBackground
+import org.json.JSONObject
 
 class MyFirebaseMessagingService : FirebaseMessagingService(){
 
@@ -34,23 +35,27 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         Log.e("TAG", "onMessageReceived: " + remoteMessage.getFrom());
         Log.e("TAG", "onMessageReceived: Noti" + remoteMessage.getNotification());
         Log.e("TAG", "onMessageReceived: Data" + remoteMessage.getData());
+      //  Log.e("TAG", "isAppIsInBackground()" +  isAppIsInBackground());
+
 
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
-                noti()
+                val json : JSONObject = JSONObject((remoteMessage.data as Map<*, *>?)!!)
+                Log.e("TAG", "onMessageReceived: Data" + json.toString());
+                noti(json)
             }
         }
-
-
     }
 
 
 
     @SuppressLint("MutableImplicitPendingIntent")
-    fun noti() {
+    fun noti(json : JSONObject) {
         val intent = Intent(this, MainActivity::class.java).putExtras(Bundle().apply {
-            putString("key" , "notice")
-            putString("_id" , "84")
+            putString("key" , json.getString("type"))
+            putString("_id" , json.getString("type_id"))
+         //   putBoolean("isActivityBackgound" , isAppIsInBackground())
+
             putString(Screen , Main)
         })
         val pendingIntent= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
@@ -64,7 +69,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
 
 
         val CHANNEL_ID="my_channel_01" // The id of the channel.
-        val name: CharSequence="Download" // The user-visible name of the channel.
+        val name: CharSequence="Notification" // The user-visible name of the channel.
         val importance= NotificationManager.IMPORTANCE_HIGH
         var mChannel: NotificationChannel?=null
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -82,7 +87,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
             .setAutoCancel(true)
             .setChannelId(CHANNEL_ID)
             .setContentIntent(pendingIntent)
-            .setContentText("file.name").build()
+            .setContentText(json.getString("title")).build()
         val notificationManager=
             getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) notificationManager.createNotificationChannel(

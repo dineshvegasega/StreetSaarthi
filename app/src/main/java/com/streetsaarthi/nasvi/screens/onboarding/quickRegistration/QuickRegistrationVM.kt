@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi.screens.onboarding.quickRegistration
 
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -115,7 +116,9 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
                 override fun success(response: Response<BaseResponseDC<Any>>) {
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
-                            view.findNavController().navigate(R.id.action_quickRegistration_to_registerSuccessful)
+                            view.findNavController().navigate(R.id.action_quickRegistration_to_registerSuccessful, Bundle().apply {
+                                putString("key", jsonObject.getString("vendor_first_name"))
+                            })
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
                     }

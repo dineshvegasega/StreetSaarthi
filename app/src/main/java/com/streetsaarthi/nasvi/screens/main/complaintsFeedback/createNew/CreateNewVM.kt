@@ -66,9 +66,12 @@ class CreateNewVM @Inject constructor(private val repository: Repository): ViewM
                     apiInterface.newFeedback( hashMap)
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
-                        showSnackBar(response.body()?.message.orEmpty())
+                        if (type == "complaint"){
+                            showSnackBar(view.resources.getString(R.string.complaint_added_successfully))
+                        } else if (type == "feedback"){
+                            showSnackBar(view.resources.getString(R.string.feedback_added_successfully))
+                        }
                         view.findNavController().navigate(R.id.action_createNew_to_history)
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())

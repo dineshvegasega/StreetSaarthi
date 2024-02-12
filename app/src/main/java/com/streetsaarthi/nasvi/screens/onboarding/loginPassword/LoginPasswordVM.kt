@@ -45,13 +45,13 @@ class LoginPasswordVM @Inject constructor(private val repository: Repository
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
                             val _id = Gson().fromJson(response.body()!!.data, Login::class.java).id
-                            profile(view, ""+_id)
-                            readData(DataStoreKeys.TOKEN) { token ->
-                                token(JSONObject().apply {
-                                    put("user_id", ""+_id)
-                                    put("mobile_token", token)
-                                })
+                            getToken() {
+                                val obj: JSONObject = JSONObject()
+                                obj.put("user_id", ""+_id)
+                                obj.put("mobile_token", ""+this)
+                                token(obj)
                             }
+                            profile(view, ""+_id)
                             showSnackBar(view.resources.getString(R.string.logged_in_successfully))
                         }else if(response.body()!!.message == "User does not exist"){
                             showSnackBar(view.resources.getString(R.string.user_does_not_exist))

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "144727767569",
-    "project_id": "streetsaarthi",
-    "storage_bucket": "streetsaarthi.appspot.com"
+    "project_number": "390718671461",
+    "project_id": "nasvi-d9704",
+    "storage_bucket": "nasvi-d9704.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:144727767569:android:5fc1a727f30f06a9734fb0",
+        "mobilesdk_app_id": "1:390718671461:android:37b01d620c45c08cf3948c",
         "android_client_info": {
           "package_name": "com.streetsaarthi.nasvi"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBZioOJMIFYeyN3u1m9j2271a41GhmLyh4"
+          "current_key": "AIzaSyCx9gwn53jm98qR4SUwXUOXa2Tl2EdTP1Y"
         }
       ],
       "services": {

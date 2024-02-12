@@ -2,6 +2,7 @@ package com.streetsaarthi.nasvi.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Configuration
 import android.database.Cursor
@@ -369,6 +370,8 @@ fun getToken(callBack: String.() -> Unit){
         if(result != null){
             callBack(result)
         }
+    }.addOnCanceledListener {
+        callBack("result")
     }
 }
 
@@ -475,4 +478,26 @@ fun View.singleClick(throttleTime: Long = 600L, action: () -> Unit) {
             lastClickTime = SystemClock.elapsedRealtime()
         }
     })
+}
+
+
+
+ fun Context.isAppIsInBackground(): Boolean {
+    var isInBackground = true
+    try {
+        val am = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val runningProcesses = am.runningAppProcesses
+        for (processInfo in runningProcesses) {
+            if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                for (activeProcess in processInfo.pkgList) {
+                    if (activeProcess == this.packageName) {
+                        isInBackground = false
+                    }
+                }
+            }
+        }
+    } catch (ex: Exception) {
+        ex.printStackTrace()
+    }
+    return isInBackground
 }

@@ -101,7 +101,7 @@
     <string name="enter_details_to_register_with_us">आमच्याकडे नोंदणी करण्यासाठी तपशील प्रविष्ट करा</string>
     <string name="profile_details">प्रोफाइल तपशील</string>
     <string name = "registration_successful">नोंदणी यशस्वी</string>
-    <string name="congratulations_your_initial_registration_is_complete">अभिनंदन!\nतुमची प्रारंभिक नोंदणी पूर्ण झाली आहे</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">अभिनंदन!\nतुमची प्रारंभिक नोंदणी पूर्ण झाली आहे</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">तुमची नोंदणी सत्यापित करण्यासाठी आमच्या टीममधील कोणीतरी तुमच्याशी ४८ तासांच्या आत संपर्क करेल.</string>
     <string name="RegisterNow">आता नोंदणी करा</string>
 
@@ -500,6 +500,7 @@
     <string name="notice_type">सूचना</string>
     <string name="scheme_type">योजना</string>
     <string name="vendor_details_type">विक्रेता तपशील</string>
+    <string name="information_type">माहिती</string>
     <string name="feedback_type">अभिप्राय</string>
     <string name="complaint_type">तक्रार</string>
     <string name = "training_title"> तुमच्याकडे एक नवीन प्रशिक्षण आहे</string>
@@ -508,5 +509,10 @@
     <string name="vendor_details_title">अभिनंदन! तुमचे प्रोफाइल मंजूर झाले आहे</string>
     <string name="feedback_title">तुमच्या फीडबॅकवर तुमच्याकडे प्रत्युत्तर आहे</string>
     <string name="complaint_title">तुमच्या तक्रारीवर तुमच्याकडे उत्तर आहे</string>
-
+    <string name="information_title">तुमच्याकडे एक नवीन माहिती आहे</string>
+    <string name="network_failed_please_try_again">नेटवर्क अयशस्वी झाले, कृपया पुन्हा प्रयत्न करा!</string>
+    <string name="try_again">पुन्हा प्रयत्न करा</string>
+    <string name="back_to_login_u"><u>लॉग इन करण्यासाठी परत</u></string>
+    <string name="complaint_added_successfully">तक्रार यशस्वीरित्या जोडली</string>
+    <string name="feedback_added_successfully">अभिप्राय यशस्वीरित्या जोडला</string>
 </resources>

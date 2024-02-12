@@ -133,13 +133,15 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                    root.resources.getString(R.string.notice_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
                } else if(dataClass.type == "training"){
                    root.resources.getString(R.string.training_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
-               } else if(dataClass.type == "Vendor Details"){
+               } else if(dataClass.type == "Vendor Details" || dataClass.type == "VendorDetails"){
                    root.resources.getString(R.string.vendor_details_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
+               } else if(dataClass.type.contains("information")){
+                   root.resources.getString(R.string.information_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
                } else if(dataClass.title.contains("Feedback")){
                    root.resources.getString(R.string.feedback_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
                } else if(dataClass.title.contains("Complaint")){
                    root.resources.getString(R.string.complaint_type)+" "+ dataClass.sent_at.changeDateFormat("yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd hh:mm a")
-               }  else {
+               } else {
                    ""
                }
                 textTitle.setText(type)
@@ -150,8 +152,10 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                     root.resources.getString(R.string.notice_title)
                 } else if(dataClass.type == "training"){
                     root.resources.getString(R.string.training_title)
-                } else if(dataClass.type == "Vendor Details"){
+                } else if(dataClass.type == "Vendor Details" || dataClass.type == "VendorDetails"){
                     root.resources.getString(R.string.vendor_details_title)
+                } else if(dataClass.type == "information"){
+                    root.resources.getString(R.string.information_title)
                 } else if(dataClass.title.contains("Feedback")){
                     root.resources.getString(R.string.feedback_title)
                 } else if(dataClass.title.contains("Complaint")){
@@ -170,6 +174,7 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                         "scheme" -> root.findNavController().navigate(R.id.action_notifications_to_liveSchemes)
                         "notice" -> root.findNavController().navigate(R.id.action_notifications_to_liveNotices)
                         "training" -> root.findNavController().navigate(R.id.action_notifications_to_liveTraining)
+                        "information" -> root.findNavController().navigate(R.id.action_notifications_to_informationCenter)
                         "Feedback" -> root.findNavController().navigate(R.id.action_notifications_to_historyDetail, Bundle().apply {
                             putString("key", ""+dataClass.type_id)
                         })
@@ -186,7 +191,6 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                         }
                     }
                 }
-
             }
         }
 

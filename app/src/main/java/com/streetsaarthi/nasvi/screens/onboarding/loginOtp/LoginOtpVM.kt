@@ -129,10 +129,12 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                             saveObject(DataStoreKeys.LOGIN_DATA, data)
                             showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
                             DataStoreUtil.readData(DataStoreKeys.TOKEN) { token ->
-                                token(JSONObject().apply {
-                                    put("user_id", "" + data.id)
-                                    put("mobile_token", token)
-                                })
+                                getToken(){
+                                    val obj: JSONObject = JSONObject()
+                                    obj.put("user_id", ""+data.id)
+                                    obj.put("mobile_token", ""+this)
+                                    token(obj)
+                                }
                             }
                             val last = if(data.language == null){
                                 "en"

@@ -103,7 +103,7 @@
                         android:src="@drawable/solid_success"
                         />
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/textHeaderadfdsfTxt312"
+                        android:id="@+id/textHeaderTxt312"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -129,7 +129,7 @@
                         android:gravity="center"
                         android:layout_marginHorizontal="@dimen/_20sdp"
                         android:layout_marginBottom="@dimen/_25sdp"
-                        app:layout_constraintTop_toBottomOf="@+id/textHeaderadfdsfTxt312"
+                        app:layout_constraintTop_toBottomOf="@+id/textHeaderTxt312"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         tools:ignore="MissingConstraints"
