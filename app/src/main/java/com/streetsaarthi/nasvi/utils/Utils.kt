@@ -376,7 +376,7 @@ fun getToken(callBack: String.() -> Unit){
 }
 
 
-fun String.titlecaseFirstCharIfItIsLowercase() = replaceFirstChar {
+fun String.firstCharIfItIsLowercase() = replaceFirstChar {
     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
 }
 

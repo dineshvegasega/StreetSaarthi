@@ -516,4 +516,7 @@
     <string name="feedback_added_successfully">ഫീഡ്‌ബാക്ക് വിജയകരമായി ചേർത്തു</string>
     <string name="congratulations">അഭിനന്ദനങ്ങൾ!</string>
     <string name="your_initial_registration_is_complete">നിങ്ങളുടെ പ്രാരംഭ രജിസ്ട്രേഷൻ പൂർത്തിയായി.</string>
+    <string name="need_to_add_complete_profile">ഒരു പരാതി/ഫീഡ്‌ബാക്ക് സമർപ്പിക്കുന്നതിന് മുമ്പ് നിങ്ങളുടെ പ്രൊഫൈൽ പൂർത്തിയാക്കേണ്ടതുണ്ട്.</string>
+<!--    <string name="conversation_marked_Close_admin">ഈ സംഭാഷണം അഡ്‌മിൻ അടച്ചതായി അടയാളപ്പെടുത്തി</string>-->
+<!--    <string name="conversation_marked_reOpen_admin">ഈ സംഭാഷണം അഡ്‌മിൻ വീണ്ടും തുറന്നതായി അടയാളപ്പെടുത്തി</string>-->
 </resources>

@@ -10,6 +10,7 @@ import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemVending
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MembershipDetailsVM @Inject constructor(private val repository: Repository): ViewModel() {
+    var counterNetwork = MutableLiveData<Boolean>(false)
 
     var itemVending : ArrayList<ItemVending> = ArrayList()
     var vendingId : Int = 0
@@ -35,7 +37,10 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
+//                    super.error(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -64,7 +69,10 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
+//                    super.error(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {

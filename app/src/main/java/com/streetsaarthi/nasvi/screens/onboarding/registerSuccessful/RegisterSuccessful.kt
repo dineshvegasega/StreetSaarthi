@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.RegisterSuccessfulBinding
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.firstCharIfItIsLowercase
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,17 +37,17 @@ class RegisterSuccessful : Fragment() {
             btSignIn.singleClick {
                 requireView().findNavController().navigate(R.id.action_registerSuccessful_to_loginPassword)
             }
+            val text =
+                "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">"+resources.getString(R.string.congratulations)+"</font> <br/>" +
+                        "<font color="+ ResourcesCompat.getColor(resources, R.color._E79D46, null)+">"+arguments?.getString("key")?.firstCharIfItIsLowercase()+"</font>"+
+                        "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">,</font> "+
+                        "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">"+resources.getString(R.string.your_initial_registration_is_complete)+"</font>"
+
 //            val text =
-//                "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">"+resources.getString(R.string.congratulations)+"</font> <br/>" +
+//                "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">"+resources.getString(R.string.congratulations)+"</font> " +
 //                        "<font color="+ ResourcesCompat.getColor(resources, R.color._E79D46, null)+">"+arguments?.getString("key")+"</font>"+
 //                        "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">,</font> <br/>"+
 //                        "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">"+resources.getString(R.string.your_initial_registration_is_complete)+"</font>"
-
-            val text =
-                "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">"+resources.getString(R.string.congratulations)+"</font> " +
-                        "<font color="+ ResourcesCompat.getColor(resources, R.color._E79D46, null)+">"+arguments?.getString("key")+"</font>"+
-                        "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">,</font> <br/>"+
-                        "<font color="+ ResourcesCompat.getColor(resources, R.color.black, null)+">"+resources.getString(R.string.your_initial_registration_is_complete)+"</font>"
 
                         textHeaderTxt312.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 

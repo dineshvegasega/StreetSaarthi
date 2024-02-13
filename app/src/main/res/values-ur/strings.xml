@@ -519,4 +519,7 @@
     <string name = "feedback_added_successfully">فیڈ بیک کامیابی سے شامل کیا گیا</string>
     <string name="congratulations">مبارک ہو!</string>
     <string name="your_initial_registration_is_complete">آپ کی ابتدائی رجسٹریشن مکمل ہو گئی ہے۔</string>
+    <string name="need_to_add_complete_profile">آپ کو شکایت/رائے جمع کرنے سے پہلے اپنا پروفائل مکمل کرنا ہوگا۔</string>
+<!--    <string name = "conversation_marked_Close_admin"> اس گفتگو کو منتظم نے بند کا نشان لگایا تھا</string>-->
+<!--    <string name = "conversation_marked_reOpen_admin"> اس گفتگو کو منتظم نے دوبارہ کھولنے کا نشان لگایا تھا</string>-->
 </resources>

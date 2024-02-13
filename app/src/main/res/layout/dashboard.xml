@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toTopOf="@+id/layoutBanner"
         android:scrollbars="vertical"
         android:saveEnabled="true"
-        android:scrollbarSize="@dimen/_4sdp"
+        android:scrollbarSize="@dimen/_3sdp"
         android:scrollbarThumbVertical="@color/_E79D46"
         android:fadeScrollbars="false"
         />

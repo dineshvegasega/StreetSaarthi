@@ -187,7 +187,11 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                         btApply.visibility = View.GONE
                                     }else{
                                         btApply.setText(view.resources.getString(R.string.apply))
-                                        btApply.visibility = View.VISIBLE
+                                        if (data.status == "Active"){
+                                            btApply.visibility = View.VISIBLE
+                                        } else {
+                                            btApply.visibility = View.GONE
+                                        }
                                     }
 
                                     btApply.singleClick {

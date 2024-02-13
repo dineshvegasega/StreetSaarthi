@@ -13,6 +13,7 @@ import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -113,23 +114,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        checkUpdate()
-
-//        setIntent(intent)
-//
-//        if (Build.VERSION.SDK_INT >= 33) {
-//            pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-//        } else {
-//
-//        }
-
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         context = WeakReference(this)
         activity = WeakReference(this)
         mainActivity = WeakReference(this)
 
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+        checkUpdate()
+
+//
+//        if (Build.VERSION.SDK_INT >= 33) {
+//            pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+//        }
+
+
 
         window.decorView.viewTreeObserver.addOnGlobalLayoutListener {
             val r = Rect()
@@ -460,7 +460,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     } catch (_: Exception) {
                     }
-
                     topLayout.ivImage.loadImage(url = { imageUrl })
                     topLayout.ivImage.singleClick {
                         arrayListOf(imageUrl).imageZoom(topLayout.ivImage)

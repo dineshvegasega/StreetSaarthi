@@ -519,4 +519,7 @@
     <string name='feedback_added_successfully'>फीडबैक सफलतापूर्वक जोड़ा गया</string>
     <string name='congratulations'>बधाई हो!</string>
     <string name='your_initial_registration_is_complete'>आपका प्रारंभिक पंजीकरण पूरा हो गया है।</string>
+    <string name = "need_to_add_complete_profile">शिकायत/प्रतिक्रिया सबमिट करने से पहले आपको अपना प्रोफ़ाइल पूरा करना होगा।</string>
+<!--    <string name='conversation_marked_Close_admin'>इस वार्तालाप को व्यवस्थापक द्वारा बंद के रूप में चिह्नित किया गया था</string>-->
+<!--    <string name='conversation_marked_reOpen_admin'>इस वार्तालाप को व्यवस्थापक द्वारा पुनः खोलें के रूप में चिह्नित किया गया था</string>-->
 </resources>

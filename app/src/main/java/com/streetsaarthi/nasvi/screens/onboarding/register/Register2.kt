@@ -631,9 +631,13 @@ class Register2  : Fragment() , CallBackListener {
                 viewModel.stateIdVending = viewModel.itemStateVending[which].id
                 view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
                 view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
-                view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                    put("state_id", viewModel.stateIdVending)
-                })}
+                if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
+                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                        put("state_id", viewModel.stateIdVending)
+                        put("district_id", viewModel.districtIdVending)
+                    })}
+                }
+
                 binding.editTextSelectDistrict.setText("")
                 binding.editTextMunicipalityPanchayat.setText("")
                 viewModel.districtIdVending = 0
@@ -655,10 +659,13 @@ class Register2  : Fragment() , CallBackListener {
                 binding.editTextSelectDistrict.setText(list[which])
                 viewModel.districtIdVending = viewModel.itemDistrictVending[which].id
                 view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdVending) }
-                view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                    put("state_id", viewModel.stateIdVending)
-                    put("district_id", viewModel.districtIdVending)
-                })}
+                if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
+                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                        put("state_id", viewModel.stateIdVending)
+                        put("district_id", viewModel.districtIdVending)
+                    })}
+                }
+
                 binding.editTextSelectPincode.setText("")
                 viewModel.pincodeIdVending = ""
             }.show()

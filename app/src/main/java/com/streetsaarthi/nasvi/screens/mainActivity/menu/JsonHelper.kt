@@ -1,6 +1,7 @@
 package com.streetsaarthi.nasvi.screens.mainActivity.menu
 
 import android.content.Context
+import androidx.core.content.ContextCompat
 import org.json.JSONObject
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
@@ -49,8 +50,20 @@ open class JsonHelper(private var context: Context) {
             for (i in 0 until k) {
                 val tempJsonObject = jsonArray.getJSONObject(i).toString()
                 val gson = Gson()
-                val newsPaper = gson.fromJson<ItemMenuModel>(tempJsonObject, ItemMenuModel::class.java)
-                newspaperList?.add(newsPaper)
+
+                if(i == 0){
+                    val newsPaper = gson.fromJson<ItemMenuModel>(tempJsonObject, ItemMenuModel::class.java)
+                    newsPaper.apply {
+                        color = ContextCompat.getColor(context, R.color._EAAA61)
+                    }
+                    newspaperList?.add(newsPaper)
+                } else {
+                    val newsPaper = gson.fromJson<ItemMenuModel>(tempJsonObject, ItemMenuModel::class.java)
+                    newsPaper.apply {
+                        color = ContextCompat.getColor(context, R.color.white)
+                    }
+                    newspaperList?.add(newsPaper)
+                }
             }
             return newspaperList
         } catch (e: Exception) {

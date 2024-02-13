@@ -42,7 +42,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
             if (loginUser != null) {
                 val json : JSONObject = JSONObject((remoteMessage.data as Map<*, *>?)!!)
                 Log.e("TAG", "onMessageReceived: Data" + json.toString());
-                noti(json)
+                //noti(json)
             }
         }
     }

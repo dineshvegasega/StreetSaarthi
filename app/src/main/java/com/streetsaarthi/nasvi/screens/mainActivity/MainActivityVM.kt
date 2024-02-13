@@ -2,11 +2,13 @@ package com.streetsaarthi.nasvi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -84,7 +86,10 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
         @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
         override fun onBindHolder(binding: ItemMenuBinding, dataClass: ItemMenuModel, position: Int) {
+
             binding.apply {
+//                header.setBackgroundTintList(
+//                    ColorStateList.valueOf(dataClass.color))
                 title.text = dataClass.title
                 if(dataClass.titleChildArray!!.isEmpty()){
                     ivArrow .visibility = View.GONE
@@ -102,9 +107,37 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
 
                 ivArrow.singleClick {
+//                    if (dataClass.isExpanded == false){
+//                        dataClass.isExpanded = true
+//                    } else {
+//                        dataClass.isExpanded = false
+//                    }
+                    val list = currentList
+//                    list.map {
+//                        it.isExpanded = false
+//                        if(it.isExpanded == dataClass.isExpanded){
+//                            dataClass.isExpanded = !dataClass.isExpanded!!
+//                        }
+//                    }
+//
+//                    if (dataClass.isExpanded == false){
+//                        dataClass.apply {
+//                            dataClass.isExpanded = true
+//                        }
+//                        Log.e("TAG", "dataClass.isExpandedAA "+dataClass.isExpanded)
+//
+//                    } else {
+//                        dataClass.apply {
+//                            dataClass.isExpanded = false
+//                        }
+//                        Log.e("TAG", "dataClass.isExpandedBB "+dataClass.isExpanded)
+//
+//                    }
+//                    dataClass.isExpanded = !dataClass.isExpanded!!
                         dataClass.isExpanded = !dataClass.isExpanded!!
-                        val list = currentList
+
                         notifyItemRangeChanged(position, list.size)
+//                    notifyDataSetChanged()
                 }
 
 

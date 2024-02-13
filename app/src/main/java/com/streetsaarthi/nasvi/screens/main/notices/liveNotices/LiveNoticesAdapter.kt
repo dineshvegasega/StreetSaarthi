@@ -116,8 +116,8 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
 
-                textHeaderTxt4.setText(if (dataClass.status == "Active") root.context.resources.getString(R.string.live) else root.context.resources.getString(R.string.expired))
-                textHeaderTxt4.backgroundTintList = if (dataClass.status == "Active") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A)
+//                textHeaderTxt4.setText(if (dataClass.status == "Active") root.context.resources.getString(R.string.live) else root.context.resources.getString(R.string.expired))
+//                textHeaderTxt4.backgroundTintList = if (dataClass.status == "Active") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A)
 
 
                 root.singleClick {

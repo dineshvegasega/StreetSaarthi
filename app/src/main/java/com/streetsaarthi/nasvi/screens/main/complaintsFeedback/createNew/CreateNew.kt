@@ -27,6 +27,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -106,7 +107,7 @@ class CreateNew : Fragment() {
                     Log.e("TAG", "typeXX "+viewModel.type)
                     val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
-//                        .addFormDataPart("user_role", USER_TYPE)
+                        .addFormDataPart("user_role", USER_TYPE)
                     requestBody.addFormDataPart("type", viewModel.type)
                     requestBody.addFormDataPart("subject", editTextSubjectOfComplaint.text.toString())
                     if (viewModel.type == "complaint" && viewModel.complaintTypeId != 0){
@@ -130,7 +131,11 @@ class CreateNew : Fragment() {
                             requestBody.addFormDataPart("state_id", ""+user.residential_state?.id)
                             requestBody.addFormDataPart("district_id", ""+user.residential_district?.id)
                             requestBody.addFormDataPart("municipality_id", ""+user.residential_municipality_panchayat?.id)
-                            viewModel.newFeedback(view = requireView(), requestBody.build())
+                            if(user?.residential_state?.id != null){
+                                viewModel.newFeedback(view = requireView(), requestBody.build())
+                            } else {
+                                showSnackBar(resources.getString(R.string.need_to_add_complete_profile))
+                            }
                         }
                     }
                 }

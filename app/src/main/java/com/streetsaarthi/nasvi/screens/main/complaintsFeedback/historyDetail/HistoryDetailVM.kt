@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.demo.home.HistoryAdapter
+import com.demo.home.HistoryDetailAdapter
 import com.streetsaarthi.nasvi.ApiInterface
 import com.streetsaarthi.nasvi.CallHandler
 import com.streetsaarthi.nasvi.Repository
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryDetailVM @Inject constructor(private val repository: Repository): ViewModel() {
-    val chatAdapter by lazy { HistoryAdapter() }
+    val chatAdapter by lazy { HistoryDetailAdapter() }
 
     var uploadMediaImage : String ?= null
 

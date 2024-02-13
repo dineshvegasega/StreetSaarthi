@@ -179,7 +179,6 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                             putString("key", ""+dataClass.type_id)
                         })
                     }
-
                     DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val obj: JSONObject = JSONObject().apply {

@@ -557,6 +557,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
                     viewModel.localOrganisation(requireView(), JSONObject().apply {
                         put("state_id", data.vending_state?.id)
+                        put("district_id", data.vending_district?.id)
                     })
 
                     if (data.local_organisation != null){
@@ -1002,9 +1003,13 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 viewModel.stateIdVending =  viewModel.itemStateVending[which].id
                 view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
                 view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
-                view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                    put("state_id", viewModel.stateIdVending)
-                })}
+                if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
+                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                        put("state_id", viewModel.stateIdVending)
+                        put("district_id", viewModel.districtIdVending)
+                    })}
+                }
+
                 viewModel.data.vending_state = ""+viewModel.stateIdVending
                 binding.editTextVendingSelectDistrict.setText("")
                 binding.editTextVendingMunicipalityPanchayat.setText("")
@@ -1028,10 +1033,13 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 viewModel.districtIdVending =  viewModel.itemDistrictVending[which].id
                 view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdVending) }
                 viewModel.data.vending_district = ""+viewModel.districtIdVending
-                view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                    put("state_id", viewModel.stateIdVending)
-                    put("district_id", viewModel.districtIdVending)
-                })}
+                if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
+                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                        put("state_id", viewModel.stateIdVending)
+                        put("district_id", viewModel.districtIdVending)
+                    })}
+                }
+
                 binding.editTextVendingSelectPincode.setText("")
                 viewModel.pincodeId = ""
             }.show()

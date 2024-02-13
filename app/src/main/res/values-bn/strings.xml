@@ -516,4 +516,7 @@
     <string name="feedback_added_successfully">প্রতিক্রিয়া সফলভাবে যোগ করা হয়েছে</string>
     <string name="congratulations">অভিনন্দন!</string>
     <string name="your_initial_registration_is_complete">আপনার প্রাথমিক নিবন্ধন সম্পূর্ণ হয়েছে৷</string>
+    <string name="need_to_add_complete_profile">অভিযোগ/প্রতিক্রিয়া জমা দেওয়ার আগে আপনাকে আপনার প্রোফাইল সম্পূর্ণ করতে হবে।</string>
+<!--    <string name="conversation_marked_Close_admin">এই কথোপকথনটিকে প্রশাসক দ্বারা বন্ধ হিসাবে চিহ্নিত করা হয়েছিল</string>-->
+<!--    <string name="conversation_marked_reOpen_admin">এই কথোপকথনটিকে প্রশাসক দ্বারা পুনরায় খুলতে চিহ্নিত করা হয়েছে</string>-->
 </resources>

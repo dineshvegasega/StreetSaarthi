@@ -517,4 +517,7 @@
     <string name="feedback_added_successfully">अभिप्राय यशस्वीरित्या जोडला</string>
     <string name="congratulations">अभिनंदन!</string>
     <string name="your_initial_registration_is_complete">तुमची प्रारंभिक नोंदणी पूर्ण झाली आहे.</string>
+    <string name="need_to_add_complete_profile">तक्रार/फीडबॅक सबमिट करण्यापूर्वी तुम्हाला तुमचे प्रोफाइल पूर्ण करणे आवश्यक आहे.</string>
+<!--    <string name="conversation_marked_Close_admin">या संभाषणावर प्रशासकाद्वारे बंद चिन्हांकित केले आहे</string>-->
+<!--    <string name="conversation_marked_reOpen_admin">या संभाषणावर प्रशासकाने री-ओपन म्हणून चिन्हांकित केले होते</string>-->
 </resources>

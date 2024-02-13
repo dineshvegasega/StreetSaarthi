@@ -517,4 +517,7 @@
     <string name="feedback_added_successfully">ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ</string>
     <string name="congratulations">ಅಭಿನಂದನೆಗಳು!</string>
     <string name="your_initial_registration_is_complete">ನಿಮ್ಮ ಆರಂಭಿಕ ನೋಂದಣಿ ಪೂರ್ಣಗೊಂಡಿದೆ.</string>
+    <string name="need_to_add_complete_profile">ದೂರು/ಪ್ರತಿಕ್ರಿಯೆ ಸಲ್ಲಿಸುವ ಮೊದಲು ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಅನ್ನು ನೀವು ಪೂರ್ಣಗೊಳಿಸಬೇಕು.</string>
+<!--    <string name="conversation_marked_Close_admin">ಈ ಸಂವಾದವನ್ನು ನಿರ್ವಾಹಕರಿಂದ ಮುಚ್ಚಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>-->
+<!--    <string name="conversation_marked_reOpen_admin">ಈ ಸಂವಾದವನ್ನು ನಿರ್ವಾಹಕರಿಂದ ಮರು-ತೆರೆಯಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>-->
 </resources>

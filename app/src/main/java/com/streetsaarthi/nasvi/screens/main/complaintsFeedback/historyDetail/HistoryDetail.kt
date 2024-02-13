@@ -90,7 +90,7 @@ class HistoryDetail : Fragment() {
 //        var feedbackId = "84"
         var status = ""
         binding.apply {
-            inclideHeaderSearch.textHeaderTxt.text = HtmlCompat.fromHtml(getString(R.string.trackingId, "<b>"+feedbackId+"</b>"), HtmlCompat.FROM_HTML_MODE_LEGACY);
+            inclideHeaderSearch.textHeaderTxt.text = HtmlCompat.fromHtml(getString(R.string.trackingId, "<b>"+feedbackId+"</b>"), HtmlCompat.FROM_HTML_MODE_LEGACY)
          //   "Tracking Id: #12344682"
             val typeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.roboto_medium)
             inclideHeaderSearch.textHeaderTxt.typeface = typeface
@@ -193,7 +193,7 @@ class HistoryDetail : Fragment() {
 
                 strings.clear()
 
-                strings.add(DataX(it.media, it.message, it.registration_date , "in-progress" , it.user_id, it.user_type, false))
+                strings.add(DataX(it.media, it.message, it.registration_date , "in-progress" , it.user_id, USER_TYPE, false))
 
                 strings.addAll(it.data.data)
                 viewModel.chatAdapter.submitList(strings)
