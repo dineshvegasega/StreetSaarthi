@@ -517,4 +517,6 @@
     <string name='back_to_login_u'><u>लॉगिन पर वापस जाएं</u></string>
     <string name='complaint_added_successfully'>शिकायत सफलतापूर्वक जोड़ी गई</string>
     <string name='feedback_added_successfully'>फीडबैक सफलतापूर्वक जोड़ा गया</string>
+    <string name='congratulations'>बधाई हो!</string>
+    <string name='your_initial_registration_is_complete'>आपका प्रारंभिक पंजीकरण पूरा हो गया है।</string>
 </resources>

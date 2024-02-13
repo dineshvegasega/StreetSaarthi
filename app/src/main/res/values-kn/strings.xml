@@ -515,4 +515,6 @@
     <string name="back_to_login_u"><u>ಲಾಗಿನ್‌ಗೆ ಹಿಂತಿರುಗಿ</u></string>
     <string name="complaint_added_successfully">ದೂರು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ</string>
     <string name="feedback_added_successfully">ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ</string>
+    <string name="congratulations">ಅಭಿನಂದನೆಗಳು!</string>
+    <string name="your_initial_registration_is_complete">ನಿಮ್ಮ ಆರಂಭಿಕ ನೋಂದಣಿ ಪೂರ್ಣಗೊಂಡಿದೆ.</string>
 </resources>

@@ -519,4 +519,6 @@
     <string name="back_to_login_u"><u>తిరిగి లాగిన్ చేయడానికి</u></string>
     <string name="complaint_added_successfully">ఫిర్యాదు విజయవంతంగా జోడించబడింది</string>
     <string name="feedback_added_successfully">అభిప్రాయం విజయవంతంగా జోడించబడింది</string>
+    <string name="congratulations">అభినందనలు!</string>
+    <string name="your_initial_registration_is_complete">మీ ప్రారంభ నమోదు పూర్తయింది.</string>
 </resources>

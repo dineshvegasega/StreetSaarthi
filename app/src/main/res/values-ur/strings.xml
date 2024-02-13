@@ -517,4 +517,6 @@
     <string name="back_to_login_u"><u>لاگ ان پر واپس</u></string>
     <string name="complaint_added_successfully">شکایت کامیابی کے ساتھ شامل کی گئی</string>
     <string name = "feedback_added_successfully">فیڈ بیک کامیابی سے شامل کیا گیا</string>
+    <string name="congratulations">مبارک ہو!</string>
+    <string name="your_initial_registration_is_complete">آپ کی ابتدائی رجسٹریشن مکمل ہو گئی ہے۔</string>
 </resources>

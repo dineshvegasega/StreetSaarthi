@@ -118,7 +118,6 @@
     <string name="enter_details_to_register_with_us">Enter Details To Register With Us</string>
     <string name="profile_details">Profile Details</string>
     <string name="registration_successful">Registration Successful</string>
-    <string name="congratulations_your_initial_registration_is_complete"><font color='black'>Congratulations! \n %s,\n%sYour initial registration is complete</font></string>
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">Someone from our team will contact you within 48 Hrs to verify your registration.</string>
     <string name="RegisterNow">Register Now</string>
 <!--    Congratulations!-->
@@ -539,6 +538,8 @@
     <string name="back_to_login_u"><u>Back To Login</u></string>
     <string name="complaint_added_successfully">Complaint added successfully</string>
     <string name="feedback_added_successfully">Feedback added successfully</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="your_initial_registration_is_complete">Your initial registration is complete.</string>
 
 
 

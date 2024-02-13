@@ -515,4 +515,6 @@
     <string name="back_to_login_u"><u>மீண்டும் உள்நுழைய</u></string>
     <string name="complaint_added_successfully">புகார் வெற்றிகரமாக சேர்க்கப்பட்டது</string>
     <string name="feedback_added_successfully">கருத்து வெற்றிகரமாக சேர்க்கப்பட்டது</string>
+    <string name="congratulations">வாழ்த்துக்கள்!</string>
+    <string name="your_initial_registration_is_complete">உங்கள் ஆரம்ப பதிவு முடிந்தது.</string>
 </resources>

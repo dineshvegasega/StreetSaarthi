@@ -117,7 +117,7 @@
                         tools:ignore="MissingConstraints"
                         app:fontFamily="@font/roboto_bold"
                         android:layout_marginTop="@dimen/_7sdp"
-                        android:text="@string/congratulations_your_initial_registration_is_complete"
+                        android:text="@string/your_initial_registration_is_complete"
                         />
 
 

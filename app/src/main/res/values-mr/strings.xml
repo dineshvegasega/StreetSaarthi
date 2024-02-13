@@ -515,4 +515,6 @@
     <string name="back_to_login_u"><u>लॉग इन करण्यासाठी परत</u></string>
     <string name="complaint_added_successfully">तक्रार यशस्वीरित्या जोडली</string>
     <string name="feedback_added_successfully">अभिप्राय यशस्वीरित्या जोडला</string>
+    <string name="congratulations">अभिनंदन!</string>
+    <string name="your_initial_registration_is_complete">तुमची प्रारंभिक नोंदणी पूर्ण झाली आहे.</string>
 </resources>

@@ -514,4 +514,6 @@
     <string name="back_to_login_u"><u>লগইন করতে ফিরে যান</u></string>
     <string name="complaint_added_successfully">অভিযোগ সফলভাবে যোগ করা হয়েছে</string>
     <string name="feedback_added_successfully">প্রতিক্রিয়া সফলভাবে যোগ করা হয়েছে</string>
+    <string name="congratulations">অভিনন্দন!</string>
+    <string name="your_initial_registration_is_complete">আপনার প্রাথমিক নিবন্ধন সম্পূর্ণ হয়েছে৷</string>
 </resources>

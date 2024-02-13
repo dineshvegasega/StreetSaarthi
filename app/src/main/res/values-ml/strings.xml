@@ -514,4 +514,6 @@
     <string name="back_to_login_u"><u>ലോഗിൻ ചെയ്യാൻ മടങ്ങുക</u></string>
     <string name="complaint_added_successfully">പരാതി വിജയകരമായി ചേർത്തു</string>
     <string name="feedback_added_successfully">ഫീഡ്‌ബാക്ക് വിജയകരമായി ചേർത്തു</string>
+    <string name="congratulations">അഭിനന്ദനങ്ങൾ!</string>
+    <string name="your_initial_registration_is_complete">നിങ്ങളുടെ പ്രാരംഭ രജിസ്ട്രേഷൻ പൂർത്തിയായി.</string>
 </resources>

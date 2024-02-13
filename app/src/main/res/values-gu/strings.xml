@@ -511,4 +511,6 @@
     <string name="back_to_login_u"><u>લોગિન પર પાછા</u></string>
     <string name="complaint_added_successfully">ફરિયાદ સફળતાપૂર્વક ઉમેરાઈ</string>
     <string name = "feedback_added_successfully"> પ્રતિસાદ સફળતાપૂર્વક ઉમેરાયો</string>
+    <string name="congratulations">અભિનંદન!</string>
+    <string name="your_initial_registration_is_complete">તમારી પ્રારંભિક નોંધણી પૂર્ણ થઈ ગઈ છે.</string>
 </resources>

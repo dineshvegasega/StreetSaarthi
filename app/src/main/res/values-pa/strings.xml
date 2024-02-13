@@ -519,4 +519,6 @@
     <string name="back_to_login_u"><u>ਲੌਗਇਨ ਕਰਨ ਲਈ ਵਾਪਸ</u></string>
     <string name="complaint_added_successfully">ਸ਼ਿਕਾਇਤ ਸਫਲਤਾਪੂਰਵਕ ਸ਼ਾਮਲ ਕੀਤੀ ਗਈ</string>
     <string name="feedback_added_successfully">ਫੀਡਬੈਕ ਸਫਲਤਾਪੂਰਵਕ ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ</string>
+    <string name="congratulations">ਵਧਾਈਆਂ!</string>
+    <string name="your_initial_registration_is_complete">ਤੁਹਾਡੀ ਸ਼ੁਰੂਆਤੀ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਪੂਰੀ ਹੋ ਗਈ ਹੈ।</string>
 </resources>
