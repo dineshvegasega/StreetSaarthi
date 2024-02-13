@@ -1,8 +1,6 @@
 package com.streetsaarthi.nasvi.screens.main.settings
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,25 +10,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLanguageStartBinding
 import com.streetsaarthi.nasvi.databinding.SettingsBinding
-import com.streetsaarthi.nasvi.models.Item
+import com.streetsaarthi.nasvi.datastore.DataStoreKeys
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
-import com.streetsaarthi.nasvi.screens.onboarding.start.StartVM
-import com.streetsaarthi.nasvi.utils.LocaleHelper
-import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MultipartBody
 
 @AndroidEntryPoint
 class Settings : Fragment() {
@@ -38,10 +37,9 @@ class Settings : Fragment() {
     private var _binding: SettingsBinding? = null
     private val binding get() = _binding!!
 
-    var itemMain : ArrayList<Item> ?= ArrayList()
 
-    var languageAlert : BottomSheetDialog?= null
-
+    var languageAlert: BottomSheetDialog? = null
+    var notificationAlert: AlertDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,10 +62,9 @@ class Settings : Fragment() {
             })
 
 
-
-            editTextSelectLanguage.setOnClickListener {
-                if(languageAlert?.isShowing == true) {
-                    return@setOnClickListener
+            editTextSelectLanguage.singleClick {
+                if (languageAlert?.isShowing == true) {
+                    return@singleClick
                 }
                 val dialogView: View = LayoutInflater.from(requireContext())
                     .inflate(R.layout.dialog_bottom_your_booking2, null)
@@ -104,47 +101,38 @@ class Settings : Fragment() {
                                 )
                             );
                             binding.btLanguage.text = dataClass.name
-                            binding.btLanguage.setOnClickListener {
-                                Log.e("TAG", "asdsfs " + dataClass.name)
-
+                            binding.btLanguage.singleClick {
                                 val list = currentList
                                 list.forEach {
                                     it.isSelected = dataClass == it
                                 }
                                 notifyDataSetChanged()
 
-                                LocaleHelper.setLocale(requireContext(), dataClass.locale)
-//                                Handler(Looper.getMainLooper()).postDelayed({
-                                    val refresh =
-                                        Intent(Intent(requireActivity(), MainActivity::class.java))
-                                    refresh.putExtra(Screen, Main)
-                                    refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    startActivity(refresh)
-                                    MainActivity.activity.get()!!.finish()
-                                    MainActivity.activity.get()!!.finishAffinity()
-//                                },100)
+                                callLanguageApi(dataClass.locale, 1)
 
+                                Handler(Looper.getMainLooper()).postDelayed(Thread {
+                                    MainActivity.mainActivity.get()?.runOnUiThread {
+                                        languageAlert?.dismiss()
+                                    }
+                                }, 100)
+//                                MainActivity.mainActivity.get()?.reloadActivity(dataClass.locale, Main)
                             }
 
-                            binding.btImage.setOnClickListener {
-                                Log.e("TAG", "asdsfs " + dataClass.name)
-
+                            binding.btImage.singleClick {
                                 val list = currentList
                                 list.forEach {
                                     it.isSelected = dataClass == it
                                 }
                                 notifyDataSetChanged()
 
-                                LocaleHelper.setLocale(requireContext(), dataClass.locale)
-//                                Handler(Looper.getMainLooper()).postDelayed({
-                                    val refresh =
-                                        Intent(Intent(requireActivity(), MainActivity::class.java))
-                                    refresh.putExtra(Screen, Main)
-                                    refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    startActivity(refresh)
-                                    MainActivity.activity.get()!!.finish()
-                                    MainActivity.activity.get()!!.finishAffinity()
-//                                },100)
+                                callLanguageApi(dataClass.locale, 1)
+
+                                Handler(Looper.getMainLooper()).postDelayed(Thread {
+                                    MainActivity.mainActivity.get()?.runOnUiThread {
+                                        languageAlert?.dismiss()
+                                    }
+                                }, 100)
+//                                MainActivity.mainActivity.get()?.reloadActivity(dataClass.locale, Main)
                             }
                         }
                     }
@@ -155,11 +143,106 @@ class Settings : Fragment() {
             }
 
 
-            btLogout.setOnClickListener {
+            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                if (loginUser != null) {
+                    val noti =  Gson().fromJson(loginUser, Login::class.java).notification
+                    switchNotifications.isChecked = if (noti == "Yes") true else false
+                }
+            }
+
+
+
+            switchNotifications.singleClick {
+                if (notificationAlert?.isShowing == true) {
+                    return@singleClick
+                }
+
+
+                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    var user = Gson().fromJson(loginUser, Login::class.java)
+                    if (loginUser != null) {
+                        notificationAlert =
+                            MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+                                .setTitle(resources.getString(R.string.app_name))
+                                .setMessage(
+                                    if (user.notification == "Yes") resources.getString(R.string.are_your_sure_want_to_turn_Off) else resources.getString(
+                                        R.string.are_your_sure_want_to_turn_On
+                                    )
+                                )
+                                .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                                    dialog.dismiss()
+                                    val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                                        .setType(MultipartBody.FORM)
+                                        .addFormDataPart("user_type", USER_TYPE)
+                                    requestBody.addFormDataPart("user_id", ""+user.id)
+                                    if (user.notification == "Yes") {
+                                        requestBody.addFormDataPart("notification", "No")
+                                    } else {
+                                        requestBody.addFormDataPart("notification", "Yes")
+                                    }
+                                    viewModel.notificationUpdate(""+user.id, requestBody.build(), 0)
+                                }
+                                .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                                    dialog.dismiss()
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        MainActivity.binding.drawerLayout.close()
+                                    }, 500)
+                                }
+                                .setCancelable(false)
+                                .show()
+                        switchNotifications.isChecked = if (user.notification == "Yes") true else false
+                    }
+                }
+
+
+                viewModel.itemNotificationUpdateResult.value = false
+                viewModel.itemNotificationUpdateResult.observe(requireActivity(), Observer {
+                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        if (loginUser != null) {
+                            val noti =  Gson().fromJson(loginUser, Login::class.java).notification
+                            switchNotifications.isChecked = if (noti == "Yes") true else false
+                        }
+                    }
+                })
+
+            }
+
+
+            editTextChangeNumber.singleClick {
+                view.findNavController().navigate(R.id.action_settings_to_changeMobile)
+            }
+
+
+            editTextChangePassword.singleClick {
+                view.findNavController().navigate(R.id.action_settings_to_changePassword)
+            }
+
+
+            btLogout.singleClick {
                 MainActivity.mainActivity.get()!!.callLogoutDialog()
+            }
+
+
+            btDeleteAccount.singleClick {
+                MainActivity.mainActivity.get()!!.callDeleteDialog()
             }
         }
     }
+
+
+   fun callLanguageApi(locale: String, value : Int) {
+       DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+           if (loginUser != null) {
+              var _id = Gson().fromJson(loginUser, Login::class.java).id
+               val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                   .setType(MultipartBody.FORM)
+                   .addFormDataPart("user_type", USER_TYPE)
+               requestBody.addFormDataPart("user_id", ""+_id)
+                   requestBody.addFormDataPart("language", "/en/"+locale)
+               viewModel.notificationUpdate(""+_id, requestBody.build(), value)
+           }
+       }
+   }
 
 
     override fun onDestroyView() {

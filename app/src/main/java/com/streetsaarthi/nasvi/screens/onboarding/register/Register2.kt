@@ -2,20 +2,25 @@ package com.streetsaarthi.nasvi.screens.onboarding.register
 
 import android.Manifest
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
@@ -29,8 +34,10 @@ import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register2Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
@@ -48,22 +55,10 @@ class Register2  : Fragment() , CallBackListener {
 
     var scrollPoistion = 0
 
+    var permissionAlert : AlertDialog?= null
 
     companion object {
         var TAG = "Register2"
-        private val REQUIRED_GALLERY_PERMISSIONS =
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
-            )
-        private const val CAPTURE_IMAGE_REQUEST = 1001
-        private const val GALLERY_IMAGE_REQUEST = 1002
-        private const val GALLERY_PERMISSION_REQUEST = 1004
-        private const val SELECT_ADDRESS_REQUEST_CODE = 1003
-        private const val REQUEST_CODE_PERMISSIONS = 1002
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-
         var callBackListener: CallBackListener? = null
     }
 
@@ -185,36 +180,36 @@ class Register2  : Fragment() , CallBackListener {
             viewModel.vending(view)
             viewModel.marketplace(view)
 
-//            btSignIn.setOnClickListener {
+//            btSignIn.singleClick {
 //                Log.e("TAG", "viewModel.dataB "+viewModel.data.toString())
 //            }
 
-            editTextTypeofMarketPlace.setOnClickListener {
+            editTextTypeofMarketPlace.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownMarketPlaceDialog()
             }
 
-            editTextTypeofVending.setOnClickListener {
+            editTextTypeofVending.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownVendingDialog()
             }
 
-            editTextTotalYearsofVending.setOnClickListener {
+            editTextTotalYearsofVending.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownYearsDialog()
             }
 
-            editTextVendingTimeOpen.setOnClickListener {
+            editTextVendingTimeOpen.singleClick {
                 requireActivity().hideKeyboard()
                 showOpenDialog()
             }
-            editTextVendingTimeClose.setOnClickListener {
+            editTextVendingTimeClose.singleClick {
                 requireActivity().hideKeyboard()
                 showCloseDialog()
             }
 
             viewModel.stateCurrent(view)
-            editTextSelectState.setOnClickListener {
+            editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemStateVending.size > 0){
                     showDropDownStateDialog()
@@ -223,7 +218,7 @@ class Register2  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectDistrict.setOnClickListener {
+            editTextSelectDistrict.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateIdVending > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -236,7 +231,7 @@ class Register2  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextMunicipalityPanchayat.setOnClickListener {
+            editTextMunicipalityPanchayat.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateIdVending > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -249,7 +244,7 @@ class Register2  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectPincode.setOnClickListener {
+            editTextSelectPincode.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.districtIdVending > 0)){
                     showSnackBar(getString(R.string.select_district_))
@@ -263,18 +258,18 @@ class Register2  : Fragment() , CallBackListener {
             }
 
 
-            ivRdLocalOrgnaizationYes.setOnClickListener {
+            ivRdLocalOrgnaizationYes.singleClick {
                 editTextLocalOrganisation.visibility = View.VISIBLE
                 setScrollPosition(1, true)
             }
 
-            ivRdLocalOrgnaizationNo.setOnClickListener {
+            ivRdLocalOrgnaizationNo.singleClick {
                 editTextLocalOrganisation.visibility = View.GONE
                 setScrollPosition(1, false)
             }
 
 
-            editTextLocalOrganisation.setOnClickListener {
+            editTextLocalOrganisation.singleClick {
                 requireActivity().hideKeyboard()
                 if (viewModel.itemLocalOrganizationVending.size > 0){
                     showDropDownLocalOrganisationDialog()
@@ -284,47 +279,41 @@ class Register2  : Fragment() , CallBackListener {
             }
 
 
-            layoutShopImage.setOnClickListener {
+            layoutShopImage.singleClick {
                 imagePosition = 11
-                isFree = true
                 callMediaPermissions()
             }
 
 
-            ivRdDocumentYes.setOnClickListener {
+            ivRdDocumentYes.singleClick {
                 viewModel.documentDetails = true
                 inclideDocuments.layoutDocuments.visibility = View.VISIBLE
                 setScrollPosition(1, true)
             }
-            ivRdDocumentNo.setOnClickListener {
+            ivRdDocumentNo.singleClick {
                 viewModel.documentDetails = false
                 inclideDocuments.layoutDocuments.visibility = View.GONE
                 setScrollPosition(1, false)
             }
 
-            inclideDocuments.layoutImageUploadCOV.setOnClickListener {
+            inclideDocuments.layoutImageUploadCOV.singleClick {
                 imagePosition = 1
-                isFree = true
                 callMediaPermissions()
             }
-            inclideDocuments.layoutImageUploadLOR.setOnClickListener {
+            inclideDocuments.layoutImageUploadLOR.singleClick {
                 imagePosition = 2
-                isFree = true
                 callMediaPermissions()
             }
-            inclideDocuments.layoutUploadSurveyReceipt.setOnClickListener {
+            inclideDocuments.layoutUploadSurveyReceipt.singleClick {
                 imagePosition = 3
-                isFree = true
                 callMediaPermissions()
             }
-            inclideDocuments.layoutUploadChallan.setOnClickListener {
+            inclideDocuments.layoutUploadChallan.singleClick {
                 imagePosition = 4
-                isFree = true
                 callMediaPermissions()
             }
-            inclideDocuments.layoutUploadApprovalLetter.setOnClickListener {
+            inclideDocuments.layoutUploadApprovalLetter.singleClick {
                 imagePosition = 5
-                isFree = true
                 callMediaPermissions()
             }
 
@@ -333,14 +322,16 @@ class Register2  : Fragment() , CallBackListener {
             binding.scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                     scrollPoistion = scrollY
             })
-
-            ivRdGovernmentYes.setOnClickListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
+            }, 100)
+            ivRdGovernmentYes.singleClick {
                 viewModel.governmentScheme = true
                 inclideGovernment.layoutGovernmentScheme.visibility = View.VISIBLE
                 setScrollPosition(2, true)
             }
 
-            ivRdGovernmentNo.setOnClickListener {
+            ivRdGovernmentNo.singleClick {
                 viewModel.governmentScheme = false
                 inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
                 setScrollPosition(2, false)
@@ -393,30 +384,50 @@ class Register2  : Fragment() , CallBackListener {
 
 
 
-    var isFree = false
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
-            // Handle Permission granted/rejected
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        showOptions()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
+            if(!permissions.entries.toString().contains("false")){
+                showOptions()
+            } else {
+                callPermissionDialog()
             }
         }
 
 
+
+    var someActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        callMediaPermissions()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callPermissionDialog() {
+        if(permissionAlert?.isShowing == true) {
+            return
+        }
+        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.required_permissions))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                val i= Intent()
+                i.action= Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                i.data= Uri.parse("package:" + requireActivity().packageName)
+                someActivityResultLauncher.launch(i)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    MainActivity.binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+    }
 
 
     private fun showOptions() = try {
@@ -427,23 +438,22 @@ class Register2  : Fragment() , CallBackListener {
         val tvCamera = dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
         val tvCameraDesc = dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
         val dialog = BottomSheetDialog(requireContext(), R.style.TransparentDialog)
-        btnCancel.setOnClickListener {
+        btnCancel.singleClick {
             dialog.dismiss()
         }
-        tvCamera.setOnClickListener {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvCameraDesc.setOnClickListener {
+        tvCamera.singleClick {
             dialog.dismiss()
             forCamera()
         }
-
-        tvPhotos.setOnClickListener {
+        tvCameraDesc.singleClick {
+            dialog.dismiss()
+            forCamera()
+        }
+        tvPhotos.singleClick {
             dialog.dismiss()
             forGallery()
         }
-        tvPhotosDesc.setOnClickListener {
+        tvPhotosDesc.singleClick {
             dialog.dismiss()
             forGallery()
         }
@@ -451,7 +461,6 @@ class Register2  : Fragment() , CallBackListener {
         dialog.show()
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG", "errorD " + e.message)
     }
 
     private fun forCamera() {
@@ -520,7 +529,6 @@ class Register2  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.total_years_of_vending))
             .setItems(list) { _, which ->
                 binding.editTextTotalYearsofVending.setText(list[which])
-//                editProfileVM.gender.value = list[which]
             }.show()
     }
 
@@ -550,8 +558,6 @@ class Register2  : Fragment() , CallBackListener {
                     binding.editTextVendingTimeOpen.setText(
                         strHrsToShow + ":" + (if (minute.toString().length == 1) "0"+datetime.get(Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
                     )
-                    //viewModel.data.open = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
-//                    var ss : String =
 
                     if (minute.toString().length == 1){
 
@@ -559,9 +565,6 @@ class Register2  : Fragment() , CallBackListener {
 
                     }
                     viewModel.data.open = "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
-                    // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
-                    //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
-                    Log.e("TAG", "AAAA " + viewModel.data.open)
                 }
             },
             hour,
@@ -569,35 +572,6 @@ class Register2  : Fragment() , CallBackListener {
             false
         )
         mTimePicker.show()
-
-
-//        val timeSetListener =
-//            OnTimeSetListener { view, hourOfDay, minute ->
-//                val datetime = Calendar.getInstance()
-//                datetime[Calendar.HOUR_OF_DAY] = hourOfDay
-//                datetime[Calendar.MINUTE] = minute
-//                val strHrsToShow =
-//                    if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
-//                        datetime.get(Calendar.HOUR)
-//                    )
-//                var am_pm = ""
-//                if (datetime.get(Calendar.AM_PM) == Calendar.AM)
-//                    am_pm = "AM";
-//                else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
-//                    am_pm = "PM";
-//                binding.editTextVendingTimeOpen.setText(strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm)
-//                viewModel.data.open = ""+hourOfDay+":"+minute+":00"
-//                Log.e("TAG", "AAAA "+ viewModel.data.open)
-//            }
-//        val timePickerDialog = CustomTimePickerDialog(
-//            requireContext(), timeSetListener,
-//            Calendar.getInstance()[Calendar.HOUR],
-//            CustomTimePickerDialog.getRoundedMinute(Calendar.getInstance()[Calendar.MINUTE] + CustomTimePickerDialog.TIME_PICKER_INTERVAL),
-//            false,
-//            R.style.TimeDialogTheme
-//        )
-//        timePickerDialog.show()
-
     }
 
 
@@ -611,6 +585,7 @@ class Register2  : Fragment() , CallBackListener {
             requireContext(),
             R.style.TimeDialogTheme,
             object : TimePickerDialog.OnTimeSetListener {
+                @SuppressLint("SetTextI18n")
                 override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
                     val datetime = Calendar.getInstance()
                     datetime[Calendar.HOUR_OF_DAY] = hourOfDay
@@ -626,14 +601,12 @@ class Register2  : Fragment() , CallBackListener {
                     else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
                         am_pm = "PM";
                     binding.editTextVendingTimeClose.setText(
-                        strHrsToShow + ":" + (if (minute.toString().length == 1) "0"+datetime.get(Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
+                        strHrsToShow + ":" + (if (minute.toString().length == 1) "0" + datetime.get(
+                            Calendar.MINUTE
+                        ) else datetime.get(Calendar.MINUTE)) + " " + am_pm
                     )
-
-                    // viewModel.data.close = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
-                    viewModel.data.close = "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
-
-                    // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
-                    //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
+                    viewModel.data.close =
+                        "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0" + minute else minute) + ":00"
                 }
             },
             hour,
@@ -658,9 +631,13 @@ class Register2  : Fragment() , CallBackListener {
                 viewModel.stateIdVending = viewModel.itemStateVending[which].id
                 view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
                 view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
-                view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                    put("state_id", viewModel.stateIdVending)
-                })}
+                if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
+                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                        put("state_id", viewModel.stateIdVending)
+                        put("district_id", viewModel.districtIdVending)
+                    })}
+                }
+
                 binding.editTextSelectDistrict.setText("")
                 binding.editTextMunicipalityPanchayat.setText("")
                 viewModel.districtIdVending = 0
@@ -682,10 +659,13 @@ class Register2  : Fragment() , CallBackListener {
                 binding.editTextSelectDistrict.setText(list[which])
                 viewModel.districtIdVending = viewModel.itemDistrictVending[which].id
                 view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdVending) }
-                view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                    put("state_id", viewModel.stateIdVending)
-                    put("district_id", viewModel.districtIdVending)
-                })}
+                if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
+                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                        put("state_id", viewModel.stateIdVending)
+                        put("district_id", viewModel.districtIdVending)
+                    })}
+                }
+
                 binding.editTextSelectPincode.setText("")
                 viewModel.pincodeIdVending = ""
             }.show()
@@ -719,7 +699,6 @@ class Register2  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) { _, which ->
                 binding.editTextSelectPincode.setText(list[which])
-//                viewModel.pincodeIdCurrent = viewModel.itemPincodeCurrent[which].id
                 viewModel.pincodeIdVending = binding.editTextSelectPincode.text.toString()
             }.show()
     }
@@ -744,10 +723,8 @@ class Register2  : Fragment() , CallBackListener {
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackB " + pos)
         binding.apply {
             if (pos == 3) {
-//                Register.callBackListener!!.onCallBack(4)
                 if (editTextTypeofMarketPlace.text.toString().isEmpty()) {
                     showSnackBar(getString(R.string.type_of_market_place))
                 } else if (viewModel.marketplaceId == 7 && editTextTypeofMarketPlaceEnter.text.toString()
@@ -785,7 +762,6 @@ class Register2  : Fragment() , CallBackListener {
                             if(binding.inclideGovernment.cbRememberOthersPleaseName.isChecked == true && binding.inclideGovernment.editTextSchemeName.text.toString().isEmpty()){
                                 showSnackBar(getString(R.string.scheme_name))
                             }else{
-                                Log.e(TAG, "schemeNameAA22 ")
                                 if(binding.inclideGovernment.cbRememberPMSwanidhiScheme.isChecked == true){
                                     schemeName.append(getString(R.string.pm_swanidhi_schemeSingle)+" ")
                                 }
@@ -799,12 +775,10 @@ class Register2  : Fragment() , CallBackListener {
                             showSnackBar(getString(R.string.select_scheme))
                         }
                     } else if(binding.ivRdGovernmentYes.isChecked == false && binding.ivRdGovernmentNo.isChecked == true){
-                        Log.e(TAG, "schemeNameBB ")
                         viewModel.data.governmentScheme = binding.ivRdGovernmentYes.isChecked
                         viewModel.data.schemeName = ""
                         setAddData()
                     }
-                    Log.e(TAG, "schemeNameCC " + schemeName.toString())
                 }
             }
         }

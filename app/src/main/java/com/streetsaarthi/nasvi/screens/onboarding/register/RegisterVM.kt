@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi.screens.onboarding.register
 
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -8,26 +9,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemDistrict
+import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemOrganization
 import com.streetsaarthi.nasvi.models.mix.ItemPanchayat
 import com.streetsaarthi.nasvi.models.mix.ItemPincode
 import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
+import com.streetsaarthi.nasvi.models.test.ItemT
 import com.streetsaarthi.nasvi.models.translate.ItemTranslate
 import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
 import com.streetsaarthi.nasvi.networking.CallHandlerTranslate
+import com.streetsaarthi.nasvi.networking.convertGsonString
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
@@ -117,6 +124,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
                     if (response.isSuccessful){
                         itemState = response.body()?.data as ArrayList<ItemState>
+//                        translate(response.body()?.data.toString())
                     }
                 }
 
@@ -130,6 +138,30 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
             }
         )
     }
+
+    fun state1(view: View) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemState>>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.state()
+
+                override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
+                    if (response.isSuccessful){
+                        itemState = response.body()?.data as ArrayList<ItemState>
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
 
     fun district(view: View, id: Int) = viewModelScope.launch {
         val obj: JSONObject = JSONObject()
@@ -363,7 +395,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
@@ -398,7 +429,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.data != null){
                             isOtpVerified = true
@@ -443,11 +473,12 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.register(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
                         Handler(Looper.getMainLooper()).postDelayed({
-                            view.findNavController().navigate(R.id.action_register_to_registerSuccessful)
+                            view.findNavController().navigate(R.id.action_register_to_registerSuccessful, Bundle().apply {
+                                putString("key", jsonObject.getString("vendor_first_name"))
+                            })
                         },100)
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
@@ -470,7 +501,8 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
 
     fun registerWithFiles(
         view: View,
-        hashMap: RequestBody
+        hashMap: RequestBody,
+        _string: String
     ) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
@@ -478,10 +510,11 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.registerWithFiles( hashMap)
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_register_to_registerSuccessful)
+                        view.findNavController().navigate(R.id.action_register_to_registerSuccessful, Bundle().apply {
+                            putString("key", _string)
+                        })
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
                     }
@@ -499,18 +532,40 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         )
     }
 
-    fun translate(view: View) = viewModelScope.launch {
+    fun translate(words: String) = viewModelScope.launch {
         repository.callApiTranslate(
-            callHandler = object : CallHandlerTranslate<Response<ItemTranslate>> {
+            callHandler = object : CallHandlerTranslate<Response<ItemT>> {
                 override suspend fun sendRequest(apiInterface: ApiTranslateInterface) =
-                    apiInterface.translate()
+                    apiInterface.translate(words)
 
-                override fun success(response: Response<ItemTranslate>) {
+                override fun success(response: Response<ItemT>) {
 //                    if (response.isSuccessful){
 //                        itemState = response.body()?.data as ArrayList<ItemState>
 //                    }
 
-                    Log.e("TAG", "XXXX "+response.getJsonRequestBody())
+                    var aa = response.body()?.get(0)
+//                    val typeToken = object : TypeToken<List<String>>() {}.type
+//                    val changeValue = Gson().fromJson<List<String>>(Gson().toJson(aa), typeToken)
+
+//                    var aa = response.body()?.get(0)
+//                    val typeToken = object : TypeToken<List<Any>>() {}.type
+//                    val changeValue = Gson().fromJson<List<Any>>(Gson().toJson(aa), typeToken)
+
+//                    var bb = aa?.get(0).toString()
+
+//                    var stringValue = String()
+//
+//                    changeValue.map {
+//                        stringValue += it.toString()
+//                    }
+
+
+//                    var bb = Gson().toJson(stringValue.toString())
+//                    var str = bb.substring(2, bb.length - 2);
+//                    var cc = JSONArray(str.toString())
+                    Log.e("TAG", "XXXX "+aa.toString())
+
+
                 }
 
                 override fun error(message: String) {

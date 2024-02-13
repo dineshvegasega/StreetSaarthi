@@ -8,63 +8,145 @@
         android:layout_margin="@dimen/_8sdp"
         >
 
-        <com.google.android.material.imageview.ShapeableImageView
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="ivUserImage,constant1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ivOpenClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:text="OpenClose"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/_D9D9D9"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="italic"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingVertical="@dimen/_4sdp"
+        android:paddingHorizontal="@dimen/_13sdp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ivDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:text="12 July 2012"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/_D9D9D9"
+        android:textSize="@dimen/_10ssp"
+        android:background="@drawable/all_radius_10"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingVertical="@dimen/_4sdp"
+        android:paddingHorizontal="@dimen/_13sdp"
+        />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/ivUserImage"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_1sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/user_icon"
+            android:text="M"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            android:background="@drawable/all_radius"
+            android:fontFamily="@font/roboto_medium"
             android:visibility="visible"
-            android:theme="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constant1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/_8sdp"
+            android:minWidth="@dimen/_110sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             app:layout_constraintEnd_toStartOf="@+id/ivUserImage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/ivDate"
+            android:background="@drawable/white_round_corner"
+            android:backgroundTint="@color/_D9D9D9"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivMap"
+                android:layout_width="@dimen/_160sdp"
+                android:layout_height="@dimen/_100sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="visible"
+                android:theme="@style/RoundCorner5"
+                app:srcCompat="@drawable/no_image"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:layout_constraintBottom_toTopOf="@+id/tvMessage"
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="5"
-                android:padding="@dimen/_10sdp"
-                android:text="UI is not looking good as a user point of view UI is not looking good as a user point of view"
-                android:background="@drawable/white_round_corner"
+                android:text="UI is "
                 android:backgroundTint="@color/_EBEBEB"
                 android:lineSpacingExtra="@dimen/_5sdp"
                 android:textColor="@color/_646464"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="@dimen/_10sdp"
+                android:visibility="visible"
+                android:layout_marginBottom="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/ivMap"
+                app:layout_constraintBottom_toTopOf="@+id/tvTime"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBy"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_below="@+id/constant1"
+                android:text="@string/message_by_member"
+                android:textColor="@color/_484848"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:textSize="@dimen/_7sdp"
+                android:visibility="visible"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/constant1"
+                android:text="12 PM"
+                android:textColor="@color/_484848"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/_7sdp"
+                android:visibility="visible"
+                tools:ignore="MissingConstraints" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/constant1"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:gravity="end"
-            android:text="12 PM"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_6sdp"
-            android:visibility="gone"
-            tools:ignore="MissingConstraints" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

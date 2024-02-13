@@ -7,10 +7,9 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
@@ -26,8 +25,6 @@ import com.streetsaarthi.nasvi.models.mix.ItemPincode
 import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.register.RegisterVM
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -38,6 +35,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfilesVM @Inject constructor(private val repository: Repository): ViewModel() {
+
+    var isEditable = MutableLiveData<Boolean>(false)
+
     var data : Model = Model()
 
     var itemState : ArrayList<ItemState> = ArrayList()
@@ -415,7 +415,8 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if (value == 111){
-                            showSnackBar(response.body()?.message.orEmpty())
+//                            showSnackBar(response.body()?.message.orEmpty())
+                            showSnackBar(view.resources.getString(R.string.profile_updated_successfully))
                         }
 
                         if(response.body()!!.data != null){

@@ -16,16 +16,13 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ProfilesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1
-import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.changeDateFormat
+import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.loadImage
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,21 +58,37 @@ class Profiles : Fragment() , CallBackListener {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.your_Profile)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
 
-            inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
-            inclideHeaderSearch.textHeaderEditTxt.setOnClickListener {
+            inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
+            inclideHeaderSearch.textHeaderEditTxt.singleClick {
                 inclideHeaderSearch.textHeaderEditTxt.visibility = View.INVISIBLE
                 btSave.visibility = View.VISIBLE
                 btCancel.visibility = View.VISIBLE
+                viewModel.isEditable.value = true
             }
 
-            btSave.setOnClickListener {
+            btSave.singleClick {
                 PersonalDetails.callBackListener!!.onCallBack(1)
             }
 
-            btCancel.setOnClickListener {
+            viewModel.isEditable.value = false
+            btCancel.singleClick {
                 inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
                 btSave.visibility = View.GONE
                 btCancel.visibility = View.GONE
+                viewModel.isEditable.value = false
+            }
+
+            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                if (loginUser != null) {
+                    val data = Gson().fromJson(loginUser, Login::class.java).status
+                    when(data){
+                        "approved" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
+                        "unverified" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                        "pending" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                        "rejected" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                        else -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
+                    }
+                }
             }
 
 
@@ -108,6 +121,11 @@ class Profiles : Fragment() , CallBackListener {
                     var data = Gson().fromJson(loginUser, Login::class.java)
                     data.profile_image_name?.let {
                         inclidePersonalProfile.ivImageProfile.loadImage(url = { data.profile_image_name.url })
+                        inclidePersonalProfile.ivImageProfile.singleClick {
+                            data.profile_image_name?.let {
+                                arrayListOf(it.url).imageZoom(inclidePersonalProfile.ivImageProfile)
+                            }
+                        }
                     }
                     inclidePersonalProfile.textNameOfMember.text = "${data.vendor_first_name} ${data.vendor_last_name}"
                     inclidePersonalProfile.textMobileNumber.text = "+91-${data.mobile_no}"
@@ -134,7 +152,7 @@ class Profiles : Fragment() , CallBackListener {
                 inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
                 btSave.visibility = View.GONE
                 btCancel.visibility = View.GONE
-
+                viewModel.isEditable.value = false
                 updateData()
             }
         }

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.OnboardItemBinding
@@ -36,7 +36,7 @@ class WalkThroughVM @Inject constructor(private val repository: Repository): Vie
 //            Picasso.get().load(
 //                dataClass.image
 //            ).into(binding!!.imageLogo)
-//            binding.root.setOnClickListener {
+//            binding.root.singleClick {
 //                when(position) {
 //                    0 -> it.findNavController().navigate(R.id.action_onboard_to_quickRegistration)
 //                    1 -> it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
@@ -48,31 +48,5 @@ class WalkThroughVM @Inject constructor(private val repository: Repository): Vie
 //            }
         }
     }
-
-
-
-//    class WalkThroughPagerAdapter(itemMain: ArrayList<Onboard.Item>?) : RecyclerView.Adapter<WalkThroughPagerAdapter.ViewHolder>() {
-//        class ViewHolder(val binding: WalkThroughItemBinding) : RecyclerView.ViewHolder(binding.root) {
-//
-//        }
-//
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-//            WalkThroughItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        )
-//
-//        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//            with(holder) {
-//                binding.apply {
-//                    //Bind views with some data here
-////                textHeaderadfdsfTxt3.text = dataClass.name
-////                Picasso.get().load(
-////                    itemMain[position]
-////                ).into(imageLogo)
-//                }
-//            }
-//        }
-//
-//        override fun getItemCount() = 3
-//    }
 
 }

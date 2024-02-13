@@ -1,21 +1,18 @@
 package com.streetsaarthi.nasvi.screens.onboarding.quickRegistration
 
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,18 +24,6 @@ import javax.inject.Inject
 @HiltViewModel
 class QuickRegistrationVM @Inject constructor(private val repository: Repository): ViewModel() {
 
-    var addTime=MutableLiveData<String>("")
-
-//    val testInt: MutableLiveData<Int> = MutableLiveData()
-//
-//    init {
-//        testInt.value = 10
-//    }
-//
-//    fun increase() {
-//        testInt.value = testInt.value?.plus(1)
-//    }
-
     var isAgree = MutableLiveData<Boolean>(false)
 
     var data : Model = Model()
@@ -48,10 +33,6 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
 
     var isOtpVerified = false
 
-    init {
-
-       // addTime.postValue("bjaa")
-    }
 
     fun sendOTP(view: View, jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
@@ -60,7 +41,6 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
@@ -96,7 +76,6 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.data != null){
                             isOtpVerified = true
@@ -135,10 +114,11 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
                     apiInterface.register(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
-                            view.findNavController().navigate(R.id.action_quickRegistration_to_registerSuccessful)
+                            view.findNavController().navigate(R.id.action_quickRegistration_to_registerSuccessful, Bundle().apply {
+                                putString("key", jsonObject.getString("vendor_first_name"))
+                            })
                     } else{
                         showSnackBar(response.body()?.message.orEmpty())
                     }
@@ -168,7 +148,6 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
                     apiInterface.registerWithFiles( hashMap)
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         showSnackBar(response.body()?.message.orEmpty())
                             view.findNavController().navigate(R.id.action_register_to_registerSuccessful)

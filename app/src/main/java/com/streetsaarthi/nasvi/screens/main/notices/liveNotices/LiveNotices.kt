@@ -6,7 +6,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,17 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.databinding.LiveNoticesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
-import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
-import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
-import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
@@ -69,6 +62,7 @@ class LiveNotices : Fragment() {
         isReadLiveNotices = true
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_notices)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_notice)
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)
@@ -152,7 +146,7 @@ class LiveNotices : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
-                        put("status", "Active")
+//                        put("status", "Active")
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
@@ -168,7 +162,7 @@ class LiveNotices : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
-                        put("status", "Active")
+//                        put("status", "Active")
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
@@ -188,7 +182,7 @@ class LiveNotices : Fragment() {
             val changeValue = Gson().fromJson<List<ItemLiveNotice>>(Gson().toJson(it.data), typeToken)
             results.addAll(changeValue as MutableList<ItemLiveNotice>)
             viewModel.adapter.addAllSearch(results)
-
+            totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {

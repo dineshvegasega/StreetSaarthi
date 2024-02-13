@@ -2,13 +2,11 @@ package com.streetsaarthi.nasvi.screens.onboarding.start
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,15 +18,13 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.databinding.StartBinding
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLanguageStartBinding
-import com.streetsaarthi.nasvi.utils.LocaleHelper
-
+import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -57,20 +53,16 @@ class Start : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = StartBinding.inflate(inflater)
-        Log.e("TAG", "onCreateView")
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("TAG", "onViewCreated")
-        //val current = resources.configuration.locale
-
         MainActivity.mainActivity.get()?.callFragment(0)
 
         binding.apply {
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                     view.findNavController().navigate(R.id.action_start_to_walkThrough)
             }
             btSignIn.setText(R.string.explore_app)
@@ -89,9 +81,9 @@ class Start : Fragment() {
                 }
             })
 
-            btLanguage.setOnClickListener {
+            btLanguage.singleClick {
                 if(languageAlert?.isShowing == true) {
-                    return@setOnClickListener
+                    return@singleClick
                 }
                 val dialogView: View = LayoutInflater.from(requireContext())
                     .inflate(R.layout.dialog_bottom_your_booking2, null)
@@ -121,40 +113,32 @@ class Start : Fragment() {
                     ) {
                         binding.btImage.setImageDrawable(ContextCompat.getDrawable(binding.root.context, if (dataClass.isSelected == true) R.drawable.radio_sec_filled else R.drawable.radio_sec_empty));
                         binding.btLanguage.text = dataClass.name
-                        binding.btLanguage.setOnClickListener {
-                            Log.e("TAG" , "asdsfs "+dataClass.name)
-
+                        binding.btLanguage.singleClick {
                             val list = currentList
                             list.forEach {
                                 it.isSelected = dataClass == it
                             }
                             notifyDataSetChanged()
-
-                            LocaleHelper.setLocale(requireContext(),dataClass.locale)
-                                val refresh = Intent(Intent(requireActivity(), MainActivity::class.java))
-                                refresh.putExtra(Screen, Start)
-                                refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(refresh)
-                                MainActivity.activity.get()!!.finish()
-                                MainActivity.activity.get()!!.finishAffinity()
+                            Handler(Looper.getMainLooper()).postDelayed(Thread {
+                                MainActivity.mainActivity.get()?.runOnUiThread {
+                                    languageAlert?.dismiss()
+                                }
+                            }, 100)
+                            MainActivity.mainActivity.get()?.reloadActivity(dataClass.locale, Start)
                         }
 
-                        binding.btImage.setOnClickListener {
-                            Log.e("TAG" , "asdsfs "+dataClass.name)
-
+                        binding.btImage.singleClick {
                             val list = currentList
                             list.forEach {
                                 it.isSelected = dataClass == it
                             }
                             notifyDataSetChanged()
-
-                            LocaleHelper.setLocale(requireContext(),dataClass.locale)
-                                val refresh = Intent(Intent(requireActivity(), MainActivity::class.java))
-                                refresh.putExtra(Screen, Start)
-                                refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(refresh)
-                                MainActivity.activity.get()!!.finish()
-                                MainActivity.activity.get()!!.finishAffinity()
+                            Handler(Looper.getMainLooper()).postDelayed(Thread {
+                                MainActivity.mainActivity.get()?.runOnUiThread {
+                                    languageAlert?.dismiss()
+                                }
+                            }, 100)
+                            MainActivity.mainActivity.get()?.reloadActivity(dataClass.locale, Start)
                         }
                     }
                 }
@@ -162,13 +146,20 @@ class Start : Fragment() {
 
                 pastBookingAdapter.submitList(viewModel.itemMain)
                 recyclerView.adapter = pastBookingAdapter
-               // fragmentManager!!.beginTransaction().detach(this@Start).commitNow();
-
             }
         }
     }
 
-
+//
+//    fun reloadActivity(locale: String) {
+//        LocaleHelper.setLocale(requireContext(), locale)
+//        val refresh = Intent(Intent(requireActivity(), MainActivity::class.java))
+//        refresh.putExtra(Screen, Start)
+//        refresh.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+//        startActivity(refresh)
+//        MainActivity.mainActivity.get()!!.finish()
+//        MainActivity.mainActivity.get()!!.finishAffinity()
+//    }
 
     override fun onDestroyView() {
         languageAlert?.let {
@@ -176,7 +167,6 @@ class Start : Fragment() {
         }
         _binding = null
         super.onDestroyView()
-        Log.e("TAG", "onDestroyView")
     }
 
 }

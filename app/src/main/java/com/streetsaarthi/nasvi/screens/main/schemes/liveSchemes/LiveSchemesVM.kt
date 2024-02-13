@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -17,9 +16,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonElement
@@ -32,13 +31,12 @@ import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.screens.main.webPage.WebPage
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.changeDateFormat
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -160,10 +158,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                 dialog.show()
 
                                 dialogBinding.apply {
-                                    GlideApp.with(root.context)
-                                        .load(data.scheme_image?.url)
-                                        .apply(myOptionsGlide)
-                                        .into(ivMap)
+                                    data.scheme_image?.url?.glideImage(root.context, ivMap)
                                     textTitle.setText(data.name)
                                     textDesc.setText(data.description)
 
@@ -179,11 +174,11 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                     }
 
                                     data.start_at?.let {
-                                        textStartDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.start_date, "<b>"+data.start_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                                        textStartDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.start_date, "<b>"+data.start_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
                                     data.end_at?.let {
-                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
 
@@ -192,10 +187,14 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                         btApply.visibility = View.GONE
                                     }else{
                                         btApply.setText(view.resources.getString(R.string.apply))
-                                        btApply.visibility = View.VISIBLE
+                                        if (data.status == "Active"){
+                                            btApply.visibility = View.VISIBLE
+                                        } else {
+                                            btApply.visibility = View.GONE
+                                        }
                                     }
 
-                                    btApply.setOnClickListener {
+                                    btApply.singleClick {
                                         if (status == 1){
                                             Handler(Looper.getMainLooper()).post(Thread {
                                                 MainActivity.activity.get()?.runOnUiThread {
@@ -226,7 +225,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                         dialog.dismiss()
                                     }
 
-                                    btClose.setOnClickListener {
+                                    btClose.singleClick {
                                         dialog.dismiss()
                                     }
                                 }

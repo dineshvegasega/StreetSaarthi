@@ -2,14 +2,11 @@ package com.streetsaarthi.nasvi.screens.onboarding.walkThrough
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.streetsaarthi.nasvi.databinding.WalkThroughBinding
 import com.streetsaarthi.nasvi.databinding.WalkThroughItemBinding
-import com.streetsaarthi.nasvi.screens.onboarding.onboard.Onboard
-import com.squareup.picasso.Picasso
+import com.streetsaarthi.nasvi.utils.singleClick
 
 class WalkThroughPagerAdapter :ListAdapter<WalkThrough.Item, WalkThroughPagerAdapter.PremiumPacksViewHolder>(
         DELIVERY_ITEM_COMPARATOR
@@ -17,7 +14,7 @@ class WalkThroughPagerAdapter :ListAdapter<WalkThrough.Item, WalkThroughPagerAda
     inner class PremiumPacksViewHolder(private val binding: WalkThroughItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener {
+            binding.root.singleClick {
             }
         }
 

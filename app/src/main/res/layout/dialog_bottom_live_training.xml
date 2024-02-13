@@ -43,8 +43,9 @@
             android:visibility="visible"
             android:theme="@style/RoundCorner5"
             app:srcCompat="@drawable/no_image"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:layout_marginTop="@dimen/_12sdp"
+            android:background="@color/white"
             />
 
 

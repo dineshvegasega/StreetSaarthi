@@ -98,7 +98,7 @@
     <string name="enter_details_to_register_with_us">ਸਾਡੇ ਨਾਲ ਰਜਿਸਟਰ ਕਰਨ ਲਈ ਵੇਰਵੇ ਦਰਜ ਕਰੋ</string>
     <string name="profile_details">ਪ੍ਰੋਫਾਈਲ ਵੇਰਵੇ</string>
     <string name="registration_successful">ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਸਫਲ</string>
-    <string name="congratulations_your_initial_registration_is_complete">ਵਧਾਈਆਂ! ਤੁਹਾਡੀ ਸ਼ੁਰੂਆਤੀ ਰਜਿਸਟਰੀ ਪੂਰੀ ਹੋ ਗਈ ਹੈ</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">ਵਧਾਈਆਂ! ਤੁਹਾਡੀ ਸ਼ੁਰੂਆਤੀ ਰਜਿਸਟਰੀ ਪੂਰੀ ਹੋ ਗਈ ਹੈ</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ਸਾਡੀ ਟੀਮ ਦਾ ਕੋਈ ਵਿਅਕਤੀ ਤੁਹਾਡੀ ਰਜਿਸਟਰੀਕਰਣ ਦੀ ਤਸਦੀਕ ਕਰਨ ਲਈ 48 ਵਜੇ ਅੰਦਰ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੇਗਾ.</string>
 
     <string name = "RegisterNow">ਹੁਣੇ ਰਜਿਸਟਰ ਕਰੋ</string>
@@ -183,6 +183,7 @@
 
 
     <string-array name="years_array">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -425,4 +426,102 @@
     <string name="please_provide_valid_password">ਕਿਰਪਾ ਕਰਕੇ ਵੈਧ ਪਾਸਵਰਡ ਪ੍ਰਦਾਨ ਕਰੋ</string>
     <string name="user_does_not_exist">ਉਪਭੋਗਤਾ ਮੌਜੂਦ ਨਹੀਂ ਹੈ</string>
 
+    <string name="tap_to_reload">ਰੀਲੋਡ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ</string>
+    <string name="error_msg_unknown">ਇੱਕ ਅਣਕਿਆਸੀ ਤਰੁੱਟੀ ਆਈ</string>
+    <string name="registration_processed">NASVI ਦੁਆਰਾ ਸਟ੍ਰੀਟ ਸਾਰਥੀ \'ਤੇ ਰਜਿਸਟਰ ਕਰਨ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ। ਤੁਹਾਡੀ ਪੁਸ਼ਟੀਕਰਨ ਪ੍ਰਕਿਰਿਆ ਅਧੀਨ ਹੈ। ਤੁਹਾਡੀ ਰਜਿਸਟ੍ਰੇਸ਼ਨ 2 ਤੋਂ 3 ਕੰਮਕਾਜੀ ਦਿਨਾਂ ਦੇ ਅੰਦਰ ਪ੍ਰਕਿਰਿਆ ਕੀਤੀ ਜਾਵੇਗੀ।</string>
+    <string name="view">ਵੇਖੋ</string>
+    <string name="watch">ਦੇਖੋ</string>
+    <string name="applied">ਲਾਗੂ ਕੀਤਾ</string>
+    <string name="not_applied">ਲਾਗੂ ਨਹੀਂ ਕੀਤਾ</string>
+    <string name = "not_live"> ਲਾਈਵ ਨਹੀਂ</string>
+    <string name="expired">ਮਿਆਦ ਸਮਾਪਤ</string>
+    <string name="start_date">ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ %s</string>
+    <string name = "end_date"> ਸਮਾਪਤੀ ਮਿਤੀ %s</string>
+    <string name="clear_all">ਸਭ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="all_information">ਸਾਰੀ ਜਾਣਕਾਰੀ</string>
+    <string name="view_details">ਵੇਰਵੇ ਦੇਖੋ</string>
+    <string name="valid_date">ਵੈਧ ਮਿਤੀ</string>
+    <string name="status">ਸਥਿਤੀ</string>
+
+    <string name="nothing_here_right_now">ਇਸ ਵੇਲੇ ਇੱਥੇ ਕੁਝ ਨਹੀਂ</string>
+    <string name="currently_no_schemes"> ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਸਕੀਮਾਂ ਨਹੀਂ ਮਿਲੀਆਂ ਹਨ। ਜਦੋਂ ਉਹ ਉਪਲਬਧ ਹੋਣ ਤਾਂ ਤੁਸੀਂ ਸਕੀਮਾਂ ਲਈ ਅਰਜ਼ੀ ਦੇ ਸਕਦੇ ਹੋ।</string>
+    <string name="currently_no_notice">ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਨੋਟਿਸ ਨਹੀਂ ਮਿਲਿਆ ਹੈ। ਜਦੋਂ ਉਹ ਉਪਲਬਧ ਹੋਣ ਤਾਂ ਤੁਸੀਂ ਨੋਟਿਸ ਲਈ ਅਰਜ਼ੀ ਦੇ ਸਕਦੇ ਹੋ।</string>
+    <string name="currently_no_training">ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਸਿਖਲਾਈ ਨਹੀਂ ਮਿਲਦੀ ਹੈ। ਜਦੋਂ ਉਹ ਉਪਲਬਧ ਹੋਣ ਤਾਂ ਤੁਸੀਂ ਸਿਖਲਾਈ ਲਈ ਅਰਜ਼ੀ ਦੇ ਸਕਦੇ ਹੋ।</string>
+    <string name = "currently_no_notifications"> ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਸੂਚਨਾਵਾਂ ਨਹੀਂ ਮਿਲੀਆਂ ਹਨ।</string>
+    <string name = "currently_no_information"> ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਜਾਣਕਾਰੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</string>
+    <string name="currently_no_complaints">ਵਰਤਮਾਨ ਵਿੱਚ, ਇੱਥੇ ਕੋਈ ਸ਼ਿਕਾਇਤ/ਫੀਡਬੈਕ ਨਹੀਂ ਮਿਲਦੀਆਂ ਹਨ।</string>
+    <string name="submit_feedback">ਫੀਡਬੈਕ ਜਮ੍ਹਾਂ ਕਰੋ</string>
+    <string-array name="type_array">
+        <item>ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ</item>
+        <item>ਫੀਡਬੈਕ ਸਪੁਰਦ ਕਰੋ</item>
+    </string-array>
+    <string name="type">ਕਿਸਮ</string>
+    <string name="select_complaint_type">ਸ਼ਿਕਾਇਤ ਦੀ ਕਿਸਮ ਚੁਣੋ</string>
+    <string name="subject_of_feedback">ਫੀਡਬੈਕ ਦਾ ਵਿਸ਼ਾ</string>
+    <string name="not_complaint_type">ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਸ਼ਿਕਾਇਤ ਕਿਸਮ ਨਹੀਂ ਹੈ</string>
+    <string name = "tracking_id">ਟਰੈਕਿੰਗ ID</string>
+    <string name="feedback">ਫੀਡਬੈਕ</string>
+    <string name="complaint">ਸ਼ਿਕਾਇਤ</string>
+    <string name="Pleaseentertextormedia">ਕਿਰਪਾ ਕਰਕੇ ਟੈਕਸਟ ਜਾਂ ਮੀਡੀਆ ਦਾਖਲ ਕਰੋ</string>
+
+    <string name = "re_open">ਮੁੜ-ਖੋਲ੍ਹੋ</string>
+    <string name="pending">ਬਕਾਇਆ</string>
+    <string name="resolved">ਹੱਲ ਕੀਤਾ</string>
+    <string name = "in_progress"> ਜਾਰੀ ਹੈ</string>
+    <string name="close_conversation">ਕੀ ਤੁਸੀਂ ਯਕੀਨਨ ਇਸ ਗੱਲਬਾਤ ਨੂੰ ਬੰਦ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="open_conversation">ਕੀ ਤੁਸੀਂ ਯਕੀਨਨ ਇਸ ਗੱਲਬਾਤ ਨੂੰ ਖੋਲ੍ਹਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="are_your_sure_want_to_delete">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਹੋ, ਤੁਸੀਂ ਆਪਣਾ ਖਾਤਾ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="are_your_sure_want_to_turn_Off">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ \'ਤੇ ਸੂਚਨਾ ਨੂੰ ਬੰਦ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="are_your_sure_want_to_turn_On">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ \'ਤੇ ਸੂਚਨਾ ਨੂੰ ਚਾਲੂ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="reset_password">ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰੋ</string>
+    <string name="enter_new_password_for_login">ਲੌਗਇਨ ਲਈ ਨਵਾਂ ਪਾਸਵਰਡ ਦਰਜ ਕਰੋ</string>
+    <string name="newPasswordStar">ਨਵਾਂ ਪਾਸਵਰਡ*</string>
+    <string name="reEnterNewPasswordStar">ਨਵਾਂ ਪਾਸਵਰਡ ਦੁਬਾਰਾ ਦਰਜ ਕਰੋ*</string>
+
+    <string name="typeColon">ਕਿਸਮ:</string>
+    <string name="registration_dateColon">ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਮਿਤੀ:</string>
+    <string name="subjectColon">ਵਿਸ਼ਾ:</string>
+    <string name="complaint_typeColon">ਸ਼ਿਕਾਇਤ ਦੀ ਕਿਸਮ:</string>
+
+    <string name="message_by_admin">ਪ੍ਰਬੰਧਕ ਦੁਆਰਾ ਸੁਨੇਹਾ</string>
+    <string name="message_by_member">ਮੈਂਬਰ ਦੁਆਰਾ ਸੁਨੇਹਾ</string>
+    <string name="admin_txt">ਪ੍ਰਬੰਧਕ</string>
+    <string name="member_txt">ਮੈਂਬਰ</string>
+
+    <string name="conversation_marked_Close">ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ ਮੈਂਬਰ ਦੁਆਰਾ ਬੰਦ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
+    <string name="conversation_marked_reOpen">ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ ਮੈਂਬਰ ਦੁਆਰਾ ਰੀ-ਓਪਨ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
+    <string name="are_your_sure_want_to_delete_all_notifications">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਹੋ, ਤੁਸੀਂ ਸਾਰੀਆਂ ਸੂਚਨਾਵਾਂ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="required_permissions">ਕਿਰਪਾ ਕਰਕੇ ਸਾਰੀਆਂ ਲੋੜੀਂਦੀਆਂ ਇਜਾਜ਼ਤਾਂ ਦਿਓ?</string>
+    <string name="notification_not_enabled">ਤੁਹਾਡੀ ਸੂਚਨਾ ਸਮਰੱਥ ਨਹੀਂ ਹੈ</string>
+    <string name="request_delete">ਤੁਹਾਡੀ ਬੇਨਤੀ ਲਈ ਧੰਨਵਾਦ। ਤੁਹਾਡਾ ਖਾਤਾ 2 – 3 ਕੰਮਕਾਜੀ ਦਿਨਾਂ ਦੇ ਅੰਦਰ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</string>
+    <string name="profile_updated_successfully">ਪ੍ਰੋਫਾਈਲ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
+    <string name="change_mobile_number">ਮੋਬਾਈਲ ਨੰਬਰ ਬਦਲੋ</string>
+    <string name="enter_new_mobile_number_for_login">ਲੌਗਇਨ ਲਈ ਨਵਾਂ ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ</string>
+    <string name="mobile_number_updated_successfully">ਮੋਬਾਈਲ ਨੰਬਰ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
+    <string name = "mobile_does_not_exist"> ਮੋਬਾਈਲ ਨੰਬਰ ਮੌਜੂਦ ਨਹੀਂ ਹੈ</string>
+
+    <string name = "training_type">ਸਿਖਲਾਈ</string>
+    <string name="notice_type">ਨੋਟਿਸ</string>
+    <string name="scheme_type">ਸਕੀਮ</string>
+    <string name="vendor_details_type">ਵਿਕਰੇਤਾ ਵੇਰਵੇ</string>
+    <string name = "information_type">ਜਾਣਕਾਰੀ</string>
+    <string name="feedback_type">ਫੀਡਬੈਕ</string>
+    <string name="complaint_type">ਸ਼ਿਕਾਇਤ</string>
+    <string name="training_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਸਿਖਲਾਈ ਹੈ</string>
+    <string name="notice_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵਾਂ ਨੋਟਿਸ ਹੈ</string>
+    <string name="scheme_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਸਕੀਮ ਹੈ</string>
+    <string name="vendor_details_title">ਵਧਾਈਆਂ! ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਨੂੰ ਮਨਜ਼ੂਰੀ ਦੇ ਦਿੱਤੀ ਗਈ ਹੈ</string>
+    <string name="feedback_title">ਤੁਹਾਡੇ ਫੀਡਬੈਕ \'ਤੇ ਇੱਕ ਜਵਾਬ ਹੈ</string>
+    <string name="complaint_title">ਤੁਹਾਡੇ ਕੋਲ ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ ਦਾ ਜਵਾਬ ਹੈ</string>
+    <string name="information_title">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਜਾਣਕਾਰੀ ਹੈ</string>
+    <string name="network_failed_please_try_again">ਨੈੱਟਵਰਕ ਅਸਫਲ ਰਿਹਾ, ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ!</string>
+    <string name = "try_again"> ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
+    <string name="back_to_login_u"><u>ਲੌਗਇਨ ਕਰਨ ਲਈ ਵਾਪਸ</u></string>
+    <string name="complaint_added_successfully">ਸ਼ਿਕਾਇਤ ਸਫਲਤਾਪੂਰਵਕ ਸ਼ਾਮਲ ਕੀਤੀ ਗਈ</string>
+    <string name="feedback_added_successfully">ਫੀਡਬੈਕ ਸਫਲਤਾਪੂਰਵਕ ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ</string>
+    <string name="congratulations">ਵਧਾਈਆਂ!</string>
+    <string name="your_initial_registration_is_complete">ਤੁਹਾਡੀ ਸ਼ੁਰੂਆਤੀ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਪੂਰੀ ਹੋ ਗਈ ਹੈ।</string>
+    <string name="need_to_add_complete_profile">ਸ਼ਿਕਾਇਤ/ਫੀਡਬੈਕ ਦਰਜ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਨੂੰ ਆਪਣਾ ਪ੍ਰੋਫਾਈਲ ਪੂਰਾ ਕਰਨ ਦੀ ਲੋੜ ਹੈ।</string>
+    <string name="conversation_marked_Close_admin">ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ ਪ੍ਰਸ਼ਾਸਕ ਦੁਆਰਾ ਬੰਦ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
+    <string name = "conversation_marked_reOpen_admin"> ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ ਪ੍ਰਸ਼ਾਸਕ ਦੁਆਰਾ ਰੀ-ਓਪਨ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
 </resources>

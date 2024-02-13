@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.OnboardBinding
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,8 +53,8 @@ class Onboard : Fragment() {
 
 
 
-        binding.btSignIn.setOnClickListener {
-            viewModel.callNextPage(it)
+        binding.btSignIn.singleClick {
+            viewModel.callNextPage(view)
         }
 
     }

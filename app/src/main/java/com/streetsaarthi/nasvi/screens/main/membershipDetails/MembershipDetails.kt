@@ -1,20 +1,28 @@
 package com.streetsaarthi.nasvi.screens.main.membershipDetails
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.Canvas
-import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
@@ -25,19 +33,18 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.load
 import coil.memory.MemoryCache
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.MembershipDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.screens.main.dashboard.BannerViewPagerAdapter
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.autoScroll
-import com.streetsaarthi.nasvi.utils.autoScrollStop
-import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
@@ -50,7 +57,11 @@ class MembershipDetails  : Fragment() {
     private var _binding: MembershipDetailsBinding? = null
     private val binding get() = _binding!!
 
-    var itemMain : ArrayList<Item> ?= ArrayList()
+    var permissionAlert : AlertDialog?= null
+
+    var networkAlert : BottomSheetDialog?= null
+    var networkCount = 1
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -85,30 +96,49 @@ class MembershipDetails  : Fragment() {
         }
     }
 
-
-
-    var isFree = false
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
-            // Handle Permission granted/rejected
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        dispatchTakePictureIntent()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
+            if(!permissions.entries.toString().contains("false")){
+                dispatchTakePictureIntent()
+            } else {
+                callPermissionDialog()
             }
         }
+
+
+    var someActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        callMediaPermissions()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callPermissionDialog() {
+        if(permissionAlert?.isShowing == true) {
+            return
+        }
+        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.required_permissions))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                val i=Intent()
+                i.action=Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                i.data= Uri.parse("package:" + requireActivity().packageName)
+                someActivityResultLauncher.launch(i)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    MainActivity.binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+    }
 
 
 
@@ -125,10 +155,9 @@ class MembershipDetails  : Fragment() {
                     Log.e("TAG", "dataLogin "+data.toString())
                     textFirstNameValueTxt.setText(data.vendor_first_name)
                     textLastNameValueTxt.setText(data.vendor_last_name)
-//                    textGenderValueTxt.setText(data.gender)
 
                     val listGender =resources.getStringArray(R.array.gender_array)
-                    data.gender.let{
+                    data.gender?.let{
                         when(it){
                             "Male" -> {
                                 textGenderValueTxt.setText(listGender[0])
@@ -145,6 +174,40 @@ class MembershipDetails  : Fragment() {
                     textDOBValueTxt.setText(data.date_of_birth)
                     textMobileValueTxt.setText("+91-"+data.mobile_no)
 
+                    viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
+                        if (it) {
+                            if(networkCount == 1){
+                                if(networkAlert?.isShowing == true) {
+                                    return@Observer
+                                }
+                                val dialogBinding = DialogBottomNetworkBinding.inflate(root.context.getSystemService(
+                                    Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                                )
+                                networkAlert = BottomSheetDialog(root.context)
+                                networkAlert?.setContentView(dialogBinding.root)
+                                networkAlert?.setOnShowListener { dia ->
+                                    val bottomSheetDialog = dia as BottomSheetDialog
+                                    val bottomSheetInternal: FrameLayout =
+                                        bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+                                    bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+                                }
+                                networkAlert?.show()
+
+                                dialogBinding.apply {
+                                    btClose.singleClick {
+                                        networkAlert?.dismiss()
+                                    }
+                                    btApply.singleClick {
+                                        networkAlert?.dismiss()
+                                        callApis(view)
+                                    }
+                                }
+                            }
+                            networkCount++
+                        }
+                    })
+
+
 
                     viewModel.vending(view)
                     viewModel.vendingTrue.observe(viewLifecycleOwner, Observer {
@@ -158,7 +221,9 @@ class MembershipDetails  : Fragment() {
                                     }
                                     break
                                 } else {
-                                    binding.textTypeofVendingValueTxt.setText(""+item.name)
+                                    data.vending_others?.let {
+                                        binding.textTypeofVendingValueTxt.setText(""+data.vending_others)
+                                    }
                                 }
                             }
                         }
@@ -177,7 +242,9 @@ class MembershipDetails  : Fragment() {
                                     }
                                     break
                                 } else {
-                                    binding.textTypeofMarketPlaceValueTxt.setText(""+item.name)
+                                    data.marketpalce_others?.let {
+                                        binding.textTypeofMarketPlaceValueTxt.setText(""+data.marketpalce_others)
+                                    }
                                 }
                             }
                         }
@@ -195,10 +262,10 @@ class MembershipDetails  : Fragment() {
                     }
 
                     if(data.vending_pincode != null){
-                        textAddressValueTxt.setText("${data.vending_address+", "+data.vending_pincode.pincode}")
+                        textAddressValueTxt.setText("${data.vending_address.replace("\n", ", ")+", "+data.vending_pincode.pincode}")
                     } else {
                         data.vending_address?.let {
-                            textAddressValueTxt.setText("${data.vending_address}")
+                            textAddressValueTxt.setText("${data.vending_address.replace("\n", ", ")}")
                         }
                     }
 
@@ -214,7 +281,7 @@ class MembershipDetails  : Fragment() {
 
                     data.local_organisation?.let {
                         layoutMain.setBackgroundResource(R.drawable.membership_card)
-                        (layoutMain.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = "1.1:1"
+                        (layoutMain.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = "1.06:1"
                         layoutAssociatedOrganization.visibility = View.VISIBLE
                         view1.visibility = View.VISIBLE
                         textMarketPlaceTxt.setText(data.local_organisation.name)
@@ -246,25 +313,22 @@ class MembershipDetails  : Fragment() {
                 }
             }
 
-            btDownload.setOnClickListener {
-                isFree = true
+            btDownload.singleClick {
                 callMediaPermissions()
             }
 
+        }
+    }
 
-//            viewModel.adsList(view)
-//            val adapter = BannerViewPagerAdapter(requireContext())
-//
-//            viewModel.itemAds.observe(viewLifecycleOwner, Observer {
-//                if (it != null) {
-//                    viewModel.itemAds.value?.let { it1 ->
-//                        adapter.submitData(it1)
-//                        banner.adapter = adapter
-//                        tabDots.setupWithViewPager(banner, true)
-//                        banner.autoScroll()
-//                    }
-//                }
-//            })
+
+
+    private fun callApis(view: View) {
+        networkCount = 1
+        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                viewModel.vending(view)
+                viewModel.marketplace(view)
+            }
         }
     }
 
@@ -329,7 +393,7 @@ class MembershipDetails  : Fragment() {
     override fun onStop() {
         super.onStop()
         binding.apply {
-            banner.autoScrollStop()
+//            banner.autoScrollStop()
         }
     }
 

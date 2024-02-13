@@ -2,12 +2,14 @@ package com.streetsaarthi.nasvi.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Configuration
 import android.database.Cursor
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
@@ -19,12 +21,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
@@ -212,7 +219,7 @@ fun getGalleryImage(requireActivity: FragmentActivity, callBack: Uri.() -> Unit)
 @SuppressLint("CheckResult")
 fun ImageView.loadImage(
     url: () -> String,
-    errorPlaceHolder: () -> Int = { R.drawable.ic_place_holder }
+    errorPlaceHolder: () -> Int = { R.drawable.user_icon }
 ) = try {
     val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
         strokeWidth = 5f
@@ -229,12 +236,28 @@ fun ImageView.loadImage(
 }
 
 
-val myOptionsGlide: RequestOptions = RequestOptions()
-    .placeholder(R.drawable.no_image)
-    .diskCacheStrategy(DiskCacheStrategy.ALL)
-    .dontAnimate()
-    //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
-    .skipMemoryCache(false)
+@SuppressLint("CheckResult")
+fun ImageView.loadImageBanner(
+    url: () -> String,
+    errorPlaceHolder: () -> Int = { R.drawable.no_image_banner }
+) = try {
+    val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
+        strokeWidth = 5f
+        centerRadius = 30f
+        start()
+    }
+    load(if (url().startsWith("http")) url() else File(url())) {
+        placeholder(circularProgressDrawable)
+        crossfade(true)
+        error(errorPlaceHolder())
+    }
+} catch (e: Exception) {
+    e.printStackTrace()
+}
+
+
+
+
 
 
 fun isValidPassword(password: String): Boolean {
@@ -259,47 +282,38 @@ fun AppCompatEditText.focus() {
 }
 
 
-var handler = Handler(Looper.getMainLooper())
+//var handlerMain = Handler(Looper.getMainLooper())
 var runnable : Runnable ?= null
 fun ViewPager.autoScroll() {
-    Log.e("TAG", "runnableAA "+runnable)
+    autoScrollStop()
         var scrollPosition = 0
         runnable = object : Runnable {
             override fun run() {
                 val count = adapter?.count ?: 0
                 setCurrentItem(scrollPosition++ % count, true)
-                handler?.let {
-                    postDelayed(this, 3000)
+                if (handler != null){
+                    handler?.let {
+                        postDelayed(this, 3000)
+                    }
                 }
             }
         }
-
-//        addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-//            override fun onPageSelected(position: Int) {
-//                scrollPosition = position + 1
-//            }
-//
-//            override fun onPageScrollStateChanged(state: Int) {
-//
-//            }
-//
-//            override fun onPageScrolled(
-//                position: Int,
-//                positionOffset: Float,
-//                positionOffsetPixels: Int
-//            ) {
-//
-//            }
-//        })
-
-    handler?.let {
-        post(runnable as Runnable)
+    if (handler != null){
+        if (runnable != null){
+            handler?.let {
+                post(runnable as Runnable)
+            }
+        }
     }
 }
 
 
 fun ViewPager.autoScrollStop() {
-    runnable?.let { handler.removeCallbacks(it) }
+    if (handler != null){
+        if (runnable != null){
+            runnable?.let { handler?.removeCallbacks(it) }
+        }
+    }
 }
 
 
@@ -341,9 +355,149 @@ fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit
 }
 
 
+fun ArrayList<String>.imageZoom(ivImage: ImageView) {
+//    StfalconImageViewer.Builder<String>(MainActivity.binding.root.context, this) { view, image ->
+//        Picasso.get().load(image).into(view)
+//    }
+//        .withTransitionFrom(ivImage)
+//        .withBackgroundColor(ContextCompat.getColor(MainActivity.mainActivity.get()!!, R.color._D9000000))
+//        .show()
+}
+
+
+fun getToken(callBack: String.() -> Unit){
+    FirebaseMessaging.getInstance().token.addOnSuccessListener { result ->
+        if(result != null){
+            callBack(result)
+        }
+    }.addOnCanceledListener {
+        callBack("result")
+    }
+}
+
+
+fun String.firstCharIfItIsLowercase() = replaceFirstChar {
+    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+}
+
+
+
+fun RecyclerView.smoothSnapToPosition(position: Int, snapMode: Int = LinearSmoothScroller.SNAP_TO_END) {
+    val smoothScroller = object : LinearSmoothScroller(this.context) {
+        override fun getVerticalSnapPreference(): Int = snapMode
+        override fun getHorizontalSnapPreference(): Int = snapMode
+    }
+    smoothScroller.targetPosition = position
+    layoutManager?.startSmoothScroll(smoothScroller)
+}
+
 fun Context.isTablet(): Boolean {
     return this.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_LARGE
 }
 
 
+fun ViewPager2.setIsFocusableInTouchModeKtx(isFocusableInTouchMode:Boolean){
+    if (childCount > 0) {
+        val rl = this.getChildAt(0)
+        if (rl is RecyclerView) {
+            rl.isFocusableInTouchMode = isFocusableInTouchMode
+        }
+    }
+}
 
+
+fun ViewPager2.setDescendantFocusabilityKtx(focusability:Int) {
+    if (childCount > 0) {
+        val rl = this.getChildAt(0)
+        if (rl is RecyclerView) {
+            rl.descendantFocusability = focusability
+        }
+    }
+}
+
+
+
+fun ViewPager2.updatePagerHeightForChild(view: View) {
+    view.post {
+        val wMeasureSpec = View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
+        val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        view.measure(wMeasureSpec, hMeasureSpec)
+        layoutParams = (layoutParams).also { lp -> lp.height = height }
+        invalidate()
+    }
+}
+
+
+//fun Context.glideImage(ivMap: ShapeableImageView, url: String = "") {
+//    GlideApp.with(this)
+//        .load("url")
+//        .apply(myOptionsGlide)
+//        .into(ivMap)
+//}
+
+
+
+val myOptionsGlide: RequestOptions = RequestOptions()
+    .placeholder(R.drawable.no_image)
+    .diskCacheStrategy(DiskCacheStrategy.ALL)
+    .dontAnimate()
+    //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
+    .skipMemoryCache(false)
+
+fun String.glideImage(context : Context, ivMap: ShapeableImageView) {
+    GlideApp.with(context)
+        .load(this)
+        .apply(myOptionsGlide)
+        .into(ivMap)
+}
+
+
+val myOptionsGlidePortrait: RequestOptions = RequestOptions()
+    .placeholder(R.drawable.image_port)
+    .diskCacheStrategy(DiskCacheStrategy.ALL)
+    .dontAnimate()
+    //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
+    .skipMemoryCache(false)
+
+fun String.glideImagePortrait(context : Context, ivMap: ShapeableImageView) {
+    GlideApp.with(context)
+        .load(this)
+        .apply(myOptionsGlidePortrait)
+        .into(ivMap)
+}
+
+
+
+fun View.singleClick(throttleTime: Long = 600L, action: () -> Unit) {
+    this.setOnClickListener(object : View.OnClickListener {
+        private var lastClickTime: Long = 0
+        override fun onClick(v: View) {
+            if (SystemClock.elapsedRealtime() - lastClickTime < throttleTime) return
+            else action()
+
+            lastClickTime = SystemClock.elapsedRealtime()
+        }
+    })
+}
+
+
+
+ fun Context.isAppIsInBackground(): Boolean {
+    var isInBackground = true
+    try {
+        val am = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val runningProcesses = am.runningAppProcesses
+        for (processInfo in runningProcesses) {
+            if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                for (activeProcess in processInfo.pkgList) {
+                    if (activeProcess == this.packageName) {
+                        isInBackground = false
+                    }
+                }
+            }
+        }
+    } catch (ex: Exception) {
+        ex.printStackTrace()
+    }
+    return isInBackground
+}

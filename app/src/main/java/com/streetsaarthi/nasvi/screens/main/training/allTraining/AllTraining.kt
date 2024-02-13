@@ -17,15 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.databinding.AllSchemesBinding
 import com.streetsaarthi.nasvi.databinding.AllTrainingBinding
-import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
-import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
@@ -62,6 +58,7 @@ class AllTraining : Fragment() {
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.all_training)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_training)
 
 
             loadFirstPage()
@@ -150,7 +147,7 @@ class AllTraining : Fragment() {
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
-                   // viewModel.allTraining(view = requireView(), obj)
+                    viewModel.allTraining(view = requireView(), obj)
                 }
             }
         }
@@ -180,7 +177,7 @@ class AllTraining : Fragment() {
             val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(it.data), typeToken)
             results.addAll(changeValue as MutableList<ItemLiveTraining>)
             viewModel.adapter.addAllSearch(results)
-
+            totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {

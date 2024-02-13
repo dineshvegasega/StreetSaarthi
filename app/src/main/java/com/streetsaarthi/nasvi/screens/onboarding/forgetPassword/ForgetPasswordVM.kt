@@ -5,9 +5,9 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
@@ -32,13 +32,15 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
                             var number = jsonObject.getString("mobile_no")
                             showSnackBar(view.resources.getString(R.string.otp_sent, number))
-                        } else {
+                        } else if(response.body()?.message == "User does not exist"){
+                            isSend.value = false
+                            showSnackBar(view.resources.getString(R.string.mobile_does_not_exist))
+                        }else {
                             isSend.value = false
                             showSnackBar(view.resources.getString(R.string.user_already_exist))
                         }
@@ -68,7 +70,6 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.data != null){
                             isOtpVerified = true

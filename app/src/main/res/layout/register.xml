@@ -29,7 +29,8 @@
             android:background="@drawable/bg_top_round_corner"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/btSignIn"
-            android:paddingVertical="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp"
             >
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -118,6 +119,8 @@
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/headerDesc"

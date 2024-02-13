@@ -9,8 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.R
-
-import com.streetsaarthi.nasvi.databinding.ItemLiveSchemesBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
@@ -18,9 +16,10 @@ import com.streetsaarthi.nasvi.BR
 import com.streetsaarthi.nasvi.databinding.ItemAllSchemesBinding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.changeDateFormat
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.glideImagePortrait
+import com.streetsaarthi.nasvi.utils.singleClick
 
 /**
  * Created by ( Eng Ali Al Fayed)
@@ -47,7 +46,6 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
         return  if(viewType == item){
             val binding: ItemAllSchemesBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_all_schemes, parent, false)
             callBackListener = this
-
             TopMoviesVH(binding)
         }else{
             val binding: ItemLoadingBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_loading, parent, false)
@@ -79,11 +77,11 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
             }
 
-            loadingVH.itemRowBinding.loadmoreRetry.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.setOnClickListener{
+            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
                 showRetry(false, "")
                 retryPageLoad()
             }
@@ -119,10 +117,7 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
             itemRowBinding.executePendingBindings()
             var dataClass = obj as ItemLiveScheme
             itemRowBinding.apply {
-                GlideApp.with(itemRowBinding.root.context)
-                    .load(dataClass.scheme_image?.url)
-                    .apply(myOptionsGlide)
-                    .into(ivIcon)
+                dataClass.scheme_image?.url?.glideImagePortrait(itemRowBinding.root.context, ivIcon)
                 textTitle.setText(dataClass.name)
                 textDesc.setText(dataClass.description)
 
@@ -134,10 +129,10 @@ class AllSchemesAdapter(liveSchemesVM: AllSchemesVM) : RecyclerView.Adapter<Recy
                 textStatusValueTxt.setTextColor(if(dataClass.user_scheme_status == "applied") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A))
 
                 dataClass.end_at?.let {
-                    textValidDateValue.text = "${dataClass.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM")}"
+                    textValidDateValue.text = "${dataClass.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")}"
                 }
 
-                root.setOnClickListener {
+                root.singleClick {
                         if (dataClass.user_scheme_status == "applied"){
                             viewModel.viewDetail(dataClass, position = position, root, 1)
                         }else{

@@ -22,6 +22,9 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED"
         tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
 
     <queries>
@@ -56,7 +59,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.StreetSaarthi"
-            android:launchMode="standard"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -92,6 +95,28 @@
         </provider>
 
 
+        <service
+            android:name=".fcm.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="default_channel_id" />
+
+
+        <receiver android:name=".fcm.SmsListener"
+            android:exported="true"
+            android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

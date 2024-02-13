@@ -52,7 +52,7 @@
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:hint="@string/register_complaint"
-                android:text=""
+                android:text="@string/register_complaint"
                 android:textColor="@color/_322F35"
                 android:focusable="false"
                 android:drawableEnd="@drawable/ic_down_arrow"
@@ -89,6 +89,37 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTypeTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/type"
+                android:textColor="@color/_322F35"
+                android:textSize="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSubjectOfComplaint"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextSelectComplaintType"
+                style="@style/PrimaryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:hint="@string/select_complaint_type"
+                android:text="@string/select_complaint_type"
+                android:textColor="@color/_322F35"
+                android:focusable="false"
+                android:drawableEnd="@drawable/ic_down_arrow"
+                app:layout_constraintTop_toBottomOf="@+id/textTypeTxt" />
+
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textYourNameTxt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -99,9 +130,8 @@
                 app:fontFamily="@font/roboto_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSubjectOfComplaint"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSelectComplaintType"
                 tools:ignore="MissingConstraints"
-
                 />
 
             <androidx.appcompat.widget.AppCompatEditText

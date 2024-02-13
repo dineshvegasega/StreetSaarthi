@@ -1,8 +1,9 @@
 package com.streetsaarthi.nasvi.di
 
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 //import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.demo.networking.ApiInterface
+import com.streetsaarthi.nasvi.ApiInterface
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
@@ -42,7 +43,7 @@ class AppModule {
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
-//            .addInterceptor(ChuckerInterceptor(context))
+            .addInterceptor(ChuckerInterceptor(context))
             .retryOnConnectionFailure(true)
             .cache(cache)
             .build()

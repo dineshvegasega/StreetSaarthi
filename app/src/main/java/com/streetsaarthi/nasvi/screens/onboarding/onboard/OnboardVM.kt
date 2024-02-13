@@ -2,8 +2,6 @@ package com.streetsaarthi.nasvi.screens.onboarding.onboard
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +10,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.OnboardItemBinding
 import com.squareup.picasso.Picasso
 import com.streetsaarthi.nasvi.screens.onboarding.networking.CompleteRegister
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginOtp
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginPassword
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -64,15 +61,15 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
             when(whichScreen) {
                 0 -> it.findNavController().navigate(R.id.action_onboard_to_quickRegistration)
                 1 ->
-                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
-                        putString(Screen, LoginPassword)
-                    })
-//                    it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
+//                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
+//                        putString(Screen, LoginPassword)
+//                    })
+                    it.findNavController().navigate(R.id.action_onboard_to_loginPassword)
                 2 ->
-                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
-                        putString(Screen, LoginOtp)
-                    })
-//                    it.findNavController().navigate(R.id.action_onboard_to_loginOtp)
+//                        it.findNavController().navigate(R.id.action_onboard_to_webPage, Bundle().apply {
+//                        putString(Screen, LoginOtp)
+//                    })
+                    it.findNavController().navigate(R.id.action_onboard_to_loginOtp)
                 3 -> it.findNavController().navigate(R.id.action_onboard_to_register, Bundle().apply {
                     putString(Screen, CompleteRegister)
                 })
@@ -114,7 +111,7 @@ class OnboardVM @Inject constructor(private val repository: Repository): ViewMod
 
             binding.btImage.setImageDrawable(ContextCompat.getDrawable(binding.root.context, if (dataClass.isSelected == true) R.drawable.radio_sec_filled else R.drawable.radio_sec_empty));
 
-            binding.root.setOnClickListener {
+            binding.root.singleClick {
                 whichScreen = position
                 val list = currentList
                 list.forEach {

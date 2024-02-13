@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -16,18 +15,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
-import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
-import com.streetsaarthi.nasvi.databinding.ItemAllSchemesBinding
-import com.streetsaarthi.nasvi.databinding.ItemDashboardMenusBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
@@ -35,14 +30,12 @@ import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.screens.main.dashboard.ItemModel
-import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemesAdapter
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.GlideApp
 import com.streetsaarthi.nasvi.utils.changeDateFormat
-import com.streetsaarthi.nasvi.utils.myOptionsGlide
+import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -178,41 +171,42 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                                 dialog.show()
 
                                 dialogBinding.apply {
-                                    GlideApp.with(root.context)
-                                        .load(data.scheme_image?.url)
-                                        .apply(myOptionsGlide)
-                                        .into(ivMap)
+                                    data.scheme_image?.url?.glideImage(root.context, ivMap)
                                     textTitle.setText(data.name)
                                     textDesc.setText(data.description)
-//                                    textHeaderTxt4.setText(data.status)
 
                                     if (data.status == "Active" && oldItemLiveScheme.user_scheme_status == "applied"){
+                                        btApply.visibility = View.GONE
                                         textHeaderTxt4.text = root.context.resources.getText(R.string.applied)
                                         textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._138808)
                                     } else if (data.status == "Active"){
+                                        btApply.visibility = View.VISIBLE
                                         textHeaderTxt4.text = root.context.resources.getText(R.string.active)
                                         textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._138808)
                                     }  else {
+                                        btApply.visibility = View.GONE
                                         textHeaderTxt4.text = root.context.resources.getText(R.string.expired)
                                         textHeaderTxt4.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._F02A2A)
                                     }
 
                                     data.start_at?.let {
-                                        textStartDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.start_date, "<b>"+data.start_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                                        textStartDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.start_date, "<b>"+data.start_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
                                     data.end_at?.let {
-                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                                        textEndDate.text = HtmlCompat.fromHtml("${root.context.resources.getString(R.string.end_date, "<b>"+data.end_at.changeDateFormat("yyyy-MM-dd", "dd MMM, yyyy")+"</b>")}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                                     }
 
 
-                                    if (status == 1){
-                                        btApply.setText(view.resources.getString(R.string.view))
-                                        btApply.visibility = View.GONE
-                                    }else{
-                                        btApply.setText(view.resources.getString(R.string.apply))
-                                    }
-                                    btApply.setOnClickListener {
+//                                    if (status == 1){
+//                                        btApply.setText(view.resources.getString(R.string.view))
+//                                        btApply.visibility = View.GONE
+//                                    }else{
+//                                        btApply.setText(view.resources.getString(R.string.apply))
+//                                        btApply.visibility = View.VISIBLE
+//                                    }
+
+                                    btApply.singleClick {
                                         if (status == 1){
                                             Handler(Looper.getMainLooper()).post(Thread {
                                                 MainActivity.activity.get()?.runOnUiThread {
@@ -243,7 +237,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                                         dialog.dismiss()
                                     }
 
-                                    btClose.setOnClickListener {
+                                    btClose.singleClick {
                                         dialog.dismiss()
                                     }
                                 }

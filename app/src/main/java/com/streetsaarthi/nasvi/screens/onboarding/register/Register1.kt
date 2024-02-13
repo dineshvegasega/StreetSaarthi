@@ -9,15 +9,19 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.textclassifier.TextClassifierEvent.LanguageDetectionEvent
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
@@ -35,17 +39,13 @@ import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register1Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.Permissions
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.time.LocalDate
 import java.time.Period
@@ -56,6 +56,8 @@ class Register1  : Fragment() , CallBackListener {
     private var _binding: Register1Binding? = null
     private val binding get() = _binding!!
     private val viewModel: RegisterVM by activityViewModels()
+
+    var permissionAlert : AlertDialog?= null
 
     companion object{
         var callBackListener: CallBackListener? = null
@@ -82,9 +84,6 @@ class Register1  : Fragment() , CallBackListener {
         }
 
     }
-
-
-
 
 
 
@@ -129,7 +128,7 @@ class Register1  : Fragment() , CallBackListener {
 
 
 
-//        binding.btSignIn.setOnClickListener {
+//        binding.btSignIn.singleClick {
 //            val requestBody: MultipartBody.Builder = MultipartBody.Builder()
 //                .setType(MultipartBody.FORM)
 //                .addFormDataPart("user_role", USER_TYPE)
@@ -150,27 +149,27 @@ class Register1  : Fragment() , CallBackListener {
 
 
         binding.apply {
-            editTextGender.setOnClickListener {
+            editTextGender.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownGenderDialog()
             }
 
-            editTextDateofBirth.setOnClickListener {
+            editTextDateofBirth.singleClick {
                 requireActivity().hideKeyboard()
                 showDOBDialog()
             }
 
-            editTextSocialCategory.setOnClickListener {
+            editTextSocialCategory.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownCategoryDialog()
             }
 
-            editTextEducationQualifacation.setOnClickListener {
+            editTextEducationQualifacation.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownEducationQualifacationDialog()
             }
 
-            editTextMaritalStatus.setOnClickListener {
+            editTextMaritalStatus.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownMaritalStatusDialog()
             }
@@ -178,7 +177,7 @@ class Register1  : Fragment() , CallBackListener {
 
             viewModel.state(view)
 //            viewModel.translate(view)
-            editTextSelectState.setOnClickListener {
+            editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemState.size > 0){
                     showDropDownStateDialog()
@@ -187,7 +186,7 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectDistrict.setOnClickListener {
+            editTextSelectDistrict.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateId > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -200,7 +199,7 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextMunicipalityPanchayat.setOnClickListener {
+            editTextMunicipalityPanchayat.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.stateId > 0)){
                     showSnackBar(getString(R.string.select_state_))
@@ -213,7 +212,7 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
 
-            editTextSelectPincode.setOnClickListener {
+            editTextSelectPincode.singleClick {
                 requireActivity().hideKeyboard()
                 if (!(viewModel.districtId > 0)){
                     showSnackBar(getString(R.string.select_district_))
@@ -226,15 +225,13 @@ class Register1  : Fragment() , CallBackListener {
                 }
             }
 
-            layoutPassportSizeImage.setOnClickListener {
+            layoutPassportSizeImage.singleClick {
                 imagePosition = 1
-                isFree = true
                 callMediaPermissions()
             }
 
-            layoutIdentificationImage.setOnClickListener {
+            layoutIdentificationImage.singleClick {
                 imagePosition = 2
-                isFree = true
                 callMediaPermissions()
             }
 
@@ -265,31 +262,50 @@ class Register1  : Fragment() , CallBackListener {
     }
 
 
-    var isFree = false
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
-            // Handle Permission granted/rejected
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        showOptions()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
+            if(!permissions.entries.toString().contains("false")){
+                showOptions()
+            } else {
+                callPermissionDialog()
             }
         }
 
 
 
+    var someActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        callMediaPermissions()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callPermissionDialog() {
+        if(permissionAlert?.isShowing == true) {
+            return
+        }
+        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.required_permissions))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                val i=Intent()
+                i.action=Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                i.data= Uri.parse("package:" + requireActivity().packageName)
+                someActivityResultLauncher.launch(i)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    MainActivity.binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+    }
 
 
     private fun showDropDownGenderDialog() {
@@ -336,7 +352,6 @@ class Register1  : Fragment() , CallBackListener {
                 binding.editTextDateofBirth.setText("")
             }
         }, year, month, day)
-//        dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
         dpd.show()
     }
 
@@ -346,7 +361,6 @@ class Register1  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.social_category))
             .setItems(list) {_,which->
                 binding.editTextSocialCategory.setText(list[which])
-//                editProfileVM.gender.value = list[which]
             }.show()
     }
 
@@ -410,12 +424,6 @@ class Register1  : Fragment() , CallBackListener {
                 binding.editTextMunicipalityPanchayat.setText("")
                 viewModel.districtId = 0
                 viewModel.panchayatId = 0
-
-//                val options = LanguageDetectionEvent.Builder()
-//                    .setSourceLanguage(FirebaseTranslateLanguage.EN)
-//                    .setTargetLanguage(FirebaseTranslateLanguage.DE)
-//                    .build()
-//                val englishGermanTranslator = FirebaseNaturalLanguage.getInstance().getTranslator(options)
             }.show()
     }
 
@@ -466,7 +474,6 @@ class Register1  : Fragment() , CallBackListener {
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) {_,which->
                 binding.editTextSelectPincode.setText(list[which])
-//                viewModel.pincodeId =  viewModel.itemPincode[which].id
                 viewModel.pincodeId = binding.editTextSelectPincode.text.toString()
             }.show()
     }
@@ -486,30 +493,29 @@ class Register1  : Fragment() , CallBackListener {
         dialog.setContentView(dialogView)
         dialog.show()
 
-        btnCancel.setOnClickListener {
+        btnCancel.singleClick {
             dialog.dismiss()
         }
-        tvCamera.setOnClickListener {
+        tvCamera.singleClick {
             dialog.dismiss()
             forCamera()
         }
-        tvCameraDesc.setOnClickListener {
+        tvCameraDesc.singleClick {
             dialog.dismiss()
             forCamera()
         }
 
-        tvPhotos.setOnClickListener {
+        tvPhotos.singleClick {
             dialog.dismiss()
             forGallery()
         }
-        tvPhotosDesc.setOnClickListener {
+        tvPhotosDesc.singleClick {
             dialog.dismiss()
             forGallery()
         }
 
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG","errorD " + e.message)
     }
 
 
@@ -537,7 +543,6 @@ class Register1  : Fragment() , CallBackListener {
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackA " + pos)
         binding.apply {
 //            Register.callBackListener!!.onCallBack(2)
             if( pos == 1) {
@@ -579,21 +584,15 @@ class Register1  : Fragment() , CallBackListener {
                         viewModel.data.vendor_last_name = editTextLN.text.toString()
                         viewModel.data.parent_first_name = editTextFatherFN.text.toString()
                         viewModel.data.parent_last_name = editTextFatherLN.text.toString()
-//                        viewModel.data.gender = editTextGender.text.toString()
                         viewModel.data.date_of_birth = editTextDateofBirth.text.toString()
                         viewModel.data.social_category = editTextSocialCategory.text.toString()
-//                        viewModel.data.education_qualification = editTextEducationQualifacation.text.toString()
-//                        viewModel.data.marital_status = editTextMaritalStatus.text.toString()
                         viewModel.data.spouse_name = editTextSpouseName.text.toString()
-
                         viewModel.data.current_state = ""+viewModel.stateId
                         viewModel.data.current_district = ""+viewModel.districtId
                         viewModel.data.municipality_panchayat_current = ""+viewModel.panchayatId
                         viewModel.data.current_pincode = ""+viewModel.pincodeId
                         viewModel.currentAddress = editTextAddress.text.toString()
                         viewModel.data.current_address = ""+viewModel.currentAddress
-
-                        Log.e("TAG", "viewModel.dataA "+viewModel.data.toString())
                         Register.callBackListener!!.onCallBack(2)
                     }
                 }

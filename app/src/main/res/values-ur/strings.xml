@@ -100,7 +100,7 @@
     <string name="enter_details_to_register_with_us">ہمارے ساتھ اندراج کے لئے تفصیلات درج کریں</string>
     <string name="profile_details">پروفائل کی تفصیلات</string>
     <string name="registration_successful">رجسٹریشن کامیاب</string>
-    <string name="congratulations_your_initial_registration_is_complete">مبارک ہو!\nآپ کی ابتدائی رجسٹریشن مکمل ہے</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">مبارک ہو!\nآپ کی ابتدائی رجسٹریشن مکمل ہے</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ہماری ٹیم کا کوئی شخص آپ کی رجسٹریشن کی تصدیق کے ل 48 گھنٹوں کے اندر آپ سے رابطہ کرے گا۔</string>
     <string name="RegisterNow">ابھی رجسٹر کریں</string>
 
@@ -184,6 +184,7 @@
 
 
     <string-array name="years_array">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -423,4 +424,102 @@
     <string name="please_provide_valid_password">براہ کرم درست پاس ورڈ فراہم کریں</string>
     <string name="user_does_not_exist">صارف موجود نہیں ہے</string>
 
+    <string name="tap_to_reload">دوبارہ لوڈ کرنے کے لیے تھپتھپائیں</string>
+    <string name="error_msg_unknown">ایک غیر متوقع خرابی پیش آگئی</string>
+    <string name="registration_processed">اسٹریٹ سارتھی پر NASVI کی طرف سے رجسٹر کرنے کے لیے آپ کا شکریہ۔ آپ کی تصدیق کا عمل جاری ہے۔ آپ کے رجسٹریشن پر 2 سے 3 کام کے دنوں میں کارروائی ہو جائے گی۔</string>
+    <string name="view">دیکھیں</string>
+    <string name="watch">دیکھیں</string>
+    <string name="applied">لاگو</string>
+    <string name = "not_applied"> لاگو نہیں کیا گیا</string>
+    <string name = "not_live"> لائیو نہیں</string>
+    <string name = "expired"> میعاد ختم</string>
+    <string name="start_date">شروع کی تاریخ %s</string>
+    <string name = "end_date"> اختتامی تاریخ %s</string>
+    <string name="clear_all">سب صاف کریں</string>
+    <string name="all_information">تمام معلومات</string>
+    <string name="view_details">تفصیلات دیکھیں</string>
+    <string name = "valid_date"> درست تاریخ</string>
+    <string name = "status"> اسٹیٹس</string>
+
+    <string name="nothing_here_right_now">ابھی یہاں کچھ نہیں ہے</string>
+    <string name="currently_no_schemes">فی الحال، کوئی اسکیم یہاں نہیں ملتی ہے۔ آپ اسکیمیں دستیاب ہونے پر درخواست دے سکتے ہیں۔</string>
+    <string name="currently_no_notice">فی الحال، یہاں کوئی نوٹس نہیں ملا۔ جب وہ دستیاب ہوں تو آپ نوٹس کے لیے درخواست دے سکتے ہیں۔</string>
+    <string name="currently_no_training">فی الحال، یہاں کوئی تربیت نہیں ملتی ہے۔ جب وہ دستیاب ہوں تو آپ تربیت کے لیے درخواست دے سکتے ہیں۔</string>
+    <string name="currently_no_notifications">فی الحال، یہاں کوئی اطلاع نہیں ملی۔</string>
+    <string name="currently_no_information">فی الحال، یہاں کوئی معلومات نہیں ملی۔</string>
+    <string name="currently_no_complaints">فی الحال، یہاں کوئی شکایت/رائے نہیں ملے۔</string>
+    <string name = "submit_feedback"> تاثرات جمع کروائیں</string>
+    <string-array name="type_array">
+        <item>شکایت درج کریں</item>
+        <item>فیڈ بیک جمع کروائیں</item>
+    </string-array>
+    <string name="type">قسم</string>
+    <string name="select_complaint_type">شکایت کی قسم منتخب کریں</string>
+    <string name="subject_of_feedback">فیڈ بیک کا موضوع</string>
+    <string name="not_complaint_type">آپ کے پاس کوئی شکایت کی قسم نہیں ہے</string>
+    <string name = "tracking_id"> ٹریکنگ ID</string>
+    <string name = "feedback"> تاثرات</string>
+    <string name="complaint">شکایت</string>
+    <string name="Pleaseentertextormedia">براہ کرم متن یا میڈیا درج کریں</string>
+
+    <string name = "re_open">دوبارہ کھولیں</string>
+    <string name = "pending"> زیر التواء</string>
+    <string name="resolved">حل شدہ</string>
+    <string name = "in_progress"> جاری ہے</string>
+    <string name="close_conversation">کیا آپ واقعی اس گفتگو کو بند کرنا چاہتے ہیں؟</string>
+    <string name="open_conversation">کیا آپ واقعی اس گفتگو کو کھولنا چاہتے ہیں؟</string>
+    <string name="are_your_sure_want_to_delete">کیا آپ کو یقین ہے، آپ اپنا اکاؤنٹ حذف کرنا چاہتے ہیں؟</string>
+    <string name="are_your_sure_want_to_turn_Off">کیا آپ واقعی اطلاع کو آف کرنا چاہتے ہیں؟</string>
+    <string name="are_your_sure_want_to_turn_On">کیا آپ واقعی اطلاع آن کرنا چاہتے ہیں؟</string>
+    <string name = "reset_password"> پاس ورڈ دوبارہ ترتیب دیں</string>
+    <string name="enter_new_password_for_login">لاگ ان کے لیے نیا پاس ورڈ درج کریں</string>
+    <string name="newPasswordStar">نیا پاس ورڈ*</string>
+    <string name="reEnterNewPasswordStar">نیا پاس ورڈ دوبارہ درج کریں*</string>
+
+    <string name = "typeColon"> قسم:</string>
+    <string name="registration_dateColon">رجسٹریشن کی تاریخ:</string>
+    <string name="subjectColon">موضوع:</string>
+    <string name="complaint_typeColon">شکایت کی قسم:</string>
+
+    <string name="message_by_admin">منتظم کی طرف سے پیغام</string>
+    <string name="message_by_member">ممبر کی طرف سے پیغام</string>
+    <string name="admin_txt">ایڈمن</string>
+    <string name="member_txt">ممبر</string>
+
+    <string name = "conversation_marked_Close"> اس گفتگو کو ممبر کے ذریعہ بند کا نشان لگایا گیا تھا</string>
+    <string name = "conversation_marked_reOpen"> اس گفتگو کو ممبر نے دوبارہ کھولنے کا نشان لگایا تھا</string>
+    <string name="are_your_sure_want_to_delete_all_notifications">کیا آپ واقعی تمام اطلاعات کو حذف کرنا چاہتے ہیں؟</string>
+    <string name="required_permissions">براہ کرم تمام مطلوبہ اجازتوں کی اجازت دیں؟</string>
+    <string name="notification_not_enabled">آپ کی اطلاع فعال نہیں ہے</string>
+    <string name="request_delete">آپ کی درخواست کا شکریہ۔ آپ کا اکاؤنٹ 2 – 3 کام کے دنوں میں حذف کر دیا جائے گا۔</string>
+    <string name="profile_updated_successfully">پروفائل کامیابی کے ساتھ اپ ڈیٹ ہو گیا</string>
+    <string name="change_mobile_number">موبائل نمبر تبدیل کریں</string>
+    <string name="enter_new_mobile_number_for_login">لاگ ان کے لیے نیا موبائل نمبر درج کریں</string>
+    <string name="mobile_number_updated_successfully">موبائل نمبر کامیابی کے ساتھ اپ ڈیٹ ہو گیا</string>
+    <string name="mobile_does_not_exist">موبائل نمبر موجود نہیں ہے</string>
+
+    <string name = "training_type">تربیت</string>
+    <string name = "notice_type"> نوٹس</string>
+    <string name = "scheme_type"> اسکیم</string>
+    <string name="vendor_details_type">وینڈر کی تفصیلات</string>
+    <string name="information_type">معلومات</string>
+    <string name="feedback_type">فیڈ بیک</string>
+    <string name="complaint_type">شکایت</string>
+    <string name = "training_title"> آپ کے پاس ایک نئی تربیت ہے</string>
+    <string name="notice_title">آپ کے پاس ایک نیا نوٹس ہے</string>
+    <string name="scheme_title">آپ کے پاس ایک نئی اسکیم ہے</string>
+    <string name="vendor_details_title">مبارک ہو! آپ کا پروفائل منظور ہو گیا ہے</string>
+    <string name="feedback_title">آپ کے تاثرات پر آپ کے پاس ایک جواب ہے</string>
+    <string name="complaint_title">آپ کے پاس آپ کی شکایت کا جواب ہے</string>
+    <string name="information_title">آپ کے پاس ایک نئی معلومات ہے</string>
+    <string name="network_failed_please_try_again">نیٹ ورک ناکام ہوگیا، براہ کرم دوبارہ کوشش کریں!</string>
+    <string name = "try_again"> دوبارہ کوشش کریں</string>
+    <string name="back_to_login_u"><u>لاگ ان پر واپس</u></string>
+    <string name="complaint_added_successfully">شکایت کامیابی کے ساتھ شامل کی گئی</string>
+    <string name = "feedback_added_successfully">فیڈ بیک کامیابی سے شامل کیا گیا</string>
+    <string name="congratulations">مبارک ہو!</string>
+    <string name="your_initial_registration_is_complete">آپ کی ابتدائی رجسٹریشن مکمل ہو گئی ہے۔</string>
+    <string name="need_to_add_complete_profile">آپ کو شکایت/رائے جمع کرنے سے پہلے اپنا پروفائل مکمل کرنا ہوگا۔</string>
+    <string name = "conversation_marked_Close_admin"> اس گفتگو کو منتظم نے بند کا نشان لگایا تھا</string>
+    <string name = "conversation_marked_reOpen_admin"> اس گفتگو کو منتظم نے دوبارہ کھولنے کا نشان لگایا تھا</string>
 </resources>

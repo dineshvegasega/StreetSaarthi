@@ -2,13 +2,14 @@ package com.streetsaarthi.nasvi.screens.mainActivity
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.res.ResourcesCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,11 +17,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
-import com.google.android.material.tabs.TabLayoutMediator
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemMenuBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
@@ -28,6 +29,7 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemAds
+import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew.CreateNew
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.dashboard.Dashboard
@@ -36,6 +38,7 @@ import com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetails
 import com.streetsaarthi.nasvi.screens.main.notices.allNotices.AllNotices
 import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.nasvi.screens.main.notifications.Notifications
+import com.streetsaarthi.nasvi.screens.main.notifications.NotificationsVM
 import com.streetsaarthi.nasvi.screens.main.profiles.Profiles
 import com.streetsaarthi.nasvi.screens.main.schemes.allSchemes.AllSchemes
 import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
@@ -46,16 +49,26 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.navHo
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemChildMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
+import com.streetsaarthi.nasvi.utils.imageZoom
+import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 import retrofit2.Response
+import java.io.BufferedInputStream
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.Locale
 import javax.inject.Inject
 
 
 @HiltViewModel
 class MainActivityVM @Inject constructor(private val repository: Repository): ViewModel() {
+
+    val bannerAdapter by lazy { BannerViewPagerAdapter() }
 
     val locale: Locale = Locale.getDefault()
 
@@ -73,7 +86,10 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
         @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
         override fun onBindHolder(binding: ItemMenuBinding, dataClass: ItemMenuModel, position: Int) {
+
             binding.apply {
+//                header.setBackgroundTintList(
+//                    ColorStateList.valueOf(dataClass.color))
                 title.text = dataClass.title
                 if(dataClass.titleChildArray!!.isEmpty()){
                     ivArrow .visibility = View.GONE
@@ -89,13 +105,44 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 recyclerViewChild.adapter = headlineAdapter
                 recyclerViewChild.layoutManager = LinearLayoutManager(binding.root.context)
 
-                ivArrow.setOnClickListener {
+
+                ivArrow.singleClick {
+//                    if (dataClass.isExpanded == false){
+//                        dataClass.isExpanded = true
+//                    } else {
+//                        dataClass.isExpanded = false
+//                    }
+                    val list = currentList
+//                    list.map {
+//                        it.isExpanded = false
+//                        if(it.isExpanded == dataClass.isExpanded){
+//                            dataClass.isExpanded = !dataClass.isExpanded!!
+//                        }
+//                    }
+//
+//                    if (dataClass.isExpanded == false){
+//                        dataClass.apply {
+//                            dataClass.isExpanded = true
+//                        }
+//                        Log.e("TAG", "dataClass.isExpandedAA "+dataClass.isExpanded)
+//
+//                    } else {
+//                        dataClass.apply {
+//                            dataClass.isExpanded = false
+//                        }
+//                        Log.e("TAG", "dataClass.isExpandedBB "+dataClass.isExpanded)
+//
+//                    }
+//                    dataClass.isExpanded = !dataClass.isExpanded!!
                         dataClass.isExpanded = !dataClass.isExpanded!!
-                        val list = currentList
+
                         notifyItemRangeChanged(position, list.size)
+//                    notifyDataSetChanged()
                 }
 
-                root.setOnClickListener {
+
+                root.singleClick {
+                    if(dataClass.titleChildArray!!.isEmpty()){
                         var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                         DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                             if (loginUser != null) {
@@ -114,8 +161,22 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                 }
                                             }
                                             2 -> {
-                                                if (fragmentInFrame !is Notifications){
-                                                    navHostFragment?.navController?.navigate(R.id.notifications)
+                                                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                                                    if (loginUser != null) {
+                                                        var isNotification = Gson().fromJson(
+                                                            loginUser,
+                                                            Login::class.java
+                                                        )?.notification ?: ""
+                                                        Log.e("TAG", "isNotification"+isNotification)
+                                                        if(isNotification == "Yes"){
+                                                            if (fragmentInFrame !is Notifications){
+                                                                NotificationsVM.isNotificationNext = false
+                                                                navHostFragment?.navController?.navigate(R.id.notifications)
+                                                            }
+                                                        } else {
+                                                            showSnackBar(root.resources.getString(R.string.notification_not_enabled))
+                                                        }
+                                                    }
                                                 }
                                             }
                                             3 -> {
@@ -152,11 +213,52 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                             }
                                         }
                                     }
+                                    "pending" -> {
+                                        when(position) {
+                                            0 -> {
+                                                if (fragmentInFrame !is Dashboard){
+                                                    navHostFragment?.navController?.navigate(R.id.dashboard)
+                                                }
+                                            }
+                                            1 -> {
+                                                if (fragmentInFrame !is Profiles) {
+                                                    navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            else -> {
+                                                showSnackBar(root.resources.getString(R.string.registration_processed))
+                                            }
+                                        }
+                                    }
+                                    "rejected" -> {
+                                        when(position) {
+                                            0 -> {
+                                                if (fragmentInFrame !is Dashboard){
+                                                    navHostFragment?.navController?.navigate(R.id.dashboard)
+                                                }
+                                            }
+                                            1 -> {
+                                                if (fragmentInFrame !is Profiles) {
+                                                    navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            else -> {
+                                                showSnackBar(root.resources.getString(R.string.registration_processed))
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                         MainActivity.binding.drawerLayout.close()
+                    }else{
+                        dataClass.isExpanded = !dataClass.isExpanded!!
+                        val list = currentList
+                        notifyItemRangeChanged(position, list.size)
+                    }
                 }
+
+
             }
         }
     }
@@ -179,7 +281,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
         fun onBindViewHolder(holder: ChildViewHolder, position: Int) {
             val item = items?.get(position)
             holder.tvTitle.text = item?.title
-            holder.itemView.setOnClickListener {
+            holder.itemView.singleClick {
                     var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                 DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
@@ -240,6 +342,12 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                             "unverified" -> {
                                 showSnackBar(mainContext.resources.getString(R.string.registration_processed))
                             }
+                            "pending" -> {
+                                showSnackBar(mainContext.resources.getString(R.string.registration_processed))
+                            }
+                            "rejected" -> {
+                                showSnackBar(mainContext.resources.getString(R.string.registration_processed))
+                            }
                         }
                     }
                 }
@@ -271,7 +379,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 //            binding.apply {
 //                val list = currentList
 //                titleChild.text = list[position].title
-//                root.setOnClickListener {
+//                root.singleClick {
 //
 //                }
 //            }
@@ -290,7 +398,45 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                     apiInterface.adsList()
                 override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
                     if (response.isSuccessful){
-                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+                        var adsList : ArrayList<ItemAds> = ArrayList()
+                        val ads = response.body()?.data as ArrayList<ItemAds>
+                        ads.map {
+                            when(it.ad_sr_no){
+                                in 3..4 ->  {
+                                    adsList.add(it)
+                                }
+                                else -> {}
+                            }
+                        }
+                        itemAdsResult.value = adsList
+
+                    }
+                }
+
+                override fun error(message: String) {
+//                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+
+
+    var itemDeleteResult = MutableLiveData<Boolean>(false)
+    fun deleteAccount( hashMap: RequestBody) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.saveSettings(hashMap)
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        itemDeleteResult.value = true
+                       // itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
                     }
                 }
 
@@ -304,6 +450,43 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
             }
         )
     }
+
+
+
+
+    var itemLogoutResult = MutableLiveData<Boolean>(false)
+    fun logoutAccount( hashMap: RequestBody) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.logout(hashMap)
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        itemLogoutResult.value = true
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+//    fun getToken(callBack: String.() -> Unit){
+//        FirebaseMessaging.getInstance().token.addOnSuccessListener { result ->
+//            if(result != null){
+//                callBack(result)
+//            }
+//        }
+//    }
+
+
 
 
 }

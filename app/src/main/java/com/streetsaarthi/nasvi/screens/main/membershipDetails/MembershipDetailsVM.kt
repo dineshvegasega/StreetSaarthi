@@ -1,17 +1,16 @@
 package com.streetsaarthi.nasvi.screens.main.membershipDetails
 
 import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemAds
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemVending
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -19,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MembershipDetailsVM @Inject constructor(private val repository: Repository): ViewModel() {
+    var counterNetwork = MutableLiveData<Boolean>(false)
 
     var itemVending : ArrayList<ItemVending> = ArrayList()
     var vendingId : Int = 0
@@ -37,7 +37,10 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
+//                    super.error(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -66,44 +69,47 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                }
-
-                override fun loading() {
-                    super.loading()
-                }
-            }
-        )
-    }
-
-
-
-
-
-
-    private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
-    val itemAds : LiveData<ArrayList<ItemAds>> get() = itemAdsResult
-    fun adsList(view: View) = viewModelScope.launch {
-        repository.callApi(
-            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
-                override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.adsList()
-
-                override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
-                    if (response.isSuccessful){
-                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+//                    super.error(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
                     }
                 }
 
-                override fun error(message: String) {
-                    super.error(message)
-                }
-
                 override fun loading() {
                     super.loading()
                 }
             }
         )
     }
+
+
+
+
+
+//
+//    private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
+//    val itemAds : LiveData<ArrayList<ItemAds>> get() = itemAdsResult
+//    fun adsList(view: View) = viewModelScope.launch {
+//        repository.callApi(
+//            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
+//                override suspend fun sendRequest(apiInterface: ApiInterface) =
+//                    apiInterface.adsList()
+//
+//                override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
+//                    if (response.isSuccessful){
+//                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+//                    }
+//                }
+//
+//                override fun error(message: String) {
+//                    super.error(message)
+//                }
+//
+//                override fun loading() {
+//                    super.loading()
+//                }
+//            }
+//        )
+//    }
 
 }

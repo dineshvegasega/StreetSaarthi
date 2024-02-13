@@ -27,12 +27,11 @@ import androidx.lifecycle.Observer
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register3Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
-import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -69,7 +68,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             var counter = 0
             var start: Int
             var end: Int
-            imgCreatePassword.setOnClickListener {
+            imgCreatePassword.singleClick {
                 if(counter == 0){
                     counter = 1
                     imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
@@ -91,7 +90,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             var counter2 = 0
             var start2: Int
             var end2: Int
-            imgReEnterPassword.setOnClickListener {
+            imgReEnterPassword.singleClick {
                 if(counter2 == 0){
                     counter2 = 1
                     imgReEnterPassword.setImageResource(R.drawable.ic_eye_open)
@@ -132,7 +131,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
                     tvTime.visibility = View.GONE
-                    OtpTimer.sendOtpTimerData = null
+//                    OtpTimer.sendOtpTimerData = null
                     OtpTimer.stopTimer()
                     editTextSendOtp.setEnabled(false)
                     editTextVeryfyOtp.setEnabled(false)
@@ -158,14 +157,16 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    editTextSendOtp.setEnabled(true)
-                    editTextSendOtp.setBackgroundTintList(
-                        ColorStateList.valueOf(
-                            ResourcesCompat.getColor(
-                                getResources(), R.color._E79D46, null)))
-                    viewModel.isOtpVerified = false
-                    Register.callBackListener!!.onCallBack(21)
-                    editTextMobileNumber.requestFocus()
+                    if (!isTimer.isNotEmpty()) {
+                        editTextSendOtp.setEnabled(true)
+                        editTextSendOtp.setBackgroundTintList(
+                            ColorStateList.valueOf(
+                                ResourcesCompat.getColor(
+                                    getResources(), R.color._E79D46, null)))
+                        viewModel.isOtpVerified = false
+                        Register.callBackListener!!.onCallBack(21)
+                        editTextMobileNumber.requestFocus()
+                    }
                 }
             })
 
@@ -177,19 +178,21 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    editTextSendOtp.setEnabled(true)
-                    editTextSendOtp.setBackgroundTintList(
-                        ColorStateList.valueOf(
-                            ResourcesCompat.getColor(
-                                getResources(), R.color._E79D46, null)))
-                    viewModel.isOtpVerified = false
-                    Register.callBackListener!!.onCallBack(21)
-                    editTextOtp.requestFocus()
+                    if (!isTimer.isNotEmpty()) {
+                        editTextSendOtp.setEnabled(true)
+                        editTextSendOtp.setBackgroundTintList(
+                            ColorStateList.valueOf(
+                                ResourcesCompat.getColor(
+                                    getResources(), R.color._E79D46, null)))
+                        viewModel.isOtpVerified = false
+                        Register.callBackListener!!.onCallBack(21)
+                        editTextOtp.requestFocus()
+                    }
                 }
             })
 
 
-            textTerms.setOnClickListener {
+            textTerms.singleClick {
                 openTermConditionsDialog()
             }
 
@@ -206,12 +209,10 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 //                })
 //
 
-            editTextSendOtp.setOnClickListener {
+            editTextSendOtp.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
-//                    isFree = true
-//                    callMediaPermissions()
                     val obj: JSONObject = JSONObject().apply {
                         put("mobile_no", binding.editTextMobileNumber.text.toString())
                         put("slug", "signup")
@@ -221,7 +222,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 }
             }
 
-            editTextVeryfyOtp.setOnClickListener {
+            editTextVeryfyOtp.singleClick {
                 if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
@@ -237,7 +238,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
 
 
-            cbRememberMe.setOnClickListener {
+            cbRememberMe.singleClick {
                 getAgreeValue()
             }
 
@@ -246,15 +247,12 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
             editTextCreatePassword.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-//                    editTextCreatePassword.requestFocus()
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                    editTextCreatePassword.requestFocus()
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    Log.e("TAG", "countAA "+start)
                     if(!editTextCreatePassword.text.toString().isEmpty()){
                         if(editTextCreatePassword.text.toString().length >= 0 && editTextCreatePassword.text.toString().length < 8){
                             textCreatePasswrordMsg.setText(R.string.InvalidPassword)
@@ -267,16 +265,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                         }
                     }
                     editTextCreatePassword.requestFocus()
-//                    editTextCreatePassword.setCursorVisible(true)
                     getAgreeValue()
-
-//                    editText.postDelayed(Runnable {
-//                        val keyboard = catalougeJobDetailFragment
-//                            .getActivity().getSystemService(
-//                                Context.INPUT_METHOD_SERVICE
-//                            ) as InputMethodManager
-//                        keyboard.showSoftInput(commentEt, 0)
-//                    }, 20)
                 }
             })
 
@@ -292,10 +281,6 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if(!editTextCreatePassword.text.toString().isEmpty()){
                         if(!editTextReEnterPassword.text.toString().isEmpty()){
-//                            if(editTextReEnterPassword.text.toString().length >= 0 && editTextReEnterPassword.text.toString().length < 8){
-//                                textReEnterPasswrordMsg.setText(R.string.InvalidPassword)
-//                                textReEnterPasswrordMsg.visibility = View.VISIBLE
-//                            } else
                             if (editTextCreatePassword.text.toString() != editTextReEnterPassword.text.toString()){
                                 textReEnterPasswrordMsg.setText(R.string.CreatePasswordReEnterPasswordisnotsame)
                                 textReEnterPasswrordMsg.visibility = View.VISIBLE
@@ -328,7 +313,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
         window!!.setBackgroundDrawableResource(R.color._00000000)
 
         val yes = mybuilder.findViewById<AppCompatImageView>(R.id.imageCross)
-        yes?.setOnClickListener {
+        yes?.singleClick {
             mybuilder.dismiss()
         }
     }
@@ -337,47 +322,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
 
 
-    private fun callMediaPermissions() {
-        activityResultLauncher.launch(
-            arrayOf()
-        )
-    }
-
-
-
-    var isFree = false
-    private val activityResultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions())
-        { permissions ->
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        val obj: JSONObject = JSONObject().apply {
-                            put("mobile_no", binding.editTextMobileNumber.text.toString())
-                            put("slug", "signup")
-                            put("user_type", USER_TYPE)
-                        }
-                        viewModel.sendOTP(view = requireView(), obj)
-//                        smsVerifyCatcher!!.onStart()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
-            }
-        }
-
-
-
-
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackC " + pos)
         binding.apply {
             if (pos == 5) {
                 if(editTextCreatePassword.text.toString().isEmpty()){
@@ -406,22 +351,18 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                     viewModel.data.password = editTextCreatePassword.text.toString()
                     viewModel.data.mobile_no = editTextMobileNumber.text.toString()
                     viewModel.data.otp = editTextOtp.text.toString()
-                    Log.e("TAG", "viewModel.dataC "+viewModel.data.toString())
                     Register.callBackListener!!.onCallBack(6)
                 }
             }
         }
     }
 
-
+    var isTimer = ""
     override fun otpData(string: String) {
+        isTimer = string
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
             tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
-
-            if(MainActivity.isOpen.get() == true){
-                editTextOtp.focus()
-            }
 
             if(string.isEmpty()){
                 editTextSendOtp.setText(getString(R.string.resendOtp))
@@ -452,12 +393,6 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
                 viewModel.isAgree.value = false
             } else if (editTextReEnterPassword.text.toString().isEmpty()){
                 viewModel.isAgree.value = false
-//            } else if(editTextReEnterPassword.text.toString().length >= 0 && editTextReEnterPassword.text.toString().length < 8){
-//                viewModel.isAgree.value = false
-//            } else if(!isValidPassword(editTextReEnterPassword.text.toString().trim())){
-//                viewModel.isAgree.value = false
-//            } else if (editTextCreatePassword.text.toString() != editTextReEnterPassword.text.toString()){
-//                viewModel.isAgree.value = false
             }  else if (viewModel.isOtpVerified == false){
                 viewModel.isAgree.value = false
             } else if (!cbRememberMe.isChecked){
@@ -472,7 +407,6 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
     override fun onResume() {
         super.onResume()
-        Log.e("TAG", "onResumeZZZ")
         Handler(Looper.getMainLooper()).postDelayed({
             getAgreeValue()
         }, 200)
@@ -486,5 +420,3 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
         super.onDestroyView()
     }
 }
-
-//implementation("com.google.firebase:firebase-analytics")

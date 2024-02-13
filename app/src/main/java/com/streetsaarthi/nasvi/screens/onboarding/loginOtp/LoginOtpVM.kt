@@ -8,17 +8,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
+import com.streetsaarthi.nasvi.utils.getToken
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -41,7 +46,6 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
@@ -81,7 +85,6 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    Log.e("TAG", "responseAA "+response.body().toString())
                     if (response.isSuccessful){
                         if(response.body()?.data != null){
                             isOtpVerified = true
@@ -120,13 +123,33 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.verifyOTPData(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        DataStoreUtil.saveData(DataStoreKeys.AUTH, response.body()!!.token ?: "")
-                        DataStoreUtil.saveObject(
-                            DataStoreKeys.LOGIN_DATA,
-                            Gson().fromJson(response.body()!!.data, Login::class.java)
-                        )
+                        if(response.body()?.data != null){
+                            saveData(DataStoreKeys.AUTH, response.body()!!.token ?: "")
+                            val data = Gson().fromJson(response.body()!!.data, Login::class.java)
+                            saveObject(DataStoreKeys.LOGIN_DATA, data)
+                            showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
+                            DataStoreUtil.readData(DataStoreKeys.TOKEN) { token ->
+                                getToken(){
+                                    val obj: JSONObject = JSONObject()
+                                    obj.put("user_id", ""+data.id)
+                                    obj.put("mobile_token", ""+this)
+                                    token(obj)
+                                }
+                            }
+                            val last = if(data.language == null){
+                                "en"
+                            }else if(data.language.contains("/")){
+                                data.language.substring(data.language.lastIndexOf('/') + 1).replace("'", "")
+                            } else {
+                                data.language
+                            }
+
+                            MainActivity.mainActivity.get()?.reloadActivity(last, Main)
+                        } else {
+                            showSnackBar(view.resources.getString(R.string.invalid_OTP))
+                        }
+                    } else {
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_loginOtp_to_dashboard)
                     }
                 }
 
@@ -141,5 +164,25 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
         )
     }
 
+
+
+    fun token(jsonObject: JSONObject) = viewModelScope.launch {
+        repository.callApiWithoutLoader(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.mobileToken(requestBody = jsonObject.getJsonRequestBody())
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                    }
+                }
+                override fun error(message: String) {
+//                    super.error(message)
+                }
+                override fun loading() {
+//                    super.loading()
+                }
+            }
+        )
+    }
 
 }

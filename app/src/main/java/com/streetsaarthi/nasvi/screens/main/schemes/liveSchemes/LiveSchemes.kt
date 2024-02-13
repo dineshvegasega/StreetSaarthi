@@ -8,9 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
@@ -69,6 +67,7 @@ class LiveSchemes : Fragment() {
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_schemes)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_schemes)
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)
@@ -149,7 +148,7 @@ class LiveSchemes : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
-                        put("status", "Active")
+//                        put("status", "Active")
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
@@ -166,7 +165,7 @@ class LiveSchemes : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
-                        put("status", "Active")
+//                        put("status", "Active")
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
@@ -186,7 +185,6 @@ class LiveSchemes : Fragment() {
             val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
             results.addAll(changeValue as MutableList<ItemLiveScheme>)
             viewModel.adapter.addAllSearch(results)
-
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()

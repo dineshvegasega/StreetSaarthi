@@ -1,11 +1,11 @@
 package com.streetsaarthi.nasvi.screens.main.dashboard
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,9 +13,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.genericAdapter.GenericAdapter
-import com.demo.networking.ApiInterface
-import com.demo.networking.CallHandler
-import com.demo.networking.Repository
+import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
@@ -25,9 +25,9 @@ import com.streetsaarthi.nasvi.databinding.ItemRecentActivitiesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.chat.ItemChat
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemAds
-import com.streetsaarthi.nasvi.models.mix.ItemComplaintFeedback
+import com.streetsaarthi.nasvi.models.mix.ItemHistory
 import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
 import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
@@ -39,7 +39,9 @@ import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.RawValue
@@ -51,6 +53,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardVM @Inject constructor(private val repository: Repository): ViewModel() {
 
+    var counterNetwork = MutableLiveData<Boolean>(false)
 
     var itemMain : ArrayList<ItemModel> ?= ArrayList()
     init {
@@ -99,9 +102,19 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
             viewType: Int
         ) = ItemDashboardMenusBinding.inflate(inflater, parent, false)
 
+        @SuppressLint("SuspiciousIndentation")
         override fun onBindHolder(binding: ItemDashboardMenusBinding, dataClass: ItemModel, position: Int) {
             binding.apply {
-                if(dataClass.isNew == true){
+//                if(dataClass.isNew == true){
+//                    animationView.visibility = View.VISIBLE
+//                    textDotTxt.visibility = View.VISIBLE
+//                    layoutBottomRed.visibility = View.VISIBLE
+//                } else {
+//                    animationView.visibility = View.GONE
+//                    textDotTxt.visibility = View.GONE
+//                    layoutBottomRed.visibility = View.GONE
+//                }
+                if(position != 0){
                     animationView.visibility = View.VISIBLE
                     textDotTxt.visibility = View.VISIBLE
                     layoutBottomRed.visibility = View.VISIBLE
@@ -110,28 +123,38 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     textDotTxt.visibility = View.GONE
                     layoutBottomRed.visibility = View.GONE
                 }
-
                 textHeaderTxt.setText(dataClass.name)
                 ivLogo.setImageResource(dataClass.image)
-                root.setOnClickListener {
+                root.singleClick {
                     DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val data = Gson().fromJson(loginUser, Login::class.java)
                                when (data.status) {
                                    "approved" -> {
                                        when (position) {
-                                           0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
-                                           1 -> it.findNavController().navigate(R.id.action_dashboard_to_liveSchemes)
-                                           2 -> it.findNavController().navigate(R.id.action_dashboard_to_liveNotices)
-                                           3 -> it.findNavController().navigate(R.id.action_dashboard_to_liveTraining)
-                                           4 -> it.findNavController().navigate(R.id.action_dashboard_to_history)
-                                           5 -> it.findNavController().navigate(R.id.action_dashboard_to_informationCenter)
+                                           0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           1 -> root.findNavController().navigate(R.id.action_dashboard_to_liveSchemes)
+                                           2 -> root.findNavController().navigate(R.id.action_dashboard_to_liveNotices)
+                                           3 -> root.findNavController().navigate(R.id.action_dashboard_to_liveTraining)
+                                           4 -> root.findNavController().navigate(R.id.action_dashboard_to_history)
+                                           5 -> root.findNavController().navigate(R.id.action_dashboard_to_informationCenter)
                                        }
                                    }
                                    "unverified" -> {
-                                    //   showSnackBar(root.resources.getString(R.string.registration_processed))
                                        when (position) {
-                                           0 -> it.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           else -> showSnackBar(root.resources.getString(R.string.registration_processed))
+                                       }
+                                   }
+                                   "pending" -> {
+                                       when (position) {
+                                           0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
+                                           else -> showSnackBar(root.resources.getString(R.string.registration_processed))
+                                       }
+                                   }
+                                   "rejected" -> {
+                                       when (position) {
+                                           0 -> root.findNavController().navigate(R.id.action_dashboard_to_profile)
                                            else -> showSnackBar(root.resources.getString(R.string.registration_processed))
                                        }
                                    }
@@ -186,7 +209,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
         fun onBindViewHolder(holder: ChildViewHolder, position: Int) {
 //            val item = items?.get(position)
             //holder.tvTitle.text = item?.title
-            holder.itemView.setOnClickListener {
+            holder.itemView.singleClick {
             }
         }
 
@@ -227,10 +250,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
                                 isScheme.value = false
                             }
+//                            Log.e("TAG", "LiveSchemes.isReadLiveSchemes"+LiveSchemes.isReadLiveSchemes)
                             if (LiveSchemes.isReadLiveSchemes == true){
                                 DataStoreUtil.saveObject(
                                     DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
                                 isScheme.value = false
+                                LiveSchemes.isReadLiveSchemes = false
                             }
 
                         }
@@ -238,8 +263,11 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+                   // super.error(message)
+                  //  showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -278,14 +306,18 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                 DataStoreUtil.saveObject(
                                     DataStoreKeys.LIVE_NOTICE_DATA, changeValue)
                                 isNotice.value = false
+                                LiveNotices.isReadLiveNotices = false
                             }
                         }
                     }
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+                  //  super.error(message)
+                 //   showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -326,14 +358,18 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                 DataStoreUtil.saveObject(
                                     DataStoreKeys.LIVE_TRAINING_DATA, changeValue)
                                 isTraining.value = false
+                                LiveTraining.isReadLiveTraining = false
                             }
                         }
                     }
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+                   // super.error(message)
+                 //   showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -346,19 +382,41 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
 
 
     var isComplaintFeedback = MutableLiveData<Boolean>(false)
-    fun complaintFeedback(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun complaintFeedbackHistory(view: View, jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.complaintFeedback(requestBody = jsonObject.getJsonRequestBody())
+                    apiInterface.complaintFeedbackHistory(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        //isTraining.value = true
-                        val typeToken = object : TypeToken<List<ItemComplaintFeedback>>() {}.type
-                        val changeValue = Gson().fromJson<List<ItemComplaintFeedback>>(Gson().toJson(response.body()!!.data), typeToken)
+                        val typeToken = object : TypeToken<List<ItemHistory>>() {}.type
+                        val changeValue = Gson().fromJson<List<ItemHistory>>(Gson().toJson(response.body()!!.data), typeToken)
+                        changeValue.map {
+//                            runBlocking {
+//                                feedbackConversationDetails(view, ""+it.feedback_id)
+//                            }
+//                            Log.e("TAG", "aaaaa_idXXX ")
+//                            val call1 = async { feedbackConversationDetails(view, ""+it.feedback_id)}
+//                            val data1Response:BaseResponse<Data1>?
+//                            try {
+//                                data1Response = call1.await()
+//
+//                            } catch (ex: Exception) {
+//                                ex.printStackTrace()
+//                            }
+
+//                            feedbackConversationDetails(view, ""+it.feedback_id){
+//                                Log.e("TAG", "aaaaa_idZZZ "+it.feedback_id)
+//                                Log.e("TAG", "aaaaa_idXXX "+this.toString())
+//                            }
+                        }
+//                        feedbackConversationDetails(view, "82"){
+////                            Log.e("TAG", "aaaaa_idZZZ "+it.feedback_id)
+//                            Log.e("TAG", "aaaaa_idXXX "+this.toString())
+//                        }
                         DataStoreUtil.readData(DataStoreKeys.Complaint_Feedback_DATA) { loginUser ->
                             if (loginUser != null) {
-                                val savedValue = Gson().fromJson<List<ItemComplaintFeedback>>(loginUser, typeToken)
+                                val savedValue = Gson().fromJson<List<ItemHistory>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
                                     isComplaintFeedback.value = true
                                 } else {
@@ -374,14 +432,18 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                 DataStoreUtil.saveObject(
                                     DataStoreKeys.Complaint_Feedback_DATA, changeValue)
                                 isComplaintFeedback.value = false
+                                History.isReadComplaintFeedback = false
                             }
                         }
                     }
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+                  //  super.error(message)
+               //     showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -391,6 +453,38 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
         )
     }
 
+
+
+//    private var feedbackConversationLiveData = MutableLiveData<ItemChat>()
+//    val feedbackConversationLive : LiveData<ItemChat> get() = feedbackConversationLiveData
+    fun feedbackConversationDetails(view: View, _id: String, callBack: ItemChat.() -> Unit) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<ItemChat>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.feedbackConversationDetails(_id)
+                override fun success(response: Response<ItemChat>) {
+                    if (response.isSuccessful){
+                        callBack(response.body()!!)
+//                        if(response.body()!!.data != null){
+//                            Log.e("TAG", "aaaaa "+response.body()!!.data.toString())
+//                            Log.e("TAG", "aaaaa_id "+_id)
+//
+////                            feedbackConversationLiveData.value = response.body()
+//                        }
+                    }
+                }
+                override fun error(message: String) {
+                   // super.error(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
+                }
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
 
 
 
@@ -423,49 +517,53 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                 DataStoreUtil.saveObject(
                                     DataStoreKeys.Information_Center_DATA, changeValue)
                                 isInformationCenter.value = false
+                                InformationCenter.isReadInformationCenter = false
                             }
                         }
                     }
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
-                }
-
-                override fun loading() {
-                    super.loading()
-                }
-            }
-        )
-    }
-
-
-
-
-    private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
-    val itemAds : LiveData< ArrayList<ItemAds>> get() = itemAdsResult
-    fun adsList(view: View) = viewModelScope.launch {
-        repository.callApi(
-            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
-                override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.adsList()
-                override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
-                    if (response.isSuccessful){
-                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+                  //  super.error(message)
+           //         showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
                     }
                 }
 
-                override fun error(message: String) {
-                    super.error(message)
-                }
-
                 override fun loading() {
                     super.loading()
                 }
             }
         )
     }
+
+
+
+//
+//    private var itemAdsResult = MutableLiveData< ArrayList<ItemAds>>()
+//    val itemAds : LiveData< ArrayList<ItemAds>> get() = itemAdsResult
+//    fun adsList(view: View) = viewModelScope.launch {
+//        repository.callApi(
+//            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemAds>>>> {
+//                override suspend fun sendRequest(apiInterface: ApiInterface) =
+//                    apiInterface.adsList()
+//                override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
+//                    if (response.isSuccessful){
+//                        itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+//                    }
+//                }
+//
+//                override fun error(message: String) {
+//                    super.error(message)
+//                }
+//
+//                override fun loading() {
+//                    super.loading()
+//                }
+//            }
+//        )
+//    }
 
 
 
@@ -478,7 +576,6 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            Log.e("TAG", "aaaaa")
                             DataStoreUtil.saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
@@ -491,8 +588,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     }
                 }
                 override fun error(message: String) {
-                    super.error(message)
+                   // super.error(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
+
                 override fun loading() {
                     super.loading()
                 }

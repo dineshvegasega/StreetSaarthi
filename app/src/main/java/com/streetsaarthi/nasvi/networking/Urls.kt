@@ -10,6 +10,7 @@ const val URL = BASE_URL+"api/"
 
 
 
+const val MOBILE_TOKEN = "update-mobile-token"
 const val LOGIN = "login"
 const val VENDER_PROFILE = "vendor-profile"
 const val VENDER_PROFILE_UPDATE = "vendor-profile-update"
@@ -29,13 +30,13 @@ const val LOCAL_ORGANISATION = "local-organisation"
 const val Vending = "vending-list?page=1"
 const val Marketplace = "marketplace-list?page=1"
 const val SchemeHistoryList = "scheme-history-list"
-const val NoticeHistoryList = "notice-history-list"
 
 const val LiveScheme = "live-scheme"
 const val NoticeLiveList = "notice-live-list"
 const val LiveTraining = "live-training"
 
 const val ComplaintFeedback = "feedback-history-all"
+const val ComplaintFeedbackHistory = "feedback-history-user"
 const val InformationCenter = "information-history-list"
 const val ADS_LIST = "ads-list?page=1"
 
@@ -43,30 +44,45 @@ const val SchemeApply = "scheme-apply"
 const val SchemeDetail = "scheme-detail"
 const val TrainingDetail = "training-detail"
 const val NoticeDetail = "notice-detail"
+const val InformationDetail = "information-detail"
+
 
 const val AllSchemeHistory = "user-scheme-history-list"
 const val AllTrainingHistory = "training-list"
 const val AllNoticeHistory = "notice-history-list"
 
 const val Notifications = "notification-list"
+const val DeleteNotification = "delete-notification"
+const val UpdateNotification = "notification-update"
 
-const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
-const val TRANSLATE = "translate/v2?key="
 
+const val FeedbackConversationDetails = "feedback-conversation-details"
+const val AddFeedbackConversation = "feedback-conversation"
+
+const val Complaint_Type = "complaint-type"
+const val NewFeedback = "new-feedback"
+const val SaveSettings = "save-settings"
+const val LOGOUT = "logout"
+const val PasswordUpdate = "password-update"
 
 const val USER_TYPE = "member"
-
 const val PING = "8.8.8.8"
+
+//const val TRANSLATE_URL = "https://translation.googleapis.com/language/"
+//const val TRANSLATE = "translate/v2?key="
+
+const val TRANSLATE_URL = "https://translate.googleapis.com/translate_a/"
+const val TRANSLATE = "single?client=gtx&sl=en&tl=hi&dt=t&dt=t"
 
 
 const val Screen = "screen"
 const val Start = "Start"
 const val Main = "Main"
-const val QuickRegister = "QuickRegister"
 const val CompleteRegister = "CompleteRegister"
 const val LoginPassword = "LoginPassword"
 const val LoginOtp = "LoginOtp"
+const val LIVE_SCHEMES = "LIVE_SCHEMES"
 
-
+const val NETWORK_DIALOG_SHOW = false
 
 

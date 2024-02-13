@@ -99,7 +99,7 @@
     <string name="enter_details_to_register_with_us">અમારી સાથે નોંધણી કરાવવા માટે વિગતો દાખલ કરો</string>
     <string name="profile_details">પ્રોફાઇલ વિગતો</string>
     <string name = "registration_successful">નોંધણી સફળ</string>
-    <string name="congratulations_your_initial_registration_is_complete">અભિનંદન!\nતમારી પ્રારંભિક નોંધણી પૂર્ણ થઈ ગઈ છે</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">અભિનંદન!\nતમારી પ્રારંભિક નોંધણી પૂર્ણ થઈ ગઈ છે</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">તમારી નોંધણી ચકાસવા માટે અમારી ટીમમાંથી કોઈ 48 કલાકની અંદર તમારો સંપર્ક કરશે.</string>
     <string name="RegisterNow">હવે નોંધણી કરો</string>
 
@@ -183,6 +183,7 @@
 
 
     <string-array name="years_array">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -417,4 +418,102 @@
     <string name="please_provide_valid_password">કૃપા કરીને માન્ય પાસવર્ડ આપો</string>
     <string name="user_does_not_exist">વપરાશકર્તા અસ્તિત્વમાં નથી</string>
 
+    <string name="tap_to_reload">ફરીથી લોડ કરવા માટે ટેપ કરો</string>
+    <string name="error_msg_unknown">એક અણધારી ભૂલ આવી</string>
+    <string name="registration_processed">NASVI દ્વારા સ્ટ્રીટ સારથી પર નોંધણી કરાવવા બદલ તમારો આભાર. તમારી ચકાસણી પ્રક્રિયા હેઠળ છે. તમારી નોંધણી 2 થી 3 કાર્યકારી દિવસોમાં પ્રક્રિયા કરવામાં આવશે.</string>
+    <string name="view">જુઓ</string>
+    <string name="watch">જુઓ</string>
+    <string name="applied">લાગુ કરેલ</string>
+    <string name="not_applied">લાગુ નથી</string>
+    <string name="not_live">લાઈવ નથી</string>
+    <string name = "expired">સમાપ્ત</string>
+    <string name="start_date">પ્રારંભ તારીખ %s</string>
+    <string name="end_date">સમાપ્તિ તારીખ %s</string>
+    <string name = "clear_all">બધું સાફ કરો</string>
+    <string name="all_information">બધી માહિતી</string>
+    <string name="view_details">વિગતો જુઓ</string>
+    <string name="valid_date">માન્ય તારીખ</string>
+    <string name="status">સ્થિતિ</string>
+
+    <string name="nothing_here_right_now">અહીં અત્યારે કંઈ નથી</string>
+    <string name="currently_no_schemes">હાલમાં, અહીં કોઈ યોજનાઓ જોવા મળતી નથી. જ્યારે તે ઉપલબ્ધ હોય ત્યારે તમે સ્કીમ માટે અરજી કરી શકો છો.</string>
+    <string name="currently_no_notice">હાલમાં, અહીં કોઈ સૂચના મળી નથી. જ્યારે તેઓ ઉપલબ્ધ હોય ત્યારે તમે સૂચના માટે અરજી કરી શકો છો.</string>
+    <string name="currently_no_training">હાલમાં, અહીં કોઈ તાલીમ મળતી નથી. જ્યારે તેઓ ઉપલબ્ધ હોય ત્યારે તમે તાલીમ માટે અરજી કરી શકો છો.</string>
+    <string name="currently_no_notifications">હાલમાં, અહીં કોઈ સૂચનાઓ મળી નથી.</string>
+    <string name="currently_no_information">હાલમાં, અહીં કોઈ માહિતી મળી નથી.</string>
+    <string name="currently_no_complaints">હાલમાં, અહીં કોઈ ફરિયાદ/પ્રતિસાદ જોવા મળતા નથી.</string>
+    <string name="submit_feedback">પ્રતિસાદ સબમિટ કરો</string>
+    <string-array name="type_array">
+        <item>ફરિયાદ નોંધો</item>
+        <item>પ્રતિસાદ સબમિટ કરો</item>
+    </string-array>
+    <string name="type">પ્રકાર</string>
+    <string name="select_complaint_type">ફરિયાદનો પ્રકાર પસંદ કરો</string>
+    <string name="subject_of_feedback">પ્રતિસાદનો વિષય</string>
+    <string name="not_complaint_type">તમારી પાસે કોઈ ફરિયાદનો પ્રકાર નથી</string>
+    <string name = "tracking_id">ટ્રેકિંગ ID</string>
+    <string name="feedback">પ્રતિસાદ</string>
+    <string name="complaint">ફરિયાદ</string>
+    <string name="Pleaseentertextormedia">કૃપા કરીને ટેક્સ્ટ અથવા મીડિયા દાખલ કરો</string>
+
+    <string name = "re_open">ફરીથી ખોલો</string>
+    <string name="pending">બાકી</string>
+    <string name = "resolved"> ઉકેલાયેલ</string>
+    <string name="in_progress">પ્રગતિમાં</string>
+    <string name="close_conversation">શું તમે ખરેખર આ વાર્તાલાપ બંધ કરવા માંગો છો?</string>
+    <string name="open_conversation">શું તમે ખરેખર આ વાર્તાલાપ ખોલવા માંગો છો?</string>
+    <string name="are_your_sure_want_to_delete">શું તમે ખરેખર તમારું એકાઉન્ટ કાઢી નાખવા માંગો છો?</string>
+    <string name="are_your_sure_want_to_turn_Off">શું તમે ખરેખર સૂચના બંધ કરવા માંગો છો?</string>
+    <string name="are_your_sure_want_to_turn_On">શું તમે ખરેખર સૂચના ચાલુ કરવા માંગો છો?</string>
+    <string name="reset_password">પાસવર્ડ રીસેટ કરો</string>
+    <string name="enter_new_password_for_login">લોગિન માટે નવો પાસવર્ડ દાખલ કરો</string>
+    <string name="newPasswordStar">નવો પાસવર્ડ*</string>
+    <string name="reEnterNewPasswordStar">નવો પાસવર્ડ ફરીથી દાખલ કરો*</string>
+
+    <string name="typeColon">પ્રકાર:</string>
+    <string name = "registration_dateColon">નોંધણી તારીખ:</string>
+    <string name="subjectColon">વિષય:</string>
+    <string name="complaint_typeColon">ફરિયાદનો પ્રકાર:</string>
+
+    <string name="message_by_admin">એડમિન દ્વારા સંદેશ</string>
+    <string name="message_by_member">સભ્ય દ્વારા સંદેશ</string>
+    <string name="admin_txt">એડમિન</string>
+    <string name="member_txt">સભ્ય</string>
+
+    <string name="conversation_marked_Close">આ વાર્તાલાપ સભ્ય દ્વારા બંધ તરીકે ચિહ્નિત કરવામાં આવ્યો હતો</string>
+    <string name="conversation_marked_reOpen">આ વાર્તાલાપને સભ્ય દ્વારા પુનઃ ખોલો તરીકે ચિહ્નિત કરવામાં આવ્યો હતો</string>
+    <string name="are_your_sure_want_to_delete_all_notifications">શું તમે ખરેખર તમામ સૂચનાઓ કાઢી નાખવા માંગો છો?</string>
+    <string name="required_permissions">કૃપા કરીને બધી જરૂરી પરવાનગીઓ આપો?</string>
+    <string name="notification_not_enabled">તમારી સૂચના સક્ષમ નથી</string>
+    <string name="request_delete">તમારી વિનંતી બદલ આભાર. તમારું એકાઉન્ટ 2 – 3 કામકાજી દિવસોમાં કાઢી નાખવામાં આવશે.</string>
+    <string name="profile_updated_successfully">પ્રોફાઇલ સફળતાપૂર્વક અપડેટ થઈ</string>
+    <string name="change_mobile_number">મોબાઇલ નંબર બદલો</string>
+    <string name="enter_new_mobile_number_for_login">લોગિન માટે નવો મોબાઇલ નંબર દાખલ કરો</string>
+    <string name="mobile_number_updated_successfully">મોબાઇલ નંબર સફળતાપૂર્વક અપડેટ થયો</string>
+    <string name="mobile_does_not_exist">મોબાઇલ નો અસ્તિત્વમાં નથી</string>
+
+    <string name = "training_type">તાલીમ</string>
+    <string name = "notice_type"> સૂચના</string>
+    <string name = "scheme_type"> યોજના</string>
+    <string name="vendor_details_type">વિક્રેતાની વિગતો</string>
+    <string name="information_type">માહિતી</string>
+    <string name="feedback_type">પ્રતિસાદ</string>
+    <string name="complaint_type">ફરિયાદ</string>
+    <string name="training_title">તમારી પાસે એક નવી તાલીમ છે</string>
+    <string name="notice_title">તમારી પાસે એક નવી સૂચના છે</string>
+    <string name="scheme_title">તમારી પાસે એક નવી યોજના છે</string>
+    <string name="vendor_details_title">અભિનંદન! તમારી પ્રોફાઇલ મંજૂર કરવામાં આવી છે</string>
+    <string name="feedback_title">તમારી પાસે તમારા પ્રતિસાદ પર જવાબ છે</string>
+    <string name="complaint_title">તમારી ફરિયાદ પર તમારી પાસે જવાબ છે</string>
+    <string name="information_title">તમારી પાસે એક નવી માહિતી છે</string>
+    <string name="network_failed_please_try_again">નેટવર્ક નિષ્ફળ થયું, કૃપા કરીને ફરી પ્રયાસ કરો!</string>
+    <string name = "try_again">ફરીથી પ્રયાસ કરો</string>
+    <string name="back_to_login_u"><u>લોગિન પર પાછા</u></string>
+    <string name="complaint_added_successfully">ફરિયાદ સફળતાપૂર્વક ઉમેરાઈ</string>
+    <string name = "feedback_added_successfully"> પ્રતિસાદ સફળતાપૂર્વક ઉમેરાયો</string>
+    <string name="congratulations">અભિનંદન!</string>
+    <string name="your_initial_registration_is_complete">તમારી પ્રારંભિક નોંધણી પૂર્ણ થઈ ગઈ છે.</string>
+    <string name="need_to_add_complete_profile">તમારે ફરિયાદ/પ્રતિસાદ સબમિટ કરતા પહેલા તમારી પ્રોફાઇલ પૂર્ણ કરવાની જરૂર છે.</string>
+    <string name="conversation_marked_Close_admin">આ વાતચીતને સંચાલક દ્વારા બંધ તરીકે ચિહ્નિત કરવામાં આવી હતી</string>
+    <string name="conversation_marked_reOpen_admin">આ વાર્તાલાપને એડમિન દ્વારા પુનઃ ખોલો તરીકે ચિહ્નિત કરવામાં આવ્યો હતો</string>
 </resources>

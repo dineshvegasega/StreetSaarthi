@@ -1,10 +1,7 @@
 package com.streetsaarthi.nasvi.screens.onboarding.forgetPassword
 
-import android.Manifest
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,14 +18,11 @@ import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ForgetPasswordBinding
-import com.streetsaarthi.nasvi.databinding.LoginPasswordBinding
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistrationVM
 import com.streetsaarthi.nasvi.utils.OtpTimer
-import com.streetsaarthi.nasvi.utils.focus
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -38,9 +32,6 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
     private val binding get() = _binding!!
     private val viewModel: ForgetPasswordVM by viewModels()
 
-    var itemMain : ArrayList<Item> ?= ArrayList()
-
-//    private var smsVerifyCatcher: SmsVerifyCatcher? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +52,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
         binding.apply {
             editTextVeryfyOtp.isEnabled = false
             btSignIn.isEnabled = false
-            textBack.setOnClickListener {
+            textBack.singleClick {
                 view.findNavController().navigateUp()
             }
 
@@ -87,7 +78,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
             var counter = 0
             var start: Int
             var end: Int
-            imgCreatePassword.setOnClickListener {
+            imgCreatePassword.singleClick {
                 if(counter == 0){
                     counter = 1
                     imgCreatePassword.setImageResource(R.drawable.ic_eye_open)
@@ -129,7 +120,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
             viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
                 if (it == true){
                     tvTime.visibility = View.GONE
-                    OtpTimer.sendOtpTimerData = null
+//                    OtpTimer.sendOtpTimerData = null
                     OtpTimer.stopTimer()
                     editTextSendOtp.setEnabled(false)
                     editTextVeryfyOtp.setEnabled(false)
@@ -163,12 +154,10 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 //                })
 
 
-            editTextSendOtp.setOnClickListener {
+            editTextSendOtp.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
                 }else{
-//                    isFree = true
-//                    callMediaPermissions()
                     val obj: JSONObject = JSONObject().apply {
                         put("mobile_no", binding.editTextMobileNumber.text.toString())
                         put("slug", "forgot")
@@ -179,7 +168,7 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
             }
 
 
-            editTextVeryfyOtp.setOnClickListener {
+            editTextVeryfyOtp.singleClick {
                 if (editTextOtp.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.enterOtp))
                 }else{
@@ -195,11 +184,9 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 
 
 
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
-//                } else if (binding.editTextOtp.text.toString().isEmpty()){
-//                    showSnackBar(getString(R.string.enterOtp))
                 } else if (editTextPassword.text.toString().isEmpty()){
                     showSnackBar(getString(R.string.YourNewPassword))
                 } else if(editTextPassword.text.toString().length >= 0 && editTextPassword.text.toString().length < 8){
@@ -221,53 +208,13 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
 
 
 
-    private fun callMediaPermissions() {
-        activityResultLauncher.launch(
-            arrayOf()
-        )
-    }
 
-
-
-    var isFree = false
-    private val activityResultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions())
-        { permissions ->
-            permissions.entries.forEach {
-                val permissionName = it.key
-                val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
-                if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
-                    if(isFree){
-                        val obj: JSONObject = JSONObject().apply {
-                            put("mobile_no", binding.editTextMobileNumber.text.toString())
-                            put("slug", "forgot")
-                            put("user_type", USER_TYPE)
-                        }
-                        viewModel.sendOTP(view = requireView(), obj)
-//                        smsVerifyCatcher!!.onStart()
-                    }
-                    isFree = false
-                } else {
-                    // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
-                }
-            }
-        }
-
-
-
-
+    var isTimer = ""
     override fun otpData(string: String) {
+        isTimer = string
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE
             tvTime.text = getString(R.string.the_verify_code_will_expire_in_00_59, string)
-
-            if(MainActivity.isOpen.get() == true){
-                editTextOtp.focus()
-            }
 
             if(string.isEmpty()){
                 editTextSendOtp.setText(getString(R.string.resendOtp))

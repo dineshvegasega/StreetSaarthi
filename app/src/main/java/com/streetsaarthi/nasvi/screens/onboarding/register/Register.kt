@@ -1,9 +1,6 @@
 package com.streetsaarthi.nasvi.screens.onboarding.register
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
@@ -12,15 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.demo.utils.PermissionUtils
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.RegisterBinding
@@ -28,16 +22,11 @@ import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.json.JSONObject
 import java.io.File
-import android.provider.Settings
-import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.singleClick
+import com.streetsaarthi.nasvi.utils.updatePagerHeightForChild
 
 
 @AndroidEntryPoint
@@ -96,20 +85,10 @@ var tabPosition: Int = 0;
             })
 
 
-            viewModel.isSendMutable.observe(viewLifecycleOwner, Observer {
-//                if (it == true){
-//                    btSignIn.setEnabled(true)
-//                    btSignIn.setBackgroundTintList(
-//                        ColorStateList.valueOf(
-//                            ResourcesCompat.getColor(
-//                                getResources(), R.color._E79D46, null)))
-//                }
-            })
-
 
             loadProgress(tabPosition)
 
-            btSignIn.setOnClickListener {
+            btSignIn.singleClick {
                     if (tabPosition == 0){
                         Register1.callBackListener!!.onCallBack(1)
                         btSignIn.setText(getString(R.string.continues))
@@ -124,8 +103,7 @@ var tabPosition: Int = 0;
 
             }
 
-            textBack.setOnClickListener {
-                Log.e("Selected_PagetabPosition", ""+tabPosition)
+            textBack.singleClick {
                 if (tabPosition == 0){
                     view.findNavController().navigateUp()
                 } else if (tabPosition == 1){
@@ -160,7 +138,6 @@ var tabPosition: Int = 0;
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     tabPosition = position
-                    Log.e("Selected_Page", position.toString())
                     if(position == 2){
                         btSignIn.setEnabled(false)
                         btSignIn.setBackgroundTintList(
@@ -174,6 +151,10 @@ var tabPosition: Int = 0;
                     super.onPageScrollStateChanged(state)
                 }
             })
+
+            introViewPager.setPageTransformer { page, position ->
+                introViewPager.updatePagerHeightForChild(page)
+            }
         }
 
     }
@@ -214,8 +195,6 @@ var tabPosition: Int = 0;
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBack " + pos)
-
         binding.apply {
          if (pos == 21){
             btSignIn.setEnabled(false)
@@ -337,9 +316,6 @@ var tabPosition: Int = 0;
                 if(viewModel.data.localOrganisation  != null){
                     requestBody.addFormDataPart("local_organisation", viewModel.data.localOrganisation!!)
                 }
-//                if(viewModel.data.localOrganisation  != null){
-//                    requestBody.addFormDataPart("local_organisation_others", viewModel.data.localOrganisation!!)
-//                }
                 if(!docs.toString().isEmpty()){
                     requestBody.addFormDataPart("vending_documents", docs.toString())
                 } else{
@@ -358,11 +334,6 @@ var tabPosition: Int = 0;
                 if(viewModel.data.password  != null){
                     requestBody.addFormDataPart("password", viewModel.data.password!!)
                 }
-
-//                requestBody.addFormDataPart("mobile_no", "1234567826")
-//                requestBody.addFormDataPart("password", "Test@123")
-
-//                requestBody.addFormDataPart("status", "unverified")
 
                 if(viewModel.data.passportSizeImage != null){
                         requestBody.addFormDataPart(
@@ -427,9 +398,7 @@ var tabPosition: Int = 0;
                         File(viewModel.data.UploadApprovalLetter!!).asRequestBody("image/*".toMediaTypeOrNull())
                     )
                 }
-
-                Log.e("TAG", "viewModel.dataAll "+viewModel.data.toString())
-                viewModel.registerWithFiles(view = requireView(), requestBody.build())
+              viewModel.registerWithFiles(view = requireView(), requestBody.build(), ""+viewModel.data.vendor_first_name!!)
             }
         }
     }

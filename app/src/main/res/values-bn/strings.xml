@@ -102,7 +102,7 @@
     <string name="enter_details_to_register_with_us">আমাদের সাথে নিবন্ধন করতে বিস্তারিত লিখুন</string>
     <string name="profile_details">প্রোফাইলের বিশদ বিবরণ</string>
     <string name = "registration_successful">নিবন্ধন সফল</string>
-    <string name="congratulations_your_initial_registration_is_complete">অভিনন্দন!\nআপনার প্রাথমিক নিবন্ধন সম্পূর্ণ হয়েছে</string>
+<!--    <string name="congratulations_your_initial_registration_is_complete">অভিনন্দন!\nআপনার প্রাথমিক নিবন্ধন সম্পূর্ণ হয়েছে</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">আপনার নিবন্ধন যাচাই করার জন্য আমাদের দলের কেউ 48 ঘন্টার মধ্যে আপনার সাথে যোগাযোগ করবে।</string>
     <string name="RegisterNow">এখনই নিবন্ধন করুন</string>৷
 
@@ -186,6 +186,7 @@
     </string-array>
 
     <string-array name="years_array">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -420,4 +421,102 @@
     <string name="please_provide_valid_password">অনুগ্রহ করে বৈধ পাসওয়ার্ড প্রদান করুন</string>
     <string name="user_does_not_exist">ব্যবহারকারীর অস্তিত্ব নেই</string>
 
+    <string name="tap_to_reload">পুনরায় লোড করতে আলতো চাপুন</string>
+    <string name="error_msg_unknown">একটি অপ্রত্যাশিত ত্রুটি ঘটেছে</string>
+    <string name="registration_processed">NASVI দ্বারা রাস্তার সারথিতে নিবন্ধন করার জন্য আপনাকে ধন্যবাদ৷ আপনার যাচাইকরণ প্রক্রিয়াধীন। আপনার নিবন্ধন 2 থেকে 3 কার্যদিবসের মধ্যে প্রক্রিয়া করা হবে৷</string>৷
+    <string name="view">দেখুন</string>
+    <string name="watch">দেখুন</string>৷
+    <string name="applied">প্রয়োগ করা হয়েছে</string>
+    <string name="not_applied">প্রয়োগ করা হয়নি</string>
+    <string name="not_live">লাইভ নয়</string>৷
+    <string name = "expired"> মেয়াদ শেষ</string>
+    <string name="start_date">শুরু করার তারিখ %s</string>
+    <string name="end_date">শেষ তারিখ %s</string>
+    <string name="clear_all">সমস্ত সাফ করুন</string>
+    <string name="all_information">সমস্ত তথ্য</string>
+    <string name="view_details">বিশদ বিবরণ দেখুন</string>
+    <string name = "valid_date"> বৈধ তারিখ</string>
+    <string name="status">স্থিতি</string>
+
+    <string name = "nothing_here_right_now">এখন এখানে কিছুই নেই</string>
+    <string name="currently_no_schemes">বর্তমানে, এখানে কোন স্কিম পাওয়া যায় না। আপনি স্কিমগুলির জন্য আবেদন করতে পারেন যখন সেগুলি উপলব্ধ হবে৷</string>
+    <string name="currently_no_notice">বর্তমানে, এখানে কোন বিজ্ঞপ্তি পাওয়া যায় না। সেগুলি উপলব্ধ হলে আপনি বিজ্ঞপ্তির জন্য আবেদন করতে পারেন৷</string>
+    <string name="currently_no_training">বর্তমানে, এখানে কোন প্রশিক্ষণ পাওয়া যায় না। সেগুলি উপলব্ধ হলে আপনি প্রশিক্ষণের জন্য আবেদন করতে পারেন৷</string>
+    <string name="currently_no_notifications">বর্তমানে, এখানে কোনো বিজ্ঞপ্তি পাওয়া যায় না৷</string>
+    <string name="currently_no_information">বর্তমানে, এখানে কোন তথ্য পাওয়া যায় না।</string>
+    <string name="currently_no_complaints">বর্তমানে, এখানে কোনো অভিযোগ/প্রতিক্রিয়া পাওয়া যায় না৷</string>
+    <string name="submit_feedback">প্রতিক্রিয়া জমা দিন</string>
+    <string-array name="type_array">
+        <item>অভিযোগ নিবন্ধন করুন</item>
+        <item>প্রতিক্রিয়া জমা দিন</item>
+    </string-array>
+    <string name = "type"> প্রকার</string>
+    <string name="select_complaint_type">অভিযোগের প্রকার নির্বাচন করুন</string>
+    <string name="subject_of_feedback">প্রতিক্রিয়ার বিষয়</string>
+    <string name="not_complaint_type">আপনার কোনো অভিযোগের ধরন নেই</string>
+    <string name = "tracking_id">ট্র্যাকিং আইডি</string>
+    <string name="feedback">প্রতিক্রিয়া</string>
+    <string name="complaint">অভিযোগ</string>
+    <string name="Pleaseentertextormedia">অনুগ্রহ করে পাঠ্য বা মিডিয়া লিখুন</string>
+
+    <string name = "re_open">পুনরায় খুলুন</string>৷
+    <string name = "pending"> মুলতুবি</string>
+    <string name="resolved">সমাধান করা হয়েছে</string>
+    <string name="in_progress">অগ্রগতিতে</string>
+    <string name="close_conversation">আপনি কি এই কথোপকথনটি বন্ধ করার বিষয়ে নিশ্চিত?</string>
+    <string name="open_conversation">আপনি কি এই কথোপকথনটি খুলতে চান?</string>
+    <string name="are_your_sure_want_to_delete">আপনি কি নিশ্চিত, আপনি আপনার অ্যাকাউন্ট মুছতে চান?</string>
+    <string name="are_your_sure_want_to_turn_Off">আপনি কি নিশ্চিত যে আপনি বিজ্ঞপ্তি বন্ধ করতে চান?</string>
+    <string name="are_your_sure_want_to_turn_On">আপনি কি নিশ্চিত যে আপনি বিজ্ঞপ্তি চালু করতে চান?</string>
+    <string name="reset_password">পাসওয়ার্ড রিসেট করুন</string>
+    <string name="enter_new_password_for_login">লগইনের জন্য নতুন পাসওয়ার্ড লিখুন</string>
+    <string name="newPasswordStar">নতুন পাসওয়ার্ড*</string>
+    <string name="reEnterNewPasswordStar">নতুন পাসওয়ার্ড পুনরায় লিখুন*</string>
+
+    <string name = "typeColon"> প্রকার:</string>
+    <string name="registration_dateColon">নিবন্ধনের তারিখ:</string>
+    <string name="subjectColon">বিষয়:</string>
+    <string name="complaint_typeColon">অভিযোগের ধরন:</string>
+
+    <string name="message_by_admin">প্রশাসকের বার্তা</string>
+    <string name="message_by_member">সদস্য দ্বারা বার্তা</string>
+    <string name="admin_txt">প্রশাসন</string>
+    <string name="member_txt">সদস্য</string>
+
+    <string name="conversation_marked_Close">এই কথোপকথনটি সদস্য দ্বারা বন্ধ হিসাবে চিহ্নিত করা হয়েছিল</string>
+    <string name="conversation_marked_reOpen">এই কথোপকথনটিকে সদস্য দ্বারা পুনরায় খোলা হিসাবে চিহ্নিত করা হয়েছিল</string>
+    <string name="are_your_sure_want_to_delete_all_notifications">আপনি কি নিশ্চিত, আপনি সমস্ত বিজ্ঞপ্তি মুছে ফেলতে চান?</string>
+    <string name="required_permissions">অনুগ্রহ করে সমস্ত প্রয়োজনীয় অনুমতি দেবেন?</string>
+    <string name="notification_not_enabled">আপনার বিজ্ঞপ্তি সক্ষম করা নেই</string>
+    <string name="request_delete">আপনার অনুরোধের জন্য ধন্যবাদ৷ আপনার অ্যাকাউন্ট 2 – 3 কার্যদিবসের মধ্যে মুছে ফেলা হবে৷</string>
+    <string name="profile_updated_successfully">প্রোফাইল সফলভাবে আপডেট হয়েছে</string>
+    <string name="change_mobile_number">মোবাইল নম্বর পরিবর্তন করুন</string>
+    <string name="enter_new_mobile_number_for_login">লগইনের জন্য নতুন মোবাইল নম্বর লিখুন</string>
+    <string name="mobile_number_updated_successfully">মোবাইল নম্বর সফলভাবে আপডেট করা হয়েছে</string>
+    <string name = "mobile_does_not_exist">মোবাইল না বিদ্যমান নেই</string>
+
+    <string name = "training_type"> প্রশিক্ষণ</string>
+    <string name="notice_type">বিজ্ঞপ্তি</string>
+    <string name="scheme_type">স্কিম</string>
+    <string name="vendor_details_type">বিক্রেতার বিবরণ</string>
+    <string name="information_type">তথ্য</string>
+    <string name="feedback_type">প্রতিক্রিয়া</string>
+    <string name="complaint_type">অভিযোগ</string>
+    <string name="training_title">আপনার একটি নতুন প্রশিক্ষণ আছে</string>
+    <string name="notice_title">আপনার কাছে একটি নতুন বিজ্ঞপ্তি আছে</string>
+    <string name="scheme_title">আপনার একটি নতুন স্কিম আছে</string>৷
+    <string name="vendor_details_title">অভিনন্দন! আপনার প্রোফাইল অনুমোদিত হয়েছে</string>
+    <string name="feedback_title">আপনার প্রতিক্রিয়ার উপর আপনার একটি উত্তর আছে</string>
+    <string name="complaint_title">আপনার অভিযোগের একটি উত্তর আছে</string>
+    <string name="information_title">আপনার কাছে একটি নতুন তথ্য আছে</string>
+    <string name="network_failed_please_try_again">নেটওয়ার্ক ব্যর্থ হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন!</string>
+    <string name = "try_again"> আবার চেষ্টা করুন</string>
+    <string name="back_to_login_u"><u>লগইন করতে ফিরে যান</u></string>
+    <string name="complaint_added_successfully">অভিযোগ সফলভাবে যোগ করা হয়েছে</string>
+    <string name="feedback_added_successfully">প্রতিক্রিয়া সফলভাবে যোগ করা হয়েছে</string>
+    <string name="congratulations">অভিনন্দন!</string>
+    <string name="your_initial_registration_is_complete">আপনার প্রাথমিক নিবন্ধন সম্পূর্ণ হয়েছে৷</string>
+    <string name="need_to_add_complete_profile">অভিযোগ/প্রতিক্রিয়া জমা দেওয়ার আগে আপনাকে আপনার প্রোফাইল সম্পূর্ণ করতে হবে।</string>
+    <string name="conversation_marked_Close_admin">এই কথোপকথনটিকে প্রশাসক দ্বারা বন্ধ হিসাবে চিহ্নিত করা হয়েছিল</string>
+    <string name="conversation_marked_reOpen_admin">এই কথোপকথনটিকে প্রশাসক দ্বারা পুনরায় খুলতে চিহ্নিত করা হয়েছে</string>
 </resources>

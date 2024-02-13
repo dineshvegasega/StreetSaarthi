@@ -1,4 +1,4 @@
-package com.demo.networking
+package com.streetsaarthi.nasvi
 
 object HttpStatusCode {
 

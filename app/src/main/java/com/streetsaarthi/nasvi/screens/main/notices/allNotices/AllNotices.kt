@@ -18,14 +18,12 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.AllNoticesBinding
-import com.streetsaarthi.nasvi.databinding.DashboardBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.screens.main.dashboard.DashboardVM
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
@@ -60,6 +58,7 @@ class AllNotices : Fragment() {
         MainActivity.mainActivity.get()?.callFragment(0)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.all_notices)
+            idDataNotFound.textDesc.text = getString(R.string.currently_no_notice)
 
             loadFirstPage()
             recyclerView.setHasFixedSize(true)
@@ -141,10 +140,11 @@ class AllNotices : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
+                        put("user_type", USER_TYPE)
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
-                 //   viewModel.liveNotice(view = requireView(), obj)
+                    viewModel.liveNotice(view = requireView(), obj)
                 }
             }
         }
@@ -156,6 +156,7 @@ class AllNotices : Fragment() {
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
                         put("page", currentPage)
+                        put("user_type", USER_TYPE)
                         put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
@@ -175,7 +176,7 @@ class AllNotices : Fragment() {
             val changeValue = Gson().fromJson<List<ItemLiveNotice>>(Gson().toJson(it.data), typeToken)
             results.addAll(changeValue as MutableList<ItemLiveNotice>)
             viewModel.adapter.addAllSearch(results)
-
+            totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {

@@ -1,32 +1,33 @@
 package com.streetsaarthi.nasvi.screens.main.dashboard
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
+import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
+import android.widget.FrameLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.squareup.picasso.Picasso
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DashboardBinding
+import com.streetsaarthi.nasvi.databinding.DialogBottomLiveTrainingBinding
+import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.Item
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.OtpTimer
-import com.streetsaarthi.nasvi.utils.autoScroll
-import com.streetsaarthi.nasvi.utils.autoScrollStop
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MultipartBody
 import org.json.JSONObject
 
 @AndroidEntryPoint
@@ -34,6 +35,10 @@ class Dashboard : Fragment() {
     private val viewModel: DashboardVM by viewModels()
     private var _binding: DashboardBinding? = null
     private val binding get() = _binding!!
+
+    var networkAlert : BottomSheetDialog?= null
+
+    var networkCount = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +60,7 @@ class Dashboard : Fragment() {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = viewModel.dashboardAdapter
             viewModel.isScheme.observe(viewLifecycleOwner, Observer {
+                Log.e("TAG","isScheme "+it)
                 if (it) {
                     viewModel.itemMain?.get(1)?.apply {
                         isNew = true
@@ -117,23 +123,42 @@ class Dashboard : Fragment() {
             viewModel.dashboardAdapter.notifyDataSetChanged()
             viewModel.dashboardAdapter.submitList(viewModel.itemMain)
 
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                if (loginUser != null) {
-                    val obj: JSONObject = JSONObject().apply {
-                        put("page", "1")
-                        put("status", "Active")
-//                    put("search_input", USER_TYPE)
-                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
-                    }
-                    viewModel.liveScheme(view = view, obj)
-                    viewModel.liveTraining(view = view, obj)
-                    viewModel.liveNotice(view = view, obj)
-                    viewModel.complaintFeedback(view = view, obj)
-                    viewModel.informationCenter(view = view, obj)
-                    viewModel.profile(view = view, ""+Gson().fromJson(loginUser, Login::class.java).id)
-                }
-            }
 
+            callApis()
+
+
+            viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
+                if (it) {
+                    if(networkCount == 1){
+                        if(networkAlert?.isShowing == true) {
+                            return@Observer
+                        }
+                        val dialogBinding = DialogBottomNetworkBinding.inflate(root.context.getSystemService(
+                            Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                        )
+                        networkAlert = BottomSheetDialog(root.context)
+                        networkAlert?.setContentView(dialogBinding.root)
+                        networkAlert?.setOnShowListener { dia ->
+                            val bottomSheetDialog = dia as BottomSheetDialog
+                            val bottomSheetInternal: FrameLayout =
+                                bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+                            bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+                        }
+                        networkAlert?.show()
+
+                        dialogBinding.apply {
+                            btClose.singleClick {
+                                networkAlert?.dismiss()
+                            }
+                            btApply.singleClick {
+                                networkAlert?.dismiss()
+                                callApis()
+                            }
+                        }
+                    }
+                    networkCount++
+                }
+            })
 
 
 //            viewModel.adsList(view)
@@ -152,17 +177,45 @@ class Dashboard : Fragment() {
         }
     }
 
-
-    override fun onStop() {
-        super.onStop()
-        binding.apply {
-            banner.autoScrollStop()
+    private fun callApis() {
+        networkCount = 1
+        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                var _id = Gson().fromJson(loginUser, Login::class.java).id
+                val obj: JSONObject = JSONObject().apply {
+                    put("page", "1")
+                    put("status", "Active")
+                    put("user_id", _id)
+                }
+                viewModel.liveScheme(view = requireView(), obj)
+                viewModel.liveTraining(view = requireView(), obj)
+                viewModel.liveNotice(view = requireView(), obj)
+                val obj2: JSONObject = JSONObject().apply {
+                    put("user_id", _id)
+                }
+                viewModel.complaintFeedbackHistory(view = requireView(), obj2)
+                viewModel.informationCenter(view = requireView(), obj)
+                viewModel.profile(view = requireView(), ""+Gson().fromJson(loginUser, Login::class.java).id)
+            }
         }
     }
 
 
+    override fun onStop() {
+        super.onStop()
+        binding.apply {
+//            banner.autoScrollStop()
+        }
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+//        LiveSchemes.isReadLiveSchemes = false
+    }
     override fun onDestroyView() {
         _binding = null
+//        LiveSchemes.isReadLiveSchemes = false
         super.onDestroyView()
     }
 }
