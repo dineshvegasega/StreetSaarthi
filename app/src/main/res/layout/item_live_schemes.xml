@@ -32,8 +32,9 @@
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="visible"
             android:theme="@style/RoundCorner5"
-            app:srcCompat="@drawable/no_image"
+            app:srcCompat="@drawable/main_logo_land"
             android:scaleType="fitXY"
+
             />
 
 

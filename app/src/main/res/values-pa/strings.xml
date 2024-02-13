@@ -522,6 +522,5 @@
     <string name="congratulations">ਵਧਾਈਆਂ!</string>
     <string name="your_initial_registration_is_complete">ਤੁਹਾਡੀ ਸ਼ੁਰੂਆਤੀ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਪੂਰੀ ਹੋ ਗਈ ਹੈ।</string>
     <string name="need_to_add_complete_profile">ਸ਼ਿਕਾਇਤ/ਫੀਡਬੈਕ ਦਰਜ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਨੂੰ ਆਪਣਾ ਪ੍ਰੋਫਾਈਲ ਪੂਰਾ ਕਰਨ ਦੀ ਲੋੜ ਹੈ।</string>
-<!--    <string name="conversation_marked_Close_admin">ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ ਪ੍ਰਸ਼ਾਸਕ ਦੁਆਰਾ ਬੰਦ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>-->
-<!--    <string name = "conversation_marked_reOpen_admin"> ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ ਪ੍ਰਸ਼ਾਸਕ ਦੁਆਰਾ ਰੀ-ਓਪਨ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>-->
+    <string name="conversation_marked_admin">ਇਸ ਗੱਲਬਾਤ ਨੂੰ %s ਦੁਆਰਾ %s ਨੂੰ ਮਾਰਕ ਕੀਤਾ ਗਿਆ ਸੀ</string>
 </resources>

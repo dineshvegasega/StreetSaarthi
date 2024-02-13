@@ -438,7 +438,7 @@ fun ViewPager2.updatePagerHeightForChild(view: View) {
 
 
 val myOptionsGlide: RequestOptions = RequestOptions()
-    .placeholder(R.drawable.no_image)
+    .placeholder(R.drawable.main_logo_land)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .dontAnimate()
     //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
@@ -453,7 +453,7 @@ fun String.glideImage(context : Context, ivMap: ShapeableImageView) {
 
 
 val myOptionsGlidePortrait: RequestOptions = RequestOptions()
-    .placeholder(R.drawable.image_port)
+    .placeholder(R.drawable.main_logo)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .dontAnimate()
     //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))

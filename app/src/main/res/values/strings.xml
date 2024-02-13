@@ -542,7 +542,6 @@
     <string name="your_initial_registration_is_complete">your initial registration is complete.</string>
     <string name="need_to_add_complete_profile">You need to complete your profile before submitting a complaint/feedback.</string>
     <string name="conversation_marked_admin">This Conversation was marked %s by %s on</string>
-<!--    <string name="conversation_marked_reOpen_admin">This Conversation was marked Re-Open by admin on</string>-->
 
 
 

@@ -42,7 +42,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvView1"
             android:visibility="visible"
             android:theme="@style/RoundCorner5"
-            app:srcCompat="@drawable/no_image"
+            app:srcCompat="@drawable/main_logo_land"
             android:scaleType="fitXY"
             android:layout_marginTop="@dimen/_12sdp"
             android:background="@color/white"
