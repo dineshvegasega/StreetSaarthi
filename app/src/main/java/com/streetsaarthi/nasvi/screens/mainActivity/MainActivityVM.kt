@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LiveData
@@ -77,6 +79,9 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
         itemMain = JsonHelper(MainActivity.context.get()!!).getMenuData(locale)
     }
 
+    var selectedPosition = -1
+    var selectedColorPosition = 0
+
     val menuAdapter = object : GenericAdapter<ItemMenuBinding, ItemMenuModel>() {
         override fun onCreateView(
             inflater: LayoutInflater,
@@ -88,8 +93,27 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
         override fun onBindHolder(binding: ItemMenuBinding, dataClass: ItemMenuModel, position: Int) {
 
             binding.apply {
-//                header.setBackgroundTintList(
-//                    ColorStateList.valueOf(dataClass.color))
+                if(selectedPosition == position) {
+                    ivArrow.setImageResource(if (dataClass.isExpanded == true) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up)
+                    recyclerViewChild.visibility = if (dataClass.isExpanded == true) View.VISIBLE else View.GONE
+                } else {
+                    ivArrow.setImageResource(R.drawable.ic_arrow_up)
+                    recyclerViewChild.visibility = View.GONE
+                    dataClass.apply {
+                        isExpanded = false
+                    }
+                }
+
+
+//                if(selectedColorPosition == position) {
+//                    header.setBackgroundTintList(
+//                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
+//                } else {
+//                    header.setBackgroundTintList(
+//                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
+//                }
+
+
                 title.text = dataClass.title
                 if(dataClass.titleChildArray!!.isEmpty()){
                     ivArrow .visibility = View.GONE
@@ -97,8 +121,6 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                     ivArrow .visibility = View.VISIBLE
                 }
 
-                ivArrow.setImageResource(if (dataClass.isExpanded == true) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up)
-                recyclerViewChild.visibility = if (dataClass.isExpanded == true) View.VISIBLE else View.GONE
 
                 recyclerViewChild.setHasFixedSize(true)
                 val headlineAdapter = ChildMenuAdapter(binding.root.context, dataClass.titleChildArray, position)
@@ -107,41 +129,16 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
 
                 ivArrow.singleClick {
-//                    if (dataClass.isExpanded == false){
-//                        dataClass.isExpanded = true
-//                    } else {
-//                        dataClass.isExpanded = false
-//                    }
-                    val list = currentList
-//                    list.map {
-//                        it.isExpanded = false
-//                        if(it.isExpanded == dataClass.isExpanded){
-//                            dataClass.isExpanded = !dataClass.isExpanded!!
-//                        }
-//                    }
-//
-//                    if (dataClass.isExpanded == false){
-//                        dataClass.apply {
-//                            dataClass.isExpanded = true
-//                        }
-//                        Log.e("TAG", "dataClass.isExpandedAA "+dataClass.isExpanded)
-//
-//                    } else {
-//                        dataClass.apply {
-//                            dataClass.isExpanded = false
-//                        }
-//                        Log.e("TAG", "dataClass.isExpandedBB "+dataClass.isExpanded)
-//
-//                    }
-//                    dataClass.isExpanded = !dataClass.isExpanded!!
-                        dataClass.isExpanded = !dataClass.isExpanded!!
-
-                        notifyItemRangeChanged(position, list.size)
-//                    notifyDataSetChanged()
+                    selectedPosition = position
+                    dataClass.isExpanded = !dataClass.isExpanded!!
+                    selectedColorPosition = position
+                    notifyDataSetChanged()
                 }
 
 
                 root.singleClick {
+                    selectedColorPosition = position
+
                     if(dataClass.titleChildArray!!.isEmpty()){
                         var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                         DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
@@ -163,7 +160,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                             2 -> {
                                                 DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                                     if (loginUser != null) {
-                                                        var isNotification = Gson().fromJson(
+                                                        val isNotification = Gson().fromJson(
                                                             loginUser,
                                                             Login::class.java
                                                         )?.notification ?: ""
@@ -252,10 +249,18 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                         }
                         MainActivity.binding.drawerLayout.close()
                     }else{
-                        dataClass.isExpanded = !dataClass.isExpanded!!
-                        val list = currentList
-                        notifyItemRangeChanged(position, list.size)
+//                        dataClass.isExpanded = !dataClass.isExpanded!!
+//                        val list = currentList
+//                        notifyItemRangeChanged(position, list.size)
+//                        selectedPosition = position
+//                        dataClass.isExpanded = !dataClass.isExpanded!!
+//                        notifyDataSetChanged()
                     }
+
+                    selectedPosition = position
+                    dataClass.isExpanded = !dataClass.isExpanded!!
+                    selectedColorPosition = position
+                    notifyDataSetChanged()
                 }
 
 
@@ -271,18 +276,33 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
         private var inflater: LayoutInflater = LayoutInflater.from(context)
         private var parentPosition: Int = mainPosition
 
+        var selectedChildColorPosition = -1
+
         override
         fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChildViewHolder {
             val view = inflater.inflate(R.layout.item_child_menu, parent, false)
             return ChildViewHolder(view)
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         override
         fun onBindViewHolder(holder: ChildViewHolder, position: Int) {
             val item = items?.get(position)
             holder.tvTitle.text = item?.title
+
+//            if(selectedChildColorPosition == position) {
+//                holder.child.setBackgroundTintList(
+//                    ColorStateList.valueOf(ContextCompat.getColor(mainContext, R.color._f6dbbb)))
+//            } else {
+//                holder.child.setBackgroundTintList(
+//                    ColorStateList.valueOf(ContextCompat.getColor(mainContext, R.color.white)))
+//            }
+
             holder.itemView.singleClick {
-                    var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
+                selectedChildColorPosition = position
+                notifyDataSetChanged()
+
+                    val fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
                 DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val data = Gson().fromJson(loginUser, Login::class.java)
@@ -351,7 +371,6 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                         }
                     }
                 }
-
                 MainActivity.binding.drawerLayout.close()
             }
         }
@@ -363,28 +382,10 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
         class ChildViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var tvTitle: AppCompatTextView = itemView.findViewById(R.id.titleChild)
+            var child: ConstraintLayout = itemView.findViewById(R.id.child)
         }
     }
 
-
-//    val menuChildAdapter = object : GenericAdapter<ItemChildMenuBinding, ItemChildMenuModel>() {
-//        override fun onCreateView(
-//            inflater: LayoutInflater,
-//            parent: ViewGroup,
-//            viewType: Int
-//        ) = ItemChildMenuBinding.inflate(inflater, parent, false)
-//
-//        @SuppressLint("NotifyDataSetChanged")
-//        override fun onBindHolder(binding: ItemChildMenuBinding, dataClass: ItemChildMenuModel, position: Int) {
-//            binding.apply {
-//                val list = currentList
-//                titleChild.text = list[position].title
-//                root.singleClick {
-//
-//                }
-//            }
-//        }
-//    }
 
 
 
@@ -398,7 +399,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                     apiInterface.adsList()
                 override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
                     if (response.isSuccessful){
-                        var adsList : ArrayList<ItemAds> = ArrayList()
+                        val adsList : ArrayList<ItemAds> = ArrayList()
                         val ads = response.body()?.data as ArrayList<ItemAds>
                         ads.map {
                             when(it.ad_sr_no){
@@ -476,16 +477,6 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
             }
         )
     }
-
-
-//    fun getToken(callBack: String.() -> Unit){
-//        FirebaseMessaging.getInstance().token.addOnSuccessListener { result ->
-//            if(result != null){
-//                callBack(result)
-//            }
-//        }
-//    }
-
 
 
 

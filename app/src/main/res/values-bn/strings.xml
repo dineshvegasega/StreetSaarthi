@@ -518,4 +518,7 @@
     <string name="your_initial_registration_is_complete">আপনার প্রাথমিক নিবন্ধন সম্পূর্ণ হয়েছে৷</string>
     <string name="need_to_add_complete_profile">অভিযোগ/প্রতিক্রিয়া জমা দেওয়ার আগে আপনাকে আপনার প্রোফাইল সম্পূর্ণ করতে হবে।</string>
     <string name="conversation_marked_admin">এই কথোপকথনটি %s দ্বারা %s দ্বারা চিহ্নিত করা হয়েছিল</string>
+    <string name="something_went_wrong">কিছু ​​ভুল হয়েছে!</string>
+
+
 </resources>

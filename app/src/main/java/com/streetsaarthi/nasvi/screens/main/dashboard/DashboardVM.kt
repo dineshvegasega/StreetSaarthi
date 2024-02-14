@@ -313,7 +313,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                  //  super.error(message)
+                    super.error(message)
                  //   showSnackBar(message)
                     if(NETWORK_DIALOG_SHOW){
                         counterNetwork.value = true

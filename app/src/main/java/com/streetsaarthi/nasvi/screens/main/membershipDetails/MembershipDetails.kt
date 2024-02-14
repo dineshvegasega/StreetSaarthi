@@ -16,6 +16,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -142,12 +143,62 @@ class MembershipDetails  : Fragment() {
 
 
 
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        binding.model = viewModel
+//        binding.lifecycleOwner = this
         MainActivity.mainActivity.get()?.callFragment(2)
+
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.membership_details)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
+//            val scale = resources.displayMetrics.widthPixels.toFloat()
+//            Log.e("TAG", "App.scaleAA "+scale)
+//
+//            val scale2 = scale * 6
+//            Log.e("TAG", "App.scaleBB "+scale2)
+//
+//            val scale3 = scale2 / 100
+//            Log.e("TAG", "App.scaleCC "+scale3)
+//
+//            val px = Math.round(
+//                TypedValue.applyDimension(
+//                    TypedValue.COMPLEX_UNIT_SP, 14f, resources.getDisplayMetrics()
+//                )
+//            )
+//            Log.e("TAG", "App.scaleDD "+viewModel.scale10)
+
+            textAssociatedOrganizationTxt.textSize = viewModel.scale10
+            textMarketPlaceTxt.textSize = viewModel.scale10
+            textFirstNameTxt.textSize = viewModel.scale10
+            textFirstNameValueTxt.textSize = viewModel.scale10
+            textLastNameTxt.textSize = viewModel.scale10
+            textLastNameValueTxt.textSize = viewModel.scale10
+            textGenderTxt.textSize = viewModel.scale10
+            textGenderValueTxt.textSize = viewModel.scale10
+            textDOBTxt.textSize = viewModel.scale10
+            textDOBValueTxt.textSize = viewModel.scale10
+            textMobileTxt.textSize = viewModel.scale10
+            textMobileValueTxt.textSize = viewModel.scale10
+            textTypeofVendingTxt.textSize = viewModel.scale10
+            textTypeofVendingValueTxt.textSize = viewModel.scale10
+            textTypeofMarketPlaceTxt.textSize = viewModel.scale10
+            textTypeofMarketPlaceValueTxt.textSize = viewModel.scale10
+            textCurrentVendingAddressTxt.textSize = viewModel.scale10
+            textStateTxt.textSize = viewModel.scale10
+            textStateValueTxt.textSize = viewModel.scale10
+            textDistrictTxt.textSize = viewModel.scale10
+            textDistrictValueTxt.textSize = viewModel.scale10
+            textMunicipalityTxt.textSize = viewModel.scale10
+            textMunicipalityValueTxt.textSize = viewModel.scale10
+            textAddressTxt.textSize = viewModel.scale10
+            textAddressValueTxt.textSize = viewModel.scale10
+            textMembershipTxt.textSize = viewModel.scale10
+            textMembershipValidTxt.textSize = viewModel.scale10
+            btDownload.textSize = viewModel.scale10
+
+
 
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {

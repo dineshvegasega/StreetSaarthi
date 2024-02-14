@@ -523,4 +523,8 @@
     <string name="your_initial_registration_is_complete">మీ ప్రారంభ నమోదు పూర్తయింది.</string>
     <string name="need_to_add_complete_profile">మీరు ఫిర్యాదు/అభిప్రాయాన్ని సమర్పించే ముందు మీ ప్రొఫైల్‌ను పూర్తి చేయాలి.</string>
     <string name="conversation_marked_admin">ఈ సంభాషణ %s ద్వారా %s అని గుర్తు పెట్టబడింది</string>
+    <string name="something_went_wrong">ఏదో తప్పు జరిగింది!</string>
+
+
+
 </resources>

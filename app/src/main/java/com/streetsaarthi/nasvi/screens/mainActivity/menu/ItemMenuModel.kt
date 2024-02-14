@@ -11,8 +11,8 @@ class ItemMenuModel(
     var titleChildArray: List<ItemChildMenuModel>? = null,
     @SerializedName("is_expanded")
     var isExpanded: Boolean? = false,
-    @SerializedName("color")
-    var color: Int = 0x00ffffff,
+//    @SerializedName("color")
+//    var color: Int = 0x00ffffff,
 ) : Serializable {
     override
     fun toString(): String {

@@ -10,7 +10,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header"
+        android:id="@+id/child"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -45,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="MissingConstraints"
             android:visibility="visible"
-            android:background="@color/_666666"
+            android:background="@color/_f6dbbb"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

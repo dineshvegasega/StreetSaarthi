@@ -519,4 +519,8 @@
     <string name="your_initial_registration_is_complete">உங்கள் ஆரம்ப பதிவு முடிந்தது.</string>
     <string name="need_to_add_complete_profile">புகார்/கருத்தை சமர்ப்பிக்கும் முன் உங்கள் சுயவிவரத்தை பூர்த்தி செய்ய வேண்டும்.</string>
     <string name="conversation_marked_admin">இந்த உரையாடல் %s ஆல் %s ஆல் குறிக்கப்பட்டது</string>
+    <string name="something_went_wrong">ஏதோ தவறாகிவிட்டது!</string>
+
+
+
 </resources>

@@ -7,17 +7,17 @@ import android.content.Context
 import android.content.res.Configuration
 import android.database.Cursor
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DimenRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -38,6 +38,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
+import java.security.AccessController.getContext
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -90,6 +91,9 @@ fun showSnackBar(string: String) = try {
         var message = string
         if (message.contains("Unable to resolve host"))
             message = context.getString(R.string.no_internet_connection)
+        else if (message.contains("DOCTYPE html"))
+            message = context.getString(R.string.something_went_wrong)
+
         Snackbar.make(
             (context as Activity).findViewById(android.R.id.content),
             message,
@@ -500,4 +504,30 @@ fun View.singleClick(throttleTime: Long = 600L, action: () -> Unit) {
         ex.printStackTrace()
     }
     return isInBackground
+}
+
+
+fun Context.px(@DimenRes dimen: Int): Int = resources.getDimension(dimen).toInt()
+
+fun Context.dp(@DimenRes dimen: Int): Float = px(dimen) / resources.displayMetrics.density
+
+
+fun Context.dpToPx(dp: Int): Int {
+//    val displayMetrics: DisplayMetrics = resources.getDisplayMetrics()
+//    return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
+    val displayMetrics: DisplayMetrics = resources.getDisplayMetrics();
+    return ((dp * displayMetrics.density) + 0.5).toInt()
+}
+
+fun Context.pxToDp(px: Int): Int {
+//    val displayMetrics: DisplayMetrics = resources.getDisplayMetrics()
+//    return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
+    val displayMetrics: DisplayMetrics = resources.getDisplayMetrics();
+    return ((px/displayMetrics.density)+0.5).toInt()
+}
+fun Context.calculateDpToPixel(dp: Int): Int {
+//    val metrics: DisplayMetrics = resources.getDisplayMetrics()
+    val d: Float = resources.getDisplayMetrics().density
+    return (dp * d).toInt()
+   // return dp * (metrics.density / 160)
 }

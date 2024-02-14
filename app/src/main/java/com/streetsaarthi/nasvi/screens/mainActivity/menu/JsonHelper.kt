@@ -53,15 +53,15 @@ open class JsonHelper(private var context: Context) {
 
                 if(i == 0){
                     val newsPaper = gson.fromJson<ItemMenuModel>(tempJsonObject, ItemMenuModel::class.java)
-                    newsPaper.apply {
-                        color = ContextCompat.getColor(context, R.color._EAAA61)
-                    }
+//                    newsPaper.apply {
+//                        color = ContextCompat.getColor(context, R.color._EDB678)
+//                    }
                     newspaperList?.add(newsPaper)
                 } else {
                     val newsPaper = gson.fromJson<ItemMenuModel>(tempJsonObject, ItemMenuModel::class.java)
-                    newsPaper.apply {
-                        color = ContextCompat.getColor(context, R.color.white)
-                    }
+//                    newsPaper.apply {
+//                        color = ContextCompat.getColor(context, R.color.white)
+//                    }
                     newspaperList?.add(newsPaper)
                 }
             }

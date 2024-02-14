@@ -519,4 +519,7 @@
     <string name="your_initial_registration_is_complete">तुमची प्रारंभिक नोंदणी पूर्ण झाली आहे.</string>
     <string name="need_to_add_complete_profile">तक्रार/फीडबॅक सबमिट करण्यापूर्वी तुम्हाला तुमचे प्रोफाइल पूर्ण करणे आवश्यक आहे.</string>
     <string name="conversation_marked_admin">हे संभाषण %s ने %s ने चिन्हांकित केले</string>
+    <string name="something_went_wrong">काहीतरी चूक झाली!</string>
+
+
 </resources>

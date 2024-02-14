@@ -521,4 +521,7 @@
     <string name='your_initial_registration_is_complete'>आपका प्रारंभिक पंजीकरण पूरा हो गया है।</string>
     <string name = "need_to_add_complete_profile">शिकायत/प्रतिक्रिया सबमिट करने से पहले आपको अपना प्रोफ़ाइल पूरा करना होगा।</string>
     <string name='conversation_marked_admin'>इस वार्तालाप को %s द्वारा %s द्वारा चिह्नित किया गया था</string>
+    <string name='something_went_wrong'>कुछ गलत हो गया!</string>
+
+
 </resources>

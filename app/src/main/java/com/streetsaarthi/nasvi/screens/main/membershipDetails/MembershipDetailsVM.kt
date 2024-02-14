@@ -1,15 +1,19 @@
 package com.streetsaarthi.nasvi.screens.main.membershipDetails
 
+import android.util.Log
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.App
 import com.streetsaarthi.nasvi.CallHandler
 import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemVending
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,8 +22,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MembershipDetailsVM @Inject constructor(private val repository: Repository): ViewModel() {
-    var counterNetwork = MutableLiveData<Boolean>(false)
 
+
+    var scale10 : Float = 0f
+    init {
+        scale10 = MainActivity.scale10.toFloat()
+    }
+
+    var counterNetwork = MutableLiveData<Boolean>(false)
     var itemVending : ArrayList<ItemVending> = ArrayList()
     var vendingId : Int = 0
     var vendingTrue = MutableLiveData<Boolean>(false)

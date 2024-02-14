@@ -518,4 +518,7 @@
     <string name="your_initial_registration_is_complete">നിങ്ങളുടെ പ്രാരംഭ രജിസ്ട്രേഷൻ പൂർത്തിയായി.</string>
     <string name="need_to_add_complete_profile">ഒരു പരാതി/ഫീഡ്‌ബാക്ക് സമർപ്പിക്കുന്നതിന് മുമ്പ് നിങ്ങളുടെ പ്രൊഫൈൽ പൂർത്തിയാക്കേണ്ടതുണ്ട്.</string>
     <string name="conversation_marked_admin">ഈ സംഭാഷണം %s എന്ന് %s എന്നതിൽ അടയാളപ്പെടുത്തി</string>
+    <string name="something_went_wrong">എന്തോ കുഴപ്പം സംഭവിച്ചു!</string>
+
+
 </resources>

@@ -515,4 +515,7 @@
     <string name="your_initial_registration_is_complete">તમારી પ્રારંભિક નોંધણી પૂર્ણ થઈ ગઈ છે.</string>
     <string name="need_to_add_complete_profile">તમારે ફરિયાદ/પ્રતિસાદ સબમિટ કરતા પહેલા તમારી પ્રોફાઇલ પૂર્ણ કરવાની જરૂર છે.</string>
     <string name="conversation_marked_admin">આ વાર્તાલાપને %s દ્વારા %s ના રોજ ચિહ્નિત કરવામાં આવ્યો હતો</string>
+    <string name="something_went_wrong">કંઈક ખોટું થયું!</string>
+
+
 </resources>

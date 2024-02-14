@@ -38,6 +38,7 @@ import com.google.android.play.core.common.IntentSenderForResultStarter
 import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.gson.Gson
+import com.streetsaarthi.nasvi.App
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.MainActivityBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
@@ -85,9 +86,12 @@ class MainActivity : AppCompatActivity() {
         private var _binding: MainActivityBinding? = null
         val binding get() = _binding!!
 
-
         @JvmStatic
         lateinit var isOpen: WeakReference<Boolean>
+
+        @JvmStatic
+        var scale10: Int = 0
+
 
     }
 
@@ -585,6 +589,24 @@ class MainActivity : AppCompatActivity() {
         startActivity(refresh)
     }
 
+
+    override fun onStart() {
+        super.onStart()
+        val fontScale = resources.configuration.fontScale
+        Log.e("TAG", "App.scale xxxhdpi "+fontScale)
+        scale10 = when(fontScale){
+            0.8f ->  14
+            0.9f ->  13
+            1.0f ->  12
+            1.1f ->  11
+            1.2f ->  10
+            1.3f ->  9
+            1.5f ->  8
+            1.7f ->  7
+            2.0f ->  6
+            else -> {5}
+        }
+    }
 
     override fun onResume() {
         super.onResume()
