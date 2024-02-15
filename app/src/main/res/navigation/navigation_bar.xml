@@ -423,6 +423,11 @@
         android:label="Profiles"
         android:id="@+id/profiles"
         tools:layout="@layout/profiles">
+        <action
+            android:id="@+id/action_profiles_to_nomineeDetails"
+            app:destination="@id/nomineeDetails"
+            app:launchSingleTop="true"
+            />
     </fragment>
 
 
@@ -590,6 +595,14 @@
         android:id="@+id/membershipDetails"
         tools:layout="@layout/membership_details">
 
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.profiles.nomineeDetails.NomineeDetails"
+        android:label="NomineeDetails"
+        android:id="@+id/nomineeDetails"
+        tools:layout="@layout/nominee_details">
     </fragment>
 
 </navigation>

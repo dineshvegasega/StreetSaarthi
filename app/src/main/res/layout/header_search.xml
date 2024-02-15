@@ -73,6 +73,23 @@
         android:visibility="gone"
         />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btNominee"
+        style="@style/PrimaryButtonYellow"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_25sdp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/nominee_details"
+        app:iconTint="@color/white"
+        android:backgroundTint="@color/_E79D46"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cornerRadius="@dimen/_4sdp"
+        android:textSize="@dimen/_10ssp"
+        android:visibility="gone"
+        app:icon="@drawable/nominee"
+        />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextSearch"

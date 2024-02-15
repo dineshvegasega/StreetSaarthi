@@ -101,7 +101,6 @@
     <string name="enter_details_to_register_with_us">हमारे साथ पंजीकरण करने के लिए विवरण दर्ज करें</string>
     <string name="profile_details">प्रोफ़ाइल विवरण</string>
     <string name="registration_successful">सफल पंजीकरण</string>
-<!--    <string name="congratulations_your_initial_registration_is_complete">सफल पंजीकरण! आपका प्रारंभिक पंजीकरण पूरा हो गया है</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">आपके पंजीकरण को सत्यापित करने के लिए हमारी टीम का कोई व्यक्ति 48 घंटे के भीतर आपसे संपर्क करेगा।</string>
     <string name="RegisterNow">अभी पंजीकरण करें</string>
 
@@ -522,6 +521,22 @@
     <string name = "need_to_add_complete_profile">शिकायत/प्रतिक्रिया सबमिट करने से पहले आपको अपना प्रोफ़ाइल पूरा करना होगा।</string>
     <string name='conversation_marked_admin'>इस वार्तालाप को %s द्वारा %s द्वारा चिह्नित किया गया था</string>
     <string name='something_went_wrong'>कुछ गलत हो गया!</string>
-
+    <string name="nominee_details">नामांकित व्यक्ति का विवरण</string>
+    <string name='list_of_nominee'>नामांकित व्यक्ति की सूची</string>
+    <string name='relationship_TypeStar'>रिलेशनशिप टाइप*</string>
+    <string name='nameStar'>नाम*</string>
+    <string-array name="relation_array">
+        <item>पिता</item>
+        <item>मां</item>
+        <item>बेटा</item>
+        <item>बेटी</item>
+        <item>बहन</item>
+        <item>भाई</item>
+        <item>पति</item>
+        <item>पत्नी</item>
+    </string-array>
+    <string name='select_nominee_type'>नामांकित व्यक्ति का प्रकार चुनें</string>
+    <string name='enter_nominee_name'>नामांकित व्यक्ति का नाम दर्ज करें</string>
+    <string name = "nominee_added_updated_successfully"> नामांकित व्यक्ति को सफलतापूर्वक जोड़ा/अपडेट किया गया</string>
 
 </resources>

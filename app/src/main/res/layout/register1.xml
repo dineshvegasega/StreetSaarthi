@@ -152,7 +152,6 @@
                 android:focusable="false"
                 app:layout_constraintTop_toBottomOf="@+id/linearGender"
                 android:drawableEnd="@drawable/ic_down_arrow"
-
                 />
 
 

@@ -99,7 +99,6 @@
     <string name="enter_details_to_register_with_us">ഞങ്ങളുമായി രജിസ്റ്റർ ചെയ്യുന്നതിന് വിശദാംശങ്ങൾ നൽകുക</string>
     <string name="profile_details">പ്രൊഫൈൽ വിശദാംശങ്ങൾ</string>
     <string name="registration_successful">രജിസ്‌ട്രേഷൻ വിജയിച്ചു</string>
-<!--    <string name="congratulations_your_initial_registration_is_complete">അഭിനന്ദനങ്ങൾ!\nനിങ്ങളുടെ പ്രാരംഭ രജിസ്ട്രേഷൻ പൂർത്തിയായി</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">നിങ്ങളുടെ രജിസ്ട്രേഷൻ സ്ഥിരീകരിക്കുന്നതിന് ഞങ്ങളുടെ ടീമിലെ ആരെങ്കിലും 48 മണിക്കൂറിനുള്ളിൽ നിങ്ങളെ ബന്ധപ്പെടും.</string>
     <string name="RegisterNow">ഇപ്പോൾ രജിസ്റ്റർ ചെയ്യുക</string>
 
@@ -520,6 +519,23 @@
     <string name="need_to_add_complete_profile">புகார்/கருத்தை சமர்ப்பிக்கும் முன் உங்கள் சுயவிவரத்தை பூர்த்தி செய்ய வேண்டும்.</string>
     <string name="conversation_marked_admin">இந்த உரையாடல் %s ஆல் %s ஆல் குறிக்கப்பட்டது</string>
     <string name="something_went_wrong">ஏதோ தவறாகிவிட்டது!</string>
+    <string name="nominee_details">நாமினி விவரங்கள்</string>
+    <string name="list_of_nominee">நாமினியின் பட்டியல்</string>
+    <string name="relationship_TypeStar">உறவு வகை*</string>
+    <string name="nameStar">பெயர்*</string>
+    <string-array name="relation_array" >
+        <item>அப்பா</item>
+        <item>அம்மா</item>
+        <item>மகன்</item>
+        <item>மகள்</item>
+        <item>சகோதரி</item>
+        <item>சகோதரர்</item>
+        <item>கணவன்</item>
+        <item>மனைவி</item>
+    </string-array>
+    <string name="select_nominee_type">நாமினி வகையைத் தேர்ந்தெடு</string>
+    <string name="enter_nominee_name">நாமினி பெயரை உள்ளிடவும்</string>
+    <string name="nominee_added_updated_successfully">நாமினி சேர்க்கப்பட்டது/வெற்றிகரமாக புதுப்பிக்கப்பட்டது</string>
 
 
 

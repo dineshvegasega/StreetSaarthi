@@ -100,7 +100,6 @@
     <string name="enter_details_to_register_with_us">ഞങ്ങളുമായി രജിസ്റ്റർ ചെയ്യുന്നതിന് വിശദാംശങ്ങൾ നൽകുക</string>
     <string name="profile_details">പ്രൊഫൈൽ വിശദാംശങ്ങൾ</string>
     <string name="registration_successful">രജിസ്‌ട്രേഷൻ വിജയിച്ചു</string>
-<!--    <string name="congratulations_your_initial_registration_is_complete">അഭിനന്ദനങ്ങൾ!\nനിങ്ങളുടെ പ്രാരംഭ രജിസ്ട്രേഷൻ പൂർത്തിയായി</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">നിങ്ങളുടെ രജിസ്ട്രേഷൻ സ്ഥിരീകരിക്കുന്നതിന് ഞങ്ങളുടെ ടീമിലെ ആരെങ്കിലും 48 മണിക്കൂറിനുള്ളിൽ നിങ്ങളെ ബന്ധപ്പെടും.</string>
     <string name="RegisterNow">ഇപ്പോൾ രജിസ്റ്റർ ചെയ്യുക</string>
 
@@ -519,6 +518,23 @@
     <string name="need_to_add_complete_profile">ഒരു പരാതി/ഫീഡ്‌ബാക്ക് സമർപ്പിക്കുന്നതിന് മുമ്പ് നിങ്ങളുടെ പ്രൊഫൈൽ പൂർത്തിയാക്കേണ്ടതുണ്ട്.</string>
     <string name="conversation_marked_admin">ഈ സംഭാഷണം %s എന്ന് %s എന്നതിൽ അടയാളപ്പെടുത്തി</string>
     <string name="something_went_wrong">എന്തോ കുഴപ്പം സംഭവിച്ചു!</string>
+    <string name="nominee_details">നോമിനി വിശദാംശങ്ങൾ</string>
+    <string name="list_of_nominee">നോമിനിയുടെ ലിസ്റ്റ്</string>
+    <string name="relationship_TypeStar">ബന്ധത്തിൻ്റെ തരം*</string>
+    <string name="nameStar">പേര്*</string>
+    <string-array name="relation_array">
+        <item>അച്ഛൻ</item>
+        <item>അമ്മ</item>
+        <item>മകൻ</item>
+        <item>മകൾ</item>
+        <item>സഹോദരി</item>
+        <item>സഹോദരൻ</item>
+        <item>ഭർത്താവ്</item>
+        <item>ഭാര്യ</item>
+    </string-array>
+    <string name="select_nominee_type">നോമിനി തരം തിരഞ്ഞെടുക്കുക</string>
+    <string name="enter_nominee_name">നോമിനി പേര് നൽകുക</string>
+    <string name="nominee_added_updated_successfully">നോമിനി ചേർത്തു/അപ്‌ഡേറ്റ് ചെയ്‌തു</string>
 
 
 </resources>

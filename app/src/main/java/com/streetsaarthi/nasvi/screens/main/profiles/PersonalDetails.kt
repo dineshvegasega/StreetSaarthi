@@ -580,7 +580,6 @@ class PersonalDetails : Fragment() , CallBackListener {
     private fun fieldsEdit() {
         binding.apply {
             viewModel.isEditable.observe(viewLifecycleOwner, Observer {
-                Log.e("TAG", "isEditable "+it)
                 editTextFN.isEnabled = it
                 editTextLN.isEnabled = it
                 editTextFatherFN.isEnabled = it

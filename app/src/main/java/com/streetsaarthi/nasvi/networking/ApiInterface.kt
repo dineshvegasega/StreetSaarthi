@@ -33,6 +33,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveTraining
 import com.streetsaarthi.nasvi.screens.onboarding.networking.MOBILE_TOKEN
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Marketplace
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NewFeedback
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NomineeDetails
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeLiveList
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Notifications
@@ -49,6 +50,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeApply
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeDetail
 import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeHistoryList
 import com.streetsaarthi.nasvi.screens.onboarding.networking.TrainingDetail
+import com.streetsaarthi.nasvi.screens.onboarding.networking.UpdateNomineeDetails
 import com.streetsaarthi.nasvi.screens.onboarding.networking.UpdateNotification
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE_UPDATE
@@ -315,6 +317,22 @@ interface ApiInterface {
 
     @POST(PasswordUpdate)
     suspend fun passwordUpdate(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @Headers("Accept: application/json")
+    @FormUrlEncoded
+    @POST(UpdateNomineeDetails)
+    suspend fun updateNomineeDetails(
+        @Field("member_id") member_id: String,
+        @FieldMap  nominee: HashMap<String, String>
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+
+    @POST(NomineeDetails)
+    suspend fun nomineeDetails(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 

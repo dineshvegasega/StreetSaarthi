@@ -120,7 +120,6 @@
     <string name="registration_successful">Registration Successful</string>
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">Someone from our team will contact you within 48 Hrs to verify your registration.</string>
     <string name="RegisterNow">Register Now</string>
-<!--    Congratulations!-->
     <string name="resendOtp">Re-send OTP</string>
     <string name="OTPnotverified">OTP Not Verified</string>
     <string name="YourNewPassword">Your New Password</string>
@@ -543,6 +542,24 @@
     <string name="need_to_add_complete_profile">You need to complete your profile before submitting a complaint/feedback.</string>
     <string name="conversation_marked_admin">This Conversation was marked %s by %s on</string>
     <string name="something_went_wrong">Something went wrong!</string>
+    <string name="nominee_details">Nominee Details</string>
+    <string name="list_of_nominee">List of Nominee</string>
+    <string name="relationship_TypeStar">Relationship Type*</string>
+    <string name="nameStar">Name*</string>
+    <string-array name="relation_array" tools:ignore="InconsistentArrays">
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Son</item>
+        <item>Daughter</item>
+        <item>Sister</item>
+        <item>Brother</item>
+        <item>Husband</item>
+        <item>Wife</item>
+    </string-array>
+    <string name="select_nominee_type">Select Nominee Type</string>
+    <string name="enter_nominee_name">Enter Nominee Name</string>
+    <string name="nominee_added_updated_successfully">Nominee Added/Updated Successfully</string>
+
 
 
 
@@ -611,6 +628,7 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
+
 
 
 

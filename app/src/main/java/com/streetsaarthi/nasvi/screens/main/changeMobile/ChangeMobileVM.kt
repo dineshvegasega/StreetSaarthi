@@ -116,11 +116,11 @@ class ChangeMobileVM @Inject constructor(private val repository: Repository): Vi
 
 
 
-    fun profileUpdate(view: View, _id: String, hashMap: RequestBody) = viewModelScope.launch {
+    fun profileUpdate(view: View, _id: String, requestBody: RequestBody) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.profileUpdate(_id, hashMap)
+                    apiInterface.profileUpdate(_id, requestBody)
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful) {

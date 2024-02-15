@@ -38,7 +38,6 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
-import java.security.AccessController.getContext
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -530,4 +529,38 @@ fun Context.calculateDpToPixel(dp: Int): Int {
     val d: Float = resources.getDisplayMetrics().density
     return (dp * d).toInt()
    // return dp * (metrics.density / 160)
+}
+
+
+fun String.relationType(array: Array<String>): String {
+    ""+this.let{
+        return when(it){
+            "father" -> {
+                array[0]
+            }
+            "mother" -> {
+                array[1]
+            }
+            "son" -> {
+                array[2]
+            }
+            "daughter" -> {
+                array[3]
+            }
+            "sister" -> {
+                array[4]
+            }
+            "brother" -> {
+                array[5]
+            }
+            "husband" -> {
+                array[6]
+            }
+            "wife" -> {
+                array[7]
+            }
+
+            else -> {""}
+        }
+    }
 }

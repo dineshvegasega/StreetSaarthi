@@ -100,7 +100,6 @@
     <string name="enter_details_to_register_with_us">ہمارے ساتھ اندراج کے لئے تفصیلات درج کریں</string>
     <string name="profile_details">پروفائل کی تفصیلات</string>
     <string name="registration_successful">رجسٹریشن کامیاب</string>
-<!--    <string name="congratulations_your_initial_registration_is_complete">مبارک ہو!\nآپ کی ابتدائی رجسٹریشن مکمل ہے</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">ہماری ٹیم کا کوئی شخص آپ کی رجسٹریشن کی تصدیق کے ل 48 گھنٹوں کے اندر آپ سے رابطہ کرے گا۔</string>
     <string name="RegisterNow">ابھی رجسٹر کریں</string>
 
@@ -522,6 +521,24 @@
     <string name="need_to_add_complete_profile">آپ کو شکایت/رائے جمع کرنے سے پہلے اپنا پروفائل مکمل کرنا ہوگا۔</string>
     <string name="conversation_marked_admin">اس گفتگو کو %s نے %s کا نشان لگایا تھا</string>
     <string name="something_went_wrong">کچھ غلط ہو گیا!</string>
+    <string name="nominee_details">نامزد کی تفصیلات</string>
+    <string name="list_of_nominee">نامزد افراد کی فہرست</string>
+    <string name="relationship_TypeStar">رشتہ کی قسم*</string>
+    <string name="nameStar">نام*</string>
+    <string-array name="relation_array" >
+        <item>والد</item>
+        <item>ماں</item>
+        <item>بیٹا</item>
+        <item>بیٹی</item>
+        <item>بہن</item>
+        <item>بھائی</item>
+        <item>شوہر</item>
+        <item>بیوی</item>
+    </string-array>
+    <string name = "select_nominee_type"> نامزد کی قسم منتخب کریں</string>
+    <string name = "enter_nominee_name"> نامزد کا نام درج کریں</string>
+    <string name="nominee_added_updated_successfully">نامزد کو کامیابی کے ساتھ شامل / اپ ڈیٹ کیا گیا</string>
+
 
 
 </resources>

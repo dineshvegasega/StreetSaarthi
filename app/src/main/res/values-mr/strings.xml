@@ -101,7 +101,6 @@
     <string name="enter_details_to_register_with_us">आमच्याकडे नोंदणी करण्यासाठी तपशील प्रविष्ट करा</string>
     <string name="profile_details">प्रोफाइल तपशील</string>
     <string name = "registration_successful">नोंदणी यशस्वी</string>
-<!--    <string name="congratulations_your_initial_registration_is_complete">अभिनंदन!\nतुमची प्रारंभिक नोंदणी पूर्ण झाली आहे</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">तुमची नोंदणी सत्यापित करण्यासाठी आमच्या टीममधील कोणीतरी तुमच्याशी ४८ तासांच्या आत संपर्क करेल.</string>
     <string name="RegisterNow">आता नोंदणी करा</string>
 
@@ -520,6 +519,23 @@
     <string name="need_to_add_complete_profile">तक्रार/फीडबॅक सबमिट करण्यापूर्वी तुम्हाला तुमचे प्रोफाइल पूर्ण करणे आवश्यक आहे.</string>
     <string name="conversation_marked_admin">हे संभाषण %s ने %s ने चिन्हांकित केले</string>
     <string name="something_went_wrong">काहीतरी चूक झाली!</string>
+    <string name="nominee_details">नामांकित तपशील</string>
+    <string name="list_of_nominee">नामांकित व्यक्तींची यादी</string>
+    <string name = "relationship_TypeStar">नात्याचा प्रकार*</string>
+    <string name="nameStar">नाव*</string>
+    <string-array name="relation_array">
+        <item>वडील</item>
+        <item>आई</item>
+        <item>मुलगा</item>
+        <item>मुलगी</item>
+        <item>बहीण</item>
+        <item>भाऊ</item>
+        <item>पती</item>
+        <item>बायको</item>
+    </string-array>
+    <string name="select_nominee_type">नॉमिनीचा प्रकार निवडा</string>
+    <string name="enter_nominee_name">नॉमिनीचे नाव एंटर करा</string>
+    <string name="nominee_added_updated_successfully">नॉमिनी यशस्वीरित्या जोडले/अपडेट केले</string>
 
 
 </resources>

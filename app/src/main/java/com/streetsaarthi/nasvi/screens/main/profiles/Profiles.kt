@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
@@ -78,15 +79,34 @@ class Profiles : Fragment() , CallBackListener {
                 viewModel.isEditable.value = false
             }
 
+            inclideHeaderSearch.btNominee.singleClick {
+                view.findNavController().navigate(R.id.action_profiles_to_nomineeDetails)
+            }
+
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java).status
                     when(data){
-                        "approved" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
-                        "unverified" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
-                        "pending" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
-                        "rejected" -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
-                        else -> inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
+                        "approved" -> {
+                            inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
+                            inclideHeaderSearch.btNominee.visibility = View.VISIBLE
+                        }
+                        "unverified" -> {
+                            inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                            inclideHeaderSearch.btNominee.visibility = View.GONE
+                        }
+                        "pending" -> {
+                            inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                            inclideHeaderSearch.btNominee.visibility = View.GONE
+                        }
+                        "rejected" -> {
+                            inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                            inclideHeaderSearch.btNominee.visibility = View.GONE
+                        }
+                        else -> {
+                            inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
+                            inclideHeaderSearch.btNominee.visibility = View.GONE
+                        }
                     }
                 }
             }

@@ -1,10 +1,10 @@
 package com.streetsaarthi.nasvi.screens.onboarding.networking
 
-const val BASE_URL = "https://v2.nasvi.in/"
-const val WEB_URL = "https://nasvi.in/"
+//const val BASE_URL = "https://v2.nasvi.in/"
+//const val WEB_URL = "https://nasvi.in/"
 
-//const val BASE_URL = "http://167.71.225.20:8081/"
-//const val WEB_URL = "http://167.71.225.20:8080/"
+const val BASE_URL = "http://167.71.225.20:8081/"
+const val WEB_URL = "http://167.71.225.20:8080/"
 
 const val URL = BASE_URL+"api/"
 
@@ -64,6 +64,9 @@ const val NewFeedback = "new-feedback"
 const val SaveSettings = "save-settings"
 const val LOGOUT = "logout"
 const val PasswordUpdate = "password-update"
+const val UpdateNomineeDetails = "update-nominee-details"
+const val NomineeDetails = "nominee-details"
+
 
 const val USER_TYPE = "member"
 const val PING = "8.8.8.8"

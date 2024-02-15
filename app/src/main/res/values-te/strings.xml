@@ -100,7 +100,6 @@
     <string name="enter_details_to_register_with_us">మాతో నమోదు చేసుకోవడానికి వివరాలను నమోదు చేయండి</string>
     <string name="profile_details">ప్రొఫైల్ వివరాలు</string>
     <string name="registration_successful">నమోదు విజయవంతమైంది</string>
-<!--    <string name="congratulations_your_initial_registration_is_complete">అభినందనలు!\nమీ ప్రారంభ రిజిస్ట్రేషన్ పూర్తయింది</string>-->
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">మీ రిజిస్ట్రేషన్‌ను ధృవీకరించడానికి మా బృందం నుండి ఎవరైనా మిమ్మల్ని 48 గంటలలోపు సంప్రదిస్తారు.</string>
     <string name="RegisterNow">ఇప్పుడు నమోదు చేసుకోండి</string>
 
@@ -524,6 +523,23 @@
     <string name="need_to_add_complete_profile">మీరు ఫిర్యాదు/అభిప్రాయాన్ని సమర్పించే ముందు మీ ప్రొఫైల్‌ను పూర్తి చేయాలి.</string>
     <string name="conversation_marked_admin">ఈ సంభాషణ %s ద్వారా %s అని గుర్తు పెట్టబడింది</string>
     <string name="something_went_wrong">ఏదో తప్పు జరిగింది!</string>
+    <string name="nominee_details">నామినీ వివరాలు</string>
+    <string name="list_of_nominee">నామినీ జాబితా</string>
+    <string name="relationship_TypeStar">సంబంధం రకం*</string>
+    <string name="nameStar">పేరు*</string>
+    <string-array name="relation_array" >
+        <item>తండ్రి</item>
+        <item>తల్లి</item>
+        <item>కొడుకు</item>
+        <item>కుమార్తె</item>
+        <item>సోదరి</item>
+        <item>సోదరుడు</item>
+        <item>భర్త</item>
+        <item>భార్య</item>
+    </string-array>
+    <string name="select_nominee_type">నామినీ రకాన్ని ఎంచుకోండి</string>
+    <string name="enter_nominee_name">నామినీ పేరును నమోదు చేయండి</string>
+    <string name="nominee_added_updated_successfully">నామినీ జోడించబడింది/విజయవంతంగా నవీకరించబడింది</string>
 
 
 
