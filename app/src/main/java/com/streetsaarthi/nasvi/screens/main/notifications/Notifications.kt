@@ -148,7 +148,7 @@ class Notifications : Fragment() {
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {
-                        put("page", currentPage)
+                        put("page", pageStart)
                         put("is_read", false)
                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                     }
@@ -205,9 +205,13 @@ class Notifications : Fragment() {
             val typeToken = object : TypeToken<List<ItemNotification>>() {}.type
             val changeValue = Gson().fromJson<List<ItemNotification>>(Gson().toJson(it.data), typeToken)
 
-            if(isNotificationNext == false){
-                results.addAll(changeValue as MutableList<ItemNotification>)
-            }
+//            if(isNotificationNext == false){
+//                results.addAll(changeValue as MutableList<ItemNotification>)
+//            }
+
+
+
+            results = changeValue as ArrayList<ItemNotification>
             viewModel.adapter.addAllSearch(results)
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
@@ -229,9 +233,35 @@ class Notifications : Fragment() {
         viewModel.itemNotificationsSecond.observe(requireActivity()) {
             val typeToken = object : TypeToken<List<ItemNotification>>() {}.type
             val changeValue = Gson().fromJson<List<ItemNotification>>(Gson().toJson(it.data), typeToken)
-            if(isNotificationNext == false){
-                results.addAll(changeValue as MutableList<ItemNotification>)
-            }
+//            if(isNotificationNext == false){
+//                results.addAll(changeValue as MutableList<ItemNotification>)
+                changeValue.map { _id ->
+//                    Log.e("TAG", "newId.notification_id "+Gson().toJson(results.toString()))
+//                    changeValue.map { newId ->
+                    //var aa =  Gson().toJson(results.toString())
+
+                    if (!Gson().toJson(results.toString()).contains(_id.notification_id.toString())){
+//                        Log.e("TAG", "newId.notification_idAA "+_id.notification_id)
+                        results.add(_id)
+                    } else {
+//                        Log.e("TAG", "newId.notification_idBB "+_id.notification_id)
+                    }
+
+//                        if (Gson().toJson(results.toString()).toString().contains(_id.notification_id.toString())){
+//                            Log.e("TAG", "newId.notification_id "+_id.notification_id)
+////
+////                            // var zz = newId
+////                            results.add(_id)
+////                        }
+//                    }
+                }
+
+                Log.e("TAG", "newId.notification_idCC "+results.size)
+//            }
+//            results.addAll(changeValue as MutableList<ItemNotification>)
+
+
+
             viewModel.adapter.removeLoadingFooter()
             isLoading = false
             viewModel.adapter.addAllSearch(results)

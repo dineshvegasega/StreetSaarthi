@@ -68,8 +68,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         }
 
 
-        val CHANNEL_ID="my_channel_01" // The id of the channel.
-        val name: CharSequence="Notification" // The user-visible name of the channel.
+        val CHANNEL_ID="notifications_channel_01" // The id of the channel.
+        val name: CharSequence="Notifications" // The user-visible name of the channel.
         val importance= NotificationManager.IMPORTANCE_HIGH
         var mChannel: NotificationChannel?=null
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
