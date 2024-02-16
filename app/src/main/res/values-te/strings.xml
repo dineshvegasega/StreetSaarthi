@@ -538,9 +538,9 @@
         <item>భార్య</item>
     </string-array>
     <string name="select_nominee_type">నామినీ రకాన్ని ఎంచుకోండి</string>
-    <string name="enter_nominee_name">నామినీ పేరును నమోదు చేయండి</string>
+    <string name="enter_nominee_name">నామినీ వివరాలను నమోదు చేయండి</string>
     <string name="nominee_added_updated_successfully">నామినీ జోడించబడింది/విజయవంతంగా నవీకరించబడింది</string>
-
+    <string name="add_edit">జోడించు/సవరించు</string>
 
 
 </resources>

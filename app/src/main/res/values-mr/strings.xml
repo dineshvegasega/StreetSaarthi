@@ -534,8 +534,8 @@
         <item>बायको</item>
     </string-array>
     <string name="select_nominee_type">नॉमिनीचा प्रकार निवडा</string>
-    <string name="enter_nominee_name">नॉमिनीचे नाव एंटर करा</string>
+    <string name="enter_nominee_name">नामांकित तपशील प्रविष्ट करा</string>
     <string name="nominee_added_updated_successfully">नॉमिनी यशस्वीरित्या जोडले/अपडेट केले</string>
-
+    <string name="add_edit">जोडा/संपादित करा</string>
 
 </resources>

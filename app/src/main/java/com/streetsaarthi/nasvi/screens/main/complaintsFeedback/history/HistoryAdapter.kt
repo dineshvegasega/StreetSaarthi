@@ -191,19 +191,10 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
 
     fun addLoadingFooter() {
         isLoadingAdded = true
-//        add(ItemLiveScheme())
     }
 
     fun removeLoadingFooter() {
         isLoadingAdded = false
-
-//        val position: Int =itemModels.size -1
-//        val movie: ItemLiveScheme = itemModels[position]
-//
-//        if(movie != null){
-//            itemModels.removeAt(position)
-//            notifyItemRemoved(position)
-//        }
     }
 
     override fun onCallBack(pos: Int) {

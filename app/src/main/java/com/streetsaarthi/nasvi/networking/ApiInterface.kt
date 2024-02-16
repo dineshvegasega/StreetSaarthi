@@ -292,6 +292,7 @@ interface ApiInterface {
     @GET(FeedbackConversationDetails+ "/{id}")
     suspend fun feedbackConversationDetails(
         @Path("id") id: String,
+        @Query("page") page: String,
     ): Response<ItemChat>
 
 

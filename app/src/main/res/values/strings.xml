@@ -557,9 +557,9 @@
         <item>Wife</item>
     </string-array>
     <string name="select_nominee_type">Select Nominee Type</string>
-    <string name="enter_nominee_name">Enter Nominee Name</string>
+    <string name="enter_nominee_name">Enter Nominee Detials</string>
     <string name="nominee_added_updated_successfully">Nominee Added/Updated Successfully</string>
-
+    <string name="add_edit">Add/Edit</string>
 
 
 

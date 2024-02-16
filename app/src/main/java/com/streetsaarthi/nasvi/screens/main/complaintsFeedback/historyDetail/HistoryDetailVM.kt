@@ -28,11 +28,11 @@ class HistoryDetailVM @Inject constructor(private val repository: Repository): V
 
     private var feedbackConversationLiveData = MutableLiveData<ItemChat>()
     val feedbackConversationLive : LiveData<ItemChat> get() = feedbackConversationLiveData
-    fun feedbackConversationDetails(view: View, _id: String) = viewModelScope.launch {
+    fun feedbackConversationDetails(view: View, _id: String, page: String) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<ItemChat>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.feedbackConversationDetails(_id)
+                    apiInterface.feedbackConversationDetails(_id, page)
                 override fun success(response: Response<ItemChat>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){

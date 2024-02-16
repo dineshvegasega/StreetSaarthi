@@ -533,7 +533,8 @@
         <item>স্ত্রী</item>
     </string-array>
     <string name = "select_nominee_type"> মনোনীত ব্যক্তি নির্বাচন করুন</string>
-    <string name = "enter_nominee_name"> মনোনীত ব্যক্তির নাম লিখুন</string>
+    <string name="enter_nominee_name">নমিনি বিবরণ লিখুন</string>
     <string name = "nominee_added_updated_successfully"> মনোনীত ব্যক্তি সফলভাবে যুক্ত/আপডেট করা হয়েছে</string>
+    <string name="add_edit">যোগ করুন/সম্পাদনা করুন</string>
 
 </resources>

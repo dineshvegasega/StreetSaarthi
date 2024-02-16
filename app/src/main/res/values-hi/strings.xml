@@ -34,7 +34,7 @@
 
 
 
-   <string name="enterMobileNumber">मान्य मोबाइल नंबर दर्ज करें</string>
+    <string name="enterMobileNumber">मान्य मोबाइल नंबर दर्ज करें</string>
 
 
     <string name="login">लॉग इन करें</string>
@@ -83,7 +83,7 @@
 
 
     <string name="RegisterHere">यहां रजिस्टर करें</string>
-   <string name="SelectYourchoiceofregistration">पंजीकरण के लिए अपनी पसंद का चयन करें</string>
+    <string name="SelectYourchoiceofregistration">पंजीकरण के लिए अपनी पसंद का चयन करें</string>
     <string name="continues">आगे बढ़ें</string>
 
 
@@ -234,34 +234,34 @@
 
 
     <string-array name="socialCategory_array">
-            <item>ST</item>
-            <item>SC</item>
-            <item>GEN</item>
-            <item>OBC</item>
-            <item>PWD</item>
-        </string-array>
+        <item>ST</item>
+        <item>SC</item>
+        <item>GEN</item>
+        <item>OBC</item>
+        <item>PWD</item>
+    </string-array>
 
 
 
     <string-array name="socialEducation_array">
-            <item>कोई पढ़ाई नही</item>
-            <item>प्राथमिक शिक्षा (पहली से पांचवीं तक)</item>
-            <item>मिडिल शिक्षा (छठी से 9वीं)</item>
-            <item>उच्च शिक्षा (10वीं से 12वीं)</item>
-            <item>स्नातक</item>
-            <item>स्नातकोत्तर पाठ्यक्रम</item>
-        </string-array>
-    
+        <item>कोई पढ़ाई नही</item>
+        <item>प्राथमिक शिक्षा (पहली से पांचवीं तक)</item>
+        <item>मिडिल शिक्षा (छठी से 9वीं)</item>
+        <item>उच्च शिक्षा (10वीं से 12वीं)</item>
+        <item>स्नातक</item>
+        <item>स्नातकोत्तर पाठ्यक्रम</item>
+    </string-array>
+
 
 
     <string name="married">विवाहित</string>
-        <string-array name="maritalStatus_array">
-            <item>अविवाहित</item>
-            <item>विवाहित</item>
-            <item>विधवा</item>
-            <item>तलाकशुदा</item>
-            <item>अलग-अलग</item>
-        </string-array>
+    <string-array name="maritalStatus_array">
+        <item>अविवाहित</item>
+        <item>विवाहित</item>
+        <item>विधवा</item>
+        <item>तलाकशुदा</item>
+        <item>अलग-अलग</item>
+    </string-array>
 
 
 
@@ -340,7 +340,7 @@
 
     <string name="close_x">बंद करना X</string>
     <string name="x_close">X बंद करना</string>
-    <string name="app_version_1_0">एप्लिकेशन वेरीज़न %s</string>
+    <string name="app_version_1_0">एप्लिकेशन संस्करण %s</string>
     <string name='notices'>नोटिस</string>
     <string name='training'>प्रशिक्षण</string>
     <string name='information_center'>सूचना केंद्र</string>
@@ -508,22 +508,22 @@
     <string name='notice_title'>आपके पास एक नई सूचना है</string>
     <string name='scheme_title'>आपके पास एक नई योजना है</string>
     <string name='vendor_details_title'>बधाई हो! आपकी प्रोफ़ाइल स्वीकृत हो गई है</string>
-    <string name='feedback_title'>आपके पास आपके फ़ीडबैक पर एक उत्तर है</string>
+    <string name='feedback_title'>आपके पास आपके प्रतिक्रिया पर एक उत्तर है</string>
     <string name='complaint_title'>आपके पास आपकी शिकायत का उत्तर है</string>
     <string name='information_title'>आपके पास एक नई जानकारी है</string>
     <string name='network_failed_please_try_again'>नेटवर्क विफल, कृपया पुनः प्रयास करें!</string>
     <string name='try_again'>फिर से प्रयास करें</string>
     <string name='back_to_login_u'><u>लॉगिन पर वापस जाएं</u></string>
     <string name='complaint_added_successfully'>शिकायत सफलतापूर्वक जोड़ी गई</string>
-    <string name='feedback_added_successfully'>फीडबैक सफलतापूर्वक जोड़ा गया</string>
+    <string name='feedback_added_successfully'>प्रतिक्रिया सफलतापूर्वक जोड़ा गया</string>
     <string name='congratulations'>बधाई हो!</string>
     <string name='your_initial_registration_is_complete'>आपका प्रारंभिक पंजीकरण पूरा हो गया है।</string>
-    <string name = "need_to_add_complete_profile">शिकायत/प्रतिक्रिया सबमिट करने से पहले आपको अपना प्रोफ़ाइल पूरा करना होगा।</string>
-    <string name='conversation_marked_admin'>इस वार्तालाप को %s द्वारा %s द्वारा चिह्नित किया गया था</string>
+    <string name = "need_to_add_complete_profile">शिकायत/प्रतिक्रिया पंजीकरण करने से पहले आपको अपना प्रोफ़ाइल पूरा करना होगा।</string>
+    <string name='conversation_marked_admin'>इस वार्तालाप को %s द्वारा %s चिह्नित किया गया था</string>
     <string name='something_went_wrong'>कुछ गलत हो गया!</string>
-    <string name="nominee_details">नामांकित व्यक्ति का विवरण</string>
+    <string name="nominee_details">नामांकित_विवरण">नामांकित व्यक्ति का विवरण</string>
     <string name='list_of_nominee'>नामांकित व्यक्ति की सूची</string>
-    <string name='relationship_TypeStar'>रिलेशनशिप टाइप*</string>
+    <string name='relationship_TypeStar'>संबंध*</string>
     <string name='nameStar'>नाम*</string>
     <string-array name="relation_array">
         <item>पिता</item>
@@ -536,7 +536,8 @@
         <item>पत्नी</item>
     </string-array>
     <string name='select_nominee_type'>नामांकित व्यक्ति का प्रकार चुनें</string>
-    <string name='enter_nominee_name'>नामांकित व्यक्ति का नाम दर्ज करें</string>
+    <string name='enter_nominee_name'>नामांकित विवरण दर्ज करें</string>
     <string name = "nominee_added_updated_successfully"> नामांकित व्यक्ति को सफलतापूर्वक जोड़ा/अपडेट किया गया</string>
+    <string name='add_edit'>जोड़ें/संपादित करें</string>
 
 </resources>

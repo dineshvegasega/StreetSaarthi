@@ -530,8 +530,8 @@
         <item>પત્ની</item>
     </string-array>
     <string name="select_nominee_type">નોમિનીનો પ્રકાર પસંદ કરો</string>
-    <string name="enter_nominee_name">નોમિનીનું નામ દાખલ કરો</string>
+    <string name="enter_nominee_name">નોમિની વિગતો દાખલ કરો</string>
     <string name="nominee_added_updated_successfully">નોમિની સફળતાપૂર્વક ઉમેરાઈ/અપડેટ થઈ</string>
-
+    <string name="add_edit">ઉમેરો/સંપાદિત કરો</string>
 
 </resources>

@@ -538,8 +538,8 @@
         <item>ਪਤਨੀ</item>
     </string-array>
     <string name = "select_nominee_type"> ਨਾਮਜ਼ਦ ਦੀ ਕਿਸਮ ਚੁਣੋ</string>
-    <string name = "enter_nominee_name"> ਨਾਮਜ਼ਦ ਦਾ ਨਾਮ ਦਰਜ ਕਰੋ</string>
+    <string name = "enter_nominee_name"> ਨਾਮਜ਼ਦ ਵੇਰਵੇ ਦਰਜ ਕਰੋ</string>
     <string name="nominee_added_updated_successfully">ਨਾਮਜ਼ਦ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਜੋੜਿਆ/ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
-
+    <string name = "add_edit">ਸ਼ਾਮਲ/ਸੋਧ</string>
 
 </resources>

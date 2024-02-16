@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi.screens.main.profiles.nomineeDetails
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -73,27 +74,28 @@ class NomineeDetailsVM @Inject constructor(private val repository: Repository): 
 
 
 
-    var mutableLiveData = MutableLiveData<Boolean>(false)
-    val pairList = ArrayList<Pair<String, String>>()
+    var nomineeMutableLiveData = MutableLiveData<Boolean>(false)
+    val nomineeArrayList = ArrayList<Pair<String, String>>()
     fun nomineeDetails(view: View, requestBody: RequestBody) = viewModelScope.launch {
-        pairList.clear()
+        nomineeArrayList.clear()
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.nomineeDetails(requestBody = requestBody)
+                @SuppressLint("SuspiciousIndentation")
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         val typeToken = object : TypeToken<ItemNomineeData>() {}.type
                         if(Gson().toJson(response.body()!!.data) != "[]"){
                             val changeValue = Gson().fromJson<ItemNomineeData>(Gson().toJson(response.body()!!.data), typeToken)
-                                changeValue.nominee.forEach {
+                                changeValue?.nominee?.forEach {
                                 val product: HashMap<String, String> ?= it
                                 var count = 0
                                 product?.values?.forEach {
-                                    pairList.add(Pair(""+product?.keys?.elementAt(count), ""+it))
+                                    nomineeArrayList.add(Pair(""+product?.keys?.elementAt(count), ""+it))
                                     count ++
                                 }
-                                mutableLiveData.value = true
+                                    nomineeMutableLiveData.value = true
                             }
                         }
                     }
@@ -108,6 +110,25 @@ class NomineeDetailsVM @Inject constructor(private val repository: Repository): 
                 }
             }
         )
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        relationType1 = ""
+        relationName1 = ""
+
+        relationType2 = ""
+        relationName2 = ""
+
+        relationType3 = ""
+        relationName3 = ""
+
+        relationType4 = ""
+        relationName4 = ""
+
+        relationType5 = ""
+        relationName5 = ""
     }
 
 

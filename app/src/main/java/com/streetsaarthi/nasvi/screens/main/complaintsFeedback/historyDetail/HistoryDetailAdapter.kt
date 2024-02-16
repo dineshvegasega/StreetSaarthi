@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemChatLeftBinding
 import com.streetsaarthi.nasvi.databinding.ItemChatRightBinding
+import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.models.chat.DataX
+import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.HistoryAdapter
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.imageZoom
@@ -23,6 +26,10 @@ class HistoryDetailAdapter () :
     ) {
     private val LAYOUT_ONE=0
     private val LAYOUT_TWO=1
+    private val LAYOUT_THREE=2
+
+    private var isLoadingAdded: Boolean = false
+    private var retryPageLoad: Boolean = false
 
     inner class LeftMessagesViewHolder(private val binding: ItemChatLeftBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -51,7 +58,7 @@ class HistoryDetailAdapter () :
                 }
 
                 model.reply_date?.let {
-                    tvTime.text = "${model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "HH:mm a")?.uppercase()}"
+                    tvTime.text = "${model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "hh:mm a")?.uppercase()}"
                 }
 
                 model.reply_date?.let {
@@ -64,17 +71,17 @@ class HistoryDetailAdapter () :
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy HH:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
                 } else if(model.status == "re-open") {
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.re_open)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy HH:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.re_open)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
                 }else if(model.status == "closed") {
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy HH:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
                 }else if(model.status == "in-progress") {
                     group.visibility = View.VISIBLE
                     ivOpenClose.visibility = View.GONE
@@ -115,7 +122,7 @@ class HistoryDetailAdapter () :
                 }
 
                 model.reply_date?.let {
-                    tvTime.text = "${model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "HH:mm a")?.uppercase()}"
+                    tvTime.text = "${model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "hh:mm a")?.uppercase()}"
                 }
 
                 model.reply_date?.let {
@@ -127,17 +134,17 @@ class HistoryDetailAdapter () :
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy HH:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
                 } else if(model.status == "re-open") {
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.re_open)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy HH:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.re_open)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
                 }else if(model.status == "closed") {
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy HH:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
                 }else if(model.status == "in-progress") {
                     group.visibility = View.VISIBLE
                     ivOpenClose.visibility = View.GONE
@@ -152,6 +159,10 @@ class HistoryDetailAdapter () :
         }
     }
 
+    inner class LoaderViewHolder(private val binding: ItemLoadingBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+    }
 
 
     override fun getItemViewType(position: Int): Int {
@@ -178,11 +189,15 @@ class HistoryDetailAdapter () :
                     ItemChatLeftBinding.inflate(LayoutInflater.from(parent.context),parent,false)
                 return LeftMessagesViewHolder(binding)
             }
-
-            else -> {
+            1 -> {
                 val binding=
                     ItemChatRightBinding.inflate(LayoutInflater.from(parent.context),parent,false)
                 return RightMessagesViewHolder(binding)
+            }
+            else -> {
+                val binding=
+                    ItemLoadingBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                return LoaderViewHolder(binding)
             }
         }
     }
@@ -221,4 +236,12 @@ class HistoryDetailAdapter () :
         fun onItemClick(model: DataX)
     }
 
+
+    fun addLoadingFooter() {
+        isLoadingAdded = true
+    }
+
+    fun removeLoadingFooter() {
+        isLoadingAdded = false
+    }
 }

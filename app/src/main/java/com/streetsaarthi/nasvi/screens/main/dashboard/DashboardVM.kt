@@ -461,7 +461,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
         repository.callApi(
             callHandler = object : CallHandler<Response<ItemChat>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.feedbackConversationDetails(_id)
+                    apiInterface.feedbackConversationDetails(_id, "1")
                 override fun success(response: Response<ItemChat>) {
                     if (response.isSuccessful){
                         callBack(response.body()!!)

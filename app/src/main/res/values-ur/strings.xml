@@ -536,9 +536,9 @@
         <item>بیوی</item>
     </string-array>
     <string name = "select_nominee_type"> نامزد کی قسم منتخب کریں</string>
-    <string name = "enter_nominee_name"> نامزد کا نام درج کریں</string>
+    <string name="enter_nominee_name">نامزد کی تفصیلات درج کریں</string>
     <string name="nominee_added_updated_successfully">نامزد کو کامیابی کے ساتھ شامل / اپ ڈیٹ کیا گیا</string>
-
+    <string name="add_edit">شامل/ترمیم کریں</string>
 
 
 </resources>

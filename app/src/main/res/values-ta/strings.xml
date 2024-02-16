@@ -534,9 +534,9 @@
         <item>மனைவி</item>
     </string-array>
     <string name="select_nominee_type">நாமினி வகையைத் தேர்ந்தெடு</string>
-    <string name="enter_nominee_name">நாமினி பெயரை உள்ளிடவும்</string>
+    <string name="enter_nominee_name">நாமினி விவரங்களை உள்ளிடவும்</string>
     <string name="nominee_added_updated_successfully">நாமினி சேர்க்கப்பட்டது/வெற்றிகரமாக புதுப்பிக்கப்பட்டது</string>
-
+    <string name="add_edit">சேர்/திருத்து</string>
 
 
 </resources>

@@ -533,8 +533,8 @@
         <item>ഭാര്യ</item>
     </string-array>
     <string name="select_nominee_type">നോമിനി തരം തിരഞ്ഞെടുക്കുക</string>
-    <string name="enter_nominee_name">നോമിനി പേര് നൽകുക</string>
+    <string name="enter_nominee_name">നോമിനി വിശദാംശങ്ങൾ നൽകുക</string>
     <string name="nominee_added_updated_successfully">നോമിനി ചേർത്തു/അപ്‌ഡേറ്റ് ചെയ്‌തു</string>
-
+    <string name="add_edit">ചേർക്കുക/എഡിറ്റ് ചെയ്യുക</string>
 
 </resources>

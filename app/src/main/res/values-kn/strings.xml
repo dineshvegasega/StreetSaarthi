@@ -534,8 +534,8 @@
         <item>ಹೆಂಡತಿ</item>
     </string-array>
     <string name="select_nominee_type">ನಾಮಿನಿ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
-    <string name="enter_nominee_name">ನಾಮಿನಿ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="enter_nominee_name">ನಾಮಿನಿ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ</string>
     <string name="nominee_added_updated_successfully">ನಾಮಿನಿಯನ್ನು ಸೇರಿಸಲಾಗಿದೆ/ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ</string>
-
+    <string name="add_edit">ಸೇರಿಸು/ಸಂಪಾದಿಸು</string>
 
 </resources>

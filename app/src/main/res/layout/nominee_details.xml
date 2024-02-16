@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inclide_header_search"
-        android:backgroundTint="@color/_FEF7FF"
+        android:backgroundTint="@color/_EDB678"
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@color/_FEF7FF"
        >
@@ -50,7 +50,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             />
 
         <com.google.android.material.button.MaterialButton
@@ -77,7 +77,7 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:visibility="invisible"
+            android:visibility="visible"
             />
 
         <com.google.android.material.button.MaterialButton
@@ -90,7 +90,7 @@
             android:layout_marginVertical="@dimen/_5sdp"
             android:paddingHorizontal="@dimen/_20sdp"
             android:paddingVertical="@dimen/_7sdp"
-            android:text="@string/edit"
+            android:text="@string/add_edit"
             android:textColor="@color/black"
             android:textSize="@dimen/_11ssp"
             app:cornerRadius="@dimen/_4sdp"
@@ -99,7 +99,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             app:strokeColor="@color/_E79D46"
             android:layout_marginEnd="@dimen/_10sdp"
             android:insetTop="0dp"
@@ -154,37 +154,90 @@
                 tools:ignore="HardcodedText" />
 
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/number1"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:text="1"
+                android:textColor="@color/_E79D46"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:focusable="false"
+                app:layout_constraintTop_toBottomOf="@+id/textListTxt"
+                android:layout_marginHorizontal="0dp"
+                />
+
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/spinnerRelationType1"
-                android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
                 android:hint="@string/relationship_TypeStar"
                 android:text=""
                 android:focusable="false"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textListTxt"
                 android:drawableEnd="@drawable/ic_down_arrow"
                 android:layout_marginHorizontal="0dp"
                 />
 
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image1"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_delete"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/number1"
+                android:layout_marginHorizontal="0dp"
+                android:visibility="gone"
+                />
+
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextName1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
                 android:hint="@string/nameStar"
                 android:text=""
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType1"
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 />
 
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/number2"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="2"
+                android:textColor="@color/_E79D46"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:focusable="false"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName1"
+                android:layout_marginHorizontal="0dp"
+                />
+
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/spinnerRelationType2"
-                android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number2"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
                 android:hint="@string/relationship_TypeStar"
@@ -195,11 +248,28 @@
                 android:layout_marginHorizontal="0dp"
                 />
 
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image2"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_delete"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/number2"
+                android:layout_marginHorizontal="0dp"
+                android:visibility="gone"
+                />
+
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextName2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number2"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:hint="@string/nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType2"
@@ -208,10 +278,28 @@
                 />
 
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/number3"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="3"
+                android:textColor="@color/_E79D46"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:focusable="false"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName2"
+                android:layout_marginHorizontal="0dp"
+                />
+
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/spinnerRelationType3"
-                android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number3"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
                 android:hint="@string/relationship_TypeStar"
@@ -222,11 +310,27 @@
                 android:layout_marginHorizontal="0dp"
                 />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image3"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_delete"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/number3"
+                android:layout_marginHorizontal="0dp"
+                android:visibility="gone"
+                />
+
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextName3"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number3"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:hint="@string/nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType3"
@@ -234,10 +338,28 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 />
 
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/number4"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="4"
+                android:textColor="@color/_E79D46"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:focusable="false"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName3"
+                android:layout_marginHorizontal="0dp"
+                />
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/spinnerRelationType4"
-                android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number4"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
                 android:hint="@string/relationship_TypeStar"
@@ -250,9 +372,12 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextName4"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number4"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:hint="@string/nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType4"
@@ -261,10 +386,27 @@
                 />
 
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/number5"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="5"
+                android:textColor="@color/_E79D46"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:focusable="false"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName4"
+                android:layout_marginHorizontal="0dp"
+                />
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/spinnerRelationType5"
-                android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number4"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
                 android:hint="@string/relationship_TypeStar"
@@ -275,11 +417,38 @@
                 android:layout_marginHorizontal="0dp"
                 />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image4"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_delete"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/number4"
+                android:layout_marginHorizontal="0dp"
+                android:visibility="gone"
+                />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image5"
+                android:layout_width="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_delete"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/number5"
+                android:layout_marginHorizontal="0dp"
+                android:visibility="gone"
+                />
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextName5"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 style="@style/PrimaryEditText"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/number5"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:hint="@string/nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType5"

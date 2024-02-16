@@ -90,7 +90,7 @@ class HistoryDetail : Fragment() {
 //        var feedbackId = "84"
         var status = ""
         binding.apply {
-            inclideHeaderSearch.textHeaderTxt.text = HtmlCompat.fromHtml(getString(R.string.trackingId, "<b>"+feedbackId+"</b>"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+            inclideHeaderSearch.textHeaderTxt.text = HtmlCompat.fromHtml(getString(R.string.trackingId, "<b>"+feedbackId+"</b>"), HtmlCompat.FROM_HTML_MODE_LEGACY);
          //   "Tracking Id: #12344682"
             val typeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.roboto_medium)
             inclideHeaderSearch.textHeaderTxt.typeface = typeface
@@ -130,6 +130,7 @@ class HistoryDetail : Fragment() {
                                 var user = Gson().fromJson(loginUser, Login::class.java)
                                 requestBody.addFormDataPart("user_id", ""+user?.id)
                                 requestBody.addFormDataPart("feedback_id", ""+feedbackId)
+                                requestBody.addFormDataPart("media", "null")
                                 viewModel.addFeedbackConversationDetails(view = requireView(), requestBody.build())
                             }
                         }
@@ -143,10 +144,10 @@ class HistoryDetail : Fragment() {
 
             viewModel.chatAdapter.submitList(strings)
             viewModel.chatAdapter.notifyDataSetChanged()
-            rvGiftCardList.adapter=viewModel.chatAdapter
+            recyclerView.adapter=viewModel.chatAdapter
 
 
-            viewModel.feedbackConversationDetails(view, ""+feedbackId)
+            viewModel.feedbackConversationDetails(view, ""+feedbackId , "1")
 
             viewModel.feedbackConversationLive.observe(requireActivity()) {
                 var complaintfeedback = if (it.type == "complaint"){
@@ -198,8 +199,8 @@ class HistoryDetail : Fragment() {
                 strings.addAll(it.data.data)
                 viewModel.chatAdapter.submitList(strings)
 
-                rvGiftCardList.postDelayed({
-                    (rvGiftCardList.getLayoutManager() as LinearLayoutManager).scrollToPositionWithOffset( (strings.size
+                recyclerView.postDelayed({
+                    (recyclerView.getLayoutManager() as LinearLayoutManager).scrollToPositionWithOffset( (strings.size
                         ?: 0) - 1, 0)
                     viewModel.chatAdapter.notifyDataSetChanged()
                 }, 50)
@@ -207,7 +208,7 @@ class HistoryDetail : Fragment() {
 
 
             viewModel.addFeedbackConversationLive.observe(requireActivity()) {
-                viewModel.feedbackConversationDetails(view, ""+feedbackId)
+                viewModel.feedbackConversationDetails(view, ""+feedbackId, "1")
             }
 
 
