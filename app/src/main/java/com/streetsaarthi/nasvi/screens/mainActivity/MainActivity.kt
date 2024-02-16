@@ -126,6 +126,18 @@ class MainActivity : AppCompatActivity() {
         mainActivity = WeakReference(this)
 
 
+        var aa = 10
+        var total = 11
+        var totalPage = 0
+
+        totalPage = total / aa
+        val dd = total % aa
+        if(dd != 0){
+            totalPage += 1
+        }
+
+        Log.e("TAG", "totalPage "+totalPage)
+
         checkUpdate()
 
 //

@@ -176,7 +176,7 @@ class Notifications : Fragment() {
 
     var results: ArrayList<ItemNotification> = ArrayList()
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
     private fun observerDataRequest(){
 
         viewModel.updateNotifications.value = -1

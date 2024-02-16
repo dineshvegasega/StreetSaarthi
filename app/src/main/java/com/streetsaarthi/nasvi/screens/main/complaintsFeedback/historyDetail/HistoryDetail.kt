@@ -32,14 +32,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.HistoryDetailBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.chat.DataX
 import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.mix.ItemHistory
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.utils.CheckValidation
+import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.loadImage
@@ -51,6 +55,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.json.JSONObject
 import java.io.File
 import java.util.Calendar
 
@@ -61,12 +66,22 @@ class HistoryDetail : Fragment() {
     private var _binding: HistoryDetailBinding? = null
     private val binding get() = _binding!!
 
-    val strings = ArrayList<DataX>()
+    val results : ArrayList<DataX> = ArrayList()
 
     var logoutAlert : AlertDialog?= null
     var permissionAlert : AlertDialog?= null
 
-    @SuppressLint("SuspiciousIndentation")
+    private var LOADER_TIME: Long = 500
+    private var pageStart: Int = 1
+    private var isLoading: Boolean = false
+    private var isLastPage: Boolean = false
+    private var totalPages: Int = 1
+    private var currentPage: Int = pageStart
+
+    var feedbackId : String = ""
+    var status = ""
+
+        @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -86,9 +101,8 @@ class HistoryDetail : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         MainActivity.mainActivity.get()?.callFragment(0)
-        var feedbackId = arguments?.getString("key")
+        feedbackId = ""+arguments?.getString("key")
 //        var feedbackId = "84"
-        var status = ""
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = HtmlCompat.fromHtml(getString(R.string.trackingId, "<b>"+feedbackId+"</b>"), HtmlCompat.FROM_HTML_MODE_LEGACY);
          //   "Tracking Id: #12344682"
@@ -142,74 +156,75 @@ class HistoryDetail : Fragment() {
                     .show()
             }
 
-            viewModel.chatAdapter.submitList(strings)
-            viewModel.chatAdapter.notifyDataSetChanged()
-            recyclerView.adapter=viewModel.chatAdapter
+            viewModel.adapter.submitList(results)
+            viewModel.adapter.notifyDataSetChanged()
+            recyclerView.adapter=viewModel.adapter
 
 
-            viewModel.feedbackConversationDetails(view, ""+feedbackId , "1")
 
-            viewModel.feedbackConversationLive.observe(requireActivity()) {
-                var complaintfeedback = if (it.type == "complaint"){
-                root.context.getString(R.string.complaint)
-                } else {
-                    root.context.getString(R.string.feedback)
-                }
-                inclideHistoryType.textTypeValue.text = complaintfeedback
-                inclideHistoryType.textRegistrationDateValue.text = "${it.registration_date.changeDateFormat("yyyy-MM-dd", "dd MMM yyyy")}"
-                inclideHistoryType.textSubjectValue.text = it.subject
-//                inclideHistoryType.textConsecteturValue.text = it.message
-                status = it.status
+//
+//            viewModel.feedbackConversationDetails(view, ""+feedbackId , "1")
+//
+//            viewModel.feedbackConversationLive.observe(requireActivity()) {
+//                var complaintfeedback = if (it.type == "complaint"){
+//                root.context.getString(R.string.complaint)
+//                } else {
+//                    root.context.getString(R.string.feedback)
+//                }
+//                inclideHistoryType.textTypeValue.text = complaintfeedback
+//                inclideHistoryType.textRegistrationDateValue.text = "${it.registration_date.changeDateFormat("yyyy-MM-dd", "dd MMM yyyy")}"
+//                inclideHistoryType.textSubjectValue.text = it.subject
+//                status = it.status
+//
+//                if (status == "resolved"){
+//                    vBottom.visibility = View.GONE
+//                    inclideHeaderSearch.btClose.text = view.resources.getString(R.string.re_open)
+//                    inclideHeaderSearch.btClose.icon = ContextCompat.getDrawable(root.context,R.drawable.check)
+//                    inclideHeaderSearch.btClose.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._138808)
+//                } else if (status == "re-open"){
+//                    vBottom.visibility = View.VISIBLE
+//                    inclideHeaderSearch.btClose.text = view.resources.getString(R.string.x_close)
+//                    inclideHeaderSearch.btClose.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._ED2525)
+//                } else if (status == "Pending" || status == "pending"){
+//                    vBottom.visibility = View.VISIBLE
+//                    inclideHeaderSearch.btClose.text = view.resources.getString(R.string.x_close)
+//                    inclideHeaderSearch.btClose.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._ED2525)
+//                } else if (status == "in-progress"){
+//                    vBottom.visibility = View.VISIBLE
+//                    inclideHeaderSearch.btClose.text = view.resources.getString(R.string.x_close)
+//                    inclideHeaderSearch.btClose.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._ED2525)
+//                } else {
+//                    vBottom.visibility = View.GONE
+//                }
+//
+//                var old = ""
+//                it.data.data.map {
+//                    var date = it.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM yyyy")
+//                    if (old != date){
+//                        old = date!!
+//                        it.dateShow = true
+//                    }
+//                }
+//
+//
+//                strings.clear()
+//
+////                strings.add(DataX(it.media, it.message, it.registration_date , "in-progress" , it.user_id, USER_TYPE, false))
+//
+//                strings.addAll(it.data.data)
+//                viewModel.chatAdapter.submitList(strings)
+//
+////                recyclerView.postDelayed({
+////                    (recyclerView.getLayoutManager() as LinearLayoutManager).scrollToPositionWithOffset( (strings.size
+////                        ?: 0) - 1, 0)
+//                    viewModel.chatAdapter.notifyDataSetChanged()
+////                }, 50)
+//
+//                viewModel.chatAdapter.addLoadingFooter()
+//            }
 
-                if (status == "resolved"){
-                    vBottom.visibility = View.GONE
-                    inclideHeaderSearch.btClose.text = view.resources.getString(R.string.re_open)
-                    inclideHeaderSearch.btClose.icon = ContextCompat.getDrawable(root.context,R.drawable.check)
-                    inclideHeaderSearch.btClose.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._138808)
-                } else if (status == "re-open"){
-                    vBottom.visibility = View.VISIBLE
-                    inclideHeaderSearch.btClose.text = view.resources.getString(R.string.x_close)
-                    inclideHeaderSearch.btClose.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._ED2525)
-                } else if (status == "Pending" || status == "pending"){
-                    vBottom.visibility = View.VISIBLE
-                    inclideHeaderSearch.btClose.text = view.resources.getString(R.string.x_close)
-                    inclideHeaderSearch.btClose.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._ED2525)
-                } else if (status == "in-progress"){
-                    vBottom.visibility = View.VISIBLE
-                    inclideHeaderSearch.btClose.text = view.resources.getString(R.string.x_close)
-                    inclideHeaderSearch.btClose.backgroundTintList = ContextCompat.getColorStateList(root.context,R.color._ED2525)
-                } else {
-                    vBottom.visibility = View.GONE
-                }
-
-                var old = ""
-                it.data.data.map {
-                    var date = it.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM yyyy")
-                    if (old != date){
-                        old = date!!
-                        it.dateShow = true
-                    }
-                }
 
 
-                strings.clear()
-
-                strings.add(DataX(it.media, it.message, it.registration_date , "in-progress" , it.user_id, USER_TYPE, false))
-
-                strings.addAll(it.data.data)
-                viewModel.chatAdapter.submitList(strings)
-
-                recyclerView.postDelayed({
-                    (recyclerView.getLayoutManager() as LinearLayoutManager).scrollToPositionWithOffset( (strings.size
-                        ?: 0) - 1, 0)
-                    viewModel.chatAdapter.notifyDataSetChanged()
-                }, 50)
-            }
-
-
-            viewModel.addFeedbackConversationLive.observe(requireActivity()) {
-                viewModel.feedbackConversationDetails(view, ""+feedbackId, "1")
-            }
 
 
             ivAttach.singleClick {
@@ -245,11 +260,254 @@ class HistoryDetail : Fragment() {
                 } else {
                     showSnackBar(view.resources.getString(R.string.Pleaseentertextormedia))
                 }
-
             }
+        }
 
+        loadFirstPage()
+        observerDataRequest()
+        recyclerViewScroll()
+    }
+
+
+
+    private fun recyclerViewScroll() {
+        binding.apply {
+            recyclerView.addOnScrollListener(object : PaginationScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
+                override fun loadMoreItems() {
+                    isLoading = true
+                    currentPage += 1
+                    if(totalPages >= currentPage){
+                        Handler(Looper.myLooper()!!).postDelayed({
+                            loadNextPage()
+                        }, LOADER_TIME)
+                    }
+                }
+                override fun getTotalPageCount(): Int {
+                    return totalPages
+                }
+                override fun isLastPage(): Boolean {
+                    return isLastPage
+                }
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+            })
         }
     }
+
+
+
+    private fun loadFirstPage() {
+        pageStart  = 1
+        isLoading = false
+        isLastPage = false
+        totalPages  = 1
+        currentPage  = pageStart
+        results.clear()
+        viewModel.feedbackConversationDetails(requireView(), ""+feedbackId , ""+currentPage)
+    }
+
+
+    fun loadNextPage() {
+        viewModel.feedbackConversationDetailsSecond(requireView(), ""+feedbackId , ""+currentPage)
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun observerDataRequest(){
+        viewModel.addFeedbackConversationLive.observe(requireActivity()) {
+            if(totalPages == 1){
+                loadFirstPage()
+            } else {
+                loadNextPage()
+            }
+        }
+
+
+
+        viewModel.feedbackConversationLive.observe(requireActivity()) {
+            binding.apply {
+                var complaintfeedback = if (it.type == "complaint") {
+                    requireContext().getString(R.string.complaint)
+                } else {
+                    requireContext().getString(R.string.feedback)
+                }
+                inclideHistoryType.textTypeValue.text = complaintfeedback
+                inclideHistoryType.textRegistrationDateValue.text =
+                    "${it.registration_date.changeDateFormat("yyyy-MM-dd", "dd MMM yyyy")}"
+                inclideHistoryType.textSubjectValue.text = it.subject
+                status = it.status
+
+                if (status == "resolved") {
+                    vBottom.visibility = View.GONE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.re_open)
+                    inclideHeaderSearch.btClose.icon =
+                        ContextCompat.getDrawable(root.context, R.drawable.check)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._138808)
+                } else if (status == "re-open") {
+                    vBottom.visibility = View.VISIBLE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.x_close)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._ED2525)
+                } else if (status == "Pending" || status == "pending") {
+                    vBottom.visibility = View.VISIBLE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.x_close)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._ED2525)
+                } else if (status == "in-progress") {
+                    vBottom.visibility = View.VISIBLE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.x_close)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._ED2525)
+                } else {
+                    vBottom.visibility = View.GONE
+                }
+            }
+
+
+                var old = ""
+                it.data.data.map {
+                    var date = it.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM yyyy")
+                    if (old != date){
+                        old = date!!
+                        it.dateShow = true
+                    }
+                }
+
+
+
+
+            results.add(DataX(it.media, it.message, it.registration_date , "in-progress" , it.user_id, USER_TYPE, false))
+
+//            resultsFirst.clear()
+//            resultsFirst.addAll(it.data.data)
+            results.addAll(it.data.data)
+
+//            if(results.size == 0){
+//                results.addAll(it.data.data)
+//            }
+            viewModel.adapter.submitList(results)
+
+            totalPages = it.data?.total!! / it.data?.per_page!!
+            val reminder = it.data?.total!! % it.data?.per_page!!
+            if(reminder != 0){
+                totalPages += 1
+            }
+            if (currentPage == totalPages) {
+                viewModel.adapter.removeLoadingFooter()
+            } else if (currentPage <= totalPages) {
+                viewModel.adapter.addLoadingFooter()
+                isLastPage = false
+            } else {
+                isLastPage = true
+            }
+
+            if (viewModel.adapter.itemCount > 0) {
+                binding.idDataNotFound.root.visibility = View.GONE
+            } else {
+                binding.idDataNotFound.root.visibility = View.VISIBLE
+            }
+            binding.apply {
+                recyclerView.postDelayed({
+                    (recyclerView.getLayoutManager() as LinearLayoutManager).scrollToPositionWithOffset( (results.size
+                        ?: 0) - 1, 0)
+                    viewModel.adapter.notifyDataSetChanged()
+                }, 50)
+            }
+        }
+
+
+        viewModel.feedbackConversationLiveSecond.observe(requireActivity()) {
+            binding.apply {
+                var complaintfeedback = if (it.type == "complaint") {
+                    requireContext().getString(R.string.complaint)
+                } else {
+                    requireContext().getString(R.string.feedback)
+                }
+                inclideHistoryType.textTypeValue.text = complaintfeedback
+                inclideHistoryType.textRegistrationDateValue.text =
+                    "${it.registration_date.changeDateFormat("yyyy-MM-dd", "dd MMM yyyy")}"
+                inclideHistoryType.textSubjectValue.text = it.subject
+                status = it.status
+
+                if (status == "resolved") {
+                    vBottom.visibility = View.GONE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.re_open)
+                    inclideHeaderSearch.btClose.icon =
+                        ContextCompat.getDrawable(root.context, R.drawable.check)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._138808)
+                } else if (status == "re-open") {
+                    vBottom.visibility = View.VISIBLE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.x_close)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._ED2525)
+                } else if (status == "Pending" || status == "pending") {
+                    vBottom.visibility = View.VISIBLE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.x_close)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._ED2525)
+                } else if (status == "in-progress") {
+                    vBottom.visibility = View.VISIBLE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.x_close)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._ED2525)
+                } else {
+                    vBottom.visibility = View.GONE
+                }
+            }
+
+            it.data.data.map { _id ->
+                if (!Gson().toJson(results.toString()).contains(_id.reply_date.toString())){
+                    results.add(_id)
+                }
+            }
+
+//            resultsTemp.clear()
+            //results.addAll(it.data.data)
+//            Log.e("TAG","xxxx "+resultsFirst.size)
+//            Log.e("TAG","yyyy "+resultsTemp.size)
+
+//            results.addAll(resultsFirst)
+//            results.addAll(resultsTemp)
+
+//            Handler(Looper.myLooper()!!).postDelayed({
+//                resultsTemp.clear()
+//            }, 50)
+//            Handler(Looper.myLooper()!!).postDelayed({
+//                resultsTemp.addAll(it.data.data)
+//            }, 50)
+//            Handler(Looper.myLooper()!!).postDelayed({
+//                results.addAll(resultsTemp)
+//            }, 50)
+
+            viewModel.adapter.removeLoadingFooter()
+            isLoading = false
+            viewModel.adapter.submitList(results)
+
+
+            totalPages = it.data?.total!! / it.data?.per_page!!
+            val reminder = it.data?.total!! % it.data?.per_page!!
+            if(reminder != 0){
+                totalPages += 1
+            }
+            if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
+            else isLastPage = true
+
+                binding.apply {
+                recyclerView.postDelayed({
+                    (recyclerView.getLayoutManager() as LinearLayoutManager).scrollToPositionWithOffset( (results.size
+                        ?: 0) - 1, 0)
+                    viewModel.adapter.notifyDataSetChanged()
+                }, 50)
+            }
+        }
+    }
+
+
+
+
 
 
     var imagePosition = 0

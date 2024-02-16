@@ -44,15 +44,13 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
         return  if(viewType == item){
             val binding: ItemHistoryBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_history, parent, false)
             callBackListener = this
-
             TopMoviesVH(binding)
         }else{
             val binding: ItemLoadingBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_loading, parent, false)
             LoadingVH(binding)
         }
-
-
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = itemModels[position]
@@ -154,8 +152,6 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
 
             }
         }
-
-
     }
 
     class LoadingVH(binding: ItemLoadingBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -178,16 +174,16 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
         notifyDataSetChanged()
     }
 
-    fun addAll(movies: MutableList<ItemHistory>) {
-        for(movie in movies){
-            add(movie)
-        }
-    }
+//    fun addAll(movies: MutableList<ItemHistory>) {
+//        for(movie in movies){
+//            add(movie)
+//        }
+//    }
 
-    fun add(moive: ItemHistory) {
-        itemModels.add(moive)
-        notifyItemInserted(itemModels.size - 1)
-    }
+//    fun add(moive: ItemHistory) {
+//        itemModels.add(moive)
+//        notifyItemInserted(itemModels.size - 1)
+//    }
 
     fun addLoadingFooter() {
         isLoadingAdded = true

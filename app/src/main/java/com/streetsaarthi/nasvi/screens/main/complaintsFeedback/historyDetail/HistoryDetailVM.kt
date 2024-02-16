@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryDetailVM @Inject constructor(private val repository: Repository): ViewModel() {
-    val chatAdapter by lazy { HistoryDetailAdapter() }
+    val adapter by lazy { HistoryDetailAdapter() }
 
     var uploadMediaImage : String ?= null
 
@@ -50,6 +50,38 @@ class HistoryDetailVM @Inject constructor(private val repository: Repository): V
             }
         )
     }
+
+
+
+
+
+    private var feedbackConversationLiveDataSecond = MutableLiveData<ItemChat>()
+    val feedbackConversationLiveSecond : LiveData<ItemChat> get() = feedbackConversationLiveDataSecond
+    fun feedbackConversationDetailsSecond(view: View, _id: String, page: String) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<ItemChat>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.feedbackConversationDetails(_id, page)
+                override fun success(response: Response<ItemChat>) {
+                    if (response.isSuccessful){
+                        if(response.body()!!.data != null){
+                            Log.e("TAG", "aaaaabbb "+response.body()!!.data.toString())
+                            feedbackConversationLiveDataSecond.value = response.body()
+                        }
+                    }
+                }
+                override fun error(message: String) {
+                    super.error(message)
+                }
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+
 
 
 
