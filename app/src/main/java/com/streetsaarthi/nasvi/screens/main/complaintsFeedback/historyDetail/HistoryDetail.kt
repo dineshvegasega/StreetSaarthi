@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,17 +31,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.HistoryDetailBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.chat.DataX
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemHistory
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
@@ -55,7 +51,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.json.JSONObject
 import java.io.File
 import java.util.Calendar
 
@@ -403,11 +398,11 @@ class HistoryDetail : Fragment() {
                 isLastPage = true
             }
 
-            if (viewModel.adapter.itemCount > 0) {
-                binding.idDataNotFound.root.visibility = View.GONE
-            } else {
-                binding.idDataNotFound.root.visibility = View.VISIBLE
-            }
+//            if (viewModel.adapter.itemCount > 0) {
+//                binding.idDataNotFound.root.visibility = View.GONE
+//            } else {
+//                binding.idDataNotFound.root.visibility = View.VISIBLE
+//            }
             binding.apply {
                 recyclerView.postDelayed({
                     (recyclerView.getLayoutManager() as LinearLayoutManager).scrollToPositionWithOffset( (results.size
@@ -654,7 +649,6 @@ class HistoryDetail : Fragment() {
 
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG","errorD " + e.message)
     }
 
 

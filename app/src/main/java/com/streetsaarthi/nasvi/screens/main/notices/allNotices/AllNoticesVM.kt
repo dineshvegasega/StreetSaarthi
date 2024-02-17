@@ -20,6 +20,7 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomLiveNoticeBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemNoticeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -35,7 +36,7 @@ class AllNoticesVM @Inject constructor(private val repository: Repository): View
 
     val adapter by lazy { AllNoticesAdapter(this) }
 
-
+    var counterNetwork = MutableLiveData<Boolean>(false)
 
     private var itemLiveNoticeResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveNotice : LiveData<BaseResponseDC<Any>> get() = itemLiveNoticeResult
@@ -51,8 +52,11 @@ class AllNoticesVM @Inject constructor(private val repository: Repository): View
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+//                    super.error(message)
+//                    showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -78,8 +82,11 @@ class AllNoticesVM @Inject constructor(private val repository: Repository): View
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+//                    super.error(message)
+//                    showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {

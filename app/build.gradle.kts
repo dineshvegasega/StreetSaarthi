@@ -203,4 +203,19 @@ dependencies {
 //    //noinspection GradleCompatible
 //    implementation ("com.android.support:support-compat:28.0.0")
 
+//    implementation ("com.google.api-client:google-api-client:1.33.0"){
+//        configurations.all {
+//            exclude("org.apache.http components")
+////            exclude("org.json', module: 'json")
+//            exclude("com.google.api-client")
+//
+//        }
+//    }
+
+//    implementation ("org.apache.commons:commons-collections4:4.4"){
+//        configurations.all {
+//            exclude("org.apache.commons components")
+//        }
+//    }
+
 }

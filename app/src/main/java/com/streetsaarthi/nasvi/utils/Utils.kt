@@ -88,11 +88,6 @@ fun showSnackBar(string: String) = try {
     MainActivity.activity.get()?.hideKeyboard()
     MainActivity.context.get()?.let { context ->
         var message = string
-        if (message.contains("Unable to resolve host"))
-            message = context.getString(R.string.no_internet_connection)
-        else if (message.contains("DOCTYPE html"))
-            message = context.getString(R.string.something_went_wrong)
-
         Snackbar.make(
             (context as Activity).findViewById(android.R.id.content),
             message,
@@ -102,7 +97,16 @@ fun showSnackBar(string: String) = try {
             animationMode = Snackbar.ANIMATION_MODE_SLIDE
             setTextColor(ContextCompat.getColor(context, R.color._ffffff))
             view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 5
-            show()
+            if (message.contains("Unable to resolve host")) {
+                message = context.getString(R.string.no_internet_connection)
+                show()
+            } else if (message.contains("DOCTYPE html")) {
+                message = context.getString(R.string.something_went_wrong)
+                show()
+            } else if (message.contains("Failed to connect")) {
+            } else  {
+                show()
+            }
         }
     }
 } catch (e: Exception) {

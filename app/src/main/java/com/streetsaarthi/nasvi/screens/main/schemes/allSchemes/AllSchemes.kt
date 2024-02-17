@@ -1,6 +1,7 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.allSchemes
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,16 +12,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.AllSchemesBinding
+import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
@@ -28,6 +34,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
+import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
@@ -36,6 +43,9 @@ class AllSchemes : Fragment() {
     private val viewModel: AllSchemesVM by viewModels()
     private var _binding: AllSchemesBinding? = null
     private val binding get() = _binding!!
+
+    var networkAlert : BottomSheetDialog?= null
+    var networkCount = 1
 
     private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
@@ -137,34 +147,30 @@ class AllSchemes : Fragment() {
         totalPages  = 1
         currentPage  = pageStart
         results.clear()
-        if (CheckValidation.isConnected(requireContext())) {
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                if (loginUser != null) {
-                    val obj: JSONObject = JSONObject().apply {
-                        put("page", currentPage)
-                        put("user_type", USER_TYPE)
-                        put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
-                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
-                    }
-                    viewModel.liveScheme(view = requireView(), obj)
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val obj: JSONObject = JSONObject().apply {
+                    put("page", currentPage)
+                    put("user_type", USER_TYPE)
+                    put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
+                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
+                viewModel.liveScheme(view = requireView(), obj)
             }
         }
     }
 
     fun loadNextPage() {
         Log.e("TAG", "loadNextPage "+currentPage)
-        if (CheckValidation.isConnected(requireContext())) {
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                if (loginUser != null) {
-                    val obj: JSONObject = JSONObject().apply {
-                        put("page", currentPage)
-                        put("user_type", USER_TYPE)
-                        put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
-                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
-                    }
-                    viewModel.liveSchemeSecond(view = requireView(), obj)
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val obj: JSONObject = JSONObject().apply {
+                    put("page", currentPage)
+                    put("user_type", USER_TYPE)
+                    put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
+                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
+                viewModel.liveSchemeSecond(view = requireView(), obj)
             }
         }
     }
@@ -217,6 +223,46 @@ class AllSchemes : Fragment() {
                 viewModel.viewDetail(data, position = position, requireView(), 3)
             }
         }
+
+
+
+        viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                if(networkCount == 1){
+                    if(networkAlert?.isShowing == true) {
+                        return@Observer
+                    }
+                    val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                    )
+                    networkAlert = BottomSheetDialog(requireContext())
+                    networkAlert?.setContentView(dialogBinding.root)
+                    networkAlert?.setOnShowListener { dia ->
+                        val bottomSheetDialog = dia as BottomSheetDialog
+                        val bottomSheetInternal: FrameLayout =
+                            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+                        bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+                    }
+                    networkAlert?.show()
+
+                    dialogBinding.apply {
+                        btClose.singleClick {
+                            networkAlert?.dismiss()
+                        }
+                        btApply.singleClick {
+                            networkAlert?.dismiss()
+                            if(totalPages == 1){
+                                loadFirstPage()
+                            } else {
+                                loadNextPage()
+                            }
+                            networkCount = 1
+                        }
+                    }
+                }
+                networkCount++
+            }
+        })
     }
 
 

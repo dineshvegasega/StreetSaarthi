@@ -31,6 +31,7 @@ import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
@@ -47,22 +48,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
 
     val adapter by lazy { AllSchemesAdapter(this) }
 
-
-//    val photosAdapter = object : GenericAdapter<ItemAllSchemesBinding, String>() {
-//        override fun onCreateView(
-//            inflater: LayoutInflater,
-//            parent: ViewGroup,
-//            viewType: Int
-//        ) = ItemAllSchemesBinding.inflate(inflater, parent, false)
-//
-//        override fun onBindHolder(binding: ItemAllSchemesBinding, dataClass: String, position: Int) {
-//
-//        }
-//    }
-
-
-
-
+    var counterNetwork = MutableLiveData<Boolean>(false)
 
     private var itemLiveSchemesResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemes : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResult
@@ -78,8 +64,11 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+//                    super.error(message)
+//                    showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -105,8 +94,11 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+//                    super.error(message)
+//                    showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -256,8 +248,6 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                             })
                         }
                         }
-                    } else {
-
                     }
                 }
 

@@ -25,6 +25,7 @@ import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemInformationDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -39,6 +40,7 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
 
     val adapter by lazy { InformationCenterAdapter(this) }
 
+    var counterNetwork = MutableLiveData<Boolean>(false)
 
     private var itemInformationCenterResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemInformationCenter : LiveData<BaseResponseDC<Any>> get() = itemInformationCenterResult
@@ -54,8 +56,11 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+//                    super.error(message)
+//                    showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -81,8 +86,11 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+//                    super.error(message)
+//                    showSnackBar(message)
+                    if(NETWORK_DIALOG_SHOW){
+                        counterNetwork.value = true
+                    }
                 }
 
                 override fun loading() {
@@ -160,8 +168,6 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
                             }
 
                         }
-                    } else {
-
                     }
                 }
 

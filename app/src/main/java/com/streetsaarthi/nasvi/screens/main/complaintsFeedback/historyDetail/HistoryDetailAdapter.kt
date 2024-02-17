@@ -171,47 +171,25 @@ class HistoryDetailAdapter () :
 
 
     override fun getItemViewType(position: Int): Int {
-        var list = currentList
+        val list = currentList
         if(position == 0){
             if(getItem(position).user_type == "admin"){
-                Log.e("TAG", "isLoadingAddedAA "+isLoadingAdded)
                 return LAYOUT_ONE
             }else if(getItem(position).user_type == "member"){
-                Log.e("TAG", "isLoadingAddedBB "+isLoadingAdded)
                 return LAYOUT_TWO
             }
         } else {
             if (position == list.size - 1 && isLoadingAdded) {
-                Log.e("TAG", "isLoadingAddedCC "+isLoadingAdded)
                 return LAYOUT_THREE
             } else {
                 if(getItem(position).user_type == "admin"){
-                    Log.e("TAG", "isLoadingAddedDD "+isLoadingAdded)
                     return LAYOUT_ONE
                 }else if(getItem(position).user_type == "member"){
-                    Log.e("TAG", "isLoadingAddedEE "+isLoadingAdded)
                     return LAYOUT_TWO
                 }
             }
         }
-
         return -1
-
-//        if(getItem(position).user_type == "admin"){
-//            Log.e("TAG", "isLoadingAddedAA "+isLoadingAdded)
-//            return LAYOUT_ONE
-//        }else if(getItem(position).user_type == "member"){
-//            Log.e("TAG", "isLoadingAddedBB "+isLoadingAdded)
-//            return LAYOUT_TWO
-//        } else {
-//            Log.e("TAG", "isLoadingAddedCC "+isLoadingAdded)
-//            if (position == list.size - 1 && isLoadingAdded) {
-//                Log.e("TAG", "isLoadingAddedDD "+isLoadingAdded)
-//                return LAYOUT_THREE
-//            } else {
-//                return -1
-//            }
-//        }
     }
 
 
@@ -247,7 +225,6 @@ class HistoryDetailAdapter () :
             (holder as RightMessagesViewHolder).bind(currentItem)
         }
 
-        Log.e("TAG", "holder.getItemViewType() "+holder.getItemViewType())
         if(holder.getItemViewType() == LAYOUT_THREE) {
             val currentItem=getItem(position)
             (holder as LoaderViewHolder).bind(currentItem)

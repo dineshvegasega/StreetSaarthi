@@ -36,7 +36,6 @@ class HistoryDetailVM @Inject constructor(private val repository: Repository): V
                 override fun success(response: Response<ItemChat>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            Log.e("TAG", "aaaaa "+response.body()!!.data.toString())
                             feedbackConversationLiveData.value = response.body()
                         }
                     }
@@ -65,7 +64,6 @@ class HistoryDetailVM @Inject constructor(private val repository: Repository): V
                 override fun success(response: Response<ItemChat>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            Log.e("TAG", "aaaaabbb "+response.body()!!.data.toString())
                             feedbackConversationLiveDataSecond.value = response.body()
                         }
                     }

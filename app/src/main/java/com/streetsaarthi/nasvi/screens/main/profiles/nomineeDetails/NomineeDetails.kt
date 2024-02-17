@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.common.collect.ArrayListMultimap
+import com.google.common.collect.Multimap
 import com.google.gson.Gson
 import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
@@ -23,8 +25,10 @@ import com.streetsaarthi.nasvi.utils.relationType
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MultipartBody
+import org.json.JSONArray
 import org.json.JSONObject
-import java.util.Collections
+
 
 @AndroidEntryPoint
 class NomineeDetails : Fragment() {
@@ -141,7 +145,6 @@ class NomineeDetails : Fragment() {
             viewModel.nomineeMutableLiveData.observe(viewLifecycleOwner, Observer {
                 if(it){
                     val data = viewModel.nomineeArrayList
-                    Log.e("TAG", "dataXXX "+data.size)
                     val relationArray = resources.getStringArray(R.array.relation_array)
 
                     emptyAll()
@@ -317,7 +320,6 @@ class NomineeDetails : Fragment() {
                 viewModel.relationName4 = editTextName4.text.toString()
                 viewModel.relationName5 = editTextName5.text.toString()
 
-
                 if(viewModel.relationType1.isEmpty() &&
                     viewModel.relationType2.isEmpty() &&
                     viewModel.relationType3.isEmpty() &&
@@ -344,28 +346,25 @@ class NomineeDetails : Fragment() {
                         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val _id = Gson().fromJson(loginUser, Login::class.java).id
-                                val hashMap = HashMap<String, String>().apply {
-                                    if(viewModel.relationType1.isNotEmpty()){
-                                        put("nominee[]["+viewModel.relationType1+"]", viewModel.relationName1)
-                                    }
-                                    if(viewModel.relationType2.isNotEmpty()){
-                                        put("nominee[]["+viewModel.relationType2+"]", viewModel.relationName2)
-
-                                    }
-                                    if(viewModel.relationType3.isNotEmpty()){
-                                        put("nominee[]["+viewModel.relationType3+"]", viewModel.relationName3)
-
-                                    }
-                                    if(viewModel.relationType4.isNotEmpty()){
-                                        put("nominee[]["+viewModel.relationType4+"]", viewModel.relationName4)
-
-                                    }
-                                    if(viewModel.relationType5.isNotEmpty()){
-                                        put("nominee[]["+viewModel.relationType5+"]", viewModel.relationName5)
-
-                                    }
+                                val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                                    .setType(MultipartBody.FORM)
+                                    .addFormDataPart("member_id", ""+_id)
+                                if (viewModel.relationType1.isNotEmpty()) {
+                                    requestBody.addFormDataPart("nominee[][" + viewModel.relationType1 + "]", viewModel.relationName1)
                                 }
-                                viewModel.updateNomineeDetails(view = requireView(), ""+_id, hashMap)
+                                if(viewModel.relationType2.isNotEmpty()){
+                                    requestBody.addFormDataPart("nominee[][" + viewModel.relationType2 + "]", viewModel.relationName2)
+                                }
+                                if(viewModel.relationType3.isNotEmpty()){
+                                    requestBody.addFormDataPart("nominee[][" + viewModel.relationType3 + "]", viewModel.relationName3)
+                                }
+                                if(viewModel.relationType4.isNotEmpty()){
+                                    requestBody.addFormDataPart("nominee[][" + viewModel.relationType4 + "]", viewModel.relationName4)
+                                }
+                                if(viewModel.relationType5.isNotEmpty()){
+                                    requestBody.addFormDataPart("nominee[][" + viewModel.relationType5 + "]", viewModel.relationName5)
+                                }
+                                viewModel.updateNomineeDetails(view = requireView(), requestBody.build())
                             }
                         }
                     }

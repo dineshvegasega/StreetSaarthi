@@ -6,6 +6,8 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.common.collect.ArrayListMultimap
+import com.google.common.collect.Multimap
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
@@ -15,9 +17,11 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemNomineeData
+import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
@@ -47,11 +51,11 @@ class NomineeDetailsVM @Inject constructor(private val repository: Repository): 
 
 
     var updateNominee = MutableLiveData<Boolean>(false)
-    fun  updateNomineeDetails(view: View, _id: String, toString: HashMap<String, String>) = viewModelScope.launch {
+    fun  updateNomineeDetails(view: View, requestBody: RequestBody) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.updateNomineeDetails(_id, toString)
+                    apiInterface.updateNomineeDetails(requestBody)
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){

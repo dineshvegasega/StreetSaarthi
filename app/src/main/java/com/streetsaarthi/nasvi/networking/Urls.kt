@@ -86,6 +86,6 @@ const val LoginPassword = "LoginPassword"
 const val LoginOtp = "LoginOtp"
 const val LIVE_SCHEMES = "LIVE_SCHEMES"
 
-const val NETWORK_DIALOG_SHOW = false
+const val NETWORK_DIALOG_SHOW = true
 
 

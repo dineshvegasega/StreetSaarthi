@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi
 
+import com.google.common.collect.Multimap
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.chat.ItemChat
@@ -323,11 +324,9 @@ interface ApiInterface {
 
 
     @Headers("Accept: application/json")
-    @FormUrlEncoded
     @POST(UpdateNomineeDetails)
     suspend fun updateNomineeDetails(
-        @Field("member_id") member_id: String,
-        @FieldMap  nominee: HashMap<String, String>
+        @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 
 

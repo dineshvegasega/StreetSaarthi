@@ -1,6 +1,7 @@
 package com.streetsaarthi.nasvi.screens.main.notifications
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,15 +9,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.NotificationsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
@@ -38,6 +43,9 @@ class Notifications : Fragment() {
     private val binding get() = _binding!!
 
     var deleteAlert : AlertDialog?= null
+
+    var networkAlert : BottomSheetDialog?= null
+    var networkCount = 1
 
     private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
@@ -144,31 +152,27 @@ class Notifications : Fragment() {
         totalPages  = 1
         currentPage  = pageStart
 //        results.clear()
-        if (CheckValidation.isConnected(requireContext())) {
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                if (loginUser != null) {
-                    val obj: JSONObject = JSONObject().apply {
-                        put("page", pageStart)
-                        put("is_read", false)
-                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
-                    }
-                    viewModel.notifications(view = requireView(), obj)
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val obj: JSONObject = JSONObject().apply {
+                    put("page", pageStart)
+                    put("is_read", false)
+                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
+                viewModel.notifications(view = requireView(), obj)
             }
         }
     }
 
     fun loadNextPage() {
-        if (CheckValidation.isConnected(requireContext())) {
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                if (loginUser != null) {
-                    val obj: JSONObject = JSONObject().apply {
-                        put("page", currentPage)
-                        put("is_read", false)
-                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
-                    }
-                    viewModel.notificationsSecond(view = requireView(), obj)
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val obj: JSONObject = JSONObject().apply {
+                    put("page", currentPage)
+                    put("is_read", false)
+                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
+                viewModel.notificationsSecond(view = requireView(), obj)
             }
         }
     }
@@ -182,8 +186,6 @@ class Notifications : Fragment() {
         viewModel.updateNotifications.value = -1
         viewModel.updateNotifications.observe(requireActivity()) {
             if (it != -1){
-                Log.e("TAG", "resultsAA "+results.size)
-                Log.e("TAG", "itAA "+it)
                 results.removeAt(it)
                 viewModel.adapter.addAllSearch(results)
                 viewModel.updateNotifications.value = -1
@@ -256,7 +258,6 @@ class Notifications : Fragment() {
 //                    }
                 }
 
-                Log.e("TAG", "newId.notification_idCC "+results.size)
 //            }
 //            results.addAll(changeValue as MutableList<ItemNotification>)
 
@@ -268,6 +269,47 @@ class Notifications : Fragment() {
             if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
             else isLastPage = true
         }
+
+
+
+
+        viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                if(networkCount == 1){
+                    if(networkAlert?.isShowing == true) {
+                        return@Observer
+                    }
+                    val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                    )
+                    networkAlert = BottomSheetDialog(requireContext())
+                    networkAlert?.setContentView(dialogBinding.root)
+                    networkAlert?.setOnShowListener { dia ->
+                        val bottomSheetDialog = dia as BottomSheetDialog
+                        val bottomSheetInternal: FrameLayout =
+                            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+                        bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+                    }
+                    networkAlert?.show()
+
+                    dialogBinding.apply {
+                        btClose.singleClick {
+                            networkAlert?.dismiss()
+                        }
+                        btApply.singleClick {
+                            networkAlert?.dismiss()
+                            if(totalPages == 1){
+                                loadFirstPage()
+                            } else {
+                                loadNextPage()
+                            }
+                            networkCount = 1
+                        }
+                    }
+                }
+                networkCount++
+            }
+        })
     }
 
 
