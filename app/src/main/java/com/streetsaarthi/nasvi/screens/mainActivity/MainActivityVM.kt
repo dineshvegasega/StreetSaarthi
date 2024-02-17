@@ -105,13 +105,13 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 }
 
 
-//                if(selectedColorPosition == position) {
-//                    header.setBackgroundTintList(
-//                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
-//                } else {
-//                    header.setBackgroundTintList(
-//                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
-//                }
+                if(selectedColorPosition == position) {
+                    header.setBackgroundTintList(
+                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
+                } else {
+                    header.setBackgroundTintList(
+                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
+                }
 
 
                 title.text = dataClass.title
@@ -290,13 +290,13 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
             val item = items?.get(position)
             holder.tvTitle.text = item?.title
 
-//            if(selectedChildColorPosition == position) {
-//                holder.child.setBackgroundTintList(
-//                    ColorStateList.valueOf(ContextCompat.getColor(mainContext, R.color._f6dbbb)))
-//            } else {
-//                holder.child.setBackgroundTintList(
-//                    ColorStateList.valueOf(ContextCompat.getColor(mainContext, R.color.white)))
-//            }
+            if(selectedChildColorPosition == position) {
+                holder.child.setBackgroundTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(mainContext, R.color._f6dbbb)))
+            } else {
+                holder.child.setBackgroundTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(mainContext, R.color.white)))
+            }
 
             holder.itemView.singleClick {
                 selectedChildColorPosition = position

@@ -8,15 +8,14 @@ package com.streetsaarthi.nasvi.screens.mainActivity
 //import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.ActivityManager
-import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import android.view.View
 import androidx.activity.result.IntentSenderRequest
@@ -38,7 +37,6 @@ import com.google.android.play.core.common.IntentSenderForResultStarter
 import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.gson.Gson
-import com.streetsaarthi.nasvi.App
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.MainActivityBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
@@ -54,7 +52,6 @@ import com.streetsaarthi.nasvi.utils.LocaleHelper
 import com.streetsaarthi.nasvi.utils.autoScroll
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
-import com.streetsaarthi.nasvi.utils.isAppIsInBackground
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -117,7 +114,6 @@ class MainActivity : AppCompatActivity() {
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
@@ -125,7 +121,11 @@ class MainActivity : AppCompatActivity() {
         activity = WeakReference(this)
         mainActivity = WeakReference(this)
 
-
+        val policy = ThreadPolicy.Builder()
+            .detectAll()
+            .penaltyLog()
+            .build()
+        StrictMode.setThreadPolicy(policy)
 
         checkUpdate()
 
@@ -197,12 +197,10 @@ class MainActivity : AppCompatActivity() {
         ) {
             override fun onDrawerClosed(view: View) {
                 super.onDrawerClosed(view)
-                Log.e("TAG", "onDrawerClosed")
             }
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                Log.e("TAG", "onDrawerOpened")
             }
         }
         binding.drawerLayout.addDrawerListener(mDrawerToggle);

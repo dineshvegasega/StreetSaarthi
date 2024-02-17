@@ -44,6 +44,7 @@ class AppModule {
             .writeTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(ChuckerInterceptor(context))
+            .addInterceptor(NetworkInterceptor.interceptor)
             .retryOnConnectionFailure(true)
             .cache(cache)
             .build()

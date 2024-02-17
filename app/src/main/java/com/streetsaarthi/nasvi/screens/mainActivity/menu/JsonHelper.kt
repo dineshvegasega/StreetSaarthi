@@ -15,7 +15,6 @@ open class JsonHelper(private var context: Context) {
     open fun getMenuData(locale: Locale): List<ItemMenuModel>? {
         if (newspaperList == null)
             newspaperList = ArrayList()
-
         try {
             var jsonObject : JSONObject = JSONObject()
             if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""){

@@ -75,7 +75,6 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @GET(VENDER_PROFILE+ "/{id}")
     suspend fun profile(
         @Path("id") id: String,
@@ -101,10 +100,12 @@ interface ApiInterface {
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
 
+
     @POST(VERIFY_OTP)
     suspend fun verifyOTP(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
+
 
     @POST(RESEND_OTP)
     suspend fun reSendOTP(
@@ -117,12 +118,12 @@ interface ApiInterface {
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
 
+
     @Headers("Accept: application/json")
     @POST(NewFeedback)
     suspend fun newFeedback(
         @Body hashMap: RequestBody
     ): Response<BaseResponseDC<Any>>
-
 
 
     @Headers("Accept: application/json")
@@ -138,36 +139,40 @@ interface ApiInterface {
     ): Response<BaseResponseDC<Any>>
 
 
-
     @GET(Vending)
     suspend fun vending(): Response<BaseResponseDC<List<ItemVending>>>
+
 
     @GET(Marketplace)
     suspend fun marketplace(): Response<BaseResponseDC<List<ItemMarketplace>>>
 
+
     @GET(STATE)
     suspend fun state(): Response<BaseResponseDC<List<ItemState>>>
+
 
     @POST(DISTRICT)
     suspend fun district(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemDistrict>>>
 
+
     @POST(PANCHAYAT)
     suspend fun panchayat(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemPanchayat>>>
+
 
     @POST(PINCODE)
     suspend fun pincode(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemPincode>>>
 
+
     @POST(LOCAL_ORGANISATION)
     suspend fun localOrganisation(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemOrganization>>>
-
 
 
     @POST(SchemeHistoryList)
@@ -176,26 +181,29 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @POST(LiveScheme)
     suspend fun liveScheme(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
+
 
     @POST(SchemeApply)
     suspend fun applyLink(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 
+
     @GET(SchemeDetail+ "/{id}")
     suspend fun schemeDetail(
         @Path("id") id: String,
     ): Response<BaseResponseDC<JsonElement>>
 
+
     @GET(TrainingDetail+ "/{id}")
     suspend fun trainingDetail(
         @Path("id") id: String,
     ): Response<BaseResponseDC<JsonElement>>
+
 
     @GET(NoticeDetail+ "/{id}")
     suspend fun noticeDetail(
@@ -221,7 +229,6 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @POST(AllSchemeHistory)
     suspend fun allSchemeList(
         @Body requestBody: RequestBody
@@ -240,7 +247,6 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @GET(Notifications)
     suspend fun notifications(
         @Query("page")  page: Int,
@@ -255,7 +261,6 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @POST(UpdateNotification)
     suspend fun updateNotification(
         @Body requestBody: RequestBody
@@ -266,7 +271,6 @@ interface ApiInterface {
     suspend fun complaintFeedback(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
-
 
 
     @POST(ComplaintFeedbackHistory)
@@ -289,13 +293,11 @@ interface ApiInterface {
     suspend fun complaintType(): Response<BaseResponseDC<List<ItemComplaintType>>>
 
 
-
     @GET(FeedbackConversationDetails+ "/{id}")
     suspend fun feedbackConversationDetails(
         @Path("id") id: String,
         @Query("page") page: String,
     ): Response<ItemChat>
-
 
 
     @Headers("Accept: application/json")
@@ -328,7 +330,6 @@ interface ApiInterface {
     suspend fun updateNomineeDetails(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
-
 
 
     @POST(NomineeDetails)
