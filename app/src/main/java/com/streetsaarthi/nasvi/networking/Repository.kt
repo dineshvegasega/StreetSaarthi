@@ -231,10 +231,24 @@ class Repository @Inject constructor(
     }
 
 
+
+    fun showLoaderSecond(context: Context) {
+        if (alertDialog == null) {
+            val alert = AlertDialog.Builder(context)
+            val binding = LoaderBinding.inflate(LayoutInflater.from(context), null, false)
+            alert.setView(binding.root)
+            alert.setCancelable(false)
+            alertDialog = alert.create()
+            alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            alertDialog?.show()
+        }
+    }
+
+
     /**
      * Hide Loader
      * */
-    private fun hideLoader() {
+    fun hideLoader() {
         alertDialog?.dismiss()
         alertDialog = null
     }

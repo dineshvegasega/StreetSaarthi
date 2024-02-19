@@ -15,10 +15,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ivOpenClose"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_1sdp"
-        android:text="OpenClose"
+        android:text=""
         android:gravity="center"
         android:textColor="@color/black"
         android:backgroundTint="@color/_D9D9D9"
@@ -30,6 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingVertical="@dimen/_4sdp"
         android:paddingHorizontal="@dimen/_13sdp"
+        android:visibility="gone"
         />
 
 

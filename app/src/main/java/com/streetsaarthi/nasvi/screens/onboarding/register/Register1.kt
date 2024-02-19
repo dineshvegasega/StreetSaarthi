@@ -176,7 +176,6 @@ class Register1  : Fragment() , CallBackListener {
 
 
             viewModel.state(view)
-//            viewModel.translate(view)
             editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemState.size > 0){

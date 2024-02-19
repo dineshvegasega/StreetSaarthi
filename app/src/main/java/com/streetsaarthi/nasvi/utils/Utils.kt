@@ -35,9 +35,15 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import org.json.JSONArray
 import org.json.JSONObject
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -567,4 +573,43 @@ fun String.relationType(array: Array<String>): String {
             else -> {""}
         }
     }
+}
+
+
+
+
+
+//suspend fun String.callUrlAndParseResult(langTo: String): String {
+//    val url = "https://translate.googleapis.com/translate_a/single?" +
+//            "client=gtx&" +
+//            "sl=" + "en" +
+//            "&tl=" + langTo +
+//            "&dt=t&q=" + URLEncoder.encode(this, "UTF-8")
+//    val obj = URL(url)
+//    val con = obj.openConnection() as HttpURLConnection
+//    con.setRequestProperty("User-Agent", "Mozilla/5.0")
+//    val `in` = BufferedReader(
+//        InputStreamReader(con.inputStream)
+//    )
+//    var inputLine: String?
+//    val response = StringBuffer()
+//    while (`in`.readLine().also { inputLine = it } != null) {
+//        response.append(inputLine)
+//    }
+//    `in`.close()
+//    return response.toString().parseResult()
+//}
+
+
+
+@Throws(Exception::class)
+fun String.parseResult(): String {
+    var words = ""
+    val jsonArray = JSONArray(this)
+    val jsonArray2 = jsonArray[0] as JSONArray
+    for (i in 0..jsonArray2.length() - 1) {
+        val jsonArray3 = jsonArray2[i] as JSONArray
+        words += jsonArray3[0].toString()
+    }
+    return words.toString()
 }

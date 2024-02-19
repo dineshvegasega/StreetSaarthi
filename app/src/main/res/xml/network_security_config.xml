@@ -3,5 +3,10 @@
     tools:ignore="MissingDefaultResource">
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">https://streetsaarthi.in/#/mobile-login</domain>
+        <domain includeSubdomains="true">https://translate.googleapis.com</domain>
+        <domain includeSubdomains="true">http://167.71.225.20:8081</domain>
     </domain-config>
+
+    <base-config cleartextTrafficPermitted="true"/>
+
 </network-security-config>

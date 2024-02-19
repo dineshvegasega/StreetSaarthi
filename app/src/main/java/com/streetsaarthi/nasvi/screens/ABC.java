@@ -39,7 +39,7 @@ public class ABC extends AppCompatActivity {
             public void onClick(View v) {
                 String word = null;
                 try {
-                    word = callUrlAndParseResult("en", "hi", "hello");
+                    word = callUrlAndParseResult("en", "hi", "Daman and Diu");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

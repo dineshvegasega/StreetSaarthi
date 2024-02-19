@@ -114,6 +114,8 @@ class MainActivity : AppCompatActivity() {
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
@@ -121,11 +123,18 @@ class MainActivity : AppCompatActivity() {
         activity = WeakReference(this)
         mainActivity = WeakReference(this)
 
+
         val policy = ThreadPolicy.Builder()
             .detectAll()
             .penaltyLog()
+//            .penaltyDeath()
+            .detectDiskReads()
+            .detectDiskWrites()
+            .detectNetwork()
             .build()
         StrictMode.setThreadPolicy(policy)
+
+
 
         checkUpdate()
 

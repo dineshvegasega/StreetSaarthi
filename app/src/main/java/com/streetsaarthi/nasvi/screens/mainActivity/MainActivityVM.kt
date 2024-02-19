@@ -106,8 +106,22 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
 
                 if(selectedColorPosition == position) {
-                    header.setBackgroundTintList(
-                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
+//                    if(position == 4){
+//                        header.setBackgroundTintList(
+//                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
+//                    } else if(position == 5){
+//                        header.setBackgroundTintList(
+//                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
+//                    } else if(position == 6){
+//                        header.setBackgroundTintList(
+//                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
+//                    } else if(position == 7){
+//                        header.setBackgroundTintList(
+//                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
+//                    } else {
+                        header.setBackgroundTintList(
+                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
+//                    }
                 } else {
                     header.setBackgroundTintList(
                         ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))

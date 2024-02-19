@@ -16,9 +16,10 @@ import java.net.URLEncoder
 
 interface ApiTranslateInterface {
 
-
+    @Headers("Accept: application/json")
     @GET(TRANSLATE)
     suspend fun translate(
-        @Query("q")  q: String
-    ): Response<ItemT>
+        @Query("tl") lang: String,
+        @Query("q") q: String
+    ): Response<JsonElement>
 }
