@@ -6,6 +6,7 @@ import com.streetsaarthi.nasvi.models.test.ItemT
 import com.streetsaarthi.nasvi.models.translate.ItemTranslate
 import com.streetsaarthi.nasvi.screens.onboarding.networking.TRANSLATE
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,8 +19,8 @@ interface ApiTranslateInterface {
 
     @Headers("Accept: application/json")
     @GET(TRANSLATE)
-    suspend fun translate(
+    fun translate(
         @Query("tl") lang: String,
         @Query("q") q: String
-    ): Response<JsonElement>
+    ): Call<JsonElement>
 }

@@ -36,16 +36,24 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.parseResult
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class LiveSchemesVM @Inject constructor(private val repository: Repository): ViewModel() {
+    var locale: Locale = Locale.getDefault()
 
     val adapter by lazy { LiveSchemesAdapter(this) }
 
@@ -267,6 +275,36 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
             }
         )
     }
+
+
+
+
+
+    @Throws(Exception::class)
+    suspend fun callUrlAndParseResult(
+        langTo: String,
+        word: String
+    ): String {
+        val url = "https://translate.googleapis.com/translate_a/single?" +
+                "client=gtx&" +
+                "sl=" + "en" +
+                "&tl=" + langTo +
+                "&dt=t&q=" + URLEncoder.encode(word, "UTF-8")
+        val obj = URL(url)
+        val con = obj.openConnection() as HttpURLConnection
+        con.setRequestProperty("User-Agent", "Mozilla/5.0")
+        val `in` = BufferedReader(
+            InputStreamReader(con.inputStream)
+        )
+        var inputLine: String?
+        val response = StringBuffer()
+        while (`in`.readLine().also { inputLine = it } != null) {
+            response.append(inputLine)
+        }
+        `in`.close()
+        return response.toString().parseResult()
+    }
+
 
 }
 

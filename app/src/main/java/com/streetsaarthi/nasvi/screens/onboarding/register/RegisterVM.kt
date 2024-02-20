@@ -1,7 +1,10 @@
 package com.streetsaarthi.nasvi.screens.onboarding.register
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
+import android.app.ProgressDialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,16 +13,21 @@ import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
+import com.google.gson.JsonParser
 import com.streetsaarthi.nasvi.ApiInterface
 import com.streetsaarthi.nasvi.CallHandler
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
+import com.streetsaarthi.nasvi.di.TotalEr
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.mix.ItemDistrict
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
@@ -31,31 +39,48 @@ import com.streetsaarthi.nasvi.models.mix.ItemVending
 import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
 import com.streetsaarthi.nasvi.networking.CallHandlerTranslate
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.networking.new.ApiClient
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.utils.callUrlAndParseResult
 import com.streetsaarthi.nasvi.utils.mainDispatcher
+import com.streetsaarthi.nasvi.utils.openKeyboard
 import com.streetsaarthi.nasvi.utils.parseResult
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import okhttp3.internal.notify
+import okhttp3.internal.wait
+import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.await
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
 @HiltViewModel
-class RegisterVM @Inject constructor(private val repository: Repository, private val repositoryTranslate: Repository) : ViewModel() {
+class RegisterVM @Inject constructor(
+    private val repository: Repository
+) : ViewModel() {
     var locale: Locale = Locale.getDefault()
 
     var data: Model = Model()
@@ -70,23 +95,36 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
     var isAgree = MutableLiveData<Boolean>(false)
 
     var alertDialog: AlertDialog? = null
+
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())
-        val binding = LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
         alert.setView(binding.root)
         alert.setCancelable(false)
         alertDialog = alert.create()
         alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        alertDialog?.show()
-
-
-//        val alert2 = AlertDialog.Builder(MainActivity.activity.get())
-//        val binding2 = LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
-//        alert2.setView(binding2.root)
-//        alert2.setCancelable(false)
-//        alertDialog2 = alert2.create()
-//        alertDialog2?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
+
+
+
+    fun show() {
+        Handler(Looper.myLooper()!!).postDelayed({
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }, 50)
+    }
+
+    fun hide() {
+        Handler(Looper.myLooper()!!).postDelayed({
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }, 50)
+    }
+
 
     fun vending(view: View) = viewModelScope.launch {
         repository.callApi(
@@ -136,6 +174,8 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
     }
 
 
+
+
     var itemState: ArrayList<ItemState> = ArrayList()
     var stateId: Int = 0
 
@@ -151,12 +191,9 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
     var currentAddress: String = ""
 
 
-
     fun state(view: View) = viewModelScope.launch {
-//        MainActivity.activity.get()?.runOnUiThread {
-//            alertDialog?.show()
-//        }
-        repository.callApi(
+        show()
+        repository.callApiWithoutLoader(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemState>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.state()
@@ -164,58 +201,43 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
                     if (response.isSuccessful) {
                         val itemStateTemp = response.body()?.data as ArrayList<ItemState>
-//                        if (MainActivity.context.get()!!
-//                                .getString(R.string.englishVal) == "" + locale
-//                        ) {
+                        if (MainActivity.context.get()!!
+                                .getString(R.string.englishVal) == "" + locale
+                        ) {
                             itemState = itemStateTemp
-//                                alertDialog?.dismiss()
-//                        } else {
-//                            MainActivity.activity.get()?.runOnUiThread {
-//                                runBlocking {
-//                                    itemStateTemp.forEach {
-//                                        val nameChange = async {
-//                                            callUrlAndParseResult( "" + locale,  it.name )
-//                                        }.await()
-//                                        apply {
-//                                            it.name = nameChange
-//                                        }
-//                                    }
-//                                    itemState = itemStateTemp
-//                                    alertDialog?.dismiss()
-//                                }
-//                            }
-//                        }
+                            hide()
+                        } else {
+                            itemStateTemp.forEach {
+//                                val nameChanged = callUrlAndParseResult("" + locale, it.name)
+                                val nameChanged = it.name.callUrlAndParseResult("" + locale)
+                                apply {
+                                    it.name = nameChanged
+                                }
+                            }
+                            itemState = itemStateTemp
+                            hide()
+                        }
                     }
                 }
 
                 override fun error(message: String) {
                     super.error(message)
-//                    runBlocking {
-//                        alertDialog?.dismiss()
-//                    }
+                    hide()
                 }
 
                 override fun loading() {
                     super.loading()
-//                    runBlocking {
-//                        alertDialog?.dismiss()
-//                    }
                 }
             }
         )
     }
 
 
-
-
-
     fun district(view: View, id: Int) = viewModelScope.launch {
-//        MainActivity.activity.get()?.runOnUiThread {
-//            alertDialog?.show()
-//        }
+        show()
         val obj: JSONObject = JSONObject()
         obj.put("state_id", id)
-        repository.callApi(
+        repository.callApiWithoutLoader(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemDistrict>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.district(requestBody = obj.getJsonRequestBody())
@@ -223,79 +245,27 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
                 override fun success(response: Response<BaseResponseDC<List<ItemDistrict>>>) {
                     if (response.isSuccessful) {
                         val itemDistrictTemp = response.body()?.data as ArrayList<ItemDistrict>
-//                        if (MainActivity.context.get()!!
-//                                .getString(R.string.englishVal) == "" + locale
-//                        ) {
+                        if (MainActivity.context.get()!!
+                                .getString(R.string.englishVal) == "" + locale
+                        ) {
                             itemDistrict = itemDistrictTemp
-//                            MainActivity.activity.get()?.runOnUiThread {
-//                                alertDialog?.dismiss()
-//                            }
-//                        } else {
-//                            MainActivity.activity.get()?.runOnUiThread {
-//                                runBlocking {
-//                                    itemDistrictTemp.forEach {
-//                                        val nameChange = async {
-//                                            callUrlAndParseResult( "" + locale,  it.name )
-//                                        }.await()
-//                                        apply {
-//                                            it.name = nameChange
-//                                        }
-//                                    }
-//                                    itemDistrict = itemDistrictTemp
-//                                    alertDialog?.dismiss()
-//                                }
-//                            }
-//                        }
+                            hide()
+                        } else {
+                            itemDistrictTemp.forEach {
+                                val nameChanged = it.name.callUrlAndParseResult("" + locale)
+                                apply {
+                                    it.name = nameChanged
+                                }
+                            }
+                            itemDistrict = itemDistrictTemp
+                            hide()
+                        }
                     }
                 }
 
                 override fun error(message: String) {
                     super.error(message)
-//                    alertDialog?.dismiss()
-                }
-
-                override fun loading() {
-//                    super.loading()
-//                    alertDialog?.dismiss()
-                }
-            }
-        )
-    }
-
-    fun panchayat(view: View, id: Int) = viewModelScope.launch {
-        val obj: JSONObject = JSONObject()
-        obj.put("state_id", id)
-        repository.callApi(
-            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemPanchayat>>>> {
-                override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.panchayat(requestBody = obj.getJsonRequestBody())
-                override fun success(response: Response<BaseResponseDC<List<ItemPanchayat>>>) {
-                    if (response.isSuccessful) {
-                        val itemPanchayatTemp = response.body()?.data as ArrayList<ItemPanchayat>
-//                        if (MainActivity.context.get()!!
-//                                .getString(R.string.englishVal) == "" + locale
-//                        ) {
-                            itemPanchayat = itemPanchayatTemp
-//                            alertDialog?.dismiss()
-//                        } else {
-//                            runBlocking {
-//                                itemPanchayat.forEach {
-//                                    val nameChange = async {
-//                                        callUrlAndParseResult( "" + locale,  it.name )
-//                                    }.await()
-//                                    apply {
-//                                        it.name = nameChange
-//                                    }
-//                                }
-//                                itemPanchayat = itemPanchayatTemp
-//                                alertDialog?.dismiss()
-//                            }
-//                        }
-                    }
-                }
-
-                override fun error(message: String) {
-                    super.error(message)
+                    hide()
                 }
 
                 override fun loading() {
@@ -304,6 +274,50 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
             }
         )
     }
+
+
+    fun panchayat(view: View, id: Int) = viewModelScope.launch {
+        show()
+        val obj: JSONObject = JSONObject()
+        obj.put("state_id", id)
+        repository.callApiWithoutLoader(
+            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemPanchayat>>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.panchayat(requestBody = obj.getJsonRequestBody())
+
+                override fun success(response: Response<BaseResponseDC<List<ItemPanchayat>>>) {
+                    if (response.isSuccessful) {
+                        val itemPanchayatTemp = response.body()?.data as ArrayList<ItemPanchayat>
+                        if (MainActivity.context.get()!!
+                                .getString(R.string.englishVal) == "" + locale
+                        ) {
+                            itemPanchayat = itemPanchayatTemp
+                            alertDialog?.dismiss()
+                        } else {
+                            itemPanchayatTemp.forEach {
+                                val nameChanged = it.name.callUrlAndParseResult("" + locale)
+                                apply {
+                                    it.name = nameChanged
+                                }
+                            }
+                            itemPanchayat = itemPanchayatTemp
+                            hide()
+                        }
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                    hide()
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
 
     fun pincode(view: View, id: Int) = viewModelScope.launch {
         val obj: JSONObject = JSONObject()
@@ -349,14 +363,28 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
     var currentAddressVending: String = ""
 
     fun stateCurrent(view: View) = viewModelScope.launch {
-        repository.callApi(
+        repository.callApiWithoutLoader(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemState>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.state()
-
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
                     if (response.isSuccessful) {
-                        itemStateVending = response.body()?.data as ArrayList<ItemState>
+                        val itemStateTemp = response.body()?.data as ArrayList<ItemState>
+                        if (MainActivity.context.get()!!
+                                .getString(R.string.englishVal) == "" + locale
+                        ) {
+                            itemStateVending = itemStateTemp
+                            hide()
+                        } else {
+                            itemStateTemp.forEach {
+                                val nameChanged = it.name.callUrlAndParseResult("" + locale)
+                                apply {
+                                    it.name = nameChanged
+                                }
+                            }
+                            itemState = itemStateTemp
+                            hide()
+                        }
                     }
                 }
 
@@ -623,152 +651,198 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
         )
     }
 
+//
+//    @Throws(Exception::class)
+//    fun callUrlAndParseResult(
+//        langTo: String,
+//        word: String
+//    ): String {
+//        var myResponse = ""
+//        val url = "https://translate.googleapis.com/translate_a/single?" +
+//                "client=gtx&" +
+//                "sl=" + "en" +
+//                "&tl=" + langTo +
+//                "&dt=t&q=" + URLEncoder.encode(word, "UTF-8")
+//        val httpURLConnection = URL(url).openConnection() as HttpURLConnection
+//        httpURLConnection.setRequestProperty("Accept", "application/json")
+//        httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0")
+//        httpURLConnection.requestMethod = "GET"
+//        httpURLConnection.doInput = true
+//        httpURLConnection.doOutput = false
+//        httpURLConnection.connectTimeout = 10000
+//        httpURLConnection.readTimeout = 10000
+//        val responseCode = httpURLConnection.responseCode
+//        if (responseCode == HttpURLConnection.HTTP_OK) {
+//            val response = httpURLConnection.inputStream.bufferedReader().use {it.readText() }
+//            myResponse = response.toString().parseResult()
+//        }
+//
+//        httpURLConnection.inputStream.bufferedReader().use {
+//            it.close()
+//        }
+//        return myResponse
+//    }
 
-    @Throws(Exception::class)
-    suspend fun callUrlAndParseResult(
-        langTo: String,
-        word: String
-    ): String {
-        val url = "https://translate.googleapis.com/translate_a/single?" +
-                "client=gtx&" +
-                "sl=" + "en" +
-                "&tl=" + langTo +
-                "&dt=t&q=" + URLEncoder.encode(word, "UTF-8")
-        val obj = URL(url)
-        val con = obj.openConnection() as HttpURLConnection
-        con.setRequestProperty("User-Agent", "Mozilla/5.0")
-        val `in` = BufferedReader(
-            InputStreamReader(con.inputStream)
-        )
-        var inputLine: String?
-        val response = StringBuffer()
-        while (`in`.readLine().also { inputLine = it } != null) {
-            response.append(inputLine)
-        }
-        `in`.close()
-        return response.toString().parseResult()
-    }
 
-
-    fun translateHi(lang: String, words: String) = viewModelScope.launch {
-        repository.callApiTranslate(
-            callHandler = object : CallHandlerTranslate<Response<JsonElement>> {
-                override suspend fun sendRequest(apiInterface: ApiTranslateInterface) =
-                    apiInterface.translate(lang, words)
-
-                override fun success(response: Response<JsonElement>) {
-                    if (response.isSuccessful) {
-                        //itemState = response.body()?.data as ArrayList<ItemState>
-
-//                        var words = ""
-//                        val jsonArray = JSONArray(response.body().toString())
-//                        val jsonArray2 = jsonArray[0] as JSONArray
-////                        for (i in 0..jsonArray2.length() - 1) {
-//                            val jsonArray3 = jsonArray2[0] as JSONArray
-//                        var  words = jsonArray3[0].toString()
-////                        }
-//                    Log.e("TAG", "XXXX "+words.toString())
-
-//                        val jsonArray = JSONObject(response.body().toString())
-
-                        var ss = response.body().toString().parseResult()
-                        Log.e("TAG", "XXXX " + ss)
-
-//                        val jsonArray: JSONArray = JSONArray(response.body().toString())
-//                        val jsonArray2 = jsonArray[0] as JSONArray
-//                        val jsonArray3 = jsonArray2[0] as JSONArray
-//                        var words = jsonArray3.get(0).toString()
-//                        Log.e("TAG", "XXXX "+words.toString())
-//                        if (MainActivity.context.get()!!.getString(R.string.bengaliVal) == "" + locale ) {
-//                            itemState = getHindi(words)
-//                        } else if (MainActivity.context.get()!!.getString(R.string.gujaratiVal) == "" + locale) {
-//                            itemState = getHindi(words)
-//                        } else if (MainActivity.context.get()!!.getString(R.string.hindiVal) == "" + locale) {
-//                            itemState = getBengali(words)
+//        suspend fun getHeroData(lang: String, words: String) : String{
+//        var myResponse = ""
+//        alertDialog?.show()
+//                async {
+//                    var apiInterface: ApiTranslateInterface =
+//                        ApiClient.getClient()!!.create(ApiTranslateInterface::class.java)
+//                    var hero = apiInterface.translate(lang, words)
+//                    hero.enqueue(object : Callback<JsonElement> {
+//                        override fun onResponse(
+//                            call: Call<JsonElement>,
+//                            response: Response<JsonElement>
+//                        ) {
+//                            alertDialog?.dismiss()
+//                            if (response != null && response.isSuccessful && response.body() != null) {
+//                                Log.e("Error:::", "onResponse " + response.body()!!)
+////                            runBlocking{
+//                                myResponse = response.body().toString().parseResult()
+//
+//                            }
 //                        }
 //
-//                        Log.e("TAG", "AAAAAAhindi ${hindi.toString()}")
-//                        //                            itemState = response.body()?.data as ArrayList<ItemState>
-
-                    }
-                }
-
-                override fun error(message: String) {
-                    super.error(message)
-                }
-
-                override fun loading() {
-                    super.loading()
-                }
-            }
-        )
-    }
-
-
-//    = viewModelScope.launch {
-
-    suspend fun translate(lang: String, words: String): String {
-        var ss = ""
-
-        repository.callApiTranslate(
-            callHandler = object : CallHandlerTranslate<Response<JsonElement>> {
-                override suspend fun sendRequest(apiInterface: ApiTranslateInterface) =
-                    apiInterface.translate(lang, words)
-
-                override fun success(response: Response<JsonElement>) {
-                    if (response.isSuccessful) {
-                        //itemState = response.body()?.data as ArrayList<ItemState>
-
-//                        var words = ""
-//                        val jsonArray = JSONArray(response.body().toString())
-//                        val jsonArray2 = jsonArray[0] as JSONArray
-////                        for (i in 0..jsonArray2.length() - 1) {
-//                            val jsonArray3 = jsonArray2[0] as JSONArray
-//                        var  words = jsonArray3[0].toString()
-////                        }
-//                    Log.e("TAG", "XXXX "+words.toString())
-
-//                        val jsonArray = JSONObject(response.body().toString())
-
-//                        runBlocking {
-//                            ss = async { response.body().toString().parseResult() }.await()
-                        ss = response.body().toString().parseResult()
-////                            Log.e("TAG", "AAAAAAone $one")
-//                        }
-
-
-                        Log.e("TAG", "XXXX " + ss)
-
-//                        val jsonArray: JSONArray = JSONArray(response.body().toString())
-//                        val jsonArray2 = jsonArray[0] as JSONArray
-//                        val jsonArray3 = jsonArray2[0] as JSONArray
-//                        var words = jsonArray3.get(0).toString()
-//                        Log.e("TAG", "XXXX "+words.toString())
-//                        if (MainActivity.context.get()!!.getString(R.string.bengaliVal) == "" + locale ) {
-//                            itemState = getHindi(words)
-//                        } else if (MainActivity.context.get()!!.getString(R.string.gujaratiVal) == "" + locale) {
-//                            itemState = getHindi(words)
-//                        } else if (MainActivity.context.get()!!.getString(R.string.hindiVal) == "" + locale) {
-//                            itemState = getBengali(words)
-//                        }
 //
-//                        Log.e("TAG", "AAAAAAhindi ${hindi.toString()}")
-//                        //                            itemState = response.body()?.data as ArrayList<ItemState>
+//                        override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+//                            Log.e("Error:::", "onFailure " + t.message)
+//                            alertDialog?.dismiss()
+//                        }
+//                    })
+//
+//                    hero.await()
+//                }.await()
+//
+//
+////                val postResponses = hero.await()
+//
+//
+//
+//        return myResponse
+//    }
 
-                    }
-                }
 
-                override fun error(message: String) {
-                    super.error(message)
-                }
-
-                override fun loading() {
-                    super.loading()
-                }
-            }
-        )
-        return ss
-    }
+//    fun translateHi(lang: String, words: String) = viewModelScope.launch {
+//        repository.callApiTranslate(
+//            callHandler = object : CallHandlerTranslate<Response<JsonElement>> {
+//                override suspend fun sendRequest(apiInterface: ApiTranslateInterface) =
+//                    apiInterface.translate(lang, words)
+//
+//                override fun success(response: Response<JsonElement>) {
+//                    if (response.isSuccessful) {
+//                        //itemState = response.body()?.data as ArrayList<ItemState>
+//
+////                        var words = ""
+////                        val jsonArray = JSONArray(response.body().toString())
+////                        val jsonArray2 = jsonArray[0] as JSONArray
+//////                        for (i in 0..jsonArray2.length() - 1) {
+////                            val jsonArray3 = jsonArray2[0] as JSONArray
+////                        var  words = jsonArray3[0].toString()
+//////                        }
+////                    Log.e("TAG", "XXXX "+words.toString())
+//
+////                        val jsonArray = JSONObject(response.body().toString())
+//
+//                        var ss = response.body().toString().parseResult()
+//                        Log.e("TAG", "XXXX " + ss)
+//
+////                        val jsonArray: JSONArray = JSONArray(response.body().toString())
+////                        val jsonArray2 = jsonArray[0] as JSONArray
+////                        val jsonArray3 = jsonArray2[0] as JSONArray
+////                        var words = jsonArray3.get(0).toString()
+////                        Log.e("TAG", "XXXX "+words.toString())
+////                        if (MainActivity.context.get()!!.getString(R.string.bengaliVal) == "" + locale ) {
+////                            itemState = getHindi(words)
+////                        } else if (MainActivity.context.get()!!.getString(R.string.gujaratiVal) == "" + locale) {
+////                            itemState = getHindi(words)
+////                        } else if (MainActivity.context.get()!!.getString(R.string.hindiVal) == "" + locale) {
+////                            itemState = getBengali(words)
+////                        }
+////
+////                        Log.e("TAG", "AAAAAAhindi ${hindi.toString()}")
+////                        //                            itemState = response.body()?.data as ArrayList<ItemState>
+//
+//                    }
+//                }
+//
+//                override fun error(message: String) {
+//                    super.error(message)
+//                }
+//
+//                override fun loading() {
+//                    super.loading()
+//                }
+//            }
+//        )
+//    }
+//
+//
+////    = viewModelScope.launch {
+//
+//    suspend fun translate(lang: String, words: String): String {
+//        var ss = ""
+//
+//        repository.callApiTranslate(
+//            callHandler = object : CallHandlerTranslate<Response<JsonElement>> {
+//                override suspend fun sendRequest(apiInterface: ApiTranslateInterface) =
+//                    apiInterface.translate(lang, words)
+//
+//                override fun success(response: Response<JsonElement>) {
+//                    if (response.isSuccessful) {
+//                        //itemState = response.body()?.data as ArrayList<ItemState>
+//
+////                        var words = ""
+////                        val jsonArray = JSONArray(response.body().toString())
+////                        val jsonArray2 = jsonArray[0] as JSONArray
+//////                        for (i in 0..jsonArray2.length() - 1) {
+////                            val jsonArray3 = jsonArray2[0] as JSONArray
+////                        var  words = jsonArray3[0].toString()
+//////                        }
+////                    Log.e("TAG", "XXXX "+words.toString())
+//
+////                        val jsonArray = JSONObject(response.body().toString())
+//
+////                        runBlocking {
+////                            ss = async { response.body().toString().parseResult() }.await()
+//                        ss = response.body().toString().parseResult()
+//////                            Log.e("TAG", "AAAAAAone $one")
+////                        }
+//
+//
+//                        Log.e("TAG", "XXXX " + ss)
+//
+////                        val jsonArray: JSONArray = JSONArray(response.body().toString())
+////                        val jsonArray2 = jsonArray[0] as JSONArray
+////                        val jsonArray3 = jsonArray2[0] as JSONArray
+////                        var words = jsonArray3.get(0).toString()
+////                        Log.e("TAG", "XXXX "+words.toString())
+////                        if (MainActivity.context.get()!!.getString(R.string.bengaliVal) == "" + locale ) {
+////                            itemState = getHindi(words)
+////                        } else if (MainActivity.context.get()!!.getString(R.string.gujaratiVal) == "" + locale) {
+////                            itemState = getHindi(words)
+////                        } else if (MainActivity.context.get()!!.getString(R.string.hindiVal) == "" + locale) {
+////                            itemState = getBengali(words)
+////                        }
+////
+////                        Log.e("TAG", "AAAAAAhindi ${hindi.toString()}")
+////                        //                            itemState = response.body()?.data as ArrayList<ItemState>
+//
+//                    }
+//                }
+//
+//                override fun error(message: String) {
+//                    super.error(message)
+//                }
+//
+//                override fun loading() {
+//                    super.loading()
+//                }
+//            }
+//        )
+//        return ss
+//    }
 
 
     private fun getBengali(words: String): ArrayList<ItemState> {
@@ -895,8 +969,6 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
 //    }
 
 
-
-
 //    fun showLoaderSecond() {
 //        if(alertDialog == null){
 //            val alert = AlertDialog.Builder(MainActivity.activity.get())
@@ -915,8 +987,6 @@ class RegisterVM @Inject constructor(private val repository: Repository, private
 //        alertDialog?.dismiss()
 //        alertDialog = null
 //    }
-
-
 
 
     data class Model(

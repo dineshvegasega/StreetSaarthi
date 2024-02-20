@@ -29,12 +29,15 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 
 
@@ -189,7 +192,33 @@ class LiveSchemes : Fragment() {
         viewModel.itemLiveSchemes.observe(requireActivity()) {
             val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
             val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
-            results.addAll(changeValue as MutableList<ItemLiveScheme>)
+
+//            if (MainActivity.context.get()!! .getString(R.string.englishVal) == "" + viewModel.locale ) {
+//                val itemStateTemp = changeValue
+//                results.addAll(itemStateTemp)
+//            } else {
+//                val itemStateTemp = changeValue
+//                MainActivity.activity.get()?.runOnUiThread {
+//                                runBlocking {
+//                                    itemStateTemp.forEach {
+//                                        val nameChange = async {
+//                                            viewModel.callUrlAndParseResult( "" +  viewModel.locale,  it.name )
+//                                        }.await()
+//                                        val descChange = async {
+//                                            viewModel.callUrlAndParseResult( "" +  viewModel.locale,  it.description )
+//                                        }.await()
+//                                        apply {
+//                                            it.name = nameChange
+//                                            it.description = descChange
+//                                        }
+//                                    }
+//                                    results.addAll(itemStateTemp)
+////                                    alertDialog?.dismiss()
+//                                }
+//                            }
+//            }
+
+            results.addAll(changeValue)
             viewModel.adapter.addAllSearch(results)
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {

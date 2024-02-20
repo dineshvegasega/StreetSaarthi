@@ -232,10 +232,10 @@ class Repository @Inject constructor(
 
 
 
-    fun showLoaderSecond(context: Context) {
+    fun showLoaderSecond() {
         if (alertDialog == null) {
-            val alert = AlertDialog.Builder(context)
-            val binding = LoaderBinding.inflate(LayoutInflater.from(context), null, false)
+            val alert = AlertDialog.Builder(MainActivity.activity.get())
+            val binding = LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
             alert.setView(binding.root)
             alert.setCancelable(false)
             alertDialog = alert.create()
