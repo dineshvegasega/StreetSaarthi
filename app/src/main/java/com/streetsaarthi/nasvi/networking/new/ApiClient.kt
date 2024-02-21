@@ -1,6 +1,8 @@
 package com.streetsaarthi.nasvi.networking.new
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.streetsaarthi.nasvi.di.NetworkInterceptor
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.TRANSLATE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,7 +12,6 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
     companion object {
-//        val BASE_URL = "https://translate.googleapis.com/translate_a/"
         var retrofit: Retrofit? = null
         fun getClient(): Retrofit? {
             if (retrofit == null) {
@@ -21,6 +22,7 @@ class ApiClient {
                     writeTimeout(20, TimeUnit.SECONDS)
                     connectTimeout(20, TimeUnit.SECONDS)
                     addInterceptor(interceptor)
+                        .addInterceptor(ChuckerInterceptor(MainActivity.activity.get()!!))
                     addInterceptor { chain ->
                         var request = chain.request()
                         request = request.newBuilder()
@@ -37,7 +39,6 @@ class ApiClient {
                     .build()
 
             }
-
             return retrofit
         }
     }

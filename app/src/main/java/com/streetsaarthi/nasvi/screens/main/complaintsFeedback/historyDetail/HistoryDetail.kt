@@ -308,7 +308,7 @@ class HistoryDetail : Fragment() {
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
     private fun observerDataRequest(){
         viewModel.addFeedbackConversationLive.observe(requireActivity()) {
             if(totalPages == 1){
@@ -450,6 +450,15 @@ class HistoryDetail : Fragment() {
                         ContextCompat.getColorStateList(root.context, R.color._ED2525)
                 } else {
                     vBottom.visibility = View.GONE
+                }
+            }
+
+            var old = ""
+            it.data.data.map {
+                var date = it.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM yyyy")
+                if (old != date){
+                    old = date!!
+                    it.dateShow = true
                 }
             }
 

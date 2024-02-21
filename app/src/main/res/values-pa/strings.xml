@@ -541,5 +541,8 @@
     <string name = "enter_nominee_name"> ਨਾਮਜ਼ਦ ਵੇਰਵੇ ਦਰਜ ਕਰੋ</string>
     <string name="nominee_added_updated_successfully">ਨਾਮਜ਼ਦ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਜੋੜਿਆ/ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
     <string name = "add_edit">ਸ਼ਾਮਲ/ਸੋਧ</string>
-
+    <string name='re_open_info'>ਮੁੜ-ਖੋਲ੍ਹੋ</string>
+    <string name="close_info">ਬੰਦ ਕਰੋ</string>
+    <string name='conversation_marked_admin_open_hi'>ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ %s ਦੁਆਰਾ %s ਦੁਆਰਾ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
+    <string name='conversation_marked_admin_close_hi'>ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ %s ਦੁਆਰਾ %s ਦੁਆਰਾ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
 </resources>

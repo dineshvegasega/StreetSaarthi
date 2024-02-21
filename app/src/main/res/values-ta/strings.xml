@@ -537,6 +537,8 @@
     <string name="enter_nominee_name">நாமினி விவரங்களை உள்ளிடவும்</string>
     <string name="nominee_added_updated_successfully">நாமினி சேர்க்கப்பட்டது/வெற்றிகரமாக புதுப்பிக்கப்பட்டது</string>
     <string name="add_edit">சேர்/திருத்து</string>
-
-
+    <string name='re_open_info'>மீண்டும் திற</string>
+    <string name="close_info">மூடு</string>
+    <string name='conversation_marked_admin_open_hi'>இந்த உரையாடல் %s என %s ஆல் அன்று குறிக்கப்பட்டது</string>
+    <string name='conversation_marked_admin_close_hi'>இந்த உரையாடல் %s ஆல் %s ஆல் அன்று குறிக்கப்பட்டது</string>
 </resources>

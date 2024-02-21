@@ -22,14 +22,14 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:backgroundTint="@color/_D9D9D9"
-        android:textSize="@dimen/_11ssp"
+        android:textSize="@dimen/_9ssp"
         android:textStyle="italic"
         android:fontFamily="@font/roboto_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingVertical="@dimen/_4sdp"
-        android:paddingHorizontal="@dimen/_13sdp"
+        android:paddingHorizontal="@dimen/_12sdp"
         android:visibility="gone"
         />
 

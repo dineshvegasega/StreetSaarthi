@@ -536,5 +536,8 @@
     <string name="enter_nominee_name">നോമിനി വിശദാംശങ്ങൾ നൽകുക</string>
     <string name="nominee_added_updated_successfully">നോമിനി ചേർത്തു/അപ്‌ഡേറ്റ് ചെയ്‌തു</string>
     <string name="add_edit">ചേർക്കുക/എഡിറ്റ് ചെയ്യുക</string>
-
+    <string name='re_open_info'>വീണ്ടും തുറക്കുക</string>
+    <string name="close_info">അടയ്ക്കുക</string>
+    <string name='conversation_marked_admin_open_hi'>ഈ സംഭാഷണം %s എന്ന് %s എന്നതിൽ അടയാളപ്പെടുത്തി</string>
+    <string name='conversation_marked_admin_close_hi'>ഈ സംഭാഷണം %s എന്ന് %s എന്നതിൽ അടയാളപ്പെടുത്തി</string>
 </resources>

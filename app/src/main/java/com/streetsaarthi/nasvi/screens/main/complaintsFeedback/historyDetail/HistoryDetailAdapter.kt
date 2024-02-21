@@ -19,6 +19,7 @@ import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.singleClick
+import java.util.Locale
 
 
 class HistoryDetailAdapter () :
@@ -30,7 +31,8 @@ class HistoryDetailAdapter () :
     private val LAYOUT_THREE=2
 
     private var isLoadingAdded: Boolean = false
-    private var retryPageLoad: Boolean = false
+
+    var locale: Locale = Locale.getDefault()
 
     inner class LeftMessagesViewHolder(private val binding: ItemChatLeftBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -72,17 +74,29 @@ class HistoryDetailAdapter () :
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    if (root.context.getString(R.string.hindiVal) == "" + locale ) {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin_close_hi, "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>" , "<b>"+binding.root.resources.getString(R.string.close_info)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    } else {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close_info)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    }
                 } else if(model.status == "re-open") {
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.re_open)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    if (root.context.getString(R.string.hindiVal) == "" + locale ) {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin_open_hi, "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>" , "<b>"+binding.root.resources.getString(R.string.re_open_info)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    } else {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.re_open_info)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    }
                 }else if(model.status == "closed") {
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    if (root.context.getString(R.string.hindiVal) == "" + locale ) {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin_close_hi, "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>" , "<b>"+binding.root.resources.getString(R.string.close_info)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    } else {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close_info)+"</b>" , "<b>"+binding.root.resources.getString(R.string.admin_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    }
                 }else if(model.status == "in-progress") {
                     group.visibility = View.VISIBLE
                     ivOpenClose.visibility = View.GONE
@@ -135,17 +149,29 @@ class HistoryDetailAdapter () :
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    if (root.context.getString(R.string.hindiVal) == "" + locale ) {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin_close_hi, "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>" , "<b>"+binding.root.resources.getString(R.string.close_info)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    } else {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close_info)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    }
                 } else if(model.status == "re-open") {
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.re_open)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    if (root.context.getString(R.string.hindiVal) == "" + locale ) {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin_open_hi, "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>" , "<b>"+binding.root.resources.getString(R.string.re_open_info)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    } else {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.re_open_info)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    }
                 }else if(model.status == "closed") {
                     group.visibility = View.GONE
                     ivOpenClose.visibility = View.VISIBLE
                     ivDate.visibility = View.GONE
-                    ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    if (root.context.getString(R.string.hindiVal) == "" + locale ) {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin_close_hi, "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>" , "<b>"+binding.root.resources.getString(R.string.close_info)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    } else {
+                        ivOpenClose.text = HtmlCompat.fromHtml(binding.root.resources.getString(R.string.conversation_marked_admin, "<b>"+binding.root.resources.getString(R.string.close_info)+"</b>" , "<b>"+binding.root.resources.getString(R.string.member_txt)+"</b>")+" "+model.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM, yyyy hh:mm a"), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    }
                 }else if(model.status == "in-progress") {
                     group.visibility = View.VISIBLE
                     ivOpenClose.visibility = View.GONE
@@ -154,7 +180,6 @@ class HistoryDetailAdapter () :
                     group.visibility = View.VISIBLE
                     ivOpenClose.visibility = View.GONE
                     ivDate.visibility = if (model.dateShow == true) View.VISIBLE else View.GONE
-
                 }
             }
         }

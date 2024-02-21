@@ -537,5 +537,8 @@
     <string name="enter_nominee_name">ನಾಮಿನಿ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ</string>
     <string name="nominee_added_updated_successfully">ನಾಮಿನಿಯನ್ನು ಸೇರಿಸಲಾಗಿದೆ/ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ</string>
     <string name="add_edit">ಸೇರಿಸು/ಸಂಪಾದಿಸು</string>
-
+    <string name='re_open_info'>ಮರು-ತೆರೆಯಿರಿ</string>
+    <string name="close_info">ಮುಚ್ಚು</string>
+    <string name='conversation_marked_admin_open_hi'>ಈ ಸಂವಾದವನ್ನು %s ರಿಂದ %s ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>
+    <string name='conversation_marked_admin_close_hi'>ಈ ಸಂವಾದವನ್ನು %s ರಿಂದ %s ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>
 </resources>

@@ -519,9 +519,9 @@
     <string name='congratulations'>बधाई हो!</string>
     <string name='your_initial_registration_is_complete'>आपका प्रारंभिक पंजीकरण पूरा हो गया है।</string>
     <string name = "need_to_add_complete_profile">शिकायत/प्रतिक्रिया पंजीकरण करने से पहले आपको अपना प्रोफ़ाइल पूरा करना होगा।</string>
-    <string name='conversation_marked_admin'>इस वार्तालाप को %s द्वारा %s चिह्नित किया गया था</string>
+    <string name='conversation_marked_admin'>इस वार्तालाप को %s द्वारा %s गया था</string>
     <string name='something_went_wrong'>कुछ गलत हो गया!</string>
-    <string name="nominee_details">नामांकित_विवरण">नामांकित व्यक्ति का विवरण</string>
+    <string name="nominee_details">नामांकित व्यक्ति का विवरण</string>
     <string name='list_of_nominee'>नामांकित व्यक्ति की सूची</string>
     <string name='relationship_TypeStar'>संबंध*</string>
     <string name='nameStar'>नाम*</string>
@@ -539,5 +539,8 @@
     <string name='enter_nominee_name'>नामांकित विवरण दर्ज करें</string>
     <string name = "nominee_added_updated_successfully"> नामांकित व्यक्ति को सफलतापूर्वक जोड़ा/अपडेट किया गया</string>
     <string name='add_edit'>जोड़ें/संपादित करें</string>
-
+    <string name='re_open_info'>खोला</string>
+    <string name="close_info">बंद</string>
+    <string name='conversation_marked_admin_open_hi'>इस वार्तालाप को %s द्वारा %s गया था</string>
+    <string name='conversation_marked_admin_close_hi'>इस वार्तालाप को %s द्वारा %s किया गया था</string>
 </resources>

@@ -560,8 +560,10 @@
     <string name="enter_nominee_name">Enter Nominee Detials</string>
     <string name="nominee_added_updated_successfully">Nominee Added/Updated Successfully</string>
     <string name="add_edit">Add/Edit</string>
-
-
+    <string name='re_open_info'>Re-open</string>
+    <string name="close_info">Close</string>
+    <string name='conversation_marked_admin_open_hi'>This Conversation was marked %s by %s on</string>
+    <string name='conversation_marked_admin_close_hi'>This Conversation was marked %s by %s on</string>
 
 
 

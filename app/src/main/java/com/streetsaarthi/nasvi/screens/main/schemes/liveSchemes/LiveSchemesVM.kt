@@ -1,9 +1,12 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -24,13 +27,16 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
+import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.networking.new.ApiClient
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
@@ -58,6 +64,48 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
     val adapter by lazy { LiveSchemesAdapter(this) }
 
     var counterNetwork = MutableLiveData<Boolean>(false)
+
+
+    var alertDialog: AlertDialog? = null
+
+    val apiInterface: ApiTranslateInterface = ApiClient.getClient()!!.create(
+        ApiTranslateInterface::class.java)
+
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun show() {
+//        Handler(Looper.myLooper()!!).postDelayed({
+//            if (alertDialog != null) {
+//                alertDialog?.dismiss()
+//                alertDialog?.show()
+//            }
+//        }, 50)
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
+
+
+    var daialogShow: Boolean? = false
 
     private var itemLiveSchemesResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemes : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResult
@@ -174,8 +222,8 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
 
                                 dialogBinding.apply {
                                     data.scheme_image?.url?.glideImage(root.context, ivMap)
-                                    textTitle.setText(data.name)
-                                    textDesc.setText(data.description)
+                                    textTitle.setText(oldItemLiveScheme.name)
+                                    textDesc.setText(oldItemLiveScheme.description)
 
                                     if (data.status == "Active" && oldItemLiveScheme.user_scheme_status == "applied"){
                                         textHeaderTxt4.text = root.context.resources.getText(R.string.applied)
@@ -259,8 +307,6 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                   })
                             }
                         }
-                    } else {
-
                     }
                 }
 
@@ -306,6 +352,9 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
     }
 
 
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        return repository.callApiTranslate(_lang, _words)
+    }
 }
 
 

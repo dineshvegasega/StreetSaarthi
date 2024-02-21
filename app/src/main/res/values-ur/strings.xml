@@ -539,6 +539,8 @@
     <string name="enter_nominee_name">نامزد کی تفصیلات درج کریں</string>
     <string name="nominee_added_updated_successfully">نامزد کو کامیابی کے ساتھ شامل / اپ ڈیٹ کیا گیا</string>
     <string name="add_edit">شامل/ترمیم کریں</string>
-
-
+    <string name='re_open_info'>دوبارہ کھولیں</string>
+    <string name="close_info">بند کریں</string>
+    <string name='conversation_marked_admin_open_hi'>اس گفتگو کو %s نے %s کا نشان لگایا تھا</string>
+    <string name='conversation_marked_admin_close_hi'>اس گفتگو کو %s نے %s کا نشان لگایا تھا</string>
 </resources>

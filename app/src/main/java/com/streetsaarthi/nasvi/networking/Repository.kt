@@ -15,6 +15,7 @@ import com.streetsaarthi.nasvi.utils.getErrorMessage
 import com.streetsaarthi.nasvi.utils.hideSoftKeyBoard
 import com.streetsaarthi.nasvi.utils.ioDispatcher
 import com.streetsaarthi.nasvi.utils.mainThread
+import com.streetsaarthi.nasvi.utils.parseResult
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import retrofit2.Response
@@ -244,6 +245,16 @@ class Repository @Inject constructor(
         }
     }
 
+
+
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        val res = apiTranslateInterface.translate(_lang, _words).execute()
+        if(res.isSuccessful){
+            return res.body().toString().parseResult()
+        } else {
+            return ""
+        }
+    }
 
     /**
      * Hide Loader

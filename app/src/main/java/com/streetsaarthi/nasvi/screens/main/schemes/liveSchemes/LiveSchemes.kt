@@ -1,7 +1,10 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,29 +19,56 @@ import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.LiveSchemesBinding
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemState
+import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
+import com.streetsaarthi.nasvi.networking.new.ApiClient
+import com.streetsaarthi.nasvi.screens.main.webPage.WebPage
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.callUrlAndParseResult
+import com.streetsaarthi.nasvi.utils.ioThread
+import com.streetsaarthi.nasvi.utils.suspendCallUrlAndParseResult
+import com.streetsaarthi.nasvi.utils.mainDispatcher
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
+import com.streetsaarthi.nasvi.utils.parseResult
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import okhttp3.internal.notify
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -47,12 +77,13 @@ class LiveSchemes : Fragment() {
     private var _binding: LiveSchemesBinding? = null
     private val binding get() = _binding!!
 
-    companion object{
+
+    companion object {
         var isReadLiveSchemes: Boolean? = false
 //        var callBackListener: ListCallBackListener? = null
     }
 
-    var networkAlert : BottomSheetDialog?= null
+    var networkAlert: BottomSheetDialog? = null
     var networkCount = 1
 
     private var LOADER_TIME: Long = 500
@@ -71,14 +102,15 @@ class LiveSchemes : Fragment() {
         return binding.root
     }
 
+
     @SuppressLint("NotifyDataSetChanged", "ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         MainActivity.mainActivity.get()?.callFragment(0)
         isReadLiveSchemes = true
-//        callBackListener = this
 
         binding.apply {
+
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.live_schemes)
             idDataNotFound.textDesc.text = getString(R.string.currently_no_schemes)
 
@@ -108,10 +140,22 @@ class LiveSchemes : Fragment() {
             inclideHeaderSearch.editTextSearch.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    inclideHeaderSearch.editTextSearch.setCompoundDrawablesWithIntrinsicBounds(0, 0, if(count >= 1) R.drawable.ic_cross_white else R.drawable.ic_search, 0);
+                    inclideHeaderSearch.editTextSearch.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        if (count >= 1) R.drawable.ic_cross_white else R.drawable.ic_search,
+                        0
+                    );
                 }
             })
 
@@ -124,23 +168,27 @@ class LiveSchemes : Fragment() {
 
     private fun recyclerViewScroll() {
         binding.apply {
-            recyclerView.addOnScrollListener(object : PaginationScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
+            recyclerView.addOnScrollListener(object :
+                PaginationScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
                 override fun loadMoreItems() {
                     isLoading = true
                     currentPage += 1
-                    if(totalPages >= currentPage){
+                    if (totalPages >= currentPage) {
                         Handler(Looper.myLooper()!!).postDelayed({
                             loadNextPage()
                         }, LOADER_TIME)
                     }
-                    Log.e("TAG", "currentPage "+currentPage)
+                    Log.e("TAG", "currentPage " + currentPage)
                 }
+
                 override fun getTotalPageCount(): Int {
                     return totalPages
                 }
+
                 override fun isLastPage(): Boolean {
                     return isLastPage
                 }
+
                 override fun isLoading(): Boolean {
                     return isLoading
                 }
@@ -150,11 +198,11 @@ class LiveSchemes : Fragment() {
 
 
     private fun loadFirstPage() {
-        pageStart  = 1
+        pageStart = 1
         isLoading = false
         isLastPage = false
-        totalPages  = 1
-        currentPage  = pageStart
+        totalPages = 1
+        currentPage = pageStart
         results.clear()
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
@@ -170,7 +218,7 @@ class LiveSchemes : Fragment() {
     }
 
     fun loadNextPage() {
-        Log.e("TAG", "loadNextPage "+currentPage)
+        Log.e("TAG", "loadNextPage " + currentPage)
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
                 val obj: JSONObject = JSONObject().apply {
@@ -185,62 +233,95 @@ class LiveSchemes : Fragment() {
     }
 
 
-
     var results: MutableList<ItemLiveScheme> = ArrayList()
-        @SuppressLint("NotifyDataSetChanged")
-    private fun observerDataRequest(){
-        viewModel.itemLiveSchemes.observe(requireActivity()) {
+
+    @OptIn(DelicateCoroutinesApi::class)
+    @SuppressLint("NotifyDataSetChanged")
+    private fun observerDataRequest() {
+        viewModel.itemLiveSchemes.observe(viewLifecycleOwner, Observer {
+            viewModel.show()
             val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
-            val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
+            val changeValue =
+                Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
 
-//            if (MainActivity.context.get()!! .getString(R.string.englishVal) == "" + viewModel.locale ) {
-//                val itemStateTemp = changeValue
-//                results.addAll(itemStateTemp)
-//            } else {
-//                val itemStateTemp = changeValue
-//                MainActivity.activity.get()?.runOnUiThread {
-//                                runBlocking {
-//                                    itemStateTemp.forEach {
-//                                        val nameChange = async {
-//                                            viewModel.callUrlAndParseResult( "" +  viewModel.locale,  it.name )
-//                                        }.await()
-//                                        val descChange = async {
-//                                            viewModel.callUrlAndParseResult( "" +  viewModel.locale,  it.description )
-//                                        }.await()
-//                                        apply {
-//                                            it.name = nameChange
-//                                            it.description = descChange
-//                                        }
-//                                    }
-//                                    results.addAll(itemStateTemp)
-////                                    alertDialog?.dismiss()
-//                                }
-//                            }
-//            }
+            if (MainActivity.context.get()!!
+                    .getString(R.string.englishVal) == "" + viewModel.locale
+            ) {
+                val itemStateTemp = changeValue
+                results.addAll(itemStateTemp)
+                viewModel.adapter.addAllSearch(results)
+                viewModel.hide()
 
-            results.addAll(changeValue)
-            viewModel.adapter.addAllSearch(results)
+                if (viewModel.adapter.itemCount > 0) {
+                    binding.idDataNotFound.root.visibility = View.GONE
+                } else {
+                    binding.idDataNotFound.root.visibility = View.VISIBLE
+                }
+            } else {
+                val itemStateTemp = changeValue
+                mainThread {
+                        itemStateTemp.forEach {
+                            val nameChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.name)
+                            val descChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.description)
+                            apply {
+                                it.name = nameChanged
+                                it.description = descChanged
+                            }
+                        }
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
+
+                    if (viewModel.adapter.itemCount > 0) {
+                        binding.idDataNotFound.root.visibility = View.GONE
+                    } else {
+                        binding.idDataNotFound.root.visibility = View.VISIBLE
+                    }
+                }
+            }
+
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
             } else if (currentPage <= totalPages) {
-                 viewModel.adapter.addLoadingFooter()
+                viewModel.adapter.addLoadingFooter()
                 isLastPage = false
             } else {
                 isLastPage = true
             }
+        })
 
-            if (viewModel.adapter.itemCount > 0) {
-                binding.idDataNotFound.root.visibility = View.GONE
-            } else {
-                binding.idDataNotFound.root.visibility = View.VISIBLE
-            }
-        }
 
         viewModel.itemLiveSchemesSecond.observe(requireActivity()) {
+            viewModel.show()
             val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
-            val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
-            results.addAll(changeValue as MutableList<ItemLiveScheme>)
+            val changeValue =
+                Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
+
+            if (MainActivity.context.get()!!
+                    .getString(R.string.englishVal) == "" + viewModel.locale
+            ) {
+                val itemStateTemp = changeValue
+                results.addAll(itemStateTemp)
+                viewModel.adapter.addAllSearch(results)
+                viewModel.hide()
+            } else {
+                val itemStateTemp = changeValue
+                mainThread {
+                    itemStateTemp.forEach {
+                        val nameChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.name)
+                        val descChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.description)
+                        apply {
+                            it.name = nameChanged
+                            it.description = descChanged
+                        }
+                    }
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
+                }
+            }
+
             viewModel.adapter.removeLoadingFooter()
             isLoading = false
             viewModel.adapter.addAllSearch(results)
@@ -249,57 +330,94 @@ class LiveSchemes : Fragment() {
         }
 
 
-            viewModel.applyLink.observe(requireActivity()) { position ->
-                if (position != -1){
-                    var data = results.get(position).apply {
-                        user_scheme_status = "applied"
-                    }
-                    viewModel.adapter.notifyDataSetChanged()
-                    viewModel.viewDetail(data, position = position, requireView(), 3)
+        viewModel.applyLink.observe(requireActivity()) { position ->
+            if (position != -1) {
+                var data = results.get(position).apply {
+                    user_scheme_status = "applied"
                 }
+                viewModel.adapter.notifyDataSetChanged()
+                viewModel.viewDetail(data, position = position, requireView(), 3)
             }
+        }
 
 
 
 
-            viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
-                if (it) {
-                    if(networkCount == 1){
-                        if(networkAlert?.isShowing == true) {
-                            return@Observer
+        viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                if (networkCount == 1) {
+                    if (networkAlert?.isShowing == true) {
+                        return@Observer
+                    }
+                    val dialogBinding = DialogBottomNetworkBinding.inflate(
+                        requireContext().getSystemService(
+                            Context.LAYOUT_INFLATER_SERVICE
+                        ) as LayoutInflater
+                    )
+                    networkAlert = BottomSheetDialog(requireContext())
+                    networkAlert?.setContentView(dialogBinding.root)
+                    networkAlert?.setOnShowListener { dia ->
+                        val bottomSheetDialog = dia as BottomSheetDialog
+                        val bottomSheetInternal: FrameLayout =
+                            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+                        bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+                    }
+                    networkAlert?.show()
+
+                    dialogBinding.apply {
+                        btClose.singleClick {
+                            networkAlert?.dismiss()
                         }
-                        val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
-                            Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                        )
-                        networkAlert = BottomSheetDialog(requireContext())
-                        networkAlert?.setContentView(dialogBinding.root)
-                        networkAlert?.setOnShowListener { dia ->
-                            val bottomSheetDialog = dia as BottomSheetDialog
-                            val bottomSheetInternal: FrameLayout =
-                                bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-                            bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
-                        }
-                        networkAlert?.show()
-
-                        dialogBinding.apply {
-                            btClose.singleClick {
-                                networkAlert?.dismiss()
+                        btApply.singleClick {
+                            networkAlert?.dismiss()
+                            if (totalPages == 1) {
+                                loadFirstPage()
+                            } else {
+                                loadNextPage()
                             }
-                            btApply.singleClick {
-                                networkAlert?.dismiss()
-                                if(totalPages == 1){
-                                    loadFirstPage()
-                                } else {
-                                    loadNextPage()
-                                }
-                                networkCount = 1
-                            }
+                            networkCount = 1
                         }
                     }
-                    networkCount++
                 }
-            })
+                networkCount++
+            }
+        })
     }
+
+
+
+//
+//    @Throws(Exception::class)
+//     suspend fun callUrlAndParseResult(
+//        langTo: String,
+//        words: String
+//    ): String {
+//        var myResponse = ""
+//        val url = "https://translate.googleapis.com/translate_a/single?" +
+//                "client=gtx&" +
+//                "sl=" + "en" +
+//                "&tl=" + langTo +
+//                "&dt=t&q=" + URLEncoder.encode(words, "UTF-8")
+//        val httpURLConnection = URL(url).openConnection() as HttpURLConnection
+//        httpURLConnection.setRequestProperty("Accept", "application/json")
+//        httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0")
+//        httpURLConnection.requestMethod = "GET"
+//        httpURLConnection.doInput = true
+//        httpURLConnection.doOutput = false
+//        httpURLConnection.connectTimeout = 10000
+//        httpURLConnection.readTimeout = 10000
+//        val responseCode = httpURLConnection.responseCode
+//        if (responseCode == HttpURLConnection.HTTP_OK) {
+//            val response = httpURLConnection.inputStream.bufferedReader().use {it.readText() }
+//            myResponse = response.toString().parseResult()
+//        }
+//
+//        httpURLConnection.inputStream.bufferedReader().use {
+//            it.close()
+//        }
+//        return myResponse
+//    }
+
 
 
 
@@ -307,7 +425,6 @@ class LiveSchemes : Fragment() {
         _binding = null
         super.onDestroyView()
     }
-
 
 
 }

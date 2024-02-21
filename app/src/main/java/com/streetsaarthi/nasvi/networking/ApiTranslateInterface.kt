@@ -16,7 +16,6 @@ import retrofit2.http.Query
 import java.net.URLEncoder
 
 interface ApiTranslateInterface {
-
     @Headers("Accept: application/json")
     @GET(TRANSLATE)
     fun translate(

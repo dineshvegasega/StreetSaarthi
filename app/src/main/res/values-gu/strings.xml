@@ -533,5 +533,8 @@
     <string name="enter_nominee_name">નોમિની વિગતો દાખલ કરો</string>
     <string name="nominee_added_updated_successfully">નોમિની સફળતાપૂર્વક ઉમેરાઈ/અપડેટ થઈ</string>
     <string name="add_edit">ઉમેરો/સંપાદિત કરો</string>
-
+    <string name='re_open_info'>ફરીથી ખોલો</string>
+    <string name = "close_info">બંધ કરો</string>
+    <string name='conversation_marked_admin_open_hi'>આ વાર્તાલાપ %s દ્વારા %s દ્વારા ચિહ્નિત કરવામાં આવ્યો હતો</string>
+    <string name='conversation_marked_admin_close_hi'>આ વાર્તાલાપ %s દ્વારા %s દ્વારા ચિહ્નિત કરવામાં આવ્યો હતો</string>
 </resources>

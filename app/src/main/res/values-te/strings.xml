@@ -541,6 +541,8 @@
     <string name="enter_nominee_name">నామినీ వివరాలను నమోదు చేయండి</string>
     <string name="nominee_added_updated_successfully">నామినీ జోడించబడింది/విజయవంతంగా నవీకరించబడింది</string>
     <string name="add_edit">జోడించు/సవరించు</string>
-
-
+    <string name='re_open_info'>మళ్లీ తెరవండి</string>
+    <string name="close_info">మూసివేయి</string>
+    <string name='conversation_marked_admin_open_hi'>ఈ సంభాషణలో %s ద్వారా %s గుర్తు పెట్టబడింది</string>
+    <string name='conversation_marked_admin_close_hi'>ఈ సంభాషణలో %s ద్వారా %s గుర్తు పెట్టబడింది</string>
 </resources>

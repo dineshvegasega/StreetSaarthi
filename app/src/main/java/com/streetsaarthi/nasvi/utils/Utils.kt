@@ -619,6 +619,41 @@ fun String.callUrlAndParseResult(
     httpURLConnection.requestMethod = "GET"
     httpURLConnection.doInput = true
     httpURLConnection.doOutput = false
+    httpURLConnection.connectTimeout = 1000
+    httpURLConnection.readTimeout = 1000
+    val responseCode = httpURLConnection.responseCode
+    if (responseCode == HttpURLConnection.HTTP_OK) {
+        val response = httpURLConnection.inputStream.bufferedReader().use {it.readText() }
+        myResponse = response.toString().parseResult()
+    } else {
+        myResponse = ""
+    }
+
+    httpURLConnection.inputStream.bufferedReader().use {
+        it.close()
+    }
+    return myResponse
+}
+
+
+
+@Throws(Exception::class)
+suspend fun suspendCallUrlAndParseResult(
+    langTo: String,
+    words: String
+): String {
+    var myResponse = ""
+    val url = "https://translate.googleapis.com/translate_a/single?" +
+            "client=gtx&" +
+            "sl=" + "en" +
+            "&tl=" + langTo +
+            "&dt=t&q=" + URLEncoder.encode(words, "UTF-8")
+    val httpURLConnection = URL(url).openConnection() as HttpURLConnection
+    httpURLConnection.setRequestProperty("Accept", "application/json")
+    httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0")
+    httpURLConnection.requestMethod = "GET"
+    httpURLConnection.doInput = true
+    httpURLConnection.doOutput = false
     httpURLConnection.connectTimeout = 10000
     httpURLConnection.readTimeout = 10000
     val responseCode = httpURLConnection.responseCode
@@ -632,6 +667,7 @@ fun String.callUrlAndParseResult(
     }
     return myResponse
 }
+
 
 
 @Throws(Exception::class)

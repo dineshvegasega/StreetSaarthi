@@ -537,5 +537,8 @@
     <string name="enter_nominee_name">नामांकित तपशील प्रविष्ट करा</string>
     <string name="nominee_added_updated_successfully">नॉमिनी यशस्वीरित्या जोडले/अपडेट केले</string>
     <string name="add_edit">जोडा/संपादित करा</string>
-
+    <string name='re_open_info'>पुन्हा उघडा</string>
+    <string name="close_info">बंद करा</string>
+    <string name='conversation_marked_admin_open_hi'>हे संभाषण %s ने %s ने चिन्हांकित केले</string>
+    <string name='conversation_marked_admin_close_hi'>या संभाषणावर %s ने %s चिन्हांकित केले होते</string>
 </resources>
