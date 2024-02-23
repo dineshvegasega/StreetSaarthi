@@ -128,9 +128,9 @@ class MainActivity : AppCompatActivity() {
             .detectAll()
             .penaltyLog()
 //            .penaltyDeath()
-            .detectDiskReads()
-            .detectDiskWrites()
-            .detectNetwork()
+//            .detectDiskReads()
+//            .detectDiskWrites()
+//            .detectNetwork()
             .build()
         StrictMode.setThreadPolicy(policy)
 
