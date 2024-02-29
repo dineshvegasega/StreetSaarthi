@@ -261,8 +261,9 @@ class LiveSchemes : Fragment() {
                 val itemStateTemp = changeValue
                 mainThread {
                         itemStateTemp.forEach {
-                            val nameChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.name)
-                            val descChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.description)
+                            val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+
                             apply {
                                 it.name = nameChanged
                                 it.description = descChanged
@@ -292,7 +293,7 @@ class LiveSchemes : Fragment() {
         })
 
 
-        viewModel.itemLiveSchemesSecond.observe(requireActivity()) {
+        viewModel.itemLiveSchemesSecond.observe(viewLifecycleOwner, Observer {
             viewModel.show()
             val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
             val changeValue =
@@ -309,8 +310,9 @@ class LiveSchemes : Fragment() {
                 val itemStateTemp = changeValue
                 mainThread {
                     itemStateTemp.forEach {
-                        val nameChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.name)
-                        val descChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.description)
+                        val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+
                         apply {
                             it.name = nameChanged
                             it.description = descChanged
@@ -327,7 +329,7 @@ class LiveSchemes : Fragment() {
             viewModel.adapter.addAllSearch(results)
             if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
             else isLastPage = true
-        }
+        })
 
 
         viewModel.applyLink.observe(requireActivity()) { position ->
@@ -383,41 +385,6 @@ class LiveSchemes : Fragment() {
             }
         })
     }
-
-
-
-//
-//    @Throws(Exception::class)
-//     suspend fun callUrlAndParseResult(
-//        langTo: String,
-//        words: String
-//    ): String {
-//        var myResponse = ""
-//        val url = "https://translate.googleapis.com/translate_a/single?" +
-//                "client=gtx&" +
-//                "sl=" + "en" +
-//                "&tl=" + langTo +
-//                "&dt=t&q=" + URLEncoder.encode(words, "UTF-8")
-//        val httpURLConnection = URL(url).openConnection() as HttpURLConnection
-//        httpURLConnection.setRequestProperty("Accept", "application/json")
-//        httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0")
-//        httpURLConnection.requestMethod = "GET"
-//        httpURLConnection.doInput = true
-//        httpURLConnection.doOutput = false
-//        httpURLConnection.connectTimeout = 10000
-//        httpURLConnection.readTimeout = 10000
-//        val responseCode = httpURLConnection.responseCode
-//        if (responseCode == HttpURLConnection.HTTP_OK) {
-//            val response = httpURLConnection.inputStream.bufferedReader().use {it.readText() }
-//            myResponse = response.toString().parseResult()
-//        }
-//
-//        httpURLConnection.inputStream.bufferedReader().use {
-//            it.close()
-//        }
-//        return myResponse
-//    }
-
 
 
 

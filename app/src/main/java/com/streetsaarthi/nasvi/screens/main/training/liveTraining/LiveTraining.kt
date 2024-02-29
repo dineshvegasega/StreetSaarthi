@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,16 +25,16 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.LiveTrainingBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import org.json.JSONObject
 
 
@@ -181,14 +182,187 @@ class LiveTraining : Fragment() {
     }
 
 
+//    var results: MutableList<ItemLiveTraining> = ArrayList()
+//    @SuppressLint("NotifyDataSetChanged")
+//    private fun observerDataRequest(){
+//        viewModel.show()
+//        viewModel.itemLiveTraining.observe(viewLifecycleOwner, Observer {
+//            val typeToken = object : TypeToken<List<ItemLiveTraining>>() {}.type
+//            val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(it.data), typeToken)
+//            if (MainActivity.context.get()!!
+//                    .getString(R.string.englishVal) == "" + viewModel.locale
+//            ) {
+//                val itemStateTemp = changeValue
+//                results.addAll(itemStateTemp)
+//                viewModel.adapter.addAllSearch(results)
+//                viewModel.hide()
+//
+//                if (viewModel.adapter.itemCount > 0) {
+//                    binding.idDataNotFound.root.visibility = View.GONE
+//                } else {
+//                    binding.idDataNotFound.root.visibility = View.VISIBLE
+//                }
+//            } else {
+//                val itemStateTemp = changeValue
+//                mainThread {
+//                    itemStateTemp.forEach {
+//                        val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+//                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+//                        apply {
+//                            it.name = nameChanged
+//                            it.description = descChanged
+//                        }
+//                    }
+//                    results.addAll(itemStateTemp)
+//                    viewModel.adapter.addAllSearch(results)
+//                    viewModel.hide()
+//
+//                    if (viewModel.adapter.itemCount > 0) {
+//                        binding.idDataNotFound.root.visibility = View.GONE
+//                    } else {
+//                        binding.idDataNotFound.root.visibility = View.VISIBLE
+//                    }
+//                }
+//            }
+//
+//            totalPages = it.meta?.total_pages!!
+//            if (currentPage == totalPages) {
+//                viewModel.adapter.removeLoadingFooter()
+//            } else if (currentPage <= totalPages) {
+//                viewModel.adapter.addLoadingFooter()
+//                isLastPage = false
+//            } else {
+//                isLastPage = true
+//            }
+//        })
+//
+//        viewModel.itemLiveTrainingSecond.observe(viewLifecycleOwner, Observer {
+//            val typeToken = object : TypeToken<List<ItemLiveTraining>>() {}.type
+//            val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(it.data), typeToken)
+//            if (MainActivity.context.get()!!
+//                    .getString(R.string.englishVal) == "" + viewModel.locale
+//            ) {
+//                val itemStateTemp = changeValue
+//                results.addAll(itemStateTemp)
+//                viewModel.adapter.addAllSearch(results)
+//                viewModel.hide()
+//            } else {
+//                val itemStateTemp = changeValue
+//                mainThread {
+//                    itemStateTemp.forEach {
+//                        val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+//                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+//
+//                        apply {
+//                            it.name = nameChanged
+//                            it.description = descChanged
+//                        }
+//                    }
+//                    results.addAll(itemStateTemp)
+//                    viewModel.adapter.addAllSearch(results)
+//                    viewModel.hide()
+//                }
+//            }
+//            viewModel.adapter.removeLoadingFooter()
+//            isLoading = false
+//            viewModel.adapter.addAllSearch(results)
+//            if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
+//            else isLastPage = true
+//        })
+//
+//
+//
+//        viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
+//            if (it) {
+//                if(networkCount == 1){
+//                    if(networkAlert?.isShowing == true) {
+//                        return@Observer
+//                    }
+//                    val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
+//                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//                    )
+//                    networkAlert = BottomSheetDialog(requireContext())
+//                    networkAlert?.setContentView(dialogBinding.root)
+//                    networkAlert?.setOnShowListener { dia ->
+//                        val bottomSheetDialog = dia as BottomSheetDialog
+//                        val bottomSheetInternal: FrameLayout =
+//                            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+//                        bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+//                    }
+//                    networkAlert?.show()
+//
+//                    dialogBinding.apply {
+//                        btClose.singleClick {
+//                            networkAlert?.dismiss()
+//                        }
+//                        btApply.singleClick {
+//                            networkAlert?.dismiss()
+//                            if(totalPages == 1){
+//                                loadFirstPage()
+//                            } else {
+//                                loadNextPage()
+//                            }
+//                            networkCount = 1
+//                        }
+//                    }
+//                }
+//                networkCount++
+//            }
+//        })
+//    }
+
+
+
+
+
     var results: MutableList<ItemLiveTraining> = ArrayList()
+
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("NotifyDataSetChanged")
-    private fun observerDataRequest(){
-        viewModel.itemLiveTraining.observe(requireActivity()) {
+    private fun observerDataRequest() {
+        viewModel.itemLiveTraining.observe(viewLifecycleOwner, Observer {
+            viewModel.show()
             val typeToken = object : TypeToken<List<ItemLiveTraining>>() {}.type
-            val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(it.data), typeToken)
-            results.addAll(changeValue as MutableList<ItemLiveTraining>)
-            viewModel.adapter.addAllSearch(results)
+            val changeValue =
+                Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(it.data), typeToken)
+
+            if (MainActivity.context.get()!!
+                    .getString(R.string.englishVal) == "" + viewModel.locale
+            ) {
+                val itemStateTemp = changeValue
+                results.addAll(itemStateTemp)
+                viewModel.adapter.addAllSearch(results)
+                viewModel.hide()
+
+                if (viewModel.adapter.itemCount > 0) {
+                    binding.idDataNotFound.root.visibility = View.GONE
+                } else {
+                    binding.idDataNotFound.root.visibility = View.VISIBLE
+                }
+            } else {
+                val itemStateTemp = changeValue
+                mainThread {
+                    itemStateTemp.forEach {
+                        val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+
+                        apply {
+                            it.name = nameChanged
+                            it.description = descChanged
+                        }
+                    }
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
+
+                    if (viewModel.adapter.itemCount > 0) {
+                        binding.idDataNotFound.root.visibility = View.GONE
+                    } else {
+                        binding.idDataNotFound.root.visibility = View.VISIBLE
+                    }
+                }
+            }
+
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
                 viewModel.adapter.removeLoadingFooter()
@@ -198,35 +372,61 @@ class LiveTraining : Fragment() {
             } else {
                 isLastPage = true
             }
+        })
 
-            if (viewModel.adapter.itemCount > 0) {
-                binding.idDataNotFound.root.visibility = View.GONE
-            } else {
-                binding.idDataNotFound.root.visibility = View.VISIBLE
-            }
-        }
 
-        viewModel.itemLiveTrainingSecond.observe(requireActivity()) {
+        viewModel.itemLiveTrainingSecond.observe(viewLifecycleOwner, Observer {
+            viewModel.show()
             val typeToken = object : TypeToken<List<ItemLiveTraining>>() {}.type
-            val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(it.data), typeToken)
-            results.addAll(changeValue as MutableList<ItemLiveTraining>)
+            val changeValue =
+                Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(it.data), typeToken)
+
+            if (MainActivity.context.get()!!
+                    .getString(R.string.englishVal) == "" + viewModel.locale
+            ) {
+                val itemStateTemp = changeValue
+                results.addAll(itemStateTemp)
+                viewModel.adapter.addAllSearch(results)
+                viewModel.hide()
+            } else {
+                val itemStateTemp = changeValue
+                mainThread {
+                    itemStateTemp.forEach {
+                        val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+
+                        apply {
+                            it.name = nameChanged
+                            it.description = descChanged
+                        }
+                    }
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
+                }
+            }
+
             viewModel.adapter.removeLoadingFooter()
             isLoading = false
             viewModel.adapter.addAllSearch(results)
             if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
             else isLastPage = true
-        }
+        })
+
+
 
 
 
         viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
             if (it) {
-                if(networkCount == 1){
-                    if(networkAlert?.isShowing == true) {
+                if (networkCount == 1) {
+                    if (networkAlert?.isShowing == true) {
                         return@Observer
                     }
-                    val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                    val dialogBinding = DialogBottomNetworkBinding.inflate(
+                        requireContext().getSystemService(
+                            Context.LAYOUT_INFLATER_SERVICE
+                        ) as LayoutInflater
                     )
                     networkAlert = BottomSheetDialog(requireContext())
                     networkAlert?.setContentView(dialogBinding.root)
@@ -244,7 +444,7 @@ class LiveTraining : Fragment() {
                         }
                         btApply.singleClick {
                             networkAlert?.dismiss()
-                            if(totalPages == 1){
+                            if (totalPages == 1) {
                                 loadFirstPage()
                             } else {
                                 loadNextPage()
@@ -257,6 +457,9 @@ class LiveTraining : Fragment() {
             }
         })
     }
+
+
+
 
 
 

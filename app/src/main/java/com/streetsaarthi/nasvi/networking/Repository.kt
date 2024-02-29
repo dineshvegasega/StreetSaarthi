@@ -249,10 +249,10 @@ class Repository @Inject constructor(
 
     fun callApiTranslate(_lang : String, _words: String) : String{
         val res = apiTranslateInterface.translate(_lang, _words).execute()
-        if(res.isSuccessful){
-            return res.body().toString().parseResult()
+        return if(res.isSuccessful){
+            res.body().toString().parseResult()
         } else {
-            return ""
+            ""
         }
     }
 

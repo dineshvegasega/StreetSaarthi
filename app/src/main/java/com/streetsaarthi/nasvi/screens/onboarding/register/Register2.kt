@@ -630,7 +630,7 @@ class Register2  : Fragment() , CallBackListener {
                 binding.editTextSelectState.setText(list[which])
                 viewModel.stateIdVending = viewModel.itemStateVending[which].id
                 view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
-                view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
+//                view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
                 if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
                     view?.let { viewModel.localOrganisation(it, JSONObject().apply {
                         put("state_id", viewModel.stateIdVending)

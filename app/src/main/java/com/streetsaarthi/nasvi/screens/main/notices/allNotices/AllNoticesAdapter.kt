@@ -16,7 +16,6 @@ import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
-import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.glideImagePortrait
 import com.streetsaarthi.nasvi.utils.singleClick
 
@@ -122,7 +121,7 @@ class AllNoticesAdapter(liveSchemesVM: AllNoticesVM) : RecyclerView.Adapter<Recy
                 }
                 root.singleClick {
 //                    if (dataClass.user_scheme_status == "applied"){
-                    viewModel.viewDetail(""+dataClass.notice_id, position = position, root, 1)
+                    viewModel.viewDetail(dataClass, position = position, root, 1)
 //                    }else{
 //                        viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
 //                    }

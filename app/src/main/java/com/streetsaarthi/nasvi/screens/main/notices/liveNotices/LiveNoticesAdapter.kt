@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.BR
@@ -122,7 +121,7 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
 
                 root.singleClick {
 //                    if (dataClass.user_scheme_status == "applied"){
-                    viewModel.viewDetail(""+dataClass.notice_id, position = position, root, 1)
+                    viewModel.viewDetail(dataClass, position = position, root, 1)
 //                    }else{
 //                        viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
 //                    }

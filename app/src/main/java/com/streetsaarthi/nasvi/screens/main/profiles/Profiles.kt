@@ -138,7 +138,7 @@ class Profiles : Fragment() , CallBackListener {
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     Log.e("TAG","loginUser "+loginUser)
-                    var data = Gson().fromJson(loginUser, Login::class.java)
+                    val data = Gson().fromJson(loginUser, Login::class.java)
                     data.profile_image_name?.let {
                         inclidePersonalProfile.ivImageProfile.loadImage(url = { data.profile_image_name.url })
                         inclidePersonalProfile.ivImageProfile.singleClick {

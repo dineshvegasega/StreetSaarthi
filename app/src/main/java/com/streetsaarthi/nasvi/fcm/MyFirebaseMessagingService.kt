@@ -38,13 +38,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
       //  Log.e("TAG", "isAppIsInBackground()" +  isAppIsInBackground());
 
 
-        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-            if (loginUser != null) {
-                val json : JSONObject = JSONObject((remoteMessage.data as Map<*, *>?)!!)
-                Log.e("TAG", "onMessageReceived: Data" + json.toString());
-                //noti(json)
-            }
-        }
+//        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+//            if (loginUser != null) {
+//                val json : JSONObject = JSONObject((remoteMessage.data as Map<*, *>?)!!)
+//                Log.e("TAG", "onMessageReceived: Data" + json.toString());
+//                //noti(json)
+//            }
+//        }
     }
 
 

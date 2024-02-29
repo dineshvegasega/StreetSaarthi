@@ -121,7 +121,7 @@ class LiveTrainingAdapter(liveSchemesVM: LiveTrainingVM) : RecyclerView.Adapter<
 
                 root.singleClick {
 //                    if (dataClass.user_scheme_status == "applied"){
-                        viewModel.viewDetail(""+dataClass.training_id, position = position, root, 1)
+                        viewModel.viewDetail(dataClass, position = position, root, 1)
 //                    }else{
 //                        viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
 //                    }

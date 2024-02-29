@@ -2,13 +2,13 @@ package com.streetsaarthi.nasvi.models.mix
 
 data class ItemLiveTraining(
     val cover_image: CoverImage,
-    val description: String,
+    var description: String,
     val district_id: Any,
     val educational_qualification: Any,
     val gender: Any,
     val live_link: String,
     val municipality_id: Any,
-    val name: String,
+    var name: String,
     val select_demography: Boolean,
     val social_category: Any,
     val state_id: Any,

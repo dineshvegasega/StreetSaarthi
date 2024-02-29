@@ -124,7 +124,7 @@ class InformationCenterAdapter(liveSchemesVM: InformationCenterVM) : RecyclerVie
 //                textHeaderTxt4.backgroundTintList = (if(dataClass.status == "Active") ContextCompat.getColorStateList(root.context,R.color._138808) else ContextCompat.getColorStateList(root.context,R.color._F02A2A))
 
                 root.singleClick{
-                    viewModel.viewDetail(""+dataClass.information_id, position = position, root, 1)
+                    viewModel.viewDetail(dataClass, position = position, root, 1)
                 }
 
             }

@@ -110,6 +110,14 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SdCardPath", "MutableImplicitPendingIntent", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
+        val policy = ThreadPolicy.Builder()
+            .detectAll()
+            .penaltyLog()
+            .detectDiskReads()
+            .detectDiskWrites()
+            .detectNetwork()
+            .build()
+        StrictMode.setThreadPolicy(policy)
         super.onCreate(savedInstanceState)
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -123,16 +131,6 @@ class MainActivity : AppCompatActivity() {
         activity = WeakReference(this)
         mainActivity = WeakReference(this)
 
-
-        val policy = ThreadPolicy.Builder()
-            .detectAll()
-            .penaltyLog()
-//            .penaltyDeath()
-//            .detectDiskReads()
-//            .detectDiskWrites()
-//            .detectNetwork()
-            .build()
-        StrictMode.setThreadPolicy(policy)
 
 
 

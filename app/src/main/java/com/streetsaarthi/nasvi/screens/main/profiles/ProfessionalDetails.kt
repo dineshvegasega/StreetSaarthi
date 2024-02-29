@@ -43,11 +43,13 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -501,17 +503,71 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         )
                     }
 
-                    data.vending_state?.let {
-                        editTextVendingSelectState.setText("${data.vending_state?.name}")
+
+
+                    runBlocking {
+                        mainThread {
+                            data.vending_state?.let {
+                                if (MainActivity.context.get()!!
+                                        .getString(R.string.englishVal) == "" + viewModel.locale
+                                ) {
+                                    editTextVendingSelectState.setText("${data.vending_state?.name}")
+                                } else {
+                                    viewModel.show()
+                                    val nameChanged: String =
+                                        viewModel.callApiTranslate("" + viewModel.locale, data.vending_state.name)
+                                    editTextVendingSelectState.setText("${nameChanged}")
+                                    viewModel.hide()
+                                }
+                            }
+
+                            data.vending_district?.let {
+                                if (MainActivity.context.get()!!
+                                        .getString(R.string.englishVal) == "" + viewModel.locale
+                                ) {
+                                    editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
+                                } else {
+                                    viewModel.show()
+                                    val nameChanged: String =
+                                        viewModel.callApiTranslate("" + viewModel.locale, data.vending_district.name)
+                                    editTextVendingSelectDistrict.setText("${nameChanged}")
+                                    viewModel.hide()
+                                }
+                            }
+
+                            data.vending_municipality_panchayat?.let {
+                                if (MainActivity.context.get()!!
+                                        .getString(R.string.englishVal) == "" + viewModel.locale
+                                ) {
+                                    editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
+                                } else {
+                                    viewModel.show()
+                                    val nameChanged: String =
+                                        viewModel.callApiTranslate("" + viewModel.locale, data.vending_municipality_panchayat.name)
+                                    editTextVendingMunicipalityPanchayat.setText("${nameChanged}")
+                                    viewModel.hide()
+                                }
+                            }
+
+                            data.vending_address?.let {
+                                if(data.vending_address != "null"){
+                                    editTextVendingAddress.setText("${data.vending_address}")
+                                    if (MainActivity.context.get()!!
+                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                    ) {
+                                        editTextVendingAddress.setText("${data.vending_address}")
+                                    } else {
+                                        viewModel.show()
+                                        val nameChanged: String =
+                                            viewModel.callApiTranslate("" + viewModel.locale, data.vending_address)
+                                        editTextVendingAddress.setText("${nameChanged}")
+                                        viewModel.hide()
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    data.vending_district?.let {
-                        editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
-                    }
-
-                    data.vending_municipality_panchayat?.let {
-                        editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
-                    }
 
                     if(data.vending_pincode != null){
                         editTextVendingSelectPincode.setText(""+data.vending_pincode?.pincode!!.toInt())
@@ -519,11 +575,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         editTextVendingSelectPincode.setText("")
                     }
 
-                    data.vending_address?.let {
-                            if(data.vending_address != "null"){
-                            editTextVendingAddress.setText("${data.vending_address}")
-                        }
-                    }
+
 
 
                     viewModel.data.vending_state = ""+data.vending_state?.id
@@ -1002,7 +1054,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 binding.editTextVendingSelectState.setText(list[which])
                 viewModel.stateIdVending =  viewModel.itemStateVending[which].id
                 view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
-                view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
+//                view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
                 if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
                     view?.let { viewModel.localOrganisation(it, JSONObject().apply {
                         put("state_id", viewModel.stateIdVending)
@@ -1151,6 +1203,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     private fun update() {
         binding.apply {
             if (editTextTypeofMarketPlace.text.toString().isEmpty()) {

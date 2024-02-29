@@ -1,8 +1,11 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.allSchemes
 
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -23,6 +26,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.model.BaseResponseDC
@@ -41,6 +45,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,6 +54,36 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
     val adapter by lazy { AllSchemesAdapter(this) }
 
     var counterNetwork = MutableLiveData<Boolean>(false)
+
+    var locale: Locale = Locale.getDefault()
+    var alertDialog: AlertDialog? = null
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
+
 
     private var itemLiveSchemesResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemes : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResult
@@ -164,8 +199,8 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
 
                                 dialogBinding.apply {
                                     data.scheme_image?.url?.glideImage(root.context, ivMap)
-                                    textTitle.setText(data.name)
-                                    textDesc.setText(data.description)
+                                    textTitle.setText(oldItemLiveScheme.name)
+                                    textDesc.setText(oldItemLiveScheme.description)
 
                                     if (data.status == "Active" && oldItemLiveScheme.user_scheme_status == "applied"){
                                         btApply.visibility = View.GONE
@@ -263,4 +298,9 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
         )
     }
 
+
+
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        return repository.callApiTranslate(_lang, _words)
+    }
 }

@@ -59,18 +59,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LiveSchemesVM @Inject constructor(private val repository: Repository): ViewModel() {
-    var locale: Locale = Locale.getDefault()
 
     val adapter by lazy { LiveSchemesAdapter(this) }
 
     var counterNetwork = MutableLiveData<Boolean>(false)
 
-
-    var alertDialog: AlertDialog? = null
-
     val apiInterface: ApiTranslateInterface = ApiClient.getClient()!!.create(
         ApiTranslateInterface::class.java)
 
+    var locale: Locale = Locale.getDefault()
+    var alertDialog: AlertDialog? = null
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())
         val binding =
@@ -82,12 +80,6 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
     }
 
     fun show() {
-//        Handler(Looper.myLooper()!!).postDelayed({
-//            if (alertDialog != null) {
-//                alertDialog?.dismiss()
-//                alertDialog?.show()
-//            }
-//        }, 50)
         viewModelScope.launch {
             if (alertDialog != null) {
                 alertDialog?.dismiss()

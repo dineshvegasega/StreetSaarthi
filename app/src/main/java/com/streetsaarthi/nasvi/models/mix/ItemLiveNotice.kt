@@ -1,13 +1,13 @@
 package com.streetsaarthi.nasvi.models.mix
 
 data class ItemLiveNotice(
-    val description: String,
+    var description: String,
     val district_id: Any,
     val educational_qualification: Any,
     val end_date: String,
     val gender: Any,
     val municipality_id: Any,
-    val name: String,
+    var name: String,
     val notice_id: Int,
     val notice_image: NoticeImage,
     val select_demography: Boolean,

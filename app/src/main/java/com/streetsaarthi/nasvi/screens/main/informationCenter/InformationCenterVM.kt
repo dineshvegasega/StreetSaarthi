@@ -1,8 +1,11 @@
 package com.streetsaarthi.nasvi.screens.main.informationCenter
 
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -21,7 +24,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomInformationCenterBinding
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
 import com.streetsaarthi.nasvi.models.mix.ItemInformationDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
@@ -33,6 +38,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,6 +47,38 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
     val adapter by lazy { InformationCenterAdapter(this) }
 
     var counterNetwork = MutableLiveData<Boolean>(false)
+
+
+
+    var locale: Locale = Locale.getDefault()
+    var alertDialog: AlertDialog? = null
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
+
 
     private var itemInformationCenterResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemInformationCenter : LiveData<BaseResponseDC<Any>> get() = itemInformationCenterResult
@@ -104,11 +142,11 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
 
 
 
-    fun viewDetail(_id: String, position: Int, root: View, status : Int) = viewModelScope.launch {
+    fun viewDetail(itemInformationCenter: ItemInformationCenter, position: Int, root: View, status: Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.informationDetail(id = _id)
+                    apiInterface.informationDetail(id = ""+itemInformationCenter.information_id)
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         var data = Gson().fromJson(response.body()!!.data, ItemInformationDetail::class.java)
@@ -129,8 +167,8 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
 
                                 dialogBinding.apply {
                                     data.cover_image?.url?.glideImage(root.context, ivMap)
-                                    textTitle.setText(data.title)
-                                    textDesc.setText(data.description)
+                                    textTitle.setText(itemInformationCenter.title)
+                                    textDesc.setText(itemInformationCenter.description)
 //                                    textHeaderTxt4.setText(data.status)
                                     textStartDate.visibility = View.GONE
                                     textEndDate.visibility = View.GONE
@@ -181,5 +219,11 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
                 }
             }
         )
+    }
+
+
+
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        return repository.callApiTranslate(_lang, _words)
     }
 }
