@@ -545,4 +545,8 @@
     <string name="close_info">ਬੰਦ ਕਰੋ</string>
     <string name='conversation_marked_admin_open_hi'>ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ %s ਦੁਆਰਾ %s ਦੁਆਰਾ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
     <string name='conversation_marked_admin_close_hi'>ਇਸ ਵਾਰਤਾਲਾਪ ਨੂੰ %s ਦੁਆਰਾ %s ਦੁਆਰਾ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
+    <string name="ok">ਠੀਕ ਹੈ</string>
+
+    <string name = "closed">ਬੰਦ</string>
+
 </resources>

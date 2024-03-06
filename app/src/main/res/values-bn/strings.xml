@@ -540,4 +540,8 @@
     <string name="close_info">বন্ধ করুন</string>
     <string name='conversation_marked_admin_open_hi'>এই কথোপকথনটিকে %s দ্বারা %s চিহ্নিত করা হয়েছিল</string>
     <string name='conversation_marked_admin_close_hi'>এই কথোপকথনটিকে %s দ্বারা %s চিহ্নিত করা হয়েছিল</string>
+    <string name="ok">ঠিক আছে</string>৷
+
+    <string name="closed">বন্ধ</string>৷
+
 </resources>

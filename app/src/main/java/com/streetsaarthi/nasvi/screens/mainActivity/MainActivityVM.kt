@@ -28,6 +28,7 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemMenuBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemAds
@@ -106,22 +107,8 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
 
                 if(selectedColorPosition == position) {
-//                    if(position == 4){
-//                        header.setBackgroundTintList(
-//                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
-//                    } else if(position == 5){
-//                        header.setBackgroundTintList(
-//                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
-//                    } else if(position == 6){
-//                        header.setBackgroundTintList(
-//                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
-//                    } else if(position == 7){
-//                        header.setBackgroundTintList(
-//                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
-//                    } else {
-                        header.setBackgroundTintList(
-                            ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
-//                    }
+                    header.setBackgroundTintList(
+                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
                 } else {
                     header.setBackgroundTintList(
                         ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
@@ -142,20 +129,19 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 recyclerViewChild.layoutManager = LinearLayoutManager(binding.root.context)
 
 
-                ivArrow.singleClick {
-                    selectedPosition = position
-                    dataClass.isExpanded = !dataClass.isExpanded!!
-                    selectedColorPosition = position
-                    notifyDataSetChanged()
-                }
+//                ivArrow.singleClick {
+//                    selectedPosition = position
+//                    dataClass.isExpanded = !dataClass.isExpanded!!
+//                    selectedColorPosition = position
+//                    notifyDataSetChanged()
+//                }
 
 
                 root.singleClick {
                     selectedColorPosition = position
-
                     if(dataClass.titleChildArray!!.isEmpty()){
                         var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
-                        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val data = Gson().fromJson(loginUser, Login::class.java)
                                 when (data.status) {
@@ -172,7 +158,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                 }
                                             }
                                             2 -> {
-                                                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                                                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                                     if (loginUser != null) {
                                                         val isNotification = Gson().fromJson(
                                                             loginUser,
@@ -262,13 +248,6 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                             }
                         }
                         MainActivity.binding.drawerLayout.close()
-                    }else{
-//                        dataClass.isExpanded = !dataClass.isExpanded!!
-//                        val list = currentList
-//                        notifyItemRangeChanged(position, list.size)
-//                        selectedPosition = position
-//                        dataClass.isExpanded = !dataClass.isExpanded!!
-//                        notifyDataSetChanged()
                     }
 
                     selectedPosition = position
@@ -316,8 +295,8 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 selectedChildColorPosition = position
                 notifyDataSetChanged()
 
-                    val fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
-                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                val fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val data = Gson().fromJson(loginUser, Login::class.java)
                         when (data.status) {
@@ -451,7 +430,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         itemDeleteResult.value = true
-                       // itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+                        // itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
                     }
                 }
 

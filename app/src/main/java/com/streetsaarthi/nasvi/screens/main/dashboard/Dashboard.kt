@@ -23,8 +23,11 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomLiveTrainingBinding
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
@@ -56,6 +59,7 @@ class Dashboard : Fragment() {
         // val menuHost: MenuHost = requireActivity()
         //createMenu(menuHost)
         MainActivity.mainActivity.get()?.callFragment(1)
+
         binding.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = viewModel.dashboardAdapter
@@ -123,8 +127,12 @@ class Dashboard : Fragment() {
             viewModel.dashboardAdapter.notifyDataSetChanged()
             viewModel.dashboardAdapter.submitList(viewModel.itemMain)
 
+            if(networkFailed) {
+                callApis()
+            } else {
+                requireContext().callNetworkDialog()
+            }
 
-            callApis()
 
 
             viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
@@ -179,7 +187,7 @@ class Dashboard : Fragment() {
 
     private fun callApis() {
         networkCount = 1
-        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
                 var _id = Gson().fromJson(loginUser, Login::class.java).id
                 val obj: JSONObject = JSONObject().apply {

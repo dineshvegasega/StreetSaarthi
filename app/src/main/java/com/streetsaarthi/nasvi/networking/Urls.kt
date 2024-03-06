@@ -1,13 +1,12 @@
 package com.streetsaarthi.nasvi.screens.onboarding.networking
 
-//const val BASE_URL = "https://v2.nasvi.in/"
-//const val WEB_URL = "https://nasvi.in/"
+const val BASE_URL = "https://v2.nasvi.in/"
+const val WEB_URL = "https://nasvi.in/"
 
-const val BASE_URL = "http://167.71.225.20:8081/"
-const val WEB_URL = "http://167.71.225.20:8080/"
+//const val BASE_URL = "http://167.71.225.20:8081/"
+//const val WEB_URL = "http://167.71.225.20:8080/"
 
 const val URL = BASE_URL+"api/"
-
 
 
 const val MOBILE_TOKEN = "update-mobile-token"
@@ -84,8 +83,10 @@ const val Main = "Main"
 const val CompleteRegister = "CompleteRegister"
 const val LoginPassword = "LoginPassword"
 const val LoginOtp = "LoginOtp"
-const val LIVE_SCHEMES = "LIVE_SCHEMES"
 
 const val NETWORK_DIALOG_SHOW = false
+const val IS_LANGUAGE = true
+const val IS_LANGUAGE_ALL = false
 
+const val RETRY_COUNT = 1
 

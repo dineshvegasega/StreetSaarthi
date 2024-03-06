@@ -34,7 +34,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_10sdp"
             />
@@ -71,7 +71,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_10sdp"
             />

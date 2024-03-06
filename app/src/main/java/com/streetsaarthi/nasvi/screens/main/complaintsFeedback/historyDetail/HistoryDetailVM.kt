@@ -28,7 +28,7 @@ class HistoryDetailVM @Inject constructor(private val repository: Repository): V
 
     private var feedbackConversationLiveData = MutableLiveData<ItemChat>()
     val feedbackConversationLive : LiveData<ItemChat> get() = feedbackConversationLiveData
-    fun feedbackConversationDetails(view: View, _id: String, page: String) = viewModelScope.launch {
+    fun feedbackConversationDetails(_id: String, page: String) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<ItemChat>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -56,7 +56,7 @@ class HistoryDetailVM @Inject constructor(private val repository: Repository): V
 
     private var feedbackConversationLiveDataSecond = MutableLiveData<ItemChat>()
     val feedbackConversationLiveSecond : LiveData<ItemChat> get() = feedbackConversationLiveDataSecond
-    fun feedbackConversationDetailsSecond(view: View, _id: String, page: String) = viewModelScope.launch {
+    fun feedbackConversationDetailsSecond( _id: String, page: String) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<ItemChat>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -85,7 +85,7 @@ class HistoryDetailVM @Inject constructor(private val repository: Repository): V
 
     private var addFeedbackConversationLiveData = MutableLiveData<BaseResponseDC<Any>>()
     val addFeedbackConversationLive : LiveData<BaseResponseDC<Any>> get() = addFeedbackConversationLiveData
-    fun addFeedbackConversationDetails(view: View, hashMap: RequestBody) = viewModelScope.launch {
+    fun addFeedbackConversationDetails(hashMap: RequestBody) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =

@@ -24,6 +24,9 @@ import com.streetsaarthi.nasvi.databinding.ItemDashboardMenusBinding
 import com.streetsaarthi.nasvi.databinding.ItemRecentActivitiesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.chat.ItemChat
 import com.streetsaarthi.nasvi.models.login.Login
@@ -126,7 +129,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 textHeaderTxt.setText(dataClass.name)
                 ivLogo.setImageResource(dataClass.image)
                 root.singleClick {
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val data = Gson().fromJson(loginUser, Login::class.java)
                                when (data.status) {
@@ -161,7 +164,6 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                }
                         }
                     }
-
                 }
             }
 
@@ -237,7 +239,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     if (response.isSuccessful){
                         val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(response.body()!!.data), typeToken)
-                        DataStoreUtil.readData(DataStoreKeys.LIVE_SCHEME_DATA) { loginUser ->
+                        readData(DataStoreKeys.LIVE_SCHEME_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveScheme>>(loginUser, typeToken)
                                 if(changeValue != savedValue){
@@ -246,13 +248,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isScheme.value = false
                                 }
                             } else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
                                 isScheme.value = false
                             }
 //                            Log.e("TAG", "LiveSchemes.isReadLiveSchemes"+LiveSchemes.isReadLiveSchemes)
                             if (LiveSchemes.isReadLiveSchemes == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
                                 isScheme.value = false
                                 LiveSchemes.isReadLiveSchemes = false
@@ -289,7 +291,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     if (response.isSuccessful){
                         val typeToken = object : TypeToken<List<ItemLiveNotice>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveNotice>>(Gson().toJson(response.body()!!.data), typeToken)
-                        DataStoreUtil.readData(DataStoreKeys.LIVE_NOTICE_DATA) { loginUser ->
+                        readData(DataStoreKeys.LIVE_NOTICE_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveNotice>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
@@ -298,12 +300,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isNotice.value = false
                                 }
                             } else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_NOTICE_DATA, changeValue)
                                 isNotice.value = false
                             }
                             if (LiveNotices.isReadLiveNotices == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_NOTICE_DATA, changeValue)
                                 isNotice.value = false
                                 LiveNotices.isReadLiveNotices = false
@@ -340,7 +342,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                         //isTraining.value = true
                         val typeToken = object : TypeToken<List<ItemLiveTraining>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(response.body()!!.data), typeToken)
-                        DataStoreUtil.readData(DataStoreKeys.LIVE_TRAINING_DATA) { loginUser ->
+                        readData(DataStoreKeys.LIVE_TRAINING_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveTraining>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
@@ -349,13 +351,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isTraining.value = false
                                 }
                             }  else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_TRAINING_DATA, changeValue)
                                 isTraining.value = false
                             }
 
                             if (LiveTraining.isReadLiveTraining == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_TRAINING_DATA, changeValue)
                                 isTraining.value = false
                                 LiveTraining.isReadLiveTraining = false
@@ -414,7 +416,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
 ////                            Log.e("TAG", "aaaaa_idZZZ "+it.feedback_id)
 //                            Log.e("TAG", "aaaaa_idXXX "+this.toString())
 //                        }
-                        DataStoreUtil.readData(DataStoreKeys.Complaint_Feedback_DATA) { loginUser ->
+                        readData(DataStoreKeys.Complaint_Feedback_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemHistory>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
@@ -423,13 +425,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isComplaintFeedback.value = false
                                 }
                             }  else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.Complaint_Feedback_DATA, changeValue)
                                 isComplaintFeedback.value = false
                             }
 
                             if (History.isReadComplaintFeedback == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.Complaint_Feedback_DATA, changeValue)
                                 isComplaintFeedback.value = false
                                 History.isReadComplaintFeedback = false
@@ -499,7 +501,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                         //isTraining.value = true
                         val typeToken = object : TypeToken<List<ItemInformationCenter>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemInformationCenter>>(Gson().toJson(response.body()!!.data), typeToken)
-                        DataStoreUtil.readData(DataStoreKeys.Information_Center_DATA) { loginUser ->
+                        readData(DataStoreKeys.Information_Center_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemInformationCenter>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
@@ -508,13 +510,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isInformationCenter.value = false
                                 }
                             }  else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.Information_Center_DATA, changeValue)
                                 isInformationCenter.value = false
                             }
 
                             if (InformationCenter.isReadInformationCenter == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.Information_Center_DATA, changeValue)
                                 isInformationCenter.value = false
                                 InformationCenter.isReadInformationCenter = false
@@ -576,14 +578,21 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            DataStoreUtil.saveData(
+                            saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
                             )
-                            DataStoreUtil.saveObject(
+                            saveObject(
                                 DataStoreKeys.LOGIN_DATA,
                                 Gson().fromJson(response.body()!!.data, Login::class.java)
                             )
+
+//                            readData(DataStoreKeys.AUTH) { authToken ->
+//                                if (authToken != null) {
+//                                    Log.e("TAG", "authToken: " + authToken)
+//                                    Log.e("TAG", "token "+response.body()!!.token ?: "")
+//                                }
+//                            }
                         }
                     }
                 }

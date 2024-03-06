@@ -16,6 +16,7 @@ import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
@@ -128,7 +129,7 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                             val data = Gson().fromJson(response.body()!!.data, Login::class.java)
                             saveObject(DataStoreKeys.LOGIN_DATA, data)
                             showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
-                            DataStoreUtil.readData(DataStoreKeys.TOKEN) { token ->
+                            readData(DataStoreKeys.TOKEN) { token ->
                                 getToken(){
                                     val obj: JSONObject = JSONObject()
                                     obj.put("user_id", ""+data.id)

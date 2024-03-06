@@ -42,8 +42,11 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.MembershipDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -148,7 +151,7 @@ class MembershipDetails  : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 //        binding.model = viewModel
 //        binding.lifecycleOwner = this
-        MainActivity.mainActivity.get()?.callFragment(2)
+        MainActivity.mainActivity.get()?.callFragment(1)
 
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.membership_details)
@@ -170,37 +173,37 @@ class MembershipDetails  : Fragment() {
 //            Log.e("TAG", "App.scaleDD "+viewModel.scale10)
 
             textAssociatedOrganizationTxt.textSize = viewModel.scale10
-            textMarketPlaceTxt.textSize = viewModel.scale10
-            textFirstNameTxt.textSize = viewModel.scale10
-            textFirstNameValueTxt.textSize = viewModel.scale10
-            textLastNameTxt.textSize = viewModel.scale10
-            textLastNameValueTxt.textSize = viewModel.scale10
-            textGenderTxt.textSize = viewModel.scale10
-            textGenderValueTxt.textSize = viewModel.scale10
-            textDOBTxt.textSize = viewModel.scale10
-            textDOBValueTxt.textSize = viewModel.scale10
-            textMobileTxt.textSize = viewModel.scale10
-            textMobileValueTxt.textSize = viewModel.scale10
-            textTypeofVendingTxt.textSize = viewModel.scale10
-            textTypeofVendingValueTxt.textSize = viewModel.scale10
-            textTypeofMarketPlaceTxt.textSize = viewModel.scale10
-            textTypeofMarketPlaceValueTxt.textSize = viewModel.scale10
-            textCurrentVendingAddressTxt.textSize = viewModel.scale10
-            textStateTxt.textSize = viewModel.scale10
-            textStateValueTxt.textSize = viewModel.scale10
-            textDistrictTxt.textSize = viewModel.scale10
-            textDistrictValueTxt.textSize = viewModel.scale10
-            textMunicipalityTxt.textSize = viewModel.scale10
-            textMunicipalityValueTxt.textSize = viewModel.scale10
-            textAddressTxt.textSize = viewModel.scale10
-            textAddressValueTxt.textSize = viewModel.scale10
-            textMembershipTxt.textSize = viewModel.scale10
-            textMembershipValidTxt.textSize = viewModel.scale10
-            btDownload.textSize = viewModel.scale10
+//            textMarketPlaceTxt.textSize = viewModel.scale10
+//            textFirstNameTxt.textSize = viewModel.scale10
+//            textFirstNameValueTxt.textSize = viewModel.scale10
+//            textLastNameTxt.textSize = viewModel.scale10
+//            textLastNameValueTxt.textSize = viewModel.scale10
+//            textGenderTxt.textSize = viewModel.scale10
+//            textGenderValueTxt.textSize = viewModel.scale10
+//            textDOBTxt.textSize = viewModel.scale10
+//            textDOBValueTxt.textSize = viewModel.scale10
+//            textMobileTxt.textSize = viewModel.scale10
+//            textMobileValueTxt.textSize = viewModel.scale10
+//            textTypeofVendingTxt.textSize = viewModel.scale10
+//            textTypeofVendingValueTxt.textSize = viewModel.scale10
+//            textTypeofMarketPlaceTxt.textSize = viewModel.scale10
+//            textTypeofMarketPlaceValueTxt.textSize = viewModel.scale10
+//            textCurrentVendingAddressTxt.textSize = viewModel.scale10
+//            textStateTxt.textSize = viewModel.scale10
+//            textStateValueTxt.textSize = viewModel.scale10
+//            textDistrictTxt.textSize = viewModel.scale10
+//            textDistrictValueTxt.textSize = viewModel.scale10
+//            textMunicipalityTxt.textSize = viewModel.scale10
+//            textMunicipalityValueTxt.textSize = viewModel.scale10
+//            textAddressTxt.textSize = viewModel.scale10
+//            textAddressValueTxt.textSize = viewModel.scale10
+//            textMembershipTxt.textSize = viewModel.scale10
+//            textMembershipValidTxt.textSize = viewModel.scale10
+//            btDownload.textSize = viewModel.scale10
 
 
 
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
                     Log.e("TAG", "dataLogin "+data.toString())
@@ -259,8 +262,12 @@ class MembershipDetails  : Fragment() {
                     })
 
 
-
-                    viewModel.vending(view)
+                    if(networkFailed) {
+                        viewModel.vending(view)
+                        viewModel.marketplace(view)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                     viewModel.vendingTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
                             for (item in viewModel.itemVending) {
@@ -281,7 +288,6 @@ class MembershipDetails  : Fragment() {
                     })
 
 
-                    viewModel.marketplace(view)
                     viewModel.marketPlaceTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
                             for (item in viewModel.itemMarketplace) {
@@ -375,10 +381,14 @@ class MembershipDetails  : Fragment() {
 
     private fun callApis(view: View) {
         networkCount = 1
-        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
-                viewModel.vending(view)
-                viewModel.marketplace(view)
+                if(networkFailed) {
+                    viewModel.vending(view)
+                    viewModel.marketplace(view)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
     }

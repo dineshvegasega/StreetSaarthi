@@ -34,7 +34,6 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
-import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,6 +49,7 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
     val adapter by lazy { LiveTrainingAdapter(this) }
 
     var counterNetwork = MutableLiveData<Boolean>(false)
+
 
 
     var locale: Locale = Locale.getDefault()
@@ -82,9 +82,10 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
     }
 
 
+
     private var itemLiveTrainingResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveTraining : LiveData<BaseResponseDC<Any>> get() = itemLiveTrainingResult
-    fun liveTraining(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveTraining(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -114,7 +115,7 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
 
     private var itemLiveTrainingResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveTrainingSecond : LiveData<BaseResponseDC<Any>> get() = itemLiveTrainingResultSecond
-    fun liveTrainingSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveTrainingSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -142,11 +143,11 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
 
 
 
-    fun viewDetail(oldItemLiveTraining: ItemLiveTraining, position: Int, root: View, status : Int) = viewModelScope.launch {
+    fun viewDetail(itemLiveTraining: ItemLiveTraining, position: Int, root: View, status: Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.trainingDetail(id = ""+oldItemLiveTraining.training_id)
+                    apiInterface.trainingDetail(id = ""+itemLiveTraining.training_id)
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         var data = Gson().fromJson(response.body()!!.data, ItemTrainingDetail::class.java)
@@ -167,8 +168,8 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
 
                                 dialogBinding.apply {
                                     data.cover_image?.url?.glideImage(root.context, ivMap)
-                                    textTitle.setText(oldItemLiveTraining.name)
-                                    textDesc.setText(oldItemLiveTraining.description)
+                                    textTitle.setText(itemLiveTraining.name)
+                                    textDesc.setText(itemLiveTraining.description)
                                     textHeaderTxt4.setText(data.status)
                                     textHeaderTxt4.visibility = View.GONE
 
@@ -219,7 +220,6 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
             }
         )
     }
-
 
 
 

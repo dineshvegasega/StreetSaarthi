@@ -35,13 +35,17 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.HistoryDetailBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.chat.DataX
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
+import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -82,7 +86,7 @@ class HistoryDetail : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = HistoryDetailBinding.inflate(inflater)
+        _binding = HistoryDetailBinding.inflate(inflater, container, false)
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MODE_CHANGED)
 //        } else {
@@ -124,6 +128,9 @@ class HistoryDetail : Fragment() {
                 } else if (status == "in-progress"){
                     requestBody.addFormDataPart("status", "resolved")
                     msg = view.resources.getString(R.string.close_conversation)
+                } else if (status == "Closed"){
+                    requestBody.addFormDataPart("status", "re-open")
+                    msg = view.resources.getString(R.string.open_conversation)
                 }
 
                 if(logoutAlert?.isShowing == true) {
@@ -134,13 +141,17 @@ class HistoryDetail : Fragment() {
                     .setMessage(msg)
                     .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
                         dialog.dismiss()
-                        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                             if (loginUser != null) {
                                 var user = Gson().fromJson(loginUser, Login::class.java)
                                 requestBody.addFormDataPart("user_id", ""+user?.id)
                                 requestBody.addFormDataPart("feedback_id", ""+feedbackId)
                                 requestBody.addFormDataPart("media", "null")
-                                viewModel.addFeedbackConversationDetails(view = requireView(), requestBody.build())
+                                if(networkFailed) {
+                                    viewModel.addFeedbackConversationDetails(requestBody.build())
+                                } else {
+                                    requireContext().callNetworkDialog()
+                                }
                             }
                         }
                     }
@@ -232,7 +243,7 @@ class HistoryDetail : Fragment() {
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("user_type", USER_TYPE)
                 if (!etTypingMessage.text!!.isEmpty() || viewModel.uploadMediaImage != null){
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             var user = Gson().fromJson(loginUser, Login::class.java)
                             requestBody.addFormDataPart("user_id", ""+user?.id)
@@ -246,10 +257,15 @@ class HistoryDetail : Fragment() {
                                     File(viewModel.uploadMediaImage!!).asRequestBody("image/*".toMediaTypeOrNull())
                                 )
                             }
-                            viewModel.addFeedbackConversationDetails(view = requireView(), requestBody.build())
-                            etTypingMessage.setText("")
-                            viewModel.uploadMediaImage = null
-                            binding.relative1.visibility = View.GONE
+                            if(networkFailed) {
+                                viewModel.addFeedbackConversationDetails(requestBody.build())
+                                etTypingMessage.setText("")
+                                viewModel.uploadMediaImage = null
+                                binding.relative1.visibility = View.GONE
+                            } else {
+                                requireContext().callNetworkDialog()
+                            }
+
                         }
                     }
                 } else {
@@ -273,7 +289,7 @@ class HistoryDetail : Fragment() {
                     currentPage += 1
                     if(totalPages >= currentPage){
                         Handler(Looper.myLooper()!!).postDelayed({
-                            loadNextPage()
+                                loadNextPage()
                         }, LOADER_TIME)
                     }
                 }
@@ -299,12 +315,20 @@ class HistoryDetail : Fragment() {
         totalPages  = 1
         currentPage  = pageStart
         results.clear()
-        viewModel.feedbackConversationDetails(requireView(), ""+feedbackId , ""+currentPage)
+        if(requireContext().isNetworkAvailable()) {
+            viewModel.feedbackConversationDetails(""+feedbackId , ""+currentPage)
+        } else {
+            requireContext().callNetworkDialog()
+        }
     }
 
 
     fun loadNextPage() {
-        viewModel.feedbackConversationDetailsSecond(requireView(), ""+feedbackId , ""+currentPage)
+            if(requireContext().isNetworkAvailable()) {
+                viewModel.feedbackConversationDetailsSecond(""+feedbackId , ""+currentPage)
+            } else {
+                requireContext().callNetworkDialog()
+            }
     }
 
 
@@ -312,9 +336,9 @@ class HistoryDetail : Fragment() {
     private fun observerDataRequest(){
         viewModel.addFeedbackConversationLive.observe(requireActivity()) {
             if(totalPages == 1){
-                loadFirstPage()
+                    loadFirstPage()
             } else {
-                loadNextPage()
+                    loadNextPage()
             }
         }
 
@@ -355,6 +379,13 @@ class HistoryDetail : Fragment() {
                     inclideHeaderSearch.btClose.text = requireContext().getString(R.string.x_close)
                     inclideHeaderSearch.btClose.backgroundTintList =
                         ContextCompat.getColorStateList(root.context, R.color._ED2525)
+                } else if (status == "Closed") {
+                    vBottom.visibility = View.GONE
+                    inclideHeaderSearch.btClose.text = requireContext().getString(R.string.re_open)
+                    inclideHeaderSearch.btClose.icon =
+                        ContextCompat.getDrawable(root.context, R.drawable.check)
+                    inclideHeaderSearch.btClose.backgroundTintList =
+                        ContextCompat.getColorStateList(root.context, R.color._138808)
                 } else {
                     vBottom.visibility = View.GONE
                 }
@@ -685,7 +716,7 @@ class HistoryDetail : Fragment() {
 
 
     override fun onDestroyView() {
-        _binding = null
+//        _binding = null
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         super.onDestroyView()
     }

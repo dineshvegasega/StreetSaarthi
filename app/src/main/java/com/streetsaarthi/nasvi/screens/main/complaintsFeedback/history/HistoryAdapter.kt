@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,17 +14,13 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemHistoryBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.models.mix.ItemHistory
-import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
-import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.glideImagePortrait
 import com.streetsaarthi.nasvi.utils.singleClick
 
 
-class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
-    PaginationAdapterCallback, CallBackListener {
+class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var viewModel = liveSchemesVM
     private val item: Int = 0
     private val loading: Int = 1
@@ -37,13 +32,9 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
 
     private var itemModels: MutableList<ItemHistory> = ArrayList()
 
-    companion object{
-        var callBackListener: CallBackListener? = null
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return  if(viewType == item){
             val binding: ItemHistoryBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_history, parent, false)
-            callBackListener = this
             TopMoviesVH(binding)
         }else{
             val binding: ItemLoadingBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_loading, parent, false)
@@ -55,33 +46,15 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = itemModels[position]
         if(getItemViewType(position) == item){
-            callBackListener = this
-
             val myOrderVH: TopMoviesVH = holder as TopMoviesVH
 //            myOrderVH.itemRowBinding.movieProgress.visibility = View.VISIBLE
             myOrderVH.bind(model, viewModel, position)
         }else{
             val loadingVH: LoadingVH = holder as LoadingVH
             if (retryPageLoad) {
-                loadingVH.itemRowBinding.loadmoreErrorlayout.visibility = View.VISIBLE
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.GONE
-
-                if(errorMsg != null) loadingVH.itemRowBinding.loadmoreErrortxt.text = errorMsg
-                else loadingVH.itemRowBinding.loadmoreErrortxt.text = MainActivity.activity.get()?.getString(
-                    R.string.error_msg_unknown)
-
             } else {
-                loadingVH.itemRowBinding.loadmoreErrorlayout.visibility = View.GONE
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
-            }
-
-            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
-                showRetry(false, "")
-                retryPageLoad()
-            }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
-                showRetry(false, "")
-                retryPageLoad()
             }
         }
     }
@@ -102,10 +75,6 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    override fun retryPageLoad() {
-        // mActivity.loadNextPage()
-    }
-
 
 
     class TopMoviesVH(binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -113,10 +82,10 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
         fun bind(obj: Any?, viewModel: HistoryVM, position: Int) {
             itemRowBinding.setVariable(BR.model, obj)
             itemRowBinding.executePendingBindings()
-            var dataClass = obj as ItemHistory
+            val dataClass = obj as ItemHistory
             itemRowBinding.apply {
                 dataClass.media?.url?.glideImagePortrait(itemRowBinding.root.context, ivIcon)
-               var complaintfeedback = if (dataClass.type == "complaint"){
+               val complaintfeedback = if (dataClass.type == "complaint"){
                     root.context.getString(R.string.complaint)
                 } else {
                     root.context.getString(R.string.feedback)
@@ -132,13 +101,15 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
                     else if (dataClass.status == "Pending" || dataClass.status == "pending") root.context.getString(R.string.pending)
                     else if (dataClass.status == "resolved") root.context.getString(R.string.resolved)
                     else if (dataClass.status == "re-open") root.context.getString(R.string.re_open)
+                    else if (dataClass.status == "Closed") root.context.getString(R.string.closed)
                     else root.context.getString(R.string.pending))
 
                 textStatusValueTxt.setTextColor(
-                    if (dataClass.status == "in-progress") ContextCompat.getColor(root.context, R.color._E79D46)
+                if (dataClass.status == "in-progress") ContextCompat.getColor(root.context, R.color._E79D46)
                 else if (dataClass.status == "Pending" || dataClass.status == "pending") ContextCompat.getColor(root.context, R.color.black)
                 else if (dataClass.status == "resolved") ContextCompat.getColor(root.context, R.color._138808)
                 else if (dataClass.status == "re-open") ContextCompat.getColor(root.context, R.color._ED2525)
+                else if (dataClass.status == "Closed") ContextCompat.getColor(root.context, R.color.black)
                 else ContextCompat.getColor(root.context, R.color._ffffffff))
 
                 dataClass.date?.let {
@@ -193,9 +164,4 @@ class HistoryAdapter(liveSchemesVM: HistoryVM) : RecyclerView.Adapter<RecyclerVi
         isLoadingAdded = false
     }
 
-    override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBack "+pos)
-//        onCallBack(pos)
-
-    }
 }

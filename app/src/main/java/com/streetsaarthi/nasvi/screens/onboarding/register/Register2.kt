@@ -30,11 +30,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.kochia.customer.utils.hideKeyboard
+import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register2Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -177,8 +180,13 @@ class Register2  : Fragment() , CallBackListener {
 
 
         binding.apply {
-            viewModel.vending(view)
-            viewModel.marketplace(view)
+            if(networkFailed) {
+                viewModel.vending(view)
+                viewModel.marketplace(view)
+            } else {
+                requireContext().callNetworkDialog()
+            }
+
 
 //            btSignIn.singleClick {
 //                Log.e("TAG", "viewModel.dataB "+viewModel.data.toString())
@@ -208,7 +216,11 @@ class Register2  : Fragment() , CallBackListener {
                 showCloseDialog()
             }
 
-            viewModel.stateCurrent(view)
+            if(networkFailed) {
+                viewModel.stateCurrent(view)
+            } else {
+                requireContext().callNetworkDialog()
+            }
             editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemStateVending.size > 0){
@@ -489,7 +501,7 @@ class Register2  : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.type_of_market_place))
             .setItems(list) { _, which ->
                 binding.editTextTypeofMarketPlace.setText(list[which])
@@ -509,7 +521,7 @@ class Register2  : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.type_of_vending))
             .setItems(list) { _, which ->
                 binding.editTextTypeofVending.setText(list[which])
@@ -525,7 +537,7 @@ class Register2  : Fragment() , CallBackListener {
 
     private fun showDropDownYearsDialog() {
         val list = resources.getStringArray(R.array.years_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.total_years_of_vending))
             .setItems(list) { _, which ->
                 binding.editTextTotalYearsofVending.setText(list[which])
@@ -624,20 +636,30 @@ class Register2  : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_state))
             .setItems(list) { _, which ->
                 binding.editTextSelectState.setText(list[which])
                 viewModel.stateIdVending = viewModel.itemStateVending[which].id
-                view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
-//                view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
-                if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
-                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                        put("state_id", viewModel.stateIdVending)
-                        put("district_id", viewModel.districtIdVending)
-                    })}
+                if(networkFailed) {
+                    view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
+                    if (!IS_LANGUAGE_ALL){
+                        view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
+                    }
+                } else {
+                    requireContext().callNetworkDialog()
                 }
 
+                if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
+                    if(networkFailed) {
+                        view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                            put("state_id", viewModel.stateIdVending)
+                            put("district_id", viewModel.districtIdVending)
+                        })}
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
+                }
                 binding.editTextSelectDistrict.setText("")
                 binding.editTextMunicipalityPanchayat.setText("")
                 viewModel.districtIdVending = 0
@@ -653,17 +675,21 @@ class Register2  : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_district))
             .setItems(list) { _, which ->
                 binding.editTextSelectDistrict.setText(list[which])
                 viewModel.districtIdVending = viewModel.itemDistrictVending[which].id
                 view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdVending) }
                 if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
-                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                        put("state_id", viewModel.stateIdVending)
-                        put("district_id", viewModel.districtIdVending)
-                    })}
+                    if(networkFailed) {
+                        view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                            put("state_id", viewModel.stateIdVending)
+                            put("district_id", viewModel.districtIdVending)
+                        })}
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
 
                 binding.editTextSelectPincode.setText("")
@@ -679,7 +705,7 @@ class Register2  : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.municipality_panchayat))
             .setItems(list) { _, which ->
                 binding.editTextMunicipalityPanchayat.setText(list[which])
@@ -695,7 +721,7 @@ class Register2  : Fragment() , CallBackListener {
             list[index] = value.pincode
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) { _, which ->
                 binding.editTextSelectPincode.setText(list[which])
@@ -711,7 +737,7 @@ class Register2  : Fragment() , CallBackListener {
             list[index] = value.local_organisation_name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.localOrganisation))
             .setItems(list) { _, which ->
                 binding.editTextLocalOrganisation.setText(list[which])

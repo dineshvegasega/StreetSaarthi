@@ -48,12 +48,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StreetSaarthi"
-        tools:targetApi="31"
+        tools:targetApi="tiramisu"
         android:largeHeap="true"
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
-
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:enableOnBackInvokedCallback="true"
         >
         <activity
             android:name=".screens.mainActivity.MainActivity"
@@ -62,7 +63,7 @@
             android:theme="@style/Theme.StreetSaarthi"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity">
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -106,18 +107,29 @@
             </intent-filter>
         </service>
 
+
+        <receiver
+            android:name=".fcm.VerifyBroadcastReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>
+
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="default_channel_id" />
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
 
-        <receiver android:name=".fcm.SmsListener"
-            android:exported="true"
-            android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED"/>
-            </intent-filter>
-        </receiver>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/_EDB678" />
+
 
     </application>
 

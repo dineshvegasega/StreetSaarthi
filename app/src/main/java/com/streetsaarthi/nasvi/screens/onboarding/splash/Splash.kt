@@ -1,6 +1,8 @@
 package com.streetsaarthi.nasvi.screens.onboarding.splash
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +27,6 @@ class Splash : Fragment() {
     private val binding get() = _binding!!
 
 
-var viewOf : View ?= null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,7 +37,6 @@ var viewOf : View ?= null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewOf = view
         super.onViewCreated(view, savedInstanceState)
         MainActivity.mainActivity.get()?.callFragment(0)
     }
@@ -56,13 +55,13 @@ var viewOf : View ?= null
                 if(loginUser == null){
                     if (fragmentInFrame !is Start){
                         navHostFragment?.navController?.navigate(R.id.action_splash_to_start)
-//                      requireView().findNavController().navigate(R.id.action_splash_to_start)
                         MainActivity.mainActivity.get()!!.callBack()
                     }
                 }else{
                     if (fragmentInFrame !is Dashboard){
-                        navHostFragment?.navController?.navigate(R.id.action_splash_to_dashboard)
-//                      requireView().findNavController().navigate(R.id.action_splash_to_dashboard)
+                        if(!MainActivity.isBackStack){
+                            navHostFragment?.navController?.navigate(R.id.action_splash_to_dashboard)
+                        }
                         MainActivity.mainActivity.get()!!.callBack()
                    }
                 }

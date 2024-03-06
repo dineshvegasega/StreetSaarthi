@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="@dimen/_22ssp"
+        android:textSize="@dimen/_22sdp"
         android:gravity="center"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_5sdp"
@@ -48,7 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="@dimen/_11ssp"
+        android:textSize="@dimen/_11sdp"
         android:gravity="center"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_25sdp"
@@ -77,7 +77,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btSignIn"
         android:gravity="start|center_vertical"
         android:drawableEnd="@drawable/mdi_arrow_dow"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_12sdp"
         />
 
 
@@ -93,6 +93,7 @@
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/textHeaderTxt1"
+        android:textSize="@dimen/_13sdp"
         />
 
 
@@ -101,7 +102,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="@dimen/_10ssp"
+        android:textSize="@dimen/_10sdp"
         android:gravity="center"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_10sdp"

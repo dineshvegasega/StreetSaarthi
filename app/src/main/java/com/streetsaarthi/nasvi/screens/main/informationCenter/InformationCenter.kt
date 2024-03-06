@@ -25,18 +25,17 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.InformationCenterBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.CheckValidation
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.delay
 import org.json.JSONObject
 
@@ -66,7 +65,7 @@ class InformationCenter : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = InformationCenterBinding.inflate(inflater)
+        _binding = InformationCenterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -74,7 +73,7 @@ class InformationCenter : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         isReadInformationCenter = true
 
 
@@ -168,7 +167,11 @@ class InformationCenter : Fragment() {
                     put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
 //                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                viewModel.informationCenter(view = requireView(), obj)
+                if(requireContext().isNetworkAvailable()) {
+                    viewModel.informationCenter(obj)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
     }
@@ -183,165 +186,64 @@ class InformationCenter : Fragment() {
                     put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
 //                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                viewModel.informationCenterSecond(view = requireView(), obj)
+                if(requireContext().isNetworkAvailable()) {
+                    viewModel.informationCenterSecond(obj)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
     }
 
 
 
-//    var results: MutableList<ItemInformationCenter> = ArrayList()
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun observerDataRequest(){
-//        viewModel.show()
-//        viewModel.itemInformationCenter.observe(viewLifecycleOwner, Observer {
-//            val typeToken = object : TypeToken<List<ItemInformationCenter>>() {}.type
-//            val changeValue = Gson().fromJson<List<ItemInformationCenter>>(Gson().toJson(it.data), typeToken)
-//            if (MainActivity.context.get()!!
-//                    .getString(R.string.englishVal) == "" + viewModel.locale
-//            ) {
-//                val itemStateTemp = changeValue
-//                results.addAll(itemStateTemp)
-//                viewModel.adapter.addAllSearch(results)
-//                viewModel.hide()
-//
-//                if (viewModel.adapter.itemCount > 0) {
-//                    binding.idDataNotFound.root.visibility = View.GONE
-//                } else {
-//                    binding.idDataNotFound.root.visibility = View.VISIBLE
-//                }
-//            } else {
-//                val itemStateTemp = changeValue
-//                mainThread {
-//                    itemStateTemp.forEach {
-//                        val nameChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.title)
-//                        val descChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.description)
-//                        apply {
-//                            it.title = nameChanged
-//                            it.description = descChanged
-//                        }
-//                    }
-//                    results.addAll(itemStateTemp)
-//                    viewModel.adapter.addAllSearch(results)
-//                    viewModel.hide()
-//
-//                    if (viewModel.adapter.itemCount > 0) {
-//                        binding.idDataNotFound.root.visibility = View.GONE
-//                    } else {
-//                        binding.idDataNotFound.root.visibility = View.VISIBLE
-//                    }
-//                }
-//            }
-//            totalPages = it.meta?.total_pages!!
-//            if (currentPage == totalPages) {
-//                viewModel.adapter.removeLoadingFooter()
-//            } else if (currentPage <= totalPages) {
-//                viewModel.adapter.addLoadingFooter()
-//                isLastPage = false
-//            } else {
-//                isLastPage = true
-//            }
-//
-//            if (viewModel.adapter.itemCount > 0) {
-//                binding.idDataNotFound.root.visibility = View.GONE
-//            } else {
-//                binding.idDataNotFound.root.visibility = View.VISIBLE
-//            }
-//        })
-//
-//
-//        viewModel.itemInformationCenterSecond.observe(viewLifecycleOwner, Observer {
-//            val typeToken = object : TypeToken<List<ItemInformationCenter>>() {}.type
-//            val changeValue = Gson().fromJson<List<ItemInformationCenter>>(Gson().toJson(it.data), typeToken)
-//            if (MainActivity.context.get()!!
-//                    .getString(R.string.englishVal) == "" + viewModel.locale
-//            ) {
-//                val itemStateTemp = changeValue
-//                results.addAll(itemStateTemp)
-//                viewModel.adapter.addAllSearch(results)
-//                viewModel.hide()
-//            } else {
-//                val itemStateTemp = changeValue
-//                mainThread {
-//                    itemStateTemp.forEach {
-//                        val nameChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.title)
-//                        val descChanged: String = viewModel.callApiTranslate(""+viewModel.locale, it.description)
-//                        apply {
-//                            it.title = nameChanged
-//                            it.description = descChanged
-//                        }
-//                    }
-//                    results.addAll(itemStateTemp)
-//                    viewModel.adapter.addAllSearch(results)
-//                    viewModel.hide()
-//                }
-//            }
-//            viewModel.adapter.removeLoadingFooter()
-//            isLoading = false
-//            viewModel.adapter.addAllSearch(results)
-//            if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
-//            else isLastPage = true
-//        })
-//
-//
-//        viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
-//            if (it) {
-//                if(networkCount == 1){
-//                    if(networkAlert?.isShowing == true) {
-//                        return@Observer
-//                    }
-//                    val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
-//                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//                    )
-//                    networkAlert = BottomSheetDialog(requireContext())
-//                    networkAlert?.setContentView(dialogBinding.root)
-//                    networkAlert?.setOnShowListener { dia ->
-//                        val bottomSheetDialog = dia as BottomSheetDialog
-//                        val bottomSheetInternal: FrameLayout =
-//                            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-//                        bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
-//                    }
-//                    networkAlert?.show()
-//
-//                    dialogBinding.apply {
-//                        btClose.singleClick {
-//                            networkAlert?.dismiss()
-//                        }
-//                        btApply.singleClick {
-//                            networkAlert?.dismiss()
-//                            if(totalPages == 1){
-//                                loadFirstPage()
-//                            } else {
-//                                loadNextPage()
-//                            }
-//                            networkCount = 1
-//                        }
-//                    }
-//                }
-//                networkCount++
-//            }
-//        })
-//
-//
-//    }
-
-
-
-
     var results: MutableList<ItemInformationCenter> = ArrayList()
-
-    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("NotifyDataSetChanged")
-    private fun observerDataRequest() {
+    private fun observerDataRequest(){
         viewModel.itemInformationCenter.observe(viewLifecycleOwner, Observer {
             viewModel.show()
             val typeToken = object : TypeToken<List<ItemInformationCenter>>() {}.type
             val changeValue =
                 Gson().fromJson<List<ItemInformationCenter>>(Gson().toJson(it.data), typeToken)
+            if (IS_LANGUAGE){
+                if (MainActivity.context.get()!!
+                        .getString(R.string.englishVal) == "" + viewModel.locale
+                ) {
+                    val itemStateTemp = changeValue
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
 
-            if (MainActivity.context.get()!!
-                    .getString(R.string.englishVal) == "" + viewModel.locale
-            ) {
+                    if (viewModel.adapter.itemCount > 0) {
+                        binding.idDataNotFound.root.visibility = View.GONE
+                    } else {
+                        binding.idDataNotFound.root.visibility = View.VISIBLE
+                    }
+                } else {
+                    val itemStateTemp = changeValue
+                    mainThread {
+                        itemStateTemp.forEach {
+                            delay(50)
+                            val nameChanged: String = if(it.title != null) viewModel.callApiTranslate(""+viewModel.locale, it.title) else ""
+                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+
+                            apply {
+                                it.title = nameChanged
+                                it.description = descChanged
+                            }
+                        }
+                        results.addAll(itemStateTemp)
+                        viewModel.adapter.addAllSearch(results)
+                        viewModel.hide()
+
+                        if (viewModel.adapter.itemCount > 0) {
+                            binding.idDataNotFound.root.visibility = View.GONE
+                        } else {
+                            binding.idDataNotFound.root.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            } else {
                 val itemStateTemp = changeValue
                 results.addAll(itemStateTemp)
                 viewModel.adapter.addAllSearch(results)
@@ -352,30 +254,8 @@ class InformationCenter : Fragment() {
                 } else {
                     binding.idDataNotFound.root.visibility = View.VISIBLE
                 }
-            } else {
-                val itemStateTemp = changeValue
-                mainThread {
-                    itemStateTemp.forEach {
-                        delay(50)
-                        val nameChanged: String = if(it.title != null) viewModel.callApiTranslate(""+viewModel.locale, it.title) else ""
-                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
-
-                        apply {
-                            it.title = nameChanged
-                            it.description = descChanged
-                        }
-                    }
-                    results.addAll(itemStateTemp)
-                    viewModel.adapter.addAllSearch(results)
-                    viewModel.hide()
-
-                    if (viewModel.adapter.itemCount > 0) {
-                        binding.idDataNotFound.root.visibility = View.GONE
-                    } else {
-                        binding.idDataNotFound.root.visibility = View.VISIBLE
-                    }
-                }
             }
+
 
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
@@ -395,31 +275,40 @@ class InformationCenter : Fragment() {
             val changeValue =
                 Gson().fromJson<List<ItemInformationCenter>>(Gson().toJson(it.data), typeToken)
 
-            if (MainActivity.context.get()!!
-                    .getString(R.string.englishVal) == "" + viewModel.locale
-            ) {
+            if (IS_LANGUAGE){
+
+                if (MainActivity.context.get()!!
+                        .getString(R.string.englishVal) == "" + viewModel.locale
+                ) {
+                    val itemStateTemp = changeValue
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
+                } else {
+                    val itemStateTemp = changeValue
+                    mainThread {
+                        itemStateTemp.forEach {
+                            delay(50)
+                            val nameChanged: String = if(it.title != null) viewModel.callApiTranslate(""+viewModel.locale, it.title) else ""
+                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+
+                            apply {
+                                it.title = nameChanged
+                                it.description = descChanged
+                            }
+                        }
+                        results.addAll(itemStateTemp)
+                        viewModel.adapter.addAllSearch(results)
+                        viewModel.hide()
+                    }
+                }
+            } else {
                 val itemStateTemp = changeValue
                 results.addAll(itemStateTemp)
                 viewModel.adapter.addAllSearch(results)
                 viewModel.hide()
-            } else {
-                val itemStateTemp = changeValue
-                mainThread {
-                    itemStateTemp.forEach {
-                        delay(50)
-                        val nameChanged: String = if(it.title != null) viewModel.callApiTranslate(""+viewModel.locale, it.title) else ""
-                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
-
-                        apply {
-                            it.title = nameChanged
-                            it.description = descChanged
-                        }
-                    }
-                    results.addAll(itemStateTemp)
-                    viewModel.adapter.addAllSearch(results)
-                    viewModel.hide()
-                }
             }
+
 
             viewModel.adapter.removeLoadingFooter()
             isLoading = false
@@ -429,17 +318,14 @@ class InformationCenter : Fragment() {
         })
 
 
-
         viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
             if (it) {
-                if (networkCount == 1) {
-                    if (networkAlert?.isShowing == true) {
+                if(networkCount == 1){
+                    if(networkAlert?.isShowing == true) {
                         return@Observer
                     }
-                    val dialogBinding = DialogBottomNetworkBinding.inflate(
-                        requireContext().getSystemService(
-                            Context.LAYOUT_INFLATER_SERVICE
-                        ) as LayoutInflater
+                    val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                     )
                     networkAlert = BottomSheetDialog(requireContext())
                     networkAlert?.setContentView(dialogBinding.root)
@@ -457,7 +343,7 @@ class InformationCenter : Fragment() {
                         }
                         btApply.singleClick {
                             networkAlert?.dismiss()
-                            if (totalPages == 1) {
+                            if(totalPages == 1){
                                 loadFirstPage()
                             } else {
                                 loadNextPage()
@@ -469,12 +355,14 @@ class InformationCenter : Fragment() {
                 networkCount++
             }
         })
+
+
     }
 
 
 
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
+//    override fun onDestroyView() {
+//        _binding = null
+//        super.onDestroyView()
+//    }
 }

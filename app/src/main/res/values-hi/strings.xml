@@ -543,4 +543,8 @@
     <string name="close_info">बंद</string>
     <string name='conversation_marked_admin_open_hi'>इस वार्तालाप को %s द्वारा %s गया था</string>
     <string name='conversation_marked_admin_close_hi'>इस वार्तालाप को %s द्वारा %s किया गया था</string>
+    <string name='ok'>ठीक है</string>
+
+    <string name='closed'>बंद</string>
+
 </resources>

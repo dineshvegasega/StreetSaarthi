@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,14 +23,13 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.NotificationsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemNotification
-import com.streetsaarthi.nasvi.screens.main.notifications.NotificationsVM.Companion.isNotificationNext
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.CheckValidation
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
@@ -59,7 +57,7 @@ class Notifications : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NotificationsBinding.inflate(inflater)
+        _binding = NotificationsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -67,7 +65,7 @@ class Notifications : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.notifications)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
@@ -87,16 +85,19 @@ class Notifications : Fragment() {
                     .setMessage(resources.getString(R.string.are_your_sure_want_to_delete_all_notifications))
                     .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
                         dialog.dismiss()
-                        if (CheckValidation.isConnected(requireContext())) {
-                            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                       readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                 if (loginUser != null) {
                                     val obj: JSONObject = JSONObject().apply {
                                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                                     }
-                                    viewModel.deleteNotification(view = requireView(), obj)
+                                    if(networkFailed) {
+                                        viewModel.deleteNotification(obj)
+                                    } else {
+                                        requireContext().callNetworkDialog()
+                                    }
                                 }
-                            }
-                        }
+                       }
+
                     }
                     .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                         dialog.dismiss()
@@ -159,7 +160,11 @@ class Notifications : Fragment() {
                     put("is_read", false)
                     put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                viewModel.notifications(view = requireView(), obj)
+                if(networkFailed) {
+                    viewModel.notifications(obj)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
     }
@@ -172,7 +177,11 @@ class Notifications : Fragment() {
                     put("is_read", false)
                     put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                viewModel.notificationsSecond(view = requireView(), obj)
+                if(networkFailed) {
+                    viewModel.notificationsSecond(obj)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
     }
@@ -314,7 +323,7 @@ class Notifications : Fragment() {
 
 
     override fun onDestroyView() {
-        _binding = null
+//        _binding = null
         deleteAlert?.let {
             deleteAlert!!.cancel()
         }

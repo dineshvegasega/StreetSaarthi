@@ -541,4 +541,8 @@
     <string name="close_info">மூடு</string>
     <string name='conversation_marked_admin_open_hi'>இந்த உரையாடல் %s என %s ஆல் அன்று குறிக்கப்பட்டது</string>
     <string name='conversation_marked_admin_close_hi'>இந்த உரையாடல் %s ஆல் %s ஆல் அன்று குறிக்கப்பட்டது</string>
+    <string name="ok">சரி</string>
+
+    <string name="closed">மூடப்பட்டது</string>
+
 </resources>

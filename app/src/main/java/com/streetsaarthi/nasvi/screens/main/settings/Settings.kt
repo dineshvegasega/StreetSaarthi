@@ -24,9 +24,12 @@ import com.streetsaarthi.nasvi.databinding.ItemLanguageStartBinding
 import com.streetsaarthi.nasvi.databinding.SettingsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
@@ -52,7 +55,7 @@ class Settings : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.settings)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
@@ -143,7 +146,7 @@ class Settings : Fragment() {
             }
 
 
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val noti =  Gson().fromJson(loginUser, Login::class.java).notification
                     switchNotifications.isChecked = if (noti == "Yes") true else false
@@ -158,7 +161,7 @@ class Settings : Fragment() {
                 }
 
 
-                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     var user = Gson().fromJson(loginUser, Login::class.java)
                     if (loginUser != null) {
                         notificationAlert =
@@ -180,7 +183,11 @@ class Settings : Fragment() {
                                     } else {
                                         requestBody.addFormDataPart("notification", "Yes")
                                     }
-                                    viewModel.notificationUpdate(""+user.id, requestBody.build(), 0)
+                                    if(networkFailed) {
+                                        viewModel.notificationUpdate(""+user.id, requestBody.build(), 0)
+                                    } else {
+                                        requireContext().callNetworkDialog()
+                                    }
                                 }
                                 .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                                     dialog.dismiss()
@@ -197,7 +204,7 @@ class Settings : Fragment() {
 
                 viewModel.itemNotificationUpdateResult.value = false
                 viewModel.itemNotificationUpdateResult.observe(requireActivity(), Observer {
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val noti =  Gson().fromJson(loginUser, Login::class.java).notification
                             switchNotifications.isChecked = if (noti == "Yes") true else false
@@ -231,7 +238,7 @@ class Settings : Fragment() {
 
 
    fun callLanguageApi(locale: String, value : Int) {
-       DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+       readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
            if (loginUser != null) {
               var _id = Gson().fromJson(loginUser, Login::class.java).id
                val requestBody: MultipartBody.Builder = MultipartBody.Builder()
@@ -239,7 +246,11 @@ class Settings : Fragment() {
                    .addFormDataPart("user_type", USER_TYPE)
                requestBody.addFormDataPart("user_id", ""+_id)
                    requestBody.addFormDataPart("language", "/en/"+locale)
-               viewModel.notificationUpdate(""+_id, requestBody.build(), value)
+               if(networkFailed) {
+                   viewModel.notificationUpdate(""+_id, requestBody.build(), value)
+               } else {
+                   requireContext().callNetworkDialog()
+              }
            }
        }
    }

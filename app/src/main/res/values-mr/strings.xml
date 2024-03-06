@@ -541,4 +541,8 @@
     <string name="close_info">बंद करा</string>
     <string name='conversation_marked_admin_open_hi'>हे संभाषण %s ने %s ने चिन्हांकित केले</string>
     <string name='conversation_marked_admin_close_hi'>या संभाषणावर %s ने %s चिन्हांकित केले होते</string>
+    <string name = "ok">ठीक आहे</string>
+
+    <string name = "closed">बंद</string>
+
 </resources>

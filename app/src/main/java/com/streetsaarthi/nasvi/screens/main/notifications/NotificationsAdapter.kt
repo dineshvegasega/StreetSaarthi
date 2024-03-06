@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.screens.main.notifications
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +14,18 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.databinding.ItemNotificationsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemNotification
-import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.main.notifications.NotificationsVM.Companion.isNotificationNext
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.singleClick
 import org.json.JSONObject
-import java.util.Locale
 
-class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
-    PaginationAdapterCallback, CallBackListener {
+class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var viewModel = liveSchemesVM
     private val item: Int = 0
     private val loading: Int = 1
@@ -40,14 +37,10 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
 
     private var itemModels: MutableList<ItemNotification> = ArrayList()
 
-    companion object{
-        var callBackListener: CallBackListener? = null
-    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return  if(viewType == item){
             val binding: ItemNotificationsBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_notifications, parent, false)
-            callBackListener = this
-
             TopMoviesVH(binding)
         }else{
             val binding: ItemLoadingBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_loading, parent, false)
@@ -60,33 +53,15 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = itemModels[position]
         if(getItemViewType(position) == item){
-            callBackListener = this
-
             val myOrderVH: TopMoviesVH = holder as TopMoviesVH
 //            myOrderVH.itemRowBinding.movieProgress.visibility = View.VISIBLE
             myOrderVH.bind(model, viewModel, position)
         }else{
             val loadingVH: LoadingVH = holder as LoadingVH
             if (retryPageLoad) {
-                loadingVH.itemRowBinding.loadmoreErrorlayout.visibility = View.VISIBLE
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.GONE
-
-                if(errorMsg != null) loadingVH.itemRowBinding.loadmoreErrortxt.text = errorMsg
-                else loadingVH.itemRowBinding.loadmoreErrortxt.text = MainActivity.activity.get()?.getString(
-                    R.string.error_msg_unknown)
-
             } else {
-                loadingVH.itemRowBinding.loadmoreErrorlayout.visibility = View.GONE
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
-            }
-
-            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
-                showRetry(false, "")
-                retryPageLoad()
-            }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
-                showRetry(false, "")
-                retryPageLoad()
             }
         }
     }
@@ -105,10 +80,6 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                 item
             }
         }
-    }
-
-    override fun retryPageLoad() {
-        // mActivity.loadNextPage()
     }
 
 
@@ -179,14 +150,18 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
                             putString("key", ""+dataClass.type_id)
                         })
                     }
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val obj: JSONObject = JSONObject().apply {
                                 put("is_read", true)
                                 put("notification_id", ""+dataClass.notification_id)
                                 put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                             }
-                            viewModel.updateNotification(root, obj, position)
+                            if(networkFailed) {
+                                viewModel.updateNotification(obj, position)
+                            } else {
+                                root.context.callNetworkDialog()
+                            }
                         }
                     }
                 }
@@ -244,9 +219,4 @@ class NotificationsAdapter (liveSchemesVM: NotificationsVM) : RecyclerView.Adapt
 //        }
     }
 
-    override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBack "+pos)
-//        onCallBack(pos)
-
-    }
 }

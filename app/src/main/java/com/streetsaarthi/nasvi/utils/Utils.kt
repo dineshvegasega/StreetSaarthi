@@ -4,9 +4,16 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.database.Cursor
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
+import android.os.Parcelable
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -18,6 +25,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DimenRes
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -27,23 +36,20 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import coil.load
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
-import com.kochia.customer.utils.hideKeyboard
+import com.stfalcon.imageviewer.StfalconImageViewer
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
-import java.net.URLEncoder
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -70,6 +76,8 @@ fun hideSoftKeyBoard() = try {
 }
 
 
+
+
 /**
  * Open Soft Keyboard
  * */
@@ -87,13 +95,38 @@ fun View.openKeyboard() = try {
 }
 
 
+
+fun Activity.hideKeyboard() {
+    val inputMethodManager =
+        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    // Check if no view has focus
+    val currentFocusedView = currentFocus
+    currentFocusedView?.let {
+        inputMethodManager.hideSoftInputFromWindow(
+            currentFocusedView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS
+        )
+    }
+}
+
 /**
  * Show Snack Bar
  * */
+@SuppressLint("CutPasteId")
 fun showSnackBar(string: String) = try {
     MainActivity.activity.get()?.hideKeyboard()
     MainActivity.context.get()?.let { context ->
-        var message = string
+        val message = if (string.contains("Unable to resolve host")) {
+           context.getString(R.string.no_internet_connection)
+        } else if (string.contains("DOCTYPE html")) {
+           context.getString(R.string.something_went_wrong)
+        } else if (string.contains("<script>")) {
+            context.getString(R.string.something_went_wrong)
+        } else if (string.contains("Failed to connect")) {
+            context.getString(R.string.network_failed_please_try_again)
+        } else  {
+            ""+string
+        }
+//        val message = string
         Snackbar.make(
             (context as Activity).findViewById(android.R.id.content),
             message,
@@ -102,17 +135,10 @@ fun showSnackBar(string: String) = try {
             setBackgroundTint(ContextCompat.getColor(context, R.color._000000))
             animationMode = Snackbar.ANIMATION_MODE_SLIDE
             setTextColor(ContextCompat.getColor(context, R.color._ffffff))
+            //var sdpSize = MainActivity.activity.get()?.resources?.getDimension(com.intuit.sdp.R.dimen._5sdp) ?: 5
+            view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).textSize = (MainActivity.scale10 + 1).toFloat()
             view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 5
-            if (message.contains("Unable to resolve host")) {
-                message = context.getString(R.string.no_internet_connection)
-                show()
-            } else if (message.contains("DOCTYPE html")) {
-                message = context.getString(R.string.something_went_wrong)
-                show()
-            } else if (message.contains("Failed to connect")) {
-            } else  {
-                show()
-            }
+            show()
         }
     }
 } catch (e: Exception) {
@@ -162,7 +188,7 @@ fun String?.getResponseError(): String {
 fun Context.getRealPathFromUri(contentUri: Uri?): String? {
     var cursor: Cursor?=null
     return try {
-        var proj=arrayOf<kotlin.String>(MediaStore.Images.Media.DATA)
+        val proj=arrayOf<kotlin.String>(MediaStore.Images.Media.DATA)
         //val proj: Array<String>= arrayOf<kotlin.String>(MediaStore.Images.Media.DATA)
         cursor=contentResolver.query(contentUri!!,proj,null,null,null)
         assert(cursor != null)
@@ -369,12 +395,16 @@ fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit
 
 
 fun ArrayList<String>.imageZoom(ivImage: ImageView) {
-//    StfalconImageViewer.Builder<String>(MainActivity.binding.root.context, this) { view, image ->
-//        Picasso.get().load(image).into(view)
-//    }
-//        .withTransitionFrom(ivImage)
-//        .withBackgroundColor(ContextCompat.getColor(MainActivity.mainActivity.get()!!, R.color._D9000000))
-//        .show()
+    StfalconImageViewer.Builder<String>(MainActivity.mainActivity.get()!!, this) { view, image ->
+        //Picasso.get().load(image).into(view)
+        Glide.with(MainActivity.mainActivity.get()!!)
+            .load(image)
+            .apply(myOptionsGlide)
+            .into(view)
+    }
+        .withTransitionFrom(ivImage)
+        .withBackgroundColor(ContextCompat.getColor(MainActivity.mainActivity.get()!!, R.color._D9000000))
+        .show()
 }
 
 
@@ -384,7 +414,7 @@ fun getToken(callBack: String.() -> Unit){
             callBack(result)
         }
     }.addOnCanceledListener {
-        callBack("result")
+        callBack("")
     }
 }
 
@@ -458,7 +488,7 @@ val myOptionsGlide: RequestOptions = RequestOptions()
     .skipMemoryCache(false)
 
 fun String.glideImage(context : Context, ivMap: ShapeableImageView) {
-    GlideApp.with(context)
+    Glide.with(context)
         .load(this)
         .apply(myOptionsGlide)
         .into(ivMap)
@@ -473,7 +503,7 @@ val myOptionsGlidePortrait: RequestOptions = RequestOptions()
     .skipMemoryCache(false)
 
 fun String.glideImagePortrait(context : Context, ivMap: ShapeableImageView) {
-    GlideApp.with(context)
+    Glide.with(context)
         .load(this)
         .apply(myOptionsGlidePortrait)
         .into(ivMap)
@@ -576,100 +606,6 @@ fun String.relationType(array: Array<String>): String {
 }
 
 
-
-
-
-//suspend fun String.callUrlAndParseResult(langTo: String): String {
-//    val url = "https://translate.googleapis.com/translate_a/single?" +
-//            "client=gtx&" +
-//            "sl=" + "en" +
-//            "&tl=" + langTo +
-//            "&dt=t&q=" + URLEncoder.encode(this, "UTF-8")
-//    val obj = URL(url)
-//    val con = obj.openConnection() as HttpURLConnection
-//    con.setRequestProperty("User-Agent", "Mozilla/5.0")
-//    val `in` = BufferedReader(
-//        InputStreamReader(con.inputStream)
-//    )
-//    var inputLine: String?
-//    val response = StringBuffer()
-//    while (`in`.readLine().also { inputLine = it } != null) {
-//        response.append(inputLine)
-//    }
-//    `in`.close()
-//    return response.toString().parseResult()
-//}
-
-
-
-
-@Throws(Exception::class)
-fun String.callUrlAndParseResult(
-    langTo: String
-): String {
-    var myResponse = ""
-    val url = "https://translate.googleapis.com/translate_a/single?" +
-            "client=gtx&" +
-            "sl=" + "en" +
-            "&tl=" + langTo +
-            "&dt=t&q=" + URLEncoder.encode(this, "UTF-8")
-    val httpURLConnection = URL(url).openConnection() as HttpURLConnection
-    httpURLConnection.setRequestProperty("Accept", "application/json")
-    httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0")
-    httpURLConnection.requestMethod = "GET"
-    httpURLConnection.doInput = true
-    httpURLConnection.doOutput = false
-    httpURLConnection.connectTimeout = 1000
-    httpURLConnection.readTimeout = 1000
-    val responseCode = httpURLConnection.responseCode
-    if (responseCode == HttpURLConnection.HTTP_OK) {
-        val response = httpURLConnection.inputStream.bufferedReader().use {it.readText() }
-        myResponse = response.toString().parseResult()
-    } else {
-        myResponse = ""
-    }
-
-    httpURLConnection.inputStream.bufferedReader().use {
-        it.close()
-    }
-    return myResponse
-}
-
-
-
-@Throws(Exception::class)
-suspend fun suspendCallUrlAndParseResult(
-    langTo: String,
-    words: String
-): String {
-    var myResponse = ""
-    val url = "https://translate.googleapis.com/translate_a/single?" +
-            "client=gtx&" +
-            "sl=" + "en" +
-            "&tl=" + langTo +
-            "&dt=t&q=" + URLEncoder.encode(words, "UTF-8")
-    val httpURLConnection = URL(url).openConnection() as HttpURLConnection
-    httpURLConnection.setRequestProperty("Accept", "application/json")
-    httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0")
-    httpURLConnection.requestMethod = "GET"
-    httpURLConnection.doInput = true
-    httpURLConnection.doOutput = false
-    httpURLConnection.connectTimeout = 10000
-    httpURLConnection.readTimeout = 10000
-    val responseCode = httpURLConnection.responseCode
-    if (responseCode == HttpURLConnection.HTTP_OK) {
-        val response = httpURLConnection.inputStream.bufferedReader().use {it.readText() }
-        myResponse = response.toString().parseResult()
-    }
-
-    httpURLConnection.inputStream.bufferedReader().use {
-        it.close()
-    }
-    return myResponse
-}
-
-
-
 @Throws(Exception::class)
 fun String.parseResult(): String {
     var words = ""
@@ -681,3 +617,358 @@ fun String.parseResult(): String {
     }
     return words.toString()
 }
+
+
+
+var networkAlert: AlertDialog? = null
+@SuppressLint("SuspiciousIndentation")
+fun Context.callNetworkDialog() {
+    if (networkAlert?.isShowing == true) {
+        return
+    }
+    networkAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
+        .setTitle(resources.getString(R.string.app_name))
+        .setMessage(resources.getString(R.string.no_internet_connection))
+        .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
+            dialog.dismiss()
+        }
+//        .setCancelable(false)
+        .show()
+}
+
+
+
+
+
+
+fun Context.isNetworkAvailable() =
+    (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).run {
+        getNetworkCapabilities(activeNetwork)?.run {
+            hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    || hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                    || hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+    } ?: false
+}
+
+
+
+
+fun Context.getTitle(_type: String, _title: String): String {
+    val locale = LocaleHelper.getLanguage(applicationContext)
+    var title = ""
+    if (_type == "scheme") {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.scheme_title)
+        }
+    } else if (_type == "notice") {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.notice_title)
+        }
+    } else if (_type == "training") {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.training_title)
+        }
+    } else if (_type == "Vendor Details" || _type == "VendorDetails") {
+        if(_title.contains("approved")){
+            title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title)
+            } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_bn)
+            } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_gu)
+            } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_hi)
+            } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_kn)
+            } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_ml)
+            } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_mr)
+            } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_pa)
+            } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_ta)
+            } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_te)
+            } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_ur)
+            } else {
+                applicationContext.resources.getString(R.string.vendor_details_title)
+            }
+        }else if(_title.contains("rejected")){
+            title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject)
+            } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_bn)
+            } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_gu)
+            } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_hi)
+            } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_kn)
+            } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_ml)
+            } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_mr)
+            } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_pa)
+            } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_ta)
+            } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_te)
+            } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject_ur)
+            } else {
+                applicationContext.resources.getString(R.string.vendor_details_title_reject)
+            }
+        } else if(_title.contains("pending")){
+            title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_en)
+            } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_bn)
+            } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_gu)
+            } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_hi)
+            } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_kn)
+            } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_ml)
+            } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_mr)
+            } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_pa)
+            } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_ta)
+            } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_te)
+            } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+                applicationContext.resources.getString(R.string.pending_title_ur)
+            } else {
+                applicationContext.resources.getString(R.string.pending_title_en)
+            }
+        }
+    } else if (_type == "information") {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.information_title)
+        }
+    } else if (_title.contains("Feedback")) {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.feedback_title)
+        }
+    } else if (_title.contains("Complaint")) {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.complaint_title)
+        }
+    } else {
+        ""
+    }
+    return title
+}
+
+
+fun String.getChannelName(): String {
+    return if (this == "scheme") {
+        "Scheme"
+    } else if (this == "notice") {
+        "Notice"
+    } else if (this == "training") {
+        "Training"
+    } else if (this == "Vendor Details" || this == "VendorDetails") {
+        "Vendor Details"
+    } else if (this == "information") {
+        "Information Center"
+    } else if (this == "Feedback") {
+        "Complaints/Feedback"
+    } else {
+        "Others"
+    }
+}
+
+
+fun String.getNotificationId(): Int {
+    return if (this == "scheme") {
+        1
+    } else if (this == "notice") {
+        2
+    } else if (this == "training") {
+        3
+    } else if (this == "Vendor Details" || this == "VendorDetails") {
+        4
+    } else if (this == "information") {
+        5
+    } else if (this == "Feedback") {
+        6
+    } else {
+        7
+    }
+}
+
+
+
+//@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+//inline fun <reified T : Parcelable> Intent.parcelable(key: String): String? = when {
+//    SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
+//    else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T
+//}
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
+    SDK_INT >= 33 -> getParcelable(key, T::class.java)
+    else -> @Suppress("DEPRECATION") getParcelable(key) as? T
+}
+
+
+
+
+fun String.parseOneTimeCode(): String {
+    return if (this != null && this.length >= 6) {
+        this.trim { it <= ' ' }.substring(0, 6)
+    } else ""
+}
+
+
+@Suppress("DEPRECATION")
+inline fun <reified P : Parcelable> Intent.getParcelable(key: String): P? {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getParcelableExtra(key, P::class.java)
+    } else {
+        getParcelableExtra(key)
+    }
+}
+
+
+
+

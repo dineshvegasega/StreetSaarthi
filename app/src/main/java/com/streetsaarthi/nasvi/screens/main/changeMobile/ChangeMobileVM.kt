@@ -17,6 +17,8 @@ import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
@@ -149,11 +151,11 @@ class ChangeMobileVM @Inject constructor(private val repository: Repository): Vi
                     if (response.isSuccessful){
                         showSnackBar(view.resources.getString(R.string.mobile_number_updated_successfully))
                         if(response.body()!!.data != null){
-                            DataStoreUtil.saveData(
+                            saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
                             )
-                            DataStoreUtil.saveObject(
+                            saveObject(
                                 DataStoreKeys.LOGIN_DATA,
                                 Gson().fromJson(response.body()!!.data, Login::class.java)
                             )

@@ -541,4 +541,8 @@
     <string name="close_info">ಮುಚ್ಚು</string>
     <string name='conversation_marked_admin_open_hi'>ಈ ಸಂವಾದವನ್ನು %s ರಿಂದ %s ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>
     <string name='conversation_marked_admin_close_hi'>ಈ ಸಂವಾದವನ್ನು %s ರಿಂದ %s ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>
+    <string name="ok">ಸರಿ</string>
+
+    <string name="closed">ಮುಚ್ಚಲಾಗಿದೆ</string>
+
 </resources>

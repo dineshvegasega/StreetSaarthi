@@ -537,4 +537,8 @@
     <string name = "close_info">બંધ કરો</string>
     <string name='conversation_marked_admin_open_hi'>આ વાર્તાલાપ %s દ્વારા %s દ્વારા ચિહ્નિત કરવામાં આવ્યો હતો</string>
     <string name='conversation_marked_admin_close_hi'>આ વાર્તાલાપ %s દ્વારા %s દ્વારા ચિહ્નિત કરવામાં આવ્યો હતો</string>
+    <string name="ok">ઓકે</string>
+
+    <string name="closed">બંધ</string>
+
 </resources>

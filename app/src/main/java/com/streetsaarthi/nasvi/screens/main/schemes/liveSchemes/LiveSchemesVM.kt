@@ -29,17 +29,18 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
-import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.networking.new.ApiClient
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.isBackApp
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.parseResult
@@ -64,8 +65,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
 
     var counterNetwork = MutableLiveData<Boolean>(false)
 
-    val apiInterface: ApiTranslateInterface = ApiClient.getClient()!!.create(
-        ApiTranslateInterface::class.java)
+
 
     var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
@@ -97,11 +97,9 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
     }
 
 
-    var daialogShow: Boolean? = false
-
     private var itemLiveSchemesResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemes : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResult
-    fun liveScheme(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveScheme(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -110,6 +108,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                     if (response.isSuccessful){
                         itemLiveSchemesResult.value = response.body() as BaseResponseDC<Any>
                     }
+                    isBackApp = false
                 }
 
                 override fun error(message: String) {
@@ -118,6 +117,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                     if(NETWORK_DIALOG_SHOW){
                         counterNetwork.value = true
                     }
+                    isBackApp = false
                 }
 
                 override fun loading() {
@@ -131,7 +131,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
 
     private var itemLiveSchemesResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemesSecond : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResultSecond
-    fun liveSchemeSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveSchemeSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -140,6 +140,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                     if (response.isSuccessful){
                         itemLiveSchemesResultSecond.value =  response.body() as BaseResponseDC<Any>
                     }
+                    isBackApp = false
                 }
 
                 override fun error(message: String) {
@@ -148,6 +149,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                     if(NETWORK_DIALOG_SHOW){
                         counterNetwork.value = true
                     }
+                    isBackApp = false
                 }
 
                 override fun loading() {
@@ -266,14 +268,18 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                                 }
                                             })
                                         } else {
-                                            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                                            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                                 if (loginUser != null) {
                                                     val obj: JSONObject = JSONObject().apply {
                                                         put("scheme_id", data?.scheme_id)
                                                         put("user_type", USER_TYPE)
                                                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                                                     }
-                                                    applyLink(obj, position)
+                                                    if(networkFailed) {
+                                                        applyLink(obj, position)
+                                                    } else {
+                                                        dialogBinding.view.context.callNetworkDialog()
+                                                    }
                                                 }
                                             }
                                         }
@@ -299,6 +305,8 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                   })
                             }
                         }
+                    } else {
+
                     }
                 }
 
@@ -342,6 +350,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
         `in`.close()
         return response.toString().parseResult()
     }
+
 
 
     fun callApiTranslate(_lang : String, _words: String) : String{

@@ -11,6 +11,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,6 +19,7 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -28,6 +30,7 @@ import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -50,6 +53,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.LocaleHelper
 import com.streetsaarthi.nasvi.utils.autoScroll
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
 import com.streetsaarthi.nasvi.utils.loadImage
@@ -63,7 +67,14 @@ import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+
     companion object {
+        @JvmStatic
+        var isBackApp = false
+
+        @JvmStatic
+        var isBackStack = false
 
         @JvmStatic
         lateinit var context: WeakReference<Context>
@@ -89,13 +100,13 @@ class MainActivity : AppCompatActivity() {
         @JvmStatic
         var scale10: Int = 0
 
-
+        @JvmStatic
+        var networkFailed: Boolean = false
     }
 
     private val viewModel: MainActivityVM by viewModels()
 
     private val connectivityManager by lazy { ConnectivityManager(this) }
-
 
     private val pushNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -133,13 +144,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
         checkUpdate()
 
 //
-//        if (Build.VERSION.SDK_INT >= 33) {
-//            pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-//        }
+        if (Build.VERSION.SDK_INT >= 33) {
+            pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
 
 
 
@@ -182,7 +192,6 @@ class MainActivity : AppCompatActivity() {
 
 
         val bundle = intent?.extras
-
         if (bundle != null) {
             showData(bundle)
         }
@@ -230,17 +239,32 @@ class MainActivity : AppCompatActivity() {
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
-//        onBackPressedDispatcher.addCallback(this , object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                val backStackEntryCount = navHostFragment?.childFragmentManager?.backStackEntryCount
-//                Log.e("TAG", "backStackEntryCount "+backStackEntryCount)
-//                if(backStackEntryCount == 0){
-//                    this@MainActivity.finish()
-//                }else if(backStackEntryCount == 1){
-//                    navHostFragment!!.navController.navigate(R.id.dashboard)
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val backStackEntryCount = navHostFragment?.childFragmentManager?.backStackEntryCount
+//                if (!isBackApp){
+                    if(backStackEntryCount == 0){
+                        val setIntent = Intent(Intent.ACTION_MAIN)
+                        setIntent.addCategory(Intent.CATEGORY_HOME)
+                        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(setIntent)
+                    } else {
+                        if(isBackStack){
+                            isBackStack = false
+                            val navOptions: NavOptions = NavOptions.Builder()
+                                .setPopUpTo(R.id.navigation_bar, true)
+                                .build()
+                            runOnUiThread {
+                                navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
+                            }
+                        } else {
+                            navHostFragment?.navController?.navigateUp()
+                        }
+                    }
 //                }
-//            }
-//        })
+            }
+        })
     }
 
 
@@ -249,6 +273,10 @@ class MainActivity : AppCompatActivity() {
         if (logoutAlert?.isShowing == true) {
             return
         }
+
+//        var aaa = AlertDialog(this@MainActivity)
+
+
         logoutAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
             .setTitle(resources.getString(R.string.app_name))
             .setMessage(resources.getString(R.string.are_your_sure_want_to_logout))
@@ -265,7 +293,11 @@ class MainActivity : AppCompatActivity() {
                             "mobile_number",
                             "" + Gson().fromJson(loginUser, Login::class.java).mobile_no
                         )
-                        viewModel.logoutAccount(requestBody.build())
+                        if(networkFailed) {
+                            viewModel.logoutAccount(requestBody.build())
+                        } else {
+                            callNetworkDialog()
+                        }
                     }
                 }
             }
@@ -277,6 +309,16 @@ class MainActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
+
+//        val title: TextView? = logoutAlert?.findViewById(android.R.id.title)
+//        title?.textSize = 7f
+//        val message: TextView? = logoutAlert?.findViewById(android.R.id.message)
+//        message?.textSize = 7f
+//        val button1: TextView? = logoutAlert?.findViewById(android.R.id.button1)
+//        button1?.textSize = 6f
+//        val button2: TextView? = logoutAlert?.findViewById(android.R.id.button2)
+//        button2?.textSize = 6f
+
 
 
         viewModel.itemLogoutResult.value = false
@@ -311,7 +353,11 @@ class MainActivity : AppCompatActivity() {
                             "" + Gson().fromJson(loginUser, Login::class.java).id
                         )
                         requestBody.addFormDataPart("delete_account", "Yes")
-                        viewModel.deleteAccount(requestBody.build())
+                        if(networkFailed) {
+                            viewModel.deleteAccount(requestBody.build())
+                        } else {
+                            callNetworkDialog()
+                        }
                     }
                 }
             }
@@ -323,6 +369,15 @@ class MainActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
+//        val title: TextView? = logoutAlert?.findViewById(android.R.id.title)
+//        title?.textSize = 7f
+//        val message: TextView? = logoutAlert?.findViewById(android.R.id.message)
+//        message?.textSize = 7f
+//        val button1: TextView? = logoutAlert?.findViewById(android.R.id.button1)
+//        button1?.textSize = 6f
+//        val button2: TextView? = logoutAlert?.findViewById(android.R.id.button2)
+//        button2?.textSize = 6f
+
 
         viewModel.itemDeleteResult.value = false
         viewModel.itemDeleteResult.observe(this@MainActivity, Observer {
@@ -334,6 +389,70 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callSesstionDialog() {
+        if (deleteAlert?.isShowing == true) {
+            return
+        }
+        deleteAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.are_your_sure_want_to_delete))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.drawerLayout.close()
+                }, 500)
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    if (loginUser != null) {
+                        val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("user_type", USER_TYPE)
+                        requestBody.addFormDataPart(
+                            "user_id",
+                            "" + Gson().fromJson(loginUser, Login::class.java).id
+                        )
+                        requestBody.addFormDataPart("delete_account", "Yes")
+                        if(networkFailed) {
+                            viewModel.deleteAccount(requestBody.build())
+                        } else {
+                            callNetworkDialog()
+                        }
+                    }
+                }
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+//        val title: TextView? = logoutAlert?.findViewById(android.R.id.title)
+//        title?.textSize = 7f
+//        val message: TextView? = logoutAlert?.findViewById(android.R.id.message)
+//        message?.textSize = 7f
+//        val button1: TextView? = logoutAlert?.findViewById(android.R.id.button1)
+//        button1?.textSize = 6f
+//        val button2: TextView? = logoutAlert?.findViewById(android.R.id.button2)
+//        button2?.textSize = 6f
+
+
+        viewModel.itemDeleteResult.value = false
+        viewModel.itemDeleteResult.observe(this@MainActivity, Observer {
+            if (it) {
+                showSnackBar(getString(R.string.request_delete))
+                clearData()
+            }
+        })
+
+
+    }
+
+
 
 
     fun clearData() {
@@ -403,42 +522,62 @@ class MainActivity : AppCompatActivity() {
         var _id = bundle?.getString("_id")
         Log.e("key", "showDataAA " + key)
         Log.e("_id", "showDataAA " + _id)
-        val navOptions: NavOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.dashboard, true)
-            .build()
 
-//        val myProcess = RunningAppProcessInfo()
-//        ActivityManager.getMyMemoryState(myProcess)
-//        val isInBackground = myProcess.importance != RunningAppProcessInfo.IMPORTANCE_FOREGROUND
-//
-//        Log.e("TAG", "isActivityBackgound$isInBackground")
-
-//        if(bundle.getBoolean("isActivityBackgound")){
-//            Log.e("TAG", "isAppIsInBackgroundAA ")
-//            when (key) {
-//                "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes, null, navOptions)
-//                "notice" -> navHostFragment!!.navController.navigate(R.id.liveNotices, null, navOptions)
-//                "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining, null, navOptions)
-//                "profile" -> navHostFragment!!.navController.navigate(R.id.profiles, null, navOptions)
-//                "Feedback" -> navHostFragment!!.navController.navigate(
-//                    R.id.historyDetail,
-//                    Bundle().apply {
-//                        putString("key", _id)
-//                    }, navOptions)
-//            }
-//        }else{
-//            Log.e("TAG", "isAppIsInBackgroundBB ")
-            when (key) {
-                "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes)
-                "notice" ->  navHostFragment!!.navController.navigate(R.id.liveNotices)
-                "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining)
-                "profile" -> navHostFragment!!.navController.navigate(R.id.profiles)
-                "Feedback" -> navHostFragment!!.navController.navigate(
-                    R.id.historyDetail,
-                    Bundle().apply {
-                        putString("key", _id)
-                    })
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                if (loginUser != null) {
+                    val data = Gson().fromJson(loginUser, Login::class.java)
+                    when (data.status) {
+                        "approved" -> {
+                            isBackStack = true
+                            when (key) {
+                                "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes)
+                                "notice" ->  navHostFragment!!.navController.navigate(R.id.liveNotices)
+                                "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining)
+                                "information" -> navHostFragment!!.navController.navigate(R.id.informationCenter)
+                                "profile" -> navHostFragment!!.navController.navigate(R.id.profiles)
+                                "feedback" -> navHostFragment!!.navController.navigate(
+                                    R.id.historyDetail,
+                                    Bundle().apply {
+                                        putString("key", _id)
+                                    })
+                            }
+                        }
+                        "unverified" -> {
+                            showSnackBar(resources.getString(R.string.registration_processed))
+                        }
+                        "pending" -> {
+                            if(key == "profile"){
+                                isBackStack = true
+                                navHostFragment!!.navController.navigate(R.id.profiles)
+                            } else {
+                                showSnackBar(resources.getString(R.string.registration_processed))
+                            }
+                        }
+                        "rejected" -> {
+                            if(key == "profile"){
+                                isBackStack = true
+                                navHostFragment!!.navController.navigate(R.id.profiles)
+                            } else {
+                                showSnackBar(resources.getString(R.string.registration_processed))
+                            }
+                        }
+                    }
+                }
             }
+
+
+
+
+//        else -> {
+//            isBackStack = true
+//            val status = bundle?.getString("status")
+//            Log.e("TAG", "statusAZ "+status)
+//            when (status) {
+//                "profile" -> {
+//                    navHostFragment!!.navController.navigate(R.id.profiles)
+//                }
+//                else -> showSnackBar(resources.getString(R.string.registration_processed))
+//            }
 //        }
 
     }
@@ -530,6 +669,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeConnectivityManager() = try {
         connectivityManager.observe(this) {
             binding.tvInternet.isVisible = !it
+            networkFailed = it
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -601,16 +741,16 @@ class MainActivity : AppCompatActivity() {
         val fontScale = resources.configuration.fontScale
         Log.e("TAG", "App.scale xxxhdpi "+fontScale)
         scale10 = when(fontScale){
-            0.8f ->  14
-            0.9f ->  13
-            1.0f ->  12
-            1.1f ->  11
-            1.2f ->  10
-            1.3f ->  9
-            1.5f ->  8
-            1.7f ->  7
-            2.0f ->  6
-            else -> {5}
+            0.8f ->  13
+            0.9f ->  12
+            1.0f ->  11
+            1.1f ->  10
+            1.2f ->  9
+            1.3f ->  8
+            1.5f ->  7
+            1.7f ->  6
+            2.0f ->  5
+            else -> 4
         }
     }
 
@@ -631,4 +771,6 @@ class MainActivity : AppCompatActivity() {
             deleteAlert!!.cancel()
         }
     }
+
+
 }

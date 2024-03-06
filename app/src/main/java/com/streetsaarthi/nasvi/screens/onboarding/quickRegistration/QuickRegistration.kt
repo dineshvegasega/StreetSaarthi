@@ -17,8 +17,10 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.QuickRegistrationBinding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import com.streetsaarthi.nasvi.utils.updatePagerHeightForChild
 import dagger.hilt.android.AndroidEntryPoint
@@ -177,7 +179,11 @@ class QuickRegistration : Fragment(), CallBackListener{
                     put("password", viewModel.data.password)
                     put("user_type", USER_TYPE)
                 }
-                viewModel.register(view = requireView(), obj)
+                if(networkFailed) {
+                    viewModel.register(view = requireView(), obj)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
         loadProgress(tabPosition)

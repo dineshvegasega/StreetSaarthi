@@ -1,17 +1,16 @@
 package com.streetsaarthi.nasvi.screens.onboarding.forgetPassword
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.ApiInterface
 import com.streetsaarthi.nasvi.CallHandler
 import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.utils.navigateBack
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -101,16 +100,16 @@ class ForgetPasswordVM @Inject constructor(private val repository: Repository): 
 
 
 
-    fun passwordupdate(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun passwordUpdate(view: View, jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.passwordupdate(requestBody = jsonObject.getJsonRequestBody())
+                    apiInterface.passwordUpdate2(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
                     if (response.isSuccessful){
                                 showSnackBar(response.body()?.message.orEmpty())
-                                view.navigateBack()
+                        view.findNavController().navigateUp()
                     }
                 }
 

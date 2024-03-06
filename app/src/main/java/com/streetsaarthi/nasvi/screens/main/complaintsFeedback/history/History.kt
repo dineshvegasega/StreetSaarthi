@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,13 +24,13 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.HistoryBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemHistory
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.CheckValidation
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,14 +62,14 @@ class History : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = HistoryBinding.inflate(inflater)
+        _binding = HistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         isReadComplaintFeedback = true
 
         binding.apply {
@@ -159,7 +158,11 @@ class History : Fragment() {
                     put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                     put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                viewModel.history(view = requireView(), obj)
+                if(networkFailed) {
+                    viewModel.history(obj)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
     }
@@ -172,7 +175,11 @@ class History : Fragment() {
                     put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                     put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                viewModel.historySecond(view = requireView(), obj)
+                if(networkFailed) {
+                    viewModel.historySecond(obj)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
     }
@@ -262,8 +269,8 @@ class History : Fragment() {
 
 
 
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
+//    override fun onDestroyView() {
+//        _binding = null
+//        super.onDestroyView()
+//    }
 }

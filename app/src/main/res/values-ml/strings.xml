@@ -540,4 +540,8 @@
     <string name="close_info">അടയ്ക്കുക</string>
     <string name='conversation_marked_admin_open_hi'>ഈ സംഭാഷണം %s എന്ന് %s എന്നതിൽ അടയാളപ്പെടുത്തി</string>
     <string name='conversation_marked_admin_close_hi'>ഈ സംഭാഷണം %s എന്ന് %s എന്നതിൽ അടയാളപ്പെടുത്തി</string>
+    <string name="ok">ശരി</string>
+
+    <string name="closed">അടച്ചു</string>
+
 </resources>

@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/edit"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_11sdp"
                 app:fontFamily="@font/roboto_medium"
                 android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:text="Name of Member"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_11sdp"
                 app:fontFamily="@font/roboto_medium"
                 tools:ignore="HardcodedText" />
 
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:text="+91-864332153"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_11sdp"
                 app:fontFamily="@font/roboto_medium"
                 tools:ignore="HardcodedText"
                 android:layout_marginTop="@dimen/_2sdp"/>
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/membership_Id"
                         android:textColor="@color/_FFEBD3"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_10sdp"
                         app:fontFamily="@font/roboto_regular"
                         tools:ignore="HardcodedText" />
 
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:text="#1235468"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_10sdp"
                         app:fontFamily="@font/roboto_medium"
                         tools:ignore="HardcodedText"
                         android:layout_marginTop="@dimen/_2sdp"/>
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/valid_Upto"
                         android:textColor="@color/_FFEBD3"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_10sdp"
                         app:fontFamily="@font/roboto_regular"
                         tools:ignore="HardcodedText" />
 
@@ -185,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:text="18 May 2023"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_10sdp"
                         app:fontFamily="@font/roboto_medium"
                         tools:ignore="HardcodedText"
                         android:layout_marginTop="@dimen/_2sdp"/>

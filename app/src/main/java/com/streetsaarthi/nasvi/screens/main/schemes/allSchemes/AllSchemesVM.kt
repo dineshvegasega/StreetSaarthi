@@ -28,15 +28,17 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -51,9 +53,11 @@ import javax.inject.Inject
 @HiltViewModel
 class AllSchemesVM @Inject constructor(private val repository: Repository): ViewModel() {
 
+
     val adapter by lazy { AllSchemesAdapter(this) }
 
     var counterNetwork = MutableLiveData<Boolean>(false)
+
 
     var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
@@ -85,9 +89,10 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
     }
 
 
+
     private var itemLiveSchemesResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemes : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResult
-    fun liveScheme(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveScheme(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -117,7 +122,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
 
     private var itemLiveSchemesResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemesSecond : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResultSecond
-    fun liveSchemeSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveSchemeSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -250,14 +255,18 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                                                 }
                                             })
                                         } else {
-                                            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                                            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                                 if (loginUser != null) {
                                                     val obj: JSONObject = JSONObject().apply {
                                                         put("scheme_id", data?.scheme_id)
                                                         put("user_type", USER_TYPE)
                                                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                                                     }
-                                                    applyLink(obj, position)
+                                                    if(networkFailed) {
+                                                        applyLink(obj, position)
+                                                    } else {
+                                                        root.context.callNetworkDialog()
+                                                    }
                                                 }
                                             }
                                         }

@@ -543,4 +543,8 @@
     <string name="close_info">بند کریں</string>
     <string name='conversation_marked_admin_open_hi'>اس گفتگو کو %s نے %s کا نشان لگایا تھا</string>
     <string name='conversation_marked_admin_close_hi'>اس گفتگو کو %s نے %s کا نشان لگایا تھا</string>
+    <string name="ok">ٹھیک ہے</string>
+
+    <string name="closed">بند</string>
+
 </resources>

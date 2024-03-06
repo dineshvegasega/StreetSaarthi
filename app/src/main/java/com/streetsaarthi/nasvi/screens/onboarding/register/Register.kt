@@ -25,6 +25,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import com.streetsaarthi.nasvi.utils.updatePagerHeightForChild
 
@@ -398,7 +400,11 @@ var tabPosition: Int = 0;
                         File(viewModel.data.UploadApprovalLetter!!).asRequestBody("image/*".toMediaTypeOrNull())
                     )
                 }
-              viewModel.registerWithFiles(view = requireView(), requestBody.build(), ""+viewModel.data.vendor_first_name!!)
+                 if(networkFailed) {
+                     viewModel.registerWithFiles(view = requireView(), requestBody.build(), ""+viewModel.data.vendor_first_name!!)
+                 } else {
+                     requireContext().callNetworkDialog()
+                 }
             }
         }
     }

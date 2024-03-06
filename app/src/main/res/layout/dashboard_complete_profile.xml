@@ -46,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="70%"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_8sdp"
                 app:fontFamily="@font/roboto_bold"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="Your profile is 70% completed"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 app:fontFamily="@font/roboto_medium"
                 tools:ignore="HardcodedText" />
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:text="Click here to complete your profile"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_10sdp"
                 app:fontFamily="@font/roboto_regular"
                 tools:ignore="HardcodedText"
                 android:layout_marginTop="@dimen/_2sdp"/>

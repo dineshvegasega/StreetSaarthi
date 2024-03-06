@@ -28,7 +28,7 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
 
     private var itemHistoryResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemHistory : LiveData<BaseResponseDC<Any>> get() = itemHistoryResult
-    fun history(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun history(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -58,7 +58,7 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
 
     private var itemHistoryResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemHistorySecond : LiveData<BaseResponseDC<Any>> get() = itemHistoryResultSecond
-    fun historySecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun historySecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =

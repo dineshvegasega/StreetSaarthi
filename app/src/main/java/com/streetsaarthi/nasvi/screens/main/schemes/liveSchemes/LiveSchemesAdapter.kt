@@ -1,7 +1,6 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,9 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLiveSchemesBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
-import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.BR
-import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.singleClick
 
@@ -24,8 +22,7 @@ import com.streetsaarthi.nasvi.utils.singleClick
  * Class do :
  * Date 12/28/2020 - 3:12 PM
  */
-class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
-    PaginationAdapterCallback, CallBackListener {
+class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var viewModel = liveSchemesVM
     private val item: Int = 0
     private val loading: Int = 1
@@ -33,18 +30,11 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
     private var isLoadingAdded: Boolean = false
     private var retryPageLoad: Boolean = false
 
-    private var errorMsg: String? = ""
-
     private var itemModels: MutableList<ItemLiveScheme> = ArrayList()
 
-    companion object{
-        var callBackListener: CallBackListener? = null
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return  if(viewType == item){
             val binding: ItemLiveSchemesBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_live_schemes, parent, false)
-            callBackListener = this
-
             TopMoviesVH(binding)
         }else{
             val binding: ItemLoadingBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_loading, parent, false)
@@ -57,32 +47,14 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = itemModels[position]
         if(getItemViewType(position) == item){
-            callBackListener = this
-
             val myOrderVH: TopMoviesVH = holder as TopMoviesVH
-//            myOrderVH.itemRowBinding.movieProgress.visibility = View.VISIBLE
             myOrderVH.bind(model, viewModel, position)
         }else{
             val loadingVH: LoadingVH = holder as LoadingVH
             if (retryPageLoad) {
-                loadingVH.itemRowBinding.loadmoreErrorlayout.visibility = View.VISIBLE
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.GONE
-
-                if(errorMsg != null) loadingVH.itemRowBinding.loadmoreErrortxt.text = errorMsg
-                else loadingVH.itemRowBinding.loadmoreErrortxt.text = MainActivity.activity.get()?.getString(R.string.error_msg_unknown)
-
             } else {
-                loadingVH.itemRowBinding.loadmoreErrorlayout.visibility = View.GONE
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
-            }
-
-            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
-                showRetry(false, "")
-                retryPageLoad()
-            }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
-                showRetry(false, "")
-                retryPageLoad()
             }
         }
     }
@@ -102,11 +74,6 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
             }
         }
     }
-
-    override fun retryPageLoad() {
-       // mActivity.loadNextPage()
-    }
-
 
 
     class TopMoviesVH(binding: ItemLiveSchemesBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -129,13 +96,16 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
 
 
                 root.singleClick {
+                    if(networkFailed) {
                         if (dataClass.user_scheme_status == "applied"){
                             viewModel.viewDetail(dataClass, position = position, root, 1)
                         }else{
                             viewModel.viewDetail(dataClass, position = position, root, 2)
                         }
+                    } else {
+                        root.context.callNetworkDialog()
+                    }
                 }
-
             }
         }
 
@@ -146,53 +116,35 @@ class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<Re
         var itemRowBinding: ItemLoadingBinding = binding
     }
 
-    fun showRetry(show: Boolean, errorMsg: String) {
-        retryPageLoad = show
-        notifyItemChanged(itemModels.size - 1)
-        this.errorMsg = errorMsg
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     fun addAllSearch(movies: MutableList<ItemLiveScheme>) {
         itemModels.clear()
         itemModels.addAll(movies)
-//        for(movie in movies){
-//            add(movie)
-//        }
         notifyDataSetChanged()
     }
 
-    fun addAll(movies: MutableList<ItemLiveScheme>) {
-        for(movie in movies){
-            add(movie)
-        }
-    }
-
-    fun add(moive: ItemLiveScheme) {
-        itemModels.add(moive)
-        notifyItemInserted(itemModels.size - 1)
-    }
+//    fun addAll(movies: MutableList<ItemLiveScheme>) {
+//        for(movie in movies){
+//            add(movie)
+//        }
+//    }
+//
+//    fun add(moive: ItemLiveScheme) {
+//        itemModels.add(moive)
+//        notifyItemInserted(itemModels.size - 1)
+//    }
 
     fun addLoadingFooter() {
         isLoadingAdded = true
-//        add(ItemLiveScheme())
     }
 
     fun removeLoadingFooter() {
         isLoadingAdded = false
-
-//        val position: Int =itemModels.size -1
+//        val position: Int = itemModels.size -1
 //        val movie: ItemLiveScheme = itemModels[position]
-//
 //        if(movie != null){
 //            itemModels.removeAt(position)
 //            notifyItemRemoved(position)
 //        }
-    }
-
-    override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBack "+pos)
-//        onCallBack(pos)
-
     }
 }

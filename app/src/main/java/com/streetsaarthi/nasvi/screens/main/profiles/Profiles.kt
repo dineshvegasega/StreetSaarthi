@@ -5,24 +5,30 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ProfilesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,6 +40,7 @@ class Profiles : Fragment() , CallBackListener {
 
     companion object{
         var callBackListener: CallBackListener? = null
+        var tabPosition = 0
     }
 
     lateinit var adapter : ProfilePagerAdapter
@@ -44,7 +51,7 @@ class Profiles : Fragment() , CallBackListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ProfilesBinding.inflate(inflater)
+        _binding = ProfilesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -52,7 +59,7 @@ class Profiles : Fragment() , CallBackListener {
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         callBackListener = this
 
         binding.apply {
@@ -83,7 +90,7 @@ class Profiles : Fragment() , CallBackListener {
                 view.findNavController().navigate(R.id.action_profiles_to_nomineeDetails)
             }
 
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java).status
                     when(data){
@@ -120,11 +127,31 @@ class Profiles : Fragment() , CallBackListener {
 
             Handler(Looper.getMainLooper()).postDelayed({
                 introViewPager.adapter=adapter
-                var array = listOf<String>(getString(R.string.personal_detailsFull), getString(R.string.professional_details))
+                val array = listOf<String>(getString(R.string.personal_detailsFull), getString(R.string.professional_details))
                 TabLayoutMediator(tabLayout, introViewPager) { tab, position ->
                     tab.text = array[position]
+                    //setTabStyle(tabLayout, array[position])
                 }.attach()
             }, 100)
+
+            introViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                }
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    tabPosition = position
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                }
+            })
 
 
             updateData()
@@ -133,11 +160,31 @@ class Profiles : Fragment() , CallBackListener {
         }
     }
 
+    private fun setTabStyle(tabs: TabLayout, txt: String) {
+        val av = ArrayList<View?>()
+        tabs.findViewsWithText(av, txt, View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION)
+        if (av.count() > 0) {
+            val avt = ArrayList<View?>()
+            (av[0] as? ViewGroup)?.let {
+                for (i in 0 until it.childCount) {
+                    val tv = it.getChildAt(i) as? TextView
+                    tv?.let { t ->
+                        if (tv.text == txt) {
+                            t.isAllCaps = false
+                            t.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 6.toFloat())
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+
     private fun updateData() {
         binding.apply {
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
-                    Log.e("TAG","loginUser "+loginUser)
                     val data = Gson().fromJson(loginUser, Login::class.java)
                     data.profile_image_name?.let {
                         inclidePersonalProfile.ivImageProfile.loadImage(url = { data.profile_image_name.url })
@@ -161,33 +208,20 @@ class Profiles : Fragment() , CallBackListener {
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBack " + pos)
-        if (pos == 11){
-//            binding.introViewPager.setCurrentItem(1, false)
+        if (pos == 2){
+            binding.introViewPager.setCurrentItem(1, false)
             Handler(Looper.getMainLooper()).postDelayed({
-                ProfessionalDetails.callBackListener!!.onCallBack(22)
+                ProfessionalDetails.callBackListener!!.onCallBack(3)
             }, 100)
-        }else if (pos == 33){
-            binding.apply {
-                inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
-                btSave.visibility = View.GONE
-                btCancel.visibility = View.GONE
-                viewModel.isEditable.value = false
-                updateData()
+        } else if (pos == 4){
+              binding.apply {
+                    inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE
+                    btSave.visibility = View.GONE
+                    btCancel.visibility = View.GONE
+                    viewModel.isEditable.value = false
+                    updateData()
             }
         }
     }
-    override fun onDestroyView() {
-        _binding = null
-//        viewModel.itemState.clear()
-//        viewModel.itemDistrict.clear()
-//        viewModel.itemPanchayat.clear()
-//        viewModel.itemPincode.clear()
-//        viewModel.itemStateVending.clear()
-//        viewModel.itemDistrictVending.clear()
-//        viewModel.itemPanchayatVending.clear()
-//        viewModel.itemPincodeVending.clear()
-//        viewModel.itemLocalOrganizationVending.clear()
-        super.onDestroyView()
-    }
+
 }

@@ -25,19 +25,21 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.AllSchemesBinding
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.utils.CheckValidation
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.delay
 import org.json.JSONObject
 
 @AndroidEntryPoint
@@ -45,6 +47,8 @@ class AllSchemes : Fragment() {
     private val viewModel: AllSchemesVM by viewModels()
     private var _binding: AllSchemesBinding? = null
     private val binding get() = _binding!!
+
+
 
     var networkAlert : BottomSheetDialog?= null
     var networkCount = 1
@@ -62,14 +66,14 @@ class AllSchemes : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = AllSchemesBinding.inflate(inflater)
+        _binding = AllSchemesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.all_schemes)
             idDataNotFound.textDesc.text = getString(R.string.currently_no_schemes)
@@ -149,51 +153,93 @@ class AllSchemes : Fragment() {
         totalPages  = 1
         currentPage  = pageStart
         results.clear()
-        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-            if (loginUser != null) {
-                val obj: JSONObject = JSONObject().apply {
-                    put("page", currentPage)
-                    put("user_type", USER_TYPE)
-                    put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
-                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
-                }
-                viewModel.liveScheme(view = requireView(), obj)
+
+
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                if (loginUser != null) {
+                    val obj: JSONObject = JSONObject().apply {
+                        put("page", currentPage)
+                        put("user_type", USER_TYPE)
+                        put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
+                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
+                    }
+                    if(requireContext().isNetworkAvailable()) {
+                        viewModel.liveScheme(obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
             }
         }
     }
 
     fun loadNextPage() {
         Log.e("TAG", "loadNextPage "+currentPage)
-        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-            if (loginUser != null) {
-                val obj: JSONObject = JSONObject().apply {
-                    put("page", currentPage)
-                    put("user_type", USER_TYPE)
-                    put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
-                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                if (loginUser != null) {
+                    val obj: JSONObject = JSONObject().apply {
+                        put("page", currentPage)
+                        put("user_type", USER_TYPE)
+                        put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
+                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
+                    }
+                    if(requireContext().isNetworkAvailable()) {
+                        viewModel.liveSchemeSecond(obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
-                viewModel.liveSchemeSecond(view = requireView(), obj)
             }
-        }
     }
 
 
 
-
     var results: MutableList<ItemLiveScheme> = ArrayList()
-
-    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("NotifyDataSetChanged")
-    private fun observerDataRequest() {
+    private fun observerDataRequest(){
         viewModel.itemLiveSchemes.observe(viewLifecycleOwner, Observer {
             viewModel.show()
             val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
             val changeValue =
                 Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
+            if (IS_LANGUAGE){
+                if (MainActivity.context.get()!!
+                        .getString(R.string.englishVal) == "" + viewModel.locale
+                ) {
+                    val itemStateTemp = changeValue
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
 
-            if (MainActivity.context.get()!!
-                    .getString(R.string.englishVal) == "" + viewModel.locale
-            ) {
+                    if (viewModel.adapter.itemCount > 0) {
+                        binding.idDataNotFound.root.visibility = View.GONE
+                    } else {
+                        binding.idDataNotFound.root.visibility = View.VISIBLE
+                    }
+                } else {
+                    val itemStateTemp = changeValue
+                    mainThread {
+                        itemStateTemp.forEach {
+                            delay(50)
+                            val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+
+                            apply {
+                                it.name = nameChanged
+                                it.description = descChanged
+                            }
+                        }
+                        results.addAll(itemStateTemp)
+                        viewModel.adapter.addAllSearch(results)
+                        viewModel.hide()
+
+                        if (viewModel.adapter.itemCount > 0) {
+                            binding.idDataNotFound.root.visibility = View.GONE
+                        } else {
+                            binding.idDataNotFound.root.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            } else {
                 val itemStateTemp = changeValue
                 results.addAll(itemStateTemp)
                 viewModel.adapter.addAllSearch(results)
@@ -204,29 +250,8 @@ class AllSchemes : Fragment() {
                 } else {
                     binding.idDataNotFound.root.visibility = View.VISIBLE
                 }
-            } else {
-                val itemStateTemp = changeValue
-                mainThread {
-                    itemStateTemp.forEach {
-                        val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
-                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
-
-                        apply {
-                            it.name = nameChanged
-                            it.description = descChanged
-                        }
-                    }
-                    results.addAll(itemStateTemp)
-                    viewModel.adapter.addAllSearch(results)
-                    viewModel.hide()
-
-                    if (viewModel.adapter.itemCount > 0) {
-                        binding.idDataNotFound.root.visibility = View.GONE
-                    } else {
-                        binding.idDataNotFound.root.visibility = View.VISIBLE
-                    }
-                }
             }
+
 
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
@@ -245,31 +270,39 @@ class AllSchemes : Fragment() {
             val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
             val changeValue =
                 Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
+            if (IS_LANGUAGE){
+                if (MainActivity.context.get()!!
+                        .getString(R.string.englishVal) == "" + viewModel.locale
+                ) {
+                    val itemStateTemp = changeValue
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
+                } else {
+                    val itemStateTemp = changeValue
+                    mainThread {
+                        itemStateTemp.forEach {
+                            delay(50)
+                            val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
 
-            if (MainActivity.context.get()!!
-                    .getString(R.string.englishVal) == "" + viewModel.locale
-            ) {
+                            apply {
+                                it.name = nameChanged
+                                it.description = descChanged
+                            }
+                        }
+                        results.addAll(itemStateTemp)
+                        viewModel.adapter.addAllSearch(results)
+                        viewModel.hide()
+                    }
+                }
+            } else {
                 val itemStateTemp = changeValue
                 results.addAll(itemStateTemp)
                 viewModel.adapter.addAllSearch(results)
                 viewModel.hide()
-            } else {
-                val itemStateTemp = changeValue
-                mainThread {
-                    itemStateTemp.forEach {
-                        val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
-                        val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
-
-                        apply {
-                            it.name = nameChanged
-                            it.description = descChanged
-                        }
-                    }
-                    results.addAll(itemStateTemp)
-                    viewModel.adapter.addAllSearch(results)
-                    viewModel.hide()
-                }
             }
+
 
             viewModel.adapter.removeLoadingFooter()
             isLoading = false
@@ -279,29 +312,30 @@ class AllSchemes : Fragment() {
         })
 
 
-        viewModel.applyLink.observe(requireActivity()) { position ->
-            if (position != -1) {
+        viewModel.applyLink.observe(viewLifecycleOwner, Observer { position ->
+            if (position != -1){
                 var data = results.get(position).apply {
                     user_scheme_status = "applied"
                 }
                 viewModel.adapter.notifyDataSetChanged()
-                viewModel.viewDetail(data, position = position, requireView(), 3)
+                if(networkFailed) {
+                    viewModel.viewDetail(data, position = position, requireView(), 3)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
-        }
-
+        })
 
 
 
         viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
             if (it) {
-                if (networkCount == 1) {
-                    if (networkAlert?.isShowing == true) {
+                if(networkCount == 1){
+                    if(networkAlert?.isShowing == true) {
                         return@Observer
                     }
-                    val dialogBinding = DialogBottomNetworkBinding.inflate(
-                        requireContext().getSystemService(
-                            Context.LAYOUT_INFLATER_SERVICE
-                        ) as LayoutInflater
+                    val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                     )
                     networkAlert = BottomSheetDialog(requireContext())
                     networkAlert?.setContentView(dialogBinding.root)
@@ -319,7 +353,7 @@ class AllSchemes : Fragment() {
                         }
                         btApply.singleClick {
                             networkAlert?.dismiss()
-                            if (totalPages == 1) {
+                            if(totalPages == 1){
                                 loadFirstPage()
                             } else {
                                 loadNextPage()
@@ -335,10 +369,10 @@ class AllSchemes : Fragment() {
 
 
 
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
+//    override fun onDestroyView() {
+//        _binding = null
+//        super.onDestroyView()
+//    }
 
 
 }

@@ -32,16 +32,22 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.kochia.customer.utils.hideKeyboard
+import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ProfessionalDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
+import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -75,7 +81,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ProfessionalDetailsBinding.inflate(inflater)
+        _binding = ProfessionalDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -265,7 +271,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
         binding.apply {
             fieldsEdit()
 
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
                     Log.e("TAG", "dataZZ "+data.toString())
@@ -400,7 +406,18 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         setScrollPosition(2, false)
                     }
 
-                    viewModel.marketplace(view)
+                    if(requireContext().isNetworkAvailable()) {
+                        viewModel.marketplace(view)
+                        viewModel.vending(view)
+                        viewModel.localOrganisation(requireView(), JSONObject().apply {
+                            put("state_id", data.vending_state?.id)
+                            put("district_id", data.vending_district?.id)
+                        })
+                        viewModel.stateCurrent(view)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
+
                     viewModel.marketPlaceTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
                             for (item in viewModel.itemMarketplace) {
@@ -424,7 +441,6 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     }
 
 
-                    viewModel.vending(view)
                     viewModel.vendingTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
                             for (item in viewModel.itemVending) {
@@ -503,68 +519,101 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         )
                     }
 
-
-
-                    runBlocking {
-                        mainThread {
-                            data.vending_state?.let {
-                                if (MainActivity.context.get()!!
-                                        .getString(R.string.englishVal) == "" + viewModel.locale
-                                ) {
-                                    editTextVendingSelectState.setText("${data.vending_state?.name}")
-                                } else {
-                                    viewModel.show()
-                                    val nameChanged: String =
-                                        viewModel.callApiTranslate("" + viewModel.locale, data.vending_state.name)
-                                    editTextVendingSelectState.setText("${nameChanged}")
-                                    viewModel.hide()
-                                }
-                            }
-
-                            data.vending_district?.let {
-                                if (MainActivity.context.get()!!
-                                        .getString(R.string.englishVal) == "" + viewModel.locale
-                                ) {
-                                    editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
-                                } else {
-                                    viewModel.show()
-                                    val nameChanged: String =
-                                        viewModel.callApiTranslate("" + viewModel.locale, data.vending_district.name)
-                                    editTextVendingSelectDistrict.setText("${nameChanged}")
-                                    viewModel.hide()
-                                }
-                            }
-
-                            data.vending_municipality_panchayat?.let {
-                                if (MainActivity.context.get()!!
-                                        .getString(R.string.englishVal) == "" + viewModel.locale
-                                ) {
-                                    editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
-                                } else {
-                                    viewModel.show()
-                                    val nameChanged: String =
-                                        viewModel.callApiTranslate("" + viewModel.locale, data.vending_municipality_panchayat.name)
-                                    editTextVendingMunicipalityPanchayat.setText("${nameChanged}")
-                                    viewModel.hide()
-                                }
-                            }
-
-                            data.vending_address?.let {
-                                if(data.vending_address != "null"){
-                                    editTextVendingAddress.setText("${data.vending_address}")
+                    if (IS_LANGUAGE_ALL){
+                        runBlocking {
+                            mainThread {
+                                data.vending_state?.let {
                                     if (MainActivity.context.get()!!
                                             .getString(R.string.englishVal) == "" + viewModel.locale
                                     ) {
-                                        editTextVendingAddress.setText("${data.vending_address}")
+                                        editTextVendingSelectState.setText("${data.vending_state?.name}")
                                     } else {
                                         viewModel.show()
                                         val nameChanged: String =
-                                            viewModel.callApiTranslate("" + viewModel.locale, data.vending_address)
-                                        editTextVendingAddress.setText("${nameChanged}")
+                                            viewModel.callApiTranslate("" + viewModel.locale, data.vending_state.name)
+                                        editTextVendingSelectState.setText("${nameChanged}")
                                         viewModel.hide()
                                     }
                                 }
+
+                                data.vending_district?.let {
+                                    if (MainActivity.context.get()!!
+                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                    ) {
+                                        editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
+                                    } else {
+                                        viewModel.show()
+                                        val nameChanged: String =
+                                            viewModel.callApiTranslate("" + viewModel.locale, data.vending_district.name)
+                                        editTextVendingSelectDistrict.setText("${nameChanged}")
+                                        viewModel.hide()
+                                    }
+                                }
+
+                                data.vending_municipality_panchayat?.let {
+                                    if (MainActivity.context.get()!!
+                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                    ) {
+                                        editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
+                                    } else {
+                                        viewModel.show()
+                                        val nameChanged: String =
+                                            viewModel.callApiTranslate("" + viewModel.locale, data.vending_municipality_panchayat.name)
+                                        editTextVendingMunicipalityPanchayat.setText("${nameChanged}")
+                                        viewModel.hide()
+                                    }
+                                }
+
+
+
+                                if (data.local_organisation != null){
+                                    if (MainActivity.context.get()!!
+                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                    ) {
+                                        editTextLocalOrganisation.setText("${data.local_organisation?.name}")
+                                        editTextLocalOrganisation.visibility = View.VISIBLE
+                                        ivRdLocalOrgnaizationYes.isChecked = true
+                                        viewModel.data.localOrganisation = ""+data.local_organisation?.id
+                                    } else {
+                                        viewModel.show()
+                                        val nameChanged: String =
+                                            viewModel.callApiTranslate("" + viewModel.locale, data.local_organisation.name)
+                                        editTextLocalOrganisation.setText(nameChanged)
+                                        editTextLocalOrganisation.visibility = View.VISIBLE
+                                        ivRdLocalOrgnaizationYes.isChecked = true
+                                        viewModel.data.localOrganisation = ""+data.local_organisation?.id
+                                        viewModel.hide()
+                                    }
+                                } else {
+                                    editTextLocalOrganisation.visibility = View.GONE
+                                    ivRdLocalOrgnaizationYes.isChecked = false
+                                    viewModel.data.localOrganisation = "-1"
+                                }
                             }
+                        }
+                    } else {
+                        data.vending_state?.let {
+                            editTextVendingSelectState.setText("${data.vending_state?.name}")
+                        }
+
+                        data.vending_district?.let {
+                            editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
+                        }
+
+                        data.vending_municipality_panchayat?.let {
+                            editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
+                        }
+
+
+                        if (data.local_organisation != null){
+                            editTextLocalOrganisation.setText("${data.local_organisation?.name}")
+                            editTextLocalOrganisation.visibility = View.VISIBLE
+                            ivRdLocalOrgnaizationYes.isChecked = true
+                            viewModel.data.localOrganisation = ""+data.local_organisation?.id
+                        } else {
+                            editTextLocalOrganisation.visibility = View.GONE
+                            ivRdLocalOrgnaizationYes.isChecked = false
+                            viewModel.data.localOrganisation = "-1"
                         }
                     }
 
@@ -575,8 +624,11 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         editTextVendingSelectPincode.setText("")
                     }
 
-
-
+                    data.vending_address?.let {
+                        if(data.vending_address != "null"){
+                            editTextVendingAddress.setText("${data.vending_address}")
+                        }
+                    }
 
                     viewModel.data.vending_state = ""+data.vending_state?.id
                     viewModel.data.vending_district = ""+data.vending_district?.id
@@ -604,24 +656,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                         viewModel.pincodeIdVending = ""
                     }
 
-                    Log.e("TAG", "data.local_organisationAA "+data.local_organisation)
 
-
-                    viewModel.localOrganisation(requireView(), JSONObject().apply {
-                        put("state_id", data.vending_state?.id)
-                        put("district_id", data.vending_district?.id)
-                    })
-
-                    if (data.local_organisation != null){
-                        editTextLocalOrganisation.setText("${data.local_organisation?.name}")
-                        editTextLocalOrganisation.visibility = View.VISIBLE
-                        ivRdLocalOrgnaizationYes.isChecked = true
-                        viewModel.data.localOrganisation = ""+data.local_organisation?.id
-                    } else {
-                        editTextLocalOrganisation.visibility = View.GONE
-                        ivRdLocalOrgnaizationYes.isChecked = false
-                        viewModel.data.localOrganisation = "-1"
-                    }
 
 
 
@@ -681,7 +716,6 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
 
-            viewModel.stateCurrent(view)
             editTextVendingSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownVendingStateDialog()
@@ -794,16 +828,6 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
                 scheme = stringPm_swanidhi_schemeSingle+stringOtherSchemeName
                 viewModel.data.schemeName = scheme
-
-
-                Log.e("TAG", "docsAA "+scheme.toString())
-
-                Log.e("TAG", "viewModel2.data2 "+ viewModel.data.toString())
-
-
-
-               // update()
-
             }
 
         }
@@ -879,7 +903,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.type_of_market_place))
             .setItems(list) { _, which ->
                 binding.editTextTypeofMarketPlace.setText(list[which])
@@ -903,7 +927,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.type_of_vending))
             .setItems(list) { _, which ->
                 binding.editTextTypeofVending.setText(list[which])
@@ -923,7 +947,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
     private fun showDropDownYearsDialog() {
         val list = resources.getStringArray(R.array.years_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.total_years_of_vending))
             .setItems(list) { _, which ->
                 binding.editTextTotalYearsofVending.setText(list[which])
@@ -962,8 +986,6 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
                     viewModel.data.open =
                         "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0" + minute else minute) + ":00"
-                    // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
-                    //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
                     Log.e("TAG", "AAAA " + viewModel.data.open)
                 }
             },
@@ -1005,11 +1027,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                             Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
                     )
 
-                    // viewModel.data.close = strHrsToShow+":"+datetime.get(Calendar.MINUTE)+" "+am_pm
                     viewModel.data.close = "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
-
-                    // Log.e("LOG", "DateToStringConversionAA " +getTimeStampFromMillis(datetime.timeInMillis, "HH:mm"))
-                    //  viewModel.data.start = getTimeStampFromMillis(datetime.timeInMillis, "HH:mm")
                 }
             },
             hour,
@@ -1029,7 +1047,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             list[index] = value.local_organisation_name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.localOrganisation))
             .setItems(list) { _, which ->
                 binding.editTextLocalOrganisation.setText(list[which])
@@ -1048,18 +1066,29 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_state))
             .setItems(list) {_,which->
                 binding.editTextVendingSelectState.setText(list[which])
                 viewModel.stateIdVending =  viewModel.itemStateVending[which].id
-                view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
-//                view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
+                if(networkFailed) {
+                    view?.let { viewModel.districtCurrent(it, viewModel.stateIdVending) }
+                    if (!IS_LANGUAGE_ALL){
+                         view?.let { viewModel.panchayatCurrent(it, viewModel.stateIdVending) }
+                    }
+                } else {
+                    requireContext().callNetworkDialog()
+                }
+
                 if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
-                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                        put("state_id", viewModel.stateIdVending)
-                        put("district_id", viewModel.districtIdVending)
-                    })}
+                    if(networkFailed) {
+                        view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                            put("state_id", viewModel.stateIdVending)
+                            put("district_id", viewModel.districtIdVending)
+                        })}
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
 
                 viewModel.data.vending_state = ""+viewModel.stateIdVending
@@ -1078,18 +1107,27 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_district))
             .setItems(list) {_,which->
                 binding.editTextVendingSelectDistrict.setText(list[which])
                 viewModel.districtIdVending =  viewModel.itemDistrictVending[which].id
-                view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdVending) }
+                if(networkFailed) {
+                    view?.let { viewModel.pincodeCurrent(it, viewModel.districtIdVending) }
+                } else {
+                    requireContext().callNetworkDialog()
+                }
+
                 viewModel.data.vending_district = ""+viewModel.districtIdVending
                 if(viewModel.stateIdVending != 0 && viewModel.districtIdVending != 0){
-                    view?.let { viewModel.localOrganisation(it, JSONObject().apply {
-                        put("state_id", viewModel.stateIdVending)
-                        put("district_id", viewModel.districtIdVending)
-                    })}
+                    if(networkFailed) {
+                        view?.let { viewModel.localOrganisation(it, JSONObject().apply {
+                            put("state_id", viewModel.stateIdVending)
+                            put("district_id", viewModel.districtIdVending)
+                        })}
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
 
                 binding.editTextVendingSelectPincode.setText("")
@@ -1105,7 +1143,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.municipality_panchayat))
             .setItems(list) {_,which->
                 binding.editTextVendingMunicipalityPanchayat.setText(list[which])
@@ -1122,7 +1160,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             list[index] = value.pincode
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) {_,which->
                 binding.editTextVendingSelectPincode.setText(list[which])
@@ -1196,14 +1234,12 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackProfessional " + pos)
-        if (pos == 22){
+        if (pos == 3){
             update()
         }
     }
 
 
-    @SuppressLint("SuspiciousIndentation")
     private fun update() {
         binding.apply {
             if (editTextTypeofMarketPlace.text.toString().isEmpty()) {
@@ -1236,6 +1272,68 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("user_role", USER_TYPE)
+
+                if(viewModel.data.vendor_first_name  != null){
+                    requestBody.addFormDataPart("vendor_first_name", viewModel.data.vendor_first_name!!)
+                }
+                if(viewModel.data.vendor_last_name  != null){
+                    requestBody.addFormDataPart("vendor_last_name", viewModel.data.vendor_last_name!!)
+                }
+                if(viewModel.data.parent_first_name  != null){
+                    requestBody.addFormDataPart("parent_first_name", viewModel.data.parent_first_name!!)
+                }
+                if(viewModel.data.parent_last_name  != null){
+                    requestBody.addFormDataPart("parent_last_name", viewModel.data.parent_last_name!!)
+                }
+                if(viewModel.data.gender  != null){
+                    requestBody.addFormDataPart("gender", viewModel.data.gender!!)
+                }
+                if(viewModel.data.date_of_birth  != null){
+                    requestBody.addFormDataPart("date_of_birth", viewModel.data.date_of_birth!!)
+                }
+                if(viewModel.data.social_category  != null){
+                    requestBody.addFormDataPart("social_category", viewModel.data.social_category!!)
+                }
+                if(viewModel.data.education_qualification  != null){
+                    requestBody.addFormDataPart("education_qualification", viewModel.data.education_qualification!!)
+                }
+                if(viewModel.data.marital_status  != null){
+                    requestBody.addFormDataPart("marital_status", viewModel.data.marital_status!!)
+                }
+                if(viewModel.data.spouse_name  != null){
+                    requestBody.addFormDataPart("spouse_name", viewModel.data.spouse_name!!)
+                }
+                if(viewModel.data.current_state  != null){
+                    requestBody.addFormDataPart("residential_state", viewModel.data.current_state!!)
+                }
+                if(viewModel.data.current_district  != null){
+                    requestBody.addFormDataPart("residential_district", viewModel.data.current_district!!)
+                }
+                if(viewModel.data.municipality_panchayat_current  != null){
+                    requestBody.addFormDataPart("residential_municipality_panchayat", viewModel.data.municipality_panchayat_current!!)
+                }
+                if(viewModel.data.current_pincode  != null){
+                    requestBody.addFormDataPart("residential_pincode", viewModel.data.current_pincode!!)
+                }
+                if(viewModel.data.current_address  != null){
+                    requestBody.addFormDataPart("residential_address", viewModel.data.current_address!!)
+                }
+                if(viewModel.data.passportSizeImage != null && (!viewModel.data.passportSizeImage!!.startsWith("http"))){
+                    requestBody.addFormDataPart(
+                        "profile_image_name",
+                        File(viewModel.data.passportSizeImage!!).name,
+                        File(viewModel.data.passportSizeImage!!).asRequestBody("image/*".toMediaTypeOrNull())
+                    )
+                }
+
+                if(viewModel.data.identificationImage != null && (!viewModel.data.identificationImage!!.startsWith("http"))){
+                    requestBody.addFormDataPart(
+                        "identity_image_name",
+                        File(viewModel.data.identificationImage!!).name,
+                        File(viewModel.data.identificationImage!!).asRequestBody("image/*".toMediaTypeOrNull())
+                    )
+                }
+
 
                 if(viewModel.data.type_of_marketplace  != null){
                     requestBody.addFormDataPart("type_of_marketplace", viewModel.data.type_of_marketplace!!)
@@ -1281,39 +1379,9 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     requestBody.addFormDataPart("vending_address", viewModel.data.vending_address!!)
                 }
 
-//                Log.e("TAG", "viewModel.data.vending_addressAA "+viewModel.data.vending_address)
-
-//                if(viewModel.data.localOrganisation  != null){
-//
-//                }
                 requestBody.addFormDataPart("local_organisation", ""+viewModel.data.localOrganisation)
 
-//                val requestBody = RequestBody.create(parse.parse("text/plain"), "Test")
-//
-//                val requestBody: RequestBody = Builder()
-//                    .setType(MultipartBody.FORM)
-//                    .addFormDataPart("param1", param1)
-//                    .addFormDataPart("param2", param2)
-//                    .build()
-//                val body: RequestBody = RequestBody.create(MediaType.parse("text/plain"), "somevalue")
-//                RequestBody requestBody = new MultipartBody.Builder().addFormDataPart("username", username)
-//                val image: RequestBody =
-//                    MultipartBody.getFormDataBody()
-//                requestBody.addPart(image)
 
-//
-//                val formBody: RequestBody = FormBody.Builder()
-//                    .add("message", null)
-//                    .build()
-                //requestBody.addPart(MultipartBody.Part.createFormData("local_organisation" , "null")
-
-
-
-                //val fileName = s.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-
-
-
-//                }
 
                 docs = stringCOV+stringSurveyReceipt+stringLOR+stringChallan+stringApprovalLetter
                 viewModel.data.vending_documents = docs
@@ -1394,10 +1462,14 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 }
 
                 Log.e("TAG", "viewModel.dataAll22 "+viewModel.data.toString())
-                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val data = Gson().fromJson(loginUser, Login::class.java)
-                        viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build(), 111)
+                        if(networkFailed) {
+                            viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build())
+                        } else {
+                            requireContext().callNetworkDialog()
+                        }
                     }
                 }
 
@@ -1406,8 +1478,4 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
     }
 
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
 }

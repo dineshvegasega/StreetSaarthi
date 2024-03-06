@@ -41,7 +41,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_16ssp"
+                    android:textSize="@dimen/_16sdp"
                     android:gravity="center"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
@@ -59,7 +59,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_11sdp"
                     android:gravity="center"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginBottom="@dimen/_25sdp"
@@ -119,7 +119,7 @@
                         android:backgroundTint="@color/_E79D46"
                         android:layout_marginEnd="@dimen/_10sdp"
                         app:cornerRadius="@dimen/_5sdp"
-                        android:textSize="@dimen/_11ssp"
+                        android:textSize="@dimen/_11sdp"
                         />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -130,7 +130,7 @@
                         android:includeFontPadding="false"
                         android:text=""
                         android:textColor="@color/_B3261E"
-                        android:textSize="@dimen/_11ssp"
+                        android:textSize="@dimen/_11sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
                         android:layout_marginHorizontal="@dimen/_25sdp"
@@ -178,7 +178,7 @@
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/_10sdp"
                         app:cornerRadius="@dimen/_5sdp"
-                        android:textSize="@dimen/_11ssp"
+                        android:textSize="@dimen/_11sdp"
                         />
 
 
@@ -191,7 +191,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/_F02A2A"
-                    android:textSize="@dimen/_12ssp"
+                    android:textSize="@dimen/_12sdp"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_25sdp"
                     app:layout_constraintTop_toBottomOf="@+id/layoutCreateMobileNumber"

@@ -1,6 +1,5 @@
 package com.streetsaarthi.nasvi.screens.main.profiles
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -21,9 +20,10 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
 import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemComplaintType
 import com.streetsaarthi.nasvi.models.mix.ItemDistrict
 import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
 import com.streetsaarthi.nasvi.models.mix.ItemOrganization
@@ -33,6 +33,8 @@ import com.streetsaarthi.nasvi.models.mix.ItemState
 import com.streetsaarthi.nasvi.models.mix.ItemVending
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -98,31 +100,37 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
 
 
+
     fun state(view: View) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemState>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.state()
+
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
                     if (response.isSuccessful){
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
-                            itemState = response.body()?.data as ArrayList<ItemState>
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemState>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.name)
-                                    apply {
-                                        it.name = nameChanged
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemState = response.body()?.data as ArrayList<ItemState>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemState>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
                                     }
+                                    itemState = itemStateTemp
+                                    hide()
                                 }
-                                itemState = itemStateTemp
-                                hide()
                             }
+                        } else {
+                            itemState = response.body()?.data as ArrayList<ItemState>
                         }
                     }
                 }
@@ -145,29 +153,33 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemDistrict>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.district(requestBody = obj.getJsonRequestBody())
+
                 override fun success(response: Response<BaseResponseDC<List<ItemDistrict>>>) {
                     if (response.isSuccessful){
-//                        itemDistrict = response.body()?.data as ArrayList<ItemDistrict>
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
-                            itemDistrict = response.body()?.data as ArrayList<ItemDistrict>
-                            panchayat(view, id)
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemDistrict>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.name)
-                                    apply {
-                                        it.name = nameChanged
-                                    }
-                                }
-                                itemDistrict = itemStateTemp
-                                hide()
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemDistrict = response.body()?.data as ArrayList<ItemDistrict>
                                 panchayat(view, id)
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemDistrict>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemDistrict = itemStateTemp
+                                    hide()
+                                    panchayat(view, id)
+                                }
                             }
+                        } else {
+                            itemDistrict = response.body()?.data as ArrayList<ItemDistrict>
                         }
                     }
                 }
@@ -190,28 +202,31 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemPanchayat>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.panchayat(requestBody = obj.getJsonRequestBody())
-                @SuppressLint("SuspiciousIndentation")
+
                 override fun success(response: Response<BaseResponseDC<List<ItemPanchayat>>>) {
                     if (response.isSuccessful){
-//                        itemPanchayat = response.body()?.data as ArrayList<ItemPanchayat>
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
-                            itemPanchayat = response.body()?.data as ArrayList<ItemPanchayat>
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemPanchayat>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.name)
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemPanchayat = response.body()?.data as ArrayList<ItemPanchayat>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemPanchayat>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
                                         apply {
-                                               it.name = nameChanged
+                                            it.name = nameChanged
                                         }
+                                    }
+                                    itemPanchayat = itemStateTemp
+                                    hide()
                                 }
-                                itemPanchayat = itemStateTemp
-                                hide()
                             }
+                        } else {
+                            itemPanchayat = response.body()?.data as ArrayList<ItemPanchayat>
                         }
                     }
                 }
@@ -280,27 +295,31 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemState>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.state()
+
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
                     if (response.isSuccessful){
-//                        itemStateVending = response.body()?.data as ArrayList<ItemState>
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
-                            itemStateVending = response.body()?.data as ArrayList<ItemState>
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemState>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.name)
-                                    apply {
-                                        it.name = nameChanged
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemStateVending = response.body()?.data as ArrayList<ItemState>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemState>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
                                     }
+                                    itemStateVending = itemStateTemp
+                                    hide()
                                 }
-                                itemStateVending = itemStateTemp
-                                hide()
                             }
+                        } else {
+                            itemStateVending = response.body()?.data as ArrayList<ItemState>
                         }
                     }
                 }
@@ -326,27 +345,30 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemDistrict>>>) {
                     if (response.isSuccessful){
-//                        itemDistrictVending = response.body()?.data as ArrayList<ItemDistrict>
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
-                            itemDistrictVending = response.body()?.data as ArrayList<ItemDistrict>
-                            panchayatCurrent(view, id)
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemDistrict>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.name)
-                                    apply {
-                                        it.name = nameChanged
-                                    }
-                                }
-                                itemDistrictVending = itemStateTemp
-                                hide()
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemDistrictVending = response.body()?.data as ArrayList<ItemDistrict>
                                 panchayatCurrent(view, id)
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemDistrict>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemDistrictVending = itemStateTemp
+                                    hide()
+                                    panchayatCurrent(view, id)
+                                }
                             }
+                        } else {
+                            itemDistrictVending = response.body()?.data as ArrayList<ItemDistrict>
                         }
                     }
                 }
@@ -372,25 +394,28 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemPanchayat>>>) {
                     if (response.isSuccessful){
-//                        itemPanchayatVending = response.body()?.data as ArrayList<ItemPanchayat>
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
-                            itemPanchayatVending = response.body()?.data as ArrayList<ItemPanchayat>
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemPanchayat>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.name)
-                                    apply {
-                                        it.name = nameChanged
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemPanchayatVending = response.body()?.data as ArrayList<ItemPanchayat>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemPanchayat>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
                                     }
+                                    itemPanchayatVending = itemStateTemp
+                                    hide()
                                 }
-                                itemPanchayatVending = itemStateTemp
-                                hide()
                             }
+                        } else {
+                            itemPanchayatVending = response.body()?.data as ArrayList<ItemPanchayat>
                         }
                     }
                 }
@@ -442,25 +467,28 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemOrganization>>>) {
                     if (response.isSuccessful){
-//                        itemLocalOrganizationVending = response.body()?.data as ArrayList<ItemOrganization>
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
-                            itemLocalOrganizationVending = response.body()?.data as ArrayList<ItemOrganization>
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemOrganization>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.local_organisation_name)
-                                    apply {
-                                        it.local_organisation_name = nameChanged
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemLocalOrganizationVending = response.body()?.data as ArrayList<ItemOrganization>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemOrganization>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.local_organisation_name)
+                                        apply {
+                                            it.local_organisation_name = nameChanged
+                                        }
                                     }
+                                    itemLocalOrganizationVending = itemStateTemp
+                                    hide()
                                 }
-                                itemLocalOrganizationVending = itemStateTemp
-                                hide()
                             }
+                        } else {
+                            itemLocalOrganizationVending = response.body()?.data as ArrayList<ItemOrganization>
                         }
                     }
                 }
@@ -495,29 +523,31 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemVending>>>) {
                     if (response.isSuccessful){
-//                        itemVending = response.body()?.data as ArrayList<ItemVending>
-//                        vendingTrue.value = true
-
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
+                        if (IS_LANGUAGE){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemVending = response.body()?.data as ArrayList<ItemVending>
+                                vendingTrue.value = true
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemVending>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemVending = itemStateTemp
+                                    vendingTrue.value = true
+                                    hide()
+                                }
+                            }
+                        } else {
                             itemVending = response.body()?.data as ArrayList<ItemVending>
                             vendingTrue.value = true
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemVending>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.name)
-                                    apply {
-                                        it.name = nameChanged
-                                    }
-                                }
-                                itemVending = itemStateTemp
-                                vendingTrue.value = true
-                                hide()
-                            }
                         }
                     }
                 }
@@ -546,28 +576,31 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<List<ItemMarketplace>>>) {
                     if (response.isSuccessful){
-//                        itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
-//                        marketPlaceTrue.value = true
-                        if (MainActivity.context.get()!!
-                                .getString(R.string.englishVal) == "" + locale
-                        ) {
+                        if (IS_LANGUAGE){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
+                                marketPlaceTrue.value = true
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemMarketplace>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemMarketplace = itemStateTemp
+                                    marketPlaceTrue.value = true
+                                    hide()
+                                }
+                            }
+                        } else {
                             itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
                             marketPlaceTrue.value = true
-                        } else {
-                            val itemStateTemp = response.body()?.data as ArrayList<ItemMarketplace>
-                            show()
-                            mainThread {
-                                itemStateTemp.forEach {
-                                    delay(50)
-                                    val nameChanged: String = callApiTranslate(""+locale, it.name)
-                                    apply {
-                                        it.name = nameChanged
-                                    }
-                                }
-                                itemMarketplace = itemStateTemp
-                                marketPlaceTrue.value = true
-                                hide()
-                            }
                         }
                     }
                 }
@@ -588,7 +621,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
 
 
-    fun profileUpdate(view: View, _id: String, hashMap: RequestBody, value: Int) = viewModelScope.launch {
+    fun profileUpdate(view: View, _id: String, hashMap: RequestBody) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -596,19 +629,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful) {
-                        //showSnackBar(response.body()?.message.orEmpty())
-//                        if(response.body()!!.data != null){
-//                            Log.e("TAG", "aaaaaZZ")
-//                    }
-                        if (value == 111){
-                            profile(view, response.body()!!.vendor_id!!, 111)
-                        } else if (value == 222){
-                            Handler(Looper.getMainLooper()).postDelayed({
-                                ProfessionalDetails.callBackListener!!.onCallBack(22)
-                            }, 100)
-                        } else if (value == 333){
-                            profile(view, response.body()!!.vendor_id!!, 111)
-                        }
+                        profile(view, response.body()!!.vendor_id!!)
                     }
                 }
                 override fun error(message: String) {
@@ -626,7 +647,7 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
 
 
-    fun profile(view: View, _id: String, value: Int) = viewModelScope.launch {
+    fun profile(view: View, _id: String) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -634,22 +655,19 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        if (value == 111){
-//                            showSnackBar(response.body()?.message.orEmpty())
-                            showSnackBar(view.resources.getString(R.string.profile_updated_successfully))
-                        }
-
+                        showSnackBar(view.resources.getString(R.string.profile_updated_successfully))
                         if(response.body()!!.data != null){
-                            Log.e("TAG", "aaaaa")
-                            DataStoreUtil.saveData(
+                            saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
                             )
-                            DataStoreUtil.saveObject(
+                            saveObject(
                                 DataStoreKeys.LOGIN_DATA,
                                 Gson().fromJson(response.body()!!.data, Login::class.java)
                             )
-                            Profiles.callBackListener!!.onCallBack(33)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                Profiles.callBackListener!!.onCallBack(4)
+                            }, 100)
                         }
                     }
                 }
@@ -750,8 +768,9 @@ class ProfilesVM @Inject constructor(private val repository: Repository): ViewMo
     }
 
 
+
+
     fun callApiTranslate(_lang : String, _words: String) : String{
         return repository.callApiTranslate(_lang, _words)
     }
-
 }

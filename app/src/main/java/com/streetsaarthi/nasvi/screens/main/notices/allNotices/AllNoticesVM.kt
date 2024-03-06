@@ -77,10 +77,9 @@ class AllNoticesVM @Inject constructor(private val repository: Repository): View
     }
 
 
-
     private var itemLiveNoticeResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveNotice : LiveData<BaseResponseDC<Any>> get() = itemLiveNoticeResult
-    fun liveNotice(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveNotice(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -110,7 +109,7 @@ class AllNoticesVM @Inject constructor(private val repository: Repository): View
 
     private var itemLiveNoticeResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveNoticeSecond : LiveData<BaseResponseDC<Any>> get() = itemLiveNoticeResultSecond
-    fun liveNoticeSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveNoticeSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -147,7 +146,7 @@ class AllNoticesVM @Inject constructor(private val repository: Repository): View
                     apiInterface.noticeDetail(id = ""+itemLiveNotice.notice_id)
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
-                        var data = Gson().fromJson(response.body()!!.data, ItemNoticeDetail::class.java)
+                        val data = Gson().fromJson(response.body()!!.data, ItemNoticeDetail::class.java)
                         when(status){
                             in 1..2 -> {
                                 val dialogBinding = DialogBottomLiveNoticeBinding.inflate(root.context.getSystemService(
@@ -199,7 +198,6 @@ class AllNoticesVM @Inject constructor(private val repository: Repository): View
             }
         )
     }
-
 
 
 

@@ -50,6 +50,7 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
     var counterNetwork = MutableLiveData<Boolean>(false)
 
 
+
     var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
@@ -80,9 +81,10 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
     }
 
 
+
     private var itemLiveTrainingResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveTraining : LiveData<BaseResponseDC<Any>> get() = itemLiveTrainingResult
-    fun allTraining(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun allTraining(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -112,7 +114,7 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
 
     private var itemLiveTrainingResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveTrainingSecond : LiveData<BaseResponseDC<Any>> get() = itemLiveTrainingResultSecond
-    fun allTrainingSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun allTrainingSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -140,11 +142,11 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
 
 
 
-    fun viewDetail(oldItemLiveTraining: ItemLiveTraining, position: Int, root: View, status: Int) = viewModelScope.launch {
+    fun viewDetail(itemLiveTraining: ItemLiveTraining, position: Int, root: View, status: Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.trainingDetail(id = ""+oldItemLiveTraining.training_id)
+                    apiInterface.trainingDetail(id = ""+itemLiveTraining.training_id)
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         var data = Gson().fromJson(response.body()!!.data, ItemTrainingDetail::class.java)
@@ -165,8 +167,8 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
 
                                 dialogBinding.apply {
                                     data.cover_image?.url?.glideImage(root.context, ivMap)
-                                    textTitle.setText(oldItemLiveTraining.name)
-                                    textDesc.setText(oldItemLiveTraining.description)
+                                    textTitle.setText(itemLiveTraining.name)
+                                    textDesc.setText(itemLiveTraining.description)
                                     textHeaderTxt4.setText(data.status)
                                     textHeaderTxt4.visibility = View.GONE
 
@@ -215,6 +217,7 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
             }
         )
     }
+
 
 
     fun callApiTranslate(_lang : String, _words: String) : String{

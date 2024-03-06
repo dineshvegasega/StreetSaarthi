@@ -13,7 +13,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
 import com.google.gson.Gson
-import com.kochia.customer.utils.hideKeyboard
+import com.streetsaarthi.nasvi.utils.hideKeyboard
+
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.NomineeDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
@@ -21,6 +22,8 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.relationType
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -51,7 +54,7 @@ class NomineeDetails : Fragment() {
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n", "SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.nominee_details)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
@@ -134,9 +137,13 @@ class NomineeDetails : Fragment() {
                 readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val _id = Gson().fromJson(loginUser, Login::class.java).id
-                        viewModel.nomineeDetails(view, JSONObject().apply {
-                            put("member_id", _id)
-                        }.getJsonRequestBody())
+                        if(networkFailed) {
+                            viewModel.nomineeDetails(view, JSONObject().apply {
+                                put("member_id", _id)
+                            }.getJsonRequestBody())
+                        } else {
+                            requireContext().callNetworkDialog()
+                        }
                     }
                 }
             })
@@ -364,7 +371,11 @@ class NomineeDetails : Fragment() {
                                 if(viewModel.relationType5.isNotEmpty()){
                                     requestBody.addFormDataPart("nominee[][" + viewModel.relationType5 + "]", viewModel.relationName5)
                                 }
-                                viewModel.updateNomineeDetails(view = requireView(), requestBody.build())
+                                if(networkFailed) {
+                                    viewModel.updateNomineeDetails(view = requireView(), requestBody.build())
+                                } else {
+                                    requireContext().callNetworkDialog()
+                                }
                             }
                         }
                     }
@@ -430,8 +441,9 @@ class NomineeDetails : Fragment() {
 
     private fun showDropDownDialog1() {
         val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.relationship_TypeStar))
+
             .setItems(list) {_,which->
                 binding.spinnerRelationType1.setText(list[which])
                 when(which){
@@ -450,7 +462,7 @@ class NomineeDetails : Fragment() {
 
     private fun showDropDownDialog2() {
         val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.relationship_TypeStar))
             .setItems(list) {_,which->
                 binding.spinnerRelationType2.setText(list[which])
@@ -469,7 +481,7 @@ class NomineeDetails : Fragment() {
 
     private fun showDropDownDialog3() {
         val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.relationship_TypeStar))
             .setItems(list) {_,which->
                 binding.spinnerRelationType3.setText(list[which])
@@ -488,7 +500,7 @@ class NomineeDetails : Fragment() {
 
     private fun showDropDownDialog4() {
         val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.relationship_TypeStar))
             .setItems(list) {_,which->
                 binding.spinnerRelationType4.setText(list[which])
@@ -507,7 +519,7 @@ class NomineeDetails : Fragment() {
 
     private fun showDropDownDialog5() {
         val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.relationship_TypeStar))
             .setItems(list) {_,which->
                 binding.spinnerRelationType5.setText(list[which])

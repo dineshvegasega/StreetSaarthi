@@ -545,4 +545,8 @@
     <string name="close_info">మూసివేయి</string>
     <string name='conversation_marked_admin_open_hi'>ఈ సంభాషణలో %s ద్వారా %s గుర్తు పెట్టబడింది</string>
     <string name='conversation_marked_admin_close_hi'>ఈ సంభాషణలో %s ద్వారా %s గుర్తు పెట్టబడింది</string>
+    <string name="ok">సరే</string>
+
+    <string name="closed">మూసివేయబడింది</string>
+
 </resources>

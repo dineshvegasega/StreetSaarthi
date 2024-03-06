@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.firebase.crashlytics")
@@ -17,10 +18,10 @@ android {
 
     defaultConfig {
         applicationId = "com.streetsaarthi.nasvi"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.0.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -62,7 +63,7 @@ android {
         viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
@@ -84,35 +85,38 @@ android {
 
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation(platform("androidx.compose:compose-bom:2024.02.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
+
+    implementation("com.google.android.material:material:1.11.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     implementation ("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.1")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.1")
+    implementation("com.google.dagger:hilt-android:2.49")
+    ksp("com.google.dagger:hilt-android-compiler:2.49")
+//    ksp ("com.google.dagger:dagger-compiler:2.48")
+//    ksp ("com.google.dagger:hilt-compiler:2.48")
+
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
     //noinspection GradleCompatible,GradleCompatible
-    implementation ("androidx.databinding:databinding-ktx:8.1.1")
-    implementation ("androidx.databinding:databinding-runtime:8.1.1")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation ("androidx.databinding:databinding-ktx:8.3.0")
+    implementation ("androidx.databinding:databinding-runtime:8.3.0")
+
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
 
     implementation("com.intuit.sdp:sdp-android:1.1.0")
@@ -129,15 +133,16 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.10.1")
 
-    implementation ("com.github.bumptech.glide:glide:4.11.0")
-    kapt ("com.github.bumptech.glide:compiler:4.11.0")
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.11.0") {
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    ksp ("com.github.bumptech.glide:ksp:4.16.0")
+    implementation("com.github.bumptech.glide:okhttp3-integration:4.16.0") {
         exclude("glide-parent")
     }
 
+
+
     implementation ("androidx.preference:preference-ktx:1.2.1")
-    implementation ("io.michaelrocks:libphonenumber-android:8.12.52")
-    implementation ("io.coil-kt:coil:2.2.1")
+    implementation ("io.coil-kt:coil:2.4.0")
 
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("androidx.datastore:datastore-preferences-core:1.0.0")
@@ -145,17 +150,15 @@ dependencies {
     implementation ("id.zelory:compressor:3.0.1")
     implementation ("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2")
     implementation ("com.airbnb.android:lottie:6.3.0")
-//    implementation ("com.github.stfalcon-studio:SmsVerifyCatcher:0.3.3")
 
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
 
-//    Chucker for Network Inspection
     debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
     releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
-//    implementation ("com.google.android.gms:play-services-auth:20.7.0")
     implementation ("com.google.android.play:core-ktx:1.8.1")
-    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation (platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation ("com.google.firebase:firebase-auth")
     implementation ("com.google.firebase:firebase-auth-ktx")
     implementation ("com.google.firebase:firebase-database-ktx")
     implementation ("com.google.firebase:firebase-messaging-ktx")
@@ -163,59 +166,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-crashlytics-ktx")
     implementation ("com.google.firebase:firebase-config-ktx")
 
-
-//    implementation ("com.google.firebase:firebase-ml-natural-language:22.0.1")
-//    implementation ("com.google.firebase:firebase-ml-natural-language-language-id-model:20.0.8")
-//    implementation ("com.google.firebase:firebase-ml-natural-language-translate-model:20.0.9")
-
-
-//    implementation ("com.google.firebase:firebase-ml-natural-language:22.0.1")
-//    implementation ("com.google.firebase:firebase-ml-natural-language-translate-model:20.0.9")
-//
-
-////    implementation ("com.google.guava:guava:27.0.1-jre")
-//    implementation("com.google.cloud:google-cloud-translate:1.12.0"){
-//        configurations.all {
-////            exclude("org.apache.http components")
-////            exclude("org.json', module: 'json")
-////            exclude("com.google.api-client")
-//        }
-//    }
-//
-//
-//    annotationProcessor ("com.google.cloud:google-cloud-translate:1.12.0")
-
-//    implementation ("com.google.api-client:google-api-client:1.33.0")
-
-
-//    implementation ("com.google.api-client:google-api-client:1.33.0"){
-//        configurations.all {
-//            exclude("org.apache.http components")
-////            exclude("org.json', module: 'json")
-//            exclude("com.google.api-client")
-//
-//        }
-//    }
-
     implementation ("com.github.stfalcon-studio:StfalconImageViewer:v1.0.1")
-//    implementation ("com.android.support:support-v4:28.0.0")
-//    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
-//    //noinspection GradleCompatible
-//    implementation ("com.android.support:support-compat:28.0.0")
-
-//    implementation ("com.google.api-client:google-api-client:1.33.0"){
-//        configurations.all {
-//            exclude("org.apache.http components")
-////            exclude("org.json', module: 'json")
-//            exclude("com.google.api-client")
-//
-//        }
-//    }
-
-//    implementation ("org.apache.commons:commons-collections4:4.4"){
-//        configurations.all {
-//            exclude("org.apache.commons components")
-//        }
-//    }
+    implementation ("com.google.android.gms:play-services-auth-api-phone:18.0.2")
 
 }

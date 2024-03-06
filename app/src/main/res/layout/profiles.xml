@@ -43,7 +43,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:textColor="@color/white"
         android:text="@string/saveUpdate"
-        android:textSize="@dimen/_11ssp"
+        android:textSize="@dimen/_11sdp"
         app:cornerRadius="@dimen/_4sdp"
         app:layout_constraintEnd_toStartOf="@+id/btCancel"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/cancel"
         android:textColor="@color/black"
-        android:textSize="@dimen/_11ssp"
+        android:textSize="@dimen/_11sdp"
         app:cornerRadius="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btSave"
@@ -100,15 +100,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabMode="fixed"
-            app:tabTextAppearance="@style/CustomTextAppearanceTab"
+            app:tabMode="auto"
+            app:tabGravity="fill"
+            app:tabTextAppearance="@style/customTextAppearanceTab"
+            style="@style/customTextAppearanceTab"
             app:tabSelectedTextColor="@color/_E79D46"
             app:tabTextColor="@color/_49454F"
             app:tabIndicatorHeight="@dimen/_3sdp"
             app:tabIndicatorColor="@color/_E79D46"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:backgroundTint="@color/_FEF7FF"
-            />
+            >
+
+        </com.google.android.material.tabs.TabLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

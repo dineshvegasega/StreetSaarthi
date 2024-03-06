@@ -50,6 +50,7 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
 
 
 
+
     var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
@@ -82,7 +83,7 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
 
     private var itemInformationCenterResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemInformationCenter : LiveData<BaseResponseDC<Any>> get() = itemInformationCenterResult
-    fun informationCenter(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun informationCenter(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -112,7 +113,7 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
 
     private var itemInformationCenterResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemInformationCenterSecond : LiveData<BaseResponseDC<Any>> get() = itemInformationCenterResultSecond
-    fun informationCenterSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun informationCenterSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =

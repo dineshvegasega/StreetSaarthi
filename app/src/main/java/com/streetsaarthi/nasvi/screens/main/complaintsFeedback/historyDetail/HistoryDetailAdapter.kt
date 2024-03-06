@@ -188,9 +188,7 @@ class HistoryDetailAdapter () :
     inner class LoaderViewHolder(private val binding: ItemLoadingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(model: DataX) {
-            binding.apply {
-                loadmoreErrorlayout.visibility = View.GONE
-            }
+
         }
     }
 

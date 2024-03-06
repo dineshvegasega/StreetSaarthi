@@ -134,7 +134,7 @@ interface ApiInterface {
 
 
     @POST(PASSWORD_UPDATE)
-    suspend fun passwordupdate(
+    suspend fun passwordUpdate2(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
 

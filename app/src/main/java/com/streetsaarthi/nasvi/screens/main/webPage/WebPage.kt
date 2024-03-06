@@ -44,7 +44,7 @@ import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginOtp
 import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginPassword
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
 import com.streetsaarthi.nasvi.screens.onboarding.networking.WEB_URL
-import com.streetsaarthi.nasvi.utils.navigateBack
+import com.streetsaarthi.nasvi.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
@@ -74,7 +74,7 @@ class WebPage : Fragment() {
                     binding.webView.goBack()
                 }
                 else {
-                    view?.navigateBack()
+                    view?.findNavController()?.navigateUp()
                 }
             }
         })

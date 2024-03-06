@@ -17,13 +17,16 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ChangeMobileBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
 import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1
 import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +51,7 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         OtpTimer.sendOtpTimerData = this
 
         binding.apply {
@@ -134,7 +137,11 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
                         put("slug", "signup")
                         put("user_type", USER_TYPE)
                     }
-                    viewModel.sendOTP(view = requireView(), obj)
+                    if(networkFailed) {
+                        viewModel.sendOTP(view = requireView(), obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
             }
 
@@ -148,7 +155,11 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
                         put("slug", "signup")
                         put("user_type", USER_TYPE)
                     }
-                    viewModel.verifyOTP(view = requireView(), obj)
+                    if(networkFailed) {
+                        viewModel.verifyOTP(view = requireView(), obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
             }
 
@@ -209,10 +220,14 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
                         put("mobile_no", editTextMobileNumber.text.toString())
                         put("user_type", USER_TYPE)
                     }
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val _id = Gson().fromJson(loginUser, Login::class.java).id
-                            viewModel.profileUpdate(view = requireView(), ""+_id, obj.getJsonRequestBody())
+                            if(networkFailed) {
+                                viewModel.profileUpdate(view = requireView(), ""+_id, obj.getJsonRequestBody())
+                            } else {
+                                requireContext().callNetworkDialog()
+                            }
                         }
                     }
                 }

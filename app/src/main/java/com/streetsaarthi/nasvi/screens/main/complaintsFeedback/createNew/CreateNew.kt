@@ -20,15 +20,17 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.kochia.customer.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.CreateNewBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.login.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
+import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +59,7 @@ class CreateNew : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.complaintsSlashfeedback)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
@@ -70,7 +72,12 @@ class CreateNew : Fragment() {
                 showDropDownDialog()
             }
 
-            viewModel.complaintType(view)
+            if(networkFailed) {
+                viewModel.complaintType(view)
+            } else {
+                requireContext().callNetworkDialog()
+            }
+
             editTextSelectComplaintType.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemComplaintType.size > 0){
@@ -124,7 +131,7 @@ class CreateNew : Fragment() {
                         )
                     }
                     requestBody.addFormDataPart("status", "pending")
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                            var user = Gson().fromJson(loginUser, Login::class.java)
                             requestBody.addFormDataPart("user_id", ""+user?.id)
@@ -132,7 +139,11 @@ class CreateNew : Fragment() {
                             requestBody.addFormDataPart("district_id", ""+user.residential_district?.id)
                             requestBody.addFormDataPart("municipality_id", ""+user.residential_municipality_panchayat?.id)
                             if(user?.residential_state?.id != null){
-                                viewModel.newFeedback(view = requireView(), requestBody.build())
+                                if(networkFailed) {
+                                    viewModel.newFeedback(view = requireView(), requestBody.build())
+                                } else {
+                                    requireContext().callNetworkDialog()
+                                }
                             } else {
                                 showSnackBar(resources.getString(R.string.need_to_add_complete_profile))
                             }
@@ -146,7 +157,7 @@ class CreateNew : Fragment() {
 
     private fun showDropDownDialog() {
         val list=resources.getStringArray(R.array.type_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_your_choice))
             .setItems(list) {_,which->
                 binding.editTextSelectYourChoice.setText(list[which])
@@ -176,7 +187,7 @@ class CreateNew : Fragment() {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_complaint_type))
             .setItems(list) {_,which->
                 binding.editTextSelectComplaintType.setText(list[which])

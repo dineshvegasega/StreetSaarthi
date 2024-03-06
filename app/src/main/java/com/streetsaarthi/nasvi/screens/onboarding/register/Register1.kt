@@ -35,11 +35,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 //import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
 //import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
 //import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
-import com.kochia.customer.utils.hideKeyboard
+import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.Register1Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -174,8 +177,12 @@ class Register1  : Fragment() , CallBackListener {
                 showDropDownMaritalStatusDialog()
             }
 
+            if(networkFailed) {
+                viewModel.state(view)
+            } else {
+                requireContext().callNetworkDialog()
+            }
 
-            viewModel.state(view)
             editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 if(viewModel.itemState.size > 0){
@@ -309,7 +316,7 @@ class Register1  : Fragment() , CallBackListener {
 
     private fun showDropDownGenderDialog() {
         val list=resources.getStringArray(R.array.gender_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.gender))
             .setItems(list) {_,which->
                 binding.editTextGender.setText(list[which])
@@ -356,7 +363,7 @@ class Register1  : Fragment() , CallBackListener {
 
     private fun showDropDownCategoryDialog() {
         val list=resources.getStringArray(R.array.socialCategory_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.social_category))
             .setItems(list) {_,which->
                 binding.editTextSocialCategory.setText(list[which])
@@ -366,7 +373,7 @@ class Register1  : Fragment() , CallBackListener {
 
     private fun showDropDownEducationQualifacationDialog() {
         val list=resources.getStringArray(R.array.socialEducation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.education_qualifacation))
             .setItems(list) {_,which->
                 binding.editTextEducationQualifacation.setText(list[which])
@@ -384,7 +391,7 @@ class Register1  : Fragment() , CallBackListener {
 
     private fun showDropDownMaritalStatusDialog() {
         val list=resources.getStringArray(R.array.maritalStatus_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.marital_status))
             .setItems(list) {_,which->
                 binding.editTextMaritalStatus.setText(list[which])
@@ -412,13 +419,19 @@ class Register1  : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_state))
             .setItems(list) {_,which->
                 binding.editTextSelectState.setText(list[which])
                 viewModel.stateId =  viewModel.itemState[which].id
-                view?.let { viewModel.district(it, viewModel.stateId) }
-                view?.let { viewModel.panchayat(it, viewModel.stateId) }
+                if(networkFailed) {
+                    view?.let { viewModel.district(it, viewModel.stateId) }
+                    if (!IS_LANGUAGE_ALL){
+                        view?.let { viewModel.panchayat(it, viewModel.stateId) }
+                    }
+                } else {
+                    requireContext().callNetworkDialog()
+                }
                 binding.editTextSelectDistrict.setText("")
                 binding.editTextMunicipalityPanchayat.setText("")
                 viewModel.districtId = 0
@@ -434,12 +447,16 @@ class Register1  : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_district))
             .setItems(list) {_,which->
                 binding.editTextSelectDistrict.setText(list[which])
                 viewModel.districtId =  viewModel.itemDistrict[which].id
-                view?.let { viewModel.pincode(it, viewModel.districtId) }
+                if(networkFailed) {
+                    view?.let { viewModel.pincode(it, viewModel.districtId) }
+                } else {
+                    requireContext().callNetworkDialog()
+                }
                 binding.editTextSelectPincode.setText("")
                 viewModel.pincodeId = ""
             }.show()
@@ -453,7 +470,7 @@ class Register1  : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.municipality_panchayat))
             .setItems(list) {_,which->
                 binding.editTextMunicipalityPanchayat.setText(list[which])
@@ -469,7 +486,7 @@ class Register1  : Fragment() , CallBackListener {
             list[index] = value.pincode
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) {_,which->
                 binding.editTextSelectPincode.setText(list[which])

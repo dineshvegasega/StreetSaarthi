@@ -1,7 +1,6 @@
 package com.streetsaarthi.nasvi.screens.main.notices.liveNotices
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +11,13 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLiveNoticeBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.interfaces.PaginationAdapterCallback
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.singleClick
 
-class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,
-    PaginationAdapterCallback, CallBackListener {
+class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var viewModel = liveSchemesVM
     private val item: Int = 0
     private val loading: Int = 1
@@ -31,14 +29,9 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
 
     private var itemModels: MutableList<ItemLiveNotice> = ArrayList()
 
-    companion object{
-        var callBackListener: CallBackListener? = null
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return  if(viewType == item){
             val binding: ItemLiveNoticeBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_live_notice, parent, false)
-            callBackListener = this
-
             TopMoviesVH(binding)
         }else{
             val binding: ItemLoadingBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_loading, parent, false)
@@ -51,7 +44,6 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = itemModels[position]
         if(getItemViewType(position) == item){
-            callBackListener = this
 
             val myOrderVH: TopMoviesVH = holder as TopMoviesVH
 //            myOrderVH.itemRowBinding.movieProgress.visibility = View.VISIBLE
@@ -59,25 +51,9 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
         }else{
             val loadingVH: LoadingVH = holder as LoadingVH
             if (retryPageLoad) {
-                loadingVH.itemRowBinding.loadmoreErrorlayout.visibility = View.VISIBLE
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.GONE
-
-                if(errorMsg != null) loadingVH.itemRowBinding.loadmoreErrortxt.text = errorMsg
-                else loadingVH.itemRowBinding.loadmoreErrortxt.text = MainActivity.activity.get()?.getString(
-                    R.string.error_msg_unknown)
-
             } else {
-                loadingVH.itemRowBinding.loadmoreErrorlayout.visibility = View.GONE
                 loadingVH.itemRowBinding.loadmoreProgress.visibility = View.VISIBLE
-            }
-
-            loadingVH.itemRowBinding.loadmoreRetry.singleClick{
-                showRetry(false, "")
-                retryPageLoad()
-            }
-            loadingVH.itemRowBinding.loadmoreErrorlayout.singleClick{
-                showRetry(false, "")
-                retryPageLoad()
             }
         }
     }
@@ -98,18 +74,13 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
         }
     }
 
-    override fun retryPageLoad() {
-        // mActivity.loadNextPage()
-    }
-
-
 
     class TopMoviesVH(binding: ItemLiveNoticeBinding) : RecyclerView.ViewHolder(binding.root) {
         var itemRowBinding: ItemLiveNoticeBinding = binding
         fun bind(obj: Any?, viewModel: LiveNoticesVM, position: Int) {
             itemRowBinding.setVariable(BR.model, obj)
             itemRowBinding.executePendingBindings()
-            var dataClass = obj as ItemLiveNotice
+            val dataClass = obj as ItemLiveNotice
             itemRowBinding.apply {
                 dataClass.notice_image?.url?.glideImage(itemRowBinding.root.context, ivMap)
                 textTitle.setText(dataClass.name)
@@ -121,7 +92,11 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
 
                 root.singleClick {
 //                    if (dataClass.user_scheme_status == "applied"){
-                    viewModel.viewDetail(dataClass, position = position, root, 1)
+                    if(networkFailed) {
+                        viewModel.viewDetail(dataClass, position = position, root, 1)
+                    } else {
+                        root.context.callNetworkDialog()
+                    }
 //                    }else{
 //                        viewModel.viewDetail(""+dataClass.scheme_id, position = position, root, 2)
 //                    }
@@ -181,9 +156,5 @@ class LiveNoticesAdapter(liveSchemesVM: LiveNoticesVM) : RecyclerView.Adapter<Re
 //        }
     }
 
-    override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBack "+pos)
-//        onCallBack(pos)
 
-    }
 }
