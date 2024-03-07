@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -20,18 +19,17 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemDistrict
-import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
-import com.streetsaarthi.nasvi.models.mix.ItemOrganization
-import com.streetsaarthi.nasvi.models.mix.ItemPanchayat
-import com.streetsaarthi.nasvi.models.mix.ItemPincode
-import com.streetsaarthi.nasvi.models.mix.ItemState
-import com.streetsaarthi.nasvi.models.mix.ItemVending
+import com.streetsaarthi.nasvi.models.ItemDistrict
+import com.streetsaarthi.nasvi.models.ItemMarketplace
+import com.streetsaarthi.nasvi.models.ItemOrganization
+import com.streetsaarthi.nasvi.models.ItemPanchayat
+import com.streetsaarthi.nasvi.models.ItemPincode
+import com.streetsaarthi.nasvi.models.ItemState
+import com.streetsaarthi.nasvi.models.ItemVending
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
 import com.streetsaarthi.nasvi.utils.mainThread
-import com.streetsaarthi.nasvi.utils.parseResult
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -39,9 +37,6 @@ import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Response
-import java.net.HttpURLConnection
-import java.net.URL
-import java.net.URLEncoder
 import java.util.Locale
 import javax.inject.Inject
 

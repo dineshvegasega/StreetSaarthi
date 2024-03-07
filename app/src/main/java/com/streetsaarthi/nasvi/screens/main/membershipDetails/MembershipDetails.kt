@@ -16,7 +16,6 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +40,8 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.MembershipDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
@@ -172,7 +170,7 @@ class MembershipDetails  : Fragment() {
 //            )
 //            Log.e("TAG", "App.scaleDD "+viewModel.scale10)
 
-            textAssociatedOrganizationTxt.textSize = viewModel.scale10
+//            textAssociatedOrganizationTxt.textSize = viewModel.scale10
 //            textMarketPlaceTxt.textSize = viewModel.scale10
 //            textFirstNameTxt.textSize = viewModel.scale10
 //            textFirstNameValueTxt.textSize = viewModel.scale10
@@ -206,7 +204,7 @@ class MembershipDetails  : Fragment() {
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
-                    Log.e("TAG", "dataLogin "+data.toString())
+//                    Log.e("TAG", "dataLogin "+data.toString())
                     textFirstNameValueTxt.setText(data.vendor_first_name)
                     textLastNameValueTxt.setText(data.vendor_last_name)
 

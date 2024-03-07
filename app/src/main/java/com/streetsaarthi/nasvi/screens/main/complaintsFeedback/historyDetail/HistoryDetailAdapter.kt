@@ -1,11 +1,9 @@
-package com.demo.home
+package com.streetsaarthi.nasvi.screens.main.complaintsFeedback.historyDetail
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +11,7 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemChatLeftBinding
 import com.streetsaarthi.nasvi.databinding.ItemChatRightBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
-import com.streetsaarthi.nasvi.models.chat.DataX
-import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.HistoryAdapter
+import com.streetsaarthi.nasvi.models.DataX
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.imageZoom

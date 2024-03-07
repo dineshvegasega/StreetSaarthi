@@ -1,17 +1,14 @@
 package com.streetsaarthi.nasvi.screens.main.complaintsFeedback.historyDetail
 
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.demo.home.HistoryDetailAdapter
 import com.streetsaarthi.nasvi.ApiInterface
 import com.streetsaarthi.nasvi.CallHandler
 import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.chat.ItemChat
+import com.streetsaarthi.nasvi.models.ItemChat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
@@ -23,8 +20,6 @@ class HistoryDetailVM @Inject constructor(private val repository: Repository): V
     val adapter by lazy { HistoryDetailAdapter() }
 
     var uploadMediaImage : String ?= null
-
-
 
     private var feedbackConversationLiveData = MutableLiveData<ItemChat>()
     val feedbackConversationLive : LiveData<ItemChat> get() = feedbackConversationLiveData

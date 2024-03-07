@@ -22,8 +22,8 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveNoticeBinding
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.models.mix.ItemNoticeDetail
+import com.streetsaarthi.nasvi.models.ItemLiveNotice
+import com.streetsaarthi.nasvi.models.ItemNoticeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW

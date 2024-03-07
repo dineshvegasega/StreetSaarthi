@@ -3,24 +3,25 @@ package com.streetsaarthi.nasvi.screens.main.membershipDetails
 import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.App
 import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
-import com.streetsaarthi.nasvi.models.mix.ItemVending
+import com.streetsaarthi.nasvi.models.ItemMarketplace
+import com.streetsaarthi.nasvi.models.ItemVending
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
+import com.streetsaarthi.nasvi.utils.mainThread
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.util.Locale
@@ -69,7 +70,6 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
 
     var counterNetwork = MutableLiveData<Boolean>(false)
     var itemVending : ArrayList<ItemVending> = ArrayList()
-    var vendingId : Int = 0
     var vendingTrue = MutableLiveData<Boolean>(false)
     fun vending(view: View) = viewModelScope.launch {
         repository.callApi(
@@ -79,8 +79,32 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
 
                 override fun success(response: Response<BaseResponseDC<List<ItemVending>>>) {
                     if (response.isSuccessful){
-                        itemVending = response.body()?.data as ArrayList<ItemVending>
-                        vendingTrue.value = true
+                        if (IS_LANGUAGE){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemVending = response.body()?.data as ArrayList<ItemVending>
+                                vendingTrue.value = true
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemVending>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemVending = itemStateTemp
+                                    vendingTrue.value = true
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemVending = response.body()?.data as ArrayList<ItemVending>
+                            vendingTrue.value = true
+                        }
                     }
                 }
 
@@ -101,7 +125,6 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
 
 
     var itemMarketplace : ArrayList<ItemMarketplace> = ArrayList()
-    var marketplaceId : Int = 0
     var marketPlaceTrue = MutableLiveData<Boolean>(false)
     fun marketplace(view: View) = viewModelScope.launch {
         repository.callApi(
@@ -111,8 +134,32 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
 
                 override fun success(response: Response<BaseResponseDC<List<ItemMarketplace>>>) {
                     if (response.isSuccessful){
-                        itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
-                        marketPlaceTrue.value = true
+                        if (IS_LANGUAGE){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
+                                marketPlaceTrue.value = true
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemMarketplace>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemMarketplace = itemStateTemp
+                                    marketPlaceTrue.value = true
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
+                            marketPlaceTrue.value = true
+                        }
                     }
                 }
 

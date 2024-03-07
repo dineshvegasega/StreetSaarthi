@@ -26,8 +26,8 @@ import com.streetsaarthi.nasvi.databinding.AllSchemesBinding
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemLiveScheme
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
@@ -173,7 +173,7 @@ class AllSchemes : Fragment() {
     }
 
     fun loadNextPage() {
-        Log.e("TAG", "loadNextPage "+currentPage)
+//        Log.e("TAG", "loadNextPage "+currentPage)
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val obj: JSONObject = JSONObject().apply {

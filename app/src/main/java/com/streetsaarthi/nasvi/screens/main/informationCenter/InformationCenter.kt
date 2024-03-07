@@ -26,7 +26,7 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.InformationCenterBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
+import com.streetsaarthi.nasvi.models.ItemInformationCenter
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
@@ -136,7 +136,7 @@ class InformationCenter : Fragment() {
                             loadNextPage()
                         }, LOADER_TIME)
                     }
-                    Log.e("TAG", "currentPage "+currentPage)
+//                    Log.e("TAG", "currentPage "+currentPage)
                 }
                 override fun getTotalPageCount(): Int {
                     return totalPages
@@ -177,7 +177,7 @@ class InformationCenter : Fragment() {
     }
 
     fun loadNextPage() {
-        Log.e("TAG", "loadNextPage "+currentPage)
+//        Log.e("TAG", "loadNextPage "+currentPage)
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
                 val obj: JSONObject = JSONObject().apply {

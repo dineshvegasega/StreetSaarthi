@@ -10,18 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLiveSchemesBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.ItemLiveScheme
 import com.streetsaarthi.nasvi.BR
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.singleClick
 
-/**
- * Created by ( Eng Ali Al Fayed)
- * Class do :
- * Date 12/28/2020 - 3:12 PM
- */
+
 class LiveSchemesAdapter(liveSchemesVM: LiveSchemesVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var viewModel = liveSchemesVM
     private val item: Int = 0

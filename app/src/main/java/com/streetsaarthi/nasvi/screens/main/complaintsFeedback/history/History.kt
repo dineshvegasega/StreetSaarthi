@@ -25,8 +25,8 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.HistoryBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemHistory
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemHistory
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener

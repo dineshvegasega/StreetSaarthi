@@ -16,15 +16,12 @@ import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ChangeMobileBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1
 import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -60,14 +57,14 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
             viewModel.isAgree.value = false
             viewModel.isAgree.observe(viewLifecycleOwner, Observer {
                 if (it == true){
-                    Log.e("TAG", "isAgreeAA "+viewModel.isAgree.value)
+//                    Log.e("TAG", "isAgreeAA "+viewModel.isAgree.value)
                     btSignIn.setEnabled(true)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._E79D46, null)))
                 } else {
-                    Log.e("TAG", "isAgreeBB "+viewModel.isAgree.value)
+                   // Log.e("TAG", "isAgreeBB "+viewModel.isAgree.value)
                     btSignIn.setEnabled(false)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -241,7 +238,7 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
     var isTimer = ""
     @OptIn(DelicateCoroutinesApi::class)
     override fun otpData(string: String) {
-        Log.e("TAG", "otpData "+string)
+//        Log.e("TAG", "otpData "+string)
         isTimer = string
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE

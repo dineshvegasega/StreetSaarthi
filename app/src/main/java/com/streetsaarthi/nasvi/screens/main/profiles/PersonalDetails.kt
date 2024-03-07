@@ -33,11 +33,9 @@ import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.PersonalDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
-import com.streetsaarthi.nasvi.screens.main.profiles.Profiles.Companion.tabPosition
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
@@ -771,7 +769,7 @@ class PersonalDetails : Fragment() , CallBackListener {
 
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG","errorD " + e.message)
+//        Log.e("TAG","errorD " + e.message)
     }
 
 

@@ -30,9 +30,9 @@ import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
-import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed

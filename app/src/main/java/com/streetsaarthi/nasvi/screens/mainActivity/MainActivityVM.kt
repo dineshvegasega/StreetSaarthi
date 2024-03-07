@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,12 +25,10 @@ import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemMenuBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemAds
-import com.streetsaarthi.nasvi.models.mix.ItemState
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemAds
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew.CreateNew
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.dashboard.Dashboard
@@ -52,18 +48,12 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.navHo
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemChildMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
-import com.streetsaarthi.nasvi.utils.imageZoom
-import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import retrofit2.Response
-import java.io.BufferedInputStream
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
 import java.util.Locale
 import javax.inject.Inject
 
@@ -164,7 +154,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                             loginUser,
                                                             Login::class.java
                                                         )?.notification ?: ""
-                                                        Log.e("TAG", "isNotification"+isNotification)
+//                                                        Log.e("TAG", "isNotification"+isNotification)
                                                         if(isNotification == "Yes"){
                                                             if (fragmentInFrame !is Notifications){
                                                                 NotificationsVM.isNotificationNext = false

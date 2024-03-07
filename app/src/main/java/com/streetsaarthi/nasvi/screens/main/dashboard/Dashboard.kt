@@ -3,34 +3,27 @@ package com.streetsaarthi.nasvi.screens.main.dashboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DashboardBinding
-import com.streetsaarthi.nasvi.databinding.DialogBottomLiveTrainingBinding
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MultipartBody
 import org.json.JSONObject
 
 @AndroidEntryPoint
@@ -64,7 +57,7 @@ class Dashboard : Fragment() {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = viewModel.dashboardAdapter
             viewModel.isScheme.observe(viewLifecycleOwner, Observer {
-                Log.e("TAG","isScheme "+it)
+//                Log.e("TAG","isScheme "+it)
                 if (it) {
                     viewModel.itemMain?.get(1)?.apply {
                         isNew = true

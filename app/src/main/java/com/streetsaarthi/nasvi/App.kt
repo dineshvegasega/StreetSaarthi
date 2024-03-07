@@ -22,6 +22,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        DataStoreUtil.initDataStore(applicationContext)
 
 //    val fontScale = resources.configuration.fontScale
 //    Log.e("TAG", "App.scale xxxhdpi "+fontScale)
@@ -132,6 +133,5 @@ class App : Application() {
 //        }
 
 
-        DataStoreUtil.initDataStore(applicationContext)
     }
 }

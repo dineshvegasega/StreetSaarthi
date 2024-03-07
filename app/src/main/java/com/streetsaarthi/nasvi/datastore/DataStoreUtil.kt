@@ -31,7 +31,7 @@ object DataStoreUtil {
             dataStore?.edit { preferences ->
                 preferences[key] = value
 
-                Log.e("TAG", "saveData: ${preferences[key]}")
+//                Log.e("TAG", "saveData: ${preferences[key]}")
             }
         }
     }

@@ -26,8 +26,8 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.LiveSchemesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemLiveScheme
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.isBackApp
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
@@ -135,7 +135,7 @@ class LiveSchemes : Fragment() {
                             loadNextPage()
                         }, LOADER_TIME)
                     }
-                    Log.e("TAG", "currentPage "+currentPage)
+//                    Log.e("TAG", "currentPage "+currentPage)
                 }
                 override fun getTotalPageCount(): Int {
                     return totalPages
@@ -177,7 +177,7 @@ class LiveSchemes : Fragment() {
     }
 
     fun loadNextPage() {
-        Log.e("TAG", "loadNextPage "+currentPage)
+//        Log.e("TAG", "loadNextPage "+currentPage)
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
                 val obj: JSONObject = JSONObject().apply {

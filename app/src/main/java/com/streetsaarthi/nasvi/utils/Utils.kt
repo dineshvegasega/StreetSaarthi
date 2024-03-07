@@ -231,11 +231,11 @@ fun Context.getMediaFilePathFor(uri: Uri): String {
 fun getGalleryImage(requireActivity: FragmentActivity, callBack: Uri.() -> Unit){
     requireActivity.registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
-            Log.e("PhotoPicker", "Selected URI: $uri")
+//            Log.e("PhotoPicker", "Selected URI: $uri")
            // binding.imageUploadpassportsizeImage.loadImage(url = {  requireContext().getMediaFilePathFor(uri) })
            // callBack(requireActivity.getMediaFilePathFor(uri))
         } else {
-            Log.e("PhotoPicker", "No media selected")
+//            Log.e("PhotoPicker", "No media selected")
         }
     }
 }

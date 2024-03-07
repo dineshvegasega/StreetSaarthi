@@ -13,8 +13,7 @@ import com.streetsaarthi.nasvi.BR
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemHistoryBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
-import com.streetsaarthi.nasvi.models.mix.ItemHistory
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.models.ItemHistory
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImagePortrait
 import com.streetsaarthi.nasvi.utils.singleClick

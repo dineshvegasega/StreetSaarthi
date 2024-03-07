@@ -36,13 +36,11 @@ import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ProfessionalDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
-import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
@@ -247,7 +245,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("TAG", "onCreate")
+//        Log.e("TAG", "onCreate")
         callBackListener = this
     }
 
@@ -274,7 +272,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
-                    Log.e("TAG", "dataZZ "+data.toString())
+                   // Log.e("TAG", "dataZZ "+data.toString())
 
 
                     if(data.vending_documents != "null"){
@@ -837,7 +835,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
     private fun fieldsEdit() {
         binding.apply {
             viewModel.isEditable.observe(viewLifecycleOwner, Observer {
-                Log.e("TAG", "isEditable "+it)
+//                Log.e("TAG", "isEditable "+it)
                 editTextTypeofMarketPlace.isEnabled = it
                 editTextTypeofMarketPlaceEnter.isEnabled = it
                 editTextTypeofVending.isEnabled = it
@@ -986,7 +984,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
                     viewModel.data.open =
                         "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0" + minute else minute) + ":00"
-                    Log.e("TAG", "AAAA " + viewModel.data.open)
+//                    Log.e("TAG", "AAAA " + viewModel.data.open)
                 }
             },
             hour,
@@ -1208,7 +1206,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
 
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG","errorD " + e.message)
+//        Log.e("TAG","errorD " + e.message)
     }
 
 
@@ -1342,7 +1340,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                 viewModel.data.marketpalce_others = ""+ editTextTypeofMarketPlaceEnter.text.toString()
                     requestBody.addFormDataPart("marketpalce_others", viewModel.data.marketpalce_others!!)
                // }
-                Log.e("TAG", "type_of_vendingAA "+viewModel.data.type_of_vending!!)
+//                Log.e("TAG", "type_of_vendingAA "+viewModel.data.type_of_vending!!)
                 if(viewModel.data.type_of_vending  != null){
                     requestBody.addFormDataPart("type_of_vending", viewModel.data.type_of_vending!!)
                 }
@@ -1461,7 +1459,7 @@ class ProfessionalDetails : Fragment() , CallBackListener {
                     )
                 }
 
-                Log.e("TAG", "viewModel.dataAll22 "+viewModel.data.toString())
+//                Log.e("TAG", "viewModel.dataAll22 "+viewModel.data.toString())
                 readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val data = Gson().fromJson(loginUser, Login::class.java)

@@ -13,7 +13,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.models.mix.ItemAds
+import com.streetsaarthi.nasvi.models.ItemAds
 import com.streetsaarthi.nasvi.utils.loadImageBanner
 import com.streetsaarthi.nasvi.utils.singleClick
 

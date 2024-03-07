@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.screens.main.profiles.nomineeDetails
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.common.collect.ArrayListMultimap
-import com.google.common.collect.Multimap
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.utils.hideKeyboard
-
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.NomineeDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
@@ -29,7 +25,6 @@ import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
-import org.json.JSONArray
 import org.json.JSONObject
 
 

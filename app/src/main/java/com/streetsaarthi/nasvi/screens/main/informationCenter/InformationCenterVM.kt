@@ -26,8 +26,8 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomInformationCenterBinding
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
-import com.streetsaarthi.nasvi.models.mix.ItemInformationDetail
+import com.streetsaarthi.nasvi.models.ItemInformationCenter
+import com.streetsaarthi.nasvi.models.ItemInformationDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW

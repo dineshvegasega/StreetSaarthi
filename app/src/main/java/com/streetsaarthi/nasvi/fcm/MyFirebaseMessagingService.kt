@@ -17,7 +17,7 @@ import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
@@ -36,9 +36,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        Log.e("TAG", "onMessageReceived: " + remoteMessage.getFrom());
-        Log.e("TAG", "onMessageReceived: Noti" + remoteMessage.getNotification());
-        Log.e("TAG", "onMessageReceived: Data" + remoteMessage.getData());
+//        Log.e("TAG", "onMessageReceived: " + remoteMessage.getFrom());
+//        Log.e("TAG", "onMessageReceived: Noti" + remoteMessage.getNotification());
+//        Log.e("TAG", "onMessageReceived: Data" + remoteMessage.getData());
         //  Log.e("TAG", "isAppIsInBackground()" +  isAppIsInBackground());
 
 

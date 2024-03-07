@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.screens.main.dashboard
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,18 +22,17 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemDashboardMenusBinding
 import com.streetsaarthi.nasvi.databinding.ItemRecentActivitiesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.chat.ItemChat
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemHistory
-import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
-import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
-import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
+import com.streetsaarthi.nasvi.models.ItemChat
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemHistory
+import com.streetsaarthi.nasvi.models.ItemInformationCenter
+import com.streetsaarthi.nasvi.models.ItemLiveNotice
+import com.streetsaarthi.nasvi.models.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.ItemLiveTraining
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.informationCenter.InformationCenter

@@ -3,7 +3,6 @@ package com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew
 import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,7 @@ import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemComplaintType
+import com.streetsaarthi.nasvi.models.ItemComplaintType
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.utils.mainThread

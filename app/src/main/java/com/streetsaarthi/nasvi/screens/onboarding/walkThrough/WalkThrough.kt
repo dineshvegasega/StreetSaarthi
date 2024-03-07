@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.screens.onboarding.walkThrough
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.WalkThroughBinding
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
 

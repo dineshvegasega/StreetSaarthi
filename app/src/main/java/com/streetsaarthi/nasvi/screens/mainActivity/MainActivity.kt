@@ -1,11 +1,5 @@
 package com.streetsaarthi.nasvi.screens.mainActivity
 
-//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
-//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -30,7 +24,6 @@ import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -45,7 +38,7 @@ import com.streetsaarthi.nasvi.databinding.MainActivityBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.networking.ConnectivityManager
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
 import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
@@ -112,10 +105,10 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
-            Log.e("TAG", "AAAAgranted " + granted)
+//            Log.e("TAG", "AAAAgranted " + granted)
 
         } else {
-            Log.e("TAG", "BBBBgranted " + granted)
+//            Log.e("TAG", "BBBBgranted " + granted)
         }
     }
 
@@ -489,7 +482,7 @@ class MainActivity : AppCompatActivity() {
                 .build()
             if (intent!!.hasExtra(Screen)) {
                 var screen = intent.getStringExtra(Screen)
-                Log.e("TAG", "screenAA " + screen)
+//                Log.e("TAG", "screenAA " + screen)
                 if (screen == Main) {
                     binding.topLayout.topToolbar.visibility = View.VISIBLE
                 }
@@ -500,13 +493,13 @@ class MainActivity : AppCompatActivity() {
                     if (bundle?.getString("key") != null) {
                         callRedirect(bundle)
                     } else {
-                        Log.e("key", "showDataBB ")
-                        Log.e("_id", "showDataBB ")
+//                        Log.e("key", "showDataBB ")
+//                        Log.e("_id", "showDataBB ")
                         navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
                     }
                 }
             } else {
-                Log.e("TAG", "screenBB ")
+//                Log.e("TAG", "screenBB ")
                 if (bundle?.getString("key") != null) {
                     callRedirect(bundle)
                 }
@@ -520,8 +513,8 @@ class MainActivity : AppCompatActivity() {
     private fun callRedirect(bundle: Bundle) {
         var key = bundle?.getString("key")
         var _id = bundle?.getString("_id")
-        Log.e("key", "showDataAA " + key)
-        Log.e("_id", "showDataAA " + _id)
+//        Log.e("key", "showDataAA " + key)
+//        Log.e("_id", "showDataAA " + _id)
 
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
@@ -678,7 +671,7 @@ class MainActivity : AppCompatActivity() {
 
     var resultUpdate =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-            Log.e("TAG", "result.resultCode " + result.resultCode)
+//            Log.e("TAG", "result.resultCode " + result.resultCode)
             if (result.resultCode == RESULT_OK) {
                 // Handle successful app update
             } else if (result.resultCode == RESULT_CANCELED) {
@@ -739,7 +732,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val fontScale = resources.configuration.fontScale
-        Log.e("TAG", "App.scale xxxhdpi "+fontScale)
+//        Log.e("TAG", "App.scale xxxhdpi "+fontScale)
         scale10 = when(fontScale){
             0.8f ->  13
             0.9f ->  12

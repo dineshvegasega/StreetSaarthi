@@ -24,7 +24,7 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.CreateNewBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
@@ -111,7 +111,7 @@ class CreateNew : Fragment() {
 //                } else if (viewModel.uploadMediaImage == null){
 //                    showSnackBar(getString(R.string.upload_media))
                 } else {
-                    Log.e("TAG", "typeXX "+viewModel.type)
+//                    Log.e("TAG", "typeXX "+viewModel.type)
                     val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                         .addFormDataPart("user_role", USER_TYPE)
@@ -268,16 +268,16 @@ class CreateNew : Fragment() {
             permissions.entries.forEach {
                 val permissionName = it.key
                 val isGranted = it.value
-                Log.e("TAG", "00000 "+permissionName)
+//                Log.e("TAG", "00000 "+permissionName)
                 if (isGranted) {
-                    Log.e("TAG", "11111"+permissionName)
+//                    Log.e("TAG", "11111"+permissionName)
                     if(isFree){
                         showOptions()
                     }
                     isFree = false
                 } else {
                     // Permission is denied
-                    Log.e("TAG", "222222"+permissionName)
+//                    Log.e("TAG", "222222"+permissionName)
                 }
             }
         }
@@ -317,7 +317,7 @@ class CreateNew : Fragment() {
 
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG","errorD " + e.message)
+//        Log.e("TAG","errorD " + e.message)
     }
 
 

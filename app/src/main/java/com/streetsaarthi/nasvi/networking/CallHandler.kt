@@ -1,9 +1,6 @@
 package com.streetsaarthi.nasvi
 
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.getErrorMessage
 import com.streetsaarthi.nasvi.utils.showSnackBar
-
 
 fun interface CallHandler<T> {
 

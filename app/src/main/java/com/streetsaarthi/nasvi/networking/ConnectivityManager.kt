@@ -1,6 +1,5 @@
 package com.streetsaarthi.nasvi.networking
 
-import android.content.ContentValues
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network

@@ -27,8 +27,8 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveTrainingBinding
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
-import com.streetsaarthi.nasvi.models.mix.ItemTrainingDetail
+import com.streetsaarthi.nasvi.models.ItemLiveTraining
+import com.streetsaarthi.nasvi.models.ItemTrainingDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW

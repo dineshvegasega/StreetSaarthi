@@ -1,7 +1,6 @@
 package com.streetsaarthi.nasvi.screens.mainActivity.menu
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import org.json.JSONObject
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R

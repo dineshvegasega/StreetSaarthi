@@ -1,13 +1,10 @@
 package com.streetsaarthi.nasvi.screens.main.profiles.nomineeDetails
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.common.collect.ArrayListMultimap
-import com.google.common.collect.Multimap
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
@@ -16,12 +13,10 @@ import com.streetsaarthi.nasvi.CallHandler
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.Repository
 import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemNomineeData
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.models.ItemNomineeData
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject

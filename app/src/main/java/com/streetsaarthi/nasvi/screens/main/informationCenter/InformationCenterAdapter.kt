@@ -10,18 +10,13 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.BR
 import com.streetsaarthi.nasvi.databinding.ItemInformationCenterBinding
-import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.models.ItemInformationCenter
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import com.streetsaarthi.nasvi.utils.glideImage
 
-/**
- * Created by ( Eng Ali Al Fayed)
- * Class do :
- * Date 12/28/2020 - 3:12 PM
- */
+
 class InformationCenterAdapter(liveSchemesVM: InformationCenterVM) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     var viewModel = liveSchemesVM
     private val item: Int = 0

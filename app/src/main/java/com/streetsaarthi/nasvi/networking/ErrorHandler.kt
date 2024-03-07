@@ -1,7 +1,6 @@
 package com.streetsaarthi.nasvi
 
 
-
 sealed class ErrorHandler<T> (
     var data: T? = null,
     var message: String? = null

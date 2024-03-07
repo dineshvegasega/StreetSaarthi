@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-//import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.streetsaarthi.nasvi.ApiInterface
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -20,7 +19,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module

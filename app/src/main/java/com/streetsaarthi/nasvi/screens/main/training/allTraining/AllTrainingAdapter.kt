@@ -10,8 +10,7 @@ import com.streetsaarthi.nasvi.BR
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemAllTrainingBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
-import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.models.ItemLiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat

@@ -8,7 +8,6 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface ApiTranslateInterface {
-
     @Headers("Accept: application/json")
     @GET(TRANSLATE)
     fun translate(
