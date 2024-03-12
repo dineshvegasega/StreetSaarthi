@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi
+package com.streetsaarthi.nasvi.networking
 
 
 import android.app.AlertDialog
@@ -8,8 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
-import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
-import com.streetsaarthi.nasvi.screens.onboarding.networking.RETRY_COUNT
 import com.streetsaarthi.nasvi.utils.getErrorMessage
 import com.streetsaarthi.nasvi.utils.hideSoftKeyBoard
 import com.streetsaarthi.nasvi.utils.ioDispatcher
@@ -96,14 +94,13 @@ class Repository @Inject constructor(
      * Call Api
      * */
     fun callApiTranslate(_lang : String, _words: String) : String{
-        val res = apiTranslateInterface.translate(_lang, _words).execute()
+        val res = apiTranslateInterface.translate(tl = _lang, q = _words).execute()
         return if(res.isSuccessful){
             res.body().toString().parseResult()
         } else {
             ""
         }
     }
-
 
 
     /**

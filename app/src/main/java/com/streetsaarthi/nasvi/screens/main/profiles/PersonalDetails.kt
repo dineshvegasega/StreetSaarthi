@@ -35,11 +35,11 @@ import com.streetsaarthi.nasvi.databinding.PersonalDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.networking.IS_LANGUAGE_ALL
+import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
-import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
@@ -835,6 +835,10 @@ class PersonalDetails : Fragment() , CallBackListener {
                 showSnackBar(getString(R.string.municipality_panchayat))
             } else if (editTextAddress.text.toString().isEmpty()){
                 showSnackBar(getString(R.string.address_mention_village))
+            } else if(viewModel.data.passportSizeImage == null){
+                showSnackBar(getString(R.string.passport_size_imageStar))
+            } else if(viewModel.data.identificationImage == null){
+                showSnackBar(getString(R.string.identity_imageStar))
             } else {
                 viewModel.data.vendor_first_name = editTextFN.text.toString()
                 viewModel.data.vendor_last_name = editTextLN.text.toString()

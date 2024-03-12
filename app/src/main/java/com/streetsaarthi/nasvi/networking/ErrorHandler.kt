@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi
+package com.streetsaarthi.nasvi.networking
 
 
 sealed class ErrorHandler<T> (

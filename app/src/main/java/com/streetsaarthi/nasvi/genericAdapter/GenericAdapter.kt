@@ -1,4 +1,4 @@
-package com.demo.genericAdapter
+package com.streetsaarthi.nasvi.genericAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

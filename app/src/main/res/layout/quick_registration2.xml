@@ -53,6 +53,7 @@
             android:imeOptions="actionNext"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:maxLength="15"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -116,7 +117,8 @@
             android:layout_marginTop="0dp"
             android:imeOptions="actionDone"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:maxLength="15"/>
 
 
         <androidx.appcompat.widget.AppCompatImageView

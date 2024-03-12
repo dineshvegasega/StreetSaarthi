@@ -47,20 +47,8 @@ open class JsonHelper(private var context: Context) {
 
             for (i in 0 until k) {
                 val tempJsonObject = jsonArray.getJSONObject(i).toString()
-                val gson = Gson()
-
-                if(i == 0){
-                    val newsPaper = gson.fromJson<ItemMenuModel>(tempJsonObject, ItemMenuModel::class.java)
-//                    newsPaper.apply {
-//                        color = ContextCompat.getColor(context, R.color._EDB678)
-//                    }
-                    newspaperList?.add(newsPaper)
-                } else {
-                    val newsPaper = gson.fromJson<ItemMenuModel>(tempJsonObject, ItemMenuModel::class.java)
-//                    newsPaper.apply {
-//                        color = ContextCompat.getColor(context, R.color.white)
-//                    }
-                    newspaperList?.add(newsPaper)
+                if (i != 9){
+                    newspaperList?.add(Gson().fromJson(tempJsonObject, ItemMenuModel::class.java))
                 }
             }
             return newspaperList

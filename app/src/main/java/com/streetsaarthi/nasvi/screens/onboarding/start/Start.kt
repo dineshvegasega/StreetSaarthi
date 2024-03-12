@@ -17,13 +17,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.genericAdapter.GenericAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.databinding.StartBinding
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLanguageStartBinding
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
+import com.streetsaarthi.nasvi.genericAdapter.GenericAdapter
+import com.streetsaarthi.nasvi.networking.Start
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 

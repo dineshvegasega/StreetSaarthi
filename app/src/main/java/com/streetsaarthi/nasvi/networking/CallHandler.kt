@@ -1,19 +1,16 @@
-package com.streetsaarthi.nasvi
+package com.streetsaarthi.nasvi.networking
 
 import com.streetsaarthi.nasvi.utils.showSnackBar
 
 fun interface CallHandler<T> {
 
-
     suspend fun sendRequest(apiInterface: ApiInterface): T
-
 
     fun loading(){
     }
 
     fun success(response: T){
     }
-
 
     fun error(message: String){
 //        if(message.contains("DOCTYPE html")){

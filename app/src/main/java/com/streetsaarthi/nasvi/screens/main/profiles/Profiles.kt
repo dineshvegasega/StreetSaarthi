@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -89,6 +90,7 @@ class Profiles : Fragment() , CallBackListener {
 
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
+                    Log.e("TAG", "loginUser "+loginUser)
                     val data = Gson().fromJson(loginUser, Login::class.java).status
                     when(data){
                         "approved" -> {
@@ -206,10 +208,14 @@ class Profiles : Fragment() , CallBackListener {
 
     override fun onCallBack(pos: Int) {
         if (pos == 2){
-            binding.introViewPager.setCurrentItem(1, false)
-            Handler(Looper.getMainLooper()).postDelayed({
+            if(ProfessionalDetails.callBackListener != null){
                 ProfessionalDetails.callBackListener!!.onCallBack(3)
-            }, 100)
+            } else {
+                binding.introViewPager.setCurrentItem(1, false)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    ProfessionalDetails.callBackListener!!.onCallBack(3)
+                }, 1000)
+            }
         } else if (pos == 4){
               binding.apply {
                     inclideHeaderSearch.textHeaderEditTxt.visibility = View.VISIBLE

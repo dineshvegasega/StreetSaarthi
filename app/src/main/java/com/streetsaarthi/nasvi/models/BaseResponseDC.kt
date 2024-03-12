@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi.model
+package com.streetsaarthi.nasvi.models
 
 import com.google.gson.annotations.SerializedName
 

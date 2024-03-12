@@ -28,10 +28,10 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.models.ItemLiveScheme
+import com.streetsaarthi.nasvi.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.isBackApp
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
-import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
@@ -49,11 +49,11 @@ class LiveSchemes : Fragment() {
     private var _binding: LiveSchemesBinding? = null
     private val binding get() = _binding!!
 
-    companion object{
+    companion object {
         var isReadLiveSchemes: Boolean? = false
     }
 
-    var networkAlert : BottomSheetDialog?= null
+    var networkAlert: BottomSheetDialog? = null
     var networkCount = 1
 
     private var LOADER_TIME: Long = 500
@@ -110,10 +110,22 @@ class LiveSchemes : Fragment() {
             inclideHeaderSearch.editTextSearch.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    inclideHeaderSearch.editTextSearch.setCompoundDrawablesWithIntrinsicBounds(0, 0, if(count >= 1) R.drawable.ic_cross_white else R.drawable.ic_search, 0);
+                    inclideHeaderSearch.editTextSearch.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        if (count >= 1) R.drawable.ic_cross_white else R.drawable.ic_search,
+                        0
+                    );
                 }
             })
 
@@ -126,23 +138,27 @@ class LiveSchemes : Fragment() {
 
     private fun recyclerViewScroll() {
         binding.apply {
-            recyclerView.addOnScrollListener(object : PaginationScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
+            recyclerView.addOnScrollListener(object :
+                PaginationScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
                 override fun loadMoreItems() {
                     isLoading = true
                     currentPage += 1
-                    if(totalPages >= currentPage){
+                    if (totalPages >= currentPage) {
                         Handler(Looper.myLooper()!!).postDelayed({
                             loadNextPage()
                         }, LOADER_TIME)
                     }
 //                    Log.e("TAG", "currentPage "+currentPage)
                 }
+
                 override fun getTotalPageCount(): Int {
                     return totalPages
                 }
+
                 override fun isLastPage(): Boolean {
                     return isLastPage
                 }
+
                 override fun isLoading(): Boolean {
                     return isLoading
                 }
@@ -152,11 +168,11 @@ class LiveSchemes : Fragment() {
 
 
     private fun loadFirstPage() {
-        pageStart  = 1
+        pageStart = 1
         isLoading = false
         isLastPage = false
-        totalPages  = 1
-        currentPage  = pageStart
+        totalPages = 1
+        currentPage = pageStart
         results.clear()
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
@@ -166,7 +182,7 @@ class LiveSchemes : Fragment() {
                     put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                     put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                if(requireContext().isNetworkAvailable()) {
+                if (requireContext().isNetworkAvailable()) {
                     isBackApp = true
                     viewModel.liveScheme(obj)
                 } else {
@@ -186,7 +202,7 @@ class LiveSchemes : Fragment() {
                     put("search_input", binding.inclideHeaderSearch.editTextSearch.text.toString())
                     put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                 }
-                if(requireContext().isNetworkAvailable()) {
+                if (requireContext().isNetworkAvailable()) {
                     isBackApp = true
                     viewModel.liveSchemeSecond(obj)
                 } else {
@@ -197,55 +213,20 @@ class LiveSchemes : Fragment() {
     }
 
 
-
     var results: MutableList<ItemLiveScheme> = ArrayList()
-        @SuppressLint("NotifyDataSetChanged")
-    private fun observerDataRequest(){
-            viewModel.itemLiveSchemes.observe(viewLifecycleOwner, Observer {
-                viewModel.show()
-                val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
-                val changeValue =
-                    Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
 
-                if (IS_LANGUAGE){
-                    if (MainActivity.context.get()!!
-                            .getString(R.string.englishVal) == "" + viewModel.locale
-                    ) {
-                        val itemStateTemp = changeValue
-                        results.addAll(itemStateTemp)
-                        viewModel.adapter.addAllSearch(results)
-                        viewModel.hide()
+    @SuppressLint("NotifyDataSetChanged")
+    private fun observerDataRequest() {
+        viewModel.itemLiveSchemes.observe(viewLifecycleOwner, Observer {
+            viewModel.show()
+            val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
+            val changeValue =
+                Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
 
-                        if (viewModel.adapter.itemCount > 0) {
-                            binding.idDataNotFound.root.visibility = View.GONE
-                        } else {
-                            binding.idDataNotFound.root.visibility = View.VISIBLE
-                        }
-                    } else {
-                        val itemStateTemp = changeValue
-                        mainThread {
-                            itemStateTemp.forEach {
-                                delay(50)
-                                val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
-                                val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
-
-                                apply {
-                                    it.name = nameChanged
-                                    it.description = descChanged
-                                }
-                            }
-                            results.addAll(itemStateTemp)
-                            viewModel.adapter.addAllSearch(results)
-                            viewModel.hide()
-
-                            if (viewModel.adapter.itemCount > 0) {
-                                binding.idDataNotFound.root.visibility = View.GONE
-                            } else {
-                                binding.idDataNotFound.root.visibility = View.VISIBLE
-                            }
-                        }
-                    }
-                } else {
+            if (IS_LANGUAGE) {
+                if (MainActivity.context.get()!!
+                        .getString(R.string.englishVal) == "" + viewModel.locale
+                ) {
                     val itemStateTemp = changeValue
                     results.addAll(itemStateTemp)
                     viewModel.adapter.addAllSearch(results)
@@ -256,37 +237,9 @@ class LiveSchemes : Fragment() {
                     } else {
                         binding.idDataNotFound.root.visibility = View.VISIBLE
                     }
-                }
-
-
-                totalPages = it.meta?.total_pages!!
-                if (currentPage == totalPages) {
-                    viewModel.adapter.removeLoadingFooter()
-                } else if (currentPage <= totalPages) {
-                    viewModel.adapter.addLoadingFooter()
-                    isLastPage = false
                 } else {
-                    isLastPage = true
-                }
-            })
-
-
-            viewModel.itemLiveSchemesSecond.observe(viewLifecycleOwner, Observer {
-                viewModel.show()
-                val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
-                val changeValue =
-                    Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
-                if (IS_LANGUAGE){
-                    if (MainActivity.context.get()!!
-                            .getString(R.string.englishVal) == "" + viewModel.locale
-                    ) {
-                        val itemStateTemp = changeValue
-                        results.addAll(itemStateTemp)
-                        viewModel.adapter.addAllSearch(results)
-                        viewModel.hide()
-                    } else {
-                        val itemStateTemp = changeValue
-                        mainThread {
+                    val itemStateTemp = changeValue
+                    mainThread {
                             itemStateTemp.forEach {
                                 delay(50)
                                 val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
@@ -297,90 +250,203 @@ class LiveSchemes : Fragment() {
                                     it.description = descChanged
                                 }
                             }
-                            results.addAll(itemStateTemp)
-                            viewModel.adapter.addAllSearch(results)
-                            viewModel.hide()
+
+
+//                        if (itemStateTemp.size != 0) {
+//                            var title = ""
+//                            var description = ""
+//
+//                            itemStateTemp.forEach {
+//                                title += if (it.name != null) it.name + "_=_=" else " " + "_=_="
+//                                description += if (it.description != null) it.description + "_=_=" else " " + "_=_="
+//                            }
+//
+//                            val title_description = title + " ___===___ " + description
+//                            val nameChanged: String =
+//                                viewModel.callApiTranslate("" + viewModel.locale, title_description)
+//                            val bothChangedSplit = nameChanged.split("___===___")
+//                            val nameChangedSplit = bothChangedSplit[0].split("_=_=")
+//                            val descriptionChangedSplit = bothChangedSplit[1].split("_=_=")
+//
+//                            for (i in 0..itemStateTemp.size - 1) {
+//                                itemStateTemp[i].apply {
+//                                    this.name = nameChangedSplit[i].trim()
+//                                    this.description = descriptionChangedSplit[i].trim()
+//                                }
+//                            }
+//                        }
+
+
+                        results.addAll(itemStateTemp)
+                        viewModel.adapter.addAllSearch(results)
+                        viewModel.hide()
+
+                        if (viewModel.adapter.itemCount > 0) {
+                            binding.idDataNotFound.root.visibility = View.GONE
+                        } else {
+                            binding.idDataNotFound.root.visibility = View.VISIBLE
                         }
                     }
-                } else {
-                    val itemStateTemp = changeValue
-                    results.addAll(itemStateTemp)
-                    viewModel.adapter.addAllSearch(results)
-                    viewModel.hide()
                 }
-
-
-                viewModel.adapter.removeLoadingFooter()
-                isLoading = false
+            } else {
+                val itemStateTemp = changeValue
+                results.addAll(itemStateTemp)
                 viewModel.adapter.addAllSearch(results)
-                if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
-                else isLastPage = true
-            })
+                viewModel.hide()
 
-
-            viewModel.applyLink.observe(requireActivity()) { position ->
-                if (position != -1){
-                    var data = results.get(position).apply {
-                        user_scheme_status = "applied"
-                    }
-                    viewModel.adapter.notifyDataSetChanged()
-                    if(networkFailed) {
-                        viewModel.viewDetail(data, position = position, requireView(), 3)
-                    } else {
-                        requireContext().callNetworkDialog()
-                    }
+                if (viewModel.adapter.itemCount > 0) {
+                    binding.idDataNotFound.root.visibility = View.GONE
+                } else {
+                    binding.idDataNotFound.root.visibility = View.VISIBLE
                 }
             }
 
 
+            totalPages = it.meta?.total_pages!!
+            if (currentPage == totalPages) {
+                viewModel.adapter.removeLoadingFooter()
+            } else if (currentPage <= totalPages) {
+                viewModel.adapter.addLoadingFooter()
+                isLastPage = false
+            } else {
+                isLastPage = true
+            }
+        })
 
 
-            viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
-                if (it) {
-                    if(networkCount == 1){
-                        if(networkAlert?.isShowing == true) {
-                            return@Observer
-                        }
-                        val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
-                            Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                        )
-                        networkAlert = BottomSheetDialog(requireContext())
-                        networkAlert?.setContentView(dialogBinding.root)
-                        networkAlert?.setOnShowListener { dia ->
-                            val bottomSheetDialog = dia as BottomSheetDialog
-                            val bottomSheetInternal: FrameLayout =
-                                bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-                            bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
-                        }
-                        networkAlert?.show()
+        viewModel.itemLiveSchemesSecond.observe(viewLifecycleOwner, Observer {
+            viewModel.show()
+            val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
+            val changeValue =
+                Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
+            if (IS_LANGUAGE) {
+                if (MainActivity.context.get()!!
+                        .getString(R.string.englishVal) == "" + viewModel.locale
+                ) {
+                    val itemStateTemp = changeValue
+                    results.addAll(itemStateTemp)
+                    viewModel.adapter.addAllSearch(results)
+                    viewModel.hide()
+                } else {
+                    val itemStateTemp = changeValue
+                    mainThread {
+                            itemStateTemp.forEach {
+                                delay(50)
+                                val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
+                                val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
 
-                        dialogBinding.apply {
-                            btClose.singleClick {
-                                networkAlert?.dismiss()
-                            }
-                            btApply.singleClick {
-                                networkAlert?.dismiss()
-                                if(totalPages == 1){
-                                    loadFirstPage()
-                                } else {
-                                    loadNextPage()
+                                apply {
+                                    it.name = nameChanged
+                                    it.description = descChanged
                                 }
-                                networkCount = 1
                             }
+
+//                        var title = ""
+//                        var description = ""
+//                        itemStateTemp.forEach {
+//                            title += if (it.name != null) it.name + "_=_=" else " " + "_=_="
+//                            description += if (it.description != null) it.description + "_=_=" else " " + "_=_="
+//                        }
+//
+//                        val nameChanged: String =
+//                            viewModel.callApiTranslate("" + viewModel.locale, title)
+//                        val nameChangedSplit = nameChanged.split("_=_=")
+//
+//                        val descriptionChanged: String =
+//                            viewModel.callApiTranslate("" + viewModel.locale, description)
+//                        val descriptionChangedSplit = descriptionChanged.split("_=_=")
+//
+//                        for (i in 0..itemStateTemp.size - 1) {
+//                            itemStateTemp[i].apply {
+//                                this.name = nameChangedSplit[i]
+//                                this.description = descriptionChangedSplit[i]
+//                            }
+//                        }
+
+                        results.addAll(itemStateTemp)
+                        viewModel.adapter.addAllSearch(results)
+                        viewModel.hide()
+                    }
+                }
+            } else {
+                val itemStateTemp = changeValue
+                results.addAll(itemStateTemp)
+                viewModel.adapter.addAllSearch(results)
+                viewModel.hide()
+            }
+
+
+            viewModel.adapter.removeLoadingFooter()
+            isLoading = false
+            viewModel.adapter.addAllSearch(results)
+            if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
+            else isLastPage = true
+        })
+
+
+        viewModel.applyLink.observe(requireActivity()) { position ->
+            if (position != -1) {
+                var data = results.get(position).apply {
+                    user_scheme_status = "applied"
+                }
+                viewModel.adapter.notifyDataSetChanged()
+                if (networkFailed) {
+                    viewModel.viewDetail(data, position = position, requireView(), 3)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
+            }
+        }
+
+
+
+
+        viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                if (networkCount == 1) {
+                    if (networkAlert?.isShowing == true) {
+                        return@Observer
+                    }
+                    val dialogBinding = DialogBottomNetworkBinding.inflate(
+                        requireContext().getSystemService(
+                            Context.LAYOUT_INFLATER_SERVICE
+                        ) as LayoutInflater
+                    )
+                    networkAlert = BottomSheetDialog(requireContext())
+                    networkAlert?.setContentView(dialogBinding.root)
+                    networkAlert?.setOnShowListener { dia ->
+                        val bottomSheetDialog = dia as BottomSheetDialog
+                        val bottomSheetInternal: FrameLayout =
+                            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+                        bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
+                    }
+                    networkAlert?.show()
+
+                    dialogBinding.apply {
+                        btClose.singleClick {
+                            networkAlert?.dismiss()
+                        }
+                        btApply.singleClick {
+                            networkAlert?.dismiss()
+                            if (totalPages == 1) {
+                                loadFirstPage()
+                            } else {
+                                loadNextPage()
+                            }
+                            networkCount = 1
                         }
                     }
-                    networkCount++
                 }
-            })
+                networkCount++
+            }
+        })
     }
-
 
 
 //    override fun onDestroyView() {
 //        _binding = null
 //        super.onDestroyView()
 //    }
-
 
 
 }

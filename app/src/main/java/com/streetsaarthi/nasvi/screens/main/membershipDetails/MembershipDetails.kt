@@ -151,6 +151,9 @@ class MembershipDetails  : Fragment() {
 //        binding.lifecycleOwner = this
         MainActivity.mainActivity.get()?.callFragment(1)
 
+
+
+
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.membership_details)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
@@ -170,34 +173,36 @@ class MembershipDetails  : Fragment() {
 //            )
 //            Log.e("TAG", "App.scaleDD "+viewModel.scale10)
 
-//            textAssociatedOrganizationTxt.textSize = viewModel.scale10
-//            textMarketPlaceTxt.textSize = viewModel.scale10
-//            textFirstNameTxt.textSize = viewModel.scale10
-//            textFirstNameValueTxt.textSize = viewModel.scale10
-//            textLastNameTxt.textSize = viewModel.scale10
-//            textLastNameValueTxt.textSize = viewModel.scale10
-//            textGenderTxt.textSize = viewModel.scale10
-//            textGenderValueTxt.textSize = viewModel.scale10
-//            textDOBTxt.textSize = viewModel.scale10
-//            textDOBValueTxt.textSize = viewModel.scale10
-//            textMobileTxt.textSize = viewModel.scale10
-//            textMobileValueTxt.textSize = viewModel.scale10
-//            textTypeofVendingTxt.textSize = viewModel.scale10
-//            textTypeofVendingValueTxt.textSize = viewModel.scale10
-//            textTypeofMarketPlaceTxt.textSize = viewModel.scale10
-//            textTypeofMarketPlaceValueTxt.textSize = viewModel.scale10
-//            textCurrentVendingAddressTxt.textSize = viewModel.scale10
-//            textStateTxt.textSize = viewModel.scale10
-//            textStateValueTxt.textSize = viewModel.scale10
-//            textDistrictTxt.textSize = viewModel.scale10
-//            textDistrictValueTxt.textSize = viewModel.scale10
-//            textMunicipalityTxt.textSize = viewModel.scale10
-//            textMunicipalityValueTxt.textSize = viewModel.scale10
-//            textAddressTxt.textSize = viewModel.scale10
-//            textAddressValueTxt.textSize = viewModel.scale10
-//            textMembershipTxt.textSize = viewModel.scale10
-//            textMembershipValidTxt.textSize = viewModel.scale10
-//            btDownload.textSize = viewModel.scale10
+//            val sdp = resources.getDimension(com.intuit.sdp.R.dimen._5sdp)
+//
+//            textAssociatedOrganizationTxt.textSize = sdp
+//            textMarketPlaceTxt.textSize = sdp
+//            textFirstNameTxt.textSize = sdp
+//            textFirstNameValueTxt.textSize = sdp
+//            textLastNameTxt.textSize = sdp
+//            textLastNameValueTxt.textSize = sdp
+//            textGenderTxt.textSize = sdp
+//            textGenderValueTxt.textSize = sdp
+//            textDOBTxt.textSize = sdp
+//            textDOBValueTxt.textSize = sdp
+//            textMobileTxt.textSize = sdp
+//            textMobileValueTxt.textSize = sdp
+//            textTypeofVendingTxt.textSize = sdp
+//            textTypeofVendingValueTxt.textSize = sdp
+//            textTypeofMarketPlaceTxt.textSize = sdp
+//            textTypeofMarketPlaceValueTxt.textSize = sdp
+//            textCurrentVendingAddressTxt.textSize = sdp
+//            textStateTxt.textSize = sdp
+//            textStateValueTxt.textSize = sdp
+//            textDistrictTxt.textSize = sdp
+//            textDistrictValueTxt.textSize = sdp
+//            textMunicipalityTxt.textSize = sdp
+//            textMunicipalityValueTxt.textSize = sdp
+//            textAddressTxt.textSize = sdp
+//            textAddressValueTxt.textSize = sdp
+//            textMembershipTxt.textSize = sdp
+//            textMembershipValidTxt.textSize = sdp
+//            btDownload.textSize = sdp
 
 
 

@@ -213,6 +213,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType1"
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
 
 
@@ -275,6 +276,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType2"
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
 
 
@@ -336,6 +338,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType3"
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
 
 
@@ -383,6 +386,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType4"
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
 
 
@@ -454,6 +458,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerRelationType5"
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

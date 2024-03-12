@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi.screens.onboarding.networking
+package com.streetsaarthi.nasvi.networking
 
 //const val BASE_URL = "https://v2.nasvi.in/"
 //const val WEB_URL = "https://nasvi.in/"
@@ -74,8 +74,9 @@ const val PING = "8.8.8.8"
 //const val TRANSLATE = "translate/v2?key="
 
 const val TRANSLATE_URL = "https://translate.googleapis.com/translate_a/"
-const val TRANSLATE = "single?client=gtx&sl=en&dt=t&dt=t"
+const val TRANSLATE = "single"
 
+//"client=gtx&sl=en&dt=t&dt=t"
 
 const val Screen = "screen"
 const val Start = "Start"

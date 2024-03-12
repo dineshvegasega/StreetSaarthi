@@ -80,7 +80,7 @@ object DataStoreUtil {
                 preferences.clear()
             }
             CoroutineScope(Dispatchers.Main).launch {
-                Log.d("clearDataStore", "clearDataStore")
+//                Log.d("clearDataStore", "clearDataStore")
                 valueIs(true)
             }
         }

@@ -39,11 +39,11 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.WebpageBinding
+import com.streetsaarthi.nasvi.networking.LoginOtp
+import com.streetsaarthi.nasvi.networking.LoginPassword
+import com.streetsaarthi.nasvi.networking.Screen
+import com.streetsaarthi.nasvi.networking.WEB_URL
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginOtp
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginPassword
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
-import com.streetsaarthi.nasvi.screens.onboarding.networking.WEB_URL
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream

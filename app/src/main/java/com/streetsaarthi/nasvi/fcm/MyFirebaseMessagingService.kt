@@ -19,8 +19,8 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
+import com.streetsaarthi.nasvi.networking.Main
+import com.streetsaarthi.nasvi.networking.Screen
 import com.streetsaarthi.nasvi.utils.getChannelName
 import com.streetsaarthi.nasvi.utils.getNotificationId
 import com.streetsaarthi.nasvi.utils.getTitle

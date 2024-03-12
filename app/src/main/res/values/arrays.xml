@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <array name="autosize_4_5_35">
+        <item>@dimen/_1sdp</item>
+        <item>@dimen/_2sdp</item>
+        <item>@dimen/_3sdp</item>
+        <item>@dimen/_4sdp</item>
+        <item>@dimen/_5sdp</item>
+        <item>@dimen/_6sdp</item>
+        <item>@dimen/_7sdp</item>
+        <item>@dimen/_8sdp</item>
+        <item>@dimen/_9sdp</item>
+        <item>@dimen/_10sdp</item>
+        <item>@dimen/_11sdp</item>
+        <item>@dimen/_12sdp</item>
+        <item>@dimen/_13sdp</item>
+        <item>@dimen/_14sdp</item>
+        <item>@dimen/_15sdp</item>
+        <item>@dimen/_16sdp</item>
+        <item>@dimen/_17sdp</item>
+        <item>@dimen/_18sdp</item>
+        <item>@dimen/_19sdp</item>
+        <item>@dimen/_20sdp</item>
+        <item>@dimen/_21sdp</item>
+        <item>@dimen/_22sdp</item>
+        <item>@dimen/_23sdp</item>
+        <item>@dimen/_24sdp</item>
+        <item>@dimen/_25sdp</item>
+        <item>@dimen/_26sdp</item>
+        <item>@dimen/_27sdp</item>
+        <item>@dimen/_28sdp</item>
+        <item>@dimen/_29sdp</item>
+        <item>@dimen/_30sdp</item>
+        <item>@dimen/_31sdp</item>
+        <item>@dimen/_32sdp</item>
+        <item>@dimen/_33sdp</item>
+        <item>@dimen/_34sdp</item>
+        <item>@dimen/_35sdp</item>
+        <item>@dimen/_36sdp</item>
+        <item>@dimen/_37sdp</item>
+        <item>@dimen/_38sdp</item>
+        <item>@dimen/_39sdp</item>
+        <item>@dimen/_40sdp</item>
+    </array>
+
+
+
     <array name="autosize_5_2_8">
         <item>@dimen/_2ssp</item>
         <item>@dimen/_3ssp</item>

@@ -20,6 +20,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -40,13 +41,14 @@ import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.networking.ConnectivityManager
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.networking.Main
+import com.streetsaarthi.nasvi.networking.Screen
+import com.streetsaarthi.nasvi.networking.Start
+import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.LocaleHelper
 import com.streetsaarthi.nasvi.utils.autoScroll
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.getDensityName
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
 import com.streetsaarthi.nasvi.utils.loadImage
@@ -94,6 +96,9 @@ class MainActivity : AppCompatActivity() {
         var scale10: Int = 0
 
         @JvmStatic
+        var fontSize: Float = 0f
+
+        @JvmStatic
         var networkFailed: Boolean = false
     }
 
@@ -127,7 +132,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
@@ -139,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         checkUpdate()
 
-//
+
         if (Build.VERSION.SDK_INT >= 33) {
             pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         }
@@ -158,19 +162,24 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
+
         loadBanner()
         viewModel.itemAds.observe(this@MainActivity, Observer {
             if (it != null) {
                 viewModel.itemAds.value?.let { it1 ->
-                    viewModel.bannerAdapter.submitData(it1)
-                    binding.banner.adapter = viewModel.bannerAdapter
-                    binding.tabDots.setupWithViewPager(binding.banner, true)
+                    binding.apply {
+                        viewModel.bannerAdapter.submitData(it1)
+                        banner.adapter = viewModel.bannerAdapter
+                        tabDots.setupWithViewPager(banner, true)
 
-                    binding.banner.autoScroll()
-                    when (screenValue) {
-                        0 -> binding.layoutBanner.visibility = View.GONE
-                        in 1..2 -> binding.layoutBanner.visibility = View.VISIBLE
+                        banner.autoScroll()
+                        when (screenValue) {
+                            0 -> layoutBanner.visibility = View.GONE
+                            in 1..2 -> layoutBanner.visibility = View.VISIBLE
+                        }
                     }
+
                 }
             }
         })
@@ -189,33 +198,31 @@ class MainActivity : AppCompatActivity() {
             showData(bundle)
         }
 
-
-        val manager = packageManager
-        val info = manager?.getPackageInfo(packageName, 0)
-        val versionName = info?.versionName
-        binding.textVersion.text = getString(R.string.app_version_1_0, versionName)
-
-        binding.btLogout.singleClick {
-            callLogoutDialog()
-        }
-
-
-        val mDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
-            this, binding.drawerLayout,
-            R.string.open, R.string.close
-        ) {
-            override fun onDrawerClosed(view: View) {
-                super.onDrawerClosed(view)
-            }
-
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-            }
-        }
-        binding.drawerLayout.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
-
         binding.apply {
+            val manager = packageManager
+            val info = manager?.getPackageInfo(packageName, 0)
+            val versionName = info?.versionName
+            textVersion.text = getString(R.string.app_version_1_0, versionName)
+            btLogout.singleClick {
+                callLogoutDialog()
+            }
+
+
+            val mDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+                this@MainActivity, drawerLayout,
+                R.string.open, R.string.close
+            ) {
+                override fun onDrawerClosed(view: View) {
+                    super.onDrawerClosed(view)
+                }
+
+                override fun onDrawerOpened(drawerView: View) {
+                    super.onDrawerOpened(drawerView)
+                }
+            }
+            drawerLayout.addDrawerListener(mDrawerToggle);
+            mDrawerToggle.syncState();
+
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
             textTitleMain.singleClick {
@@ -226,36 +233,44 @@ class MainActivity : AppCompatActivity() {
                 drawerLayout.open()
             }
 
-            binding.recyclerView.setHasFixedSize(true)
-            binding.recyclerView.adapter = viewModel.menuAdapter
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = viewModel.menuAdapter
             viewModel.menuAdapter.submitList(viewModel.itemMain)
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
 
+
+
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val backStackEntryCount = navHostFragment?.childFragmentManager?.backStackEntryCount
-//                if (!isBackApp){
-                    if(backStackEntryCount == 0){
+                if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    binding.drawerLayout.close()
+                } else {
+                    if (backStackEntryCount == 0) {
                         val setIntent = Intent(Intent.ACTION_MAIN)
                         setIntent.addCategory(Intent.CATEGORY_HOME)
                         setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(setIntent)
                     } else {
-                        if(isBackStack){
+                        if (isBackStack) {
                             isBackStack = false
                             val navOptions: NavOptions = NavOptions.Builder()
                                 .setPopUpTo(R.id.navigation_bar, true)
                                 .build()
                             runOnUiThread {
-                                navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
+                                navHostFragment?.navController?.navigate(
+                                    R.id.dashboard,
+                                    null,
+                                    navOptions
+                                )
                             }
                         } else {
                             navHostFragment?.navController?.navigateUp()
                         }
                     }
-//                }
+                }
             }
         })
     }
@@ -266,9 +281,6 @@ class MainActivity : AppCompatActivity() {
         if (logoutAlert?.isShowing == true) {
             return
         }
-
-//        var aaa = AlertDialog(this@MainActivity)
-
 
         logoutAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
             .setTitle(resources.getString(R.string.app_name))
@@ -286,7 +298,7 @@ class MainActivity : AppCompatActivity() {
                             "mobile_number",
                             "" + Gson().fromJson(loginUser, Login::class.java).mobile_no
                         )
-                        if(networkFailed) {
+                        if (networkFailed) {
                             viewModel.logoutAccount(requestBody.build())
                         } else {
                             callNetworkDialog()
@@ -302,16 +314,6 @@ class MainActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
-
-//        val title: TextView? = logoutAlert?.findViewById(android.R.id.title)
-//        title?.textSize = 7f
-//        val message: TextView? = logoutAlert?.findViewById(android.R.id.message)
-//        message?.textSize = 7f
-//        val button1: TextView? = logoutAlert?.findViewById(android.R.id.button1)
-//        button1?.textSize = 6f
-//        val button2: TextView? = logoutAlert?.findViewById(android.R.id.button2)
-//        button2?.textSize = 6f
-
 
 
         viewModel.itemLogoutResult.value = false
@@ -346,7 +348,7 @@ class MainActivity : AppCompatActivity() {
                             "" + Gson().fromJson(loginUser, Login::class.java).id
                         )
                         requestBody.addFormDataPart("delete_account", "Yes")
-                        if(networkFailed) {
+                        if (networkFailed) {
                             viewModel.deleteAccount(requestBody.build())
                         } else {
                             callNetworkDialog()
@@ -362,15 +364,6 @@ class MainActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
-//        val title: TextView? = logoutAlert?.findViewById(android.R.id.title)
-//        title?.textSize = 7f
-//        val message: TextView? = logoutAlert?.findViewById(android.R.id.message)
-//        message?.textSize = 7f
-//        val button1: TextView? = logoutAlert?.findViewById(android.R.id.button1)
-//        button1?.textSize = 6f
-//        val button2: TextView? = logoutAlert?.findViewById(android.R.id.button2)
-//        button2?.textSize = 6f
-
 
         viewModel.itemDeleteResult.value = false
         viewModel.itemDeleteResult.observe(this@MainActivity, Observer {
@@ -382,7 +375,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
 
 
     @SuppressLint("SuspiciousIndentation")
@@ -408,7 +400,7 @@ class MainActivity : AppCompatActivity() {
                             "" + Gson().fromJson(loginUser, Login::class.java).id
                         )
                         requestBody.addFormDataPart("delete_account", "Yes")
-                        if(networkFailed) {
+                        if (networkFailed) {
                             viewModel.deleteAccount(requestBody.build())
                         } else {
                             callNetworkDialog()
@@ -424,15 +416,6 @@ class MainActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
-//        val title: TextView? = logoutAlert?.findViewById(android.R.id.title)
-//        title?.textSize = 7f
-//        val message: TextView? = logoutAlert?.findViewById(android.R.id.message)
-//        message?.textSize = 7f
-//        val button1: TextView? = logoutAlert?.findViewById(android.R.id.button1)
-//        button1?.textSize = 6f
-//        val button2: TextView? = logoutAlert?.findViewById(android.R.id.button2)
-//        button2?.textSize = 6f
-
 
         viewModel.itemDeleteResult.value = false
         viewModel.itemDeleteResult.observe(this@MainActivity, Observer {
@@ -444,8 +427,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
-
 
 
     fun clearData() {
@@ -516,49 +497,50 @@ class MainActivity : AppCompatActivity() {
 //        Log.e("key", "showDataAA " + key)
 //        Log.e("_id", "showDataAA " + _id)
 
-            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                if (loginUser != null) {
-                    val data = Gson().fromJson(loginUser, Login::class.java)
-                    when (data.status) {
-                        "approved" -> {
-                            isBackStack = true
-                            when (key) {
-                                "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes)
-                                "notice" ->  navHostFragment!!.navController.navigate(R.id.liveNotices)
-                                "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining)
-                                "information" -> navHostFragment!!.navController.navigate(R.id.informationCenter)
-                                "profile" -> navHostFragment!!.navController.navigate(R.id.profiles)
-                                "feedback" -> navHostFragment!!.navController.navigate(
-                                    R.id.historyDetail,
-                                    Bundle().apply {
-                                        putString("key", _id)
-                                    })
-                            }
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val data = Gson().fromJson(loginUser, Login::class.java)
+                when (data.status) {
+                    "approved" -> {
+                        isBackStack = true
+                        when (key) {
+                            "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes)
+                            "notice" -> navHostFragment!!.navController.navigate(R.id.liveNotices)
+                            "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining)
+                            "information" -> navHostFragment!!.navController.navigate(R.id.informationCenter)
+                            "profile" -> navHostFragment!!.navController.navigate(R.id.profiles)
+                            "feedback" -> navHostFragment!!.navController.navigate(
+                                R.id.historyDetail,
+                                Bundle().apply {
+                                    putString("key", _id)
+                                })
                         }
-                        "unverified" -> {
+                    }
+
+                    "unverified" -> {
+                        showSnackBar(resources.getString(R.string.registration_processed))
+                    }
+
+                    "pending" -> {
+                        if (key == "profile") {
+                            isBackStack = true
+                            navHostFragment!!.navController.navigate(R.id.profiles)
+                        } else {
                             showSnackBar(resources.getString(R.string.registration_processed))
                         }
-                        "pending" -> {
-                            if(key == "profile"){
-                                isBackStack = true
-                                navHostFragment!!.navController.navigate(R.id.profiles)
-                            } else {
-                                showSnackBar(resources.getString(R.string.registration_processed))
-                            }
-                        }
-                        "rejected" -> {
-                            if(key == "profile"){
-                                isBackStack = true
-                                navHostFragment!!.navController.navigate(R.id.profiles)
-                            } else {
-                                showSnackBar(resources.getString(R.string.registration_processed))
-                            }
+                    }
+
+                    "rejected" -> {
+                        if (key == "profile") {
+                            isBackStack = true
+                            navHostFragment!!.navController.navigate(R.id.profiles)
+                        } else {
+                            showSnackBar(resources.getString(R.string.registration_processed))
                         }
                     }
                 }
             }
-
-
+        }
 
 
 //        else -> {
@@ -585,12 +567,12 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser == null) {
-                    binding.topLayout.topToolbar.visibility = View.GONE
+                    topLayout.topToolbar.visibility = View.GONE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                    binding.layoutBanner.visibility = View.GONE
-                    binding.textHeaderTxt1.visibility = View.GONE
+                    layoutBanner.visibility = View.GONE
+                    textHeaderTxt1.visibility = View.GONE
                 } else {
-                    binding.topLayout.topToolbar.visibility = View.VISIBLE
+                    topLayout.topToolbar.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
                     var imageUrl = ""
@@ -619,38 +601,38 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             when (screen) {
                 0 -> {
-                    binding.textHeaderTxt1.visibility = View.GONE
-                    binding.layoutBanner.visibility = View.GONE
+                    textHeaderTxt1.visibility = View.GONE
+                    layoutBanner.visibility = View.GONE
                 }
 
                 1 -> {
-                    binding.textHeaderTxt1.visibility = View.VISIBLE
-                    binding.mainLayout.setBackgroundResource(R.color.white)
+                    textHeaderTxt1.visibility = View.VISIBLE
+                    mainLayout.setBackgroundResource(R.color.white)
                     viewModel.itemAds.value?.let { it1 ->
                         if (it1.size > 0) {
                             if (screen == 1) {
-                                binding.layoutBanner.visibility = View.VISIBLE
+                                layoutBanner.visibility = View.VISIBLE
                             } else {
-                                binding.layoutBanner.visibility = View.GONE
+                                layoutBanner.visibility = View.GONE
                             }
                         } else {
-                            binding.layoutBanner.visibility = View.GONE
+                            layoutBanner.visibility = View.GONE
                         }
                     }
                 }
 
                 2 -> {
-                    binding.textHeaderTxt1.visibility = View.VISIBLE
-                    binding.mainLayout.setBackgroundResource(R.color._FFF3E4)
+                    textHeaderTxt1.visibility = View.VISIBLE
+                    mainLayout.setBackgroundResource(R.color._FFF3E4)
                     viewModel.itemAds.value?.let { it1 ->
                         if (it1.size > 0) {
                             if (screen == 2) {
-                                binding.layoutBanner.visibility = View.VISIBLE
+                                layoutBanner.visibility = View.VISIBLE
                             } else {
-                                binding.layoutBanner.visibility = View.GONE
+                                layoutBanner.visibility = View.GONE
                             }
                         } else {
-                            binding.layoutBanner.visibility = View.GONE
+                            layoutBanner.visibility = View.GONE
                         }
                     }
                 }
@@ -732,18 +714,29 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val fontScale = resources.configuration.fontScale
-//        Log.e("TAG", "App.scale xxxhdpi "+fontScale)
-        scale10 = when(fontScale){
-            0.8f ->  13
-            0.9f ->  12
-            1.0f ->  11
-            1.1f ->  10
-            1.2f ->  9
-            1.3f ->  8
-            1.5f ->  7
-            1.7f ->  6
-            2.0f ->  5
+        scale10 = when (fontScale) {
+            0.8f -> 13
+            0.9f -> 12
+            1.0f -> 11
+            1.1f -> 10
+            1.2f -> 9
+            1.3f -> 8
+            1.5f -> 7
+            1.7f -> 6
+            2.0f -> 5
             else -> 4
+        }
+
+        val densityDpi = getDensityName()
+        Log.e("TAG", "densityDpiAA " + densityDpi)
+        fontSize = when (densityDpi) {
+            "xxxhdpi" -> 9f
+            "xxhdpi" -> 9.5f
+            "xhdpi" -> 10.5f
+            "hdpi" -> 10.5f
+            "mdpi" -> 11f
+            "ldpi" -> 11.5f
+            else -> 12f
         }
     }
 

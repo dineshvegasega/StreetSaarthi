@@ -365,6 +365,13 @@
             app:destination="@id/membershipDetails"
             app:launchSingleTop="true"
             />
+
+        <action
+            android:id="@+id/action_dashboard_to_membershipDetailsXX"
+            app:destination="@id/membershipDetailsXX"
+            app:launchSingleTop="true"
+            />
+
         <action
             android:id="@+id/action_dashboard_to_liveSchemes"
             app:destination="@id/liveSchemes"
@@ -594,6 +601,15 @@
         android:label="MembershipDetails"
         android:id="@+id/membershipDetails"
         tools:layout="@layout/membership_details">
+
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetailsXX"
+        android:label="MembershipDetailsXX"
+        android:id="@+id/membershipDetailsXX"
+        tools:layout="@layout/membership_detailsxx">
 
     </fragment>
 

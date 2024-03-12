@@ -50,6 +50,7 @@
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/textFNTxt"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
 
 
@@ -79,6 +80,7 @@
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/textLNTxt"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -106,7 +108,8 @@
                 android:hint="@string/father_s_first_nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/textFatherFNTxt"
-                tools:layout_editor_absoluteX="13dp" />
+                tools:layout_editor_absoluteX="13dp"
+                android:maxLength="25"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textFatherLNTxt"
@@ -133,6 +136,7 @@
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/textFatherLNTxt"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -252,6 +256,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textSpouseNameTxt"
                 android:visibility="gone"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:maxLength="25"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -400,6 +405,7 @@
                 android:singleLine="false"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/editTextSelectPincode"
+                android:maxLength="100"
                 />
 
 

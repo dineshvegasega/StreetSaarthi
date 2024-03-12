@@ -90,6 +90,7 @@
         android:paddingHorizontal="@dimen/_10sdp"
         android:text=""
         app:layout_constraintTop_toBottomOf="@+id/layoutOthersPleaseName"
+        android:maxLength="30"
         />
 
 

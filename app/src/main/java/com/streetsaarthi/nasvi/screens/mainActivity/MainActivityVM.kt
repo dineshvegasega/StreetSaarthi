@@ -16,17 +16,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.genericAdapter.GenericAdapter
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemMenuBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.genericAdapter.GenericAdapter
+import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.models.ItemAds
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew.CreateNew
@@ -34,6 +34,7 @@ import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.dashboard.Dashboard
 import com.streetsaarthi.nasvi.screens.main.informationCenter.InformationCenter
 import com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetails
+import com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetailsXX
 import com.streetsaarthi.nasvi.screens.main.notices.allNotices.AllNotices
 import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.nasvi.screens.main.notifications.Notifications
@@ -48,6 +49,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.navHo
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemChildMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
+import com.streetsaarthi.nasvi.utils.getDensityName
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -167,8 +169,17 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                 }
                                             }
                                             3 -> {
-                                                if (fragmentInFrame !is MembershipDetails){
-                                                    navHostFragment?.navController?.navigate(R.id.membershipDetails)
+                                                val densityDpi = root.context.getDensityName()
+                                                 when (densityDpi) {
+                                                     "xxhdpi" -> {
+                                                         if (fragmentInFrame !is MembershipDetailsXX){
+                                                             navHostFragment?.navController?.navigate(R.id.membershipDetailsXX)
+                                                         }
+                                                     } else -> {
+                                                         if (fragmentInFrame !is MembershipDetails){
+                                                             navHostFragment?.navController?.navigate(R.id.membershipDetails)
+                                                         }
+                                                     }
                                                 }
                                             }
                                             8 -> {

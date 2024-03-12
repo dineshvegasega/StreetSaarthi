@@ -13,12 +13,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.Repository
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
-import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.models.ItemDistrict
 import com.streetsaarthi.nasvi.models.ItemMarketplace
 import com.streetsaarthi.nasvi.models.ItemOrganization
@@ -28,7 +28,7 @@ import com.streetsaarthi.nasvi.models.ItemState
 import com.streetsaarthi.nasvi.models.ItemVending
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.IS_LANGUAGE_ALL
+import com.streetsaarthi.nasvi.networking.IS_LANGUAGE_ALL
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel

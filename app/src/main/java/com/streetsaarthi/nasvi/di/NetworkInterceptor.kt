@@ -8,11 +8,6 @@ import okhttp3.Interceptor
  * Status Code Interceptor
  * */
 object NetworkInterceptor {
-
-
-    /**
-     * Status Code Handler
-     * */
     val interceptor = Interceptor { chain ->
         var request = chain.request()
         request = request.newBuilder().apply {
@@ -24,8 +19,5 @@ object NetworkInterceptor {
         val response = chain.proceed(request)
         response
     }
-
-
-
 
 }

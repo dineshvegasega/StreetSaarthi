@@ -1,4 +1,4 @@
-package com.demo.genericAdapter
+package com.streetsaarthi.nasvi.genericAdapter
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
