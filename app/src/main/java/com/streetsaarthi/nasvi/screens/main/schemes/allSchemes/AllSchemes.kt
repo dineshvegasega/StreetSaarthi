@@ -32,6 +32,7 @@ import com.streetsaarthi.nasvi.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
@@ -203,7 +204,7 @@ class AllSchemes : Fragment() {
                 Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
             if (IS_LANGUAGE){
                 if (MainActivity.context.get()!!
-                        .getString(R.string.englishVal) == "" + viewModel.locale
+                        .getString(R.string.englishVal) == "" + locale
                 ) {
                     val itemStateTemp = changeValue
                     results.addAll(itemStateTemp)
@@ -220,14 +221,48 @@ class AllSchemes : Fragment() {
                     mainThread {
                         itemStateTemp.forEach {
                             delay(50)
-                            val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
-                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+                            val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+locale, it.name) else ""
+                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+locale, it.description) else ""
 
                             apply {
                                 it.name = nameChanged
                                 it.description = descChanged
                             }
                         }
+
+//                        itemStateTemp.forEach {
+//                            delay(50)
+//                            val nameChanged: String = if(it.name != null) it.name else ""
+//                            val descChanged: String = if(it.description != null) it.description else ""
+//                            val convertValue: String = viewModel.callApiTranslate(""+locale, nameChanged +" ⚖ "+ descChanged)
+//                            apply {
+//                                it.name = convertValue.split("⚖")[0].trim()
+//                                it.description = convertValue.split("⚖")[1].trim()
+//                            }
+//                        }
+
+//                        var title = ""
+//                        var description = ""
+//                        itemStateTemp.forEach {
+//                            title += if (it.name != null) it.name + " _=_= " else " " + " _=_= "
+//                            description += if (it.description != null) it.description + " _=_= " else " " + " _=_= "
+//                        }
+//
+//                        val nameChanged: String =
+//                            viewModel.callApiTranslate("" + viewModel.locale, title)
+//                        val nameChangedSplit = nameChanged.split("_=_=")
+//
+//                        val descriptionChanged: String =
+//                            viewModel.callApiTranslate("" + viewModel.locale, description)
+//                        val descriptionChangedSplit = descriptionChanged.split("_=_=")
+//
+//                        for (i in 0..itemStateTemp.size - 1) {
+//                            itemStateTemp[i].apply {
+//                                this.name = nameChangedSplit[i]
+//                                this.description = descriptionChangedSplit[i]
+//                            }
+//                        }
+
                         results.addAll(itemStateTemp)
                         viewModel.adapter.addAllSearch(results)
                         viewModel.hide()
@@ -272,7 +307,7 @@ class AllSchemes : Fragment() {
                 Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
             if (IS_LANGUAGE){
                 if (MainActivity.context.get()!!
-                        .getString(R.string.englishVal) == "" + viewModel.locale
+                        .getString(R.string.englishVal) == "" + locale
                 ) {
                     val itemStateTemp = changeValue
                     results.addAll(itemStateTemp)
@@ -283,14 +318,48 @@ class AllSchemes : Fragment() {
                     mainThread {
                         itemStateTemp.forEach {
                             delay(50)
-                            val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
-                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+                            val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+locale, it.name) else ""
+                            val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+locale, it.description) else ""
 
                             apply {
                                 it.name = nameChanged
                                 it.description = descChanged
                             }
                         }
+
+//                        itemStateTemp.forEach {
+//                            delay(50)
+//                            val nameChanged: String = if(it.name != null) it.name else ""
+//                            val descChanged: String = if(it.description != null) it.description else ""
+//                            val convertValue: String = viewModel.callApiTranslate(""+locale, nameChanged +" ⚖ "+ descChanged)
+//                            apply {
+//                                it.name = convertValue.split("⚖")[0].trim()
+//                                it.description = convertValue.split("⚖")[1].trim()
+//                            }
+//                        }
+
+//                        var title = ""
+//                        var description = ""
+//                        itemStateTemp.forEach {
+//                            title += if (it.name != null) it.name + " _=_= " else " " + " _=_= "
+//                            description += if (it.description != null) it.description + " _=_= " else " " + " _=_= "
+//                        }
+//
+//                        val nameChanged: String =
+//                            viewModel.callApiTranslate("" + viewModel.locale, title)
+//                        val nameChangedSplit = nameChanged.split("_=_=")
+//
+//                        val descriptionChanged: String =
+//                            viewModel.callApiTranslate("" + viewModel.locale, description)
+//                        val descriptionChangedSplit = descriptionChanged.split("_=_=")
+//
+//                        for (i in 0..itemStateTemp.size - 1) {
+//                            itemStateTemp[i].apply {
+//                                this.name = nameChangedSplit[i]
+//                                this.description = descriptionChangedSplit[i]
+//                            }
+//                        }
+
                         results.addAll(itemStateTemp)
                         viewModel.adapter.addAllSearch(results)
                         viewModel.hide()

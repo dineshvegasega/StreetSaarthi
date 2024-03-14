@@ -43,7 +43,7 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
                     if (response.isSuccessful){
                         if(response.body()?.message == "OTP Sent successfully"){
                             isSend.value = true
-                            var number = jsonObject.getString("mobile_no")
+                            val number = jsonObject.getString("mobile_no")
                             showSnackBar(view.resources.getString(R.string.otp_sent, number))
                         } else {
                             isSend.value = false

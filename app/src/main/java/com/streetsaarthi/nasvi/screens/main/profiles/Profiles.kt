@@ -186,10 +186,10 @@ class Profiles : Fragment() , CallBackListener {
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
                     data.profile_image_name?.let {
-                        inclidePersonalProfile.ivImageProfile.loadImage(url = { data.profile_image_name.url })
+                        inclidePersonalProfile.ivImageProfile.loadImage(type = 1, url = { data.profile_image_name.url })
                         inclidePersonalProfile.ivImageProfile.singleClick {
                             data.profile_image_name?.let {
-                                arrayListOf(it.url).imageZoom(inclidePersonalProfile.ivImageProfile)
+                                arrayListOf(it.url).imageZoom(inclidePersonalProfile.ivImageProfile, 2)
                             }
                         }
                     }

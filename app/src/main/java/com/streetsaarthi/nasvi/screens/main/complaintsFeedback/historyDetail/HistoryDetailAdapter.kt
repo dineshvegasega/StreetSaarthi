@@ -12,6 +12,7 @@ import com.streetsaarthi.nasvi.databinding.ItemChatLeftBinding
 import com.streetsaarthi.nasvi.databinding.ItemChatRightBinding
 import com.streetsaarthi.nasvi.databinding.ItemLoadingBinding
 import com.streetsaarthi.nasvi.models.DataX
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.imageZoom
@@ -29,7 +30,7 @@ class HistoryDetailAdapter () :
 
     private var isLoadingAdded: Boolean = false
 
-    var locale: Locale = Locale.getDefault()
+//    var locale: Locale = Locale.getDefault()
 
     inner class LeftMessagesViewHolder(private val binding: ItemChatLeftBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -50,7 +51,7 @@ class HistoryDetailAdapter () :
 
                     ivMap.singleClick {
                         model.media?.let {
-                            arrayListOf(it.url).imageZoom(ivMap)
+                            arrayListOf(it.url).imageZoom(ivMap, 1)
                         }
                     }
                 } else {
@@ -126,7 +127,7 @@ class HistoryDetailAdapter () :
 
                     ivMap.singleClick {
                         model.media?.let {
-                            arrayListOf(it.url).imageZoom(ivMap)
+                            arrayListOf(it.url).imageZoom(ivMap, 1)
                         }
                     }
                 } else {

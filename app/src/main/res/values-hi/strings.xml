@@ -547,11 +547,36 @@
 
     <string name='closed'>बंद</string>
 
-    <string name="subscriptions">सदस्यता</string>
-    <string name="create_subscription">सदस्यता बनाएँ</string>
-    <string name="subscription_history">इतिहास</string>
 
+    <string name="subscription">सदस्य</string>
+    <string name="view_manage">देखें/प्रबंधित करें</string>
+    <string name="history">इतिहास</string>
 
+    <string name='select_month_year'>महीना/वर्ष चुनें</string>
+    <string name='choose_number'>नंबर चुनें</string>
+    <string name='month'>महीना</string>
+    <string name='year'>वर्ष</string>
+    <string name='calculate_price'>कीमत की गणना करें</string>
+    <string name='price_breakup'>कीमत ब्रेकअप</string>
+    <string name='membership_cost'>सदस्यता लागत</string>
+    <string name='validity'>वैधता</string>
+    <string name='gst'>GST</string>
+    <string name='coupon_discount'>कूपन छूट</string>
+    <string name='total_cost'>कुल लागत</string>
+    <string name='purchase_subscription'>सदस्यता खरीदें</string>
+    <string name='months'>महीने</string>
+    <string name = "years">वर्ष</string>
+    <string name='s_no'>क्र.सं.</string>
+    <string name='date'>दिनांक</string>
+    <string name='transaction_id'>लेनदेन आईडी</string>
+    <string name='duration'>अवधि</string>
+
+    <string-array name="month_year_array">
+    <item>महीना</item>
+    <item>वर्ष</item>
+    </string-array>
+
+    <string name='subscription_details'>सदस्यता विवरण</string>
 
 
 

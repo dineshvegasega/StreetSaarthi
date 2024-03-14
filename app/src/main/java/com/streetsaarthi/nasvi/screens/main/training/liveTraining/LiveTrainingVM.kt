@@ -52,7 +52,7 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
 
 
 
-    var locale: Locale = Locale.getDefault()
+//    var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())

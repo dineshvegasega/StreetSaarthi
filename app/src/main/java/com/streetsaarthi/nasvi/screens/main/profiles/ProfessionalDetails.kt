@@ -43,6 +43,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.networking.IS_LANGUAGE_ALL
 import com.streetsaarthi.nasvi.networking.USER_TYPE
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
@@ -173,7 +174,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                                 File(requireContext().getMediaFilePathFor(uri))
                             )
                             viewModel.data.shopImage = compressedImageFile.path
-                            binding.ivImageShopImage.loadImage(url = { viewModel.data.shopImage!! })
+                            binding.ivImageShopImage.loadImage(type = 1, url = { viewModel.data.shopImage!! })
                         }
 
                         2 -> {
@@ -182,7 +183,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                                 File(requireContext().getMediaFilePathFor(uri))
                             )
                             viewModel.data.ImageUploadCOV = compressedImageFile.path
-                            binding.ivImageCOV.loadImage(url = { viewModel.data.ImageUploadCOV!! })
+                            binding.ivImageCOV.loadImage(type = 1, url = { viewModel.data.ImageUploadCOV!! })
                         }
 
                         3 -> {
@@ -191,7 +192,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                                 File(requireContext().getMediaFilePathFor(uri))
                             )
                             viewModel.data.UploadSurveyReceipt = compressedImageFile.path
-                            binding.ivImageSurveyReceipt.loadImage(url = { viewModel.data.UploadSurveyReceipt!! })
+                            binding.ivImageSurveyReceipt.loadImage(type = 1, url = { viewModel.data.UploadSurveyReceipt!! })
                         }
 
                         4 -> {
@@ -200,7 +201,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                                 File(requireContext().getMediaFilePathFor(uri))
                             )
                             viewModel.data.ImageUploadLOR = compressedImageFile.path
-                            binding.ivImageLOR.loadImage(url = { viewModel.data.ImageUploadLOR!! })
+                            binding.ivImageLOR.loadImage(type = 1, url = { viewModel.data.ImageUploadLOR!! })
                         }
 
                         5 -> {
@@ -209,7 +210,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                                 File(requireContext().getMediaFilePathFor(uri))
                             )
                             viewModel.data.UploadChallan = compressedImageFile.path
-                            binding.ivImageUploadChallan.loadImage(url = { viewModel.data.UploadChallan!! })
+                            binding.ivImageUploadChallan.loadImage(type = 1, url = { viewModel.data.UploadChallan!! })
                         }
 
                         6 -> {
@@ -218,7 +219,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                                 File(requireContext().getMediaFilePathFor(uri))
                             )
                             viewModel.data.UploadApprovalLetter = compressedImageFile.path
-                            binding.ivImageApprovalLetter.loadImage(url = { viewModel.data.UploadApprovalLetter!! })
+                            binding.ivImageApprovalLetter.loadImage(type = 1, url = { viewModel.data.UploadApprovalLetter!! })
                         }
                     }
                 }
@@ -237,7 +238,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                             File(requireContext().getMediaFilePathFor(uriReal!!))
                         )
                         viewModel.data.shopImage = compressedImageFile.path
-                        binding.ivImageShopImage.loadImage(url = { viewModel.data.shopImage!! })
+                        binding.ivImageShopImage.loadImage(type = 1, url = { viewModel.data.shopImage!! })
                     }
 
                     2 -> {
@@ -246,7 +247,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                             File(requireContext().getMediaFilePathFor(uriReal!!))
                         )
                         viewModel.data.ImageUploadCOV = compressedImageFile.path
-                        binding.ivImageCOV.loadImage(url = { viewModel.data.ImageUploadCOV!! })
+                        binding.ivImageCOV.loadImage(type = 1, url = { viewModel.data.ImageUploadCOV!! })
                     }
 
                     3 -> {
@@ -255,7 +256,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                             File(requireContext().getMediaFilePathFor(uriReal!!))
                         )
                         viewModel.data.UploadSurveyReceipt = compressedImageFile.path
-                        binding.ivImageSurveyReceipt.loadImage(url = { viewModel.data.UploadSurveyReceipt!! })
+                        binding.ivImageSurveyReceipt.loadImage(type = 1, url = { viewModel.data.UploadSurveyReceipt!! })
                     }
 
                     4 -> {
@@ -264,7 +265,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                             File(requireContext().getMediaFilePathFor(uriReal!!))
                         )
                         viewModel.data.ImageUploadLOR = compressedImageFile.path
-                        binding.ivImageLOR.loadImage(url = { viewModel.data.ImageUploadLOR!! })
+                        binding.ivImageLOR.loadImage(type = 1, url = { viewModel.data.ImageUploadLOR!! })
                     }
 
                     5 -> {
@@ -273,7 +274,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                             File(requireContext().getMediaFilePathFor(uriReal!!))
                         )
                         viewModel.data.UploadChallan = compressedImageFile.path
-                        binding.ivImageUploadChallan.loadImage(url = { viewModel.data.UploadChallan!! })
+                        binding.ivImageUploadChallan.loadImage(type = 1, url = { viewModel.data.UploadChallan!! })
                     }
 
                     6 -> {
@@ -282,7 +283,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                             File(requireContext().getMediaFilePathFor(uriReal!!))
                         )
                         viewModel.data.UploadApprovalLetter = compressedImageFile.path
-                        binding.ivImageApprovalLetter.loadImage(url = { viewModel.data.UploadApprovalLetter!! })
+                        binding.ivImageApprovalLetter.loadImage(type = 1, url = { viewModel.data.UploadApprovalLetter!! })
                     }
                 }
             }
@@ -577,14 +578,14 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                             mainThread {
                                 data.vending_state?.let {
                                     if (MainActivity.context.get()!!
-                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                            .getString(R.string.englishVal) == "" + locale
                                     ) {
                                         editTextVendingSelectState.setText("${data.vending_state?.name}")
                                     } else {
                                         viewModel.show()
                                         val nameChanged: String =
                                             viewModel.callApiTranslate(
-                                                "" + viewModel.locale,
+                                                "" + locale,
                                                 data.vending_state.name
                                             )
                                         editTextVendingSelectState.setText("${nameChanged}")
@@ -594,14 +595,14 @@ class ProfessionalDetails : Fragment(), CallBackListener {
 
                                 data.vending_district?.let {
                                     if (MainActivity.context.get()!!
-                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                            .getString(R.string.englishVal) == "" + locale
                                     ) {
                                         editTextVendingSelectDistrict.setText("${data.vending_district?.name}")
                                     } else {
                                         viewModel.show()
                                         val nameChanged: String =
                                             viewModel.callApiTranslate(
-                                                "" + viewModel.locale,
+                                                "" + locale,
                                                 data.vending_district.name
                                             )
                                         editTextVendingSelectDistrict.setText("${nameChanged}")
@@ -611,14 +612,14 @@ class ProfessionalDetails : Fragment(), CallBackListener {
 
                                 data.vending_municipality_panchayat?.let {
                                     if (MainActivity.context.get()!!
-                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                            .getString(R.string.englishVal) == "" + locale
                                     ) {
                                         editTextVendingMunicipalityPanchayat.setText("${data.vending_municipality_panchayat?.name}")
                                     } else {
                                         viewModel.show()
                                         val nameChanged: String =
                                             viewModel.callApiTranslate(
-                                                "" + viewModel.locale,
+                                                "" + locale,
                                                 data.vending_municipality_panchayat.name
                                             )
                                         editTextVendingMunicipalityPanchayat.setText("${nameChanged}")
@@ -630,7 +631,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
 
                                 if (data.local_organisation != null) {
                                     if (MainActivity.context.get()!!
-                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                            .getString(R.string.englishVal) == "" + locale
                                     ) {
                                         editTextLocalOrganisation.setText("${data.local_organisation?.name}")
                                         editTextLocalOrganisation.visibility = View.VISIBLE
@@ -641,7 +642,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
                                         viewModel.show()
                                         val nameChanged: String =
                                             viewModel.callApiTranslate(
-                                                "" + viewModel.locale,
+                                                "" + locale,
                                                 data.local_organisation.name
                                             )
                                         editTextLocalOrganisation.setText(nameChanged)
@@ -730,27 +731,27 @@ class ProfessionalDetails : Fragment(), CallBackListener {
 
                     data.shop_image?.let {
                         viewModel.data.shopImage = data.shop_image?.url
-                        ivImageShopImage.loadImage(url = { data.shop_image.url })
+                        ivImageShopImage.loadImage(type = 1, url = { data.shop_image.url })
                     }
                     data.cov_image?.let {
                         viewModel.data.ImageUploadCOV = data.cov_image?.url
-                        ivImageCOV.loadImage(url = { data.cov_image.url })
+                        ivImageCOV.loadImage(type = 1, url = { data.cov_image.url })
                     }
                     data.survey_receipt_image?.let {
                         viewModel.data.UploadSurveyReceipt = data.survey_receipt_image?.url
-                        ivImageSurveyReceipt.loadImage(url = { data.survey_receipt_image.url })
+                        ivImageSurveyReceipt.loadImage(type = 1, url = { data.survey_receipt_image.url })
                     }
                     data.lor_image?.let {
                         viewModel.data.ImageUploadLOR = data.lor_image?.url
-                        ivImageLOR.loadImage(url = { data.lor_image.url })
+                        ivImageLOR.loadImage(type = 1, url = { data.lor_image.url })
                     }
                     data.challan_image?.let {
                         viewModel.data.UploadChallan = data.challan_image?.url
-                        ivImageUploadChallan.loadImage(url = { data.challan_image.url })
+                        ivImageUploadChallan.loadImage(type = 1, url = { data.challan_image.url })
                     }
                     data.approval_letter_image?.let {
                         viewModel.data.UploadApprovalLetter = data.approval_letter_image?.url
-                        ivImageApprovalLetter.loadImage(url = { data.approval_letter_image.url })
+                        ivImageApprovalLetter.loadImage(type = 1, url = { data.approval_letter_image.url })
                     }
                 }
             }

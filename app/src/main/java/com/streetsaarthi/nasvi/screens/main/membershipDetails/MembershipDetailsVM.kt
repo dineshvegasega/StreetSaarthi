@@ -19,6 +19,7 @@ import com.streetsaarthi.nasvi.models.ItemVending
 import com.streetsaarthi.nasvi.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.mainThread
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -39,7 +40,7 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
 
 
 
-    var locale: Locale = Locale.getDefault()
+//    var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())

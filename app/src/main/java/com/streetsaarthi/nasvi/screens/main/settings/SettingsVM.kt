@@ -2,6 +2,7 @@ package com.streetsaarthi.nasvi.screens.main.settings
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,7 @@ import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.networking.Main
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
@@ -29,7 +31,7 @@ import javax.inject.Inject
 class SettingsVM @Inject constructor(private val repository: Repository): ViewModel() {
 
     var itemMain : ArrayList<Item> ?= ArrayList()
-    var locale: Locale = Locale.getDefault()
+//    var locale: Locale = Locale.getDefault()
 
     var appLanguage = MutableLiveData<String>("")
 
@@ -50,7 +52,7 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
 
 
         for (item in itemMain!!.iterator()) {
-            if(item.locale == ""+locale){
+            if(item.locale == ""+ locale){
                 item.apply {
                     item.isSelected = true
                 }

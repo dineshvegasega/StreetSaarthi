@@ -210,7 +210,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/timeDate"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 android:layout_marginStart="@dimen/_15sdp"
-
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

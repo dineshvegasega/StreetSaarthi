@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layoutMain"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textSno"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/s_no"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    tools:ignore="HardcodedText"
+                    android:layout_weight="1.1"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                   />
+
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTitle"
+                    android:background="@color/_E79D46"
+                    >
+                </View>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/date"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    tools:ignore="HardcodedText"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    />
+
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTitle"
+                    android:background="@color/_E79D46"
+                    >
+                </View>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textTransactionId"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/transaction_id"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    tools:ignore="HardcodedText"
+                    android:layout_weight="0.98"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    />
+
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTitle"
+                    android:background="@color/_E79D46"
+                    >
+                </View>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/duration"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    tools:ignore="HardcodedText"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+
+

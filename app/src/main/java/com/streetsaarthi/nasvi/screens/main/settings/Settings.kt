@@ -238,7 +238,7 @@ class Settings : Fragment() {
    fun callLanguageApi(locale: String, value : Int) {
        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
            if (loginUser != null) {
-              var _id = Gson().fromJson(loginUser, Login::class.java).id
+              val _id = Gson().fromJson(loginUser, Login::class.java).id
                val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                    .setType(MultipartBody.FORM)
                    .addFormDataPart("user_type", USER_TYPE)

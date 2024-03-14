@@ -1,10 +1,10 @@
 package com.streetsaarthi.nasvi.networking
 
-//const val BASE_URL = "https://v2.nasvi.in/"
-//const val WEB_URL = "https://nasvi.in/"
+const val BASE_URL = "https://v2.nasvi.in/"
+const val WEB_URL = "https://nasvi.in/"
 
-const val BASE_URL = "http://167.71.225.20:8081/"
-const val WEB_URL = "http://167.71.225.20:8080/"
+//const val BASE_URL = "http://167.71.225.20:8081/"
+//const val WEB_URL = "http://167.71.225.20:8080/"
 
 const val URL = BASE_URL+"api/"
 
@@ -74,7 +74,7 @@ const val PING = "8.8.8.8"
 //const val TRANSLATE = "translate/v2?key="
 
 const val TRANSLATE_URL = "https://translate.googleapis.com/translate_a/"
-const val TRANSLATE = "single"
+const val TRANSLATE = "single?client=gtx&sl=en&dt=t"
 
 //"client=gtx&sl=en&dt=t&dt=t"
 

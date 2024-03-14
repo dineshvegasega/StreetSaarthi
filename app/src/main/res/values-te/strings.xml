@@ -549,12 +549,36 @@
 
     <string name="closed">మూసివేయబడింది</string>
 
-    <string name="subscriptions">చందాలు</string>
-    <string name="create_subscription">చందాను సృష్టించండి</string>
-    <string name="subscription_history">చరిత్ర</string>
 
+    <string name="subscription">చందా</string>
+    <string name="view_manage">వీక్షించండి/నిర్వహించండి</string>
+    <string name="history">చరిత్ర</string>
 
+    <string name="select_month_year">నెల/సంవత్సరాన్ని ఎంచుకోండి</string>
+    <string name="choose_number">సంఖ్యను ఎంచుకోండి</string>
+    <string name="month">నెల</string>
+    <string name="year">సంవత్సరం</string>
+    <string name="calculate_price">ధరను లెక్కించు</string>
+    <string name="price_breakup">ధర విభజన</string>
+    <string name="membership_cost">సభ్యత్వ ధర</string>
+    <string name="validity">చెల్లుబాటు</string>
+    <string name="gst">GST</string>
+    <string name="coupon_discount">కూపన్ తగ్గింపు</string>
+    <string name="total_cost">మొత్తం ధర</string>
+    <string name="purchase_subscription">కొనుగోలు చందా</string>
+    <string name="months">నెలలు</string>
+    <string name="years">సంవత్సరాలు</string>
+    <string name="s_no">ఎస్.నెం.</string>
+    <string name="date">తేదీ</string>
+    <string name="transaction_id">లావాదేవీ ID</string>
+    <string name="duration">వ్యవధి</string>
 
+    <string-array name="month_year_array">
+        <item>నెల</item>
+        <item>సంవత్సరం</item>
+    </string-array>
+
+    <string name="subscription_details">చందా వివరాలు</string>
 
 
 

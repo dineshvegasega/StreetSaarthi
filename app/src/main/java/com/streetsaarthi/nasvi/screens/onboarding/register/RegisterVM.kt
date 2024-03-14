@@ -29,6 +29,7 @@ import com.streetsaarthi.nasvi.models.ItemVending
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.networking.IS_LANGUAGE_ALL
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,7 +59,7 @@ class RegisterVM @Inject constructor(
     var isAgree = MutableLiveData<Boolean>(false)
 
 
-    var locale: Locale = Locale.getDefault()
+//    var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())

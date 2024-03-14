@@ -549,9 +549,36 @@
 
     <string name = "closed">ਬੰਦ</string>
 
-    <string name="subscriptions">ਗਾਹਕੀਆਂ</string>
-    <string name="create_subscription">ਗਾਹਕੀ ਬਣਾਓ</string>
-    <string name="subscription_history">ਇਤਿਹਾਸ</string>
+
+     <string name="subscription">ਗਾਹਕੀ</string>
+     <string name="view_manage">ਦੇਖੋ/ਪ੍ਰਬੰਧ ਕਰੋ</string>
+     <string name="history">ਇਤਿਹਾਸ</string>
+
+ <string name="select_month_year">ਮਹੀਨਾ/ਸਾਲ ਚੁਣੋ</string>
+ <string name="choose_number">ਨੰਬਰ ਚੁਣੋ</string>
+ <string name="month">ਮਹੀਨਾ</string>
+ <string name="year">ਸਾਲ</string>
+ <string name="calculate_price">ਕੀਮਤ ਦੀ ਗਣਨਾ ਕਰੋ</string>
+ <string name="price_breakup">ਕੀਮਤ ਬ੍ਰੇਕਅੱਪ</string>
+ <string name = "membership_cost">ਮੈਂਬਰਸ਼ਿਪ ਦੀ ਲਾਗਤ</string>
+ <string name="validity">ਵੈਧਤਾ</string>
+ <string name="gst">GST</string>
+ <string name = "coupon_discount">ਕੂਪਨ ਛੋਟ</string>
+ <string name = "total_cost">ਕੁੱਲ ਲਾਗਤ</string>
+ <string name = "purchase_subscription"> ਗਾਹਕੀ ਖਰੀਦੋ</string>
+ <string name="months">ਮਹੀਨੇ</string>
+ <string name="years">ਸਾਲ</string>
+ <string name="s_no">ਸ.ਨੰ.</string>
+ <string name = "date"> ਮਿਤੀ</string>
+ <string name = "transaction_id"> ਲੈਣ-ਦੇਣ ID</string>
+ <string name="duration">ਮਿਆਦ</string>
+
+    <string-array name="month_year_array">
+        <item>ਮਹੀਨਾ</item>
+        <item>ਸਾਲ</item>
+    </string-array>
+
+    <string name="subscription_details">ਗਾਹਕੀ ਵੇਰਵੇ</string>
 
 
 

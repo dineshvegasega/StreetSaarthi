@@ -47,7 +47,7 @@ class LiveNoticesVM @Inject constructor(private val repository: Repository): Vie
 
 
 
-    var locale: Locale = Locale.getDefault()
+//    var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())

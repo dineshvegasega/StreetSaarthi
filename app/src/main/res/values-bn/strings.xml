@@ -544,12 +544,36 @@
 
     <string name="closed">বন্ধ</string>৷
 
-    <string name="subscriptions">সদস্যতা</string>
-    <string name="create_subscription">সাবস্ক্রিপশন তৈরি করুন</string>
-    <string name="subscription_history">ইতিহাস</string>
 
+    <string name="subscription">সাবস্ক্রিপশন</string>
+    <string name="view_manage">দেখুন/পরিচালনা করুন</string>
+    <string name="history">ইতিহাস</string>
 
+    <string name="select_month_year">মাস/বছর নির্বাচন করুন</string>
+    <string name = "choose_number"> নম্বর চয়ন করুন</string>
+    <string name="month">মাস</string>
+    <string name="year">বছর</string>
+    <string name="calculate_price">মূল্য গণনা করুন</string>
+    <string name="price_breakup">মূল্য ব্রেকআপ</string>
+    <string name = "membership_cost">সদস্যতার খরচ</string>
+    <string name="validity">বৈধতা</string>৷
+    <string name = "gst">GST</string>
+    <string name = "coupon_discount">কুপন ছাড়</string>
+    <string name = "total_cost">মোট খরচ</string>
+    <string name="purchase_subscription">সাবস্ক্রিপশন ক্রয়</string>৷
+    <string name="months">মাস</string>
+    <string name="years">বছর</string>
+    <string name="s_no">এস.নং.</string>
+    <string name="date">তারিখ</string>
+    <string name = "transaction_id"> লেনদেন আইডি</string>
+    <string name="duration">সময়কাল</string>
 
+    <string-array name="month_year_array">
+        <item>মাস</item>
+        <item>বছর</item>
+    </string-array>
+
+    <string name="subscription_details">সাবস্ক্রিপশনের বিবরণ</string>
 
 
 

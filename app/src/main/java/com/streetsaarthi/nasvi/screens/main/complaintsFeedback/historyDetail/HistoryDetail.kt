@@ -142,7 +142,7 @@ class HistoryDetail : Fragment() {
                         dialog.dismiss()
                         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                             if (loginUser != null) {
-                                var user = Gson().fromJson(loginUser, Login::class.java)
+                                val user = Gson().fromJson(loginUser, Login::class.java)
                                 requestBody.addFormDataPart("user_id", ""+user?.id)
                                 requestBody.addFormDataPart("feedback_id", ""+feedbackId)
                                 requestBody.addFormDataPart("media", "null")
@@ -244,7 +244,7 @@ class HistoryDetail : Fragment() {
                 if (!etTypingMessage.text!!.isEmpty() || viewModel.uploadMediaImage != null){
                     readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
-                            var user = Gson().fromJson(loginUser, Login::class.java)
+                            val user = Gson().fromJson(loginUser, Login::class.java)
                             requestBody.addFormDataPart("user_id", ""+user?.id)
                             requestBody.addFormDataPart("feedback_id", ""+feedbackId)
                             requestBody.addFormDataPart("reply", ""+etTypingMessage.text.toString())
@@ -445,7 +445,7 @@ class HistoryDetail : Fragment() {
 
         viewModel.feedbackConversationLiveSecond.observe(requireActivity()) {
             binding.apply {
-                var complaintfeedback = if (it.type == "complaint") {
+                val complaintfeedback = if (it.type == "complaint") {
                     requireContext().getString(R.string.complaint)
                 } else {
                     requireContext().getString(R.string.feedback)
@@ -485,7 +485,7 @@ class HistoryDetail : Fragment() {
 
             var old = ""
             it.data.data.map {
-                var date = it.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM yyyy")
+                val date = it.reply_date.changeDateFormat("yyyy-MM-dd HH:mm:ss", "dd MMM yyyy")
                 if (old != date){
                     old = date!!
                     it.dateShow = true
@@ -552,7 +552,7 @@ class HistoryDetail : Fragment() {
                     1 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
                         viewModel.uploadMediaImage = compressedImageFile.path
-                        binding.ivImageImage.loadImage(url = { viewModel.uploadMediaImage!! })
+                        binding.ivImageImage.loadImage(type = 1, url = { viewModel.uploadMediaImage!! })
                         binding.relative1.visibility = View.VISIBLE
                     }
                 }
@@ -570,7 +570,7 @@ class HistoryDetail : Fragment() {
                     1 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
                         viewModel.uploadMediaImage = compressedImageFile.path
-                        binding.ivImageImage.loadImage(url = { viewModel.uploadMediaImage!! })
+                        binding.ivImageImage.loadImage(type = 1, url = { viewModel.uploadMediaImage!! })
                         binding.relative1.visibility = View.VISIBLE
                     }
                 }

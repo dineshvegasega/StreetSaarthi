@@ -59,7 +59,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
     var counterNetwork = MutableLiveData<Boolean>(false)
 
 
-    var locale: Locale = Locale.getDefault()
+//    var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())

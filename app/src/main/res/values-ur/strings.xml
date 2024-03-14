@@ -547,11 +547,36 @@
 
     <string name="closed">بند</string>
 
-    <string name="subscriptions">سبسکرپشنز</string>
-    <string name="create_subscription">سبسکرپشن بنائیں</string>
-    <string name="subscription_history">تاریخ</string>
 
+    <string name="subscription">رکنیت</string>
+    <string name="view_manage">دیکھیں/منظم کریں۔</string>
+    <string name="history">تاریخ</string>
 
+    <string name="select_month_year">مہینہ/سال منتخب کریں</string>
+    <string name="choose_number">نمبر منتخب کریں</string>
+    <string name="month">مہینہ</string>
+    <string name="year">سال</string>
+    <string name="calculate_price">قیمت کا حساب لگائیں</string>
+    <string name = "price_breakup"> قیمت کا وقفہ</string>
+    <string name = "membership_cost">رکنیت کی قیمت</string>
+    <string name="validity">وثیقیت</string>
+    <string name="gst">GST</string>
+    <string name="coupon_discount">کوپن ڈسکاؤنٹ</string>
+    <string name = "total_cost"> کل لاگت</string>
+    <string name="purchase_subscription">سبسکرپشن خریدیں</string>
+    <string name = "months"> مہینے</string>
+    <string name="years">سال</string>
+    <string name="s_no">سیریل نمبر.</string>
+    <string name="date">تاریخ</string>
+    <string name="transaction_id">ٹرانزیکشن ID</string>
+    <string name = "duration"> دورانیہ</string>
+
+    <string-array name="month_year_array">
+        <item>مہینہ</item>
+        <item>سال</item>
+    </string-array>
+
+    <string name="subscription_details">سبسکرپشن کی تفصیلات</string>
 
 
 

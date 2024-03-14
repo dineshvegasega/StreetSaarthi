@@ -182,7 +182,7 @@ class Dashboard : Fragment() {
         networkCount = 1
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
-                var _id = Gson().fromJson(loginUser, Login::class.java).id
+                val _id = Gson().fromJson(loginUser, Login::class.java).id
                 val obj: JSONObject = JSONObject().apply {
                     put("page", "1")
                     put("status", "Active")

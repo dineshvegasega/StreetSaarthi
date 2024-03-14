@@ -5,6 +5,9 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.content.pm.Signature
 import android.content.res.Configuration
 import android.database.Cursor
 import android.net.ConnectivityManager
@@ -49,6 +52,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -117,10 +122,8 @@ fun showSnackBar(string: String) = try {
             context.getString(R.string.something_went_wrong)
         } else if (string.contains("<script>")) {
             context.getString(R.string.something_went_wrong)
-        } else if (string.contains("<script>")) {
-            context.getString(R.string.something_went_wrong)
         } else if (string.contains("SQLSTATE")) {
-            context.getString(R.string.network_failed_please_try_again)
+            context.getString(R.string.something_went_wrong)
         } else {
             "" + string
         }
@@ -248,8 +251,9 @@ fun getGalleryImage(requireActivity: FragmentActivity, callBack: Uri.() -> Unit)
 
 @SuppressLint("CheckResult")
 fun ImageView.loadImage(
+    type: Int,
     url: () -> String,
-    errorPlaceHolder: () -> Int = { R.drawable.user_icon }
+    errorPlaceHolder: () -> Int = { if(type == 1) R.drawable.user_icon else R.drawable.no_image_banner }
 ) = try {
     val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
         strokeWidth = 5f
@@ -266,24 +270,24 @@ fun ImageView.loadImage(
 }
 
 
-@SuppressLint("CheckResult")
-fun ImageView.loadImageBanner(
-    url: () -> String,
-    errorPlaceHolder: () -> Int = { R.drawable.no_image_banner }
-) = try {
-    val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
-        strokeWidth = 5f
-        centerRadius = 30f
-        start()
-    }
-    load(if (url().startsWith("http")) url() else File(url())) {
-        placeholder(circularProgressDrawable)
-        crossfade(true)
-        error(errorPlaceHolder())
-    }
-} catch (e: Exception) {
-    e.printStackTrace()
-}
+//@SuppressLint("CheckResult")
+//fun ImageView.loadImageBanner(
+//    url: () -> String,
+//    errorPlaceHolder: () -> Int = { R.drawable.no_image_banner }
+//) = try {
+//    val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
+//        strokeWidth = 5f
+//        centerRadius = 30f
+//        start()
+//    }
+//    load(if (url().startsWith("http")) url() else File(url())) {
+//        placeholder(circularProgressDrawable)
+//        crossfade(true)
+//        error(errorPlaceHolder())
+//    }
+//} catch (e: Exception) {
+//    e.printStackTrace()
+//}
 
 
 fun isValidPassword(password: String): Boolean {
@@ -380,12 +384,11 @@ fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit
 }
 
 
-fun ArrayList<String>.imageZoom(ivImage: ImageView) {
+fun ArrayList<String>.imageZoom(ivImage: ImageView, type : Int) {
     StfalconImageViewer.Builder<String>(MainActivity.mainActivity.get()!!, this) { view, image ->
-        //Picasso.get().load(image).into(view)
         Glide.with(MainActivity.mainActivity.get()!!)
             .load(image)
-            .apply(myOptionsGlide)
+            .apply(if(type == 1) myOptionsGlide else if(type == 2) myOptionsGlideUser else myOptionsGlide)
             .into(view)
     }
         .withTransitionFrom(ivImage)
@@ -473,6 +476,13 @@ fun ViewPager2.updatePagerHeightForChild(view: View) {
 
 val myOptionsGlide: RequestOptions = RequestOptions()
     .placeholder(R.drawable.main_logo_land)
+    .diskCacheStrategy(DiskCacheStrategy.ALL)
+    .dontAnimate()
+    //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
+    .skipMemoryCache(false)
+
+val myOptionsGlideUser: RequestOptions = RequestOptions()
+    .placeholder(R.drawable.user_icon)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .dontAnimate()
     //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
@@ -1014,4 +1024,30 @@ fun Context.getDensityName(): String {
     return if (density >= 1.0) {
         "mdpi"
     } else "ldpi"
+}
+
+
+
+
+@RequiresApi(Build.VERSION_CODES.P)
+fun Context.getSignature(): String {
+    var info: PackageInfo? = null
+    try {
+        info = packageManager.getPackageInfo(
+            packageName,
+            PackageManager.GET_SIGNING_CERTIFICATES
+        )
+        val sigHistory: Array<Signature> = info.signingInfo.signingCertificateHistory
+        val signature: ByteArray = sigHistory[0].toByteArray()
+        val md = MessageDigest.getInstance("SHA1")
+        val digest = md.digest(signature)
+        val sha1Builder = StringBuilder()
+        for (b in digest) sha1Builder.append(String.format("%02x", b))
+        return sha1Builder.toString()
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+    } catch (e: NoSuchAlgorithmException) {
+        e.printStackTrace()
+    }
+    return ""
 }

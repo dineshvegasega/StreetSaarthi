@@ -17,6 +17,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +50,7 @@ import com.streetsaarthi.nasvi.utils.LocaleHelper
 import com.streetsaarthi.nasvi.utils.autoScroll
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getDensityName
+import com.streetsaarthi.nasvi.utils.getSignature
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
 import com.streetsaarthi.nasvi.utils.loadImage
@@ -58,6 +60,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import okhttp3.MultipartBody
 import java.lang.ref.WeakReference
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -65,6 +68,12 @@ class MainActivity : AppCompatActivity() {
 
 
     companion object {
+        @JvmStatic
+        var PACKAGE_NAME = ""
+
+        @JvmStatic
+        var SIGNATURE_NAME = ""
+
         @JvmStatic
         var isBackApp = false
 
@@ -100,6 +109,10 @@ class MainActivity : AppCompatActivity() {
 
         @JvmStatic
         var networkFailed: Boolean = false
+
+//        @JvmStatic
+//        var locale: Locale = Locale.getDefault()
+
     }
 
     private val viewModel: MainActivityVM by viewModels()
@@ -117,6 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("SdCardPath", "MutableImplicitPendingIntent", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         val policy = ThreadPolicy.Builder()
@@ -131,13 +145,16 @@ class MainActivity : AppCompatActivity() {
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         context = WeakReference(this)
         activity = WeakReference(this)
         mainActivity = WeakReference(this)
+
+
+        PACKAGE_NAME = packageName
+        SIGNATURE_NAME = getSignature()
 
 
 
@@ -584,9 +601,9 @@ class MainActivity : AppCompatActivity() {
                         }
                     } catch (_: Exception) {
                     }
-                    topLayout.ivImage.loadImage(url = { imageUrl })
+                    topLayout.ivImage.loadImage(type = 1, url = { imageUrl })
                     topLayout.ivImage.singleClick {
-                        arrayListOf(imageUrl).imageZoom(topLayout.ivImage)
+                        arrayListOf(imageUrl).imageZoom(topLayout.ivImage, 2)
                     }
                 }
             }

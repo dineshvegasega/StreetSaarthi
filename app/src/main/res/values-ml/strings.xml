@@ -544,12 +544,36 @@
 
     <string name="closed">അടച്ചു</string>
 
-    <string name="subscriptions">സബ്സ്ക്രിപ്ഷനുകൾ</string>
-    <string name="create_subscription">സബ്സ്ക്രിപ്ഷൻ സൃഷ്ടിക്കുക</string>
-    <string name="subscription_history">ചരിത്രം</string>
 
+    <string name="subscription">സബ്സ്ക്രിപ്ഷൻ</string>
+    <string name="view_manage">കാണുക/മാനേജ് ചെയ്യുക</string>
+    <string name="history">ചരിത്രം</string>
 
+    <string name="select_month_year">മാസം/വർഷം തിരഞ്ഞെടുക്കുക</string>
+    <string name="choose_number">നമ്പർ തിരഞ്ഞെടുക്കുക</string>
+    <string name="month">മാസം</string>
+    <string name="year">വർഷം</string>
+    <string name="calculate_price">വില കണക്കാക്കുക</string>
+    <string name="price_breakup">വില ബ്രേക്കപ്പ്</string>
+    <string name="membership_cost">അംഗത്വ ചെലവ്</string>
+    <string name="validity">സാധുത</string>
+    <string name="gst">GST</string>
+    <string name="coupon_discount">കൂപ്പൺ കിഴിവ്</string>
+    <string name="total_cost">മൊത്തം ചെലവ്</string>
+    <string name="purchase_subscription">വാങ്ങൽ സബ്‌സ്‌ക്രിപ്‌ഷൻ</string>
+    <string name="months">മാസങ്ങൾ</string>
+    <string name="years">വർഷങ്ങൾ</string>
+    <string name="s_no">എസ്.നം.</string>
+    <string name="date">തീയതി</string>
+    <string name="transaction_id">ഇടപാട് ഐഡി</string>
+    <string name="duration">ദൈർഘ്യം</string>
 
+    <string-array name="month_year_array">
+        <item>മാസം</item>
+        <item>വർഷം</item>
+    </string-array>
+
+    <string name="subscription_details">സബ്‌സ്‌ക്രിപ്‌ഷൻ വിശദാംശങ്ങൾ</string>
 
 
 

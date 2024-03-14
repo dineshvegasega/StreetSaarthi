@@ -40,6 +40,7 @@ import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
@@ -163,12 +164,12 @@ class PersonalDetails : Fragment() , CallBackListener {
                     1 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
                         viewModel.data.passportSizeImage = compressedImageFile.path
-                        binding.ivImagePassportsizeImage.loadImage(url = { viewModel.data.passportSizeImage!! })
+                        binding.ivImagePassportsizeImage.loadImage(type = 1, url = { viewModel.data.passportSizeImage!! })
                     }
                     2 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
                         viewModel.data.identificationImage = compressedImageFile.path
-                        binding.ivImageIdentityImage.loadImage(url = { viewModel.data.identificationImage!! })
+                        binding.ivImageIdentityImage.loadImage(type = 1, url = { viewModel.data.identificationImage!! })
                     }
                 }
             }
@@ -184,12 +185,12 @@ class PersonalDetails : Fragment() , CallBackListener {
                     1 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
                         viewModel.data.passportSizeImage = compressedImageFile.path
-                        binding.ivImagePassportsizeImage.loadImage(url = { viewModel.data.passportSizeImage!! })
+                        binding.ivImagePassportsizeImage.loadImage(type = 1, url = { viewModel.data.passportSizeImage!! })
                     }
                     2 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
                         viewModel.data.identificationImage = compressedImageFile.path
-                        binding.ivImageIdentityImage.loadImage(url = { viewModel.data.identificationImage!! })
+                        binding.ivImageIdentityImage.loadImage(type = 1, url = { viewModel.data.identificationImage!! })
                     }
                 }
             }
@@ -221,12 +222,12 @@ class PersonalDetails : Fragment() , CallBackListener {
                     viewModel.data.education_qualification = data.education_qualification
 
                     data.profile_image_name?.let {
-                        ivImagePassportsizeImage.loadImage(url = { data.profile_image_name.url })
+                        ivImagePassportsizeImage.loadImage(type = 1, url = { data.profile_image_name.url })
                         viewModel.data.passportSizeImage = data.profile_image_name.url
                     }
 
                     data.identity_image_name?.let {
-                        ivImageIdentityImage.loadImage(url = { data.identity_image_name.url })
+                        ivImageIdentityImage.loadImage(type = 1, url = { data.identity_image_name.url })
                         viewModel.data.identificationImage = data.identity_image_name.url
                     }
 
@@ -311,13 +312,13 @@ class PersonalDetails : Fragment() , CallBackListener {
                             mainThread {
                                 data.residential_state?.let {
                                     if (MainActivity.context.get()!!
-                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                            .getString(R.string.englishVal) == "" + locale
                                     ) {
                                         editTextSelectState.setText("${data.residential_state.name}")
                                     } else {
                                         viewModel.show()
                                         val nameChanged: String =
-                                            viewModel.callApiTranslate("" + viewModel.locale, data.residential_state.name)
+                                            viewModel.callApiTranslate("" + locale, data.residential_state.name)
                                         editTextSelectState.setText("${nameChanged}")
                                         viewModel.hide()
                                     }
@@ -325,13 +326,13 @@ class PersonalDetails : Fragment() , CallBackListener {
 
                                 data.residential_district?.let {
                                     if (MainActivity.context.get()!!
-                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                            .getString(R.string.englishVal) == "" + locale
                                     ) {
                                         editTextSelectDistrict.setText("${data.residential_district.name}")
                                     } else {
                                         viewModel.show()
                                         val nameChanged: String =
-                                            viewModel.callApiTranslate("" + viewModel.locale, data.residential_district.name)
+                                            viewModel.callApiTranslate("" + locale, data.residential_district.name)
                                         editTextSelectDistrict.setText("${nameChanged}")
                                         viewModel.hide()
                                     }
@@ -339,13 +340,13 @@ class PersonalDetails : Fragment() , CallBackListener {
 
                                 data.residential_municipality_panchayat?.let {
                                     if (MainActivity.context.get()!!
-                                            .getString(R.string.englishVal) == "" + viewModel.locale
+                                            .getString(R.string.englishVal) == "" + locale
                                     ) {
                                         editTextMunicipalityPanchayat.setText("${data.residential_municipality_panchayat.name}")
                                     } else {
                                         viewModel.show()
                                         val nameChanged: String =
-                                            viewModel.callApiTranslate("" + viewModel.locale, data.residential_municipality_panchayat.name)
+                                            viewModel.callApiTranslate("" + locale, data.residential_municipality_panchayat.name)
                                         editTextMunicipalityPanchayat.setText("${nameChanged}")
                                         viewModel.hide()
                                     }

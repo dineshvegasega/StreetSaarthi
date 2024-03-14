@@ -61,7 +61,7 @@ var tabPosition: Int = 0;
         callBackListener = this
 
         binding.apply {
-            var adapter= RegisterAdapter(requireActivity())
+            val adapter= RegisterAdapter(requireActivity())
             adapter.notifyDataSetChanged()
             introViewPager.adapter=adapter
             introViewPager.setUserInputEnabled(false);
@@ -211,7 +211,7 @@ var tabPosition: Int = 0;
                 introViewPager.setCurrentItem(2, false)
                 btSignIn.setText(getString(R.string.RegisterNow))
             } else if (pos == 6) {
-                var docs = StringBuffer()
+                val docs = StringBuffer()
                 if(viewModel.data.ImageUploadCOVBoolean == true){
                     docs.append(getString(R.string.COVText)+" ")
                 }

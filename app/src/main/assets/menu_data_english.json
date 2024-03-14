@@ -75,14 +75,9 @@
       ]
     },
     {
-      "name": "Subscriptions",
+      "name": "Subscription",
       "headlines": [
-        {
-          "title": "Create Subscription"
-        },
-        {
-          "title": "History"
-        }
+
       ]
     },
     {

@@ -65,10 +65,16 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
     val bannerAdapter by lazy { BannerViewPagerAdapter() }
 
-    val locale: Locale = Locale.getDefault()
+//    val locale: Locale = Locale.getDefault()
+
+    companion object{
+        @JvmStatic
+        var locale: Locale = Locale.getDefault()
+    }
 
     var itemMain : List<ItemMenuModel> ?= ArrayList()
     init {
+        locale = Locale.getDefault()
         itemMain = JsonHelper(MainActivity.context.get()!!).getMenuData(locale)
     }
 

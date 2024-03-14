@@ -30,10 +30,15 @@ import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.models.ItemLiveScheme
 import com.streetsaarthi.nasvi.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.PACKAGE_NAME
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.SIGNATURE_NAME
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.isBackApp
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.getSignature
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
@@ -41,6 +46,7 @@ import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import org.json.JSONObject
+import java.net.URLEncoder
 
 
 @AndroidEntryPoint
@@ -225,7 +231,7 @@ class LiveSchemes : Fragment() {
 
             if (IS_LANGUAGE) {
                 if (MainActivity.context.get()!!
-                        .getString(R.string.englishVal) == "" + viewModel.locale
+                        .getString(R.string.englishVal) == "" + locale
                 ) {
                     val itemStateTemp = changeValue
                     results.addAll(itemStateTemp)
@@ -242,8 +248,8 @@ class LiveSchemes : Fragment() {
                     mainThread {
                             itemStateTemp.forEach {
                                 delay(50)
-                                val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
-                                val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+                                val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+locale, it.name) else ""
+                                val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+locale, it.description) else ""
 
                                 apply {
                                     it.name = nameChanged
@@ -251,31 +257,49 @@ class LiveSchemes : Fragment() {
                                 }
                             }
 
+//                        itemStateTemp.forEach {
+//                            delay(50)
+//                            val nameChanged: String = if(it.name != null) it.name else ""
+//                            val descChanged: String = if(it.description != null) it.description else ""
+//                            val convertValue: String = viewModel.callApiTranslate(""+locale, nameChanged +" ⚖ "+ descChanged)
+//                            apply {
+//                                it.name = convertValue.split("⚖")[0].trim()
+//                                it.description = convertValue.split("⚖")[1].trim()
+//                            }
+//                        }
+
+//                        Log.e("TAG", "PACKAGE_NAME "+PACKAGE_NAME)
+//                        Log.e("TAG", "SIGNATURE_NAME "+SIGNATURE_NAME)
+
 
 //                        if (itemStateTemp.size != 0) {
 //                            var title = ""
 //                            var description = ""
-//
 //                            itemStateTemp.forEach {
-//                                title += if (it.name != null) it.name + "_=_=" else " " + "_=_="
-//                                description += if (it.description != null) it.description + "_=_=" else " " + "_=_="
+//                                delay(50)
+//                                title += if (it.name != null) it.name + " ¿ " else " " + " ¿ "
+//                                description += if (it.description != null) it.description + " ⬱ " else " " + " ⬱ "
 //                            }
 //
-//                            val title_description = title + " ___===___ " + description
 //                            val nameChanged: String =
-//                                viewModel.callApiTranslate("" + viewModel.locale, title_description)
-//                            val bothChangedSplit = nameChanged.split("___===___")
-//                            val nameChangedSplit = bothChangedSplit[0].split("_=_=")
-//                            val descriptionChangedSplit = bothChangedSplit[1].split("_=_=")
+//                                viewModel.callApiTranslate("" + viewModel.locale, title)
+//                            val nameChangedSplit = nameChanged.split("¿")
+//
+////                            val descriptionChanged: String =
+////                                viewModel.callApiTranslate("" + viewModel.locale, description)
+////                            val descriptionChangedSplit = descriptionChanged.split("✍")
 //
 //                            for (i in 0..itemStateTemp.size - 1) {
 //                                itemStateTemp[i].apply {
 //                                    this.name = nameChangedSplit[i].trim()
-//                                    this.description = descriptionChangedSplit[i].trim()
+////                                    this.description = descriptionChangedSplit[i].trim()
+////                                    Log.e("TAG", "")
 //                                }
 //                            }
 //                        }
 
+
+//                        ⚖
 
                         results.addAll(itemStateTemp)
                         viewModel.adapter.addAllSearch(results)
@@ -321,7 +345,7 @@ class LiveSchemes : Fragment() {
                 Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(it.data), typeToken)
             if (IS_LANGUAGE) {
                 if (MainActivity.context.get()!!
-                        .getString(R.string.englishVal) == "" + viewModel.locale
+                        .getString(R.string.englishVal) == "" + locale
                 ) {
                     val itemStateTemp = changeValue
                     results.addAll(itemStateTemp)
@@ -332,8 +356,8 @@ class LiveSchemes : Fragment() {
                     mainThread {
                             itemStateTemp.forEach {
                                 delay(50)
-                                val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+viewModel.locale, it.name) else ""
-                                val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+viewModel.locale, it.description) else ""
+                                val nameChanged: String = if(it.name != null) viewModel.callApiTranslate(""+locale, it.name) else ""
+                                val descChanged: String = if(it.description != null) viewModel.callApiTranslate(""+locale, it.description) else ""
 
                                 apply {
                                     it.name = nameChanged
@@ -341,25 +365,38 @@ class LiveSchemes : Fragment() {
                                 }
                             }
 
-//                        var title = ""
-//                        var description = ""
 //                        itemStateTemp.forEach {
-//                            title += if (it.name != null) it.name + "_=_=" else " " + "_=_="
-//                            description += if (it.description != null) it.description + "_=_=" else " " + "_=_="
+//                            delay(50)
+//                            val nameChanged: String = if(it.name != null) it.name else ""
+//                            val descChanged: String = if(it.description != null) it.description else ""
+//                            val convertValue: String = viewModel.callApiTranslate(""+locale, nameChanged +" ⚖ "+ descChanged)
+//                            apply {
+//                                it.name = convertValue.split("⚖")[0].trim()
+//                                it.description = convertValue.split("⚖")[1].trim()
+//                            }
 //                        }
+
+//                        if (itemStateTemp.size != 0) {
+//                            var title = ""
+//                            var description = ""
+//                            itemStateTemp.forEach {
+//                                title += if (it.name != null) it.name + " ✍ " else " " + " ✍ "
+//                                description += if (it.description != null) it.description + " ✍ " else " " + " ✍ "
+//                            }
 //
-//                        val nameChanged: String =
-//                            viewModel.callApiTranslate("" + viewModel.locale, title)
-//                        val nameChangedSplit = nameChanged.split("_=_=")
+//                            val nameChanged: String =
+//                                viewModel.callApiTranslate("" + viewModel.locale, title)
+//                            val nameChangedSplit = nameChanged.split("✍")
 //
-//                        val descriptionChanged: String =
-//                            viewModel.callApiTranslate("" + viewModel.locale, description)
-//                        val descriptionChangedSplit = descriptionChanged.split("_=_=")
+//                            val descriptionChanged: String =
+//                                viewModel.callApiTranslate("" + viewModel.locale, description)
+//                            val descriptionChangedSplit = descriptionChanged.split("✍")
 //
-//                        for (i in 0..itemStateTemp.size - 1) {
-//                            itemStateTemp[i].apply {
-//                                this.name = nameChangedSplit[i]
-//                                this.description = descriptionChangedSplit[i]
+//                            for (i in 0..itemStateTemp.size - 1) {
+//                                itemStateTemp[i].apply {
+//                                    this.name = nameChangedSplit[i].trim()
+//                                    this.description = descriptionChangedSplit[i].trim()
+//                                }
 //                            }
 //                        }
 

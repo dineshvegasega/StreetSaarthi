@@ -132,7 +132,7 @@ class CreateNew : Fragment() {
                     requestBody.addFormDataPart("status", "pending")
                     readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
-                           var user = Gson().fromJson(loginUser, Login::class.java)
+                           val user = Gson().fromJson(loginUser, Login::class.java)
                             requestBody.addFormDataPart("user_id", ""+user?.id)
                             requestBody.addFormDataPart("state_id", ""+user.residential_state?.id)
                             requestBody.addFormDataPart("district_id", ""+user.residential_district?.id)

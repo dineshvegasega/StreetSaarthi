@@ -87,7 +87,7 @@ android {
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2024.02.01"))
+    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -97,7 +97,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.02"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
@@ -139,7 +139,6 @@ dependencies {
     }
 
 
-
     implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("io.coil-kt:coil:2.4.0")
 
@@ -147,7 +146,6 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences-core:1.0.0")
 
     implementation ("id.zelory:compressor:3.0.1")
-    implementation ("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2")
     implementation ("com.airbnb.android:lottie:6.3.0")
 
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
@@ -156,7 +154,7 @@ dependencies {
     releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
     implementation ("com.google.android.play:core-ktx:1.8.1")
-    implementation (platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation (platform("com.google.firebase:firebase-bom:32.7.4"))
     implementation ("com.google.firebase:firebase-auth")
     implementation ("com.google.firebase:firebase-auth-ktx")
     implementation ("com.google.firebase:firebase-database-ktx")

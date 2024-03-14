@@ -541,9 +541,38 @@
 
     <string name="closed">બંધ</string>
 
-    <string name="subscriptions">સબ્સ્ક્રિપ્શન્સ</string>
-    <string name="create_subscription">સબ્સ્ક્રિપ્શન બનાવો</string>
-    <string name="subscription_history">ઇતિહાસ</string>
+
+    <string name="subscription">સબ્સ્ક્રિપ્શન</string>
+    <string name="view_manage">જુઓ/મેનેજ કરો</string>
+    <string name="history">ઇતિહાસ</string>
+
+    <string name="select_month_year">મહિનો/વર્ષ પસંદ કરો</string>
+    <string name="choose_number">નંબર પસંદ કરો</string>
+    <string name="month">મહિનો</string>
+    <string name="year">વર્ષ</string>
+    <string name="calculate_price">કિંમતની ગણતરી કરો</string>
+    <string name="price_breakup">કિંમત બ્રેકઅપ</string>
+    <string name = "membership_cost">સદસ્યતાની કિંમત</string>
+    <string name = "validity">માન્યતા</string>
+    <string name = "gst">GST</string>
+    <string name = "coupon_discount">કૂપન ડિસ્કાઉન્ટ</string>
+    <string name = "total_cost">કુલ કિંમત</string>
+    <string name="purchase_subscription">સબ્સ્ક્રિપ્શન ખરીદો</string>
+    <string name = "months"> મહિનાઓ</string>
+    <string name="years">વર્ષો</string>
+    <string name="s_no">એસ.નં.</string>
+    <string name="date">તારીખ</string>
+    <string name = "transaction_id">વ્યવહાર ID</string>
+    <string name="duration">સમયગાળો</string>
+
+    <string-array name="month_year_array">
+        <item>મહિનો</item>
+        <item>વર્ષ</item>
+    </string-array>
+
+    <string name="subscription_details">સબ્સ્ક્રિપ્શન વિગતો</string>
+
+
 
 
 

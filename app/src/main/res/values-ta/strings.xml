@@ -545,11 +545,36 @@
 
     <string name="closed">மூடப்பட்டது</string>
 
-    <string name="subscriptions">சந்தாக்கள்</string>
-    <string name="create_subscription">சந்தாவை உருவாக்கவும்</string>
-    <string name="subscription_history">வரலாறு</string>
 
+    <string name="subscription">சந்தா</string>
+    <string name="view_manage">பார்க்க/நிர்வகி</string>
+    <string name="history">வரலாறு</string>
 
+    <string name="select_month_year">மாதம்/ஆண்டு தேர்ந்தெடு</string>
+    <string name="choose_number">எண்ணைத் தேர்ந்தெடு</string>
+    <string name="month">மாதம்</string>
+    <string name="year">ஆண்டு</string>
+    <string name="calculate_price">விலையைக் கணக்கிடு</string>
+    <string name="price_breakup">விலை முறிப்பு</string>
+    <string name="membership_cost">உறுப்பினர் செலவு</string>
+    <string name="validity">செல்லுபடியாகும் தன்மை</string>
+    <string name="gst">GST</string>
+    <string name="coupon_discount">கூப்பன் தள்ளுபடி</string>
+    <string name="total_cost">மொத்த செலவு</string>
+    <string name="purchase_subscription">வாங்குதல் சந்தா</string>
+    <string name="months">மாதங்கள்</string>
+    <string name="years">ஆண்டுகள்</string>
+    <string name="s_no">எஸ்.எண்</string>
+    <string name="date">தேதி</string>
+    <string name="transaction_id">பரிவர்த்தனை ஐடி</string>
+    <string name="duration">காலம்</string>
+
+    <string-array name="month_year_array">
+        <item>மாதம்</item>
+        <item>ஆண்டு</item>
+    </string-array>
+
+    <string name="subscription_details">சந்தா விவரங்கள்</string>
 
 
 
