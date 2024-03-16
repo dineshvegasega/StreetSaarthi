@@ -29,7 +29,6 @@ import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.models.ItemLiveTraining
 import com.streetsaarthi.nasvi.models.ItemTrainingDetail
-import com.streetsaarthi.nasvi.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
@@ -46,13 +45,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LiveTrainingVM @Inject constructor(private val repository: Repository): ViewModel() {
+
     val adapter by lazy { LiveTrainingAdapter(this) }
 
-    var counterNetwork = MutableLiveData<Boolean>(false)
-
-
-
-//    var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())
@@ -97,11 +92,8 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
+                    super.error(message)
 //                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -127,11 +119,8 @@ class LiveTrainingVM @Inject constructor(private val repository: Repository): Vi
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
+                    super.error(message)
 //                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {

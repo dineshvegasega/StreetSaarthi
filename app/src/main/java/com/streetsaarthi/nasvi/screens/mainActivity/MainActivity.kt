@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -156,7 +157,11 @@ class MainActivity : AppCompatActivity() {
         PACKAGE_NAME = packageName
         SIGNATURE_NAME = getSignature()
 
-
+        if(LocaleHelper.getLanguage(applicationContext) == "ur"){
+            binding.root.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            binding.root.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
 
         checkUpdate()
 
@@ -745,7 +750,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val densityDpi = getDensityName()
-        Log.e("TAG", "densityDpiAA " + densityDpi)
+//        Log.e("TAG", "densityDpiAA " + densityDpi)
         fontSize = when (densityDpi) {
             "xxxhdpi" -> 9f
             "xxhdpi" -> 9.5f

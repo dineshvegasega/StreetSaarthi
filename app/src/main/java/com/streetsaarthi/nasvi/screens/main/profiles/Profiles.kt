@@ -90,7 +90,7 @@ class Profiles : Fragment() , CallBackListener {
 
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
-                    Log.e("TAG", "loginUser "+loginUser)
+//                    Log.e("TAG", "loginUser "+loginUser)
                     val data = Gson().fromJson(loginUser, Login::class.java).status
                     when(data){
                         "approved" -> {

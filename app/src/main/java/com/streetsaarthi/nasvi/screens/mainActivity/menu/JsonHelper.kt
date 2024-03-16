@@ -47,9 +47,9 @@ open class JsonHelper(private var context: Context) {
 
             for (i in 0 until k) {
                 val tempJsonObject = jsonArray.getJSONObject(i).toString()
-                if (i != 9){
+               // if (i != 9){
                     newspaperList?.add(Gson().fromJson(tempJsonObject, ItemMenuModel::class.java))
-                }
+              //  }
             }
             return newspaperList
         } catch (e: Exception) {

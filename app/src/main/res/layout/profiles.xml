@@ -100,8 +100,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabMode="auto"
+            app:tabMode="fixed"
             app:tabGravity="fill"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingEnd="0dp"
+            android:clipToPadding="true"
             app:tabTextAppearance="@style/customTextAppearanceTab"
             style="@style/customTextAppearanceTab"
             app:tabSelectedTextColor="@color/_E79D46"
@@ -111,7 +114,6 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:backgroundTint="@color/_FEF7FF"
             >
-
         </com.google.android.material.tabs.TabLayout>
         <View
             android:layout_width="match_parent"

@@ -316,8 +316,10 @@ class HistoryDetail : Fragment() {
         results.clear()
         if(requireContext().isNetworkAvailable()) {
             viewModel.feedbackConversationDetails(""+feedbackId , ""+currentPage)
+            binding.idNetworkNotFound.root.visibility = View.GONE
         } else {
-            requireContext().callNetworkDialog()
+//            requireContext().callNetworkDialog()
+            binding.idNetworkNotFound.root.visibility = View.VISIBLE
         }
     }
 

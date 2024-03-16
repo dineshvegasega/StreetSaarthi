@@ -116,7 +116,6 @@ class Settings : Fragment() {
                                         languageAlert?.dismiss()
                                     }
                                 }, 100)
-//                                MainActivity.mainActivity.get()?.reloadActivity(dataClass.locale, Main)
                             }
 
                             binding.btImage.singleClick {

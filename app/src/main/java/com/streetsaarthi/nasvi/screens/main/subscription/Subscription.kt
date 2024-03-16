@@ -19,11 +19,14 @@ import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class Subscription : Fragment(){
@@ -57,7 +60,7 @@ class Subscription : Fragment(){
 
             DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
-                    Log.e("TAG", "loginUser " + loginUser)
+//                    Log.e("TAG", "loginUser " + loginUser)
 
                     val data = Gson().fromJson(loginUser, Login::class.java)
                     data.profile_image_name?.let {
@@ -74,6 +77,18 @@ class Subscription : Fragment(){
                     data.validity_to?.let {
                         inclidePersonalProfile.textValidUptoValue.text = "${data.validity_to.changeDateFormat("yyyy-MM-dd", "dd-MMM-yyyy")}"
                     }
+
+
+//                    if(networkFailed) {
+                        val _id = Gson().fromJson(loginUser, Login::class.java).residential_state.id
+                        val obj: JSONObject = JSONObject().apply {
+//                            put("state_id", _id)
+                            put("state_id", "5")
+                        }
+                        viewModel.subscription(obj)
+//                    } else {
+//                        requireContext().callNetworkDialog()
+//                    }
 
 //                    val data = Gson().fromJson(loginUser, Login::class.java).status
 //                    when (data) {

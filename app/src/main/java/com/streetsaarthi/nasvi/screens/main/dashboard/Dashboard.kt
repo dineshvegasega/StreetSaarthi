@@ -32,9 +32,6 @@ class Dashboard : Fragment() {
     private var _binding: DashboardBinding? = null
     private val binding get() = _binding!!
 
-    var networkAlert : BottomSheetDialog?= null
-
-    var networkCount = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -128,39 +125,6 @@ class Dashboard : Fragment() {
 
 
 
-            viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
-                if (it) {
-                    if(networkCount == 1){
-                        if(networkAlert?.isShowing == true) {
-                            return@Observer
-                        }
-                        val dialogBinding = DialogBottomNetworkBinding.inflate(root.context.getSystemService(
-                            Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                        )
-                        networkAlert = BottomSheetDialog(root.context)
-                        networkAlert?.setContentView(dialogBinding.root)
-                        networkAlert?.setOnShowListener { dia ->
-                            val bottomSheetDialog = dia as BottomSheetDialog
-                            val bottomSheetInternal: FrameLayout =
-                                bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-                            bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
-                        }
-                        networkAlert?.show()
-
-                        dialogBinding.apply {
-                            btClose.singleClick {
-                                networkAlert?.dismiss()
-                            }
-                            btApply.singleClick {
-                                networkAlert?.dismiss()
-                                callApis()
-                            }
-                        }
-                    }
-                    networkCount++
-                }
-            })
-
 
 //            viewModel.adsList(view)
 //            val adapter = BannerViewPagerAdapter(requireContext())
@@ -179,7 +143,6 @@ class Dashboard : Fragment() {
     }
 
     private fun callApis() {
-        networkCount = 1
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
                 val _id = Gson().fromJson(loginUser, Login::class.java).id

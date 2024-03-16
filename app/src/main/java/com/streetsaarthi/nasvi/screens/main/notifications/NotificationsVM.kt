@@ -9,7 +9,6 @@ import com.streetsaarthi.nasvi.networking.CallHandler
 import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.models.BaseResponseDC
-import com.streetsaarthi.nasvi.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +22,6 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
 
     val adapter by lazy { NotificationsAdapter(this) }
 
-    var counterNetwork = MutableLiveData<Boolean>(false)
 
     companion object{
         var isNotificationNext: Boolean? = false
@@ -46,10 +44,7 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
 
                 override fun error(message: String) {
                     super.error(message)
-//                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
+                    showSnackBar(message)
                 }
 
                 override fun loading() {
@@ -78,11 +73,7 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
-//                    showSnackBar
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
+                    super.error(message)
                 }
 
                 override fun loading() {

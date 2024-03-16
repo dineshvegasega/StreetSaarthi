@@ -35,7 +35,6 @@ import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.models.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.ItemSchemeDetail
-import com.streetsaarthi.nasvi.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
@@ -64,7 +63,6 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
 
     val adapter by lazy { LiveSchemesAdapter(this) }
 
-    var counterNetwork = MutableLiveData<Boolean>(false)
 
     var alertDialog: AlertDialog? = null
     init {
@@ -110,11 +108,8 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
+                    super.error(message)
 //                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                     isBackApp = false
                 }
 
@@ -142,11 +137,8 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
+                    super.error(message)
 //                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                     isBackApp = false
                 }
 

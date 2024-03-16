@@ -51,8 +51,6 @@ class LiveTraining : Fragment() {
         var isReadLiveTraining: Boolean? = false
     }
 
-    var networkAlert : BottomSheetDialog?= null
-    var networkCount = 1
 
     private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
@@ -167,8 +165,10 @@ class LiveTraining : Fragment() {
                 }
                 if(requireContext().isNetworkAvailable()) {
                     viewModel.liveTraining(obj)
+                    binding.idNetworkNotFound.root.visibility = View.GONE
                 } else {
-                    requireContext().callNetworkDialog()
+//                    requireContext().callNetworkDialog()
+                    binding.idNetworkNotFound.root.visibility = View.VISIBLE
                 }
             }
         }
@@ -383,45 +383,6 @@ class LiveTraining : Fragment() {
         })
 
 
-
-
-        viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                if(networkCount == 1){
-                    if(networkAlert?.isShowing == true) {
-                        return@Observer
-                    }
-                    val dialogBinding = DialogBottomNetworkBinding.inflate(requireContext().getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                    )
-                    networkAlert = BottomSheetDialog(requireContext())
-                    networkAlert?.setContentView(dialogBinding.root)
-                    networkAlert?.setOnShowListener { dia ->
-                        val bottomSheetDialog = dia as BottomSheetDialog
-                        val bottomSheetInternal: FrameLayout =
-                            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-                        bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
-                    }
-                    networkAlert?.show()
-
-                    dialogBinding.apply {
-                        btClose.singleClick {
-                            networkAlert?.dismiss()
-                        }
-                        btApply.singleClick {
-                            networkAlert?.dismiss()
-                            if(totalPages == 1){
-                                loadFirstPage()
-                            } else {
-                                loadNextPage()
-                            }
-                            networkCount = 1
-                        }
-                    }
-                }
-                networkCount++
-            }
-        })
     }
 
 

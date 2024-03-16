@@ -43,6 +43,7 @@ import com.streetsaarthi.nasvi.screens.main.profiles.Profiles
 import com.streetsaarthi.nasvi.screens.main.schemes.allSchemes.AllSchemes
 import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import com.streetsaarthi.nasvi.screens.main.settings.Settings
+import com.streetsaarthi.nasvi.screens.main.subscription.Subscription
 import com.streetsaarthi.nasvi.screens.main.training.allTraining.AllTraining
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.navHostFragment
@@ -64,8 +65,6 @@ import javax.inject.Inject
 class MainActivityVM @Inject constructor(private val repository: Repository): ViewModel() {
 
     val bannerAdapter by lazy { BannerViewPagerAdapter() }
-
-//    val locale: Locale = Locale.getDefault()
 
     companion object{
         @JvmStatic
@@ -194,6 +193,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                 }
                                             }
                                             9 -> {
+                                                if (fragmentInFrame !is Subscription){
+                                                    navHostFragment?.navController?.navigate(R.id.subscription)
+                                                }
+                                            }
+                                            10 -> {
                                                 if (fragmentInFrame !is Settings){
                                                     navHostFragment?.navController?.navigate(R.id.settings)
                                                 }
@@ -210,6 +214,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                             1 -> {
                                                 if (fragmentInFrame !is Profiles) {
                                                     navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            10 -> {
+                                                if (fragmentInFrame !is Subscription) {
+                                                    navHostFragment?.navController?.navigate(R.id.subscription)
                                                 }
                                             }
                                             else -> {
@@ -229,6 +238,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                     navHostFragment?.navController?.navigate(R.id.profiles)
                                                 }
                                             }
+                                            10 -> {
+                                                if (fragmentInFrame !is Subscription) {
+                                                    navHostFragment?.navController?.navigate(R.id.subscription)
+                                                }
+                                            }
                                             else -> {
                                                 showSnackBar(root.resources.getString(R.string.registration_processed))
                                             }
@@ -244,6 +258,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                             1 -> {
                                                 if (fragmentInFrame !is Profiles) {
                                                     navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            10 -> {
+                                                if (fragmentInFrame !is Subscription) {
+                                                    navHostFragment?.navController?.navigate(R.id.subscription)
                                                 }
                                             }
                                             else -> {

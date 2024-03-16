@@ -2,6 +2,7 @@ package com.streetsaarthi.nasvi.screens.main.subscription
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ViewManageBinding
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.hideKeyboard
+import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,7 +48,56 @@ class ViewManage : Fragment(){
                 requireActivity().hideKeyboard()
                 showDropDownChooseNumberDialog()
             }
+
+            btCalculatePrice.singleClick {
+                requireActivity().hideKeyboard()
+                if(viewModel.number > 0 && viewModel.monthYear > 0){
+                    viewModel.validity = when(viewModel.monthYear) {
+                        1 ->  if(viewModel.number == 1) "${viewModel.number} "+getString(R.string.month) else "${viewModel.number} "+getString(R.string.months)
+                        2 ->  if(viewModel.number == 1) "${viewModel.number} "+getString(R.string.year) else "${viewModel.number} "+getString(R.string.years)
+                        else -> ""
+                    }
+                    viewModel.validityMonths = when(viewModel.monthYear) {
+                        1 -> viewModel.number
+                        2 -> viewModel.number * 12
+                        else -> 0
+                    }
+                    viewModel.membershipCost = viewModel.subscription.value?.subscription_cost!! * viewModel.validityMonths
+                    viewModel.afterGst = viewModel.membershipCost + (viewModel.membershipCost * viewModel.gst) / 100
+                    viewModel.totalCost = viewModel.afterGst - ((viewModel.afterGst * viewModel.couponDiscount) / 100)
+
+                    update(
+                        viewModel.membershipCost,
+                        viewModel.validity,
+                        viewModel.gst,
+                        viewModel.couponDiscount,
+                        viewModel.totalCost,
+                    )
+                } else {
+                    showSnackBar(getString(R.string.please_select_month_year_and_number))
+                }
+
+
+
+
+            }
         }
+    }
+
+    private fun update(
+        membershipCost: Double,
+        validity: String,
+        gst: Double,
+        couponDiscount: Double,
+        totalCost: Double
+    ) {
+       binding.apply {
+           textMembershipCostValue.text = "${membershipCost}"
+           textValidityValue.text = validity
+           textGSTValue.text = "${gst}"
+           textCouponDiscountValue.text = "${couponDiscount}"
+           textTotalCostValue.text = "${totalCost}"
+       }
     }
 
 
@@ -56,11 +107,7 @@ class ViewManage : Fragment(){
             .setTitle(resources.getString(R.string.select_month_year))
             .setItems(list) {_,which->
                 binding.editTextSelectMonthYear.setText(list[which])
-//                when(which){
-//                    0-> viewModel.data.gender = "Male"
-//                    1-> viewModel.data.gender = "Female"
-//                    2-> viewModel.data.gender = "Other"
-//                }
+                viewModel.monthYear = which+1
             }.show()
     }
 
@@ -71,11 +118,7 @@ class ViewManage : Fragment(){
             .setTitle(resources.getString(R.string.choose_number))
             .setItems(list) {_,which->
                 binding.editTextChooseNumber.setText(list[which])
-//                when(which){
-//                    0-> viewModel.data.gender = "Male"
-//                    1-> viewModel.data.gender = "Female"
-//                    2-> viewModel.data.gender = "Other"
-//                }
+                viewModel.number = which+1
             }.show()
     }
 

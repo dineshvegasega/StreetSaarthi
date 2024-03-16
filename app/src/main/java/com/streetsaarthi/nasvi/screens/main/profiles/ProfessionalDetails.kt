@@ -320,7 +320,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
-                     Log.e("TAG", "dataZZ "+data.toString())
+//                     Log.e("TAG", "dataZZ "+data.toString())
 
                     if (data.vending_documents != "null") {
                         if (data.vending_documents?.contains(getString(R.string.COVText)) == true) {
@@ -1314,7 +1314,7 @@ class ProfessionalDetails : Fragment(), CallBackListener {
 
 
     private fun update() {
-        Log.e("TAG", "dataZZupdate "+viewModel.marketplaceId)
+//        Log.e("TAG", "dataZZupdate "+viewModel.marketplaceId)
         binding.apply {
             if (viewModel.marketplaceId == 0) {
                 showSnackBar(getString(R.string.type_of_market_place))

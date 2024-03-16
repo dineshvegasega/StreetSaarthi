@@ -28,7 +28,6 @@ import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.models.ItemInformationCenter
 import com.streetsaarthi.nasvi.models.ItemInformationDetail
-import com.streetsaarthi.nasvi.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.glideImage
@@ -46,7 +45,6 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
 
     val adapter by lazy { InformationCenterAdapter(this) }
 
-    var counterNetwork = MutableLiveData<Boolean>(false)
 
 
 
@@ -95,11 +93,8 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
+                    super.error(message)
 //                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -125,11 +120,8 @@ class InformationCenterVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
+                    super.error(message)
 //                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {

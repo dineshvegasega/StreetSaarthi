@@ -9,7 +9,6 @@ import com.streetsaarthi.nasvi.networking.CallHandler
 import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.models.BaseResponseDC
-import com.streetsaarthi.nasvi.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,8 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryVM @Inject constructor(private val repository: Repository): ViewModel() {
     val adapter by lazy { HistoryAdapter(this) }
-
-    var counterNetwork = MutableLiveData<Boolean>(false)
 
 
     private var itemHistoryResult = MutableLiveData<BaseResponseDC<Any>>()
@@ -38,11 +35,8 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
+                    super.error(message)
 //                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -70,9 +64,6 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
                 override fun error(message: String) {
 //                    super.error(message)
 //                    showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {

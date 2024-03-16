@@ -63,8 +63,6 @@ class MembershipDetailsXX  : Fragment() {
 
     var permissionAlert : AlertDialog?= null
 
-    var networkAlert : BottomSheetDialog?= null
-    var networkCount = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -233,38 +231,6 @@ class MembershipDetailsXX  : Fragment() {
                     textDOBValueTxt.setText(data.date_of_birth)
                     textMobileValueTxt.setText("+91-"+data.mobile_no)
 
-                    viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
-                        if (it) {
-                            if(networkCount == 1){
-                                if(networkAlert?.isShowing == true) {
-                                    return@Observer
-                                }
-                                val dialogBinding = DialogBottomNetworkBinding.inflate(root.context.getSystemService(
-                                    Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                                )
-                                networkAlert = BottomSheetDialog(root.context)
-                                networkAlert?.setContentView(dialogBinding.root)
-                                networkAlert?.setOnShowListener { dia ->
-                                    val bottomSheetDialog = dia as BottomSheetDialog
-                                    val bottomSheetInternal: FrameLayout =
-                                        bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-                                    bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
-                                }
-                                networkAlert?.show()
-
-                                dialogBinding.apply {
-                                    btClose.singleClick {
-                                        networkAlert?.dismiss()
-                                    }
-                                    btApply.singleClick {
-                                        networkAlert?.dismiss()
-                                        callApis(view)
-                                    }
-                                }
-                            }
-                            networkCount++
-                        }
-                    })
 
 
                     if(networkFailed) {
@@ -385,7 +351,6 @@ class MembershipDetailsXX  : Fragment() {
 
 
     private fun callApis(view: View) {
-        networkCount = 1
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
                 if(networkFailed) {

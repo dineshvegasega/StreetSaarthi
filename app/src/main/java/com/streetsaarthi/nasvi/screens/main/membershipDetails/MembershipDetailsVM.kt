@@ -17,7 +17,6 @@ import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.models.ItemMarketplace
 import com.streetsaarthi.nasvi.models.ItemVending
 import com.streetsaarthi.nasvi.networking.IS_LANGUAGE
-import com.streetsaarthi.nasvi.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.mainThread
@@ -70,7 +69,6 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
     }
 
 
-    var counterNetwork = MutableLiveData<Boolean>(false)
     var itemVending : ArrayList<ItemVending> = ArrayList()
     var vendingTrue = MutableLiveData<Boolean>(false)
     fun vending(view: View) = viewModelScope.launch {
@@ -111,10 +109,7 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
+                    super.error(message)
                 }
 
                 override fun loading() {
@@ -166,10 +161,7 @@ class MembershipDetailsVM @Inject constructor(private val repository: Repository
                 }
 
                 override fun error(message: String) {
-//                    super.error(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
+                    super.error(message)
                 }
 
                 override fun loading() {

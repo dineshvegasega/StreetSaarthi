@@ -33,7 +33,6 @@ import com.streetsaarthi.nasvi.models.ItemInformationCenter
 import com.streetsaarthi.nasvi.models.ItemLiveNotice
 import com.streetsaarthi.nasvi.models.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.ItemLiveTraining
-import com.streetsaarthi.nasvi.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.informationCenter.InformationCenter
@@ -53,8 +52,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardVM @Inject constructor(private val repository: Repository): ViewModel() {
-
-    var counterNetwork = MutableLiveData<Boolean>(false)
 
     var itemMain : ArrayList<ItemModel> ?= ArrayList()
     init {
@@ -263,11 +260,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                   // super.error(message)
+                    super.error(message)
                   //  showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -315,9 +309,6 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun error(message: String) {
                     super.error(message)
                  //   showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -365,11 +356,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                   // super.error(message)
+                    super.error(message)
                  //   showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -439,11 +427,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                  //  super.error(message)
+                    super.error(message)
                //     showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -474,10 +459,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     }
                 }
                 override fun error(message: String) {
-                   // super.error(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
+                    super.error(message)
                 }
                 override fun loading() {
                     super.loading()
@@ -524,11 +506,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                  //  super.error(message)
+                    super.error(message)
            //         showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -595,10 +574,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     }
                 }
                 override fun error(message: String) {
-                   // super.error(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
+                    super.error(message)
                 }
 
                 override fun loading() {

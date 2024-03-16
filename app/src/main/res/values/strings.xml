@@ -709,7 +709,6 @@
 
 
     <string-array name="numbers_array">
-        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -724,6 +723,7 @@
     </string-array>
 
     <string name="subscription_details">Subscription Details</string>
+    <string name="please_select_month_year_and_number">Please select Month/Year and Number</string>
 
 
 
@@ -794,11 +794,6 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
-
-
-
-
-
 
 
 </resources>
