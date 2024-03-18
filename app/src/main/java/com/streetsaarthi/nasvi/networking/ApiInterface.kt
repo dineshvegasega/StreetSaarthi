@@ -1,59 +1,17 @@
-package com.streetsaarthi.nasvi
+package com.streetsaarthi.nasvi.networking
 
 import com.google.gson.JsonElement
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.chat.ItemChat
-import com.streetsaarthi.nasvi.models.mix.ItemAds
-import com.streetsaarthi.nasvi.models.mix.ItemComplaintType
-import com.streetsaarthi.nasvi.models.mix.ItemDistrict
-import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
-import com.streetsaarthi.nasvi.models.mix.ItemOrganization
-import com.streetsaarthi.nasvi.models.mix.ItemPanchayat
-import com.streetsaarthi.nasvi.models.mix.ItemPincode
-import com.streetsaarthi.nasvi.models.mix.ItemState
-import com.streetsaarthi.nasvi.models.mix.ItemVending
-import com.streetsaarthi.nasvi.screens.onboarding.networking.ADS_LIST
-import com.streetsaarthi.nasvi.screens.onboarding.networking.AddFeedbackConversation
-import com.streetsaarthi.nasvi.screens.onboarding.networking.AllNoticeHistory
-import com.streetsaarthi.nasvi.screens.onboarding.networking.AllSchemeHistory
-import com.streetsaarthi.nasvi.screens.onboarding.networking.AllTrainingHistory
-import com.streetsaarthi.nasvi.screens.onboarding.networking.ComplaintFeedback
-import com.streetsaarthi.nasvi.screens.onboarding.networking.ComplaintFeedbackHistory
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Complaint_Type
-import com.streetsaarthi.nasvi.screens.onboarding.networking.DISTRICT
-import com.streetsaarthi.nasvi.screens.onboarding.networking.DeleteNotification
-import com.streetsaarthi.nasvi.screens.onboarding.networking.FeedbackConversationDetails
-import com.streetsaarthi.nasvi.screens.onboarding.networking.InformationCenter
-import com.streetsaarthi.nasvi.screens.onboarding.networking.InformationDetail
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LOCAL_ORGANISATION
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGIN
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LOGOUT
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveScheme
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LiveTraining
-import com.streetsaarthi.nasvi.screens.onboarding.networking.MOBILE_TOKEN
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Marketplace
-import com.streetsaarthi.nasvi.screens.onboarding.networking.NewFeedback
-import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeDetail
-import com.streetsaarthi.nasvi.screens.onboarding.networking.NoticeLiveList
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Notifications
-import com.streetsaarthi.nasvi.screens.onboarding.networking.PANCHAYAT
-import com.streetsaarthi.nasvi.screens.onboarding.networking.PASSWORD_UPDATE
-import com.streetsaarthi.nasvi.screens.onboarding.networking.PINCODE
-import com.streetsaarthi.nasvi.screens.onboarding.networking.PasswordUpdate
-import com.streetsaarthi.nasvi.screens.onboarding.networking.RESEND_OTP
-import com.streetsaarthi.nasvi.screens.onboarding.networking.SEND_OTP
-import com.streetsaarthi.nasvi.screens.onboarding.networking.SIGN_UP
-import com.streetsaarthi.nasvi.screens.onboarding.networking.STATE
-import com.streetsaarthi.nasvi.screens.onboarding.networking.SaveSettings
-import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeApply
-import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeDetail
-import com.streetsaarthi.nasvi.screens.onboarding.networking.SchemeHistoryList
-import com.streetsaarthi.nasvi.screens.onboarding.networking.TrainingDetail
-import com.streetsaarthi.nasvi.screens.onboarding.networking.UpdateNotification
-import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE
-import com.streetsaarthi.nasvi.screens.onboarding.networking.VENDER_PROFILE_UPDATE
-import com.streetsaarthi.nasvi.screens.onboarding.networking.VERIFY_OTP
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Vending
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.ItemChat
+import com.streetsaarthi.nasvi.models.ItemAds
+import com.streetsaarthi.nasvi.models.ItemComplaintType
+import com.streetsaarthi.nasvi.models.ItemDistrict
+import com.streetsaarthi.nasvi.models.ItemMarketplace
+import com.streetsaarthi.nasvi.models.ItemOrganization
+import com.streetsaarthi.nasvi.models.ItemPanchayat
+import com.streetsaarthi.nasvi.models.ItemPincode
+import com.streetsaarthi.nasvi.models.ItemState
+import com.streetsaarthi.nasvi.models.ItemVending
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -70,7 +28,6 @@ interface ApiInterface {
     suspend fun login(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
-
 
 
     @GET(VENDER_PROFILE+ "/{id}")
@@ -98,10 +55,12 @@ interface ApiInterface {
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
 
+
     @POST(VERIFY_OTP)
     suspend fun verifyOTP(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
+
 
     @POST(RESEND_OTP)
     suspend fun reSendOTP(
@@ -114,12 +73,12 @@ interface ApiInterface {
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
 
+
     @Headers("Accept: application/json")
     @POST(NewFeedback)
     suspend fun newFeedback(
         @Body hashMap: RequestBody
     ): Response<BaseResponseDC<Any>>
-
 
 
     @Headers("Accept: application/json")
@@ -130,41 +89,45 @@ interface ApiInterface {
 
 
     @POST(PASSWORD_UPDATE)
-    suspend fun passwordupdate(
+    suspend fun passwordUpdate2(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<Any>>
-
 
 
     @GET(Vending)
     suspend fun vending(): Response<BaseResponseDC<List<ItemVending>>>
 
+
     @GET(Marketplace)
     suspend fun marketplace(): Response<BaseResponseDC<List<ItemMarketplace>>>
 
+
     @GET(STATE)
     suspend fun state(): Response<BaseResponseDC<List<ItemState>>>
+
 
     @POST(DISTRICT)
     suspend fun district(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemDistrict>>>
 
+
     @POST(PANCHAYAT)
     suspend fun panchayat(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemPanchayat>>>
+
 
     @POST(PINCODE)
     suspend fun pincode(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemPincode>>>
 
+
     @POST(LOCAL_ORGANISATION)
     suspend fun localOrganisation(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<List<ItemOrganization>>>
-
 
 
     @POST(SchemeHistoryList)
@@ -173,26 +136,29 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @POST(LiveScheme)
     suspend fun liveScheme(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
+
 
     @POST(SchemeApply)
     suspend fun applyLink(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 
+
     @GET(SchemeDetail+ "/{id}")
     suspend fun schemeDetail(
         @Path("id") id: String,
     ): Response<BaseResponseDC<JsonElement>>
 
+
     @GET(TrainingDetail+ "/{id}")
     suspend fun trainingDetail(
         @Path("id") id: String,
     ): Response<BaseResponseDC<JsonElement>>
+
 
     @GET(NoticeDetail+ "/{id}")
     suspend fun noticeDetail(
@@ -218,7 +184,6 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @POST(AllSchemeHistory)
     suspend fun allSchemeList(
         @Body requestBody: RequestBody
@@ -237,7 +202,6 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @GET(Notifications)
     suspend fun notifications(
         @Query("page")  page: Int,
@@ -252,7 +216,6 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
     @POST(UpdateNotification)
     suspend fun updateNotification(
         @Body requestBody: RequestBody
@@ -263,7 +226,6 @@ interface ApiInterface {
     suspend fun complaintFeedback(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
-
 
 
     @POST(ComplaintFeedbackHistory)
@@ -286,12 +248,11 @@ interface ApiInterface {
     suspend fun complaintType(): Response<BaseResponseDC<List<ItemComplaintType>>>
 
 
-
     @GET(FeedbackConversationDetails+ "/{id}")
     suspend fun feedbackConversationDetails(
         @Path("id") id: String,
+        @Query("page") page: String,
     ): Response<ItemChat>
-
 
 
     @Headers("Accept: application/json")
@@ -315,6 +276,25 @@ interface ApiInterface {
 
     @POST(PasswordUpdate)
     suspend fun passwordUpdate(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @Headers("Accept: application/json")
+    @POST(UpdateNomineeDetails)
+    suspend fun updateNomineeDetails(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(NomineeDetails)
+    suspend fun nomineeDetails(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(Subscription)
+    suspend fun subscription(
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 

@@ -16,21 +16,22 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ivOpenClose"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_1sdp"
         android:text="OpenClose"
         android:gravity="center"
         android:textColor="@color/black"
         android:backgroundTint="@color/_D9D9D9"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_9sdp"
         android:textStyle="italic"
         android:fontFamily="@font/roboto_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingVertical="@dimen/_4sdp"
-        android:paddingHorizontal="@dimen/_13sdp"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:visibility="gone"
         />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -42,7 +43,7 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:backgroundTint="@color/_D9D9D9"
-        android:textSize="@dimen/_10ssp"
+        android:textSize="@dimen/_10sdp"
         android:background="@drawable/all_radius_10"
         android:fontFamily="@font/roboto_medium"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +63,7 @@
             android:text="M"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
+            android:textSize="@dimen/_10sdp"
             android:background="@drawable/all_radius"
             android:fontFamily="@font/roboto_medium"
             android:visibility="visible"

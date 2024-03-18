@@ -1,30 +1,28 @@
 package com.streetsaarthi.nasvi.screens.mainActivity
 
-//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
-//import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
-//import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.ActivityManager
-import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -43,17 +41,19 @@ import com.streetsaarthi.nasvi.databinding.MainActivityBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.networking.ConnectivityManager
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Start
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.networking.Main
+import com.streetsaarthi.nasvi.networking.Screen
+import com.streetsaarthi.nasvi.networking.Start
+import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.LocaleHelper
 import com.streetsaarthi.nasvi.utils.autoScroll
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.getDensityName
+import com.streetsaarthi.nasvi.utils.getSignature
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.ioThread
-import com.streetsaarthi.nasvi.utils.isAppIsInBackground
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -61,11 +61,25 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import okhttp3.MultipartBody
 import java.lang.ref.WeakReference
+import java.util.Locale
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+
     companion object {
+        @JvmStatic
+        var PACKAGE_NAME = ""
+
+        @JvmStatic
+        var SIGNATURE_NAME = ""
+
+        @JvmStatic
+        var isBackApp = false
+
+        @JvmStatic
+        var isBackStack = false
 
         @JvmStatic
         lateinit var context: WeakReference<Context>
@@ -85,9 +99,20 @@ class MainActivity : AppCompatActivity() {
         private var _binding: MainActivityBinding? = null
         val binding get() = _binding!!
 
-
         @JvmStatic
         lateinit var isOpen: WeakReference<Boolean>
+
+        @JvmStatic
+        var scale10: Int = 0
+
+        @JvmStatic
+        var fontSize: Float = 0f
+
+        @JvmStatic
+        var networkFailed: Boolean = false
+
+//        @JvmStatic
+//        var locale: Locale = Locale.getDefault()
 
     }
 
@@ -95,24 +120,31 @@ class MainActivity : AppCompatActivity() {
 
     private val connectivityManager by lazy { ConnectivityManager(this) }
 
-
     private val pushNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
-            Log.e("TAG", "AAAAgranted " + granted)
+//            Log.e("TAG", "AAAAgranted " + granted)
 
         } else {
-            Log.e("TAG", "BBBBgranted " + granted)
+//            Log.e("TAG", "BBBBgranted " + granted)
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("SdCardPath", "MutableImplicitPendingIntent", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
+        val policy = ThreadPolicy.Builder()
+            .detectAll()
+            .penaltyLog()
+            .detectDiskReads()
+            .detectDiskWrites()
+            .detectNetwork()
+            .build()
+        StrictMode.setThreadPolicy(policy)
         super.onCreate(savedInstanceState)
         _binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -122,12 +154,21 @@ class MainActivity : AppCompatActivity() {
         mainActivity = WeakReference(this)
 
 
+        PACKAGE_NAME = packageName
+        SIGNATURE_NAME = getSignature()
+
+        if(LocaleHelper.getLanguage(applicationContext) == "ur"){
+            binding.root.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            binding.root.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
+
         checkUpdate()
 
-//
-//        if (Build.VERSION.SDK_INT >= 33) {
-//            pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-//        }
+
+        if (Build.VERSION.SDK_INT >= 33) {
+            pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
 
 
 
@@ -143,19 +184,24 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
+
         loadBanner()
         viewModel.itemAds.observe(this@MainActivity, Observer {
             if (it != null) {
                 viewModel.itemAds.value?.let { it1 ->
-                    viewModel.bannerAdapter.submitData(it1)
-                    binding.banner.adapter = viewModel.bannerAdapter
-                    binding.tabDots.setupWithViewPager(binding.banner, true)
+                    binding.apply {
+                        viewModel.bannerAdapter.submitData(it1)
+                        banner.adapter = viewModel.bannerAdapter
+                        tabDots.setupWithViewPager(banner, true)
 
-                    binding.banner.autoScroll()
-                    when (screenValue) {
-                        0 -> binding.layoutBanner.visibility = View.GONE
-                        in 1..2 -> binding.layoutBanner.visibility = View.VISIBLE
+                        banner.autoScroll()
+                        when (screenValue) {
+                            0 -> layoutBanner.visibility = View.GONE
+                            in 1..2 -> layoutBanner.visibility = View.VISIBLE
+                        }
                     }
+
                 }
             }
         })
@@ -170,40 +216,35 @@ class MainActivity : AppCompatActivity() {
 
 
         val bundle = intent?.extras
-
         if (bundle != null) {
             showData(bundle)
         }
 
-
-        val manager = packageManager
-        val info = manager?.getPackageInfo(packageName, 0)
-        val versionName = info?.versionName
-        binding.textVersion.text = getString(R.string.app_version_1_0, versionName)
-
-        binding.btLogout.singleClick {
-            callLogoutDialog()
-        }
-
-
-        val mDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
-            this, binding.drawerLayout,
-            R.string.open, R.string.close
-        ) {
-            override fun onDrawerClosed(view: View) {
-                super.onDrawerClosed(view)
-                Log.e("TAG", "onDrawerClosed")
-            }
-
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-                Log.e("TAG", "onDrawerOpened")
-            }
-        }
-        binding.drawerLayout.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
-
         binding.apply {
+            val manager = packageManager
+            val info = manager?.getPackageInfo(packageName, 0)
+            val versionName = info?.versionName
+            textVersion.text = getString(R.string.app_version_1_0, versionName)
+            btLogout.singleClick {
+                callLogoutDialog()
+            }
+
+
+            val mDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+                this@MainActivity, drawerLayout,
+                R.string.open, R.string.close
+            ) {
+                override fun onDrawerClosed(view: View) {
+                    super.onDrawerClosed(view)
+                }
+
+                override fun onDrawerOpened(drawerView: View) {
+                    super.onDrawerOpened(drawerView)
+                }
+            }
+            drawerLayout.addDrawerListener(mDrawerToggle);
+            mDrawerToggle.syncState();
+
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
             textTitleMain.singleClick {
@@ -214,23 +255,46 @@ class MainActivity : AppCompatActivity() {
                 drawerLayout.open()
             }
 
-            binding.recyclerView.setHasFixedSize(true)
-            binding.recyclerView.adapter = viewModel.menuAdapter
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = viewModel.menuAdapter
             viewModel.menuAdapter.submitList(viewModel.itemMain)
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
-//        onBackPressedDispatcher.addCallback(this , object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                val backStackEntryCount = navHostFragment?.childFragmentManager?.backStackEntryCount
-//                Log.e("TAG", "backStackEntryCount "+backStackEntryCount)
-//                if(backStackEntryCount == 0){
-//                    this@MainActivity.finish()
-//                }else if(backStackEntryCount == 1){
-//                    navHostFragment!!.navController.navigate(R.id.dashboard)
-//                }
-//            }
-//        })
+
+
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val backStackEntryCount = navHostFragment?.childFragmentManager?.backStackEntryCount
+                if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    binding.drawerLayout.close()
+                } else {
+                    if (backStackEntryCount == 0) {
+                        val setIntent = Intent(Intent.ACTION_MAIN)
+                        setIntent.addCategory(Intent.CATEGORY_HOME)
+                        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(setIntent)
+                    } else {
+                        if (isBackStack) {
+                            isBackStack = false
+                            val navOptions: NavOptions = NavOptions.Builder()
+                                .setPopUpTo(R.id.navigation_bar, true)
+                                .build()
+                            runOnUiThread {
+                                navHostFragment?.navController?.navigate(
+                                    R.id.dashboard,
+                                    null,
+                                    navOptions
+                                )
+                            }
+                        } else {
+                            navHostFragment?.navController?.navigateUp()
+                        }
+                    }
+                }
+            }
+        })
     }
 
 
@@ -239,6 +303,7 @@ class MainActivity : AppCompatActivity() {
         if (logoutAlert?.isShowing == true) {
             return
         }
+
         logoutAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
             .setTitle(resources.getString(R.string.app_name))
             .setMessage(resources.getString(R.string.are_your_sure_want_to_logout))
@@ -255,7 +320,11 @@ class MainActivity : AppCompatActivity() {
                             "mobile_number",
                             "" + Gson().fromJson(loginUser, Login::class.java).mobile_no
                         )
-                        viewModel.logoutAccount(requestBody.build())
+                        if (networkFailed) {
+                            viewModel.logoutAccount(requestBody.build())
+                        } else {
+                            callNetworkDialog()
+                        }
                     }
                 }
             }
@@ -301,7 +370,63 @@ class MainActivity : AppCompatActivity() {
                             "" + Gson().fromJson(loginUser, Login::class.java).id
                         )
                         requestBody.addFormDataPart("delete_account", "Yes")
-                        viewModel.deleteAccount(requestBody.build())
+                        if (networkFailed) {
+                            viewModel.deleteAccount(requestBody.build())
+                        } else {
+                            callNetworkDialog()
+                        }
+                    }
+                }
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.drawerLayout.close()
+                }, 500)
+            }
+            .setCancelable(false)
+            .show()
+
+        viewModel.itemDeleteResult.value = false
+        viewModel.itemDeleteResult.observe(this@MainActivity, Observer {
+            if (it) {
+                showSnackBar(getString(R.string.request_delete))
+                clearData()
+            }
+        })
+
+
+    }
+
+
+    @SuppressLint("SuspiciousIndentation")
+    fun callSesstionDialog() {
+        if (deleteAlert?.isShowing == true) {
+            return
+        }
+        deleteAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
+            .setTitle(resources.getString(R.string.app_name))
+            .setMessage(resources.getString(R.string.are_your_sure_want_to_delete))
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.drawerLayout.close()
+                }, 500)
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    if (loginUser != null) {
+                        val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("user_type", USER_TYPE)
+                        requestBody.addFormDataPart(
+                            "user_id",
+                            "" + Gson().fromJson(loginUser, Login::class.java).id
+                        )
+                        requestBody.addFormDataPart("delete_account", "Yes")
+                        if (networkFailed) {
+                            viewModel.deleteAccount(requestBody.build())
+                        } else {
+                            callNetworkDialog()
+                        }
                     }
                 }
             }
@@ -355,12 +480,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun showData(bundle: Bundle) {
         try {
-            val navOptions: NavOptions = NavOptions.Builder()
+            if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                binding.drawerLayout.close()
+            }
+                val navOptions: NavOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.navigation_bar, true)
                 .build()
             if (intent!!.hasExtra(Screen)) {
                 var screen = intent.getStringExtra(Screen)
-                Log.e("TAG", "screenAA " + screen)
+//                Log.e("TAG", "screenAA " + screen)
                 if (screen == Main) {
                     binding.topLayout.topToolbar.visibility = View.VISIBLE
                 }
@@ -371,13 +499,13 @@ class MainActivity : AppCompatActivity() {
                     if (bundle?.getString("key") != null) {
                         callRedirect(bundle)
                     } else {
-                        Log.e("key", "showDataBB ")
-                        Log.e("_id", "showDataBB ")
+//                        Log.e("key", "showDataBB ")
+//                        Log.e("_id", "showDataBB ")
                         navHostFragment?.navController?.navigate(R.id.dashboard, null, navOptions)
                     }
                 }
             } else {
-                Log.e("TAG", "screenBB ")
+//                Log.e("TAG", "screenBB ")
                 if (bundle?.getString("key") != null) {
                     callRedirect(bundle)
                 }
@@ -391,44 +519,65 @@ class MainActivity : AppCompatActivity() {
     private fun callRedirect(bundle: Bundle) {
         var key = bundle?.getString("key")
         var _id = bundle?.getString("_id")
-        Log.e("key", "showDataAA " + key)
-        Log.e("_id", "showDataAA " + _id)
-        val navOptions: NavOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.dashboard, true)
-            .build()
+//        Log.e("key", "showDataAA " + key)
+//        Log.e("_id", "showDataAA " + _id)
 
-//        val myProcess = RunningAppProcessInfo()
-//        ActivityManager.getMyMemoryState(myProcess)
-//        val isInBackground = myProcess.importance != RunningAppProcessInfo.IMPORTANCE_FOREGROUND
-//
-//        Log.e("TAG", "isActivityBackgound$isInBackground")
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val data = Gson().fromJson(loginUser, Login::class.java)
+                when (data.status) {
+                    "approved" -> {
+                        isBackStack = true
+                        when (key) {
+                            "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes)
+                            "notice" -> navHostFragment!!.navController.navigate(R.id.liveNotices)
+                            "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining)
+                            "information" -> navHostFragment!!.navController.navigate(R.id.informationCenter)
+                            "profile" -> navHostFragment!!.navController.navigate(R.id.profiles)
+                            "feedback" -> navHostFragment!!.navController.navigate(
+                                R.id.historyDetail,
+                                Bundle().apply {
+                                    putString("key", _id)
+                                })
+                        }
+                    }
 
-//        if(bundle.getBoolean("isActivityBackgound")){
-//            Log.e("TAG", "isAppIsInBackgroundAA ")
-//            when (key) {
-//                "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes, null, navOptions)
-//                "notice" -> navHostFragment!!.navController.navigate(R.id.liveNotices, null, navOptions)
-//                "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining, null, navOptions)
-//                "profile" -> navHostFragment!!.navController.navigate(R.id.profiles, null, navOptions)
-//                "Feedback" -> navHostFragment!!.navController.navigate(
-//                    R.id.historyDetail,
-//                    Bundle().apply {
-//                        putString("key", _id)
-//                    }, navOptions)
-//            }
-//        }else{
-//            Log.e("TAG", "isAppIsInBackgroundBB ")
-            when (key) {
-                "scheme" -> navHostFragment!!.navController.navigate(R.id.liveSchemes)
-                "notice" ->  navHostFragment!!.navController.navigate(R.id.liveNotices)
-                "training" -> navHostFragment!!.navController.navigate(R.id.liveTraining)
-                "profile" -> navHostFragment!!.navController.navigate(R.id.profiles)
-                "Feedback" -> navHostFragment!!.navController.navigate(
-                    R.id.historyDetail,
-                    Bundle().apply {
-                        putString("key", _id)
-                    })
+                    "unverified" -> {
+                        showSnackBar(resources.getString(R.string.registration_processed))
+                    }
+
+                    "pending" -> {
+                        if (key == "profile") {
+                            isBackStack = true
+                            navHostFragment!!.navController.navigate(R.id.profiles)
+                        } else {
+                            showSnackBar(resources.getString(R.string.registration_processed))
+                        }
+                    }
+
+                    "rejected" -> {
+                        if (key == "profile") {
+                            isBackStack = true
+                            navHostFragment!!.navController.navigate(R.id.profiles)
+                        } else {
+                            showSnackBar(resources.getString(R.string.registration_processed))
+                        }
+                    }
+                }
             }
+        }
+
+
+//        else -> {
+//            isBackStack = true
+//            val status = bundle?.getString("status")
+//            Log.e("TAG", "statusAZ "+status)
+//            when (status) {
+//                "profile" -> {
+//                    navHostFragment!!.navController.navigate(R.id.profiles)
+//                }
+//                else -> showSnackBar(resources.getString(R.string.registration_processed))
+//            }
 //        }
 
     }
@@ -443,12 +592,12 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser == null) {
-                    binding.topLayout.topToolbar.visibility = View.GONE
+                    topLayout.topToolbar.visibility = View.GONE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                    binding.layoutBanner.visibility = View.GONE
-                    binding.textHeaderTxt1.visibility = View.GONE
+                    layoutBanner.visibility = View.GONE
+                    textHeaderTxt1.visibility = View.GONE
                 } else {
-                    binding.topLayout.topToolbar.visibility = View.VISIBLE
+                    topLayout.topToolbar.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
                     var imageUrl = ""
@@ -460,9 +609,9 @@ class MainActivity : AppCompatActivity() {
                         }
                     } catch (_: Exception) {
                     }
-                    topLayout.ivImage.loadImage(url = { imageUrl })
+                    topLayout.ivImage.loadImage(type = 1, url = { imageUrl })
                     topLayout.ivImage.singleClick {
-                        arrayListOf(imageUrl).imageZoom(topLayout.ivImage)
+                        arrayListOf(imageUrl).imageZoom(topLayout.ivImage, 2)
                     }
                 }
             }
@@ -477,38 +626,38 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             when (screen) {
                 0 -> {
-                    binding.textHeaderTxt1.visibility = View.GONE
-                    binding.layoutBanner.visibility = View.GONE
+                    textHeaderTxt1.visibility = View.GONE
+                    layoutBanner.visibility = View.GONE
                 }
 
                 1 -> {
-                    binding.textHeaderTxt1.visibility = View.VISIBLE
-                    binding.mainLayout.setBackgroundResource(R.color.white)
+                    textHeaderTxt1.visibility = View.VISIBLE
+                    mainLayout.setBackgroundResource(R.color.white)
                     viewModel.itemAds.value?.let { it1 ->
                         if (it1.size > 0) {
                             if (screen == 1) {
-                                binding.layoutBanner.visibility = View.VISIBLE
+                                layoutBanner.visibility = View.VISIBLE
                             } else {
-                                binding.layoutBanner.visibility = View.GONE
+                                layoutBanner.visibility = View.GONE
                             }
                         } else {
-                            binding.layoutBanner.visibility = View.GONE
+                            layoutBanner.visibility = View.GONE
                         }
                     }
                 }
 
                 2 -> {
-                    binding.textHeaderTxt1.visibility = View.VISIBLE
-                    binding.mainLayout.setBackgroundResource(R.color._FFF3E4)
+                    textHeaderTxt1.visibility = View.VISIBLE
+                    mainLayout.setBackgroundResource(R.color._FFF3E4)
                     viewModel.itemAds.value?.let { it1 ->
                         if (it1.size > 0) {
                             if (screen == 2) {
-                                binding.layoutBanner.visibility = View.VISIBLE
+                                layoutBanner.visibility = View.VISIBLE
                             } else {
-                                binding.layoutBanner.visibility = View.GONE
+                                layoutBanner.visibility = View.GONE
                             }
                         } else {
-                            binding.layoutBanner.visibility = View.GONE
+                            layoutBanner.visibility = View.GONE
                         }
                     }
                 }
@@ -520,6 +669,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeConnectivityManager() = try {
         connectivityManager.observe(this) {
             binding.tvInternet.isVisible = !it
+            networkFailed = it
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -528,7 +678,7 @@ class MainActivity : AppCompatActivity() {
 
     var resultUpdate =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-            Log.e("TAG", "result.resultCode " + result.resultCode)
+//            Log.e("TAG", "result.resultCode " + result.resultCode)
             if (result.resultCode == RESULT_OK) {
                 // Handle successful app update
             } else if (result.resultCode == RESULT_CANCELED) {
@@ -586,6 +736,35 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onStart() {
+        super.onStart()
+        val fontScale = resources.configuration.fontScale
+        scale10 = when (fontScale) {
+            0.8f -> 13
+            0.9f -> 12
+            1.0f -> 11
+            1.1f -> 10
+            1.2f -> 9
+            1.3f -> 8
+            1.5f -> 7
+            1.7f -> 6
+            2.0f -> 5
+            else -> 4
+        }
+
+        val densityDpi = getDensityName()
+//        Log.e("TAG", "densityDpiAA " + densityDpi)
+        fontSize = when (densityDpi) {
+            "xxxhdpi" -> 9f
+            "xxhdpi" -> 9.5f
+            "xhdpi" -> 10.5f
+            "hdpi" -> 10.5f
+            "mdpi" -> 11f
+            "ldpi" -> 11.5f
+            else -> 12f
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         ioThread {
@@ -603,4 +782,6 @@ class MainActivity : AppCompatActivity() {
             deleteAlert!!.cancel()
         }
     }
+
+
 }

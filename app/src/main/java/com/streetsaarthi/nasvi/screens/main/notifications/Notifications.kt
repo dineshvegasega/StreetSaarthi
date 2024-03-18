@@ -1,32 +1,35 @@
 package com.streetsaarthi.nasvi.screens.main.notifications
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.NotificationsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemNotification
-import com.streetsaarthi.nasvi.screens.main.notifications.NotificationsVM.Companion.isNotificationNext
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemNotification
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.utils.CheckValidation
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
@@ -38,6 +41,7 @@ class Notifications : Fragment() {
     private val binding get() = _binding!!
 
     var deleteAlert : AlertDialog?= null
+
 
     private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
@@ -51,7 +55,7 @@ class Notifications : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NotificationsBinding.inflate(inflater)
+        _binding = NotificationsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,7 +63,7 @@ class Notifications : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.notifications)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
@@ -79,16 +83,19 @@ class Notifications : Fragment() {
                     .setMessage(resources.getString(R.string.are_your_sure_want_to_delete_all_notifications))
                     .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
                         dialog.dismiss()
-                        if (CheckValidation.isConnected(requireContext())) {
-                            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                       readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                 if (loginUser != null) {
                                     val obj: JSONObject = JSONObject().apply {
                                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                                     }
-                                    viewModel.deleteNotification(view = requireView(), obj)
+                                    if(networkFailed) {
+                                        viewModel.deleteNotification(obj)
+                                    } else {
+                                        requireContext().callNetworkDialog()
+                                    }
                                 }
-                            }
-                        }
+                       }
+
                     }
                     .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                         dialog.dismiss()
@@ -144,30 +151,36 @@ class Notifications : Fragment() {
         totalPages  = 1
         currentPage  = pageStart
 //        results.clear()
-        if (CheckValidation.isConnected(requireContext())) {
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                if (loginUser != null) {
-                    val obj: JSONObject = JSONObject().apply {
-                        put("page", currentPage)
-                        put("is_read", false)
-                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
-                    }
-                    viewModel.notifications(view = requireView(), obj)
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val obj: JSONObject = JSONObject().apply {
+                    put("page", pageStart)
+                    put("is_read", false)
+                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
+                }
+                if(networkFailed) {
+                    viewModel.notifications(obj)
+                    binding.idNetworkNotFound.root.visibility = View.GONE
+                } else {
+//                    requireContext().callNetworkDialog()
+                    binding.idNetworkNotFound.root.visibility = View.VISIBLE
                 }
             }
         }
     }
 
     fun loadNextPage() {
-        if (CheckValidation.isConnected(requireContext())) {
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                if (loginUser != null) {
-                    val obj: JSONObject = JSONObject().apply {
-                        put("page", currentPage)
-                        put("is_read", false)
-                        put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
-                    }
-                    viewModel.notificationsSecond(view = requireView(), obj)
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val obj: JSONObject = JSONObject().apply {
+                    put("page", currentPage)
+                    put("is_read", false)
+                    put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
+                }
+                if(networkFailed) {
+                    viewModel.notificationsSecond(obj)
+                } else {
+                    requireContext().callNetworkDialog()
                 }
             }
         }
@@ -176,14 +189,12 @@ class Notifications : Fragment() {
 
     var results: ArrayList<ItemNotification> = ArrayList()
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
     private fun observerDataRequest(){
 
         viewModel.updateNotifications.value = -1
         viewModel.updateNotifications.observe(requireActivity()) {
             if (it != -1){
-                Log.e("TAG", "resultsAA "+results.size)
-                Log.e("TAG", "itAA "+it)
                 results.removeAt(it)
                 viewModel.adapter.addAllSearch(results)
                 viewModel.updateNotifications.value = -1
@@ -205,9 +216,13 @@ class Notifications : Fragment() {
             val typeToken = object : TypeToken<List<ItemNotification>>() {}.type
             val changeValue = Gson().fromJson<List<ItemNotification>>(Gson().toJson(it.data), typeToken)
 
-            if(isNotificationNext == false){
-                results.addAll(changeValue as MutableList<ItemNotification>)
-            }
+//            if(isNotificationNext == false){
+//                results.addAll(changeValue as MutableList<ItemNotification>)
+//            }
+
+
+
+            results = changeValue as ArrayList<ItemNotification>
             viewModel.adapter.addAllSearch(results)
             totalPages = it.meta?.total_pages!!
             if (currentPage == totalPages) {
@@ -229,20 +244,48 @@ class Notifications : Fragment() {
         viewModel.itemNotificationsSecond.observe(requireActivity()) {
             val typeToken = object : TypeToken<List<ItemNotification>>() {}.type
             val changeValue = Gson().fromJson<List<ItemNotification>>(Gson().toJson(it.data), typeToken)
-            if(isNotificationNext == false){
-                results.addAll(changeValue as MutableList<ItemNotification>)
-            }
+//            if(isNotificationNext == false){
+//                results.addAll(changeValue as MutableList<ItemNotification>)
+                changeValue.map { _id ->
+//                    Log.e("TAG", "newId.notification_id "+Gson().toJson(results.toString()))
+//                    changeValue.map { newId ->
+                    //var aa =  Gson().toJson(results.toString())
+
+                    if (!Gson().toJson(results.toString()).contains(_id.notification_id.toString())){
+//                        Log.e("TAG", "newId.notification_idAA "+_id.notification_id)
+                        results.add(_id)
+                    } else {
+//                        Log.e("TAG", "newId.notification_idBB "+_id.notification_id)
+                    }
+
+//                        if (Gson().toJson(results.toString()).toString().contains(_id.notification_id.toString())){
+//                            Log.e("TAG", "newId.notification_id "+_id.notification_id)
+////
+////                            // var zz = newId
+////                            results.add(_id)
+////                        }
+//                    }
+                }
+
+//            }
+//            results.addAll(changeValue as MutableList<ItemNotification>)
+
+
+
             viewModel.adapter.removeLoadingFooter()
             isLoading = false
             viewModel.adapter.addAllSearch(results)
             if (currentPage != totalPages) viewModel.adapter.addLoadingFooter()
             else isLastPage = true
         }
+
+
+
     }
 
 
     override fun onDestroyView() {
-        _binding = null
+//        _binding = null
         deleteAlert?.let {
             deleteAlert!!.cancel()
         }

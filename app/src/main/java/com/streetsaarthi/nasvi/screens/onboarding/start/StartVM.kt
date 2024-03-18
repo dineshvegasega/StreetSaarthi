@@ -2,7 +2,7 @@ package com.streetsaarthi.nasvi.screens.onboarding.start
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.Repository
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.R
 import dagger.hilt.android.lifecycle.HiltViewModel

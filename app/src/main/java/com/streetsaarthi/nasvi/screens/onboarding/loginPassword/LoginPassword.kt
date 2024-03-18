@@ -11,6 +11,8 @@ import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.LoginPasswordBinding
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
@@ -82,7 +84,11 @@ class LoginPassword : Fragment() {
                             put("mobile_number", binding.editTextMobileNumber.text.toString())
                             put("password", binding.editTextPassword.text.toString())
                         }
-                        viewModel.login(view = requireView(), obj)
+                        if(networkFailed) {
+                            viewModel.login(view = requireView(), obj)
+                        } else {
+                            requireContext().callNetworkDialog()
+                        }
                     }
                 }
             }

@@ -31,7 +31,7 @@ object DataStoreUtil {
             dataStore?.edit { preferences ->
                 preferences[key] = value
 
-                Log.e("TAG", "saveData: ${preferences[key]}")
+//                Log.e("TAG", "saveData: ${preferences[key]}")
             }
         }
     }
@@ -80,7 +80,7 @@ object DataStoreUtil {
                 preferences.clear()
             }
             CoroutineScope(Dispatchers.Main).launch {
-                Log.d("clearDataStore", "clearDataStore")
+//                Log.d("clearDataStore", "clearDataStore")
                 valueIs(true)
             }
         }

@@ -39,12 +39,11 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.WebpageBinding
+import com.streetsaarthi.nasvi.networking.LoginOtp
+import com.streetsaarthi.nasvi.networking.LoginPassword
+import com.streetsaarthi.nasvi.networking.Screen
+import com.streetsaarthi.nasvi.networking.WEB_URL
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginOtp
-import com.streetsaarthi.nasvi.screens.onboarding.networking.LoginPassword
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
-import com.streetsaarthi.nasvi.screens.onboarding.networking.WEB_URL
-import com.streetsaarthi.nasvi.utils.navigateBack
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
@@ -74,7 +73,7 @@ class WebPage : Fragment() {
                     binding.webView.goBack()
                 }
                 else {
-                    view?.navigateBack()
+                    view?.findNavController()?.navigateUp()
                 }
             }
         })
@@ -168,12 +167,12 @@ class WebPage : Fragment() {
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
-            Log.e("TAG", "AAAAgranted " + granted)
+//            Log.e("TAG", "AAAAgranted " + granted)
             if (urlLoad.startsWith("data:")) {
                 val path: String = createAndSaveFileFromBase64Url(urlLoad)
             }
         } else {
-            Log.e("TAG", "BBBBgranted " + granted)
+//            Log.e("TAG", "BBBBgranted " + granted)
         }
 
     }
@@ -197,7 +196,7 @@ class WebPage : Fragment() {
             os.close()
             val intent = Intent(Intent.ACTION_VIEW)
 
-            Log.e("TAG", "fileZZ "+file.toString())
+//            Log.e("TAG", "fileZZ "+file.toString())
 
 //            val data =
 //                FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", file)
@@ -314,7 +313,7 @@ class WebPage : Fragment() {
 
         @JavascriptInterface
         fun sendWebLinkToAndroid(toast: String) {
-            Log.e("TAG", "sendWebLinkToAndroid "+toast)
+//            Log.e("TAG", "sendWebLinkToAndroid "+toast)
             Handler(Looper.getMainLooper()).post(Thread {
                 MainActivity.activity.get()?.runOnUiThread {
 //                    Toast.makeText(mContext, "AA1"+toast, Toast.LENGTH_SHORT).show()
@@ -336,7 +335,7 @@ class WebPage : Fragment() {
 
         @JavascriptInterface
         fun sendVideoLinkToAndroid(toast: String) {
-            Log.e("TAG", "sendVideoLinkToAndroid "+toast)
+//            Log.e("TAG", "sendVideoLinkToAndroid "+toast)
             Handler(Looper.getMainLooper()).post(Thread {
                 MainActivity.activity.get()?.runOnUiThread {
                     toast?.let {

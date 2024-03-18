@@ -13,16 +13,20 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Screen
-import com.streetsaarthi.nasvi.utils.isAppIsInBackground
+import com.streetsaarthi.nasvi.networking.Main
+import com.streetsaarthi.nasvi.networking.Screen
+import com.streetsaarthi.nasvi.utils.getChannelName
+import com.streetsaarthi.nasvi.utils.getNotificationId
+import com.streetsaarthi.nasvi.utils.getTitle
 import org.json.JSONObject
 
-class MyFirebaseMessagingService : FirebaseMessagingService(){
+class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -32,68 +36,105 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        Log.e("TAG", "onMessageReceived: " + remoteMessage.getFrom());
-        Log.e("TAG", "onMessageReceived: Noti" + remoteMessage.getNotification());
-        Log.e("TAG", "onMessageReceived: Data" + remoteMessage.getData());
-      //  Log.e("TAG", "isAppIsInBackground()" +  isAppIsInBackground());
+//        Log.e("TAG", "onMessageReceived: " + remoteMessage.getFrom());
+//        Log.e("TAG", "onMessageReceived: Noti" + remoteMessage.getNotification());
+//        Log.e("TAG", "onMessageReceived: Data" + remoteMessage.getData());
+        //  Log.e("TAG", "isAppIsInBackground()" +  isAppIsInBackground());
 
 
         readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
-                val json : JSONObject = JSONObject((remoteMessage.data as Map<*, *>?)!!)
-                Log.e("TAG", "onMessageReceived: Data" + json.toString());
-                //noti(json)
+                val _id = Gson().fromJson(loginUser, Login::class.java).id
+                val json: JSONObject = JSONObject((remoteMessage.data as Map<*, *>?)!!)
+                if(json.getString("user_id") == ""+_id){
+                    val notiId = json.getString("type").getNotificationId()
+                    when(notiId){
+                        1 -> noti(json , notiId)
+                        2 -> noti(json , notiId)
+                        3 -> noti(json , notiId)
+                        4 -> noti(json , notiId)
+                        5 -> noti(json , notiId)
+                        6 -> noti(json , notiId)
+                        7 -> noti(json , notiId)
+                    }
+                }
             }
         }
     }
 
 
-
     @SuppressLint("MutableImplicitPendingIntent")
-    fun noti(json : JSONObject) {
+    fun noti(json: JSONObject, notiId: Int) {
+        val chName = json.getString("type").getChannelName()
         val intent = Intent(this, MainActivity::class.java).putExtras(Bundle().apply {
-            putString("key" , json.getString("type"))
-            putString("_id" , json.getString("type_id"))
-         //   putBoolean("isActivityBackgound" , isAppIsInBackground())
+            if (json.getString("type") == "Vendor Details" || json.getString("type") == "VendorDetails") {
+                putString("key", "profile")
+            } else if (json.getString("title").contains("Feedback") || json.getString("title")
+                    .contains("Complaint")
+            ) {
+                putString("key", "feedback")
+            } else {
+                putString("key", json.getString("type"))
+            }
 
-            putString(Screen , Main)
+            putString("_id", json.getString("type_id"))
+            putString(Screen, Main)
         })
-        val pendingIntent= if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT)
-        }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            PendingIntent.getActivity(
+                this,
+                notiId,
+                intent,
+                PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT
+            )
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(
+                this,
+                notiId,
+                intent,
+                PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
         } else {
-            PendingIntent.getActivity(this,0,intent,
-                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(
+                this,
+                notiId,
+                intent,
+                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+            )
         }
 
 
-        val CHANNEL_ID="my_channel_01" // The id of the channel.
-        val name: CharSequence="Notification" // The user-visible name of the channel.
-        val importance= NotificationManager.IMPORTANCE_HIGH
-        var mChannel: NotificationChannel?=null
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mChannel= NotificationChannel(CHANNEL_ID,name,importance)
+
+
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        var mChannel: NotificationChannel? = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mChannel = NotificationChannel(chName, chName, importance)
             mChannel.enableLights(true)
-            mChannel.lightColor= Color.WHITE
+            mChannel.lightColor = Color.WHITE
             mChannel.setShowBadge(true)
-            mChannel.lockscreenVisibility= Notification.VISIBILITY_PUBLIC
+            mChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         }
 
-        val notification= NotificationCompat.Builder(this,CHANNEL_ID)
+
+        val notification = NotificationCompat.Builder(this, chName)
             .setSmallIcon(R.mipmap.ic_launcher) //.setLargeIcon(icon)
             .setPriority(Notification.PRIORITY_HIGH)
             .setContentTitle(getString(R.string.app_name))
+            .setStyle(NotificationCompat.BigTextStyle().bigText(applicationContext.getTitle(json.getString("type"), json.getString("title"))))
             .setAutoCancel(true)
-            .setChannelId(CHANNEL_ID)
+            .setChannelId(chName)
             .setContentIntent(pendingIntent)
-            .setContentText(json.getString("title")).build()
-        val notificationManager=
+            .setContentText(applicationContext.getTitle(json.getString("type"), json.getString("title"))).build()
+        val notificationManager =
             getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) notificationManager.createNotificationChannel(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) notificationManager.createNotificationChannel(
             mChannel!!
         )
-        notificationManager.notify(0,notification)
+        notificationManager.notify(notiId, notification)
     }
+
+
+
 
 }

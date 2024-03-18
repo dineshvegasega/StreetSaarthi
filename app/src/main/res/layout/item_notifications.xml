@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:text="Prakhar Vikas Yojna"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_12sdp"
             app:fontFamily="@font/roboto_bold"
             tools:ignore="HardcodedText" />
 
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="Lorem ipsum dolor sit amet amigos nu fasa con s ectetur."
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_12sdp"
             app:fontFamily="@font/roboto_regular"
             tools:ignore="HardcodedText"
             android:layout_marginTop="@dimen/_2sdp"/>

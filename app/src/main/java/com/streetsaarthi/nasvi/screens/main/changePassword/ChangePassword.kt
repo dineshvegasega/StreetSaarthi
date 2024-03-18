@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +17,11 @@ import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ChangePasswordBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.isValidPassword
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +44,7 @@ class ChangePassword : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
 
         binding.apply {
             btSignIn.setEnabled(false)
@@ -160,13 +161,17 @@ class ChangePassword : Fragment() {
 
 
             btSignIn.singleClick {
-                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
                         requestBody.addFormDataPart( "mobile_number", "" + Gson().fromJson(loginUser, Login::class.java).mobile_no)
                         requestBody.addFormDataPart( "password", editTextCreatePassword.text.toString())
-                        viewModel.updatePassword(requestBody.build())
+                        if(networkFailed) {
+                            viewModel.updatePassword(requestBody.build())
+                        } else {
+                            requireContext().callNetworkDialog()
+                        }
                     }
                 }
 

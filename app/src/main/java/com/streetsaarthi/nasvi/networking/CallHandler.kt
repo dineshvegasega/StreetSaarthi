@@ -1,13 +1,10 @@
-package com.streetsaarthi.nasvi
+package com.streetsaarthi.nasvi.networking
 
 import com.streetsaarthi.nasvi.utils.showSnackBar
 
-
 fun interface CallHandler<T> {
 
-
     suspend fun sendRequest(apiInterface: ApiInterface): T
-
 
     fun loading(){
     }
@@ -15,9 +12,13 @@ fun interface CallHandler<T> {
     fun success(response: T){
     }
 
-
     fun error(message: String){
-        showSnackBar(message)
+//        if(message.contains("DOCTYPE html")){
+//            MainActivity.context?.get()?.resources?.getString(R.string.something_went_wrong)
+//                ?.let { showSnackBar(it) }
+//        }else{
+            showSnackBar(message)
+//        }
     }
 
 }

@@ -1,28 +1,24 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginOtp
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
+import com.streetsaarthi.nasvi.networking.Main
 import com.streetsaarthi.nasvi.utils.getToken
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -128,7 +124,7 @@ class LoginOtpVM @Inject constructor(private val repository: Repository): ViewMo
                             val data = Gson().fromJson(response.body()!!.data, Login::class.java)
                             saveObject(DataStoreKeys.LOGIN_DATA, data)
                             showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
-                            DataStoreUtil.readData(DataStoreKeys.TOKEN) { token ->
+                            readData(DataStoreKeys.TOKEN) { token ->
                                 getToken(){
                                     val obj: JSONObject = JSONObject()
                                     obj.put("user_id", ""+data.id)

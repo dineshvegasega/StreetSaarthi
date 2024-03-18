@@ -1,18 +1,27 @@
 package com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew
 
-import android.util.Log
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemComplaintType
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.ItemComplaintType
+import com.streetsaarthi.nasvi.networking.IS_LANGUAGE
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -27,6 +36,35 @@ class CreateNewVM @Inject constructor(private val repository: Repository): ViewM
     var uploadMediaImage : String ?= null
 
 
+    var alertDialog: AlertDialog? = null
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
+
+
     var itemComplaintType : ArrayList<ItemComplaintType> = ArrayList()
     var complaintTypeId : Int = 0
     fun complaintType(view: View) = viewModelScope.launch {
@@ -37,7 +75,29 @@ class CreateNewVM @Inject constructor(private val repository: Repository): ViewM
 
                 override fun success(response: Response<BaseResponseDC<List<ItemComplaintType>>>) {
                     if (response.isSuccessful){
-                        itemComplaintType = response.body()?.data as ArrayList<ItemComplaintType>
+                        if (IS_LANGUAGE){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemComplaintType = response.body()?.data as ArrayList<ItemComplaintType>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemComplaintType>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemComplaintType = itemStateTemp
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemComplaintType = response.body()?.data as ArrayList<ItemComplaintType>
+                        }
                     }
                 }
 
@@ -88,5 +148,10 @@ class CreateNewVM @Inject constructor(private val repository: Repository): ViewM
                 }
             }
         )
+    }
+
+
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        return repository.callApiTranslate(_lang, _words)
     }
 }

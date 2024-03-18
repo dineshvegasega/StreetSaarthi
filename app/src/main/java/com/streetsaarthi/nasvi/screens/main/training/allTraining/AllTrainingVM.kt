@@ -1,8 +1,11 @@
 package com.streetsaarthi.nasvi.screens.main.training.allTraining
 
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -14,16 +17,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveTrainingBinding
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemTrainingDetail
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.ItemLiveTraining
+import com.streetsaarthi.nasvi.models.ItemTrainingDetail
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.changeDateFormat
@@ -34,17 +39,47 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class AllTrainingVM @Inject constructor(private val repository: Repository): ViewModel() {
+
     val adapter by lazy { AllTrainingAdapter(this) }
+
+    var alertDialog: AlertDialog? = null
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
 
 
 
     private var itemLiveTrainingResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveTraining : LiveData<BaseResponseDC<Any>> get() = itemLiveTrainingResult
-    fun allTraining(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun allTraining(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -57,7 +92,7 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
 
                 override fun error(message: String) {
                     super.error(message)
-                    showSnackBar(message)
+//                    showSnackBar(message)
                 }
 
                 override fun loading() {
@@ -71,7 +106,7 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
 
     private var itemLiveTrainingResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveTrainingSecond : LiveData<BaseResponseDC<Any>> get() = itemLiveTrainingResultSecond
-    fun allTrainingSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun allTrainingSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -84,7 +119,7 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
 
                 override fun error(message: String) {
                     super.error(message)
-                    showSnackBar(message)
+//                    showSnackBar(message)
                 }
 
                 override fun loading() {
@@ -96,11 +131,11 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
 
 
 
-    fun viewDetail(_id: String, position: Int, root: View, status : Int) = viewModelScope.launch {
+    fun viewDetail(itemLiveTraining: ItemLiveTraining, position: Int, root: View, status: Int) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.trainingDetail(id = _id)
+                    apiInterface.trainingDetail(id = ""+itemLiveTraining.training_id)
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         var data = Gson().fromJson(response.body()!!.data, ItemTrainingDetail::class.java)
@@ -121,8 +156,8 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
 
                                 dialogBinding.apply {
                                     data.cover_image?.url?.glideImage(root.context, ivMap)
-                                    textTitle.setText(data.name)
-                                    textDesc.setText(data.description)
+                                    textTitle.setText(itemLiveTraining.name)
+                                    textDesc.setText(itemLiveTraining.description)
                                     textHeaderTxt4.setText(data.status)
                                     textHeaderTxt4.visibility = View.GONE
 
@@ -172,4 +207,9 @@ class AllTrainingVM @Inject constructor(private val repository: Repository): Vie
         )
     }
 
+
+
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        return repository.callApiTranslate(_lang, _words)
+    }
 }

@@ -40,9 +40,11 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.MembershipDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,8 +61,6 @@ class MembershipDetails  : Fragment() {
 
     var permissionAlert : AlertDialog?= null
 
-    var networkAlert : BottomSheetDialog?= null
-    var networkCount = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -142,17 +142,72 @@ class MembershipDetails  : Fragment() {
 
 
 
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(2)
+//        binding.model = viewModel
+//        binding.lifecycleOwner = this
+        MainActivity.mainActivity.get()?.callFragment(1)
+
+
+
+
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.membership_details)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
+//            val scale = resources.displayMetrics.widthPixels.toFloat()
+//            Log.e("TAG", "App.scaleAA "+scale)
+//
+//            val scale2 = scale * 6
+//            Log.e("TAG", "App.scaleBB "+scale2)
+//
+//            val scale3 = scale2 / 100
+//            Log.e("TAG", "App.scaleCC "+scale3)
+//
+//            val px = Math.round(
+//                TypedValue.applyDimension(
+//                    TypedValue.COMPLEX_UNIT_SP, 14f, resources.getDisplayMetrics()
+//                )
+//            )
+//            Log.e("TAG", "App.scaleDD "+viewModel.scale10)
 
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+//            val sdp = resources.getDimension(com.intuit.sdp.R.dimen._5sdp)
+//
+//            textAssociatedOrganizationTxt.textSize = sdp
+//            textMarketPlaceTxt.textSize = sdp
+//            textFirstNameTxt.textSize = sdp
+//            textFirstNameValueTxt.textSize = sdp
+//            textLastNameTxt.textSize = sdp
+//            textLastNameValueTxt.textSize = sdp
+//            textGenderTxt.textSize = sdp
+//            textGenderValueTxt.textSize = sdp
+//            textDOBTxt.textSize = sdp
+//            textDOBValueTxt.textSize = sdp
+//            textMobileTxt.textSize = sdp
+//            textMobileValueTxt.textSize = sdp
+//            textTypeofVendingTxt.textSize = sdp
+//            textTypeofVendingValueTxt.textSize = sdp
+//            textTypeofMarketPlaceTxt.textSize = sdp
+//            textTypeofMarketPlaceValueTxt.textSize = sdp
+//            textCurrentVendingAddressTxt.textSize = sdp
+//            textStateTxt.textSize = sdp
+//            textStateValueTxt.textSize = sdp
+//            textDistrictTxt.textSize = sdp
+//            textDistrictValueTxt.textSize = sdp
+//            textMunicipalityTxt.textSize = sdp
+//            textMunicipalityValueTxt.textSize = sdp
+//            textAddressTxt.textSize = sdp
+//            textAddressValueTxt.textSize = sdp
+//            textMembershipTxt.textSize = sdp
+//            textMembershipValidTxt.textSize = sdp
+//            btDownload.textSize = sdp
+
+
+
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
-                    Log.e("TAG", "dataLogin "+data.toString())
+//                    Log.e("TAG", "dataLogin "+data.toString())
                     textFirstNameValueTxt.setText(data.vendor_first_name)
                     textLastNameValueTxt.setText(data.vendor_last_name)
 
@@ -174,42 +229,14 @@ class MembershipDetails  : Fragment() {
                     textDOBValueTxt.setText(data.date_of_birth)
                     textMobileValueTxt.setText("+91-"+data.mobile_no)
 
-                    viewModel.counterNetwork.observe(viewLifecycleOwner, Observer {
-                        if (it) {
-                            if(networkCount == 1){
-                                if(networkAlert?.isShowing == true) {
-                                    return@Observer
-                                }
-                                val dialogBinding = DialogBottomNetworkBinding.inflate(root.context.getSystemService(
-                                    Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                                )
-                                networkAlert = BottomSheetDialog(root.context)
-                                networkAlert?.setContentView(dialogBinding.root)
-                                networkAlert?.setOnShowListener { dia ->
-                                    val bottomSheetDialog = dia as BottomSheetDialog
-                                    val bottomSheetInternal: FrameLayout =
-                                        bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-                                    bottomSheetInternal.setBackgroundResource(R.drawable.bg_top_round_corner)
-                                }
-                                networkAlert?.show()
-
-                                dialogBinding.apply {
-                                    btClose.singleClick {
-                                        networkAlert?.dismiss()
-                                    }
-                                    btApply.singleClick {
-                                        networkAlert?.dismiss()
-                                        callApis(view)
-                                    }
-                                }
-                            }
-                            networkCount++
-                        }
-                    })
 
 
-
-                    viewModel.vending(view)
+                    if(networkFailed) {
+                        viewModel.vending(view)
+                        viewModel.marketplace(view)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                     viewModel.vendingTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
                             for (item in viewModel.itemVending) {
@@ -230,7 +257,6 @@ class MembershipDetails  : Fragment() {
                     })
 
 
-                    viewModel.marketplace(view)
                     viewModel.marketPlaceTrue.observe(viewLifecycleOwner, Observer {
                         if(it == true){
                             for (item in viewModel.itemMarketplace) {
@@ -323,11 +349,14 @@ class MembershipDetails  : Fragment() {
 
 
     private fun callApis(view: View) {
-        networkCount = 1
-        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
             if (loginUser != null) {
-                viewModel.vending(view)
-                viewModel.marketplace(view)
+                if(networkFailed) {
+                    viewModel.vending(view)
+                    viewModel.marketplace(view)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
             }
         }
     }

@@ -2,13 +2,12 @@ package com.streetsaarthi.nasvi.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-//import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.streetsaarthi.nasvi.ApiInterface
+import com.streetsaarthi.nasvi.networking.ApiInterface
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
-import com.streetsaarthi.nasvi.screens.onboarding.networking.TRANSLATE_URL
-import com.streetsaarthi.nasvi.screens.onboarding.networking.URL
+import com.streetsaarthi.nasvi.networking.TRANSLATE_URL
+import com.streetsaarthi.nasvi.networking.URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +19,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -39,11 +37,12 @@ class AppModule {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(ChuckerInterceptor(context))
+            .addInterceptor(NetworkInterceptor.interceptor)
             .retryOnConnectionFailure(true)
             .cache(cache)
             .build()

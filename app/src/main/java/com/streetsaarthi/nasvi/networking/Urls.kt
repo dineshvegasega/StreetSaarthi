@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi.screens.onboarding.networking
+package com.streetsaarthi.nasvi.networking
 
 const val BASE_URL = "https://v2.nasvi.in/"
 const val WEB_URL = "https://nasvi.in/"
@@ -7,7 +7,6 @@ const val WEB_URL = "https://nasvi.in/"
 //const val WEB_URL = "http://167.71.225.20:8080/"
 
 const val URL = BASE_URL+"api/"
-
 
 
 const val MOBILE_TOKEN = "update-mobile-token"
@@ -64,6 +63,10 @@ const val NewFeedback = "new-feedback"
 const val SaveSettings = "save-settings"
 const val LOGOUT = "logout"
 const val PasswordUpdate = "password-update"
+const val UpdateNomineeDetails = "update-nominee-details"
+const val NomineeDetails = "nominee-details"
+const val Subscription = "subscription"
+
 
 const val USER_TYPE = "member"
 const val PING = "8.8.8.8"
@@ -72,8 +75,9 @@ const val PING = "8.8.8.8"
 //const val TRANSLATE = "translate/v2?key="
 
 const val TRANSLATE_URL = "https://translate.googleapis.com/translate_a/"
-const val TRANSLATE = "single?client=gtx&sl=en&tl=hi&dt=t&dt=t"
+const val TRANSLATE = "single?client=gtx&sl=en&dt=t"
 
+//"client=gtx&sl=en&dt=t&dt=t"
 
 const val Screen = "screen"
 const val Start = "Start"
@@ -81,8 +85,9 @@ const val Main = "Main"
 const val CompleteRegister = "CompleteRegister"
 const val LoginPassword = "LoginPassword"
 const val LoginOtp = "LoginOtp"
-const val LIVE_SCHEMES = "LIVE_SCHEMES"
 
-const val NETWORK_DIALOG_SHOW = false
+const val IS_LANGUAGE = true
+const val IS_LANGUAGE_ALL = false
 
+const val RETRY_COUNT = 1
 

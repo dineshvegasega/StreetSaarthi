@@ -3,11 +3,11 @@ package com.streetsaarthi.nasvi.screens.main.changePassword
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.JsonElement
-import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.BaseResponseDC
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody

@@ -34,7 +34,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_10sdp"
             />
@@ -52,7 +52,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:paddingVertical="@dimen/_12sdp"
             />
@@ -95,7 +95,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_10sdp"
             />
@@ -113,7 +113,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:paddingVertical="@dimen/_12sdp"
             />
@@ -157,7 +157,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_10sdp"
             />
@@ -175,7 +175,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:paddingVertical="@dimen/_12sdp"
             />
@@ -220,7 +220,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_10sdp"
             />
@@ -236,7 +236,7 @@
             android:singleLine="true"
             android:text="@string/upload_challan"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageUploadChallan"
             app:layout_constraintHorizontal_bias="0.0"
@@ -282,7 +282,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:layout_marginStart="@dimen/_10sdp"
             />
@@ -300,7 +300,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_424041"
             android:textColor="@color/_424041"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_medium"
             android:paddingVertical="@dimen/_12sdp"
             />

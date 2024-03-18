@@ -13,8 +13,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.models.mix.ItemAds
-import com.streetsaarthi.nasvi.utils.loadImageBanner
+import com.streetsaarthi.nasvi.models.ItemAds
+import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.singleClick
 
 class BannerViewPagerAdapter() : PagerAdapter() {
@@ -36,7 +36,7 @@ class BannerViewPagerAdapter() : PagerAdapter() {
         val view = inflater!!.inflate(R.layout.item_banner, null)
         var bannerItem = view.findViewById<AppCompatImageView>(R.id.bannerItem)
 //        bannerItem.setImageResource(images[0])
-        bannerItem.loadImageBanner(url = { itemMain?.get(position)!!.ad_media })
+        bannerItem.loadImage(type = 2, url = { itemMain?.get(position)!!.ad_media })
         view.singleClick {
             Handler(Looper.getMainLooper()).post(Thread {
                 MainActivity.activity.get()?.runOnUiThread {

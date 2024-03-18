@@ -4,20 +4,31 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.content.pm.Signature
 import android.content.res.Configuration
 import android.database.Cursor
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
+import android.os.Parcelable
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.provider.OpenableColumns
-import android.util.Log
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DimenRes
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -27,17 +38,22 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import coil.load
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
-import com.kochia.customer.utils.hideKeyboard
+import com.stfalcon.imageviewer.StfalconImageViewer
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -81,15 +97,37 @@ fun View.openKeyboard() = try {
 }
 
 
+fun Activity.hideKeyboard() {
+    val inputMethodManager =
+        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    // Check if no view has focus
+    val currentFocusedView = currentFocus
+    currentFocusedView?.let {
+        inputMethodManager.hideSoftInputFromWindow(
+            currentFocusedView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS
+        )
+    }
+}
+
 /**
  * Show Snack Bar
  * */
+@SuppressLint("CutPasteId")
 fun showSnackBar(string: String) = try {
     MainActivity.activity.get()?.hideKeyboard()
     MainActivity.context.get()?.let { context ->
-        var message = string
-        if (message.contains("Unable to resolve host"))
-            message = context.getString(R.string.no_internet_connection)
+        val message = if (string.contains("Unable to resolve host")) {
+            context.getString(R.string.no_internet_connection)
+        } else if (string.contains("DOCTYPE html")) {
+            context.getString(R.string.something_went_wrong)
+        } else if (string.contains("<script>")) {
+            context.getString(R.string.something_went_wrong)
+        } else if (string.contains("SQLSTATE")) {
+            context.getString(R.string.something_went_wrong)
+        } else {
+            "" + string
+        }
+//        val message = string
         Snackbar.make(
             (context as Activity).findViewById(android.R.id.content),
             message,
@@ -98,6 +136,9 @@ fun showSnackBar(string: String) = try {
             setBackgroundTint(ContextCompat.getColor(context, R.color._000000))
             animationMode = Snackbar.ANIMATION_MODE_SLIDE
             setTextColor(ContextCompat.getColor(context, R.color._ffffff))
+            //var sdpSize = MainActivity.activity.get()?.resources?.getDimension(com.intuit.sdp.R.dimen._5sdp) ?: 5
+            view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).textSize =
+                (MainActivity.scale10 + 1).toFloat()
             view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 5
             show()
         }
@@ -105,11 +146,6 @@ fun showSnackBar(string: String) = try {
 } catch (e: Exception) {
     e.printStackTrace()
 }
-
-
-
-
-
 
 
 /**
@@ -145,15 +181,14 @@ fun String?.getResponseError(): String {
 }
 
 
-
 fun Context.getRealPathFromUri(contentUri: Uri?): String? {
-    var cursor: Cursor?=null
+    var cursor: Cursor? = null
     return try {
-        var proj=arrayOf<kotlin.String>(MediaStore.Images.Media.DATA)
+        val proj = arrayOf<kotlin.String>(MediaStore.Images.Media.DATA)
         //val proj: Array<String>= arrayOf<kotlin.String>(MediaStore.Images.Media.DATA)
-        cursor=contentResolver.query(contentUri!!,proj,null,null,null)
+        cursor = contentResolver.query(contentUri!!, proj, null, null, null)
         assert(cursor != null)
-        val column_index=cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
         cursor.moveToFirst()
         cursor.getString(column_index)
     } finally {
@@ -188,19 +223,17 @@ fun Context.getMediaFilePathFor(uri: Uri): String {
 }
 
 
-
-fun getGalleryImage(requireActivity: FragmentActivity, callBack: Uri.() -> Unit){
+fun getGalleryImage(requireActivity: FragmentActivity, callBack: Uri.() -> Unit) {
     requireActivity.registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
-            Log.e("PhotoPicker", "Selected URI: $uri")
-           // binding.imageUploadpassportsizeImage.loadImage(url = {  requireContext().getMediaFilePathFor(uri) })
-           // callBack(requireActivity.getMediaFilePathFor(uri))
+//            Log.e("PhotoPicker", "Selected URI: $uri")
+            // binding.imageUploadpassportsizeImage.loadImage(url = {  requireContext().getMediaFilePathFor(uri) })
+            // callBack(requireActivity.getMediaFilePathFor(uri))
         } else {
-            Log.e("PhotoPicker", "No media selected")
+//            Log.e("PhotoPicker", "No media selected")
         }
     }
 }
-
 
 
 //fun registerForActivityResultGallery(requireActivity: FragmentActivity): String {
@@ -218,8 +251,9 @@ fun getGalleryImage(requireActivity: FragmentActivity, callBack: Uri.() -> Unit)
 
 @SuppressLint("CheckResult")
 fun ImageView.loadImage(
+    type: Int,
     url: () -> String,
-    errorPlaceHolder: () -> Int = { R.drawable.user_icon }
+    errorPlaceHolder: () -> Int = { if(type == 1) R.drawable.user_icon else R.drawable.no_image_banner }
 ) = try {
     val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
         strokeWidth = 5f
@@ -236,28 +270,24 @@ fun ImageView.loadImage(
 }
 
 
-@SuppressLint("CheckResult")
-fun ImageView.loadImageBanner(
-    url: () -> String,
-    errorPlaceHolder: () -> Int = { R.drawable.no_image_banner }
-) = try {
-    val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
-        strokeWidth = 5f
-        centerRadius = 30f
-        start()
-    }
-    load(if (url().startsWith("http")) url() else File(url())) {
-        placeholder(circularProgressDrawable)
-        crossfade(true)
-        error(errorPlaceHolder())
-    }
-} catch (e: Exception) {
-    e.printStackTrace()
-}
-
-
-
-
+//@SuppressLint("CheckResult")
+//fun ImageView.loadImageBanner(
+//    url: () -> String,
+//    errorPlaceHolder: () -> Int = { R.drawable.no_image_banner }
+//) = try {
+//    val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
+//        strokeWidth = 5f
+//        centerRadius = 30f
+//        start()
+//    }
+//    load(if (url().startsWith("http")) url() else File(url())) {
+//        placeholder(circularProgressDrawable)
+//        crossfade(true)
+//        error(errorPlaceHolder())
+//    }
+//} catch (e: Exception) {
+//    e.printStackTrace()
+//}
 
 
 fun isValidPassword(password: String): Boolean {
@@ -283,23 +313,23 @@ fun AppCompatEditText.focus() {
 
 
 //var handlerMain = Handler(Looper.getMainLooper())
-var runnable : Runnable ?= null
+var runnable: Runnable? = null
 fun ViewPager.autoScroll() {
     autoScrollStop()
-        var scrollPosition = 0
-        runnable = object : Runnable {
-            override fun run() {
-                val count = adapter?.count ?: 0
-                setCurrentItem(scrollPosition++ % count, true)
-                if (handler != null){
-                    handler?.let {
-                        postDelayed(this, 3000)
-                    }
+    var scrollPosition = 0
+    runnable = object : Runnable {
+        override fun run() {
+            val count = adapter?.count ?: 0
+            setCurrentItem(scrollPosition++ % count, true)
+            if (handler != null) {
+                handler?.let {
+                    postDelayed(this, 3000)
                 }
             }
         }
-    if (handler != null){
-        if (runnable != null){
+    }
+    if (handler != null) {
+        if (runnable != null) {
             handler?.let {
                 post(runnable as Runnable)
             }
@@ -309,8 +339,8 @@ fun ViewPager.autoScroll() {
 
 
 fun ViewPager.autoScrollStop() {
-    if (handler != null){
-        if (runnable != null){
+    if (handler != null) {
+        if (runnable != null) {
             runnable?.let { handler?.removeCallbacks(it) }
         }
     }
@@ -318,8 +348,8 @@ fun ViewPager.autoScrollStop() {
 
 
 @SuppressLint("SimpleDateFormat")
-fun String.changeDateFormat(inDate : String, outDate: String) : String? {
-    var str : String ?= ""
+fun String.changeDateFormat(inDate: String, outDate: String): String? {
+    var str: String? = ""
     try {
         val inputFormat = SimpleDateFormat(inDate)
         val outputFormat = SimpleDateFormat(outDate)
@@ -330,12 +360,11 @@ fun String.changeDateFormat(inDate : String, outDate: String) : String? {
         } catch (e: ParseException) {
             e.printStackTrace()
         }
-    }catch (e: Exception){
+    } catch (e: Exception) {
         str = ""
     }
     return str
 }
-
 
 
 @SuppressLint("ClickableViewAccessibility")
@@ -355,23 +384,31 @@ fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit
 }
 
 
-fun ArrayList<String>.imageZoom(ivImage: ImageView) {
-//    StfalconImageViewer.Builder<String>(MainActivity.binding.root.context, this) { view, image ->
-//        Picasso.get().load(image).into(view)
-//    }
-//        .withTransitionFrom(ivImage)
-//        .withBackgroundColor(ContextCompat.getColor(MainActivity.mainActivity.get()!!, R.color._D9000000))
-//        .show()
+fun ArrayList<String>.imageZoom(ivImage: ImageView, type : Int) {
+    StfalconImageViewer.Builder<String>(MainActivity.mainActivity.get()!!, this) { view, image ->
+        Glide.with(MainActivity.mainActivity.get()!!)
+            .load(image)
+            .apply(if(type == 1) myOptionsGlide else if(type == 2) myOptionsGlideUser else myOptionsGlide)
+            .into(view)
+    }
+        .withTransitionFrom(ivImage)
+        .withBackgroundColor(
+            ContextCompat.getColor(
+                MainActivity.mainActivity.get()!!,
+                R.color._D9000000
+            )
+        )
+        .show()
 }
 
 
-fun getToken(callBack: String.() -> Unit){
+fun getToken(callBack: String.() -> Unit) {
     FirebaseMessaging.getInstance().token.addOnSuccessListener { result ->
-        if(result != null){
+        if (result != null) {
             callBack(result)
         }
     }.addOnCanceledListener {
-        callBack("result")
+        callBack("")
     }
 }
 
@@ -381,8 +418,10 @@ fun String.firstCharIfItIsLowercase() = replaceFirstChar {
 }
 
 
-
-fun RecyclerView.smoothSnapToPosition(position: Int, snapMode: Int = LinearSmoothScroller.SNAP_TO_END) {
+fun RecyclerView.smoothSnapToPosition(
+    position: Int,
+    snapMode: Int = LinearSmoothScroller.SNAP_TO_END
+) {
     val smoothScroller = object : LinearSmoothScroller(this.context) {
         override fun getVerticalSnapPreference(): Int = snapMode
         override fun getHorizontalSnapPreference(): Int = snapMode
@@ -396,7 +435,7 @@ fun Context.isTablet(): Boolean {
 }
 
 
-fun ViewPager2.setIsFocusableInTouchModeKtx(isFocusableInTouchMode:Boolean){
+fun ViewPager2.setIsFocusableInTouchModeKtx(isFocusableInTouchMode: Boolean) {
     if (childCount > 0) {
         val rl = this.getChildAt(0)
         if (rl is RecyclerView) {
@@ -406,7 +445,7 @@ fun ViewPager2.setIsFocusableInTouchModeKtx(isFocusableInTouchMode:Boolean){
 }
 
 
-fun ViewPager2.setDescendantFocusabilityKtx(focusability:Int) {
+fun ViewPager2.setDescendantFocusabilityKtx(focusability: Int) {
     if (childCount > 0) {
         val rl = this.getChildAt(0)
         if (rl is RecyclerView) {
@@ -414,7 +453,6 @@ fun ViewPager2.setDescendantFocusabilityKtx(focusability:Int) {
         }
     }
 }
-
 
 
 fun ViewPager2.updatePagerHeightForChild(view: View) {
@@ -436,16 +474,22 @@ fun ViewPager2.updatePagerHeightForChild(view: View) {
 //}
 
 
-
 val myOptionsGlide: RequestOptions = RequestOptions()
-    .placeholder(R.drawable.no_image)
+    .placeholder(R.drawable.main_logo_land)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .dontAnimate()
     //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
     .skipMemoryCache(false)
 
-fun String.glideImage(context : Context, ivMap: ShapeableImageView) {
-    GlideApp.with(context)
+val myOptionsGlideUser: RequestOptions = RequestOptions()
+    .placeholder(R.drawable.user_icon)
+    .diskCacheStrategy(DiskCacheStrategy.ALL)
+    .dontAnimate()
+    //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
+    .skipMemoryCache(false)
+
+fun String.glideImage(context: Context, ivMap: ShapeableImageView) {
+    Glide.with(context)
         .load(this)
         .apply(myOptionsGlide)
         .into(ivMap)
@@ -453,19 +497,18 @@ fun String.glideImage(context : Context, ivMap: ShapeableImageView) {
 
 
 val myOptionsGlidePortrait: RequestOptions = RequestOptions()
-    .placeholder(R.drawable.image_port)
+    .placeholder(R.drawable.main_logo)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .dontAnimate()
     //  .apply( RequestOptions().centerCrop().circleCrop().placeholder(R.drawable.no_image_2))
     .skipMemoryCache(false)
 
-fun String.glideImagePortrait(context : Context, ivMap: ShapeableImageView) {
-    GlideApp.with(context)
+fun String.glideImagePortrait(context: Context, ivMap: ShapeableImageView) {
+    Glide.with(context)
         .load(this)
         .apply(myOptionsGlidePortrait)
         .into(ivMap)
 }
-
 
 
 fun View.singleClick(throttleTime: Long = 600L, action: () -> Unit) {
@@ -481,8 +524,7 @@ fun View.singleClick(throttleTime: Long = 600L, action: () -> Unit) {
 }
 
 
-
- fun Context.isAppIsInBackground(): Boolean {
+fun Context.isAppIsInBackground(): Boolean {
     var isInBackground = true
     try {
         val am = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -500,4 +542,512 @@ fun View.singleClick(throttleTime: Long = 600L, action: () -> Unit) {
         ex.printStackTrace()
     }
     return isInBackground
+}
+
+
+fun Context.px(@DimenRes dimen: Int): Int = resources.getDimension(dimen).toInt()
+
+fun Context.dp(@DimenRes dimen: Int): Float = px(dimen) / resources.displayMetrics.density
+
+
+fun Context.dpToPx(dp: Int): Int {
+//    val displayMetrics: DisplayMetrics = resources.getDisplayMetrics()
+//    return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
+    val displayMetrics: DisplayMetrics = resources.getDisplayMetrics();
+    return ((dp * displayMetrics.density) + 0.5).toInt()
+}
+
+fun Context.pxToDp(px: Int): Int {
+//    val displayMetrics: DisplayMetrics = resources.getDisplayMetrics()
+//    return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
+    val displayMetrics: DisplayMetrics = resources.getDisplayMetrics();
+    return ((px / displayMetrics.density) + 0.5).toInt()
+}
+
+fun Context.calculateDpToPixel(dp: Int): Int {
+//    val metrics: DisplayMetrics = resources.getDisplayMetrics()
+    val d: Float = resources.getDisplayMetrics().density
+    return (dp * d).toInt()
+    // return dp * (metrics.density / 160)
+}
+
+
+fun String.relationType(array: Array<String>): String {
+    "" + this.let {
+        return when (it) {
+            "father" -> {
+                array[0]
+            }
+
+            "mother" -> {
+                array[1]
+            }
+
+            "son" -> {
+                array[2]
+            }
+
+            "daughter" -> {
+                array[3]
+            }
+
+            "sister" -> {
+                array[4]
+            }
+
+            "brother" -> {
+                array[5]
+            }
+
+            "husband" -> {
+                array[6]
+            }
+
+            "wife" -> {
+                array[7]
+            }
+
+            else -> {
+                ""
+            }
+        }
+    }
+}
+
+
+@Throws(Exception::class)
+fun String.parseResult(): String {
+    var words = ""
+    val jsonArray = JSONArray(this)
+    val jsonArray2 = jsonArray[0] as JSONArray
+    for (i in 0..jsonArray2.length() - 1) {
+        val jsonArray3 = jsonArray2[i] as JSONArray
+        words += jsonArray3[0].toString()
+    }
+    return words.toString()
+}
+
+
+var networkAlert: AlertDialog? = null
+
+@SuppressLint("SuspiciousIndentation")
+fun Context.callNetworkDialog() {
+    if (networkAlert?.isShowing == true) {
+        return
+    }
+    networkAlert = MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
+        .setTitle(resources.getString(R.string.app_name))
+        .setMessage(resources.getString(R.string.no_internet_connection))
+        .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
+            dialog.dismiss()
+        }
+//        .setCancelable(false)
+        .show()
+}
+
+
+fun Context.isNetworkAvailable() =
+    (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).run {
+        getNetworkCapabilities(activeNetwork)?.run {
+            hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    || hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                    || hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+        } ?: false
+    }
+
+
+fun Context.getTitle(_type: String, _title: String): String {
+    val locale = LocaleHelper.getLanguage(applicationContext)
+    var title = ""
+    if (_type == "scheme") {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.scheme_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.scheme_title)
+        }
+    } else if (_type == "notice") {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.notice_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.notice_title)
+        }
+    } else if (_type == "training") {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.training_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.training_title)
+        }
+    } else if (_type == "Vendor Details" || _type == "VendorDetails") {
+        if (_title.contains("approved")) {
+            title =
+                if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title)
+                } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_bn)
+                } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_gu)
+                } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_hi)
+                } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_kn)
+                } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_ml)
+                } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_mr)
+                } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_pa)
+                } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_ta)
+                } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_te)
+                } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_ur)
+                } else {
+                    applicationContext.resources.getString(R.string.vendor_details_title)
+                }
+        } else if (_title.contains("rejected")) {
+            title =
+                if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject)
+                } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_bn)
+                } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_gu)
+                } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_hi)
+                } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_kn)
+                } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_ml)
+                } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_mr)
+                } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_pa)
+                } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_ta)
+                } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_te)
+                } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject_ur)
+                } else {
+                    applicationContext.resources.getString(R.string.vendor_details_title_reject)
+                }
+        } else if (_title.contains("pending")) {
+            title =
+                if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_en)
+                } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_bn)
+                } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_gu)
+                } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_hi)
+                } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_kn)
+                } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_ml)
+                } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_mr)
+                } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_pa)
+                } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_ta)
+                } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_te)
+                } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+                    applicationContext.resources.getString(R.string.pending_title_ur)
+                } else {
+                    applicationContext.resources.getString(R.string.pending_title_en)
+                }
+        }
+    } else if (_type == "information") {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.information_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.information_title)
+        }
+    } else if (_title.contains("Feedback")) {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.feedback_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.feedback_title)
+        }
+    } else if (_title.contains("Complaint")) {
+        title = if (applicationContext.resources.getString(R.string.englishVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title)
+        } else if (applicationContext.resources.getString(R.string.bengaliVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_bn)
+        } else if (applicationContext.resources.getString(R.string.gujaratiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_gu)
+        } else if (applicationContext.resources.getString(R.string.hindiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_hi)
+        } else if (applicationContext.resources.getString(R.string.kannadaVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_kn)
+        } else if (applicationContext.resources.getString(R.string.malayalamVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_ml)
+        } else if (applicationContext.resources.getString(R.string.marathiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_mr)
+        } else if (applicationContext.resources.getString(R.string.punjabiVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_pa)
+        } else if (applicationContext.resources.getString(R.string.tamilVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_ta)
+        } else if (applicationContext.resources.getString(R.string.teluguVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_te)
+        } else if (applicationContext.resources.getString(R.string.urduVal) == "" + locale) {
+            applicationContext.resources.getString(R.string.complaint_title_ur)
+        } else {
+            applicationContext.resources.getString(R.string.complaint_title)
+        }
+    } else {
+        ""
+    }
+    return title
+}
+
+
+fun String.getChannelName(): String {
+    return if (this == "scheme") {
+        "Scheme"
+    } else if (this == "notice") {
+        "Notice"
+    } else if (this == "training") {
+        "Training"
+    } else if (this == "Vendor Details" || this == "VendorDetails") {
+        "Vendor Details"
+    } else if (this == "information") {
+        "Information Center"
+    } else if (this == "Feedback") {
+        "Complaints/Feedback"
+    } else {
+        "Others"
+    }
+}
+
+
+fun String.getNotificationId(): Int {
+    return if (this == "scheme") {
+        1
+    } else if (this == "notice") {
+        2
+    } else if (this == "training") {
+        3
+    } else if (this == "Vendor Details" || this == "VendorDetails") {
+        4
+    } else if (this == "information") {
+        5
+    } else if (this == "Feedback") {
+        6
+    } else {
+        7
+    }
+}
+
+
+//@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+//inline fun <reified T : Parcelable> Intent.parcelable(key: String): String? = when {
+//    SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
+//    else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T
+//}
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
+    SDK_INT >= 33 -> getParcelable(key, T::class.java)
+    else -> @Suppress("DEPRECATION") getParcelable(key) as? T
+}
+
+
+fun String.parseOneTimeCode(): String {
+    return if (this != null && this.length >= 6) {
+        this.trim { it <= ' ' }.substring(0, 6)
+    } else ""
+}
+
+
+@Suppress("DEPRECATION")
+inline fun <reified P : Parcelable> Intent.getParcelable(key: String): P? {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getParcelableExtra(key, P::class.java)
+    } else {
+        getParcelableExtra(key)
+    }
+}
+
+fun Context.determineScreenDensityCode(): String {
+    return when (resources.displayMetrics.densityDpi) {
+        DisplayMetrics.DENSITY_LOW -> "ldpi"
+        DisplayMetrics.DENSITY_MEDIUM -> "mdpi"
+        DisplayMetrics.DENSITY_HIGH -> "hdpi"
+        DisplayMetrics.DENSITY_XHIGH, DisplayMetrics.DENSITY_280 -> "xhdpi"
+        DisplayMetrics.DENSITY_XXHIGH, DisplayMetrics.DENSITY_360, DisplayMetrics.DENSITY_400, DisplayMetrics.DENSITY_420 -> "xxhdpi"
+        DisplayMetrics.DENSITY_XXXHIGH, DisplayMetrics.DENSITY_560 -> "xxxhdpi"
+        else -> "Unknown code ${resources.displayMetrics.densityDpi}"
+    }
+}
+
+
+fun Context.getScreenDensity(): String {
+    val density: String
+    when (resources.displayMetrics.densityDpi) {
+        DisplayMetrics.DENSITY_LOW -> density = "LDPI"
+        DisplayMetrics.DENSITY_140 -> density = "LDPI - MDPI"
+        DisplayMetrics.DENSITY_MEDIUM -> density = "MDPI"
+        DisplayMetrics.DENSITY_180, DisplayMetrics.DENSITY_200, DisplayMetrics.DENSITY_220 -> density = "MDPI - HDPI"
+        DisplayMetrics.DENSITY_HIGH -> density = "HDPI"
+        DisplayMetrics.DENSITY_260, DisplayMetrics.DENSITY_280, DisplayMetrics.DENSITY_300 -> density = "HDPI - XHDPI"
+        DisplayMetrics.DENSITY_XHIGH -> density = "XHDPI"
+        DisplayMetrics.DENSITY_340, DisplayMetrics.DENSITY_360, DisplayMetrics.DENSITY_400, DisplayMetrics.DENSITY_420, DisplayMetrics.DENSITY_440 -> density =
+            "XHDPI - XXHDPI"
+        DisplayMetrics.DENSITY_XXHIGH -> density = "XXHDPI"
+        DisplayMetrics.DENSITY_560, DisplayMetrics.DENSITY_600 -> density = "XXHDPI - XXXHDPI"
+        DisplayMetrics.DENSITY_XXXHIGH -> density = "XXXHDPI"
+        DisplayMetrics.DENSITY_TV -> density = "TVDPI"
+        else -> density = "UNKNOWN"
+    }
+    return density
+}
+
+
+fun Context.getDensityName(): String {
+    val density = resources.displayMetrics.density
+    if (density >= 4.0) {
+        return "xxxhdpi"
+    }
+    if (density >= 3.0) {
+        return "xxhdpi"
+    }
+    if (density >= 2.0) {
+        return "xhdpi"
+    }
+    if (density >= 1.5) {
+        return "hdpi"
+    }
+    return if (density >= 1.0) {
+        "mdpi"
+    } else "ldpi"
+}
+
+
+
+
+@RequiresApi(Build.VERSION_CODES.P)
+fun Context.getSignature(): String {
+    var info: PackageInfo? = null
+    try {
+        info = packageManager.getPackageInfo(
+            packageName,
+            PackageManager.GET_SIGNING_CERTIFICATES
+        )
+        val sigHistory: Array<Signature> = info.signingInfo.signingCertificateHistory
+        val signature: ByteArray = sigHistory[0].toByteArray()
+        val md = MessageDigest.getInstance("SHA1")
+        val digest = md.digest(signature)
+        val sha1Builder = StringBuilder()
+        for (b in digest) sha1Builder.append(String.format("%02x", b))
+        return sha1Builder.toString()
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+    } catch (e: NoSuchAlgorithmException) {
+        e.printStackTrace()
+    }
+    return ""
 }

@@ -15,7 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.RegisterBinding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
@@ -25,6 +25,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.singleClick
 import com.streetsaarthi.nasvi.utils.updatePagerHeightForChild
 
@@ -59,7 +61,7 @@ var tabPosition: Int = 0;
         callBackListener = this
 
         binding.apply {
-            var adapter= RegisterAdapter(requireActivity())
+            val adapter= RegisterAdapter(requireActivity())
             adapter.notifyDataSetChanged()
             introViewPager.adapter=adapter
             introViewPager.setUserInputEnabled(false);
@@ -209,7 +211,7 @@ var tabPosition: Int = 0;
                 introViewPager.setCurrentItem(2, false)
                 btSignIn.setText(getString(R.string.RegisterNow))
             } else if (pos == 6) {
-                var docs = StringBuffer()
+                val docs = StringBuffer()
                 if(viewModel.data.ImageUploadCOVBoolean == true){
                     docs.append(getString(R.string.COVText)+" ")
                 }
@@ -398,7 +400,11 @@ var tabPosition: Int = 0;
                         File(viewModel.data.UploadApprovalLetter!!).asRequestBody("image/*".toMediaTypeOrNull())
                     )
                 }
-              viewModel.registerWithFiles(view = requireView(), requestBody.build(), ""+viewModel.data.vendor_first_name!!)
+                 if(networkFailed) {
+                     viewModel.registerWithFiles(view = requireView(), requestBody.build(), ""+viewModel.data.vendor_first_name!!)
+                 } else {
+                     requireContext().callNetworkDialog()
+                 }
             }
         }
     }

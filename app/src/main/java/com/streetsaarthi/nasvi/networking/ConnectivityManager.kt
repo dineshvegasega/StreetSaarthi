@@ -1,13 +1,11 @@
 package com.streetsaarthi.nasvi.networking
 
-import android.content.ContentValues
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import androidx.lifecycle.LiveData
-import com.streetsaarthi.nasvi.screens.onboarding.networking.PING
 import com.streetsaarthi.nasvi.utils.ioThread
 import com.streetsaarthi.nasvi.utils.mainDispatcher
 import kotlinx.coroutines.delay

@@ -120,7 +120,6 @@
     <string name="registration_successful">Registration Successful</string>
     <string name="someone_from_our_team_will_contact_you_within_48hrs_to_verify_your_registration">Someone from our team will contact you within 48 Hrs to verify your registration.</string>
     <string name="RegisterNow">Register Now</string>
-<!--    Congratulations!-->
     <string name="resendOtp">Re-send OTP</string>
     <string name="OTPnotverified">OTP Not Verified</string>
     <string name="YourNewPassword">Your New Password</string>
@@ -528,8 +527,8 @@
     <string name="complaint_type">Complaint</string>
     <string name="training_title">You have One New Training</string>
     <string name="notice_title">You have One New Notice</string>
-    <string name="scheme_title">You have One New  Scheme</string>
-    <string name="vendor_details_title">Congratulations! Your profile has been approved</string>
+    <string name="scheme_title">You have One New Scheme</string>
+    <string name="vendor_details_title">Congratulations! Your profile has been approved, please logout and login again.</string>
     <string name="feedback_title">You have a Reply on Your Feedback</string>
     <string name="complaint_title">You have a Reply on Your Complaint</string>
     <string name="information_title">You have One New Information</string>
@@ -541,8 +540,190 @@
     <string name="congratulations">Congratulations!</string>
     <string name="your_initial_registration_is_complete">your initial registration is complete.</string>
     <string name="need_to_add_complete_profile">You need to complete your profile before submitting a complaint/feedback.</string>
-    <string name="conversation_marked_Close_admin">This Conversation was marked Close by admin on</string>
-    <string name="conversation_marked_reOpen_admin">This Conversation was marked Re-Open by admin on</string>
+    <string name="conversation_marked_admin">This Conversation was marked %s by %s on</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="nominee_details">Nominee Details</string>
+    <string name="list_of_nominee">List of Nominee</string>
+    <string name="relationship_TypeStar">Relationship Type*</string>
+    <string name="nameStar">Name*</string>
+    <string-array name="relation_array" tools:ignore="InconsistentArrays">
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Son</item>
+        <item>Daughter</item>
+        <item>Sister</item>
+        <item>Brother</item>
+        <item>Husband</item>
+        <item>Wife</item>
+    </string-array>
+    <string name="select_nominee_type">Select Nominee Type</string>
+    <string name="enter_nominee_name">Enter Nominee Detials</string>
+    <string name="nominee_added_updated_successfully">Nominee Added/Updated Successfully</string>
+    <string name="add_edit">Add/Edit</string>
+    <string name='re_open_info'>Re-open</string>
+    <string name="close_info">Close</string>
+    <string name='conversation_marked_admin_open_hi'>This Conversation was marked %s by %s on</string>
+    <string name='conversation_marked_admin_close_hi'>This Conversation was marked %s by %s on</string>
+    <string name="ok">OK</string>
+
+
+
+    <string name='notice_title_bn' translatable="false">আপনার কাছে একটি নতুন বিজ্ঞপ্তি আছে</string>
+    <string name='notice_title_gu' translatable="false">તમારી પાસે એક નવી સૂચના છે</string>
+    <string name='notice_title_hi' translatable="false">आपके पास एक नया नोटिस है</string>
+    <string name='notice_title_kn' translatable="false">ನೀವು ಒಂದು ಹೊಸ ಸೂಚನೆಯನ್ನು ಹೊಂದಿರುವಿರಿ</string>
+    <string name="notice_title_ml" translatable="false">നിങ്ങൾക്ക് ഒരു പുതിയ അറിയിപ്പുണ്ട്</string>
+    <string name="notice_title_mr" translatable="false">तुमच्याकडे एक नवीन सूचना आहे</string>
+    <string name="notice_title_pa" translatable="false">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵਾਂ ਨੋਟਿਸ ਹੈ</string>
+    <string name="notice_title_ta" translatable="false">உங்களிடம் ஒரு புதிய அறிவிப்பு உள்ளது</string>
+    <string name="notice_title_te" translatable="false">మీకు ఒక కొత్త నోటీసు ఉంది</string>
+    <string name="notice_title_ur" translatable="false">آپ کے پاس ایک نیا نوٹس ہے</string>
+
+
+    <string name="scheme_title_bn" translatable="false">আপনার একটি নতুন স্কিম আছে</string>৷
+    <string name="scheme_title_gu" translatable="false">તમારી પાસે એક નવી યોજના છે</string>
+    <string name='scheme_title_hi' translatable="false">आपके पास एक नई योजना है</string>
+    <string name="scheme_title_kn" translatable="false">ನೀವು ಒಂದು ಹೊಸ ಯೋಜನೆಯನ್ನು ಹೊಂದಿರುವಿರಿ</string>
+    <string name="scheme_title_ml" translatable="false">നിങ്ങൾക്ക് ഒരു പുതിയ സ്കീം ഉണ്ട്</string>
+    <string name="scheme_title_mr" translatable="false">तुमच्याकडे एक नवीन योजना आहे</string>
+    <string name="scheme_title_pa" translatable="false">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਸਕੀਮ ਹੈ</string>
+    <string name="scheme_title_ta" translatable="false">உங்களிடம் ஒரு புதிய திட்டம் உள்ளது</string>
+    <string name="scheme_title_te" translatable="false">మీకు ఒక కొత్త పథకం ఉంది</string>
+    <string name="scheme_title_ur" translatable="false">آپ کے پاس ایک نئی اسکیم ہے</string>
+
+
+    <string name="training_title_bn" translatable="false">আপনার একটি নতুন প্রশিক্ষণ আছে</string>
+    <string name="training_title_gu" translatable="false">તમારી પાસે એક નવી તાલીમ છે</string>
+    <string name='training_title_hi' translatable="false">आपके पास एक नया प्रशिक्षण है</string>
+    <string name="training_title_kn" translatable="false">ನೀವು ಒಂದು ಹೊಸ ತರಬೇತಿಯನ್ನು ಹೊಂದಿರುವಿರಿ</string>
+    <string name="training_title_ml" translatable="false">നിങ്ങൾക്ക് ഒരു പുതിയ പരിശീലനം ഉണ്ട്</string>
+    <string name = "training_title_mr" translatable="false"> तुमच्याकडे एक नवीन प्रशिक्षण आहे</string>
+    <string name="training_title_pa" translatable="false">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਸਿਖਲਾਈ ਹੈ</string>
+    <string name="training_title_ta" translatable="false">உங்களுக்கு ஒரு புதிய பயிற்சி உள்ளது</string>
+    <string name="training_title_te" translatable="false">మీకు ఒక కొత్త శిక్షణ ఉంది</string>
+    <string name = "training_title_ur" translatable="false"> آپ کے پاس ایک نئی تربیت ہے</string>
+
+
+    <string name="vendor_details_title_bn" translatable="false">অভিনন্দন! আপনার প্রোফাইল অনুমোদিত হয়েছে, অনুগ্রহ করে লগআউট করুন এবং আবার লগইন করুন।</string>
+    <string name="vendor_details_title_gu" translatable="false">અભિનંદન! તમારી પ્રોફાઇલ મંજૂર કરવામાં આવી છે, કૃપા કરીને લોગઆઉટ કરો અને ફરીથી લોગિન કરો.</string>
+    <string name='vendor_details_title_hi' translatable="false">बधाई हो! आपकी प्रोफ़ाइल स्वीकृत हो गई है, कृपया लॉगआउट करें और फिर से लॉगिन करें।</string>
+    <string name="vendor_details_title_kn" translatable="false">ಅಭಿನಂದನೆಗಳು! ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಅನುಮೋದಿಸಲಾಗಿದೆ, ದಯವಿಟ್ಟು ಲಾಗ್‌ಔಟ್ ಮಾಡಿ ಮತ್ತು ಮತ್ತೆ ಲಾಗಿನ್ ಮಾಡಿ.</string>
+    <string name="vendor_details_title_ml" translatable="false">അഭിനന്ദനങ്ങൾ! നിങ്ങളുടെ പ്രൊഫൈൽ അംഗീകരിച്ചു, ദയവായി ലോഗ് ഔട്ട് ചെയ്‌ത് വീണ്ടും ലോഗിൻ ചെയ്യുക.</string>
+    <string name="vendor_details_title_mr" translatable="false">अभिनंदन! तुमचे प्रोफाइल मंजूर झाले आहे, कृपया लॉगआउट करा आणि पुन्हा लॉग इन करा.</string>
+    <string name="vendor_details_title_pa" translatable="false">ਵਧਾਈਆਂ! ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਮਨਜ਼ੂਰ ਹੋ ਗਈ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਲੌਗਆਉਟ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਲੌਗਇਨ ਕਰੋ।</string>
+    <string name="vendor_details_title_ta" translatable="false">வாழ்த்துகள்! உங்கள் சுயவிவரம் அங்கீகரிக்கப்பட்டது, வெளியேறி மீண்டும் உள்நுழையவும்.</string>
+    <string name="vendor_details_title_te" translatable="false">అభినందనలు! మీ ప్రొఫైల్ ఆమోదించబడింది, దయచేసి లాగ్ అవుట్ చేసి మళ్లీ లాగిన్ చేయండి.</string>
+    <string name="vendor_details_title_ur" translatable="false">مبارک ہو! آپ کا پروفائل منظور ہو گیا ہے، براہ کرم لاگ آؤٹ کریں اور دوبارہ لاگ ان کریں۔</string>
+
+
+    <string name="vendor_details_title_reject" translatable="false">Your profile has been rejected. Please contact admin.</string>
+    <string name="vendor_details_title_reject_bn" translatable="false">আপনার প্রোফাইল প্রত্যাখ্যান করা হয়েছে. অ্যাডমিনের সাথে যোগাযোগ করুন.</string>
+    <string name="vendor_details_title_reject_gu" translatable="false">તમારી પ્રોફાઇલ નકારવામાં આવી છે. કૃપા કરીને એડમિનનો સંપર્ક કરો.</string>
+    <string name='vendor_details_title_reject_hi' translatable="false">आपकी प्रोफ़ाइल अस्वीकार कर दी गई है. कृपया व्यवस्थापक से संपर्क करें.</string>
+    <string name="vendor_details_title_reject_kn" translatable="false">ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಅನ್ನು ತಿರಸ್ಕರಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.</string>
+    <string name="vendor_details_title_reject_ml" translatable="false">നിങ്ങളുടെ പ്രൊഫൈൽ നിരസിക്കപ്പെട്ടു. ദയവായി അഡ്മിനെ ബന്ധപ്പെടുക.</string>
+    <string name="vendor_details_title_reject_mr" translatable="false">तुमचे प्रोफाइल नाकारले गेले आहे. कृपया प्रशासकाशी संपर्क साधा.</string>
+    <string name="vendor_details_title_reject_pa" translatable="false">ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਨੂੰ ਅਸਵੀਕਾਰ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਐਡਮਿਨ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।</string>
+    <string name="vendor_details_title_reject_ta" translatable="false">உங்கள் சுயவிவரம் நிராகரிக்கப்பட்டது. நிர்வாகியை தொடர்பு கொள்ளவும்.</string>
+    <string name="vendor_details_title_reject_te" translatable="false">మీ ప్రొఫైల్ తిరస్కరించబడింది. దయచేసి నిర్వాహకుడిని సంప్రదించండి.</string>
+    <string name="vendor_details_title_reject_ur" translatable="false">آپ کا پروفائل مسترد کر دیا گیا ہے۔ براہ کرم ایڈمن سے رابطہ کریں۔</string>
+
+    <string name="information_title_bn" translatable="false">আপনার কাছে একটি নতুন তথ্য আছে</string>
+    <string name="information_title_gu" translatable="false">તમારી પાસે એક નવી માહિતી છે</string>
+    <string name='information_title_hi' translatable="false">आपके पास एक नई जानकारी है</string>
+    <string name="information_title_kn" translatable="false">ನೀವು ಒಂದು ಹೊಸ ಮಾಹಿತಿಯನ್ನು ಹೊಂದಿರುವಿರಿ</string>
+    <string name="information_title_ml" translatable="false">നിങ്ങൾക്ക് ഒരു പുതിയ വിവരമുണ്ട്</string>
+    <string name="information_title_mr" translatable="false">तुमच्याकडे एक नवीन माहिती आहे</string>
+    <string name="information_title_pa" translatable="false">ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਨਵੀਂ ਜਾਣਕਾਰੀ ਹੈ</string>
+    <string name="information_title_ta" translatable="false">உங்களிடம் ஒரு புதிய தகவல் உள்ளது</string>
+    <string name="information_title_te" translatable="false">మీకు ఒక కొత్త సమాచారం ఉంది</string>
+    <string name="information_title_ur" translatable="false">آپ کے پاس ایک نئی معلومات ہے</string>
+
+
+
+    <string name="feedback_title_bn" translatable="false">আপনার প্রতিক্রিয়ার উপর আপনার একটি উত্তর আছে</string>
+    <string name="feedback_title_gu" translatable="false">તમારી પાસે તમારા પ્રતિસાદ પર જવાબ છે</string>
+    <string name='feedback_title_hi' translatable="false">आपके पास आपके प्रतिक्रिया पर एक उत्तर है</string>
+    <string name="feedback_title_kn" translatable="false">ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ ನೀವು ಪ್ರತ್ಯುತ್ತರವನ್ನು ಹೊಂದಿರುವಿರಿ</string>
+    <string name="feedback_title_ml" translatable="false">നിങ്ങളുടെ ഫീഡ്‌ബാക്കിൽ നിങ്ങൾക്ക് ഒരു മറുപടിയുണ്ട്</string>
+    <string name="feedback_title_mr" translatable="false">तुमच्या फीडबॅकवर तुमच्याकडे प्रत्युत्तर आहे</string>
+    <string name="feedback_title_pa" translatable="false">ਤੁਹਾਡੇ ਫੀਡਬੈਕ \'ਤੇ ਇੱਕ ਜਵਾਬ ਹੈ</string>
+    <string name="feedback_title_ta" translatable="false">உங்கள் பின்னூட்டத்தில் பதில் உள்ளது</string>
+    <string name="feedback_title_te" translatable="false">మీ అభిప్రాయంపై మీకు ప్రత్యుత్తరం ఉంది</string>
+    <string name="feedback_title_ur" translatable="false">آپ کے تاثرات پر آپ کے پاس ایک جواب ہے</string>
+
+
+    <string name="complaint_title_bn" translatable="false">আপনার অভিযোগের একটি উত্তর আছে</string>
+    <string name="complaint_title_gu" translatable="false">તમારી ફરિયાદ પર તમારી પાસે જવાબ છે</string>
+    <string name='complaint_title_hi' translatable="false">आपके पास आपकी शिकायत का उत्तर है</string>
+    <string name="complaint_title_kn" translatable="false">ನಿಮ್ಮ ದೂರಿಗೆ ನೀವು ಪ್ರತ್ಯುತ್ತರವನ್ನು ಹೊಂದಿರುವಿರಿ</string>
+    <string name="complaint_title_ml" translatable="false">നിങ്ങളുടെ പരാതിയിൽ നിങ്ങൾക്ക് ഒരു മറുപടിയുണ്ട്</string>
+    <string name="complaint_title_mr" translatable="false">तुमच्या तक्रारीवर तुमच्याकडे उत्तर आहे</string>
+    <string name="complaint_title_pa" translatable="false">ਤੁਹਾਡੇ ਕੋਲ ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ ਦਾ ਜਵਾਬ ਹੈ</string>
+    <string name="complaint_title_ta" translatable="false">உங்கள் புகாருக்கு உங்களிடம் பதில் உள்ளது</string>
+    <string name="complaint_title_te" translatable="false">మీ ఫిర్యాదుపై మీకు ప్రత్యుత్తరం ఉంది</string>
+    <string name="complaint_title_ur" translatable="false">آپ کے پاس آپ کی شکایت کا جواب ہے</string>
+
+    <string name="pending_title_en" translatable="false">Your profile has been still pending. Please contact admin.</string>
+    <string name="pending_title_bn" translatable="false">আপনার প্রোফাইল এখনও মুলতুবি রয়েছে৷ অনুগ্রহ করে প্রশাসকের সাথে যোগাযোগ করুন৷</string>
+    <string name="pending_title_gu" translatable="false">તમારી પ્રોફાઇલ હજુ બાકી છે. કૃપા કરીને એડમિનનો સંપર્ક કરો.</string>
+    <string name="pending_title_hi" translatable="false">आपकी प्रोफ़ाइल अभी भी लंबित है। कृपया व्यवस्थापक से संपर्क करें.</string>
+    <string name="pending_title_kn" translatable="false">ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಇನ್ನೂ ಬಾಕಿ ಉಳಿದಿದೆ. ದಯವಿಟ್ಟು ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.</string>
+    <string name="pending_title_ml" translatable="false">നിങ്ങളുടെ പ്രൊഫൈൽ ഇപ്പോഴും തീർച്ചപ്പെടുത്തിയിട്ടില്ല. അഡ്മിനെ ബന്ധപ്പെടുക.</string>
+    <string name="pending_title_mr" translatable="false">तुमची प्रोफाइल अद्याप प्रलंबित आहे. कृपया प्रशासकाशी संपर्क साधा.</string>
+    <string name="pending_title_pa" translatable="false">ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਅਜੇ ਵੀ ਲੰਬਿਤ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਪ੍ਰਸ਼ਾਸਕ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।</string>
+    <string name="pending_title_ta" translatable="false">உங்கள் சுயவிவரம் இன்னும் நிலுவையில் உள்ளது. நிர்வாகியைத் தொடர்பு கொள்ளவும்.</string>
+    <string name="pending_title_te" translatable="false">మీ ప్రొఫైల్ ఇంకా పెండింగ్‌లో ఉంది. దయచేసి నిర్వాహకుడిని సంప్రదించండి.</string>
+    <string name="pending_title_ur" translatable="false">آپ کا پروفائل ابھی تک زیر التواء ہے۔ براہ کرم منتظم سے رابطہ کریں۔</string>
+
+    <string name="closed">Closed</string>
+
+
+    <string name="subscription">Subscription</string>
+    <string name="view_manage">View/Manage</string>
+    <string name="history">History</string>
+
+    <string name="select_month_year">Select Month/Year</string>
+    <string name="choose_number">Choose Number</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="calculate_price">Calculate Price</string>
+    <string name="price_breakup">Price Breakup</string>
+    <string name="membership_cost">Membership cost</string>
+    <string name="validity">Validity</string>
+    <string name="gst">GST</string>
+    <string name="coupon_discount">Coupon Discount</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="purchase_subscription">Purchase Subscription</string>
+    <string name="months">Months</string>
+    <string name="years">Years</string>
+    <string name="s_no">S.no.</string>
+    <string name="date">Date</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="duration">Duration</string>
+
+    <string-array name="month_year_array">
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
+
+
+    <string-array name="numbers_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
+
+    <string name="subscription_details">Subscription Details</string>
+    <string name="please_select_month_year_and_number">Please select Month/Year and Number</string>
 
 
 
@@ -566,10 +747,10 @@
     <string name="terms166">Terms and Conditions (also referred as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service. This Terms and Conditions agreement has been created with the help of the Free Terms and Conditions Generator.</string>
     <string name="terms16">Third-party Social Media Service means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</string>
     <string name="terms17">Website refers to Nasvi.in, accessible from https://nasvi.in/</string>
+
     <string name="terms18">You means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</string>
     <string name="terms19">Acknowledgment</string>
     <string name="terms20">These are the Terms and Conditions governing the use of this Service and the agreement that operates between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.</string>
-
     <string name="terms21">Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users and others who access or use the Service.</string>
     <string name="terms22">By accessing or using the Service You agree to be bound by these Terms and Conditions. If You disagree with any part of these Terms and Conditions then You may not access the Service.</string>
     <string name="terms23">You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.</string>
@@ -579,6 +760,7 @@
     <string name="terms27">The Company has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that the Company shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods or services available on or through any such web sites or services.</string>
     <string name="terms28">We strongly advise You to read the terms and conditions and privacy policies of any third-party web sites or services that You visit.</string>
     <string name="terms29">Termination</string>
+
     <string name="terms30">We may terminate or suspend Your access immediately, without prior notice or liability, for any reason whatsoever, including without limitation if You breach these Terms and Conditions.</string>
     <string name="terms31">Upon termination, Your right to use the Service will cease immediately.</string>
     <string name="terms32">Limitation of Liability</string>
@@ -586,6 +768,7 @@
     <string name="terms34">To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits, loss of data or other information, for business interruption, for personal injury, loss of privacy arising out of or in any way related to the use of or inability to use the Service, third-party software and/or third-party hardware used with the Service, or otherwise in connection with any provision of this Terms), even if the Company or any supplier has been advised of the possibility of such damages and even if the remedy fails of its essential purpose.</string>
     <string name="terms35">Some states do not allow the exclusion of implied warranties or limitation of liability for incidental or consequential damages, which means that some of the above limitations may not apply. In these states, each party\'s liability will be limited to the greatest extent permitted by law.</string>
     <string name="terms36">"AS IS" and "AS AVAILABLE" Disclaimer</string>
+
     <string name="terms37">The Service is provided to You "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice. Without limitation to the foregoing, the Company provides no warranty or undertaking, and makes no representation of any kind that the Service will meet Your requirements, achieve any intended results, be compatible or work with any other software, applications, systems or services, operate without interruption, meet any performance or reliability standards or be error free or that any errors or defects can or will be corrected.</string>
     <string name="terms38">Without limiting the foregoing, neither the Company nor any of the company\'s provider makes any representation or warranty of any kind, express or implied: (i) as to the operation or availability of the Service, or the information, content, and materials or products included thereon; (ii) that the Service will be uninterrupted or error-free; (iii) as to the accuracy, reliability, or currency of any information or content provided through the Service; or (iv) that the Service, its servers, the content, or e-mails sent from or on behalf of the Company are free of viruses, scripts, trojan horses, worms, malware, timebombs or other harmful components.</string>
     <string name="terms39">Some jurisdictions do not allow the exclusion of certain types of warranties or limitations on applicable statutory rights of a consumer, so some or all of the above exclusions and limitations may not apply to You. But in such a case the exclusions and limitations set forth in this section shall be applied to the greatest extent enforceable under applicable law.</string>
@@ -593,6 +776,7 @@
     <string name="terms41">The laws of the Country, excluding its conflicts of law rules, shall govern this Terms and Your use of the Service. Your use of the Application may also be subject to other local, state, national, or international laws.</string>
     <string name="terms42">Disputes Resolution</string>
     <string name="terms43">If You have any concern or dispute about the Service, You agree to first try to resolve the dispute informally by contacting the Company.</string>
+
     <string name="terms44">For European Union (EU) Users</string>
     <string name="terms45">If You are a European Union consumer, you will benefit from any mandatory provisions of the law of the country in which you are resident in.</string>
     <string name="terms46">United States Legal Compliance</string>
@@ -602,6 +786,7 @@
     <string name="terms50">Waiver</string>
     <string name="terms51">Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not effect a party\'s ability to exercise such right or require such performance at any time thereafter nor shall the waiver of a breach constitute a waiver of any subsequent breach.</string>
     <string name="terms52">Translation Interpretation</string>
+
     <string name="terms53">These Terms and Conditions may have been translated if We have made them available to You on our Service. You agree that the original English text shall prevail in the case of a dispute.</string>
     <string name="terms54">Changes to These Terms and Conditions</string>
     <string name="terms55">We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material We will make reasonable efforts to provide at least 30 days\' notice prior to any new terms taking effect. What constitutes a material change will be determined at Our sole discretion.</string>
@@ -609,7 +794,6 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
-
 
 
 </resources>

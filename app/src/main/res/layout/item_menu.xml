@@ -27,7 +27,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:text="@string/back_to_login"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_12sdp"
             app:fontFamily="@font/roboto_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -56,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="MissingConstraints"
             android:visibility="visible"
-            android:background="@color/_E79D46"
+            android:background="@color/_EDB678"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

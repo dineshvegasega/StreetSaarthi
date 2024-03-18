@@ -17,7 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_12sdp"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_25sdp"
         app:layout_constraintTop_toTopOf="parent"
@@ -53,6 +53,7 @@
             android:imeOptions="actionNext"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:maxLength="15"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -79,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/_F02A2A"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_12sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_25sdp"
             app:layout_constraintTop_toBottomOf="@+id/layoutCreatePassword"
@@ -116,7 +117,8 @@
             android:layout_marginTop="0dp"
             android:imeOptions="actionDone"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:maxLength="15"/>
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -142,7 +144,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/_F02A2A"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_12sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_25sdp"
             app:layout_constraintTop_toBottomOf="@+id/layoutReEnterPassword"
@@ -176,7 +178,7 @@
             android:button="@drawable/check_box_button"
             android:buttonTint="@color/_363438"
             android:textColor="@color/_363438"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/roboto_regular"
             />
 
@@ -185,7 +187,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/_363438"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_11sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cbRememberMe"

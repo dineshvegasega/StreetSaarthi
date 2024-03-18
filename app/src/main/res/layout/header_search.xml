@@ -12,15 +12,17 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textHeaderTxt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/live_schemes"
+        android:gravity="start"
+        android:text="@string/title"
         android:textColor="@color/black"
-        android:textSize="@dimen/_13ssp"
+        android:textSize="@dimen/_13sdp"
         app:fontFamily="@font/roboto_bold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btNominee"
         app:layout_constraintTop_toTopOf="parent"
+
         tools:ignore="HardcodedText" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -30,7 +32,7 @@
         android:gravity="center"
         android:text="@string/edit"
         android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_12sdp"
         app:fontFamily="@font/roboto_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -48,7 +50,7 @@
         android:gravity="center"
         android:text="@string/live_schemes"
         android:textColor="@color/_79747E"
-        android:textSize="@dimen/_11ssp"
+        android:textSize="@dimen/_11sdp"
         app:fontFamily="@font/roboto_regular"
         app:layout_constraintStart_toEndOf="@+id/textHeaderTxt"
         app:layout_constraintTop_toTopOf="parent"
@@ -69,10 +71,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cornerRadius="@dimen/_4sdp"
-        android:textSize="@dimen/_10ssp"
+        android:textSize="@dimen/_10sdp"
         android:visibility="gone"
         />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btNominee"
+        style="@style/PrimaryButtonYellow"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_25sdp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/nominee_details"
+        app:iconTint="@color/white"
+        android:backgroundTint="@color/_E79D46"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cornerRadius="@dimen/_4sdp"
+        android:textSize="@dimen/_10sdp"
+        android:visibility="gone"
+        app:icon="@drawable/nominee"
+        />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextSearch"

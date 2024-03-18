@@ -1,12 +1,16 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -16,31 +20,42 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
-import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.ItemSchemeDetail
+import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.isBackApp
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
+import com.streetsaarthi.nasvi.utils.parseResult
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,10 +64,38 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
     val adapter by lazy { LiveSchemesAdapter(this) }
 
 
+    var alertDialog: AlertDialog? = null
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
+
 
     private var itemLiveSchemesResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemes : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResult
-    fun liveScheme(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveScheme(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -61,11 +104,13 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                     if (response.isSuccessful){
                         itemLiveSchemesResult.value = response.body() as BaseResponseDC<Any>
                     }
+                    isBackApp = false
                 }
 
                 override fun error(message: String) {
                     super.error(message)
-                    showSnackBar(message)
+//                    showSnackBar(message)
+                    isBackApp = false
                 }
 
                 override fun loading() {
@@ -79,7 +124,7 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
 
     private var itemLiveSchemesResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemesSecond : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResultSecond
-    fun liveSchemeSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveSchemeSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -88,11 +133,13 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                     if (response.isSuccessful){
                         itemLiveSchemesResultSecond.value =  response.body() as BaseResponseDC<Any>
                     }
+                    isBackApp = false
                 }
 
                 override fun error(message: String) {
                     super.error(message)
-                    showSnackBar(message)
+//                    showSnackBar(message)
+                    isBackApp = false
                 }
 
                 override fun loading() {
@@ -159,8 +206,8 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
 
                                 dialogBinding.apply {
                                     data.scheme_image?.url?.glideImage(root.context, ivMap)
-                                    textTitle.setText(data.name)
-                                    textDesc.setText(data.description)
+                                    textTitle.setText(oldItemLiveScheme.name)
+                                    textDesc.setText(oldItemLiveScheme.description)
 
                                     if (data.status == "Active" && oldItemLiveScheme.user_scheme_status == "applied"){
                                         textHeaderTxt4.text = root.context.resources.getText(R.string.applied)
@@ -211,14 +258,18 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
                                                 }
                                             })
                                         } else {
-                                            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                                            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                                 if (loginUser != null) {
                                                     val obj: JSONObject = JSONObject().apply {
                                                         put("scheme_id", data?.scheme_id)
                                                         put("user_type", USER_TYPE)
                                                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                                                     }
-                                                    applyLink(obj, position)
+                                                    if(networkFailed) {
+                                                        applyLink(obj, position)
+                                                    } else {
+                                                        dialogBinding.view.context.callNetworkDialog()
+                                                    }
                                                 }
                                             }
                                         }
@@ -261,6 +312,40 @@ class LiveSchemesVM @Inject constructor(private val repository: Repository): Vie
         )
     }
 
+
+
+
+
+    @Throws(Exception::class)
+    suspend fun callUrlAndParseResult(
+        langTo: String,
+        word: String
+    ): String {
+        val url = "https://translate.googleapis.com/translate_a/single?" +
+                "client=gtx&" +
+                "sl=" + "en" +
+                "&tl=" + langTo +
+                "&dt=t&q=" + URLEncoder.encode(word, "UTF-8")
+        val obj = URL(url)
+        val con = obj.openConnection() as HttpURLConnection
+        con.setRequestProperty("User-Agent", "Mozilla/5.0")
+        val `in` = BufferedReader(
+            InputStreamReader(con.inputStream)
+        )
+        var inputLine: String?
+        val response = StringBuffer()
+        while (`in`.readLine().also { inputLine = it } != null) {
+            response.append(inputLine)
+        }
+        `in`.close()
+        return response.toString().parseResult()
+    }
+
+
+
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        return repository.callApiTranslate(_lang, _words)
+    }
 }
 
 

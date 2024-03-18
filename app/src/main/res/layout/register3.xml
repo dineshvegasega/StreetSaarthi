@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -83,6 +83,7 @@
                     android:imeOptions="actionNext"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:maxLength="15"
                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -108,7 +109,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/_F02A2A"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutCreatePassword"
@@ -144,7 +145,8 @@
                     android:layout_marginTop="0dp"
                     android:imeOptions="actionNext"
                     android:focusable="true"
-                    android:focusableInTouchMode="true"/>
+                    android:focusableInTouchMode="true"
+                    android:maxLength="15"/>
 
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -170,7 +172,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/_F02A2A"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutReEnterPassword"
@@ -189,7 +191,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toBottomOf="@+id/textReEnterPasswrordMsg"
@@ -206,7 +208,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 app:layout_constraintTop_toBottomOf="@+id/textReEnterPasswrordMsg"
                 app:layout_constraintStart_toEndOf="@+id/textTitlePermanentAddress"
@@ -255,7 +257,7 @@
                 android:backgroundTint="@color/_E79D46"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:cornerRadius="@dimen/_5sdp"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_11sdp"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -266,7 +268,7 @@
                 android:includeFontPadding="false"
                 android:text="00:27"
                 android:textColor="@color/_B3261E"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_11sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextMobileNumber"
                 android:layout_marginHorizontal="@dimen/_25sdp"
@@ -311,7 +313,7 @@
                 android:backgroundTint="@color/_999999"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:cornerRadius="@dimen/_5sdp"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_11sdp"
                 />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -335,7 +337,7 @@
                     android:button="@drawable/check_box_button"
                     android:buttonTint="@color/_363438"
                     android:textColor="@color/_363438"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_11sdp"
                     android:fontFamily="@font/roboto_regular"
                     />
 
@@ -344,7 +346,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/_363438"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_11sdp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cbRememberMe"

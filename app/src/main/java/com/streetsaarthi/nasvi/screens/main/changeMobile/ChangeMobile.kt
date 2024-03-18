@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +15,14 @@ import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ChangeMobileBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistration1
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +47,7 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MainActivity.mainActivity.get()?.callFragment(0)
+        MainActivity.mainActivity.get()?.callFragment(1)
         OtpTimer.sendOtpTimerData = this
 
         binding.apply {
@@ -57,14 +56,14 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
             viewModel.isAgree.value = false
             viewModel.isAgree.observe(viewLifecycleOwner, Observer {
                 if (it == true){
-                    Log.e("TAG", "isAgreeAA "+viewModel.isAgree.value)
+//                    Log.e("TAG", "isAgreeAA "+viewModel.isAgree.value)
                     btSignIn.setEnabled(true)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
                             ResourcesCompat.getColor(
                                 getResources(), R.color._E79D46, null)))
                 } else {
-                    Log.e("TAG", "isAgreeBB "+viewModel.isAgree.value)
+                   // Log.e("TAG", "isAgreeBB "+viewModel.isAgree.value)
                     btSignIn.setEnabled(false)
                     btSignIn.setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -134,7 +133,11 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
                         put("slug", "signup")
                         put("user_type", USER_TYPE)
                     }
-                    viewModel.sendOTP(view = requireView(), obj)
+                    if(networkFailed) {
+                        viewModel.sendOTP(view = requireView(), obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
             }
 
@@ -148,7 +151,11 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
                         put("slug", "signup")
                         put("user_type", USER_TYPE)
                     }
-                    viewModel.verifyOTP(view = requireView(), obj)
+                    if(networkFailed) {
+                        viewModel.verifyOTP(view = requireView(), obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
             }
 
@@ -209,10 +216,14 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
                         put("mobile_no", editTextMobileNumber.text.toString())
                         put("user_type", USER_TYPE)
                     }
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val _id = Gson().fromJson(loginUser, Login::class.java).id
-                            viewModel.profileUpdate(view = requireView(), ""+_id, obj.getJsonRequestBody())
+                            if(networkFailed) {
+                                viewModel.profileUpdate(view = requireView(), ""+_id, obj.getJsonRequestBody())
+                            } else {
+                                requireContext().callNetworkDialog()
+                            }
                         }
                     }
                 }
@@ -226,7 +237,7 @@ class ChangeMobile : Fragment() , OtpTimer.SendOtpTimerData {
     var isTimer = ""
     @OptIn(DelicateCoroutinesApi::class)
     override fun otpData(string: String) {
-        Log.e("TAG", "otpData "+string)
+//        Log.e("TAG", "otpData "+string)
         isTimer = string
         binding.apply {
             tvTime.visibility = if (string.isNotEmpty()) View.VISIBLE else View.GONE

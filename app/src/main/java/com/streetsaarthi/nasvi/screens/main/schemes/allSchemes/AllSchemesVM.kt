@@ -1,8 +1,11 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.allSchemes
 
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -15,23 +18,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
-import com.streetsaarthi.nasvi.models.mix.ItemSchemeDetail
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.ItemSchemeDetail
+import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -40,33 +46,49 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class AllSchemesVM @Inject constructor(private val repository: Repository): ViewModel() {
 
+
     val adapter by lazy { AllSchemesAdapter(this) }
 
 
-//    val photosAdapter = object : GenericAdapter<ItemAllSchemesBinding, String>() {
-//        override fun onCreateView(
-//            inflater: LayoutInflater,
-//            parent: ViewGroup,
-//            viewType: Int
-//        ) = ItemAllSchemesBinding.inflate(inflater, parent, false)
-//
-//        override fun onBindHolder(binding: ItemAllSchemesBinding, dataClass: String, position: Int) {
-//
-//        }
-//    }
+    var alertDialog: AlertDialog? = null
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
 
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
 
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
 
 
 
     private var itemLiveSchemesResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemes : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResult
-    fun liveScheme(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveScheme(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -79,7 +101,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
 
                 override fun error(message: String) {
                     super.error(message)
-                    showSnackBar(message)
+//                    showSnackBar(message)
                 }
 
                 override fun loading() {
@@ -93,7 +115,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
 
     private var itemLiveSchemesResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemLiveSchemesSecond : LiveData<BaseResponseDC<Any>> get() = itemLiveSchemesResultSecond
-    fun liveSchemeSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun liveSchemeSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -106,7 +128,7 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
 
                 override fun error(message: String) {
                     super.error(message)
-                    showSnackBar(message)
+//                    showSnackBar(message)
                 }
 
                 override fun loading() {
@@ -172,8 +194,8 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
 
                                 dialogBinding.apply {
                                     data.scheme_image?.url?.glideImage(root.context, ivMap)
-                                    textTitle.setText(data.name)
-                                    textDesc.setText(data.description)
+                                    textTitle.setText(oldItemLiveScheme.name)
+                                    textDesc.setText(oldItemLiveScheme.description)
 
                                     if (data.status == "Active" && oldItemLiveScheme.user_scheme_status == "applied"){
                                         btApply.visibility = View.GONE
@@ -223,14 +245,18 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                                                 }
                                             })
                                         } else {
-                                            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                                            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                                 if (loginUser != null) {
                                                     val obj: JSONObject = JSONObject().apply {
                                                         put("scheme_id", data?.scheme_id)
                                                         put("user_type", USER_TYPE)
                                                         put("user_id", Gson().fromJson(loginUser, Login::class.java).id)
                                                     }
-                                                    applyLink(obj, position)
+                                                    if(networkFailed) {
+                                                        applyLink(obj, position)
+                                                    } else {
+                                                        root.context.callNetworkDialog()
+                                                    }
                                                 }
                                             }
                                         }
@@ -256,8 +282,6 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
                             })
                         }
                         }
-                    } else {
-
                     }
                 }
 
@@ -273,4 +297,9 @@ class AllSchemesVM @Inject constructor(private val repository: Repository): View
         )
     }
 
+
+
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        return repository.callApiTranslate(_lang, _words)
+    }
 }

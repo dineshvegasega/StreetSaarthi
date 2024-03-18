@@ -1,26 +1,38 @@
 package com.streetsaarthi.nasvi.screens.onboarding.forgetPassword
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-//import com.stfalcon.smsverifycatcher.OnSmsCatchListener
-//import com.stfalcon.smsverifycatcher.SmsVerifyCatcher
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.android.gms.tasks.Task
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ForgetPasswordBinding
+import com.streetsaarthi.nasvi.fcm.VerifyBroadcastReceiver
+import com.streetsaarthi.nasvi.networking.USER_TYPE
+import com.streetsaarthi.nasvi.screens.interfaces.SMSListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.OtpTimer
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.isValidPassword
+import com.streetsaarthi.nasvi.utils.parseOneTimeCode
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,12 +49,13 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = ForgetPasswordBinding.inflate(inflater)
         return binding.root
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         MainActivity.mainActivity.get()?.callFragment(0)
@@ -142,18 +155,6 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
             })
 
 
-//            smsVerifyCatcher = SmsVerifyCatcher(requireActivity(),
-//                OnSmsCatchListener<String?> { message ->
-//                    if(message != null && message.length >= 6){
-//                        var otp = message.trim().substring(0,6).toInt()
-//                        editTextOtp.setText("${otp}")
-//                        var start2=editTextOtp.getSelectionStart()
-//                        var end2=editTextOtp.getSelectionEnd()
-//                        editTextOtp.setSelection(start2,end2)
-//                    }
-//                })
-
-
             editTextSendOtp.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
@@ -163,7 +164,27 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
                         put("slug", "forgot")
                         put("user_type", USER_TYPE)
                     }
-                    viewModel.sendOTP(view = requireView(), obj)
+                    if(networkFailed) {
+                        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+                        requireContext().registerReceiver(
+                            VerifyBroadcastReceiver(),
+                            intentFilter,
+                            Context.RECEIVER_NOT_EXPORTED
+                        )
+                        val client = SmsRetriever.getClient(requireContext())
+                        client.startSmsUserConsent(null)
+                        val task: Task<Void> = client.startSmsRetriever()
+                        task.addOnSuccessListener {
+                            VerifyBroadcastReceiver.initSMSListener(object : SMSListener {
+                                override fun onSuccess(intent: Intent?) {
+                                    someActivityResultLauncher.launch(intent)
+                                }
+                            })
+                        }
+                        viewModel.sendOTP(view = requireView(), obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
             }
 
@@ -178,7 +199,11 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
                         put("slug", "forgot")
                         put("user_type", USER_TYPE)
                     }
-                    viewModel.verifyOTP(view = requireView(), obj)
+                    if(networkFailed) {
+                        viewModel.verifyOTP(view = requireView(), obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
             }
 
@@ -198,7 +223,11 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
                         put("mobile_number", editTextMobileNumber.text.toString())
                         put("password", editTextPassword.text.toString())
                     }
-                    viewModel.passwordupdate(view = requireView(), obj)
+                    if(networkFailed) {
+                        viewModel.passwordUpdate(view = requireView(), obj)
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
                 }
             }
 
@@ -232,6 +261,27 @@ class ForgetPassword : Fragment() , OtpTimer.SendOtpTimerData {
             }
         }
     }
+
+
+
+    val someActivityResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val message = result.data?.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
+            if (message != null) {
+                binding.apply {
+                    editTextOtp.requestFocus()
+                    editTextOtp.setText(message.parseOneTimeCode())
+                    editTextOtp.text?.length?.let { editTextOtp.setSelection(it) }
+                    OtpTimer.sendOtpTimerData = null
+                    OtpTimer.stopTimer()
+                    tvTime.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+
 
     override fun onDestroyView() {
         OtpTimer.sendOtpTimerData = null

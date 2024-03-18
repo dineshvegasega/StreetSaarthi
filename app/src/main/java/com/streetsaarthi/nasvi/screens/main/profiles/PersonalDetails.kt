@@ -29,22 +29,29 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.kochia.customer.utils.hideKeyboard
+import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.PersonalDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.networking.IS_LANGUAGE_ALL
+import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.USER_TYPE
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
+import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
+import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -70,7 +77,7 @@ class PersonalDetails : Fragment() , CallBackListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = PersonalDetailsBinding.inflate(inflater)
+        _binding = PersonalDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -157,12 +164,12 @@ class PersonalDetails : Fragment() , CallBackListener {
                     1 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
                         viewModel.data.passportSizeImage = compressedImageFile.path
-                        binding.ivImagePassportsizeImage.loadImage(url = { viewModel.data.passportSizeImage!! })
+                        binding.ivImagePassportsizeImage.loadImage(type = 1, url = { viewModel.data.passportSizeImage!! })
                     }
                     2 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uri)))
                         viewModel.data.identificationImage = compressedImageFile.path
-                        binding.ivImageIdentityImage.loadImage(url = { viewModel.data.identificationImage!! })
+                        binding.ivImageIdentityImage.loadImage(type = 1, url = { viewModel.data.identificationImage!! })
                     }
                 }
             }
@@ -178,12 +185,12 @@ class PersonalDetails : Fragment() , CallBackListener {
                     1 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
                         viewModel.data.passportSizeImage = compressedImageFile.path
-                        binding.ivImagePassportsizeImage.loadImage(url = { viewModel.data.passportSizeImage!! })
+                        binding.ivImagePassportsizeImage.loadImage(type = 1, url = { viewModel.data.passportSizeImage!! })
                     }
                     2 -> {
                         val compressedImageFile = Compressor.compress(requireContext(), File(requireContext().getMediaFilePathFor(uriReal!!)))
                         viewModel.data.identificationImage = compressedImageFile.path
-                        binding.ivImageIdentityImage.loadImage(url = { viewModel.data.identificationImage!! })
+                        binding.ivImageIdentityImage.loadImage(type = 1, url = { viewModel.data.identificationImage!! })
                     }
                 }
             }
@@ -200,7 +207,7 @@ class PersonalDetails : Fragment() , CallBackListener {
 
             fieldsEdit()
 
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
                     val data = Gson().fromJson(loginUser, Login::class.java)
                     editTextFN.setText(data.vendor_first_name)
@@ -215,12 +222,12 @@ class PersonalDetails : Fragment() , CallBackListener {
                     viewModel.data.education_qualification = data.education_qualification
 
                     data.profile_image_name?.let {
-                        ivImagePassportsizeImage.loadImage(url = { data.profile_image_name.url })
+                        ivImagePassportsizeImage.loadImage(type = 1, url = { data.profile_image_name.url })
                         viewModel.data.passportSizeImage = data.profile_image_name.url
                     }
 
                     data.identity_image_name?.let {
-                        ivImageIdentityImage.loadImage(url = { data.identity_image_name.url })
+                        ivImageIdentityImage.loadImage(type = 1, url = { data.identity_image_name.url })
                         viewModel.data.identificationImage = data.identity_image_name.url
                     }
 
@@ -300,15 +307,69 @@ class PersonalDetails : Fragment() , CallBackListener {
                         }
                     }
 
-                    data.residential_state?.let {
-                        editTextSelectState.setText("${data.residential_state.name}")
+                    if (IS_LANGUAGE_ALL){
+                        runBlocking {
+                            mainThread {
+                                data.residential_state?.let {
+                                    if (MainActivity.context.get()!!
+                                            .getString(R.string.englishVal) == "" + locale
+                                    ) {
+                                        editTextSelectState.setText("${data.residential_state.name}")
+                                    } else {
+                                        viewModel.show()
+                                        val nameChanged: String =
+                                            viewModel.callApiTranslate("" + locale, data.residential_state.name)
+                                        editTextSelectState.setText("${nameChanged}")
+                                        viewModel.hide()
+                                    }
+                                }
+
+                                data.residential_district?.let {
+                                    if (MainActivity.context.get()!!
+                                            .getString(R.string.englishVal) == "" + locale
+                                    ) {
+                                        editTextSelectDistrict.setText("${data.residential_district.name}")
+                                    } else {
+                                        viewModel.show()
+                                        val nameChanged: String =
+                                            viewModel.callApiTranslate("" + locale, data.residential_district.name)
+                                        editTextSelectDistrict.setText("${nameChanged}")
+                                        viewModel.hide()
+                                    }
+                                }
+
+                                data.residential_municipality_panchayat?.let {
+                                    if (MainActivity.context.get()!!
+                                            .getString(R.string.englishVal) == "" + locale
+                                    ) {
+                                        editTextMunicipalityPanchayat.setText("${data.residential_municipality_panchayat.name}")
+                                    } else {
+                                        viewModel.show()
+                                        val nameChanged: String =
+                                            viewModel.callApiTranslate("" + locale, data.residential_municipality_panchayat.name)
+                                        editTextMunicipalityPanchayat.setText("${nameChanged}")
+                                        viewModel.hide()
+                                    }
+
+                                }
+                            }
+                        }
+                    } else {
+                        data.residential_state?.let {
+                            editTextSelectState.setText("${data.residential_state.name}")
+                        }
+                        data.residential_district?.let {
+                            editTextSelectDistrict.setText("${data.residential_district.name}")
+                        }
+                        data.residential_municipality_panchayat?.let {
+                            editTextMunicipalityPanchayat.setText("${data.residential_municipality_panchayat.name}")
+                        }
                     }
-                    data.residential_district?.let {
-                        editTextSelectDistrict.setText("${data.residential_district.name}")
-                    }
-                    data.residential_municipality_panchayat?.let {
-                        editTextMunicipalityPanchayat.setText("${data.residential_municipality_panchayat.name}")
-                    }
+
+
+
+
+
 
                     if(data.residential_pincode != null){
                         editTextSelectPincode.setText(""+data.residential_pincode.pincode.toInt())
@@ -353,13 +414,6 @@ class PersonalDetails : Fragment() , CallBackListener {
                     } else {
                         viewModel.pincodeId = ""
                     }
-
-//                } else if ((viewModel.stateId > 0)){
-//                    showSnackBar(getString(R.string.select_state))
-//                } else if ((viewModel.districtId > 0)){
-//                    showSnackBar(getString(R.string.select_district))
-//                } else if ((viewModel.panchayatId > 0)){
-//
                 }
             }
 
@@ -374,8 +428,12 @@ class PersonalDetails : Fragment() , CallBackListener {
             }
 
 
+            if(requireContext().isNetworkAvailable()) {
+                viewModel.state(view)
+            } else {
+                requireContext().callNetworkDialog()
+            }
 
-            viewModel.state(view)
             editTextSelectState.singleClick {
                 requireActivity().hideKeyboard()
                 showDropDownStateDialog()
@@ -421,127 +479,6 @@ class PersonalDetails : Fragment() , CallBackListener {
             }
 
 
-            btnAddtoCart.singleClick {
-                if(editTextFN.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.first_name))
-                } else if (editTextLN.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.last_name))
-                } else if (editTextFatherFN.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.father_s_first_name))
-                } else if (editTextFatherLN.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.father_s_last_name))
-                } else if (editTextGender.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.gender))
-                } else if (editTextDateofBirth.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.date_of_birth))
-                } else if (editTextMaritalStatus.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.marital_status))
-                } else if (editTextMaritalStatus.text.toString() == getString(R.string.married) && editTextSpouseName.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.spouse_s_name))
-                } else if (editTextSocialCategory.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.social_category))
-                } else if (editTextEducationQualifacation.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.education_qualifacation))
-                } else if (!(viewModel.stateId > 0)){
-                    showSnackBar(getString(R.string.select_state))
-                } else if (!(viewModel.districtId > 0)){
-                    showSnackBar(getString(R.string.select_district))
-                } else if (!(viewModel.panchayatId > 0)){
-                    showSnackBar(getString(R.string.municipality_panchayat))
-                } else if (editTextAddress.text.toString().isEmpty()){
-                    showSnackBar(getString(R.string.address_mention_village))
-                } else {
-                    viewModel.data.vendor_first_name = editTextFN.text.toString()
-                    viewModel.data.vendor_last_name = editTextLN.text.toString()
-                    viewModel.data.parent_first_name = editTextFatherFN.text.toString()
-                    viewModel.data.parent_last_name = editTextFatherLN.text.toString()
-
-                    viewModel.data.spouse_name = editTextSpouseName.text.toString()
-
-                    if (viewModel.data.marital_status == "Married"){
-                        viewModel.data.spouse_name = editTextSpouseName.text.toString()
-                    } else {
-                        viewModel.data.spouse_name = null
-                    }
-
-                    viewModel.data.social_category = editTextSocialCategory.text.toString()
-                    viewModel.data.current_address = editTextAddress.text.toString()
-
-                    val requestBody: MultipartBody.Builder = MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("user_role", USER_TYPE)
-                    if(viewModel.data.vendor_first_name  != null){
-                        requestBody.addFormDataPart("vendor_first_name", viewModel.data.vendor_first_name!!)
-                    }
-                    if(viewModel.data.vendor_last_name  != null){
-                        requestBody.addFormDataPart("vendor_last_name", viewModel.data.vendor_last_name!!)
-                    }
-                    if(viewModel.data.parent_first_name  != null){
-                        requestBody.addFormDataPart("parent_first_name", viewModel.data.parent_first_name!!)
-                    }
-                    if(viewModel.data.parent_last_name  != null){
-                        requestBody.addFormDataPart("parent_last_name", viewModel.data.parent_last_name!!)
-                    }
-                    if(viewModel.data.gender  != null){
-                        requestBody.addFormDataPart("gender", viewModel.data.gender!!)
-                    }
-                    if(viewModel.data.date_of_birth  != null){
-                        requestBody.addFormDataPart("date_of_birth", viewModel.data.date_of_birth!!)
-                    }
-                    if(viewModel.data.social_category  != null){
-                        requestBody.addFormDataPart("social_category", viewModel.data.social_category!!)
-                    }
-                    if(viewModel.data.education_qualification  != null){
-                        requestBody.addFormDataPart("education_qualification", viewModel.data.education_qualification!!)
-                    }
-                    if(viewModel.data.marital_status  != null){
-                        requestBody.addFormDataPart("marital_status", viewModel.data.marital_status!!)
-                    }
-                    if(viewModel.data.spouse_name  != null){
-                        requestBody.addFormDataPart("spouse_name", viewModel.data.spouse_name!!)
-                    }
-                    if(viewModel.data.current_state  != null){
-                        requestBody.addFormDataPart("residential_state", viewModel.data.current_state!!)
-                    }
-                    if(viewModel.data.current_district  != null){
-                        requestBody.addFormDataPart("residential_district", viewModel.data.current_district!!)
-                    }
-                    if(viewModel.data.municipality_panchayat_current  != null){
-                        requestBody.addFormDataPart("residential_municipality_panchayat", viewModel.data.municipality_panchayat_current!!)
-                    }
-                    if(viewModel.data.current_pincode  != null){
-                        requestBody.addFormDataPart("residential_pincode", viewModel.data.current_pincode!!)
-                    }
-                    if(viewModel.data.current_address  != null){
-                        requestBody.addFormDataPart("residential_address", viewModel.data.current_address!!)
-                    }
-                    if(viewModel.data.passportSizeImage != null && (!viewModel.data.passportSizeImage!!.startsWith("http"))){
-                        requestBody.addFormDataPart(
-                            "profile_image_name",
-                            File(viewModel.data.passportSizeImage!!).name,
-                            File(viewModel.data.passportSizeImage!!).asRequestBody("image/*".toMediaTypeOrNull())
-                        )
-                    }
-
-                    if(viewModel.data.identificationImage != null && (!viewModel.data.identificationImage!!.startsWith("http"))){
-                        requestBody.addFormDataPart(
-                            "identity_image_name",
-                            File(viewModel.data.identificationImage!!).name,
-                            File(viewModel.data.identificationImage!!).asRequestBody("image/*".toMediaTypeOrNull())
-                        )
-                    }
-
-//                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-//                        if (loginUser != null) {
-//                            val data = Gson().fromJson(loginUser, Login::class.java)
-//                            viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build())
-//                        }
-//                    }
-                }
-
-
-                Log.e("TAG", "viewModel.data "+ viewModel.data.toString())
-            }
 
 
             editTextGender.singleClick {
@@ -580,7 +517,6 @@ class PersonalDetails : Fragment() , CallBackListener {
     private fun fieldsEdit() {
         binding.apply {
             viewModel.isEditable.observe(viewLifecycleOwner, Observer {
-                Log.e("TAG", "isEditable "+it)
                 editTextFN.isEnabled = it
                 editTextLN.isEnabled = it
                 editTextFatherFN.isEnabled = it
@@ -605,7 +541,7 @@ class PersonalDetails : Fragment() , CallBackListener {
 
     private fun showDropDownGenderDialog() {
         val list=resources.getStringArray(R.array.gender_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.gender))
             .setItems(list) {_,which->
                 binding.editTextGender.setText(list[which])
@@ -655,7 +591,7 @@ class PersonalDetails : Fragment() , CallBackListener {
 
     private fun showDropDownCategoryDialog() {
         val list=resources.getStringArray(R.array.socialCategory_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.social_category))
             .setItems(list) {_,which->
                 binding.editTextSocialCategory.setText(list[which])
@@ -665,7 +601,7 @@ class PersonalDetails : Fragment() , CallBackListener {
 
     private fun showDropDownEducationQualifacationDialog() {
         val list=resources.getStringArray(R.array.socialEducation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.education_qualifacation))
             .setItems(list) {_,which->
                 binding.editTextEducationQualifacation.setText(list[which])
@@ -683,7 +619,7 @@ class PersonalDetails : Fragment() , CallBackListener {
 
     private fun showDropDownMaritalStatusDialog() {
         val list=resources.getStringArray(R.array.maritalStatus_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.marital_status))
             .setItems(list) {_,which->
                 binding.editTextMaritalStatus.setText(list[which])
@@ -708,8 +644,6 @@ class PersonalDetails : Fragment() , CallBackListener {
 
 
 
-
-
     private fun showDropDownStateDialog() {
         var index = 0
         val list = arrayOfNulls<String>(viewModel.itemState.size)
@@ -717,13 +651,19 @@ class PersonalDetails : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_state))
             .setItems(list) {_,which->
                 binding.editTextSelectState.setText(list[which])
                 viewModel.stateId =  viewModel.itemState[which].id
-                view?.let { viewModel.district(it, viewModel.stateId) }
-                view?.let { viewModel.panchayat(it, viewModel.stateId) }
+                if(networkFailed) {
+                    view?.let { viewModel.district(it, viewModel.stateId) }
+                    if (!IS_LANGUAGE_ALL){
+                        view?.let { viewModel.panchayat(it, viewModel.stateId) }
+                    }
+                } else {
+                    requireContext().callNetworkDialog()
+                }
                 viewModel.data.current_state = ""+viewModel.stateId
                 binding.editTextSelectDistrict.setText("")
                 binding.editTextMunicipalityPanchayat.setText("")
@@ -740,12 +680,16 @@ class PersonalDetails : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_district))
             .setItems(list) {_,which->
                 binding.editTextSelectDistrict.setText(list[which])
                 viewModel.districtId =  viewModel.itemDistrict[which].id
-                view?.let { viewModel.pincode(it, viewModel.districtId) }
+                if(networkFailed) {
+                    view?.let { viewModel.pincode(it, viewModel.districtId) }
+                } else {
+                    requireContext().callNetworkDialog()
+                }
                 viewModel.data.current_district = ""+viewModel.districtId
                 binding.editTextSelectPincode.setText("")
                 viewModel.pincodeId = ""
@@ -760,7 +704,7 @@ class PersonalDetails : Fragment() , CallBackListener {
             list[index] = value.name
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.municipality_panchayat))
             .setItems(list) {_,which->
                 binding.editTextMunicipalityPanchayat.setText(list[which])
@@ -777,7 +721,7 @@ class PersonalDetails : Fragment() , CallBackListener {
             list[index] = value.pincode
             index++
         }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DialogTheme)
+        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
             .setTitle(resources.getString(R.string.select_pincode))
             .setItems(list) {_,which->
                 binding.editTextSelectPincode.setText(list[which])
@@ -826,7 +770,7 @@ class PersonalDetails : Fragment() , CallBackListener {
 
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.e("TAG","errorD " + e.message)
+//        Log.e("TAG","errorD " + e.message)
     }
 
 
@@ -853,11 +797,14 @@ class PersonalDetails : Fragment() , CallBackListener {
 
 
     override fun onCallBack(pos: Int) {
-        Log.e("TAG", "onCallBackPersonal " + pos)
         if(pos == 1){
             update()
         }
     }
+
+
+
+
 
     private fun update() {
         binding.apply {
@@ -889,6 +836,10 @@ class PersonalDetails : Fragment() , CallBackListener {
                 showSnackBar(getString(R.string.municipality_panchayat))
             } else if (editTextAddress.text.toString().isEmpty()){
                 showSnackBar(getString(R.string.address_mention_village))
+            } else if(viewModel.data.passportSizeImage == null){
+                showSnackBar(getString(R.string.passport_size_imageStar))
+            } else if(viewModel.data.identificationImage == null){
+                showSnackBar(getString(R.string.identity_imageStar))
             } else {
                 viewModel.data.vendor_first_name = editTextFN.text.toString()
                 viewModel.data.vendor_last_name = editTextLN.text.toString()
@@ -970,32 +921,13 @@ class PersonalDetails : Fragment() , CallBackListener {
                     )
                 }
 
-
-
-                if (ProfessionalDetails.callBackListener != null){
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                        if (loginUser != null) {
-                            val data = Gson().fromJson(loginUser, Login::class.java)
-                            viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build(), 222)
-                        }
-                    }
-                } else {
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                        if (loginUser != null) {
-                            val data = Gson().fromJson(loginUser, Login::class.java)
-                            viewModel.profileUpdate(view = requireView(), ""+data.id , requestBody.build(), 111)
-                        }
-                    }
-                }
-
-
+                Handler(Looper.getMainLooper()).postDelayed({
+                    Profiles.callBackListener!!.onCallBack(2)
+                }, 100)
             }
         }
     }
 
 
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
+
 }

@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -47,7 +47,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -69,6 +69,7 @@
                 android:hint="@string/first_nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/textTitleMain"
+                android:maxLength="25"
                 />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -80,6 +81,7 @@
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/editTextFN"
+                android:maxLength="25"
                 />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -90,6 +92,7 @@
                 android:hint="@string/father_s_first_nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/editTextLN"
+                android:maxLength="25"
                 />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -100,6 +103,7 @@
                 android:hint="@string/father_s_last_nameStar"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/editTextFatherFN"
+                android:maxLength="25"
                 />
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -152,7 +156,6 @@
                 android:focusable="false"
                 app:layout_constraintTop_toBottomOf="@+id/linearGender"
                 android:drawableEnd="@drawable/ic_down_arrow"
-
                 />
 
 
@@ -194,6 +197,7 @@
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/editTextMaritalStatus"
                 android:visibility="gone"
+                android:maxLength="25"
                 />
 
 
@@ -202,7 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toBottomOf="@+id/editTextSpouseName"
@@ -219,7 +223,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 app:layout_constraintTop_toBottomOf="@+id/editTextSpouseName"
                 app:layout_constraintStart_toEndOf="@+id/textTitlePermanentAddress"
@@ -321,7 +325,7 @@
                 android:singleLine="false"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/linearPanchayatPincode"
-                tools:layout_editor_absoluteX="16dp" />
+                android:maxLength="100"/>
 
 
 
@@ -330,7 +334,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toBottomOf="@+id/editTextAddress"
@@ -347,7 +351,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 app:layout_constraintTop_toBottomOf="@+id/editTextAddress"
                 app:layout_constraintStart_toEndOf="@+id/textTitlePassportSizeImage"
@@ -390,7 +394,7 @@
                     android:button="@drawable/check_box_button"
                     android:buttonTint="@color/_999999"
                     android:textColor="@color/_999999"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_11sdp"
                     android:fontFamily="@font/roboto_medium"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:paddingVertical="@dimen/_12sdp"
@@ -417,7 +421,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutPassportSizeImage"
@@ -434,7 +438,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutPassportSizeImage"
                 app:layout_constraintStart_toEndOf="@+id/textTitleIdentificationImage"
@@ -454,7 +458,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/_9A9A9A"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_11sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toBottomOf="@+id/textTitleIdentificationImage"
@@ -497,7 +501,7 @@
                     android:button="@drawable/check_box_button"
                     android:buttonTint="@color/_999999"
                     android:textColor="@color/_999999"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_11sdp"
                     android:fontFamily="@font/roboto_medium"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:paddingVertical="@dimen/_12sdp"

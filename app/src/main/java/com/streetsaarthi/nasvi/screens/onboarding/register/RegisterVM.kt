@@ -1,56 +1,93 @@
 package com.streetsaarthi.nasvi.screens.onboarding.register
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.mix.ItemDistrict
-import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.models.mix.ItemMarketplace
-import com.streetsaarthi.nasvi.models.mix.ItemOrganization
-import com.streetsaarthi.nasvi.models.mix.ItemPanchayat
-import com.streetsaarthi.nasvi.models.mix.ItemPincode
-import com.streetsaarthi.nasvi.models.mix.ItemState
-import com.streetsaarthi.nasvi.models.mix.ItemVending
-import com.streetsaarthi.nasvi.models.test.ItemT
-import com.streetsaarthi.nasvi.models.translate.ItemTranslate
-import com.streetsaarthi.nasvi.networking.ApiTranslateInterface
-import com.streetsaarthi.nasvi.networking.CallHandlerTranslate
-import com.streetsaarthi.nasvi.networking.convertGsonString
+import com.streetsaarthi.nasvi.networking.Repository
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.ItemDistrict
+import com.streetsaarthi.nasvi.models.ItemMarketplace
+import com.streetsaarthi.nasvi.models.ItemOrganization
+import com.streetsaarthi.nasvi.models.ItemPanchayat
+import com.streetsaarthi.nasvi.models.ItemPincode
+import com.streetsaarthi.nasvi.models.ItemState
+import com.streetsaarthi.nasvi.models.ItemVending
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.networking.IS_LANGUAGE_ALL
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
-import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
+import java.util.Locale
 import javax.inject.Inject
 
+
 @HiltViewModel
-class RegisterVM @Inject constructor(private val repository: Repository): ViewModel() {
-    var data : Model = Model()
+class RegisterVM @Inject constructor(
+    private val repository: Repository
+) : ViewModel() {
 
-    var itemVending : ArrayList<ItemVending> = ArrayList()
-    var vendingId : Int = 0
+    var data: Model = Model()
 
-    var itemMarketplace : ArrayList<ItemMarketplace> = ArrayList()
-    var marketplaceId : Int = 0
+    var itemVending: ArrayList<ItemVending> = ArrayList()
+    var vendingId: Int = 0
+
+    var itemMarketplace: ArrayList<ItemMarketplace> = ArrayList()
+    var marketplaceId: Int = 0
 
 
     var isAgree = MutableLiveData<Boolean>(false)
+
+
+//    var locale: Locale = Locale.getDefault()
+    var alertDialog: AlertDialog? = null
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
+
 
     fun vending(view: View) = viewModelScope.launch {
         repository.callApi(
@@ -59,8 +96,30 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.vending()
 
                 override fun success(response: Response<BaseResponseDC<List<ItemVending>>>) {
-                    if (response.isSuccessful){
-                        itemVending = response.body()?.data as ArrayList<ItemVending>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemVending = response.body()?.data as ArrayList<ItemVending>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemVending>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemVending = itemStateTemp
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemVending = response.body()?.data as ArrayList<ItemVending>
+                        }
                     }
                 }
 
@@ -83,8 +142,30 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.marketplace()
 
                 override fun success(response: Response<BaseResponseDC<List<ItemMarketplace>>>) {
-                    if (response.isSuccessful){
-                        itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemMarketplace>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemMarketplace = itemStateTemp
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemMarketplace = response.body()?.data as ArrayList<ItemMarketplace>
+                        }
                     }
                 }
 
@@ -101,53 +182,53 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
 
 
 
-    var itemState : ArrayList<ItemState> = ArrayList()
-    var stateId : Int = 0
 
-    var itemDistrict : ArrayList<ItemDistrict> = ArrayList()
-    var districtId : Int = 0
+    var itemState: ArrayList<ItemState> = ArrayList()
+    var stateId: Int = 0
 
-    var itemPanchayat : ArrayList<ItemPanchayat> = ArrayList()
-    var panchayatId : Int = 0
+    var itemDistrict: ArrayList<ItemDistrict> = ArrayList()
+    var districtId: Int = 0
 
-    var itemPincode : ArrayList<ItemPincode> = ArrayList()
-    var pincodeId : String = ""
+    var itemPanchayat: ArrayList<ItemPanchayat> = ArrayList()
+    var panchayatId: Int = 0
 
-    var currentAddress : String = ""
+    var itemPincode: ArrayList<ItemPincode> = ArrayList()
+    var pincodeId: String = ""
+
+    var currentAddress: String = ""
+
 
     fun state(view: View) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemState>>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.state()
-
+                @SuppressLint("SuspiciousIndentation")
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
-                    if (response.isSuccessful){
-                        itemState = response.body()?.data as ArrayList<ItemState>
-//                        translate(response.body()?.data.toString())
-                    }
-                }
-
-                override fun error(message: String) {
-                    super.error(message)
-                }
-
-                override fun loading() {
-                    super.loading()
-                }
-            }
-        )
-    }
-
-    fun state1(view: View) = viewModelScope.launch {
-        repository.callApi(
-            callHandler = object : CallHandler<Response<BaseResponseDC<List<ItemState>>>> {
-                override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.state()
-
-                override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
-                    if (response.isSuccessful){
-                        itemState = response.body()?.data as ArrayList<ItemState>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemState = response.body()?.data as ArrayList<ItemState>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemState>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate("" + locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemState = itemStateTemp
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemState = response.body()?.data as ArrayList<ItemState>
+                        }
                     }
                 }
 
@@ -172,8 +253,32 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.district(requestBody = obj.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<List<ItemDistrict>>>) {
-                    if (response.isSuccessful){
-                        itemDistrict = response.body()?.data as ArrayList<ItemDistrict>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemDistrict = response.body()?.data as ArrayList<ItemDistrict>
+                                panchayat(view, id)
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemDistrict>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemDistrict = itemStateTemp
+                                    hide()
+                                    panchayat(view, id)
+                                }
+                            }
+                        } else {
+                            itemDistrict = response.body()?.data as ArrayList<ItemDistrict>
+                        }
                     }
                 }
 
@@ -187,6 +292,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
             }
         )
     }
+
 
     fun panchayat(view: View, id: Int) = viewModelScope.launch {
         val obj: JSONObject = JSONObject()
@@ -197,8 +303,30 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.panchayat(requestBody = obj.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<List<ItemPanchayat>>>) {
-                    if (response.isSuccessful){
-                        itemPanchayat = response.body()?.data as ArrayList<ItemPanchayat>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemPanchayat = response.body()?.data as ArrayList<ItemPanchayat>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemPanchayat>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemPanchayat = itemStateTemp
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemPanchayat = response.body()?.data as ArrayList<ItemPanchayat>
+                        }
                     }
                 }
 
@@ -213,6 +341,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         )
     }
 
+
     fun pincode(view: View, id: Int) = viewModelScope.launch {
         val obj: JSONObject = JSONObject()
         obj.put("district_id", id)
@@ -222,7 +351,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.pincode(requestBody = obj.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<List<ItemPincode>>>) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         itemPincode = response.body()?.data as ArrayList<ItemPincode>
                     }
                 }
@@ -239,25 +368,22 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
     }
 
 
+    var itemStateVending: ArrayList<ItemState> = ArrayList()
+    var stateIdVending: Int = 0
 
+    var itemDistrictVending: ArrayList<ItemDistrict> = ArrayList()
+    var districtIdVending: Int = 0
 
+    var itemPanchayatVending: ArrayList<ItemPanchayat> = ArrayList()
+    var panchayatIdVending: Int = 0
 
-    var itemStateVending : ArrayList<ItemState> = ArrayList()
-    var stateIdVending : Int = 0
+    var itemPincodeVending: ArrayList<ItemPincode> = ArrayList()
+    var pincodeIdVending: String = ""
 
-    var itemDistrictVending : ArrayList<ItemDistrict> = ArrayList()
-    var districtIdVending : Int = 0
+    var itemLocalOrganizationVending: ArrayList<ItemOrganization> = ArrayList()
+    var localOrganizationIdVending: Int = 0
 
-    var itemPanchayatVending : ArrayList<ItemPanchayat> = ArrayList()
-    var panchayatIdVending : Int = 0
-
-    var itemPincodeVending : ArrayList<ItemPincode> = ArrayList()
-    var pincodeIdVending : String = ""
-
-    var itemLocalOrganizationVending : ArrayList<ItemOrganization> = ArrayList()
-    var localOrganizationIdVending : Int = 0
-
-    var currentAddressVending : String = ""
+    var currentAddressVending: String = ""
 
     fun stateCurrent(view: View) = viewModelScope.launch {
         repository.callApi(
@@ -266,8 +392,30 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.state()
 
                 override fun success(response: Response<BaseResponseDC<List<ItemState>>>) {
-                    if (response.isSuccessful){
-                        itemStateVending = response.body()?.data as ArrayList<ItemState>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemStateVending = response.body()?.data as ArrayList<ItemState>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemState>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemStateVending = itemStateTemp
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemStateVending = response.body()?.data as ArrayList<ItemState>
+                        }
                     }
                 }
 
@@ -291,8 +439,32 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.district(requestBody = obj.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<List<ItemDistrict>>>) {
-                    if (response.isSuccessful){
-                        itemDistrictVending = response.body()?.data as ArrayList<ItemDistrict>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemDistrictVending = response.body()?.data as ArrayList<ItemDistrict>
+                                panchayatCurrent(view, id)
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemDistrict>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemDistrictVending = itemStateTemp
+                                    hide()
+                                    panchayatCurrent(view, id)
+                                }
+                            }
+                        } else {
+                            itemDistrictVending = response.body()?.data as ArrayList<ItemDistrict>
+                        }
                     }
                 }
 
@@ -316,8 +488,30 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.panchayat(requestBody = obj.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<List<ItemPanchayat>>>) {
-                    if (response.isSuccessful){
-                        itemPanchayatVending = response.body()?.data as ArrayList<ItemPanchayat>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemPanchayatVending = response.body()?.data as ArrayList<ItemPanchayat>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemPanchayat>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.name)
+                                        apply {
+                                            it.name = nameChanged
+                                        }
+                                    }
+                                    itemPanchayatVending = itemStateTemp
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemPanchayatVending = response.body()?.data as ArrayList<ItemPanchayat>
+                        }
                     }
                 }
 
@@ -341,7 +535,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.pincode(requestBody = obj.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<List<ItemPincode>>>) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         itemPincodeVending = response.body()?.data as ArrayList<ItemPincode>
                     }
                 }
@@ -364,8 +558,31 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.localOrganisation(requestBody = jsonObj.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<List<ItemOrganization>>>) {
-                    if (response.isSuccessful){
-                        itemLocalOrganizationVending = response.body()?.data as ArrayList<ItemOrganization>
+                    if (response.isSuccessful) {
+                        if (IS_LANGUAGE_ALL){
+                            if (MainActivity.context.get()!!
+                                    .getString(R.string.englishVal) == "" + locale
+                            ) {
+                                itemLocalOrganizationVending = response.body()?.data as ArrayList<ItemOrganization>
+                            } else {
+                                val itemStateTemp = response.body()?.data as ArrayList<ItemOrganization>
+                                show()
+                                mainThread {
+                                    itemStateTemp.forEach {
+                                        delay(50)
+                                        val nameChanged: String = callApiTranslate(""+locale, it.local_organisation_name)
+                                        apply {
+                                            it.local_organisation_name = nameChanged
+                                        }
+                                    }
+                                    itemLocalOrganizationVending = itemStateTemp
+                                    hide()
+                                }
+                            }
+                        } else {
+                            itemLocalOrganizationVending =
+                                response.body()?.data as ArrayList<ItemOrganization>
+                        }
                     }
                 }
 
@@ -381,8 +598,8 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
     }
 
 
-    var documentDetails : Boolean ?= false
-    var governmentScheme : Boolean ?= false
+    var documentDetails: Boolean? = false
+    var governmentScheme: Boolean? = false
 
     var isSend = MutableLiveData<Boolean>(false)
     var isSendMutable = MutableLiveData<Boolean>(false)
@@ -395,8 +612,8 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.sendOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    if (response.isSuccessful){
-                        if(response.body()?.message == "OTP Sent successfully"){
+                    if (response.isSuccessful) {
+                        if (response.body()?.message == "OTP Sent successfully") {
                             isSend.value = true
                             var number = jsonObject.getString("mobile_no")
                             showSnackBar(view.resources.getString(R.string.otp_sent, number))
@@ -404,7 +621,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                             isSend.value = false
                             showSnackBar(view.resources.getString(R.string.user_already_exist))
                         }
-                    } else{
+                    } else {
                         isSend.value = false
                         showSnackBar(response.body()?.message.orEmpty())
                     }
@@ -429,8 +646,8 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.verifyOTP(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    if (response.isSuccessful){
-                        if(response.body()?.data != null){
+                    if (response.isSuccessful) {
+                        if (response.body()?.data != null) {
                             isOtpVerified = true
                             isSendMutable.value = true
                             showSnackBar(view.resources.getString(R.string.otp_Verified_successfully))
@@ -439,7 +656,7 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                             isSendMutable.value = false
                             showSnackBar(view.resources.getString(R.string.invalid_OTP))
                         }
-                    } else{
+                    } else {
                         isOtpVerified = false
                         isSendMutable.value = false
                         showSnackBar(response.body()?.message.orEmpty())
@@ -465,7 +682,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
     }
 
 
-
     fun register(view: View, jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
@@ -473,14 +689,16 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
                     apiInterface.register(requestBody = jsonObject.getJsonRequestBody())
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         showSnackBar(response.body()?.message.orEmpty())
                         Handler(Looper.getMainLooper()).postDelayed({
-                            view.findNavController().navigate(R.id.action_register_to_registerSuccessful, Bundle().apply {
-                                putString("key", jsonObject.getString("vendor_first_name"))
-                            })
-                        },100)
-                    } else{
+                            view.findNavController().navigate(
+                                R.id.action_register_to_registerSuccessful,
+                                Bundle().apply {
+                                    putString("key", jsonObject.getString("vendor_first_name"))
+                                })
+                        }, 100)
+                    } else {
                         showSnackBar(response.body()?.message.orEmpty())
                     }
                 }
@@ -496,7 +714,6 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
             }
         )
     }
-
 
 
     fun registerWithFiles(
@@ -507,15 +724,16 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<Any>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.registerWithFiles( hashMap)
+                    apiInterface.registerWithFiles(hashMap)
 
                 override fun success(response: Response<BaseResponseDC<Any>>) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         showSnackBar(response.body()?.message.orEmpty())
-                        view.findNavController().navigate(R.id.action_register_to_registerSuccessful, Bundle().apply {
-                            putString("key", _string)
-                        })
-                    } else{
+                        view.findNavController()
+                            .navigate(R.id.action_register_to_registerSuccessful, Bundle().apply {
+                                putString("key", _string)
+                            })
+                    } else {
                         showSnackBar(response.body()?.message.orEmpty())
                     }
                 }
@@ -532,135 +750,74 @@ class RegisterVM @Inject constructor(private val repository: Repository): ViewMo
         )
     }
 
-    fun translate(words: String) = viewModelScope.launch {
-        repository.callApiTranslate(
-            callHandler = object : CallHandlerTranslate<Response<ItemT>> {
-                override suspend fun sendRequest(apiInterface: ApiTranslateInterface) =
-                    apiInterface.translate(words)
-
-                override fun success(response: Response<ItemT>) {
-//                    if (response.isSuccessful){
-//                        itemState = response.body()?.data as ArrayList<ItemState>
-//                    }
-
-                    var aa = response.body()?.get(0)
-//                    val typeToken = object : TypeToken<List<String>>() {}.type
-//                    val changeValue = Gson().fromJson<List<String>>(Gson().toJson(aa), typeToken)
-
-//                    var aa = response.body()?.get(0)
-//                    val typeToken = object : TypeToken<List<Any>>() {}.type
-//                    val changeValue = Gson().fromJson<List<Any>>(Gson().toJson(aa), typeToken)
-
-//                    var bb = aa?.get(0).toString()
-
-//                    var stringValue = String()
-//
-//                    changeValue.map {
-//                        stringValue += it.toString()
-//                    }
-
-
-//                    var bb = Gson().toJson(stringValue.toString())
-//                    var str = bb.substring(2, bb.length - 2);
-//                    var cc = JSONArray(str.toString())
-                    Log.e("TAG", "XXXX "+aa.toString())
-
-
-                }
-
-                override fun error(message: String) {
-                    super.error(message)
-                }
-
-                override fun loading() {
-                    super.loading()
-                }
-            }
-        )
-    }
-
-
-//    fun uploadImage(imagePath: String, callback: String.() -> Unit) = getAuthToken {
-//        viewModelScope.launch {
-//            repository.callApi(callHandler = object :
-//                CallHandler<Response<BaseResponseDC<UserDataDC>>> {
-//                override suspend fun sendRequest(apiInterface: ApiInterface) =
-//                    apiInterface.uploadImage(image = File(imagePath).getPartMap("file"))
-//
-//                override fun success(response: Response<BaseResponseDC<UserDataDC>>) {
-//                    if (response.isSuccessful) {
-//                        imageUrl = response.body()?.data?.filePath
-//                        callback(imageUrl.orEmpty())
-//                    }
-//                }
-//            })
-//        }
-//    }
 
     data class Model(
-        var vendor_first_name : String ?= null,
-        var vendor_last_name : String ?= null,
-        var parent_first_name : String ?= null,
-        var parent_last_name : String ?= null,
-        var gender : String ?= null,
-        var date_of_birth : String ?= null,
-        var social_category : String ?= null,
-        var education_qualification : String ?= null,
-        var marital_status : String ?= null,
-        var spouse_name : String ?= null,
-        var current_state : String ?= null,
-        var current_district : String ?= null,
-        var municipality_panchayat_current : String ?= null,
-        var current_pincode : String ?= null,
-        var current_address : String ?= null,
+        var vendor_first_name: String? = null,
+        var vendor_last_name: String? = null,
+        var parent_first_name: String? = null,
+        var parent_last_name: String? = null,
+        var gender: String? = null,
+        var date_of_birth: String? = null,
+        var social_category: String? = null,
+        var education_qualification: String? = null,
+        var marital_status: String? = null,
+        var spouse_name: String? = null,
+        var current_state: String? = null,
+        var current_district: String? = null,
+        var municipality_panchayat_current: String? = null,
+        var current_pincode: String? = null,
+        var current_address: String? = null,
 
-        var passportSizeImage : String ?= null,
-        var identificationImage : String ?= null,
-
-
-
-        var type_of_marketplace : String ?= null,
-        var marketpalce_others : String ?= null,
-        var type_of_vending : String ?= null,
-        var vending_others : String ?= null,
-
-        var total_years_of_business : String ?= null,
-
-        var open : String ?= null,
-        var close : String ?= null,
-
-        var vending_state : String ?= null,
-        var vending_district : String ?= null,
-        var vending_municipality_panchayat : String ?= null,
-        var vending_pincode : String ?= null,
-        var vending_address : String ?= null,
-        var localOrganisation : String ?= null,
+        var passportSizeImage: String? = null,
+        var identificationImage: String? = null,
 
 
-        var shopImage : String ?= null,
+        var type_of_marketplace: String? = null,
+        var marketpalce_others: String? = null,
+        var type_of_vending: String? = null,
+        var vending_others: String? = null,
 
-        var documentDetails : Boolean ?= false,
-        var ImageUploadCOV : String ?= null,
-        var ImageUploadLOR : String ?= null,
-        var UploadSurveyReceipt : String ?= null,
-        var UploadChallan : String ?= null,
-        var UploadApprovalLetter : String ?= null,
+        var total_years_of_business: String? = null,
 
-        var ImageUploadCOVBoolean : Boolean ?= false,
-        var ImageUploadLORBoolean : Boolean ?= false,
-        var UploadSurveyReceiptBoolean : Boolean ?= false,
-        var UploadChallanBoolean : Boolean ?= false,
-        var UploadApprovalLetterBoolean : Boolean ?= false,
+        var open: String? = null,
+        var close: String? = null,
 
-        var governmentScheme : Boolean ?= false,
-        var pmSwanidhiScheme : Boolean ?= false,
-        var otherScheme : Boolean ?= false,
-        var schemeName : String ?= null,
+        var vending_state: String? = null,
+        var vending_district: String? = null,
+        var vending_municipality_panchayat: String? = null,
+        var vending_pincode: String? = null,
+        var vending_address: String? = null,
+        var localOrganisation: String? = null,
 
-        var mobile_no : String ?= null,
-        var otp : String ?= null,
-        var password : String ?= null
+
+        var shopImage: String? = null,
+
+        var documentDetails: Boolean? = false,
+        var ImageUploadCOV: String? = null,
+        var ImageUploadLOR: String? = null,
+        var UploadSurveyReceipt: String? = null,
+        var UploadChallan: String? = null,
+        var UploadApprovalLetter: String? = null,
+
+        var ImageUploadCOVBoolean: Boolean? = false,
+        var ImageUploadLORBoolean: Boolean? = false,
+        var UploadSurveyReceiptBoolean: Boolean? = false,
+        var UploadChallanBoolean: Boolean? = false,
+        var UploadApprovalLetterBoolean: Boolean? = false,
+
+        var governmentScheme: Boolean? = false,
+        var pmSwanidhiScheme: Boolean? = false,
+        var otherScheme: Boolean? = false,
+        var schemeName: String? = null,
+
+        var mobile_no: String? = null,
+        var otp: String? = null,
+        var password: String? = null
     )
 
 
+
+    fun callApiTranslate(_lang : String, _words: String) : String{
+        return repository.callApiTranslate(_lang, _words)
+    }
 }

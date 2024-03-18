@@ -1,28 +1,22 @@
 package com.streetsaarthi.nasvi.screens.main.changeMobile
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.screens.main.profiles.ProfessionalDetails
-import com.streetsaarthi.nasvi.screens.main.profiles.Profiles
-import com.streetsaarthi.nasvi.screens.onboarding.quickRegistration.QuickRegistrationVM
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -116,11 +110,11 @@ class ChangeMobileVM @Inject constructor(private val repository: Repository): Vi
 
 
 
-    fun profileUpdate(view: View, _id: String, hashMap: RequestBody) = viewModelScope.launch {
+    fun profileUpdate(view: View, _id: String, requestBody: RequestBody) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.profileUpdate(_id, hashMap)
+                    apiInterface.profileUpdate(_id, requestBody)
 
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful) {
@@ -149,11 +143,11 @@ class ChangeMobileVM @Inject constructor(private val repository: Repository): Vi
                     if (response.isSuccessful){
                         showSnackBar(view.resources.getString(R.string.mobile_number_updated_successfully))
                         if(response.body()!!.data != null){
-                            DataStoreUtil.saveData(
+                            saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
                             )
-                            DataStoreUtil.saveObject(
+                            saveObject(
                                 DataStoreKeys.LOGIN_DATA,
                                 Gson().fromJson(response.body()!!.data, Login::class.java)
                             )
@@ -170,10 +164,5 @@ class ChangeMobileVM @Inject constructor(private val repository: Repository): Vi
             }
         )
     }
-
-
-
-
-
 
 }

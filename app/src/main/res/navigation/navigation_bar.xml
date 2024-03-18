@@ -365,6 +365,13 @@
             app:destination="@id/membershipDetails"
             app:launchSingleTop="true"
             />
+
+        <action
+            android:id="@+id/action_dashboard_to_membershipDetailsXX"
+            app:destination="@id/membershipDetailsXX"
+            app:launchSingleTop="true"
+            />
+
         <action
             android:id="@+id/action_dashboard_to_liveSchemes"
             app:destination="@id/liveSchemes"
@@ -411,6 +418,11 @@
             app:launchSingleTop="true"
             />
         <action
+            android:id="@+id/action_dashboard_to_subscription"
+            app:destination="@id/subscription"
+            app:launchSingleTop="true"
+            />
+        <action
             android:id="@+id/action_dashboard_to_settings"
             app:destination="@id/settings"
             app:launchSingleTop="true"
@@ -423,6 +435,11 @@
         android:label="Profiles"
         android:id="@+id/profiles"
         tools:layout="@layout/profiles">
+        <action
+            android:id="@+id/action_profiles_to_nomineeDetails"
+            app:destination="@id/nomineeDetails"
+            app:launchSingleTop="true"
+            />
     </fragment>
 
 
@@ -469,6 +486,39 @@
         android:label="InformationCenter"
         android:id="@+id/informationCenter"
         tools:layout="@layout/information_center">
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.subscription.Subscription"
+        android:label="Subscription"
+        android:id="@+id/subscription"
+        tools:layout="@layout/subscription">
+        <action
+            android:id="@+id/action_subscription_to_viewManage"
+            app:destination="@id/viewManage"
+            app:launchSingleTop="true"
+            />
+        <action
+            android:id="@+id/action_subscription_to_subscriptionHistory"
+            app:destination="@id/subscriptionHistory"
+            app:launchSingleTop="true"
+            />
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.subscription.ViewManage"
+        android:label="ViewManage"
+        android:id="@+id/viewManage"
+        tools:layout="@layout/view_manage">
+    </fragment>
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.subscription.SubscriptionHistory"
+        android:label="SubscriptionHistory"
+        android:id="@+id/subscriptionHistory"
+        tools:layout="@layout/subscription_history">
     </fragment>
 
     <fragment
@@ -590,6 +640,23 @@
         android:id="@+id/membershipDetails"
         tools:layout="@layout/membership_details">
 
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetailsXX"
+        android:label="MembershipDetailsXX"
+        android:id="@+id/membershipDetailsXX"
+        tools:layout="@layout/membership_detailsxx">
+
+    </fragment>
+
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.profiles.nomineeDetails.NomineeDetails"
+        android:label="NomineeDetails"
+        android:id="@+id/nomineeDetails"
+        tools:layout="@layout/nominee_details">
     </fragment>
 
 </navigation>

@@ -2,21 +2,24 @@ package com.streetsaarthi.nasvi.screens.main.settings
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.networking.Main
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.Main
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
@@ -28,7 +31,7 @@ import javax.inject.Inject
 class SettingsVM @Inject constructor(private val repository: Repository): ViewModel() {
 
     var itemMain : ArrayList<Item> ?= ArrayList()
-    var locale: Locale = Locale.getDefault()
+//    var locale: Locale = Locale.getDefault()
 
     var appLanguage = MutableLiveData<String>("")
 
@@ -49,11 +52,13 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
 
 
         for (item in itemMain!!.iterator()) {
-            if(item.locale == ""+locale){
+            if(item.locale == ""+ locale){
                 item.apply {
                     item.isSelected = true
                 }
-                appLanguage.value = item.name
+                Handler(Looper.getMainLooper()).postDelayed(Thread {
+                    appLanguage.value = item.name
+                }, 50)
             }
         }
     }
@@ -100,12 +105,12 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            DataStoreUtil.saveData(
+                            saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
                             )
                             val data = Gson().fromJson(response.body()!!.data, Login::class.java)
-                            DataStoreUtil.saveObject(
+                            saveObject(
                                 DataStoreKeys.LOGIN_DATA,
                                 data
                             )

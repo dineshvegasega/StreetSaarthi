@@ -8,33 +8,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.res.ResourcesCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.genericAdapter.GenericAdapter
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemMenuBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemAds
-import com.streetsaarthi.nasvi.models.mix.ItemState
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.genericAdapter.GenericAdapter
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemAds
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.createNew.CreateNew
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.dashboard.Dashboard
 import com.streetsaarthi.nasvi.screens.main.informationCenter.InformationCenter
 import com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetails
+import com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetailsXX
 import com.streetsaarthi.nasvi.screens.main.notices.allNotices.AllNotices
 import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.nasvi.screens.main.notifications.Notifications
@@ -43,24 +43,20 @@ import com.streetsaarthi.nasvi.screens.main.profiles.Profiles
 import com.streetsaarthi.nasvi.screens.main.schemes.allSchemes.AllSchemes
 import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import com.streetsaarthi.nasvi.screens.main.settings.Settings
+import com.streetsaarthi.nasvi.screens.main.subscription.Subscription
 import com.streetsaarthi.nasvi.screens.main.training.allTraining.AllTraining
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.navHostFragment
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemChildMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemMenuModel
 import com.streetsaarthi.nasvi.screens.mainActivity.menu.JsonHelper
-import com.streetsaarthi.nasvi.utils.imageZoom
-import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.getDensityName
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import retrofit2.Response
-import java.io.BufferedInputStream
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
 import java.util.Locale
 import javax.inject.Inject
 
@@ -70,12 +66,19 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
     val bannerAdapter by lazy { BannerViewPagerAdapter() }
 
-    val locale: Locale = Locale.getDefault()
+    companion object{
+        @JvmStatic
+        var locale: Locale = Locale.getDefault()
+    }
 
     var itemMain : List<ItemMenuModel> ?= ArrayList()
     init {
+        locale = Locale.getDefault()
         itemMain = JsonHelper(MainActivity.context.get()!!).getMenuData(locale)
     }
+
+    var selectedPosition = -1
+    var selectedColorPosition = 0
 
     val menuAdapter = object : GenericAdapter<ItemMenuBinding, ItemMenuModel>() {
         override fun onCreateView(
@@ -88,8 +91,27 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
         override fun onBindHolder(binding: ItemMenuBinding, dataClass: ItemMenuModel, position: Int) {
 
             binding.apply {
-//                header.setBackgroundTintList(
-//                    ColorStateList.valueOf(dataClass.color))
+                if(selectedPosition == position) {
+                    ivArrow.setImageResource(if (dataClass.isExpanded == true) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up)
+                    recyclerViewChild.visibility = if (dataClass.isExpanded == true) View.VISIBLE else View.GONE
+                } else {
+                    ivArrow.setImageResource(R.drawable.ic_arrow_up)
+                    recyclerViewChild.visibility = View.GONE
+                    dataClass.apply {
+                        isExpanded = false
+                    }
+                }
+
+
+                if(selectedColorPosition == position) {
+                    header.setBackgroundTintList(
+                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
+                } else {
+                    header.setBackgroundTintList(
+                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
+                }
+
+
                 title.text = dataClass.title
                 if(dataClass.titleChildArray!!.isEmpty()){
                     ivArrow .visibility = View.GONE
@@ -97,8 +119,6 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                     ivArrow .visibility = View.VISIBLE
                 }
 
-                ivArrow.setImageResource(if (dataClass.isExpanded == true) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up)
-                recyclerViewChild.visibility = if (dataClass.isExpanded == true) View.VISIBLE else View.GONE
 
                 recyclerViewChild.setHasFixedSize(true)
                 val headlineAdapter = ChildMenuAdapter(binding.root.context, dataClass.titleChildArray, position)
@@ -106,45 +126,19 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 recyclerViewChild.layoutManager = LinearLayoutManager(binding.root.context)
 
 
-                ivArrow.singleClick {
-//                    if (dataClass.isExpanded == false){
-//                        dataClass.isExpanded = true
-//                    } else {
-//                        dataClass.isExpanded = false
-//                    }
-                    val list = currentList
-//                    list.map {
-//                        it.isExpanded = false
-//                        if(it.isExpanded == dataClass.isExpanded){
-//                            dataClass.isExpanded = !dataClass.isExpanded!!
-//                        }
-//                    }
-//
-//                    if (dataClass.isExpanded == false){
-//                        dataClass.apply {
-//                            dataClass.isExpanded = true
-//                        }
-//                        Log.e("TAG", "dataClass.isExpandedAA "+dataClass.isExpanded)
-//
-//                    } else {
-//                        dataClass.apply {
-//                            dataClass.isExpanded = false
-//                        }
-//                        Log.e("TAG", "dataClass.isExpandedBB "+dataClass.isExpanded)
-//
-//                    }
+//                ivArrow.singleClick {
+//                    selectedPosition = position
 //                    dataClass.isExpanded = !dataClass.isExpanded!!
-                        dataClass.isExpanded = !dataClass.isExpanded!!
-
-                        notifyItemRangeChanged(position, list.size)
+//                    selectedColorPosition = position
 //                    notifyDataSetChanged()
-                }
+//                }
 
 
                 root.singleClick {
+                    selectedColorPosition = position
                     if(dataClass.titleChildArray!!.isEmpty()){
                         var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
-                        DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val data = Gson().fromJson(loginUser, Login::class.java)
                                 when (data.status) {
@@ -161,13 +155,13 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                 }
                                             }
                                             2 -> {
-                                                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                                                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                                                     if (loginUser != null) {
-                                                        var isNotification = Gson().fromJson(
+                                                        val isNotification = Gson().fromJson(
                                                             loginUser,
                                                             Login::class.java
                                                         )?.notification ?: ""
-                                                        Log.e("TAG", "isNotification"+isNotification)
+//                                                        Log.e("TAG", "isNotification"+isNotification)
                                                         if(isNotification == "Yes"){
                                                             if (fragmentInFrame !is Notifications){
                                                                 NotificationsVM.isNotificationNext = false
@@ -180,8 +174,17 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                 }
                                             }
                                             3 -> {
-                                                if (fragmentInFrame !is MembershipDetails){
-                                                    navHostFragment?.navController?.navigate(R.id.membershipDetails)
+                                                val densityDpi = root.context.getDensityName()
+                                                 when (densityDpi) {
+                                                     "xxhdpi" -> {
+                                                         if (fragmentInFrame !is MembershipDetailsXX){
+                                                             navHostFragment?.navController?.navigate(R.id.membershipDetailsXX)
+                                                         }
+                                                     } else -> {
+                                                         if (fragmentInFrame !is MembershipDetails){
+                                                             navHostFragment?.navController?.navigate(R.id.membershipDetails)
+                                                         }
+                                                     }
                                                 }
                                             }
                                             8 -> {
@@ -189,6 +192,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                     navHostFragment?.navController?.navigate(R.id.informationCenter)
                                                 }
                                             }
+//                                            9 -> {
+//                                                if (fragmentInFrame !is Subscription){
+//                                                    navHostFragment?.navController?.navigate(R.id.subscription)
+//                                                }
+//                                            }
                                             9 -> {
                                                 if (fragmentInFrame !is Settings){
                                                     navHostFragment?.navController?.navigate(R.id.settings)
@@ -208,6 +216,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                     navHostFragment?.navController?.navigate(R.id.profiles)
                                                 }
                                             }
+                                            10 -> {
+                                                if (fragmentInFrame !is Subscription) {
+                                                    navHostFragment?.navController?.navigate(R.id.subscription)
+                                                }
+                                            }
                                             else -> {
                                                 showSnackBar(root.resources.getString(R.string.registration_processed))
                                             }
@@ -223,6 +236,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                             1 -> {
                                                 if (fragmentInFrame !is Profiles) {
                                                     navHostFragment?.navController?.navigate(R.id.profiles)
+                                                }
+                                            }
+                                            10 -> {
+                                                if (fragmentInFrame !is Subscription) {
+                                                    navHostFragment?.navController?.navigate(R.id.subscription)
                                                 }
                                             }
                                             else -> {
@@ -242,6 +260,11 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                                                     navHostFragment?.navController?.navigate(R.id.profiles)
                                                 }
                                             }
+                                            10 -> {
+                                                if (fragmentInFrame !is Subscription) {
+                                                    navHostFragment?.navController?.navigate(R.id.subscription)
+                                                }
+                                            }
                                             else -> {
                                                 showSnackBar(root.resources.getString(R.string.registration_processed))
                                             }
@@ -251,11 +274,12 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                             }
                         }
                         MainActivity.binding.drawerLayout.close()
-                    }else{
-                        dataClass.isExpanded = !dataClass.isExpanded!!
-                        val list = currentList
-                        notifyItemRangeChanged(position, list.size)
                     }
+
+                    selectedPosition = position
+                    dataClass.isExpanded = !dataClass.isExpanded!!
+                    selectedColorPosition = position
+                    notifyDataSetChanged()
                 }
 
 
@@ -271,19 +295,34 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
         private var inflater: LayoutInflater = LayoutInflater.from(context)
         private var parentPosition: Int = mainPosition
 
+        var selectedChildColorPosition = -1
+
         override
         fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChildViewHolder {
             val view = inflater.inflate(R.layout.item_child_menu, parent, false)
             return ChildViewHolder(view)
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         override
         fun onBindViewHolder(holder: ChildViewHolder, position: Int) {
             val item = items?.get(position)
             holder.tvTitle.text = item?.title
+
+            if(selectedChildColorPosition == position) {
+                holder.child.setBackgroundTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(mainContext, R.color._f6dbbb)))
+            } else {
+                holder.child.setBackgroundTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(mainContext, R.color.white)))
+            }
+
             holder.itemView.singleClick {
-                    var fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
-                DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                selectedChildColorPosition = position
+                notifyDataSetChanged()
+
+                val fragmentInFrame = navHostFragment!!.getChildFragmentManager().getFragments().get(0)
+                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                     if (loginUser != null) {
                         val data = Gson().fromJson(loginUser, Login::class.java)
                         when (data.status) {
@@ -351,7 +390,6 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                         }
                     }
                 }
-
                 MainActivity.binding.drawerLayout.close()
             }
         }
@@ -363,28 +401,10 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
 
         class ChildViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var tvTitle: AppCompatTextView = itemView.findViewById(R.id.titleChild)
+            var child: ConstraintLayout = itemView.findViewById(R.id.child)
         }
     }
 
-
-//    val menuChildAdapter = object : GenericAdapter<ItemChildMenuBinding, ItemChildMenuModel>() {
-//        override fun onCreateView(
-//            inflater: LayoutInflater,
-//            parent: ViewGroup,
-//            viewType: Int
-//        ) = ItemChildMenuBinding.inflate(inflater, parent, false)
-//
-//        @SuppressLint("NotifyDataSetChanged")
-//        override fun onBindHolder(binding: ItemChildMenuBinding, dataClass: ItemChildMenuModel, position: Int) {
-//            binding.apply {
-//                val list = currentList
-//                titleChild.text = list[position].title
-//                root.singleClick {
-//
-//                }
-//            }
-//        }
-//    }
 
 
 
@@ -398,7 +418,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                     apiInterface.adsList()
                 override fun success(response: Response<BaseResponseDC<List<ItemAds>>>) {
                     if (response.isSuccessful){
-                        var adsList : ArrayList<ItemAds> = ArrayList()
+                        val adsList : ArrayList<ItemAds> = ArrayList()
                         val ads = response.body()?.data as ArrayList<ItemAds>
                         ads.map {
                             when(it.ad_sr_no){
@@ -436,7 +456,7 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         itemDeleteResult.value = true
-                       // itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
+                        // itemAdsResult.value = response.body()?.data as ArrayList<ItemAds>
                     }
                 }
 
@@ -476,16 +496,6 @@ class MainActivityVM @Inject constructor(private val repository: Repository): Vi
             }
         )
     }
-
-
-//    fun getToken(callBack: String.() -> Unit){
-//        FirebaseMessaging.getInstance().token.addOnSuccessListener { result ->
-//            if(result != null){
-//                callBack(result)
-//            }
-//        }
-//    }
-
 
 
 

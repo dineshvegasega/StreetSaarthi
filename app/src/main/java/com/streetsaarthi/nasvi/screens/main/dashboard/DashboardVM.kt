@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.screens.main.dashboard
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.genericAdapter.GenericAdapter
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
@@ -23,15 +21,18 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemDashboardMenusBinding
 import com.streetsaarthi.nasvi.databinding.ItemRecentActivitiesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.chat.ItemChat
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemHistory
-import com.streetsaarthi.nasvi.models.mix.ItemInformationCenter
-import com.streetsaarthi.nasvi.models.mix.ItemLiveNotice
-import com.streetsaarthi.nasvi.models.mix.ItemLiveScheme
-import com.streetsaarthi.nasvi.models.mix.ItemLiveTraining
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
+import com.streetsaarthi.nasvi.genericAdapter.GenericAdapter
+import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.ItemChat
+import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.models.ItemHistory
+import com.streetsaarthi.nasvi.models.ItemInformationCenter
+import com.streetsaarthi.nasvi.models.ItemLiveNotice
+import com.streetsaarthi.nasvi.models.ItemLiveScheme
+import com.streetsaarthi.nasvi.models.ItemLiveTraining
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history.History
 import com.streetsaarthi.nasvi.screens.main.informationCenter.InformationCenter
@@ -39,7 +40,6 @@ import com.streetsaarthi.nasvi.screens.main.notices.liveNotices.LiveNotices
 import com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes.LiveSchemes
 import com.streetsaarthi.nasvi.screens.main.training.liveTraining.LiveTraining
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.onboarding.networking.NETWORK_DIALOG_SHOW
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,8 +52,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardVM @Inject constructor(private val repository: Repository): ViewModel() {
-
-    var counterNetwork = MutableLiveData<Boolean>(false)
 
     var itemMain : ArrayList<ItemModel> ?= ArrayList()
     init {
@@ -126,7 +124,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 textHeaderTxt.setText(dataClass.name)
                 ivLogo.setImageResource(dataClass.image)
                 root.singleClick {
-                    DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
                             val data = Gson().fromJson(loginUser, Login::class.java)
                                when (data.status) {
@@ -161,7 +159,6 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                }
                         }
                     }
-
                 }
             }
 
@@ -237,7 +234,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     if (response.isSuccessful){
                         val typeToken = object : TypeToken<List<ItemLiveScheme>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveScheme>>(Gson().toJson(response.body()!!.data), typeToken)
-                        DataStoreUtil.readData(DataStoreKeys.LIVE_SCHEME_DATA) { loginUser ->
+                        readData(DataStoreKeys.LIVE_SCHEME_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveScheme>>(loginUser, typeToken)
                                 if(changeValue != savedValue){
@@ -246,13 +243,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isScheme.value = false
                                 }
                             } else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
                                 isScheme.value = false
                             }
 //                            Log.e("TAG", "LiveSchemes.isReadLiveSchemes"+LiveSchemes.isReadLiveSchemes)
                             if (LiveSchemes.isReadLiveSchemes == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_SCHEME_DATA, changeValue)
                                 isScheme.value = false
                                 LiveSchemes.isReadLiveSchemes = false
@@ -263,11 +260,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                   // super.error(message)
+                    super.error(message)
                   //  showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -289,7 +283,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     if (response.isSuccessful){
                         val typeToken = object : TypeToken<List<ItemLiveNotice>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveNotice>>(Gson().toJson(response.body()!!.data), typeToken)
-                        DataStoreUtil.readData(DataStoreKeys.LIVE_NOTICE_DATA) { loginUser ->
+                        readData(DataStoreKeys.LIVE_NOTICE_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveNotice>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
@@ -298,12 +292,12 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isNotice.value = false
                                 }
                             } else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_NOTICE_DATA, changeValue)
                                 isNotice.value = false
                             }
                             if (LiveNotices.isReadLiveNotices == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_NOTICE_DATA, changeValue)
                                 isNotice.value = false
                                 LiveNotices.isReadLiveNotices = false
@@ -313,11 +307,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                  //  super.error(message)
+                    super.error(message)
                  //   showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -340,7 +331,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                         //isTraining.value = true
                         val typeToken = object : TypeToken<List<ItemLiveTraining>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemLiveTraining>>(Gson().toJson(response.body()!!.data), typeToken)
-                        DataStoreUtil.readData(DataStoreKeys.LIVE_TRAINING_DATA) { loginUser ->
+                        readData(DataStoreKeys.LIVE_TRAINING_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemLiveTraining>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
@@ -349,13 +340,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isTraining.value = false
                                 }
                             }  else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_TRAINING_DATA, changeValue)
                                 isTraining.value = false
                             }
 
                             if (LiveTraining.isReadLiveTraining == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.LIVE_TRAINING_DATA, changeValue)
                                 isTraining.value = false
                                 LiveTraining.isReadLiveTraining = false
@@ -365,11 +356,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                   // super.error(message)
+                    super.error(message)
                  //   showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -414,7 +402,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
 ////                            Log.e("TAG", "aaaaa_idZZZ "+it.feedback_id)
 //                            Log.e("TAG", "aaaaa_idXXX "+this.toString())
 //                        }
-                        DataStoreUtil.readData(DataStoreKeys.Complaint_Feedback_DATA) { loginUser ->
+                        readData(DataStoreKeys.Complaint_Feedback_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemHistory>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
@@ -423,13 +411,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isComplaintFeedback.value = false
                                 }
                             }  else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.Complaint_Feedback_DATA, changeValue)
                                 isComplaintFeedback.value = false
                             }
 
                             if (History.isReadComplaintFeedback == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.Complaint_Feedback_DATA, changeValue)
                                 isComplaintFeedback.value = false
                                 History.isReadComplaintFeedback = false
@@ -439,11 +427,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                  //  super.error(message)
+                    super.error(message)
                //     showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -461,7 +446,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
         repository.callApi(
             callHandler = object : CallHandler<Response<ItemChat>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
-                    apiInterface.feedbackConversationDetails(_id)
+                    apiInterface.feedbackConversationDetails(_id, "1")
                 override fun success(response: Response<ItemChat>) {
                     if (response.isSuccessful){
                         callBack(response.body()!!)
@@ -474,10 +459,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                     }
                 }
                 override fun error(message: String) {
-                   // super.error(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
+                    super.error(message)
                 }
                 override fun loading() {
                     super.loading()
@@ -499,7 +481,7 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                         //isTraining.value = true
                         val typeToken = object : TypeToken<List<ItemInformationCenter>>() {}.type
                         val changeValue = Gson().fromJson<List<ItemInformationCenter>>(Gson().toJson(response.body()!!.data), typeToken)
-                        DataStoreUtil.readData(DataStoreKeys.Information_Center_DATA) { loginUser ->
+                        readData(DataStoreKeys.Information_Center_DATA) { loginUser ->
                             if (loginUser != null) {
                                 val savedValue = Gson().fromJson<List<ItemInformationCenter>>(loginUser, typeToken)
                                 if(changeValue!= savedValue){
@@ -508,13 +490,13 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                                     isInformationCenter.value = false
                                 }
                             }  else {
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.Information_Center_DATA, changeValue)
                                 isInformationCenter.value = false
                             }
 
                             if (InformationCenter.isReadInformationCenter == true){
-                                DataStoreUtil.saveObject(
+                                saveObject(
                                     DataStoreKeys.Information_Center_DATA, changeValue)
                                 isInformationCenter.value = false
                                 InformationCenter.isReadInformationCenter = false
@@ -524,11 +506,8 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 }
 
                 override fun error(message: String) {
-                  //  super.error(message)
+                    super.error(message)
            //         showSnackBar(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
                 }
 
                 override fun loading() {
@@ -576,22 +555,26 @@ class DashboardVM @Inject constructor(private val repository: Repository): ViewM
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         if(response.body()!!.data != null){
-                            DataStoreUtil.saveData(
+                            saveData(
                                 DataStoreKeys.AUTH,
                                 response.body()!!.token ?: ""
                             )
-                            DataStoreUtil.saveObject(
+                            saveObject(
                                 DataStoreKeys.LOGIN_DATA,
                                 Gson().fromJson(response.body()!!.data, Login::class.java)
                             )
+
+//                            readData(DataStoreKeys.AUTH) { authToken ->
+//                                if (authToken != null) {
+//                                    Log.e("TAG", "authToken: " + authToken)
+//                                    Log.e("TAG", "token "+response.body()!!.token ?: "")
+//                                }
+//                            }
                         }
                     }
                 }
                 override fun error(message: String) {
-                   // super.error(message)
-                    if(NETWORK_DIALOG_SHOW){
-                        counterNetwork.value = true
-                    }
+                    super.error(message)
                 }
 
                 override fun loading() {

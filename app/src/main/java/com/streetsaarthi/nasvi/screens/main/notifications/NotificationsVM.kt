@@ -1,21 +1,14 @@
 package com.streetsaarthi.nasvi.screens.main.notifications
 
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.JsonElement
-import com.streetsaarthi.nasvi.datastore.DataStoreKeys
-import com.streetsaarthi.nasvi.datastore.DataStoreUtil
-import com.streetsaarthi.nasvi.model.BaseResponseDC
-import com.streetsaarthi.nasvi.models.login.Login
-import com.streetsaarthi.nasvi.models.mix.ItemNotification
+import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +22,7 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
 
     val adapter by lazy { NotificationsAdapter(this) }
 
+
     companion object{
         var isNotificationNext: Boolean? = false
 //        var isNotificationId = MutableLiveData<ItemNotification>()
@@ -36,13 +30,12 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
 
     private var itemNotificationsResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemNotifications : LiveData<BaseResponseDC<Any>> get() = itemNotificationsResult
-    fun notifications(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun notifications(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.notifications(jsonObject.getInt("page") , jsonObject.getBoolean("is_read") , jsonObject.getString("user_id") )
 //                    apiInterface.notifications(jsonObject.getInt("page"), jsonObject.getString("user_id"))
-
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
                     if (response.isSuccessful){
                         itemNotificationsResult.value = response.body() as BaseResponseDC<Any>
@@ -65,7 +58,7 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
 
     private var itemNotificationsResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemNotificationsSecond : LiveData<BaseResponseDC<Any>> get() = itemNotificationsResultSecond
-    fun notificationsSecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun notificationsSecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -81,7 +74,6 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
 
                 override fun error(message: String) {
                     super.error(message)
-                    showSnackBar(message)
                 }
 
                 override fun loading() {
@@ -96,7 +88,7 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
 
 
     var deleteNotifications = MutableLiveData<Boolean>(false)
-    fun deleteNotification(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun deleteNotification(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -121,7 +113,7 @@ class NotificationsVM @Inject constructor(private val repository: Repository): V
 
 
     var updateNotifications = MutableLiveData<Int>(-1)
-    fun updateNotification(view: View, jsonObject: JSONObject, pos: Int) = viewModelScope.launch {
+    fun updateNotification(jsonObject: JSONObject, pos: Int) = viewModelScope.launch {
 
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {

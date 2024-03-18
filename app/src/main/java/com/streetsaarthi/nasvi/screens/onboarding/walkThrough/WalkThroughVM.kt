@@ -3,12 +3,12 @@ package com.streetsaarthi.nasvi.screens.onboarding.walkThrough
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
-import com.demo.genericAdapter.GenericAdapter
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.Repository
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.OnboardItemBinding
 import com.streetsaarthi.nasvi.databinding.WalkThroughItemBinding
+import com.streetsaarthi.nasvi.genericAdapter.GenericAdapter
 import com.streetsaarthi.nasvi.screens.onboarding.onboard.Onboard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

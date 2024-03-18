@@ -1,17 +1,15 @@
 package com.streetsaarthi.nasvi.screens.main.complaintsFeedback.history
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.streetsaarthi.nasvi.ApiInterface
-import com.streetsaarthi.nasvi.CallHandler
-import com.streetsaarthi.nasvi.Repository
+import com.streetsaarthi.nasvi.networking.ApiInterface
+import com.streetsaarthi.nasvi.networking.CallHandler
+import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.JsonElement
-import com.streetsaarthi.nasvi.model.BaseResponseDC
+import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
-import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -23,10 +21,9 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
     val adapter by lazy { HistoryAdapter(this) }
 
 
-
     private var itemHistoryResult = MutableLiveData<BaseResponseDC<Any>>()
     val itemHistory : LiveData<BaseResponseDC<Any>> get() = itemHistoryResult
-    fun history(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun history(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -39,7 +36,7 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
 
                 override fun error(message: String) {
                     super.error(message)
-                    showSnackBar(message)
+//                    showSnackBar(message)
                 }
 
                 override fun loading() {
@@ -53,7 +50,7 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
 
     private var itemHistoryResultSecond = MutableLiveData<BaseResponseDC<Any>>()
     val itemHistorySecond : LiveData<BaseResponseDC<Any>> get() = itemHistoryResultSecond
-    fun historySecond(view: View, jsonObject: JSONObject) = viewModelScope.launch {
+    fun historySecond(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
@@ -65,8 +62,8 @@ class HistoryVM @Inject constructor(private val repository: Repository): ViewMod
                 }
 
                 override fun error(message: String) {
-                    super.error(message)
-                    showSnackBar(message)
+//                    super.error(message)
+//                    showSnackBar(message)
                 }
 
                 override fun loading() {
