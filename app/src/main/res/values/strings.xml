@@ -725,6 +725,15 @@
     <string name="subscription_details">Subscription Details</string>
     <string name="please_select_month_year_and_number">Please select Month/Year and Number</string>
 
+    <string name="rupees" translatable="false">\u20B9%s</string>
+    <string name="percent" translatable="false">%s &#37;</string>
+    <string name="days" translatable="false">%s Days</string>
+
+
+
+
+
+
 
 
 

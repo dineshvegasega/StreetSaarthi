@@ -114,14 +114,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/white_round_corner"
-            >
+            tools:ignore="UselessParent">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etTypingMessage"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/_70sdp"
+                android:layout_marginEnd="@dimen/_70sdp"
                 android:background="@color/_00000000"
                 android:clickable="false"
                 android:drawablePadding="@dimen/_30sdp"
@@ -129,7 +129,7 @@
                 android:inputType="textMultiLine|textShortMessage"
                 android:maxLines="3"
                 android:paddingVertical="10dp"
-                android:paddingLeft="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
                 android:paddingBottom="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/_79747E"
@@ -140,10 +140,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/ivSend"
+                android:layout_toStartOf="@+id/ivSend"
                 android:src="@drawable/symbols_attachment"
                 android:padding="@dimen/_8sdp"
-               />
+                />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivSend"

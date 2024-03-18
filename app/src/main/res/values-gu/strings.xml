@@ -572,6 +572,12 @@
 
     <string name="subscription_details">સબ્સ્ક્રિપ્શન વિગતો</string>
     <string name="please_select_month_year_and_number">કૃપા કરીને મહિનો/વર્ષ અને નંબર પસંદ કરો</string>
+    <string name="days" translatable="false">%s દિવસ</string>
+
+
+
+
+
 
 
 

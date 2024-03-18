@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.screens.main.membershipDetails
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -19,7 +18,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -33,11 +31,9 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.load
 import coil.memory.MemoryCache
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.MembershipDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData

@@ -575,6 +575,12 @@
 
     <string name="subscription_details">সাবস্ক্রিপশনের বিবরণ</string>
     <string name="please_select_month_year_and_number">অনুগ্রহ করে মাস/বছর এবং নম্বর নির্বাচন করুন</string>
+    <string name="days" translatable="false">%s দিন</string>
+
+
+
+
+
 
 
 

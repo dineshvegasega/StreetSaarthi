@@ -1,13 +1,15 @@
 package com.streetsaarthi.nasvi.screens.onboarding.loginOtp
 
 import android.app.Activity
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -148,6 +150,48 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
 
 
 
+            editTextMobileNumber.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (isTimer.isEmpty()) {
+                        editTextSendOtp.setEnabled(true)
+                        editTextSendOtp.setBackgroundTintList(
+                            ColorStateList.valueOf(
+                                ResourcesCompat.getColor(
+                                    getResources(), R.color._E79D46, null)))
+                        viewModel.isOtpVerified = false
+                        editTextMobileNumber.requestFocus()
+                    }
+                }
+            })
+
+            editTextOtp.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (isTimer.isEmpty()) {
+                        editTextSendOtp.setEnabled(true)
+                        editTextSendOtp.setBackgroundTintList(
+                            ColorStateList.valueOf(
+                                ResourcesCompat.getColor(
+                                    getResources(), R.color._E79D46, null)))
+                        viewModel.isOtpVerified = false
+                        editTextOtp.requestFocus()
+                    }
+                }
+            })
+
+
+
             btSignIn.singleClick {
                 if (editTextMobileNumber.text.toString().isEmpty() || editTextMobileNumber.text.toString().length != 10){
                     showSnackBar(getString(R.string.enterMobileNumber))
@@ -217,6 +261,7 @@ class LoginOtp : Fragment() , OtpTimer.SendOtpTimerData {
                     editTextOtp.text?.length?.let { editTextOtp.setSelection(it) }
                     OtpTimer.sendOtpTimerData = null
                     OtpTimer.stopTimer()
+                    isTimer = ""
                     tvTime.visibility = View.GONE
                 }
             }

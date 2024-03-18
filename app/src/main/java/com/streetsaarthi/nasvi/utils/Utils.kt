@@ -52,8 +52,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
+import java.math.RoundingMode
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -1051,3 +1053,18 @@ fun Context.getSignature(): String {
     }
     return ""
 }
+
+
+
+
+fun Double.roundOffDecimal(): Double { //here, 1.45678 = 1.46
+    val df = DecimalFormat("#.##")
+    df.roundingMode = RoundingMode.CEILING
+    return df.format(this).toDouble()
+}
+
+//fun roundOffDecimal(number: Double): Double? { //here, 1.45678 = 1.45
+//    val df = DecimalFormat("#.##")
+//    df.roundingMode = RoundingMode.FLOOR
+//    return df.format(number).toDouble()
+//}

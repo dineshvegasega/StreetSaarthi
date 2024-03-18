@@ -1,28 +1,21 @@
 package com.streetsaarthi.nasvi.screens.main.dashboard
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
-import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DashboardBinding
-import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
-import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 

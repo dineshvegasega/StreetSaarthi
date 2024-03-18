@@ -1,28 +1,23 @@
 package com.streetsaarthi.nasvi.screens.main.schemes.liveSchemes
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.LiveSchemesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
@@ -30,23 +25,17 @@ import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.models.ItemLiveScheme
 import com.streetsaarthi.nasvi.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.PACKAGE_NAME
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.SIGNATURE_NAME
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.isBackApp
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
-import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
-import com.streetsaarthi.nasvi.utils.getSignature
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
-import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import org.json.JSONObject
-import java.net.URLEncoder
 
 
 @AndroidEntryPoint

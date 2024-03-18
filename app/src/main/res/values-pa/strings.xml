@@ -580,6 +580,16 @@
 
     <string name="subscription_details">ਗਾਹਕੀ ਵੇਰਵੇ</string>
     <string name="please_select_month_year_and_number">ਕਿਰਪਾ ਕਰਕੇ ਮਹੀਨਾ/ਸਾਲ ਅਤੇ ਨੰਬਰ ਚੁਣੋ</string>
+    <string name="days" translatable="false">%s ਦਿਨ</string>
+
+
+
+
+
+
+
+
+
 
 
 

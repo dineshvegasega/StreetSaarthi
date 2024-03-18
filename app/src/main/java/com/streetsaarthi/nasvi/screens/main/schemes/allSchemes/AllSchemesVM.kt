@@ -46,7 +46,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel

@@ -11,17 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.LiveNoticesBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
@@ -35,7 +32,6 @@ import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
-import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import org.json.JSONObject

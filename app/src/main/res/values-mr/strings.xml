@@ -576,6 +576,16 @@
 
     <string name="subscription_details">सदस्यता तपशील</string>
     <string name="please_select_month_year_and_number">कृपया महिना/वर्ष आणि क्रमांक निवडा</string>
+    <string name="days" translatable="false">%s दिवस</string>
+
+
+
+
+
+
+
+
+
 
 
 

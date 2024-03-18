@@ -2,7 +2,6 @@ package com.streetsaarthi.nasvi.screens.main.settings
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +23,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import retrofit2.Response
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel

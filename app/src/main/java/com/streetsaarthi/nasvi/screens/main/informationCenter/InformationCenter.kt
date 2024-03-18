@@ -22,7 +22,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
-import com.streetsaarthi.nasvi.databinding.DialogBottomNetworkBinding
 import com.streetsaarthi.nasvi.databinding.InformationCenterBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
@@ -35,7 +34,6 @@ import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.onRightDrawableClicked
-import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import org.json.JSONObject

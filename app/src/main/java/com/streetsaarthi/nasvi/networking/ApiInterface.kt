@@ -298,4 +298,19 @@ interface ApiInterface {
         @Body requestBody: RequestBody
     ): Response<BaseResponseDC<JsonElement>>
 
+
+    @POST(Subscription)
+    suspend fun purchaseSubscription(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+    @POST(Subscription)
+    suspend fun subscriptionHistory(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
+
+
+
+
 }

@@ -578,6 +578,15 @@
 
     <string name="subscription_details">سبسکرپشن کی تفصیلات</string>
     <string name="please_select_month_year_and_number">براہ کرم مہینہ/سال اور نمبر منتخب کریں۔</string>
+    <string name="days" translatable="false">%s دن</string>
+
+
+
+
+
+
+
+
 
 
 

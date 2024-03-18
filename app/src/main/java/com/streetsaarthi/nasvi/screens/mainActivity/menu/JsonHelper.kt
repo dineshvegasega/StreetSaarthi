@@ -1,5 +1,6 @@
 package com.streetsaarthi.nasvi.screens.mainActivity.menu
 
+import android.annotation.SuppressLint
 import android.content.Context
 import org.json.JSONObject
 import com.google.gson.Gson
@@ -11,6 +12,7 @@ import java.util.Locale
 open class JsonHelper(private var context: Context) {
     private var newspaperList: MutableList<ItemMenuModel>? = null
 
+    @SuppressLint("SuspiciousIndentation")
     open fun getMenuData(locale: Locale): List<ItemMenuModel>? {
         if (newspaperList == null)
             newspaperList = ArrayList()

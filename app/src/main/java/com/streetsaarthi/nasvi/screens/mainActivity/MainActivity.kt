@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +13,7 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,8 +33,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.common.IntentSenderForResultStarter
+import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.MainActivityBinding
@@ -61,7 +64,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import okhttp3.MultipartBody
 import java.lang.ref.WeakReference
-import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -110,9 +112,6 @@ class MainActivity : AppCompatActivity() {
 
         @JvmStatic
         var networkFailed: Boolean = false
-
-//        @JvmStatic
-//        var locale: Locale = Locale.getDefault()
 
     }
 
@@ -164,7 +163,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         checkUpdate()
-
 
         if (Build.VERSION.SDK_INT >= 33) {
             pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
@@ -480,7 +478,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun showData(bundle: Bundle) {
         try {
-            val navOptions: NavOptions = NavOptions.Builder()
+            if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                binding.drawerLayout.close()
+            }
+                val navOptions: NavOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.navigation_bar, true)
                 .build()
             if (intent!!.hasExtra(Screen)) {
@@ -675,9 +676,10 @@ class MainActivity : AppCompatActivity() {
 
     var resultUpdate =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-//            Log.e("TAG", "result.resultCode " + result.resultCode)
+            Log.e("TAG", "result.resultCode " + result.resultCode)
             if (result.resultCode == RESULT_OK) {
                 // Handle successful app update
+                Log.e("TAG", "RESULT_OK")
             } else if (result.resultCode == RESULT_CANCELED) {
 //                finish()
             } else if (result.resultCode == RESULT_IN_APP_UPDATE_FAILED) {
@@ -686,6 +688,7 @@ class MainActivity : AppCompatActivity() {
 //                finish()
             }
         }
+
 
     private fun checkUpdate() {
         val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(this)

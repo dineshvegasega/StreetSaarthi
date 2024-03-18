@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.SubscriptionBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
+import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
@@ -58,7 +58,7 @@ class Subscription : Fragment(){
             inclideHeaderSearch.textHeaderEditTxt.visibility = View.GONE
 
 
-            DataStoreUtil.readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
 //                    Log.e("TAG", "loginUser " + loginUser)
 
@@ -79,16 +79,15 @@ class Subscription : Fragment(){
                     }
 
 
-//                    if(networkFailed) {
-                        val _id = Gson().fromJson(loginUser, Login::class.java).residential_state.id
+                    if(networkFailed) {
+                        val _id = Gson().fromJson(loginUser, Login::class.java)?.residential_state?.id
                         val obj: JSONObject = JSONObject().apply {
-//                            put("state_id", _id)
-                            put("state_id", "5")
+                            put("state_id", _id)
                         }
                         viewModel.subscription(obj)
-//                    } else {
-//                        requireContext().callNetworkDialog()
-//                    }
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
 
 //                    val data = Gson().fromJson(loginUser, Login::class.java).status
 //                    when (data) {
