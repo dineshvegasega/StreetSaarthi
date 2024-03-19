@@ -550,7 +550,7 @@
     <string name="history">ചരിത്രം</string>
 
     <string name="select_month_year">മാസം/വർഷം തിരഞ്ഞെടുക്കുക</string>
-    <string name="choose_number">നമ്പർ തിരഞ്ഞെടുക്കുക</string>
+    <string name="choose_number">ദൈർഘ്യം തിരഞ്ഞെടുക്കുക</string>
     <string name="month">മാസം</string>
     <string name="year">വർഷം</string>
     <string name="calculate_price">വില കണക്കാക്കുക</string>

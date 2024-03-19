@@ -166,4 +166,6 @@ dependencies {
     implementation ("com.github.stfalcon-studio:StfalconImageViewer:v1.0.1")
     implementation ("com.google.android.gms:play-services-auth-api-phone:18.0.2")
 
+    implementation ("androidx.paging:paging-common-ktx:3.2.1")
+    implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
 }

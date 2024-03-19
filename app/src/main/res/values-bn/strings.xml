@@ -550,7 +550,7 @@
     <string name="history">ইতিহাস</string>
 
     <string name="select_month_year">মাস/বছর নির্বাচন করুন</string>
-    <string name = "choose_number"> নম্বর চয়ন করুন</string>
+    <string name = "choose_number">সময়কাল নির্বাচন করুন</string>
     <string name="month">মাস</string>
     <string name="year">বছর</string>
     <string name="calculate_price">মূল্য গণনা করুন</string>

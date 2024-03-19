@@ -66,6 +66,7 @@ const val PasswordUpdate = "password-update"
 const val UpdateNomineeDetails = "update-nominee-details"
 const val NomineeDetails = "nominee-details"
 const val Subscription = "subscription"
+const val CouponLiveList = "coupon-live-list"
 
 
 const val USER_TYPE = "member"
@@ -77,7 +78,6 @@ const val PING = "8.8.8.8"
 const val TRANSLATE_URL = "https://translate.googleapis.com/translate_a/"
 const val TRANSLATE = "single?client=gtx&sl=en&dt=t"
 
-//"client=gtx&sl=en&dt=t&dt=t"
 
 const val Screen = "screen"
 const val Start = "Start"

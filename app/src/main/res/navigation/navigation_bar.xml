@@ -659,4 +659,14 @@
         tools:layout="@layout/nominee_details">
     </fragment>
 
+
+
+    <fragment
+        android:name="com.streetsaarthi.nasvi.screens.main.scheme.Scheme"
+        android:label="Scheme"
+        android:id="@+id/scheme"
+        tools:layout="@layout/live_schemes">
+    </fragment>
+
+
 </navigation>

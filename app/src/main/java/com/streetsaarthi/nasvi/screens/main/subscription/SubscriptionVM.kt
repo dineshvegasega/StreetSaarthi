@@ -2,6 +2,7 @@ package com.streetsaarthi.nasvi.screens.main.subscription
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -17,6 +18,7 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomSubscriptionBinding
 import com.streetsaarthi.nasvi.databinding.ItemSubscriptionHistoryBinding
 import com.streetsaarthi.nasvi.genericAdapter.GenericAdapter
 import com.streetsaarthi.nasvi.models.BaseResponseDC
+import com.streetsaarthi.nasvi.models.ItemCouponLiveList
 import com.streetsaarthi.nasvi.models.ItemSubscription
 import com.streetsaarthi.nasvi.networking.ApiInterface
 import com.streetsaarthi.nasvi.networking.CallHandler
@@ -95,12 +97,10 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
     var validity : String = ""
     var validityMonths : Int = 0
     var validityDays : Int = 0
-    var gst : Double = 2.0
+    var gst : Double = 18.0
     var afterGst : Double = 0.0
     var couponDiscount : Double = 10.0
-//    var afterDiscount : Double = 0.0
     var totalCost : Double = 0.0
-
     var monthYear : Int = 0
     var number : Int = 0
 
@@ -190,7 +190,53 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
         )
     }
 
+
+
+
+
+
+    var couponLiveList = MutableLiveData<ItemCouponLiveList>()
+    fun couponLiveList(jsonObject: JSONObject) = viewModelScope.launch {
+        repository.callApi(
+            callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
+                override suspend fun sendRequest(apiInterface: ApiInterface) =
+                    apiInterface.couponLiveList(requestBody = jsonObject.getJsonRequestBody())
+                override fun success(response: Response<BaseResponseDC<JsonElement>>) {
+                    if (response.isSuccessful){
+                        if(response.body()!!.data != null){
+                            couponLiveList.value = Gson().fromJson(response.body()!!.data, ItemCouponLiveList::class.java)
+                        }
+                    }
+                }
+
+                override fun error(message: String) {
+                    super.error(message)
+                    //  showSnackBar(message)
+                }
+
+                override fun loading() {
+                    super.loading()
+                }
+            }
+        )
+    }
+
+
+
+
+
+    public override fun onCleared() {
+        super.onCleared()
+        monthYear = 0
+        number = 0
+    }
+
+
 }
+
+
+
+
 
 
 

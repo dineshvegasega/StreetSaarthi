@@ -555,7 +555,7 @@
     <string name="history">చరిత్ర</string>
 
     <string name="select_month_year">నెల/సంవత్సరాన్ని ఎంచుకోండి</string>
-    <string name="choose_number">సంఖ్యను ఎంచుకోండి</string>
+    <string name="choose_number">వ్యవధిని ఎంచుకోండి</string>
     <string name="month">నెల</string>
     <string name="year">సంవత్సరం</string>
     <string name="calculate_price">ధరను లెక్కించు</string>

@@ -553,7 +553,7 @@
     <string name="history">इतिहास</string>
 
     <string name='select_month_year'>महीना/वर्ष चुनें</string>
-    <string name='choose_number'>नंबर चुनें</string>
+    <string name='choose_number'>अवधि चुनें</string>
     <string name='month'>महीना</string>
     <string name='year'>वर्ष</string>
     <string name='calculate_price'>कीमत की गणना करें</string>

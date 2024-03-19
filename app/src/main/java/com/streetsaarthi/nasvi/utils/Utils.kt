@@ -1055,7 +1055,9 @@ fun Context.getSignature(): String {
 }
 
 
-
+fun Double.decimal2Digits(): String {
+    return String.format("%.2f", this)
+}
 
 fun Double.roundOffDecimal(): Double { //here, 1.45678 = 1.46
     val df = DecimalFormat("#.##")

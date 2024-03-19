@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -13,6 +14,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -20,6 +22,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.streetsaarthi.nasvi.networking.ApiInterface
 import com.streetsaarthi.nasvi.networking.CallHandler
 import com.streetsaarthi.nasvi.networking.Repository
@@ -28,20 +31,34 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.DialogBottomLiveSchemeBinding
+import com.streetsaarthi.nasvi.databinding.ItemMenuBinding
 import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.genericAdapter.GenericAdapter
 import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.models.ItemLiveScheme
 import com.streetsaarthi.nasvi.models.ItemSchemeDetail
 import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.main.dashboard.Dashboard
+import com.streetsaarthi.nasvi.screens.main.informationCenter.InformationCenter
+import com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetails
+import com.streetsaarthi.nasvi.screens.main.membershipDetails.MembershipDetailsXX
+import com.streetsaarthi.nasvi.screens.main.notifications.Notifications
+import com.streetsaarthi.nasvi.screens.main.notifications.NotificationsVM
+import com.streetsaarthi.nasvi.screens.main.profiles.Profiles
+import com.streetsaarthi.nasvi.screens.main.settings.Settings
+import com.streetsaarthi.nasvi.screens.main.subscription.Subscription
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.isBackApp
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM
+import com.streetsaarthi.nasvi.screens.mainActivity.menu.ItemMenuModel
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
+import com.streetsaarthi.nasvi.utils.getDensityName
 import com.streetsaarthi.nasvi.utils.glideImage
 import com.streetsaarthi.nasvi.utils.parseResult
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -61,6 +78,221 @@ import javax.inject.Inject
 class LiveSchemesVM @Inject constructor(private val repository: Repository): ViewModel() {
 
     val adapter by lazy { LiveSchemesAdapter(this) }
+
+
+    val menuAdapter = object : GenericAdapter<ItemMenuBinding, ItemLiveScheme>() {
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            parent: ViewGroup,
+            viewType: Int
+        ) = ItemMenuBinding.inflate(inflater, parent, false)
+
+        @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
+        override fun onBindHolder(binding: ItemMenuBinding, dataClass: ItemLiveScheme, position: Int) {
+
+//            binding.apply {
+//                if(selectedPosition == position) {
+//                    ivArrow.setImageResource(if (dataClass.isExpanded == true) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up)
+//                    recyclerViewChild.visibility = if (dataClass.isExpanded == true) View.VISIBLE else View.GONE
+//                } else {
+//                    ivArrow.setImageResource(R.drawable.ic_arrow_up)
+//                    recyclerViewChild.visibility = View.GONE
+//                    dataClass.apply {
+//                        isExpanded = false
+//                    }
+//                }
+//
+//
+//                if(selectedColorPosition == position) {
+//                    header.setBackgroundTintList(
+//                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color._EDB678)))
+//                } else {
+//                    header.setBackgroundTintList(
+//                        ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.white)))
+//                }
+//
+//
+//                title.text = dataClass.title
+//                if(dataClass.titleChildArray!!.isEmpty()){
+//                    ivArrow .visibility = View.GONE
+//                }else{
+//                    ivArrow .visibility = View.VISIBLE
+//                }
+//
+//
+//                recyclerViewChild.setHasFixedSize(true)
+//                val headlineAdapter = MainActivityVM.ChildMenuAdapter(
+//                    binding.root.context,
+//                    dataClass.titleChildArray,
+//                    position
+//                )
+//                recyclerViewChild.adapter = headlineAdapter
+//                recyclerViewChild.layoutManager = LinearLayoutManager(binding.root.context)
+//
+//
+////                ivArrow.singleClick {
+////                    selectedPosition = position
+////                    dataClass.isExpanded = !dataClass.isExpanded!!
+////                    selectedColorPosition = position
+////                    notifyDataSetChanged()
+////                }
+//
+//
+//                root.singleClick {
+//                    selectedColorPosition = position
+//                    if(dataClass.titleChildArray!!.isEmpty()){
+//                        var fragmentInFrame = MainActivity.navHostFragment!!.getChildFragmentManager().getFragments().get(0)
+//                        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+//                            if (loginUser != null) {
+//                                val data = Gson().fromJson(loginUser, Login::class.java)
+//                                when (data.status) {
+//                                    "approved" -> {
+//                                        when(position) {
+//                                            0 -> {
+//                                                if (fragmentInFrame !is Dashboard){
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.dashboard)
+//                                                }
+//                                            }
+//                                            1 -> {
+//                                                if (fragmentInFrame !is Profiles){
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.profiles)
+//                                                }
+//                                            }
+//                                            2 -> {
+//                                                readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+//                                                    if (loginUser != null) {
+//                                                        val isNotification = Gson().fromJson(
+//                                                            loginUser,
+//                                                            Login::class.java
+//                                                        )?.notification ?: ""
+////                                                        Log.e("TAG", "isNotification"+isNotification)
+//                                                        if(isNotification == "Yes"){
+//                                                            if (fragmentInFrame !is Notifications){
+//                                                                NotificationsVM.isNotificationNext = false
+//                                                                MainActivity.navHostFragment?.navController?.navigate(R.id.notifications)
+//                                                            }
+//                                                        } else {
+//                                                            showSnackBar(root.resources.getString(R.string.notification_not_enabled))
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
+//                                            3 -> {
+//                                                val densityDpi = root.context.getDensityName()
+//                                                when (densityDpi) {
+//                                                    "xxhdpi" -> {
+//                                                        if (fragmentInFrame !is MembershipDetailsXX){
+//                                                            MainActivity.navHostFragment?.navController?.navigate(R.id.membershipDetailsXX)
+//                                                        }
+//                                                    } else -> {
+//                                                    if (fragmentInFrame !is MembershipDetails){
+//                                                        MainActivity.navHostFragment?.navController?.navigate(R.id.membershipDetails)
+//                                                    }
+//                                                }
+//                                                }
+//                                            }
+//                                            8 -> {
+//                                                if (fragmentInFrame !is InformationCenter){
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.informationCenter)
+//                                                }
+//                                            }
+//                                            9 -> {
+//                                                if (fragmentInFrame !is Subscription){
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.subscription)
+//                                                }
+//                                            }
+//                                            10 -> {
+//                                                if (fragmentInFrame !is Settings){
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.settings)
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                    "unverified" -> {
+//                                        when(position) {
+//                                            0 -> {
+//                                                if (fragmentInFrame !is Dashboard){
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.dashboard)
+//                                                }
+//                                            }
+//                                            1 -> {
+//                                                if (fragmentInFrame !is Profiles) {
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.profiles)
+//                                                }
+//                                            }
+//                                            10 -> {
+//                                                if (fragmentInFrame !is Subscription) {
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.subscription)
+//                                                }
+//                                            }
+//                                            else -> {
+//                                                showSnackBar(root.resources.getString(R.string.registration_processed))
+//                                            }
+//                                        }
+//                                    }
+//                                    "pending" -> {
+//                                        when(position) {
+//                                            0 -> {
+//                                                if (fragmentInFrame !is Dashboard){
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.dashboard)
+//                                                }
+//                                            }
+//                                            1 -> {
+//                                                if (fragmentInFrame !is Profiles) {
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.profiles)
+//                                                }
+//                                            }
+//                                            10 -> {
+//                                                if (fragmentInFrame !is Subscription) {
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.subscription)
+//                                                }
+//                                            }
+//                                            else -> {
+//                                                showSnackBar(root.resources.getString(R.string.registration_processed))
+//                                            }
+//                                        }
+//                                    }
+//                                    "rejected" -> {
+//                                        when(position) {
+//                                            0 -> {
+//                                                if (fragmentInFrame !is Dashboard){
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.dashboard)
+//                                                }
+//                                            }
+//                                            1 -> {
+//                                                if (fragmentInFrame !is Profiles) {
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.profiles)
+//                                                }
+//                                            }
+//                                            10 -> {
+//                                                if (fragmentInFrame !is Subscription) {
+//                                                    MainActivity.navHostFragment?.navController?.navigate(R.id.subscription)
+//                                                }
+//                                            }
+//                                            else -> {
+//                                                showSnackBar(root.resources.getString(R.string.registration_processed))
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        MainActivity.binding.drawerLayout.close()
+//                    }
+//
+//                    selectedPosition = position
+//                    dataClass.isExpanded = !dataClass.isExpanded!!
+//                    selectedColorPosition = position
+//                    notifyDataSetChanged()
+//                }
+//
+//
+//            }
+        }
+    }
+
+
+
 
 
     var alertDialog: AlertDialog? = null

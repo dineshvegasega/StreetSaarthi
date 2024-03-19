@@ -551,7 +551,7 @@
     <string name="history">வரலாறு</string>
 
     <string name="select_month_year">மாதம்/ஆண்டு தேர்ந்தெடு</string>
-    <string name="choose_number">எண்ணைத் தேர்ந்தெடு</string>
+    <string name="choose_number">கால அளவைத் தேர்ந்தெடுக்கவும்</string>
     <string name="month">மாதம்</string>
     <string name="year">ஆண்டு</string>
     <string name="calculate_price">விலையைக் கணக்கிடு</string>

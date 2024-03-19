@@ -110,7 +110,6 @@ class ConnectivityManager(context: Context) : LiveData<Boolean>() {
          * */
         fun execute(socketFactory: SocketFactory): Boolean {
             return try {
-//                Logger.debug(ContentValues.TAG, "PINGING Google...")
                 val socket = socketFactory.createSocket() ?: throw IOException("Socket is null.")
                 socket.connect(InetSocketAddress(PING, 53), 1500)
                 socket.close()
@@ -120,5 +119,4 @@ class ConnectivityManager(context: Context) : LiveData<Boolean>() {
             }
         }
     }
-
 }

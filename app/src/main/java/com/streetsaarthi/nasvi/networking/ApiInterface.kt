@@ -311,6 +311,9 @@ interface ApiInterface {
     ): Response<BaseResponseDC<JsonElement>>
 
 
-
+    @POST(CouponLiveList)
+    suspend fun couponLiveList(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponseDC<JsonElement>>
 
 }

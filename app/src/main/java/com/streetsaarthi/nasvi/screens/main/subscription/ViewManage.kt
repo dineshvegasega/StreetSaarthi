@@ -2,33 +2,44 @@ package com.streetsaarthi.nasvi.screens.main.subscription
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ViewManageBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.readData
+import com.streetsaarthi.nasvi.models.ItemInformationCenter
 import com.streetsaarthi.nasvi.models.Login
+import com.streetsaarthi.nasvi.networking.IS_LANGUAGE
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
+import com.streetsaarthi.nasvi.utils.decimal2Digits
 import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.utils.imageZoom
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.roundOffDecimal
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import org.json.JSONObject
 import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class ViewManage : Fragment(){
@@ -77,13 +88,35 @@ class ViewManage : Fragment(){
                     }
                     viewModel.validityDays = when(viewModel.monthYear) {
                         1 -> viewModel.number * 30
-                        2 -> viewModel.number * 12 * 30
+                        2 -> viewModel.number * 365
                         else -> 0
                     }
 
                     viewModel.membershipCost = viewModel.subscription.value?.subscription_cost!! * viewModel.validityMonths
                     viewModel.afterGst = viewModel.membershipCost + (viewModel.membershipCost * viewModel.gst) / 100
                     viewModel.totalCost = viewModel.afterGst - ((viewModel.afterGst * viewModel.couponDiscount) / 100)
+
+
+                    readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+                        if (loginUser != null) {
+                            val data = Gson().fromJson(loginUser, Login::class.java)
+                            if (networkFailed) {
+                                val obj: JSONObject = JSONObject().apply {
+                                    put("state_id", ""+data?.residential_state?.id)
+                                    put("no_of_month_year", ""+viewModel.number)
+                                    put("month_year", ""+viewModel.monthYear)
+                                }
+                                viewModel.couponLiveList(obj)
+                            } else {
+                                requireContext().callNetworkDialog()
+                            }
+                        }
+                    }
+
+
+                    viewModel.couponLiveList.observe(viewLifecycleOwner, Observer {
+
+                    })
 
                     update(
                         viewModel.membershipCost,
@@ -105,7 +138,7 @@ class ViewManage : Fragment(){
                         val data = Gson().fromJson(loginUser, Login::class.java)
                         if(networkFailed) {
                             val obj: JSONObject = JSONObject().apply {
-                                put("state_id", data.id)
+                                put("state_id", data?.residential_state?.id)
                             }
                             viewModel.purchaseSubscription(obj)
                         } else {
@@ -126,14 +159,14 @@ class ViewManage : Fragment(){
     totalCost: Double = 0.00
     ) {
        binding.apply {
-
-           textMembershipCostValue.text = resources.getString(R.string.rupees, "${membershipCost}")
+           textMembershipCostValue.text = resources.getString(R.string.rupees, membershipCost.decimal2Digits()
+           )
            textValidityValue.text = resources.getString(R.string.days, "${validity}")
            textGSTValue.text = "${gst} %"
            textCouponDiscountValue.text = "${couponDiscount} %"
 //           resources.getString(R.string.percent, "${gst}")
           // textCouponDiscountValue.text = resources.getString(R.string.percent, "${couponDiscount}")
-           textTotalCostValue.text = resources.getString(R.string.rupees, "${totalCost}")
+           textTotalCostValue.text = resources.getString(R.string.rupees, totalCost.decimal2Digits())
        }
     }
 
@@ -158,5 +191,7 @@ class ViewManage : Fragment(){
                 viewModel.number = which+1
             }.show()
     }
+
+
 
 }
