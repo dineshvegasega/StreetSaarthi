@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi.screens.main.scheme
+package com.streetsaarthi.nasvi.test.scheme
 
 import android.annotation.SuppressLint
 import android.os.Bundle

@@ -41,6 +41,7 @@ import com.streetsaarthi.nasvi.models.Login
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.callPermissionDialog
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +56,6 @@ class MembershipDetails  : Fragment() {
     private var _binding: MembershipDetailsBinding? = null
     private val binding get() = _binding!!
 
-    var permissionAlert : AlertDialog?= null
 
 
     override fun onCreateView(
@@ -99,7 +99,9 @@ class MembershipDetails  : Fragment() {
             if(!permissions.entries.toString().contains("false")){
                 dispatchTakePictureIntent()
             } else {
-                callPermissionDialog()
+                requireActivity().callPermissionDialog{
+                    someActivityResultLauncher.launch(this)
+                }
             }
         }
 
@@ -110,31 +112,6 @@ class MembershipDetails  : Fragment() {
         callMediaPermissions()
     }
 
-    @SuppressLint("SuspiciousIndentation")
-    fun callPermissionDialog() {
-        if(permissionAlert?.isShowing == true) {
-            return
-        }
-        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
-            .setTitle(resources.getString(R.string.app_name))
-            .setMessage(resources.getString(R.string.required_permissions))
-            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
-                dialog.dismiss()
-                val i=Intent()
-                i.action=Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                i.addCategory(Intent.CATEGORY_DEFAULT)
-                i.data= Uri.parse("package:" + requireActivity().packageName)
-                someActivityResultLauncher.launch(i)
-            }
-            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
-                dialog.dismiss()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    MainActivity.binding.drawerLayout.close()
-                }, 500)
-            }
-            .setCancelable(false)
-            .show()
-    }
 
 
 

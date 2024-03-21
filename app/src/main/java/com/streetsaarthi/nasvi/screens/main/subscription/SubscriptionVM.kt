@@ -2,11 +2,11 @@ package com.streetsaarthi.nasvi.screens.main.subscription
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +18,6 @@ import com.streetsaarthi.nasvi.databinding.DialogBottomSubscriptionBinding
 import com.streetsaarthi.nasvi.databinding.ItemSubscriptionHistoryBinding
 import com.streetsaarthi.nasvi.genericAdapter.GenericAdapter
 import com.streetsaarthi.nasvi.models.BaseResponseDC
-import com.streetsaarthi.nasvi.models.ItemCouponLiveList
 import com.streetsaarthi.nasvi.models.ItemSubscription
 import com.streetsaarthi.nasvi.networking.ApiInterface
 import com.streetsaarthi.nasvi.networking.CallHandler
@@ -32,9 +31,9 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class SubscriptionVM @Inject constructor(private val repository: Repository): ViewModel() {
+class SubscriptionVM @Inject constructor(private val repository: Repository) : ViewModel() {
 
-    var itemMain : ArrayList<ItemModel> ?= ArrayList()
+    var itemMain: ArrayList<ItemModel>? = ArrayList()
 
     init {
         itemMain?.add(ItemModel())
@@ -52,7 +51,6 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
     }
 
 
-
     val historyAdapter = object : GenericAdapter<ItemSubscriptionHistoryBinding, ItemModel>() {
         override fun onCreateView(
             inflater: LayoutInflater,
@@ -61,16 +59,26 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
         ) = ItemSubscriptionHistoryBinding.inflate(inflater, parent, false)
 
         @SuppressLint("SuspiciousIndentation")
-        override fun onBindHolder(binding: ItemSubscriptionHistoryBinding, dataClass: ItemModel, position: Int) {
+        override fun onBindHolder(
+            binding: ItemSubscriptionHistoryBinding,
+            dataClass: ItemModel,
+            position: Int
+        ) {
             binding.apply {
-                layoutMain.backgroundTintList = (if(position % 2 == 0) ContextCompat.getColorStateList(root.context,R.color._f6dbbb) else ContextCompat.getColorStateList(root.context,R.color.white))
+                layoutMain.backgroundTintList =
+                    (if (position % 2 == 0) ContextCompat.getColorStateList(
+                        root.context,
+                        R.color._f6dbbb
+                    ) else ContextCompat.getColorStateList(root.context, R.color.white))
                 textSno.setText(dataClass.s_no)
                 textDate.setText(dataClass.date)
                 textTransactionId.setText(dataClass.transactionId)
-                textDuration.setText(dataClass.duration +" "+ root.resources.getString(R.string.months))
+                textDuration.setText(dataClass.duration + " " + root.resources.getString(R.string.months))
                 root.singleClick {
-                    val dialogBinding = DialogBottomSubscriptionBinding.inflate(root.context.getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                    val dialogBinding = DialogBottomSubscriptionBinding.inflate(
+                        root.context.getSystemService(
+                            Context.LAYOUT_INFLATER_SERVICE
+                        ) as LayoutInflater
                     )
                     val dialog = BottomSheetDialog(root.context)
                     dialog.setContentView(dialogBinding.root)
@@ -93,16 +101,16 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
     }
 
 
-    var membershipCost : Double = 0.0
-    var validity : String = ""
-    var validityMonths : Int = 0
-    var validityDays : Int = 0
-    var gst : Double = 18.0
-    var afterGst : Double = 0.0
-    var couponDiscount : Double = 10.0
-    var totalCost : Double = 0.0
-    var monthYear : Int = 0
-    var number : Int = 0
+    var membershipCost: Double = 0.0
+    var validity: String = ""
+    var validityMonths: Int = 0
+    var validityDays: Int = 0
+    var gst: Double = 18.0
+    var afterGst: Double = 0.0
+    var couponDiscount: Double = 0.0
+    var totalCost: Double = 0.0
+    var monthYear: Int = 0
+    var number: Int = 0
 
     var subscription = MutableLiveData<ItemSubscription>()
     fun subscription(jsonObject: JSONObject) = viewModelScope.launch {
@@ -110,10 +118,14 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.subscription(requestBody = jsonObject.getJsonRequestBody())
+
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
-                    if (response.isSuccessful){
-                        if(response.body()!!.data != null){
-                            subscription.value = Gson().fromJson(response.body()!!.data, ItemSubscription::class.java)
+                    if (response.isSuccessful) {
+                        if (response.body()!!.data != null) {
+                            subscription.value = Gson().fromJson(
+                                response.body()!!.data,
+                                ItemSubscription::class.java
+                            )
                         }
                     }
                 }
@@ -129,8 +141,6 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
             }
         )
     }
-
-
 
 
     var purchaseSubscription = MutableLiveData<ItemSubscription>()
@@ -139,10 +149,14 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.purchaseSubscription(requestBody = jsonObject.getJsonRequestBody())
+
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
-                    if (response.isSuccessful){
-                        if(response.body()!!.data != null){
-                            purchaseSubscription.value = Gson().fromJson(response.body()!!.data, ItemSubscription::class.java)
+                    if (response.isSuccessful) {
+                        if (response.body()!!.data != null) {
+                            purchaseSubscription.value = Gson().fromJson(
+                                response.body()!!.data,
+                                ItemSubscription::class.java
+                            )
                         }
                     }
                 }
@@ -158,10 +172,6 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
             }
         )
     }
-
-
-
-
 
 
     var subscriptionHistory = MutableLiveData<ItemSubscription>()
@@ -170,10 +180,14 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.subscriptionHistory(requestBody = jsonObject.getJsonRequestBody())
+
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
-                    if (response.isSuccessful){
-                        if(response.body()!!.data != null){
-                            subscriptionHistory.value = Gson().fromJson(response.body()!!.data, ItemSubscription::class.java)
+                    if (response.isSuccessful) {
+                        if (response.body()!!.data != null) {
+                            subscriptionHistory.value = Gson().fromJson(
+                                response.body()!!.data,
+                                ItemSubscription::class.java
+                            )
                         }
                     }
                 }
@@ -191,27 +205,25 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
     }
 
 
-
-
-
-
-    var couponLiveList = MutableLiveData<ItemCouponLiveList>()
+    var couponLiveListCalled = MutableLiveData<Boolean>(false)
+    private var itemCouponLiveListResult = MutableLiveData<BaseResponseDC<Any>>()
+    val itemCouponLiveList: LiveData<BaseResponseDC<Any>> get() = itemCouponLiveListResult
     fun couponLiveList(jsonObject: JSONObject) = viewModelScope.launch {
         repository.callApi(
             callHandler = object : CallHandler<Response<BaseResponseDC<JsonElement>>> {
                 override suspend fun sendRequest(apiInterface: ApiInterface) =
                     apiInterface.couponLiveList(requestBody = jsonObject.getJsonRequestBody())
                 override fun success(response: Response<BaseResponseDC<JsonElement>>) {
-                    if (response.isSuccessful){
-                        if(response.body()!!.data != null){
-                            couponLiveList.value = Gson().fromJson(response.body()!!.data, ItemCouponLiveList::class.java)
-                        }
+                    if (response.isSuccessful) {
+                        itemCouponLiveListResult.value = response.body() as BaseResponseDC<Any>
+                        couponLiveListCalled.value = true
                     }
                 }
 
                 override fun error(message: String) {
                     super.error(message)
                     //  showSnackBar(message)
+                    couponLiveListCalled.value = false
                 }
 
                 override fun loading() {
@@ -220,9 +232,6 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
             }
         )
     }
-
-
-
 
 
     public override fun onCleared() {
@@ -235,15 +244,9 @@ class SubscriptionVM @Inject constructor(private val repository: Repository): Vi
 }
 
 
-
-
-
-
-
-data class ItemModel (
+data class ItemModel(
     var s_no: String = "01",
     var date: String = "12/02/22",
     var transactionId: String = "#312314",
     var duration: String = "12",
-
-)
+    )

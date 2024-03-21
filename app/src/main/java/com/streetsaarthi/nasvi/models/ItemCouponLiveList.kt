@@ -2,7 +2,7 @@ package com.streetsaarthi.nasvi.models
 
 data class ItemCouponLiveList(
     val coupon_code: String,
-    val coupon_discount: Int,
+    val coupon_discount: Double,
     val coupon_name: String,
     val coupon_validity: String,
     val created_at: String,

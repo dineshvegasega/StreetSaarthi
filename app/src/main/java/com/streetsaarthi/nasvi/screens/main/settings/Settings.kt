@@ -108,9 +108,7 @@ class Settings : Fragment() {
                                     it.isSelected = dataClass == it
                                 }
                                 notifyDataSetChanged()
-
                                 callLanguageApi(dataClass.locale, 1)
-
                                 Handler(Looper.getMainLooper()).postDelayed(Thread {
                                     MainActivity.mainActivity.get()?.runOnUiThread {
                                         languageAlert?.dismiss()
@@ -124,15 +122,12 @@ class Settings : Fragment() {
                                     it.isSelected = dataClass == it
                                 }
                                 notifyDataSetChanged()
-
                                 callLanguageApi(dataClass.locale, 1)
-
                                 Handler(Looper.getMainLooper()).postDelayed(Thread {
                                     MainActivity.mainActivity.get()?.runOnUiThread {
                                         languageAlert?.dismiss()
                                     }
                                 }, 100)
-//                                MainActivity.mainActivity.get()?.reloadActivity(dataClass.locale, Main)
                             }
                         }
                     }

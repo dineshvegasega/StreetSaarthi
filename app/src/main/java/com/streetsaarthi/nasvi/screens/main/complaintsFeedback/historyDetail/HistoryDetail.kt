@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,17 +17,13 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
@@ -42,10 +37,13 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.PaginationScrollListener
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.callPermissionDialog
 import com.streetsaarthi.nasvi.utils.changeDateFormat
+import com.streetsaarthi.nasvi.utils.getCameraPath
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.loadImage
+import com.streetsaarthi.nasvi.utils.showOptions
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +53,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.util.Calendar
 
 
 @AndroidEntryPoint
@@ -67,7 +64,6 @@ class HistoryDetail : Fragment() {
     val results : ArrayList<DataX> = ArrayList()
 
     var logoutAlert : AlertDialog?= null
-    var permissionAlert : AlertDialog?= null
 
     private var LOADER_TIME: Long = 500
     private var pageStart: Int = 1
@@ -613,9 +609,16 @@ class HistoryDetail : Fragment() {
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
             if(!permissions.entries.toString().contains("false")){
-                showOptions()
+                requireActivity().showOptions {
+                    when(this){
+                        1 -> forCamera()
+                        2 -> forGallery()
+                    }
+                }
             } else {
-                callPermissionDialog()
+                requireActivity().callPermissionDialog{
+                    someActivityResultLauncher.launch(this)
+                }
             }
         }
 
@@ -629,80 +632,11 @@ class HistoryDetail : Fragment() {
         callMediaPermissions()
     }
 
-    @SuppressLint("SuspiciousIndentation")
-    fun callPermissionDialog() {
-        if(permissionAlert?.isShowing == true) {
-            return
-        }
-        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
-            .setTitle(resources.getString(R.string.app_name))
-            .setMessage(resources.getString(R.string.required_permissions))
-            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
-                dialog.dismiss()
-                val i= Intent()
-                i.action= Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                i.addCategory(Intent.CATEGORY_DEFAULT)
-                i.data= Uri.parse("package:" + requireActivity().packageName)
-                someActivityResultLauncher.launch(i)
-            }
-            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
-                dialog.dismiss()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    MainActivity.binding.drawerLayout.close()
-                }, 500)
-            }
-            .setCancelable(false)
-            .show()
-    }
-
-
-
-    private fun showOptions() =try {
-        val dialogView=layoutInflater.inflate(R.layout.dialog_choose_image_option,null)
-        val btnCancel=dialogView.findViewById<AppCompatButton>(R.id.btnCancel)
-        val tvPhotos=dialogView.findViewById<AppCompatTextView>(R.id.tvPhotos)
-        val tvPhotosDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvPhotosDesc)
-        val tvCamera=dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
-        val tvCameraDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
-        val dialog= BottomSheetDialog(requireContext(),R.style.TransparentDialog)
-        dialog.setContentView(dialogView)
-        dialog.show()
-
-        btnCancel.singleClick {
-            dialog.dismiss()
-        }
-        tvCamera.singleClick {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvCameraDesc.singleClick {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvPhotos.singleClick {
-            dialog.dismiss()
-            forGallery()
-        }
-        tvPhotosDesc.singleClick {
-            dialog.dismiss()
-            forGallery()
-        }
-
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-
-
 
 
     private fun forCamera() {
-        requireActivity().runOnUiThread(){
-            val directory = File(requireContext().filesDir, "camera_images")
-            if(!directory.exists()){
-                directory.mkdirs()
-            }
-            val file = File(directory,"${Calendar.getInstance().timeInMillis}.png")
-            uriReal = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", file)
+        requireActivity().getCameraPath {
+            uriReal = this
             captureMedia.launch(uriReal)
         }
     }

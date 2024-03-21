@@ -3,6 +3,8 @@ package com.streetsaarthi.nasvi.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -16,10 +18,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.Parcelable
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.provider.Settings
 import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
@@ -29,8 +34,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DimenRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -41,12 +49,14 @@ import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.stfalcon.imageviewer.StfalconImageViewer
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.models.ItemReturn
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -58,6 +68,8 @@ import java.security.NoSuchAlgorithmException
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.Period
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -203,8 +215,8 @@ fun Context.getMediaFilePathFor(uri: Uri): String {
     return contentResolver.query(uri, null, null, null, null)?.use { cursor ->
         val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
         cursor.moveToFirst()
-        val name = cursor.getString(nameIndex)
-        File(filesDir, name).run {
+//        val name = cursor.getString(nameIndex)
+        File(filesDir, getImageName()).run {
             kotlin.runCatching {
                 contentResolver.openInputStream(uri).use { inputStream ->
                     val outputStream = FileOutputStream(this)
@@ -255,7 +267,7 @@ fun getGalleryImage(requireActivity: FragmentActivity, callBack: Uri.() -> Unit)
 fun ImageView.loadImage(
     type: Int,
     url: () -> String,
-    errorPlaceHolder: () -> Int = { if(type == 1) R.drawable.user_icon else R.drawable.no_image_banner }
+    errorPlaceHolder: () -> Int = { if (type == 1) R.drawable.user_icon else R.drawable.no_image_banner }
 ) = try {
     val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
         strokeWidth = 5f
@@ -386,11 +398,11 @@ fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit
 }
 
 
-fun ArrayList<String>.imageZoom(ivImage: ImageView, type : Int) {
+fun ArrayList<String>.imageZoom(ivImage: ImageView, type: Int) {
     StfalconImageViewer.Builder<String>(MainActivity.mainActivity.get()!!, this) { view, image ->
         Glide.with(MainActivity.mainActivity.get()!!)
             .load(image)
-            .apply(if(type == 1) myOptionsGlide else if(type == 2) myOptionsGlideUser else myOptionsGlide)
+            .apply(if (type == 1) myOptionsGlide else if (type == 2) myOptionsGlideUser else myOptionsGlide)
             .into(view)
     }
         .withTransitionFrom(ivImage)
@@ -993,12 +1005,17 @@ fun Context.getScreenDensity(): String {
         DisplayMetrics.DENSITY_LOW -> density = "LDPI"
         DisplayMetrics.DENSITY_140 -> density = "LDPI - MDPI"
         DisplayMetrics.DENSITY_MEDIUM -> density = "MDPI"
-        DisplayMetrics.DENSITY_180, DisplayMetrics.DENSITY_200, DisplayMetrics.DENSITY_220 -> density = "MDPI - HDPI"
+        DisplayMetrics.DENSITY_180, DisplayMetrics.DENSITY_200, DisplayMetrics.DENSITY_220 -> density =
+            "MDPI - HDPI"
+
         DisplayMetrics.DENSITY_HIGH -> density = "HDPI"
-        DisplayMetrics.DENSITY_260, DisplayMetrics.DENSITY_280, DisplayMetrics.DENSITY_300 -> density = "HDPI - XHDPI"
+        DisplayMetrics.DENSITY_260, DisplayMetrics.DENSITY_280, DisplayMetrics.DENSITY_300 -> density =
+            "HDPI - XHDPI"
+
         DisplayMetrics.DENSITY_XHIGH -> density = "XHDPI"
         DisplayMetrics.DENSITY_340, DisplayMetrics.DENSITY_360, DisplayMetrics.DENSITY_400, DisplayMetrics.DENSITY_420, DisplayMetrics.DENSITY_440 -> density =
             "XHDPI - XXHDPI"
+
         DisplayMetrics.DENSITY_XXHIGH -> density = "XXHDPI"
         DisplayMetrics.DENSITY_560, DisplayMetrics.DENSITY_600 -> density = "XXHDPI - XXXHDPI"
         DisplayMetrics.DENSITY_XXXHIGH -> density = "XXXHDPI"
@@ -1027,8 +1044,6 @@ fun Context.getDensityName(): String {
         "mdpi"
     } else "ldpi"
 }
-
-
 
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -1070,3 +1085,291 @@ fun Double.roundOffDecimal(): Double { //here, 1.45678 = 1.46
 //    df.roundingMode = RoundingMode.FLOOR
 //    return df.format(number).toDouble()
 //}
+
+fun Activity.getCameraPath(callBack: Uri.() -> Unit) {
+    runOnUiThread() {
+        val directory = File(filesDir, "camera_images")
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+        val uriReal = FileProvider.getUriForFile(
+            this,
+            packageName + ".provider",
+            File(directory, "${Calendar.getInstance().timeInMillis}.png")
+        )
+        callBack(uriReal)
+    }
+}
+
+
+fun getImageName(): String {
+    return "${"StreetSaarthi_" + SimpleDateFormat("HHmmss").format(Date())}.png"
+}
+
+
+fun Activity.showOptions(callBack: Int.() -> Unit) = try {
+    val dialogView = layoutInflater.inflate(R.layout.dialog_choose_image_option, null)
+    val btnCancel = dialogView.findViewById<AppCompatButton>(R.id.btnCancel)
+    val tvPhotos = dialogView.findViewById<AppCompatTextView>(R.id.tvPhotos)
+    val tvPhotosDesc = dialogView.findViewById<AppCompatTextView>(R.id.tvPhotosDesc)
+    val tvCamera = dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
+    val tvCameraDesc = dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
+    val dialog = BottomSheetDialog(this, R.style.TransparentDialog)
+    dialog.setContentView(dialogView)
+    dialog.show()
+
+    btnCancel.singleClick {
+        dialog.dismiss()
+    }
+    tvCamera.singleClick {
+        dialog.dismiss()
+        callBack(1)
+    }
+    tvCameraDesc.singleClick {
+        dialog.dismiss()
+        callBack(1)
+    }
+
+    tvPhotos.singleClick {
+        dialog.dismiss()
+        callBack(2)
+    }
+    tvPhotosDesc.singleClick {
+        dialog.dismiss()
+        callBack(2)
+    }
+} catch (e: Exception) {
+    e.printStackTrace()
+}
+
+
+@SuppressLint("SuspiciousIndentation")
+fun Activity.callPermissionDialog(callBack: Intent.() -> Unit) {
+
+    MaterialAlertDialogBuilder(this, R.style.LogoutDialogTheme)
+        .setTitle(resources.getString(R.string.app_name))
+        .setMessage(resources.getString(R.string.required_permissions))
+        .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
+            dialog.dismiss()
+            val i = Intent()
+            i.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            i.addCategory(Intent.CATEGORY_DEFAULT)
+            i.data = Uri.parse("package:" + packageName)
+            callBack(i)
+        }
+        .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+            dialog.dismiss()
+            Handler(Looper.getMainLooper()).postDelayed({
+                MainActivity.binding.drawerLayout.close()
+            }, 500)
+        }
+        .setCancelable(false)
+        .show()
+}
+
+
+fun Activity.showDropDownDialog(
+    type: Int = 0,
+    arrayList: Array<String?> = emptyArray(),
+    callBack: ItemReturn.() -> Unit
+) {
+    hideKeyboard()
+
+    when (type) {
+        1 -> {
+            val list = resources.getStringArray(R.array.gender_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.gender))
+                .setItems(list) { _, which ->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
+
+        2 -> {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            val dpd = DatePickerDialog(
+                this,
+                R.style.CalendarDatePickerDialog,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    val today = LocalDate.now()
+                    val birthday: LocalDate = LocalDate.of(year, (monthOfYear + 1), dayOfMonth)
+                    val p: Period = Period.between(birthday, today)
+
+                    var mm: String = (monthOfYear + 1).toString()
+                    if (mm.length == 1) {
+                        mm = "0" + mm
+                    }
+
+                    var dd: String = "" + dayOfMonth
+                    if (dd.length == 1) {
+                        dd = "0" + dd
+                    }
+
+                    if (p.getYears() > 13) {
+                        callBack(ItemReturn(name = "" + year + "-" + mm + "-" + dd))
+                    } else {
+                        showSnackBar(getString(R.string.age_minimum))
+                        callBack(ItemReturn(name = ""))
+                    }
+                },
+                year,
+                month,
+                day
+            )
+            dpd.show()
+        }
+
+        3 -> {
+            val list = resources.getStringArray(R.array.socialCategory_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.social_category))
+                .setItems(list) { _, which ->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
+
+        4 -> {
+            val list = resources.getStringArray(R.array.socialEducation_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.education_qualifacation))
+                .setItems(list) { _, which ->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
+
+        5 -> {
+            val list = resources.getStringArray(R.array.maritalStatus_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.marital_status))
+                .setItems(list) { _, which ->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
+
+        6 -> {
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.select_state))
+                .setItems(arrayList) { _, which ->
+                    callBack(ItemReturn(which, arrayList[which]!!))
+                }.show()
+        }
+
+        7 -> {
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.select_district))
+                .setItems(arrayList) { _, which ->
+                    callBack(ItemReturn(which, arrayList[which]!!))
+                }.show()
+        }
+
+        8 -> {
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.municipality_panchayat))
+                .setItems(arrayList) { _, which ->
+                    callBack(ItemReturn(which, arrayList[which]!!))
+                }.show()
+        }
+
+        9 -> {
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.select_pincode))
+                .setItems(arrayList) { _, which ->
+                    callBack(ItemReturn(which, arrayList[which]!!))
+                }.show()
+        }
+
+        10 -> {
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.type_of_market_place))
+                .setItems(arrayList) { _, which ->
+                    callBack(ItemReturn(which, arrayList[which]!!))
+                }.show()
+        }
+
+        11 -> {
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.type_of_vending))
+                .setItems(arrayList) { _, which ->
+                    callBack(ItemReturn(which, arrayList[which]!!))
+                }.show()
+        }
+
+        12 -> {
+            val list = resources.getStringArray(R.array.years_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.total_years_of_vending))
+                .setItems(list) { _, which ->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
+
+        13 -> {
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.localOrganisation))
+                .setItems(arrayList) { _, which ->
+                    callBack(ItemReturn(which, arrayList[which]!!))
+                }.show()
+        }
+        14 -> {
+            val mTimePicker: TimePickerDialog
+            val mcurrentTime = Calendar.getInstance()
+            val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
+            val minute = mcurrentTime.get(Calendar.MINUTE)
+            mTimePicker = TimePickerDialog(
+                this,
+                R.style.TimeDialogTheme,
+                object : TimePickerDialog.OnTimeSetListener {
+                    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                        val datetime = Calendar.getInstance()
+                        datetime[Calendar.HOUR_OF_DAY] = hourOfDay
+                        datetime[Calendar.MINUTE] = minute
+                        val strHrsToShow =
+                            if (datetime.get(Calendar.HOUR) === 0) "12" else Integer.toString(
+                                datetime.get(Calendar.HOUR)
+                            )
+                        var am_pm = ""
+                        if (datetime.get(Calendar.AM_PM) == Calendar.AM)
+                            am_pm = "AM";
+                        else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
+                            am_pm = "PM";
+                        val time =  strHrsToShow + ":" + (if (minute.toString().length == 1) "0"+datetime.get(Calendar.MINUTE)  else datetime.get(Calendar.MINUTE)) + " " + am_pm
+                        val time00 =  "" + hourOfDay + ":" + (if (minute.toString().length == 1) "0"+minute else minute) + ":00"
+                        callBack(ItemReturn(0, time, time00))
+                    }
+                },
+                hour,
+                minute,
+                false
+            )
+            mTimePicker.show()
+        }
+        15 -> {
+            val list=resources.getStringArray(R.array.relation_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.relationship_TypeStar))
+                .setItems(list) {_,which->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
+        16 -> {
+            val list=resources.getStringArray(R.array.type_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.select_your_choice))
+                .setItems(list) {_,which->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
+        17 -> {
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.select_complaint_type))
+                .setItems(arrayList) {_,which->
+                    callBack(ItemReturn(which, arrayList[which]!!))
+                }.show()
+        }
+    }
+
+}
+

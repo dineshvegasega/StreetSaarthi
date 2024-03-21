@@ -21,6 +21,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.relationType
+import com.streetsaarthi.nasvi.utils.showDropDownDialog
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -241,76 +242,6 @@ class NomineeDetails : Fragment() {
                             emptyAll()
                         }
                     }
-
-//                    if(data.size == 1){
-//                        viewModel.relationType1 = ""+data[0].first
-//                        spinnerRelationType1.setText(""+data[0].first.relationType(relationArray))
-//                        editTextName1.setText(""+data[0].second)
-//                    }
-//
-//                    if(data.size == 2){
-//                        viewModel.relationType1 = ""+data[0].first
-//                        spinnerRelationType1.setText(""+data[0].first.relationType(relationArray))
-//                        editTextName1.setText(""+data[0].second)
-//
-//                        viewModel.relationType2 = ""+data[1].first
-//                        spinnerRelationType2.setText(""+data[1].first.relationType(relationArray))
-//                        editTextName2.setText(""+data[1].second)
-//                    }
-//
-//                    if(data.size == 3){
-//                        viewModel.relationType1 = ""+data[0].first
-//                        spinnerRelationType1.setText(""+data[0].first.relationType(relationArray))
-//                        editTextName1.setText(""+data[0].second)
-//
-//                        viewModel.relationType2 = ""+data[1].first
-//                        spinnerRelationType2.setText(""+data[1].first.relationType(relationArray))
-//                        editTextName2.setText(""+data[1].second)
-//
-//                        viewModel.relationType3 = ""+data[2].first
-//                        spinnerRelationType3.setText(""+data[2].first.relationType(relationArray))
-//                        editTextName3.setText(""+data[2].second)
-//                    }
-//
-//                    if(data.size == 4){
-//                        viewModel.relationType1 = ""+data[0].first
-//                        spinnerRelationType1.setText(""+data[0].first.relationType(relationArray))
-//                        editTextName1.setText(""+data[0].second)
-//
-//                        viewModel.relationType2 = ""+data[1].first
-//                        spinnerRelationType2.setText(""+data[1].first.relationType(relationArray))
-//                        editTextName2.setText(""+data[1].second)
-//
-//                        viewModel.relationType3 = ""+data[2].first
-//                        spinnerRelationType3.setText(""+data[2].first.relationType(relationArray))
-//                        editTextName3.setText(""+data[2].second)
-//
-//                        viewModel.relationType4 = ""+data[3].first
-//                        spinnerRelationType4.setText(""+data[3].first.relationType(relationArray))
-//                        editTextName4.setText(""+data[3].second)
-//                    }
-//
-//                    if(data.size == 5){
-//                        viewModel.relationType1 = ""+data[0].first
-//                        spinnerRelationType1.setText(""+data[0].first.relationType(relationArray))
-//                        editTextName1.setText(""+data[0].second)
-//
-//                        viewModel.relationType2 = ""+data[1].first
-//                        spinnerRelationType2.setText(""+data[1].first.relationType(relationArray))
-//                        editTextName2.setText(""+data[1].second)
-//
-//                        viewModel.relationType3 = ""+data[2].first
-//                        spinnerRelationType3.setText(""+data[2].first.relationType(relationArray))
-//                        editTextName3.setText(""+data[2].second)
-//
-//                        viewModel.relationType4 = ""+data[3].first
-//                        spinnerRelationType4.setText(""+data[3].first.relationType(relationArray))
-//                        editTextName4.setText(""+data[3].second)
-//
-//                        viewModel.relationType5 = ""+data[4].first
-//                        spinnerRelationType5.setText(""+data[4].first.relationType(relationArray))
-//                        editTextName5.setText(""+data[4].second)
-//                    }
                 }
             })
 
@@ -378,28 +309,83 @@ class NomineeDetails : Fragment() {
             }
 
             spinnerRelationType1.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownDialog1()
+                requireActivity().showDropDownDialog(type = 15) {
+                    binding.spinnerRelationType1.setText(name)
+                    when(position){
+                        0-> viewModel.relationType1 = "father"
+                        1-> viewModel.relationType1 = "mother"
+                        2-> viewModel.relationType1 = "son"
+                        3-> viewModel.relationType1 = "daughter"
+                        4-> viewModel.relationType1 = "sister"
+                        5-> viewModel.relationType1 = "brother"
+                        6-> viewModel.relationType1 = "husband"
+                        7-> viewModel.relationType1 = "wife"
+                    }
+                }
             }
 
             spinnerRelationType2.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownDialog2()
+                requireActivity().showDropDownDialog(type = 15) {
+                    binding.spinnerRelationType2.setText(name)
+                    when(position){
+                        0-> viewModel.relationType2 = "father"
+                        1-> viewModel.relationType2 = "mother"
+                        2-> viewModel.relationType2 = "son"
+                        3-> viewModel.relationType2 = "daughter"
+                        4-> viewModel.relationType2 = "sister"
+                        5-> viewModel.relationType2 = "brother"
+                        6-> viewModel.relationType2 = "husband"
+                        7-> viewModel.relationType2 = "wife"
+                    }
+                }
             }
 
             spinnerRelationType3.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownDialog3()
+                requireActivity().showDropDownDialog(type = 15) {
+                    binding.spinnerRelationType3.setText(name)
+                    when(position){
+                        0-> viewModel.relationType3 = "father"
+                        1-> viewModel.relationType3 = "mother"
+                        2-> viewModel.relationType3 = "son"
+                        3-> viewModel.relationType3 = "daughter"
+                        4-> viewModel.relationType3 = "sister"
+                        5-> viewModel.relationType3 = "brother"
+                        6-> viewModel.relationType3 = "husband"
+                        7-> viewModel.relationType3 = "wife"
+                    }
+                }
             }
 
             spinnerRelationType4.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownDialog4()
+                requireActivity().showDropDownDialog(type = 15) {
+                    binding.spinnerRelationType4.setText(name)
+                    when(position){
+                        0-> viewModel.relationType4 = "father"
+                        1-> viewModel.relationType4 = "mother"
+                        2-> viewModel.relationType4 = "son"
+                        3-> viewModel.relationType4 = "daughter"
+                        4-> viewModel.relationType4 = "sister"
+                        5-> viewModel.relationType4 = "brother"
+                        6-> viewModel.relationType4 = "husband"
+                        7-> viewModel.relationType4 = "wife"
+                    }
+                }
             }
 
             spinnerRelationType5.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownDialog5()
+                requireActivity().showDropDownDialog(type = 15) {
+                    binding.spinnerRelationType5.setText(name)
+                    when(position){
+                        0-> viewModel.relationType5 = "father"
+                        1-> viewModel.relationType5 = "mother"
+                        2-> viewModel.relationType5 = "son"
+                        3-> viewModel.relationType5 = "daughter"
+                        4-> viewModel.relationType5 = "sister"
+                        5-> viewModel.relationType5 = "brother"
+                        6-> viewModel.relationType5 = "husband"
+                        7-> viewModel.relationType5 = "wife"
+                    }
+                }
             }
         }
     }
@@ -433,103 +419,6 @@ class NomineeDetails : Fragment() {
         }
     }
 
-
-    private fun showDropDownDialog1() {
-        val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.relationship_TypeStar))
-
-            .setItems(list) {_,which->
-                binding.spinnerRelationType1.setText(list[which])
-                when(which){
-                    0-> viewModel.relationType1 = "father"
-                    1-> viewModel.relationType1 = "mother"
-                    2-> viewModel.relationType1 = "son"
-                    3-> viewModel.relationType1 = "daughter"
-                    4-> viewModel.relationType1 = "sister"
-                    5-> viewModel.relationType1 = "brother"
-                    6-> viewModel.relationType1 = "husband"
-                    7-> viewModel.relationType1 = "wife"
-                }
-            }.show()
-    }
-
-
-    private fun showDropDownDialog2() {
-        val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.relationship_TypeStar))
-            .setItems(list) {_,which->
-                binding.spinnerRelationType2.setText(list[which])
-                when(which){
-                    0-> viewModel.relationType2 = "father"
-                    1-> viewModel.relationType2 = "mother"
-                    2-> viewModel.relationType2 = "son"
-                    3-> viewModel.relationType2 = "daughter"
-                    4-> viewModel.relationType2 = "sister"
-                    5-> viewModel.relationType2 = "brother"
-                    6-> viewModel.relationType2 = "husband"
-                    7-> viewModel.relationType2 = "wife"
-                }
-            }.show()
-    }
-
-    private fun showDropDownDialog3() {
-        val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.relationship_TypeStar))
-            .setItems(list) {_,which->
-                binding.spinnerRelationType3.setText(list[which])
-                when(which){
-                    0-> viewModel.relationType3 = "father"
-                    1-> viewModel.relationType3 = "mother"
-                    2-> viewModel.relationType3 = "son"
-                    3-> viewModel.relationType3 = "daughter"
-                    4-> viewModel.relationType3 = "sister"
-                    5-> viewModel.relationType3 = "brother"
-                    6-> viewModel.relationType3 = "husband"
-                    7-> viewModel.relationType3 = "wife"
-                }
-            }.show()
-    }
-
-    private fun showDropDownDialog4() {
-        val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.relationship_TypeStar))
-            .setItems(list) {_,which->
-                binding.spinnerRelationType4.setText(list[which])
-                when(which){
-                    0-> viewModel.relationType4 = "father"
-                    1-> viewModel.relationType4 = "mother"
-                    2-> viewModel.relationType4 = "son"
-                    3-> viewModel.relationType4 = "daughter"
-                    4-> viewModel.relationType4 = "sister"
-                    5-> viewModel.relationType4 = "brother"
-                    6-> viewModel.relationType4 = "husband"
-                    7-> viewModel.relationType4 = "wife"
-                }
-            }.show()
-    }
-
-    private fun showDropDownDialog5() {
-        val list=resources.getStringArray(R.array.relation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.relationship_TypeStar))
-            .setItems(list) {_,which->
-                binding.spinnerRelationType5.setText(list[which])
-                when(which){
-                    0-> viewModel.relationType5 = "father"
-                    1-> viewModel.relationType5 = "mother"
-                    2-> viewModel.relationType5 = "son"
-                    3-> viewModel.relationType5 = "daughter"
-                    4-> viewModel.relationType5 = "sister"
-                    5-> viewModel.relationType5 = "brother"
-                    6-> viewModel.relationType5 = "husband"
-                    7-> viewModel.relationType5 = "wife"
-                }
-            }.show()
-    }
 
 
     private fun fieldsEdit() {

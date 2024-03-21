@@ -1,7 +1,8 @@
 package com.streetsaarthi.nasvi.di
 import javax.inject.Qualifier
 
-class Qualifiers {
+class
+Qualifiers {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)

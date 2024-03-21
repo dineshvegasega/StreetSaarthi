@@ -1,16 +1,12 @@
 package com.streetsaarthi.nasvi.screens.main.profiles
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,18 +14,11 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import com.streetsaarthi.nasvi.utils.hideKeyboard
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.PersonalDetailsBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
@@ -42,10 +31,14 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.callPermissionDialog
+import com.streetsaarthi.nasvi.utils.getCameraPath
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.isNetworkAvailable
 import com.streetsaarthi.nasvi.utils.loadImage
 import com.streetsaarthi.nasvi.utils.mainThread
+import com.streetsaarthi.nasvi.utils.showDropDownDialog
+import com.streetsaarthi.nasvi.utils.showOptions
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,9 +49,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.time.LocalDate
-import java.time.Period
-import java.util.Calendar
 
 @AndroidEntryPoint
 class PersonalDetails : Fragment() , CallBackListener {
@@ -66,7 +56,6 @@ class PersonalDetails : Fragment() , CallBackListener {
     private var _binding: PersonalDetailsBinding? = null
     private val binding get() = _binding!!
 
-    var permissionAlert : AlertDialog?= null
 
     companion object{
         var callBackListener: CallBackListener? = null
@@ -113,9 +102,16 @@ class PersonalDetails : Fragment() , CallBackListener {
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
             if(!permissions.entries.toString().contains("false")){
-                showOptions()
+                requireActivity().showOptions {
+                    when(this){
+                        1 -> forCamera()
+                        2 -> forGallery()
+                    }
+                }
             } else {
-                callPermissionDialog()
+                requireActivity().callPermissionDialog{
+                    someActivityResultLauncher.launch(this)
+                }
             }
         }
 
@@ -125,32 +121,6 @@ class PersonalDetails : Fragment() , CallBackListener {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         callMediaPermissions()
-    }
-
-    @SuppressLint("SuspiciousIndentation")
-    fun callPermissionDialog() {
-        if(permissionAlert?.isShowing == true) {
-            return
-        }
-        permissionAlert = MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
-            .setTitle(resources.getString(R.string.app_name))
-            .setMessage(resources.getString(R.string.required_permissions))
-            .setPositiveButton(resources.getString(R.string.yes)) { dialog, _ ->
-                dialog.dismiss()
-                val i= Intent()
-                i.action= Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                i.addCategory(Intent.CATEGORY_DEFAULT)
-                i.data= Uri.parse("package:" + requireActivity().packageName)
-                someActivityResultLauncher.launch(i)
-            }
-            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
-                dialog.dismiss()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    MainActivity.binding.drawerLayout.close()
-                }, 500)
-            }
-            .setCancelable(false)
-            .show()
     }
 
 
@@ -435,17 +405,54 @@ class PersonalDetails : Fragment() , CallBackListener {
             }
 
             editTextSelectState.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownStateDialog()
+                var index = 0
+                val list = arrayOfNulls<String>(viewModel.itemState.size)
+                for (value in viewModel.itemState) {
+                    list[index] = value.name
+                    index++
+                }
+                requireActivity().showDropDownDialog(type = 6, arrayList = list){
+                    binding.editTextSelectState.setText(name)
+                    viewModel.stateId =  viewModel.itemState[position].id
+                    if(networkFailed) {
+                        view?.let { viewModel.district(it, viewModel.stateId) }
+                        if (!IS_LANGUAGE_ALL){
+                            view?.let { viewModel.panchayat(it, viewModel.stateId) }
+                        }
+                    } else {
+                        requireContext().callNetworkDialog()
+                    }
+                    viewModel.data.current_state = ""+viewModel.stateId
+                    binding.editTextSelectDistrict.setText("")
+                    binding.editTextMunicipalityPanchayat.setText("")
+                    viewModel.districtId = 0
+                    viewModel.panchayatId = 0
+                }
             }
 
             editTextSelectDistrict.singleClick {
-                requireActivity().hideKeyboard()
                 if (!(viewModel.stateId > 0)){
                     showSnackBar(getString(R.string.select_state_))
                 }else{
                     if(viewModel.itemDistrict.size > 0){
-                        showDropDownDistrictDialog()
+                        var index = 0
+                        val list = arrayOfNulls<String>(viewModel.itemDistrict.size)
+                        for (value in viewModel.itemDistrict) {
+                            list[index] = value.name
+                            index++
+                        }
+                        requireActivity().showDropDownDialog(type = 7, arrayList = list){
+                            binding.editTextSelectDistrict.setText(name)
+                            viewModel.districtId = viewModel.itemDistrict[position].id
+                            if (networkFailed) {
+                                view?.let { viewModel.pincode(it, viewModel.districtId) }
+                            } else {
+                                requireContext().callNetworkDialog()
+                            }
+                            viewModel.data.current_district = ""+viewModel.districtId
+                            binding.editTextSelectPincode.setText("")
+                            viewModel.pincodeId = ""
+                        }
                     } else {
                         showSnackBar(getString(R.string.not_district))
                     }
@@ -453,12 +460,21 @@ class PersonalDetails : Fragment() , CallBackListener {
             }
 
             editTextMunicipalityPanchayat.singleClick {
-                requireActivity().hideKeyboard()
                 if (!(viewModel.stateId> 0)){
                     showSnackBar(getString(R.string.select_state_))
                 }else{
                     if(viewModel.itemPanchayat.size > 0){
-                        showDropDownPanchayatDialog()
+                        var index = 0
+                        val list = arrayOfNulls<String>(viewModel.itemPanchayat.size)
+                        for (value in viewModel.itemPanchayat) {
+                            list[index] = value.name
+                            index++
+                        }
+                        requireActivity().showDropDownDialog(type = 8, arrayList = list){
+                            binding.editTextMunicipalityPanchayat.setText(name)
+                            viewModel.panchayatId = viewModel.itemPanchayat[position].id
+                            viewModel.data.municipality_panchayat_current = ""+viewModel.panchayatId
+                        }
                     } else {
                         showSnackBar(getString(R.string.not_municipality_panchayat))
                     }
@@ -466,12 +482,21 @@ class PersonalDetails : Fragment() , CallBackListener {
             }
 
             editTextSelectPincode.singleClick {
-                requireActivity().hideKeyboard()
                 if (!(viewModel.districtId > 0)){
                     showSnackBar(getString(R.string.select_district_))
                 } else {
                     if(viewModel.itemPincode.size > 0){
-                        showDropDownPincodeDialog()
+                        var index = 0
+                        val list = arrayOfNulls<String>(viewModel.itemPincode.size)
+                        for (value in viewModel.itemPincode) {
+                            list[index] = value.pincode
+                            index++
+                        }
+                        requireActivity().showDropDownDialog(type = 9, arrayList = list){
+                            binding.editTextSelectPincode.setText(name)
+                            viewModel.pincodeId = binding.editTextSelectPincode.text.toString()
+                            viewModel.data.current_pincode = ""+viewModel.pincodeId
+                        }
                     } else {
                         showSnackBar(getString(R.string.not_pincode))
                     }
@@ -480,33 +505,64 @@ class PersonalDetails : Fragment() , CallBackListener {
 
 
 
-
             editTextGender.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownGenderDialog()
+                requireActivity().showDropDownDialog(type = 1){
+                    binding.editTextGender.setText(name)
+                    when (position) {
+                        0 -> viewModel.data.gender = "Male"
+                        1 -> viewModel.data.gender = "Female"
+                        2 -> viewModel.data.gender = "Other"
+                    }
+                }
             }
 
             editTextDateofBirth.singleClick {
-                requireActivity().hideKeyboard()
-                showDOBDialog()
+                requireActivity().showDropDownDialog(type = 2){
+                    binding.editTextDateofBirth.setText(name)
+                    viewModel.data.date_of_birth = if(name != "") name else null
+                }
             }
 
             editTextSocialCategory.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownCategoryDialog()
+                requireActivity().showDropDownDialog(type = 3){
+                    binding.editTextSocialCategory.setText(name)
+                }
             }
 
             editTextEducationQualifacation.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownEducationQualifacationDialog()
+                requireActivity().showDropDownDialog(type = 4){
+                    binding.editTextEducationQualifacation.setText(name)
+                    when (position) {
+                        0 -> viewModel.data.education_qualification = "No Education"
+                        1 -> viewModel.data.education_qualification = "Primary Education(1st To 5th)"
+                        2 -> viewModel.data.education_qualification = "Middle Education(6th To 9th)"
+                        3 -> viewModel.data.education_qualification = "Higher Education(10th To 12th)"
+                        4 -> viewModel.data.education_qualification = "Graduation"
+                        5 -> viewModel.data.education_qualification = "Post Graduation"
+                    }
+                }
             }
 
             editTextMaritalStatus.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownMaritalStatusDialog()
+                requireActivity().showDropDownDialog(type = 5){
+                    binding.editTextMaritalStatus.setText(name)
+                    if (name == getString(R.string.married)) {
+                        binding.textSpouseNameTxt.visibility = View.VISIBLE
+                        binding.editTextSpouseName.visibility = View.VISIBLE
+                    } else {
+                        binding.textSpouseNameTxt.visibility = View.GONE
+                        binding.editTextSpouseName.visibility = View.GONE
+                        viewModel.data.spouse_name = null
+                    }
+                    when (position) {
+                        0 -> viewModel.data.marital_status = "Single"
+                        1 -> viewModel.data.marital_status = "Married"
+                        2 -> viewModel.data.marital_status = "Widowed"
+                        3 -> viewModel.data.marital_status = "Divorced"
+                        4 -> viewModel.data.marital_status = "Separated"
+                    }
+                }
             }
-
-
 
         }
 
@@ -539,251 +595,14 @@ class PersonalDetails : Fragment() , CallBackListener {
     }
 
 
-    private fun showDropDownGenderDialog() {
-        val list=resources.getStringArray(R.array.gender_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.gender))
-            .setItems(list) {_,which->
-                binding.editTextGender.setText(list[which])
-                when(which){
-                    0-> viewModel.data.gender = "Male"
-                    1-> viewModel.data.gender = "Female"
-                    2-> viewModel.data.gender = "Other"
-                }
-            }.show()
-    }
 
-    @SuppressLint("SetTextI18n")
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun showDOBDialog() {
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-        val dpd = DatePickerDialog(requireContext(), R.style.CalendarDatePickerDialog,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            val today= LocalDate.now()
-            val birthday: LocalDate = LocalDate.of(year,(monthOfYear+1),dayOfMonth)
-            val p: Period = Period.between(birthday,today)
-
-
-            var mm : String = (monthOfYear+1).toString()
-            if (mm.length == 1){
-                mm = "0"+mm
-            }
-
-            var dd : String = ""+dayOfMonth
-            if (dd.length == 1){
-                dd = "0"+dd
-            }
-
-            if(p.getYears() > 13){
-                binding.editTextDateofBirth.setText("" + year + "-" + mm  + "-" + dd)
-                viewModel.data.date_of_birth = "" + year + "-" + mm  + "-" + dd
-            }else{
-                showSnackBar(getString(R.string.age_minimum))
-                binding.editTextDateofBirth.setText("")
-                viewModel.data.date_of_birth = null
-            }
-        }, year, month, day)
-        dpd.show()
-    }
-
-    private fun showDropDownCategoryDialog() {
-        val list=resources.getStringArray(R.array.socialCategory_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.social_category))
-            .setItems(list) {_,which->
-                binding.editTextSocialCategory.setText(list[which])
-            }.show()
-    }
-
-
-    private fun showDropDownEducationQualifacationDialog() {
-        val list=resources.getStringArray(R.array.socialEducation_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.education_qualifacation))
-            .setItems(list) {_,which->
-                binding.editTextEducationQualifacation.setText(list[which])
-                when(which){
-                    0-> viewModel.data.education_qualification = "No Education"
-                    1-> viewModel.data.education_qualification = "Primary Education(1st To 5th)"
-                    2-> viewModel.data.education_qualification = "Middle Education(6th To 9th)"
-                    3-> viewModel.data.education_qualification = "Higher Education(10th To 12th)"
-                    4-> viewModel.data.education_qualification = "Graduation"
-                    5-> viewModel.data.education_qualification = "Post Graduation"
-                }
-            }.show()
-    }
-
-
-    private fun showDropDownMaritalStatusDialog() {
-        val list=resources.getStringArray(R.array.maritalStatus_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.marital_status))
-            .setItems(list) {_,which->
-                binding.editTextMaritalStatus.setText(list[which])
-                if (list[which] == getString(R.string.married)){
-                    binding.textSpouseNameTxt.visibility = View.VISIBLE
-                    binding.editTextSpouseName.visibility = View.VISIBLE
-                }else{
-                    binding.textSpouseNameTxt.visibility = View.GONE
-                    binding.editTextSpouseName.visibility = View.GONE
-                    viewModel.data.spouse_name = null
-                }
-                when(which){
-                    0-> viewModel.data.marital_status = "Single"
-                    1-> viewModel.data.marital_status = "Married"
-                    2-> viewModel.data.marital_status = "Widowed"
-                    3-> viewModel.data.marital_status = "Divorced"
-                    4-> viewModel.data.marital_status = "Separated"
-                }
-            }.show()
-    }
-
-
-
-
-    private fun showDropDownStateDialog() {
-        var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemState.size)
-        for (value in viewModel.itemState) {
-            list[index] = value.name
-            index++
-        }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.select_state))
-            .setItems(list) {_,which->
-                binding.editTextSelectState.setText(list[which])
-                viewModel.stateId =  viewModel.itemState[which].id
-                if(networkFailed) {
-                    view?.let { viewModel.district(it, viewModel.stateId) }
-                    if (!IS_LANGUAGE_ALL){
-                        view?.let { viewModel.panchayat(it, viewModel.stateId) }
-                    }
-                } else {
-                    requireContext().callNetworkDialog()
-                }
-                viewModel.data.current_state = ""+viewModel.stateId
-                binding.editTextSelectDistrict.setText("")
-                binding.editTextMunicipalityPanchayat.setText("")
-                viewModel.districtId = 0
-                viewModel.panchayatId = 0
-            }.show()
-    }
-
-
-    private fun showDropDownDistrictDialog() {
-        var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemDistrict.size)
-        for (value in viewModel.itemDistrict) {
-            list[index] = value.name
-            index++
-        }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.select_district))
-            .setItems(list) {_,which->
-                binding.editTextSelectDistrict.setText(list[which])
-                viewModel.districtId =  viewModel.itemDistrict[which].id
-                if(networkFailed) {
-                    view?.let { viewModel.pincode(it, viewModel.districtId) }
-                } else {
-                    requireContext().callNetworkDialog()
-                }
-                viewModel.data.current_district = ""+viewModel.districtId
-                binding.editTextSelectPincode.setText("")
-                viewModel.pincodeId = ""
-            }.show()
-    }
-
-
-    private fun showDropDownPanchayatDialog() {
-        var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemPanchayat.size)
-        for (value in viewModel.itemPanchayat) {
-            list[index] = value.name
-            index++
-        }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.municipality_panchayat))
-            .setItems(list) {_,which->
-                binding.editTextMunicipalityPanchayat.setText(list[which])
-                viewModel.panchayatId =  viewModel.itemPanchayat[which].id
-                viewModel.data.municipality_panchayat_current = ""+viewModel.panchayatId
-            }.show()
-    }
-
-
-    private fun showDropDownPincodeDialog() {
-        var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemPincode.size)
-        for (value in viewModel.itemPincode) {
-            list[index] = value.pincode
-            index++
-        }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.select_pincode))
-            .setItems(list) {_,which->
-                binding.editTextSelectPincode.setText(list[which])
-//                viewModel.pincodeId =  viewModel.itemPincode[which].id
-                viewModel.pincodeId = binding.editTextSelectPincode.text.toString()
-                viewModel.data.current_pincode = ""+viewModel.pincodeId
-            }.show()
-    }
-
-
-
-
-
-
-    private fun showOptions() =try {
-        val dialogView=layoutInflater.inflate(R.layout.dialog_choose_image_option,null)
-        val btnCancel=dialogView.findViewById<AppCompatButton>(R.id.btnCancel)
-        val tvPhotos=dialogView.findViewById<AppCompatTextView>(R.id.tvPhotos)
-        val tvPhotosDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvPhotosDesc)
-        val tvCamera=dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
-        val tvCameraDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
-        val dialog= BottomSheetDialog(requireContext(),R.style.TransparentDialog)
-        dialog.setContentView(dialogView)
-        dialog.show()
-
-        btnCancel.singleClick {
-            dialog.dismiss()
-        }
-        tvCamera.singleClick {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvCameraDesc.singleClick {
-            dialog.dismiss()
-            forCamera()
-        }
-
-        tvPhotos.singleClick {
-            dialog.dismiss()
-            forGallery()
-        }
-        tvPhotosDesc.singleClick {
-            dialog.dismiss()
-            forGallery()
-        }
-
-    } catch (e: Exception) {
-        e.printStackTrace()
-//        Log.e("TAG","errorD " + e.message)
-    }
 
 
 
 
     private fun forCamera() {
-        requireActivity().runOnUiThread(){
-            val directory = File(requireContext().filesDir, "camera_images")
-            if(!directory.exists()){
-                directory.mkdirs()
-            }
-            val file = File(directory,"${Calendar.getInstance().timeInMillis}.png")
-            uriReal = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", file)
+        requireActivity().getCameraPath {
+            uriReal = this
             captureMedia.launch(uriReal)
         }
     }

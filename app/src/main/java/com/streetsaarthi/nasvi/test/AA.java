@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi;
+package com.streetsaarthi.nasvi.test;
 
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 import com.google.gson.Gson;
+import com.streetsaarthi.nasvi.R;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

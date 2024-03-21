@@ -1,4 +1,4 @@
-package com.streetsaarthi.nasvi.screens
+package com.streetsaarthi.nasvi.test
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

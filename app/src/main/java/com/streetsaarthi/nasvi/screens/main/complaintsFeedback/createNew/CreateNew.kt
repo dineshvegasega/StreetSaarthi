@@ -28,8 +28,11 @@ import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.getCameraPath
 import com.streetsaarthi.nasvi.utils.getMediaFilePathFor
 import com.streetsaarthi.nasvi.utils.hideKeyboard
+import com.streetsaarthi.nasvi.utils.showDropDownDialog
+import com.streetsaarthi.nasvi.utils.showOptions
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,7 +71,23 @@ class CreateNew : Fragment() {
             }
 
             editTextSelectYourChoice.singleClick {
-                showDropDownDialog()
+                requireActivity().showDropDownDialog(type = 16){
+                    binding.editTextSelectYourChoice.setText(name)
+                    when(position){
+                        0-> {
+                            viewModel.type = "complaint"
+                            binding.textSubjectOfComplaintTxt.text = getString(R.string.subject_of_complaint)
+                            binding.textTypeTxt.visibility = View.VISIBLE
+                            binding.editTextSelectComplaintType.visibility = View.VISIBLE
+                        }
+                        1-> {
+                            viewModel.type = "feedback"
+                            binding.textSubjectOfComplaintTxt.text = getString(R.string.subject_of_feedback)
+                            binding.textTypeTxt.visibility = View.GONE
+                            binding.editTextSelectComplaintType.visibility = View.GONE
+                        }
+                    }
+                }
             }
 
             if(networkFailed) {
@@ -78,9 +97,17 @@ class CreateNew : Fragment() {
             }
 
             editTextSelectComplaintType.singleClick {
-                requireActivity().hideKeyboard()
                 if(viewModel.itemComplaintType.size > 0){
-                    showDropDownComplaintTypeDialog()
+                    var index = 0
+                    val list = arrayOfNulls<String>(viewModel.itemComplaintType.size)
+                    for (value in viewModel.itemComplaintType) {
+                        list[index] = value.name
+                        index++
+                    }
+                    requireActivity().showDropDownDialog(type = 17, list){
+                        binding.editTextSelectComplaintType.setText(name)
+                        viewModel.complaintTypeId =  viewModel.itemComplaintType[position].id
+                    }
                 } else {
                     showSnackBar(getString(R.string.not_complaint_type))
                 }
@@ -154,48 +181,6 @@ class CreateNew : Fragment() {
     }
 
 
-    private fun showDropDownDialog() {
-        val list=resources.getStringArray(R.array.type_array)
-        MaterialAlertDialogBuilder(requireContext(), R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.select_your_choice))
-            .setItems(list) {_,which->
-                binding.editTextSelectYourChoice.setText(list[which])
-                when(which){
-                    0-> {
-                        viewModel.type = "complaint"
-                        binding.textSubjectOfComplaintTxt.text = getString(R.string.subject_of_complaint)
-                        binding.textTypeTxt.visibility = View.VISIBLE
-                        binding.editTextSelectComplaintType.visibility = View.VISIBLE
-                    }
-                    1-> {
-                        viewModel.type = "feedback"
-                        binding.textSubjectOfComplaintTxt.text = getString(R.string.subject_of_feedback)
-                        binding.textTypeTxt.visibility = View.GONE
-                        binding.editTextSelectComplaintType.visibility = View.GONE
-                    }
-                }
-            }.show()
-    }
-
-
-
-    private fun showDropDownComplaintTypeDialog() {
-        var index = 0
-        val list = arrayOfNulls<String>(viewModel.itemComplaintType.size)
-        for (value in viewModel.itemComplaintType) {
-            list[index] = value.name
-            index++
-        }
-        MaterialAlertDialogBuilder(requireView().context, R.style.DropdownDialogTheme)
-            .setTitle(resources.getString(R.string.select_complaint_type))
-            .setItems(list) {_,which->
-                binding.editTextSelectComplaintType.setText(list[which])
-                viewModel.complaintTypeId =  viewModel.itemComplaintType[which].id
-            }.show()
-    }
-
-
-
 
 
     var imagePosition = 0
@@ -263,73 +248,31 @@ class CreateNew : Fragment() {
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
-            // Handle Permission granted/rejected
             permissions.entries.forEach {
                 val permissionName = it.key
                 val isGranted = it.value
-//                Log.e("TAG", "00000 "+permissionName)
                 if (isGranted) {
-//                    Log.e("TAG", "11111"+permissionName)
                     if(isFree){
-                        showOptions()
+                        requireActivity().showOptions {
+                            when(this){
+                                1 -> forCamera()
+                                2 -> forGallery()
+                            }
+                        }
                     }
                     isFree = false
                 } else {
-                    // Permission is denied
-//                    Log.e("TAG", "222222"+permissionName)
                 }
             }
         }
 
 
 
-    private fun showOptions() =try {
-        val dialogView=layoutInflater.inflate(R.layout.dialog_choose_image_option,null)
-        val btnCancel=dialogView.findViewById<AppCompatButton>(R.id.btnCancel)
-        val tvPhotos=dialogView.findViewById<AppCompatTextView>(R.id.tvPhotos)
-        val tvPhotosDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvPhotosDesc)
-        val tvCamera=dialogView.findViewById<AppCompatTextView>(R.id.tvCamera)
-        val tvCameraDesc=dialogView.findViewById<AppCompatTextView>(R.id.tvCameraDesc)
-        val dialog= BottomSheetDialog(requireContext(),R.style.TransparentDialog)
-        dialog.setContentView(dialogView)
-        dialog.show()
-
-        btnCancel.singleClick {
-            dialog.dismiss()
-        }
-        tvCamera.singleClick {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvCameraDesc.singleClick {
-            dialog.dismiss()
-            forCamera()
-        }
-        tvPhotos.singleClick {
-            dialog.dismiss()
-            forGallery()
-        }
-        tvPhotosDesc.singleClick {
-            dialog.dismiss()
-            forGallery()
-        }
-
-    } catch (e: Exception) {
-        e.printStackTrace()
-//        Log.e("TAG","errorD " + e.message)
-    }
-
-
 
 
     private fun forCamera() {
-        requireActivity().runOnUiThread(){
-            val directory = File(requireContext().filesDir, "camera_images")
-            if(!directory.exists()){
-                directory.mkdirs()
-            }
-            val file = File(directory,"${Calendar.getInstance().timeInMillis}.png")
-            uriReal = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", file)
+        requireActivity().getCameraPath {
+            uriReal = this
             captureMedia.launch(uriReal)
         }
     }
