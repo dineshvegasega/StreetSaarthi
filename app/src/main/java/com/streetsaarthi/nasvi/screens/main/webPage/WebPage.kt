@@ -130,14 +130,19 @@ class WebPage : Fragment() {
             }
         }
 
-        var screen = arguments?.getString(Screen)
+        val screen = arguments?.getString(Screen)
         Handler(Looper.getMainLooper()).postDelayed({
             if (screen == LoginPassword){
                 binding.webView.loadUrl(WEB_URL+"#/mobile-login")
 //                binding.webView.loadUrl("https://amritmahotsav.nic.in/downloads.htm")
-
             } else if (screen == LoginOtp){
                 binding.webView.loadUrl(WEB_URL+"#/mobile-otp-login")
+            } else if (screen == LoginOtp){
+                binding.webView.loadUrl(WEB_URL+"#/privacy-policy")
+            } else if (screen == LoginOtp){
+                binding.webView.loadUrl(WEB_URL+"#/term-condition")
+            } else if (screen == LoginOtp){
+                binding.webView.loadUrl(WEB_URL+"#/term-condition")
             }
         }, 200)
 

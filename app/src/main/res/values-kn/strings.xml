@@ -558,8 +558,8 @@
     <string name="price_breakup">ಬೆಲೆ ವಿಭಜನೆ</string>
     <string name="membership_cost">ಸದಸ್ಯತ್ವದ ವೆಚ್ಚ</string>
     <string name="validity">ಮಾನ್ಯತೆ</string>
-    <string name="gst">GST</string>
-    <string name="coupon_discount">ಕೂಪನ್ ರಿಯಾಯಿತಿ</string>
+    <string name="gst">GST (%s)</string>
+    <string name="coupon_discount">ಕೂಪನ್ ರಿಯಾಯಿತಿ (%s)</string>
     <string name="total_cost">ಒಟ್ಟು ವೆಚ್ಚ</string>
     <string name="purchase_subscription">ಖರೀದಿ ಚಂದಾದಾರಿಕೆ</string>
     <string name="months">ತಿಂಗಳು</string>

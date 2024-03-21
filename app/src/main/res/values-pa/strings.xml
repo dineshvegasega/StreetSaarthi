@@ -562,8 +562,8 @@
  <string name="price_breakup">ਕੀਮਤ ਬ੍ਰੇਕਅੱਪ</string>
  <string name = "membership_cost">ਮੈਂਬਰਸ਼ਿਪ ਦੀ ਲਾਗਤ</string>
  <string name="validity">ਵੈਧਤਾ</string>
- <string name="gst">GST</string>
- <string name = "coupon_discount">ਕੂਪਨ ਛੋਟ</string>
+ <string name="gst">GST (%s)</string>
+ <string name = "coupon_discount">ਕੂਪਨ ਛੋਟ (%s)</string>
  <string name = "total_cost">ਕੁੱਲ ਲਾਗਤ</string>
  <string name = "purchase_subscription"> ਗਾਹਕੀ ਖਰੀਦੋ</string>
  <string name="months">ਮਹੀਨੇ</string>

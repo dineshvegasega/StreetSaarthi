@@ -186,7 +186,7 @@
                 app:fontFamily="@font/roboto_medium"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/validity"
-                android:visibility="visible"
+                android:visibility="gone"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -197,6 +197,41 @@
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 app:layout_constraintTop_toBottomOf="@+id/textMembershipCostValue"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_medium"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="XX"
+                android:visibility="gone"
+                />
+
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textCouponDiscountTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_2C2C2C"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/textValidityTxt"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                app:fontFamily="@font/roboto_medium"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/coupon_discount"
+                android:visibility="visible"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textCouponDiscountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_2C2C2C"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/textValidityTxt"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_medium"
@@ -213,7 +248,7 @@
                 android:textColor="@color/_2C2C2C"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/textValidityTxt"
+                app:layout_constraintTop_toBottomOf="@+id/textCouponDiscountTxt"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_medium"
@@ -229,7 +264,7 @@
                 android:textColor="@color/_2C2C2C"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/textValidityValue"
+                app:layout_constraintTop_toBottomOf="@+id/textCouponDiscountTxt"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_medium"
@@ -238,38 +273,6 @@
                 android:visibility="visible"
                 />
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textCouponDiscountTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/_2C2C2C"
-                android:textSize="@dimen/_12sdp"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/textGSTTxt"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints"
-                app:fontFamily="@font/roboto_medium"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/coupon_discount"
-                android:visibility="visible"
-                />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textCouponDiscountValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/_2C2C2C"
-                android:textSize="@dimen/_12sdp"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/textGSTValue"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:ignore="MissingConstraints"
-                app:fontFamily="@font/roboto_medium"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="XX"
-                android:visibility="visible"
-                />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -279,7 +282,7 @@
                 android:textColor="@color/_E79D46"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/textCouponDiscountTxt"
+                app:layout_constraintTop_toBottomOf="@+id/textGSTTxt"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_bold"
@@ -295,7 +298,7 @@
                 android:textColor="@color/_E79D46"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/textCouponDiscountValue"
+                app:layout_constraintTop_toBottomOf="@+id/textGSTTxt"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_bold"

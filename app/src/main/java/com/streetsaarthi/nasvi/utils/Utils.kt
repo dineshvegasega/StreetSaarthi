@@ -1369,6 +1369,22 @@ fun Activity.showDropDownDialog(
                     callBack(ItemReturn(which, arrayList[which]!!))
                 }.show()
         }
+        18 -> {
+            val list=resources.getStringArray(R.array.month_year_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.select_month_year))
+                .setItems(list) {_,which->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
+        19 -> {
+            val list=resources.getStringArray(R.array.numbers_array)
+            MaterialAlertDialogBuilder(this, R.style.DropdownDialogTheme)
+                .setTitle(resources.getString(R.string.choose_number))
+                .setItems(list) {_,which->
+                    callBack(ItemReturn(which, list[which]))
+                }.show()
+        }
     }
 
 }

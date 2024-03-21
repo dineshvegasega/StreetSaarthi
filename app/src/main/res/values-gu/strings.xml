@@ -554,8 +554,8 @@
     <string name="price_breakup">કિંમત બ્રેકઅપ</string>
     <string name = "membership_cost">સદસ્યતાની કિંમત</string>
     <string name = "validity">માન્યતા</string>
-    <string name = "gst">GST</string>
-    <string name = "coupon_discount">કૂપન ડિસ્કાઉન્ટ</string>
+    <string name = "gst">GST (%s)</string>
+    <string name = "coupon_discount">કૂપન ડિસ્કાઉન્ટ (%s)</string>
     <string name = "total_cost">કુલ કિંમત</string>
     <string name="purchase_subscription">સબ્સ્ક્રિપ્શન ખરીદો</string>
     <string name = "months"> મહિનાઓ</string>

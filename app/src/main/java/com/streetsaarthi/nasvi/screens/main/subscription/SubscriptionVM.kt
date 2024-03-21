@@ -106,8 +106,11 @@ class SubscriptionVM @Inject constructor(private val repository: Repository) : V
     var validityMonths: Int = 0
     var validityDays: Int = 0
     var gst: Double = 18.0
+    var gstPrice : Double = 18.0
     var afterGst: Double = 0.0
     var couponDiscount: Double = 0.0
+    var couponDiscountPrice: Double = 0.0
+    var afterCouponDiscount: Double = 0.0
     var totalCost: Double = 0.0
     var monthYear: Int = 0
     var number: Int = 0

@@ -22,7 +22,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inclide_header_search"
-        app:layout_constraintVertical_bias="1.0">
+        android:scrollbars="vertical"
+        android:saveEnabled="true"
+        android:scrollbarSize="@dimen/_3sdp"
+        android:scrollbarThumbVertical="@color/_E79D46"
+        android:fadeScrollbars="false"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -223,7 +228,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textDeleteYourAccountTxt"
                     android:background="@drawable/white_round_corner"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:paddingVertical="@dimen/_8sdp"
                     >
@@ -259,7 +264,205 @@
                         />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout3"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textMoreInformationTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_information"
+                    android:textColor="@color/_322F35"
+                    android:textSize="@dimen/_12sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textAboutUsTxt"
+                    style="@style/PrimaryEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/about_us"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/_1D1B20"
+                    android:fontFamily="@font/roboto_medium"
+                    android:focusable="false"
+                    android:drawableEnd="@drawable/arrow_right"
+                    app:layout_constraintTop_toBottomOf="@+id/textMoreInformationTxt" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textPrivacyPolicyTxt"
+                    style="@style/PrimaryEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privacy_policy"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/_1D1B20"
+                    android:fontFamily="@font/roboto_medium"
+                    android:focusable="false"
+                    android:drawableEnd="@drawable/arrow_right"
+                    app:layout_constraintTop_toBottomOf="@+id/textAboutUsTxt" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textTermsConditionsTxt"
+                    style="@style/PrimaryEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/terms_conditions"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/_1D1B20"
+                    android:fontFamily="@font/roboto_medium"
+                    android:focusable="false"
+                    android:drawableEnd="@drawable/arrow_right"
+                    app:layout_constraintTop_toBottomOf="@+id/textPrivacyPolicyTxt" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textRateOurAppTxt"
+                    style="@style/PrimaryEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/rate_our_app"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/_1D1B20"
+                    android:fontFamily="@font/roboto_medium"
+                    android:focusable="false"
+                    android:drawableEnd="@drawable/arrow_right"
+                    app:layout_constraintTop_toBottomOf="@+id/textTermsConditionsTxt" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textShareOurAppTxt"
+                    style="@style/PrimaryEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/share_our_app"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/_1D1B20"
+                    android:fontFamily="@font/roboto_medium"
+                    android:focusable="false"
+                    android:drawableEnd="@drawable/arrow_right"
+                    app:layout_constraintTop_toBottomOf="@+id/textRateOurAppTxt" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout4"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textAppUpdateTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_update"
+                    android:textColor="@color/_322F35"
+                    android:textSize="@dimen/_12sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textAboutUsNewVersionTxt"
+                    style="@style/PrimaryEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="New Version Available 1.0.5"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/_1D1B20"
+                    android:fontFamily="@font/roboto_medium"
+                    android:focusable="false"
+                    android:drawableEnd="@drawable/arrow_right"
+                    app:layout_constraintTop_toBottomOf="@+id/textAppUpdateTxt" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout5"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_20sdp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textAppNameTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textAllCaps="true"
+                    android:textColor="@color/_322F35"
+                    android:textSize="@dimen/_20sdp"
+                    app:fontFamily="@font/roboto_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textAppVersionTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="App Version 1.0.4"
+                    android:textColor="@color/_322F35"
+                    android:textSize="@dimen/_12sdp"
+                    app:fontFamily="@font/roboto_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textAppNameTxt"
+                    tools:ignore="MissingConstraints" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 

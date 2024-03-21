@@ -558,8 +558,8 @@
     <string name="price_breakup">किंमत ब्रेकअप</string>
     <string name="membership_cost">सदस्यत्वाची किंमत</string>
     <string name="validity">वैधता</string>
-    <string name = "gst">GST</string>
-    <string name = "coupon_discount">कूपन सवलत</string>
+    <string name = "gst">GST (%s)</string>
+    <string name = "coupon_discount">कूपन सवलत (%s)</string>
     <string name = "total_cost">एकूण किंमत</string>
     <string name="purchase_subscription">सदस्यता खरेदी करा</string>
     <string name="months">महिने</string>

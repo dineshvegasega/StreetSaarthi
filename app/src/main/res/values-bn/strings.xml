@@ -557,8 +557,8 @@
     <string name="price_breakup">মূল্য ব্রেকআপ</string>
     <string name = "membership_cost">সদস্যতার খরচ</string>
     <string name="validity">বৈধতা</string>৷
-    <string name = "gst">GST</string>
-    <string name = "coupon_discount">কুপন ছাড়</string>
+    <string name = "gst">GST (%s)</string>
+    <string name = "coupon_discount">কুপন ছাড় (%s)</string>
     <string name = "total_cost">মোট খরচ</string>
     <string name="purchase_subscription">সাবস্ক্রিপশন ক্রয়</string>৷
     <string name="months">মাস</string>

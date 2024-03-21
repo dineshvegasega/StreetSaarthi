@@ -154,7 +154,7 @@ class Settings : Fragment() {
 
 
                 readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-                    var user = Gson().fromJson(loginUser, Login::class.java)
+                    val user = Gson().fromJson(loginUser, Login::class.java)
                     if (loginUser != null) {
                         notificationAlert =
                             MaterialAlertDialogBuilder(requireContext(), R.style.LogoutDialogTheme)
@@ -223,6 +223,31 @@ class Settings : Fragment() {
 
 
             btDeleteAccount.singleClick {
+                MainActivity.mainActivity.get()!!.callDeleteDialog()
+            }
+
+
+            textAboutUsTxt.singleClick {
+                MainActivity.mainActivity.get()!!.callDeleteDialog()
+            }
+
+            textPrivacyPolicyTxt.singleClick {
+                MainActivity.mainActivity.get()!!.callDeleteDialog()
+            }
+
+            textTermsConditionsTxt.singleClick {
+                MainActivity.mainActivity.get()!!.callDeleteDialog()
+            }
+
+            textRateOurAppTxt.singleClick {
+                MainActivity.mainActivity.get()!!.callDeleteDialog()
+            }
+
+            textShareOurAppTxt.singleClick {
+                MainActivity.mainActivity.get()!!.callDeleteDialog()
+            }
+
+            textAboutUsNewVersionTxt.singleClick {
                 MainActivity.mainActivity.get()!!.callDeleteDialog()
             }
         }

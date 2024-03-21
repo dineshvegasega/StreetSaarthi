@@ -557,8 +557,8 @@
     <string name="price_breakup">വില ബ്രേക്കപ്പ്</string>
     <string name="membership_cost">അംഗത്വ ചെലവ്</string>
     <string name="validity">സാധുത</string>
-    <string name="gst">GST</string>
-    <string name="coupon_discount">കൂപ്പൺ കിഴിവ്</string>
+    <string name="gst">GST (%s)</string>
+    <string name="coupon_discount">കൂപ്പൺ കിഴിവ് (%s)</string>
     <string name="total_cost">മൊത്തം ചെലവ്</string>
     <string name="purchase_subscription">വാങ്ങൽ സബ്‌സ്‌ക്രിപ്‌ഷൻ</string>
     <string name="months">മാസങ്ങൾ</string>

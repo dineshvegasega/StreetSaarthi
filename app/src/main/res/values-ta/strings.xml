@@ -558,8 +558,8 @@
     <string name="price_breakup">விலை முறிப்பு</string>
     <string name="membership_cost">உறுப்பினர் செலவு</string>
     <string name="validity">செல்லுபடியாகும் தன்மை</string>
-    <string name="gst">GST</string>
-    <string name="coupon_discount">கூப்பன் தள்ளுபடி</string>
+    <string name="gst">GST (%s)</string>
+    <string name="coupon_discount">கூப்பன் தள்ளுபடி (%s)</string>
     <string name="total_cost">மொத்த செலவு</string>
     <string name="purchase_subscription">வாங்குதல் சந்தா</string>
     <string name="months">மாதங்கள்</string>

@@ -23,6 +23,7 @@ import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.netwo
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.decimal2Digits
 import com.streetsaarthi.nasvi.utils.hideKeyboard
+import com.streetsaarthi.nasvi.utils.showDropDownDialog
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,13 +52,17 @@ class ViewManage : Fragment() {
 
         binding.apply {
             editTextSelectMonthYear.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownMonthYearDialog()
+                requireActivity().showDropDownDialog(type = 18){
+                    binding.editTextSelectMonthYear.setText(name)
+                    viewModel.monthYear = position + 1
+                }
             }
 
             editTextChooseNumber.singleClick {
-                requireActivity().hideKeyboard()
-                showDropDownChooseNumberDialog()
+                requireActivity().showDropDownDialog(type = 19){
+                    binding.editTextChooseNumber.setText(name)
+                    viewModel.number = position + 1
+                }
             }
 
             btCalculatePrice.singleClick {
@@ -127,17 +132,19 @@ class ViewManage : Fragment() {
 
                         viewModel.membershipCost =
                             viewModel.subscription.value?.subscription_cost!! * viewModel.validityMonths
-                        viewModel.afterGst =
-                            viewModel.membershipCost + (viewModel.membershipCost * viewModel.gst) / 100
-                        viewModel.totalCost =
-                            viewModel.afterGst - ((viewModel.afterGst * viewModel.couponDiscount) / 100)
-
+                        viewModel.couponDiscountPrice = (viewModel.membershipCost * viewModel.couponDiscount) / 100
+                        viewModel.afterCouponDiscount = viewModel.membershipCost - viewModel.couponDiscountPrice
+                        viewModel.gstPrice = (viewModel.afterCouponDiscount * viewModel.gst) / 100
+                        viewModel.afterGst = viewModel.afterCouponDiscount + viewModel.gstPrice
+                        viewModel.totalCost = viewModel.afterGst
 
                         update(
                             viewModel.membershipCost,
                             "" + viewModel.validityDays,
                             viewModel.gst,
+                            viewModel.gstPrice,
                             viewModel.couponDiscount,
+                            viewModel.couponDiscountPrice,
                             viewModel.totalCost,
                         )
                     })
@@ -174,7 +181,9 @@ class ViewManage : Fragment() {
         membershipCost: Double = 0.00,
         validity: String,
         gst: Double,
+        gstPrice: Double,
         couponDiscount: Double,
+        couponDiscountPrice: Double,
         totalCost: Double = 0.00
     ) {
         binding.apply {
@@ -182,10 +191,21 @@ class ViewManage : Fragment() {
                 R.string.rupees, membershipCost.decimal2Digits()
             )
             textValidityValue.text = resources.getString(R.string.days, "${validity}")
-            textGSTValue.text = "${gst} %"
-            textCouponDiscountValue.text = "${couponDiscount} %"
-//           resources.getString(R.string.percent, "${gst}")
-            // textCouponDiscountValue.text = resources.getString(R.string.percent, "${couponDiscount}")
+//            textGSTValue.text = "${gst} %"
+//            textCouponDiscountValue.text = "${couponDiscount} %"
+
+            textCouponDiscountTxt.text = resources.getString(R.string.coupon_discount, "${couponDiscount}%")
+            textCouponDiscountValue.text = resources.getString(
+                R.string.rupees, couponDiscountPrice.decimal2Digits()
+            )
+            textGSTTxt.text = resources.getString(R.string.gst, "${gst}%")
+            textGSTValue.text = resources.getString(
+                R.string.rupees, gstPrice.decimal2Digits()
+            )
+
+
+
+
             textTotalCostValue.text =
                 resources.getString(R.string.rupees, totalCost.decimal2Digits())
         }

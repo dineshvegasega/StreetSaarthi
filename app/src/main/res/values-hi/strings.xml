@@ -560,8 +560,8 @@
     <string name='price_breakup'>कीमत ब्रेकअप</string>
     <string name='membership_cost'>सदस्यता लागत</string>
     <string name='validity'>वैधता</string>
-    <string name='gst'>GST</string>
-    <string name='coupon_discount'>कूपन छूट</string>
+    <string name='gst'>GST (%s)</string>
+    <string name='coupon_discount'>कूपन छूट (%s)</string>
     <string name='total_cost'>कुल लागत</string>
     <string name='purchase_subscription'>सदस्यता खरीदें</string>
     <string name='months'>महीने</string>

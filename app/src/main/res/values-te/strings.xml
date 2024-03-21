@@ -562,8 +562,8 @@
     <string name="price_breakup">ధర విభజన</string>
     <string name="membership_cost">సభ్యత్వ ధర</string>
     <string name="validity">చెల్లుబాటు</string>
-    <string name="gst">GST</string>
-    <string name="coupon_discount">కూపన్ తగ్గింపు</string>
+    <string name="gst">GST (%s)</string>
+    <string name="coupon_discount">కూపన్ తగ్గింపు (%s)</string>
     <string name="total_cost">మొత్తం ధర</string>
     <string name="purchase_subscription">కొనుగోలు చందా</string>
     <string name="months">నెలలు</string>

@@ -435,6 +435,7 @@ class Register2  : Fragment() , CallBackListener {
             Handler(Looper.getMainLooper()).postDelayed({
                 inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
             }, 100)
+
             ivRdGovernmentYes.singleClick {
                 viewModel.governmentScheme = true
                 inclideGovernment.layoutGovernmentScheme.visibility = View.VISIBLE
@@ -446,7 +447,6 @@ class Register2  : Fragment() , CallBackListener {
                 inclideGovernment.layoutGovernmentScheme.visibility = View.GONE
                 setScrollPosition(2, false)
             }
-
         }
     }
 

@@ -689,10 +689,10 @@
     <string name="year">Year</string>
     <string name="calculate_price">Calculate Price</string>
     <string name="price_breakup">Price Breakup</string>
-    <string name="membership_cost">Membership cost</string>
+    <string name="membership_cost">Membership Cost</string>
     <string name="validity">Validity</string>
-    <string name="gst">GST</string>
-    <string name="coupon_discount">Coupon Discount</string>
+    <string name="gst">GST (%s)</string>
+    <string name="coupon_discount">Coupon Discount (%s)</string>
     <string name="total_cost">Total Cost</string>
     <string name="purchase_subscription">Purchase Subscription</string>
     <string name="months">Months</string>
@@ -728,7 +728,13 @@
     <string name="rupees" translatable="false">\u20B9%s</string>
     <string name="percent" translatable="false">%s &#37;</string>
     <string name="days" translatable="false">%s Days</string>
-
+    <string name="more_information">More Information</string>
+    <string name="about_us">About Us</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="rate_our_app">Rate Our App</string>
+    <string name="share_our_app">Share Our App</string>
+    <string name="app_update">App Update</string>
 
 
 
@@ -803,6 +809,7 @@
     <string name="terms57">Contact Us</string>
     <string name="terms58">If you have any questions about these Terms and Conditions, You can contact us:</string>
     <string name="terms59">By email: info@nasvinet.org</string>
+
 
 
 </resources>

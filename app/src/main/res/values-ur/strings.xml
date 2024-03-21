@@ -560,8 +560,8 @@
     <string name = "price_breakup"> قیمت کا وقفہ</string>
     <string name = "membership_cost">رکنیت کی قیمت</string>
     <string name="validity">وثیقیت</string>
-    <string name="gst">GST</string>
-    <string name="coupon_discount">کوپن ڈسکاؤنٹ</string>
+    <string name="gst">GST (%s)</string>
+    <string name="coupon_discount">کوپن ڈسکاؤنٹ (%s)</string>
     <string name = "total_cost"> کل لاگت</string>
     <string name="purchase_subscription">سبسکرپشن خریدیں</string>
     <string name = "months"> مہینے</string>
