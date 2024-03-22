@@ -26,7 +26,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -44,6 +46,8 @@ import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.utils.OtpTimer
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
 import com.streetsaarthi.nasvi.utils.isValidPassword
+import com.streetsaarthi.nasvi.utils.loadHtml
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.parcelable
 import com.streetsaarthi.nasvi.utils.parseOneTimeCode
 import com.streetsaarthi.nasvi.utils.showSnackBar
@@ -209,7 +213,10 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
 
 
             textTerms.singleClick {
-                openTermConditionsDialog()
+                viewModel.show()
+                mainThread {
+                    openTermConditionsDialog()
+                }
             }
 
 
@@ -330,21 +337,29 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
         }
     }
 
+
+
     private fun openTermConditionsDialog() {
         val mybuilder= Dialog(requireActivity())
-        mybuilder.setContentView(R.layout.dialog_termsconditions)
+        mybuilder.setContentView(R.layout.dialog_load_html)
         mybuilder.show()
         val window=mybuilder.window
         window!!.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
-        window!!.setBackgroundDrawableResource(R.color._00000000)
-
+        window.setBackgroundDrawableResource(R.color._00000000)
         val yes = mybuilder.findViewById<AppCompatImageView>(R.id.imageCross)
+        val title = mybuilder.findViewById<AppCompatTextView>(R.id.textTitleMain)
+        val text = mybuilder.findViewById<AppCompatTextView>(R.id.textTitleText)
+        title.text = resources.getString(R.string.terms_amp_conditions)
+        requireContext().loadHtml(3) {
+            text.text = HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        }
         yes?.singleClick {
             mybuilder.dismiss()
         }
+        viewModel.hide()
     }
 
 

@@ -1,14 +1,22 @@
 package com.streetsaarthi.nasvi.screens.main.settings
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.StrictMode
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,6 +24,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.tasks.OnCompleteListener
+import com.google.android.play.core.tasks.Task
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLanguageStartBinding
@@ -28,9 +40,12 @@ import com.streetsaarthi.nasvi.networking.USER_TYPE
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity.Companion.networkFailed
 import com.streetsaarthi.nasvi.utils.callNetworkDialog
+import com.streetsaarthi.nasvi.utils.loadHtml
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
+
 
 @AndroidEntryPoint
 class Settings : Fragment() {
@@ -54,6 +69,7 @@ class Settings : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         MainActivity.mainActivity.get()?.callFragment(1)
+
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.settings)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
@@ -140,7 +156,7 @@ class Settings : Fragment() {
 
             readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                 if (loginUser != null) {
-                    val noti =  Gson().fromJson(loginUser, Login::class.java).notification
+                    val noti = Gson().fromJson(loginUser, Login::class.java).notification
                     switchNotifications.isChecked = if (noti == "Yes") true else false
                 }
             }
@@ -169,14 +185,18 @@ class Settings : Fragment() {
                                     val requestBody: MultipartBody.Builder = MultipartBody.Builder()
                                         .setType(MultipartBody.FORM)
                                         .addFormDataPart("user_type", USER_TYPE)
-                                    requestBody.addFormDataPart("user_id", ""+user.id)
+                                    requestBody.addFormDataPart("user_id", "" + user.id)
                                     if (user.notification == "Yes") {
                                         requestBody.addFormDataPart("notification", "No")
                                     } else {
                                         requestBody.addFormDataPart("notification", "Yes")
                                     }
-                                    if(networkFailed) {
-                                        viewModel.notificationUpdate(""+user.id, requestBody.build(), 0)
+                                    if (networkFailed) {
+                                        viewModel.notificationUpdate(
+                                            "" + user.id,
+                                            requestBody.build(),
+                                            0
+                                        )
                                     } else {
                                         requireContext().callNetworkDialog()
                                     }
@@ -189,7 +209,8 @@ class Settings : Fragment() {
                                 }
                                 .setCancelable(false)
                                 .show()
-                        switchNotifications.isChecked = if (user.notification == "Yes") true else false
+                        switchNotifications.isChecked =
+                            if (user.notification == "Yes") true else false
                     }
                 }
 
@@ -198,7 +219,7 @@ class Settings : Fragment() {
                 viewModel.itemNotificationUpdateResult.observe(requireActivity(), Observer {
                     readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
                         if (loginUser != null) {
-                            val noti =  Gson().fromJson(loginUser, Login::class.java).notification
+                            val noti = Gson().fromJson(loginUser, Login::class.java).notification
                             switchNotifications.isChecked = if (noti == "Yes") true else false
                         }
                     }
@@ -228,19 +249,42 @@ class Settings : Fragment() {
 
 
             textAboutUsTxt.singleClick {
-                MainActivity.mainActivity.get()!!.callDeleteDialog()
+                viewModel.show()
+                mainThread {
+                    openDialog(1)
+                }
             }
 
             textPrivacyPolicyTxt.singleClick {
-                MainActivity.mainActivity.get()!!.callDeleteDialog()
+                viewModel.show()
+                mainThread {
+                    openDialog(2)
+                }
             }
 
             textTermsConditionsTxt.singleClick {
-                MainActivity.mainActivity.get()!!.callDeleteDialog()
+                viewModel.show()
+                mainThread {
+                    openDialog(3)
+                }
             }
 
             textRateOurAppTxt.singleClick {
-                MainActivity.mainActivity.get()!!.callDeleteDialog()
+//                val manager = ReviewManagerFactory.create(requireContext())
+//                val request = manager.requestReviewFlow()
+//                request.addOnCompleteListener { task ->
+//                    if (task.isSuccessful) {
+//                        // We got the ReviewInfo object
+//                        val reviewInfo = task.result
+//                        Log.e("TAG", "reviewInfo "+reviewInfo)
+//                    } else {
+//                        // There was some problem, log or handle the error code.
+////                        @ReviewErrorCode val reviewErrorCode = (task.getException() as ReviewException).errorCode
+//                        Log.e("TAG", "reviewErrorCode "+task.getException())
+//                    }
+//                }
+
+                showRatingUserInterface(requireActivity())
             }
 
             textShareOurAppTxt.singleClick {
@@ -254,23 +298,70 @@ class Settings : Fragment() {
     }
 
 
-   fun callLanguageApi(locale: String, value : Int) {
-       readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
-           if (loginUser != null) {
-              val _id = Gson().fromJson(loginUser, Login::class.java).id
-               val requestBody: MultipartBody.Builder = MultipartBody.Builder()
-                   .setType(MultipartBody.FORM)
-                   .addFormDataPart("user_type", USER_TYPE)
-               requestBody.addFormDataPart("user_id", ""+_id)
-                   requestBody.addFormDataPart("language", "/en/"+locale)
-               if(networkFailed) {
-                   viewModel.notificationUpdate(""+_id, requestBody.build(), value)
-               } else {
-                   requireContext().callNetworkDialog()
-              }
-           }
-       }
-   }
+    private fun showRatingUserInterface(activity: Activity) {
+        val manager = ReviewManagerFactory.create(activity)
+        val request: Task<ReviewInfo> = manager.requestReviewFlow()
+        request.addOnCompleteListener(object : OnCompleteListener<ReviewInfo?> {
+            override fun onComplete(task: Task<ReviewInfo?>) {
+                Log.e("TAG", "onComplete1 "+task.result)
+                if (task.isSuccessful()) {
+                    val reviewInfo: ReviewInfo = task.getResult()
+                    val flow: Task<Void> = manager.launchReviewFlow(activity, reviewInfo)
+                    flow.addOnCompleteListener(object : OnCompleteListener<Void?> {
+                        override fun onComplete(task: Task<Void?>) {
+                            Log.e("TAG", "onComplete2 "+task.result)
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    fun callLanguageApi(locale: String, value: Int) {
+        readData(DataStoreKeys.LOGIN_DATA) { loginUser ->
+            if (loginUser != null) {
+                val _id = Gson().fromJson(loginUser, Login::class.java).id
+                val requestBody: MultipartBody.Builder = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("user_type", USER_TYPE)
+                requestBody.addFormDataPart("user_id", "" + _id)
+                requestBody.addFormDataPart("language", "/en/" + locale)
+                if (networkFailed) {
+                    viewModel.notificationUpdate("" + _id, requestBody.build(), value)
+                } else {
+                    requireContext().callNetworkDialog()
+                }
+            }
+        }
+    }
+
+
+    private fun openDialog(type: Int) {
+        val mybuilder = Dialog(requireActivity())
+        mybuilder.setContentView(R.layout.dialog_load_html)
+        mybuilder.show()
+        val window = mybuilder.window
+        window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(R.color._00000000)
+        val yes = mybuilder.findViewById<AppCompatImageView>(R.id.imageCross)
+        val title = mybuilder.findViewById<AppCompatTextView>(R.id.textTitleMain)
+        val text = mybuilder.findViewById<AppCompatTextView>(R.id.textTitleText)
+        when (type) {
+            1 -> title.text = resources.getString(R.string.about_us)
+            2 -> title.text = resources.getString(R.string.privacy_policy)
+            3 -> title.text = resources.getString(R.string.terms_amp_conditions)
+        }
+        requireContext().loadHtml(type) {
+            text.text = HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        }
+        yes?.singleClick {
+            mybuilder.dismiss()
+        }
+        viewModel.hide()
+    }
 
 
     override fun onDestroyView() {

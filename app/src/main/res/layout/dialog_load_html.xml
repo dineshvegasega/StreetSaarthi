@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/_15sdp"
     android:background="@color/white"
+    android:orientation="vertical"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,25 +15,21 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/_E79D46">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textTitleMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="@string/about_us"
             android:textColor="@color/black"
             android:textSize="@dimen/_13sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="MissingConstraints"
             app:fontFamily="@font/roboto_medium"
-            android:text="@string/terms_amp_conditions"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageCross"
@@ -49,11 +46,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@+id/mainTop"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         >
@@ -69,26 +67,30 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textTitleMain1"
-                android:layout_width="wrap_content"
+                android:id="@+id/textTitleText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_11sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="MissingConstraints"
                 app:fontFamily="@font/roboto_medium"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/terms1"
+                android:text="@string/about_us"
                 />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
     </androidx.core.widget.NestedScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

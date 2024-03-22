@@ -69,7 +69,6 @@ import java.lang.ref.WeakReference
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-
     companion object {
         @JvmStatic
         var PACKAGE_NAME = ""

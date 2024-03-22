@@ -19,29 +19,29 @@ open class JsonHelper(private var context: Context) {
         try {
             var jsonObject : JSONObject = JSONObject()
             if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_english.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_english.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.englishVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_english.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_english.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.bengaliVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_bengali.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_bengali.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.gujaratiVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_gujarati.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_gujarati.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.hindiVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_hindi.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_hindi.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.kannadaVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_kannada.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_kannada.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.malayalamVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_malayalam.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_malayalam.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.marathiVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_marathi.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_marathi.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.punjabiVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_punjabi.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_punjabi.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.tamilVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_tamil.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_tamil.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.teluguVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_telugu.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_telugu.json")!!)
             } else if (MainActivity.context.get()!!.getString(R.string.urduVal) == ""+locale){
-                jsonObject = JSONObject(getJSONFromAssets("menu_data_urdu.json")!!)
+                jsonObject = JSONObject(getJSONFromAssets("json/menu_data_urdu.json")!!)
             }
 
             val jsonArray = jsonObject.getJSONArray("menu")

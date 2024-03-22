@@ -26,6 +26,7 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -58,10 +59,12 @@ import com.stfalcon.imageviewer.StfalconImageViewer
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.models.ItemReturn
 import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivityVM.Companion.locale
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.math.RoundingMode
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -1386,6 +1389,68 @@ fun Activity.showDropDownDialog(
                 }.show()
         }
     }
+}
 
+
+
+fun Context.loadHtml(type: Int, callBack: String.() -> Unit){
+    var inputStream: InputStream = assets.open("web/about.html")
+    when(type){
+        1 -> {
+            when (""+locale){
+                MainActivity.context.get()!!.getString(R.string.englishVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.bengaliVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.gujaratiVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.hindiVal) -> inputStream = assets.open("web/about_hindi.html")
+                MainActivity.context.get()!!.getString(R.string.kannadaVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.malayalamVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.marathiVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.punjabiVal) -> inputStream = assets.open("web/about_punjabi.html")
+                MainActivity.context.get()!!.getString(R.string.tamilVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.teluguVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.urduVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.englishVal) -> inputStream = assets.open("web/about.html")
+            }
+        }
+        2 -> {
+            when (""+locale){
+                MainActivity.context.get()!!.getString(R.string.englishVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.bengaliVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.gujaratiVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.hindiVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.kannadaVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.malayalamVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.marathiVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.punjabiVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.tamilVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.teluguVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.urduVal) -> inputStream = assets.open("web/privacy.html")
+                MainActivity.context.get()!!.getString(R.string.englishVal) -> inputStream = assets.open("web/privacy.html")
+            }
+        }
+        3 -> {
+            when (""+locale){
+                MainActivity.context.get()!!.getString(R.string.englishVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.bengaliVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.gujaratiVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.hindiVal) -> inputStream = assets.open("web/terms_hindi.html")
+                MainActivity.context.get()!!.getString(R.string.kannadaVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.malayalamVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.marathiVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.punjabiVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.tamilVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.teluguVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.urduVal) -> inputStream = assets.open("web/terms.html")
+                MainActivity.context.get()!!.getString(R.string.englishVal) -> inputStream = assets.open("web/terms.html")
+            }
+        }
+    }
+
+    val size: Int = inputStream.available()
+    val buffer = ByteArray(size)
+    inputStream.read(buffer)
+    inputStream.close()
+    val str = String(buffer)
+    callBack(str)
 }
 

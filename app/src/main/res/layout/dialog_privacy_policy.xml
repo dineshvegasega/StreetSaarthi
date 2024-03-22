@@ -31,7 +31,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="MissingConstraints"
             app:fontFamily="@font/roboto_medium"
-            android:text="@string/terms_amp_conditions"
+            android:text="@string/privacy_policy"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -73,19 +73,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_16sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_25sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
-                app:fontFamily="@font/roboto_medium"
+                app:fontFamily="@font/roboto_bold"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/terms1"
                 />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     </androidx.core.widget.NestedScrollView>

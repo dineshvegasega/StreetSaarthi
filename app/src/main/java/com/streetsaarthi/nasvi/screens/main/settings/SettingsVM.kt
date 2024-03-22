@@ -1,7 +1,11 @@
 package com.streetsaarthi.nasvi.screens.main.settings
 
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +15,7 @@ import com.streetsaarthi.nasvi.networking.Repository
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.datastore.DataStoreKeys
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveData
 import com.streetsaarthi.nasvi.datastore.DataStoreUtil.saveObject
@@ -29,9 +34,11 @@ import javax.inject.Inject
 class SettingsVM @Inject constructor(private val repository: Repository): ViewModel() {
 
     var itemMain : ArrayList<Item> ?= ArrayList()
-//    var locale: Locale = Locale.getDefault()
-
     var appLanguage = MutableLiveData<String>("")
+
+
+    var alertDialog: AlertDialog? = null
+
 
 
     init {
@@ -59,7 +66,38 @@ class SettingsVM @Inject constructor(private val repository: Repository): ViewMo
                 }, 50)
             }
         }
+
+
+
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
+
+
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
+
+
+
 
     data class Item (
         var name: String = "",
