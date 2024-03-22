@@ -582,7 +582,13 @@
     <string name="please_select_month_year_and_number">ਕਿਰਪਾ ਕਰਕੇ ਮਹੀਨਾ/ਸਾਲ ਅਤੇ ਨੰਬਰ ਚੁਣੋ</string>
     <string name="days" translatable="false">%s ਦਿਨ</string>
 
-
+    <string name="more_information">ਹੋਰ ਜਾਣਕਾਰੀ</string>
+    <string name = "about_us">ਸਾਡੇ ਬਾਰੇ</string>
+    <string name="privacy_policy">ਗੋਪਨੀਯਤਾ ਨੀਤੀ</string>
+    <string name="terms_conditions"><![CDATA[ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ]]></string>
+    <string name="rate_our_app">ਸਾਡੀ ਐਪ ਨੂੰ ਦਰਜਾ ਦਿਓ</string>
+    <string name="share_our_app">ਸਾਡੀ ਐਪ ਨੂੰ ਸਾਂਝਾ ਕਰੋ</string>
+    <string name="app_update">ਐਪ ਅੱਪਡੇਟ</string>
 
 
 

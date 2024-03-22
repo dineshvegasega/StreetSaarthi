@@ -1,6 +1,10 @@
 package com.streetsaarthi.nasvi.screens.onboarding.quickRegistration
 
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,8 +14,10 @@ import com.streetsaarthi.nasvi.networking.ApiInterface
 import com.streetsaarthi.nasvi.networking.CallHandler
 import com.streetsaarthi.nasvi.networking.Repository
 import com.streetsaarthi.nasvi.R
+import com.streetsaarthi.nasvi.databinding.LoaderBinding
 import com.streetsaarthi.nasvi.models.BaseResponseDC
 import com.streetsaarthi.nasvi.networking.getJsonRequestBody
+import com.streetsaarthi.nasvi.screens.mainActivity.MainActivity
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,6 +28,36 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuickRegistrationVM @Inject constructor(private val repository: Repository): ViewModel() {
+
+    var alertDialog: AlertDialog? = null
+    init {
+        val alert = AlertDialog.Builder(MainActivity.activity.get())
+        val binding =
+            LoaderBinding.inflate(LayoutInflater.from(MainActivity.activity.get()), null, false)
+        alert.setView(binding.root)
+        alert.setCancelable(false)
+        alertDialog = alert.create()
+        alertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun show() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+                alertDialog?.show()
+            }
+        }
+    }
+
+    fun hide() {
+        viewModelScope.launch {
+            if (alertDialog != null) {
+                alertDialog?.dismiss()
+            }
+        }
+    }
+
+
 
     var isAgree = MutableLiveData<Boolean>(false)
 
@@ -166,6 +202,10 @@ class QuickRegistrationVM @Inject constructor(private val repository: Repository
             }
         )
     }
+
+
+
+
 
 
     data class Model(

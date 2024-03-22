@@ -78,7 +78,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="MissingConstraints"
-                app:fontFamily="@font/roboto_medium"
+                app:fontFamily="@font/roboto_light"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/about_us"
                 />

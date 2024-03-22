@@ -1399,17 +1399,16 @@ fun Context.loadHtml(type: Int, callBack: String.() -> Unit){
         1 -> {
             when (""+locale){
                 MainActivity.context.get()!!.getString(R.string.englishVal) -> inputStream = assets.open("web/about.html")
-                MainActivity.context.get()!!.getString(R.string.bengaliVal) -> inputStream = assets.open("web/privacy.html")
-                MainActivity.context.get()!!.getString(R.string.gujaratiVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.bengaliVal) -> inputStream = assets.open("web/about_bangla.html")
+                MainActivity.context.get()!!.getString(R.string.gujaratiVal) -> inputStream = assets.open("web/about_gugrati.html")
                 MainActivity.context.get()!!.getString(R.string.hindiVal) -> inputStream = assets.open("web/about_hindi.html")
-                MainActivity.context.get()!!.getString(R.string.kannadaVal) -> inputStream = assets.open("web/about.html")
-                MainActivity.context.get()!!.getString(R.string.malayalamVal) -> inputStream = assets.open("web/about.html")
-                MainActivity.context.get()!!.getString(R.string.marathiVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.kannadaVal) -> inputStream = assets.open("web/about_kannada.html")
+                MainActivity.context.get()!!.getString(R.string.malayalamVal) -> inputStream = assets.open("web/about_malyalam.html")
+                MainActivity.context.get()!!.getString(R.string.marathiVal) -> inputStream = assets.open("web/about _marathi.html")
                 MainActivity.context.get()!!.getString(R.string.punjabiVal) -> inputStream = assets.open("web/about_punjabi.html")
-                MainActivity.context.get()!!.getString(R.string.tamilVal) -> inputStream = assets.open("web/about.html")
-                MainActivity.context.get()!!.getString(R.string.teluguVal) -> inputStream = assets.open("web/about.html")
-                MainActivity.context.get()!!.getString(R.string.urduVal) -> inputStream = assets.open("web/about.html")
-                MainActivity.context.get()!!.getString(R.string.englishVal) -> inputStream = assets.open("web/about.html")
+                MainActivity.context.get()!!.getString(R.string.tamilVal) -> inputStream = assets.open("web/about_tamil.html")
+                MainActivity.context.get()!!.getString(R.string.teluguVal) -> inputStream = assets.open("web/about_telugu.html")
+                MainActivity.context.get()!!.getString(R.string.urduVal) -> inputStream = assets.open("web/about_urdu.html")
             }
         }
         2 -> {

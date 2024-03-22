@@ -215,7 +215,7 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
             textTerms.singleClick {
                 viewModel.show()
                 mainThread {
-                    openTermConditionsDialog()
+                    openDialog(3)
                 }
             }
 
@@ -338,22 +338,25 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
     }
 
 
-
-    private fun openTermConditionsDialog() {
-        val mybuilder= Dialog(requireActivity())
+    private fun openDialog(type: Int) {
+        val mybuilder = Dialog(requireActivity())
         mybuilder.setContentView(R.layout.dialog_load_html)
         mybuilder.show()
-        val window=mybuilder.window
+        val window = mybuilder.window
         window!!.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
         window.setBackgroundDrawableResource(R.color._00000000)
         val yes = mybuilder.findViewById<AppCompatImageView>(R.id.imageCross)
         val title = mybuilder.findViewById<AppCompatTextView>(R.id.textTitleMain)
         val text = mybuilder.findViewById<AppCompatTextView>(R.id.textTitleText)
-        title.text = resources.getString(R.string.terms_amp_conditions)
-        requireContext().loadHtml(3) {
+        when (type) {
+            1 -> title.text = resources.getString(R.string.about_us)
+            2 -> title.text = resources.getString(R.string.privacy_policy)
+            3 -> title.text = resources.getString(R.string.terms_amp_conditions)
+        }
+        requireContext().loadHtml(type) {
             text.text = HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
         yes?.singleClick {
@@ -361,7 +364,6 @@ class Register3  : Fragment() , CallBackListener , OtpTimer.SendOtpTimerData {
         }
         viewModel.hide()
     }
-
 
 
 

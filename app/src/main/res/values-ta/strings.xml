@@ -578,7 +578,13 @@
     <string name="please_select_month_year_and_number">மாதம்/ஆண்டு மற்றும் எண்ணைத் தேர்ந்தெடுக்கவும்</string>
     <string name="days" translatable="false">%s நாட்களில்</string>
 
-
+    <string name="more_information">மேலும் தகவல்</string>
+    <string name="about_us">எங்களைப் பற்றி</string>
+    <string name="privacy_policy">தனியுரிமைக் கொள்கை</string>
+    <string name="terms_conditions"><![CDATA[விதிமுறைகள் & நிபந்தனைகள்]]></string>
+    <string name="rate_our_app">எங்கள் பயன்பாட்டை மதிப்பிடவும்</string>
+    <string name="share_our_app">எங்கள் பயன்பாட்டைப் பகிரவும்</string>
+    <string name="app_update">பயன்பாட்டு புதுப்பிப்பு</string>
 
 
 

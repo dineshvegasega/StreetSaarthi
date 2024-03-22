@@ -55,6 +55,10 @@ public class AA extends AppCompatActivity {
             }
         });
 
+        appUpdateInfoTask.addOnCompleteListener(app -> {
+            Log.e("inAppUpdates","appUpdateInfoTask.addOnCompleteListener"+ app.toString());
+        });
+
         installStateUpdatedListener = state -> {
             Log.e("inAppUpdates",String.valueOf(state.installStatus()));
             if (state.installStatus() == InstallStatus.DOWNLOADING) {

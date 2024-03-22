@@ -58,8 +58,6 @@ class RegisterVM @Inject constructor(
 
     var isAgree = MutableLiveData<Boolean>(false)
 
-
-//    var locale: Locale = Locale.getDefault()
     var alertDialog: AlertDialog? = null
     init {
         val alert = AlertDialog.Builder(MainActivity.activity.get())

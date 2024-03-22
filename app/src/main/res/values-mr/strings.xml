@@ -578,7 +578,13 @@
     <string name="please_select_month_year_and_number">कृपया महिना/वर्ष आणि क्रमांक निवडा</string>
     <string name="days" translatable="false">%s दिवस</string>
 
-
+    <string name="more_information">अधिक माहिती</string>
+    <string name = "about_us"> आमच्याबद्दल</string>
+    <string name="privacy_policy">गोपनीयता धोरण</string>
+    <string name="terms_conditions"><![CDATA[अटी आणि नियम]]></string>
+    <string name="rate_our_app">आमच्या ॲपला रेट करा</string>
+    <string name="share_our_app">आमचे ॲप शेअर करा</string>
+    <string name="app_update">ॲप अपडेट</string>
 
 
 

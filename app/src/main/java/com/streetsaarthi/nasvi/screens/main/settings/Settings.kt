@@ -3,15 +3,19 @@ package com.streetsaarthi.nasvi.screens.main.settings
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageInstaller
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.StrictMode
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -24,10 +28,17 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.tasks.OnCompleteListener
 import com.google.android.play.core.tasks.Task
+import com.google.firebase.dynamiclinks.androidParameters
+import com.google.firebase.dynamiclinks.dynamicLink
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.dynamiclinks.shortLinkAsync
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.ItemLanguageStartBinding
@@ -45,6 +56,8 @@ import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
+import org.jsoup.Jsoup
+import java.io.File
 
 
 @AndroidEntryPoint
@@ -73,6 +86,12 @@ class Settings : Fragment() {
         binding.apply {
             inclideHeaderSearch.textHeaderTxt.text = getString(R.string.settings)
             inclideHeaderSearch.editTextSearch.visibility = View.GONE
+
+
+            val manager = requireContext().packageManager
+            val info = manager?.getPackageInfo(requireContext().packageName, 0)
+            val versionName = info?.versionName
+            textAppVersionTxt.text = getString(R.string.app_version_1_0, versionName)
 
             viewModel.appLanguage.observe(viewLifecycleOwner, Observer {
                 editTextSelectLanguage.setText(it)
@@ -270,33 +289,145 @@ class Settings : Fragment() {
             }
 
             textRateOurAppTxt.singleClick {
-//                val manager = ReviewManagerFactory.create(requireContext())
-//                val request = manager.requestReviewFlow()
-//                request.addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        // We got the ReviewInfo object
-//                        val reviewInfo = task.result
-//                        Log.e("TAG", "reviewInfo "+reviewInfo)
-//                    } else {
-//                        // There was some problem, log or handle the error code.
-////                        @ReviewErrorCode val reviewErrorCode = (task.getException() as ReviewException).errorCode
-//                        Log.e("TAG", "reviewErrorCode "+task.getException())
-//                    }
-//                }
-
                 showRatingUserInterface(requireActivity())
             }
 
             textShareOurAppTxt.singleClick {
-                MainActivity.mainActivity.get()!!.callDeleteDialog()
+                val shareContent: String =
+                    "Hey, have you heard about Street Saarthi?! It’s a Developed by the National Association of Street Vendors of India (NASVI), that actually lets you play flirt against dates as well as your mates! \nYou HAVE to give it a try!..."
+                val dynamicLink = Firebase.dynamicLinks.dynamicLink {
+                    val builder = Uri.Builder().scheme("https")
+                        .authority("com.streetsaarthi.nasvi")
+                    //                .appendPath("params")
+//                    .appendQueryParameter(queryParam, queryParamValue)
+                    link = builder.build()
+                    domainUriPrefix = "https://streetsaarthi.page.link"
+                    androidParameters("com.streetsaarthi.nasvi") {}
+//                iosParameters("com.dtm") {
+//    //                appStoreId = "1493006990"
+//                }
+                }
+                Firebase.dynamicLinks.shortLinkAsync {
+                    longLink = dynamicLink.uri
+                }.addOnSuccessListener { result ->
+                    val link = result.shortLink?.toString() ?: ""
+                    val shareIntent = Intent()
+                    shareIntent.action = Intent.ACTION_SEND
+                    shareIntent.type = "text/plain"
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "$shareContent\n\n $link")
+                    view.context.startActivity(
+                        Intent.createChooser(
+                            shareIntent,
+                            "Share to"
+                        )
+                    )
+                }.addOnFailureListener {
+                    it.printStackTrace()
+                }
             }
 
+//            val appUpdateManager = AppUpdateManagerFactory.create(requireContext())
+//
+//            val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+//            appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+//                var ss = appUpdateInfo.availableVersionCode()
+//                textAboutUsNewVersionTxt.setText( "AA"+ss)
+//            }
+//            appUpdateInfoTask.addOnFailureListener {
+//                textAboutUsNewVersionTxt.setText( "BB"+this.toString())
+//            }
+//            appUpdateInfoTask.addOnCompleteListener {
+//                textAboutUsNewVersionTxt.setText( "CC "+Gson().toJson(it))
+//            }
+
+
+
             textAboutUsNewVersionTxt.singleClick {
-                MainActivity.mainActivity.get()!!.callDeleteDialog()
+
+//                val playStoreVersionCode: String = FirebaseRemoteConfig.getInstance().getString(
+//                    "com.streetsaarthi.nasvi"
+//                )
+
+                var newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + requireActivity().getPackageName() + "&hl=it")
+                    .timeout(30000)
+                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                    .referrer("http://www.google.com")
+                    .get()
+                    .select("div[itemprop=softwareVersion]")
+                    .first()
+                    ?.ownText();
+
+                Log.e("TAG", "playStoreVersionCode "+newVersion)
+
+//                val pInfo: PackageInfo =
+//                    this.getPackageManager().getPackageInfo(getPackageName(), 0)
+//                val currentAppVersionCode = pInfo.versionCode
+//                if (playStoreVersionCode > currentAppVersionCode) {
+////Show update popup or whatever best for you
+//                }
+
+                // install(requireContext(), "com.streetsaarthi.nasvi", "https://play.google.com/store/apps/details?id=com.streetsaarthi.nasvi")
+
+//                val appUpdateManager = AppUpdateManagerFactory.create(updateActionListener.getActivity())
+//                val appUpdateInfoTask = appUpdateManager!!.appUpdateInfo
+//                appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+//                    handleAppUpdateInfo(appUpdateInfo)
+//                }
+
+
+//                val appUpdateManager = AppUpdateManagerFactory.create(requireContext())
+//
+//                val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+//
+//                appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+////                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+////
+////                        && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+////                    ) {
+////                        // Request the update.
+////                    }
+//                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+//                        && (appUpdateInfo.clientVersionStalenessDays() ?: -1) >= 4
+//                        && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+//                        // Request the update.
+//                    }
+
+//                    if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+//                        popupSnackbarForCompleteUpdate()
+//                    }
+
+//            }
             }
         }
     }
 
+
+    fun install(context: Context, packageName: String, apkPath: String) {
+
+// PackageManager provides an instance of PackageInstaller
+        val packageInstaller = context.packageManager.packageInstaller
+
+// Prepare params for installing one APK file with MODE_FULL_INSTALL
+// We could use MODE_INHERIT_EXISTING to install multiple split APKs
+        val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL)
+        params.setAppPackageName(packageName)
+
+// Get a PackageInstaller.Session for performing the actual update
+        val sessionId = packageInstaller.createSession(params)
+        val session = packageInstaller.openSession(sessionId)
+
+// Copy APK file bytes into OutputStream provided by install Session
+        val out = session.openWrite(packageName, 0, -1)
+        val fis = File(apkPath).inputStream()
+        fis.copyTo(out)
+        session.fsync(out)
+        out.close()
+
+// The app gets killed after installation session commit
+        session.commit(
+            PendingIntent.getBroadcast(context, sessionId,
+            Intent("android.intent.action.MAIN"), PendingIntent.FLAG_IMMUTABLE).intentSender)
+    }
 
     private fun showRatingUserInterface(activity: Activity) {
         val manager = ReviewManagerFactory.create(activity)

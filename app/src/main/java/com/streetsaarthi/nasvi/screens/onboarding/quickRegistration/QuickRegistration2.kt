@@ -12,12 +12,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.streetsaarthi.nasvi.R
 import com.streetsaarthi.nasvi.databinding.QuickRegistration2Binding
 import com.streetsaarthi.nasvi.screens.interfaces.CallBackListener
 import com.streetsaarthi.nasvi.utils.isValidPassword
+import com.streetsaarthi.nasvi.utils.loadHtml
+import com.streetsaarthi.nasvi.utils.mainThread
 import com.streetsaarthi.nasvi.utils.showSnackBar
 import com.streetsaarthi.nasvi.utils.singleClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,7 +100,10 @@ class QuickRegistration2 : Fragment() , CallBackListener {
             }
 
             textTerms.singleClick {
-                openTermConditionsDialog()
+                viewModel.show()
+                mainThread {
+                    openDialog(3)
+                }
             }
 
 
@@ -204,21 +211,33 @@ class QuickRegistration2 : Fragment() , CallBackListener {
     }
 
 
-    private fun openTermConditionsDialog() {
-        val mybuilder= Dialog(requireActivity())
-        mybuilder.setContentView(R.layout.dialog_termsconditions)
+    private fun openDialog(type: Int) {
+        val mybuilder = Dialog(requireActivity())
+        mybuilder.setContentView(R.layout.dialog_load_html)
         mybuilder.show()
-        val window=mybuilder.window
+        val window = mybuilder.window
         window!!.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        window!!.setBackgroundDrawableResource(R.color._00000000)
+        window.setBackgroundDrawableResource(R.color._00000000)
         val yes = mybuilder.findViewById<AppCompatImageView>(R.id.imageCross)
+        val title = mybuilder.findViewById<AppCompatTextView>(R.id.textTitleMain)
+        val text = mybuilder.findViewById<AppCompatTextView>(R.id.textTitleText)
+        when (type) {
+            1 -> title.text = resources.getString(R.string.about_us)
+            2 -> title.text = resources.getString(R.string.privacy_policy)
+            3 -> title.text = resources.getString(R.string.terms_amp_conditions)
+        }
+        requireContext().loadHtml(type) {
+            text.text = HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        }
         yes?.singleClick {
             mybuilder.dismiss()
         }
+        viewModel.hide()
     }
+
 
 
     override fun onResume() {
